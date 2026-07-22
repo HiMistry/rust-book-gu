@@ -290,7 +290,13 @@ fn process_markdown(
                 return;
             }
 
-            let trans_words: Vec<&str> = translated.split_whitespace().collect();
+            // Strip leading `#` markers so word counts reflect real text.
+            let stripped = translated
+                .lines()
+                .map(|l| l.trim_start_matches(|c: char| c == '#' || c == ' '))
+                .collect::<Vec<&str>>()
+                .join(" ");
+            let trans_words: Vec<&str> = stripped.split_whitespace().collect();
             let total_trans_words = trans_words.len();
             let mut word_offset: usize = 0;
 
@@ -354,7 +360,7 @@ fn process_markdown(
                 }
                 TagEnd::Heading(_) => {
                     // Finish heading — add to buffer but DON'T flush yet.
-                    // It will merge with the following paragraph.
+                    // It will merge with the following paragraph (with a delimiter).
                     finish_block(&mut acc, &mut block_buffer, &mut buffer_words, &state);
                     state = State::Normal;
                 }
@@ -447,18 +453,15 @@ fn process_markdown(
 // Helper: write a translated block to the output, handling headings vs prose.
 fn write_block(output: &mut String, block: &TextBlock, text: &str) {
     let trimmed = text.trim();
-    if trimmed.is_empty() {
-        return;
-    }
-    // Strip any leading # markers from the translated text (model may preserve them).
     let cleaned = trimmed.trim_start_matches(|c: char| c == '#' || c == ' ');
-    if cleaned.is_empty() {
-        return;
-    }
     if block.is_heading {
         let prefix = "#".repeat(block.heading_level as usize);
-        output.push_str(&format!("{} {}\n\n", prefix, cleaned.trim()));
+        let content = if cleaned.is_empty() { "" } else { cleaned.trim() };
+        output.push_str(&format!("{} {}\n\n", prefix, content));
     } else {
+        if cleaned.is_empty() {
+            return;
+        }
         output.push_str(cleaned.trim());
         output.push_str("\n\n");
     }

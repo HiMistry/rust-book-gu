@@ -1,0 +1,5 @@
+/* Gujarati-specific overrides */
+body {
+    font-family: "Gujarati Sangam MN", "Nirmala UI", Shruti, "Noto Sans Gujarati", sans-serif;
+    line-height: 1.8;
+}
