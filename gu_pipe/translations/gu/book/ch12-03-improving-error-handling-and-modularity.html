@@ -1,0 +1,364 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Refactoring to Improve Modularity and Error Handling - ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-7ed1a93d.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-0e4ce700.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h2 id="સુવયવસથા-માટે-પુનરગઠન-અને-ભૂલ-વયવહાર-સુધારવો"><a class="header" href="#સુવયવસથા-માટે-પુનરગઠન-અને-ભૂલ-વયવહાર-સુધારવો">સુવ્યવસ્થા માટે પુનર્ગઠન અને ભૂલ વ્યવહાર સુધારવો</a></h2>
+<p>આપણો કાર્યક્રમ સુધારવા માટે, આપણે ચાર સમસ્યાઓ નિવારિત કરીશું જે કાર્યક્રમની રચના અને સંભવિત ભૂલોને કેવી રીતે નિયંત્રિત કરે છે તેની સાથે સંબંધિત છે. પ્રથમ, આપણું <code>main</code> વિધેય હવે બે કાર્યો કરે છે: તે દલીલોનું વિશ્લેષણ કરે છે અને ફાઇલો વાંચે છે. જેમ જેમ આપણો કાર્યક્રમ વધતો જાય તેમ, <code>main</code> વિધેય દ્વારા સંભાળવામાં આવતા અલગ-અલગ કાર્યોની સંખ્યા વધશે. કોઈ વિધેય વધુ જવાબદારીઓ મેળવે છે, ત્યારે તેના વિશે વિચારવું વધુ મુશ્કેલ બને છે, તેનું પરીક્ષણ કરવું મુશ્કેલ બને છે અને તેના ભાગો તૂટી જાય તે ડર વગર તેને બદલવાનું પણ મુશ્કેલ બને છે. દરેક કાર્ય માટે એક વિધેય જવાબદાર હોય તે રીતે કાર્યક્ષમતાને અલગ કરવી શ્રેષ્ઠ છે.</p>
+<p>આ સમસ્યા બીજા પ્રશ્નમાં પણ જોડાયેલી છે: જો કે <code>query</code> અને <code>file_path</code> અમારા કાર્યક્રમના રૂપરેખાંકન ચલ છે, તો <code>contents</code> જેવા ચલ કાર્યક્રમની તર્કસંગતતા માટે વપરાય છે. <code>main</code> જેટલું લાંબુ બનશે, તેટલા વધુ ચલને અવકાશમાં લાવવાની જરૂર પડશે; આપણી પાસે જેટલા વધુ ચલ અવકાશમાં હશે, દરેકના હેતુને ટ્રેક કરવાનું એટલું જ મુશ્કેલ બનશે. તેમના હેતુ સ્પષ્ટ કરવા માટે રૂપરેખાંકન ચલોને એક માળખામાં જૂથ કરવું શ્રેષ્ઠ છે. ત્રીજી સમસ્યા એ છે</p>
+<p>કે ફાઈલ વાંચવામાં નિષ્ફળતા મળે ત્યારે ભૂલ સંદેશ છાપવા માટે આપણે <code>expect</code> નો ઉપયોગ કર્યો છે, પરંતુ ભૂલ સંદેશ ફક્ત <code>Should have been able to read the file</code> છાપે છે. ફાઈલ વાંચવામાં ઘણી રીતે નિષ્ફળતા આવી શકે છે: ઉદાહરણ તરીકે, ફાઈલ ગુમ હોઈ શકે છે, અથવા અમારી પાસે તેને ખોલવાની પરવાનગી ન હોઈ શકે. અત્યારે, પરિસ્થિતિ ગમે તે હોય, અમે દરેક વસ્તુ માટે સમાન ભૂલ સંદેશ છાપીશું, જે વપરાશકર્તાને કોઈ માહિતી આપશે નહીં!</p>
+<p>ચોથું, અમે <code>expect</code> નો ઉપયોગ ભૂલને નિયંત્રિત કરવા માટે કરીએ છીએ, અને જો વપરાશકર્તા અમારા કાર્યક્રમને પૂરતા પ્રમાણમાં દલીલો આપ્યા વિના ચલાવે છે, તો તેમને <code>index out of bounds</code> નામની ભૂલ મળશે જે Rust દ્વારા સ્પષ્ટપણે સમસ્યા સમજાવતી નથી. જો ભૂલ-નિયંત્રણ તર્ક બદલવાની જરૂર હોય તો ભવિષ્યના જાળવણી કરનારાઓ માટે કોડની માત્ર એક જ જગ્યાએ સલાહ લેવી શ્રેષ્ઠ રહેશે, તેથી તમામ ભૂલ-નિયંત્રણ કોડ એક જ સ્થળે હોવું જોઈએ. એક જ સ્થળે તમામ ભૂલ-નિયંત્રણ કોડ રાખવાથી એ પણ સુનિશ્ચિત થશે કે અમે એવા સંદેશાઓ છાપી રહ્યા છીએ જે અમારા અંતિમ વપરાશકર્તાઓ માટે અર્થપૂર્ણ હશે.</p>
+<p>ચાલો આ ચાર સમસ્યાઓ નિવારવા માટે આપણી યોજનાને ફરીથી ઘડીએ.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="બાઈનરી-પરોજેકટસમાં-ચિંતાઓને-અલગ-કરવી"><a class="header" href="#બાઈનરી-પરોજેકટસમાં-ચિંતાઓને-અલગ-કરવી">બાઈનરી પ્રોજેક્ટ્સમાં ચિંતાઓને અલગ કરવી</a></h3>
+<p>ઘણા બાઈનરી પ્રોજેક્ટ્સમાં <code>main</code> ફંક્શનને અનેક કાર્યો સોંપવાની સંગઠનાત્મક સમસ્યા સામાન્ય છે. પરિણામે, ઘણા Rust કાર્યકરોને બાઈનરી પ્રોગ્રામની જુદી જુદી ચિંતાઓને વિભાજીત કરવી ઉપયોગી લાગે છે જ્યારે <code>main</code> ફંક્શન મોટું થવા માંડે છે. આ પ્રક્રિયામાં નીચેના પગલાં શામેલ છે:</p>
+<p>તમારા પ્રોગ્રામને main.rs ફાઇલ અને lib.rs ફાઇલમાં વિભાજીત કરો અને તમારા પ્રોગ્રામના તર્કને lib.rs માં ખસેડો.</p>
+<p>જ્યાં સુધી તમારી કમાન્ડ લાઇન પાર્સિંગ લોજિક નાની હોય, ત્યાં સુધી તે <code>main</code> ફંક્શનમાં રહી શકે છે.</p>
+<p>જ્યારે આદેશ વાક્ય વિશ્લેષણ તર્ક જટિલ થવા લાગે છે, ત્યારે તેને <code>main</code> કાર્યમાંથી અન્ય કાર્યો અથવા પ્રકારોમાં બહાર કાઢો.</p>
+<p>આ પ્રક્રિયા પછી <code>main</code> વિધેયમાં રહેલી જવાબદારીઓ નીચે મુજબ મર્યાદિત હોવી જોઈએ:</p>
+<p>આર્ગ્યુમેન્ટ મૂલ્યો સાથે કમાન્ડ લાઇન પાર્સિંગ લોજિકને બોલાવવું.</p>
+<p>અન્ય કોઈપણ રૂપરેખાંકન (configuration) ગોઠવવું.</p>
+<p><code>lib.rs</code> માં એક <code>run</code> વિધેયને બોલાવવું.</p>
+<p>જો <code>run</code> કોઈ ભૂલ આપે તો તેને નિયંત્રિત કરવું.</p>
+<p>આ પેટર્ન ચિંતાઓને અલગ પાડવા વિશે છે: main.rs પ્રોગ્રામ ચલાવે છે અને lib.rs કાર્યના તમામ તર્કને સંભાળે છે. કારણ કે તમે <code>main</code> ફંક્શનને સીધું જ ચકાસી શકતા નથી, આ માળખું તમને <code>main</code> ફંક્શનમાંથી તર્ક બહાર કાઢીને તમારા પ્રોગ્રામના તમામ તર્કના પરીક્ષણ કરવાની મંજૂરી આપે છે. <code>main</code> ફંક્શનમાં રહેલો કોડ વાંચીને તેની યોગ્યતા ચકાસવા માટે પૂરતો નાનો હશે. ચાલો આ પ્રક્રિયા અનુસરીને અમારા પ્રોગ્રામને ફરીથી ગોઠવીએ.</p>
+<h4 id="દલીલ-વિશલેષક-argument-parser-બહાર-કાઢવો"><a class="header" href="#દલીલ-વિશલેષક-argument-parser-બહાર-કાઢવો">દલીલ વિશ્લેષક (Argument Parser) બહાર કાઢવો</a></h4>
+<p>અમે દલીલોનું વિશ્લેષણ કરવાની કાર્યક્ષમતાને એક ફંક્શનમાં બહાર કાઢીશું, જે <code>main</code> બોલાશે. સૂચિ ૧૨-૫ દર્શાવે છે કે <code>main</code> ફંક્શનની નવી શરૂઆત કેવી રીતે કરવી, જે એક નવું ફંક્શન <code>parse_config</code> બોલાવે છે, જેને આપણે src/main.rs માં વ્યાખ્યાયિત કરીશું.</p>
+<listing number="12-5" file-name="src/main.rs" caption="Extracting a `parse_config` function from `main`">
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-05/src/main.rs:here}}
+</listing>
+અમે હજી કમાન્ડ લાઇન આર્ગ્યુમેન્ટ્સને વેક્ટર (vector) માં એકત્રિત કરી રહ્યા છીએ, પરંતુ ઇન્ડેક્સ ૧ પરના આર્ગ્યુમેન્ટ મૂલ્યને `query` ચલ અને ઇન્ડેક્સ ૨ પરના આર્ગ્યુમેન્ટ મૂલ્યને `file_path` ચલમાં સોંપવાને બદલે, અમે સમગ્ર વેક્ટરને `parse_config` ફંક્શનમાં પસાર કરીએ છીએ. `parse_config` ફંક્શન પછી તર્ક ધરાવે છે કે કયું આર્ગ્યુમેન્ટ કયા ચલમાં જાય છે અને મૂલ્યોને પાછા `main` માં મોકલે છે. અમે હજી પણ `query` અને `file_path` ચલો `main` માં બનાવીએ છીએ, પરંતુ `main` હવે કમાન્ડ લાઇન આર્ગ્યુમેન્ટ્સ અને ચલો વચ્ચેનો સંબંધ નક્કી કરવાની જવાબદારી ધરાવતું નથી.
+<p>આ પુનર્નિર્માણ અમારા નાના કાર્યક્રમ માટે અતિશય લાગે તેવું தோன்றી શકે છે, પરંતુ અમે નાનાં, ક્રમિક તબક્કામાં સુધારો કરી રહ્યા છીએ. આ ફેરફાર કર્યા પછી, કાર્યક્રમ ફરીથી ચલાવો અને ખાતરી કરો કે દલીલ વિશ્લેષણ (argument parsing) હજી પણ કાર્ય કરે છે. સમસ્યાઓ ઊભી થાય ત્યારે તેમના કારણોને ઓળખવામાં મદદ કરવા માટે તમારી પ્રગતિ વારંવાર તપાસવી યોગ્ય છે.</p>
+<h4 id="grouping-configuration-values"><a class="header" href="#grouping-configuration-values">Grouping Configuration Values</a></h4>
+<p>આપણે <code>parse_config</code> વિધેયને વધુ સુધારવા માટે બીજો નાનો પગથિયું લઈ શકીએ છીએ. હાલમાં, આપણે એક ટ્યૂપલ (tuple) પરત પાડી રહ્યા છીએ, પરંતુ પછી તરત જ તેને વ્યક્તિગત ભાગોમાં તોડી નાખીએ છીએ. આ એ વાતની નિશાની છે કે કદાચ આપણી પાસે હજુ યોગ્ય અમૂર્તિ (abstraction) નથી.</p>
+<p>બીજો સંકેત જે દર્શાવે છે કે સુધારણા માટે અવકાશ છે તે <code>config</code> ભાગ છે, જે <code>parse_config</code> નો એક ભાગ છે, જે સૂચવે છે કે આપણે જે બે મૂલ્યો પરત કરીએ છીએ તે સંબંધિત છે અને બંને એક જ રૂપરેખાંકન (configuration) મૂલ્યનો ભાગ છે. હાલમાં, આપણે ડેટાની રચનામાં આ અર્થ વ્યક્ત કરી રહ્યા નથી સિવાય કે બે મૂલ્યોને ટ્યૂપલમાં જૂથ કરીને; તેના બદલે આપણે આ બે મૂલ્યોને એક struct માં મૂકીશું અને struct ના દરેક ક્ષેત્રને અર્થપૂર્ણ નામ આપીશું. આમ કરવાથી આ કોડના ભવિષ્યના જાળવણી કરનારાઓ માટે જુદા જુદા મૂલ્યો કેવી રીતે સંબંધિત છે અને તેમનો હેતુ શું છે તે સમજવાનું સરળ બનશે.</p>
+<p>Listing 12-6 દર્શાવે છે <code>parse_config</code> વિધિમાં થયેલા સુધારાઓ.</p>
+<listing number="12-6" file-name="src/main.rs" caption="Refactoring `parse_config` to return an instance of a `Config` struct">
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-06/src/main.rs:here}}
+</listing>
+અમે `Config` નામનું struct ઉમેર્યું છે જે `query` અને `file_path` નામના ક્ષેત્રો ધરાવે છે. `parse_config` નું નિદર્શક હવે દર્શાવે છે કે તે એક `Config` મૂલ્ય આપે છે. `parse_config` ની અંદર, જ્યાં અમે પહેલાં string slices આપતા હતા જે `args` માં રહેલા  `String` મૂલ્યોનો સંદર્ભ લેતા હતા, ત્યાં હવે અમે `Config` ને ધરાવે છે એવા owned `String` મૂલ્યો. `main` માં `args` ચલ આર્ગ્યુમેન્ટ મૂલ્યોનો માલિક છે અને તે માત્ર `parse_config` કાર્યને તેમ લોન આપવા દે છે, જેનો અર્થ થાય છે કે જો `Config` `args` માં રહેલા મૂલ્યોનું સ્વામિત્વ લેવાનો પ્રયત્ન કરે તો અમે Rust ના લોન નિયમોનું ઉલ્લંઘન કરીશું.
+<p>ત્યાં  <code>String</code>  માહિતીનું સંચાલન કરવાની ઘણી રીતો છે; સૌથી સરળ, જોકે થોડી અસક્ષમ, માર્ગ એ છે કે મૂલ્યો પર  <code>clone</code>  પદ્ધતિને બોલાવવી. આ  <code>Config</code>  ઇન્સ્ટન્સ માટે ડેટાની સંપૂર્ણ નકલ બનાવશે, જેમાં વધુ સમય અને મેમરી લાગશે સ્ટ્રિંગ ડેટાના સંદર્ભ સંગ્રહિત કરવા કરતાં. જો કે, ડેટા ક્લોન કરવાથી અમારું કોડ ખૂબ સીધું પણ થઈ જાય છે કારણ કે આપણે સંદર્ભોના આયુષ્યનું સંચાલન કરવું પડતું નથી; આ પરિસ્થિતિમાં, થોડી કામગીરી છોડીને સરળતા મેળવવી એ યોગ્ય સમાધાન છે.</p>
+<h3 id="clone-વાપરવાના-ગેરલાભો"><a class="header" href="#clone-વાપરવાના-ગેરલાભો"><code>clone</code> વાપરવાના ગેરલાભો</a></h3>
+<p>ઘણા Rustaceans માં <code>clone</code> વાપરવાનું ટાળવાની વૃત્તિ હોય છે કારણ કે તેનાથી રનટાઇમ ખર્ચ થાય છે. પ્રકરણ ૧૩ માં, તમે શીખશો કે આ પ્રકારની પરિસ્થિતિમાં વધુ કાર્યક્ષમ પદ્ધતિઓનો ઉપયોગ કેવી રીતે કરવો. પરંતુ હાલ માટે, થોડી <code>String</code> ની નકલો બનાવવી ઠીક છે જેથી કરીને પ્રગતિ ચાલુ રાખી શકાય કારણ કે તમે આ નકલો માત્ર એક જ વાર બનાવશો અને તમારી ફાઇલ પાથ (file path) અને ક્વેરી સ્ટ્રિંગ (query string) ખૂબ જ નાની હોય છે. થોડી અક્ષમ કાર્યકારી પ્રોગ્રામ હોવો એ વધુ સારો છે, તેના બદલે પ્રથમ પ્રયાસમાં કોડને અત્યંત ઑપ્ટિમાઇઝ કરવાનો પ્રયાસ કરવો. જેમ જેમ તમે Rust સાથે વધુ અનુભવી થશો, તેમ તેમ સૌથી કાર્યક્ષમ ઉકેલથી શરૂ કરવું સરળ બનશે, પરંતુ હાલ માટે, <code>clone</code> બોલાવવું સંપૂર્ણપણે સ્વીકાર્ય છે.</p>
+<p>અમે <code>main</code> ને સુધારી છે જેથી તે <code>parse_config</code> દ્વારા પરત કરવામાં આવેલ <code>Config</code> નું ઉદાહરણ એક ચલ નામના <code>config</code> માં મૂકે, અને અગાઉ <code>query</code> અને <code>file_path</code> અલગ ચલોનો ઉપયોગ કરતા કોડને હવે <code>Config</code> struct ના ક્ષેત્રોનો ઉપયોગ કરવા માટે સુધારી છે.</p>
+<p>હવે અમારા કોડ વધુ સ્પષ્ટ રીતે દર્શાવે છે કે <code>query</code> અને <code>file_path</code> સંબંધિત છે અને તેમનો હેતુ એ છે કે પ્રોગ્રામ કેવી રીતે કાર્ય કરશે તે રૂપરેખાંકિત કરવું. આ મૂલ્યોનો ઉપયોગ કરતા કોઈપણ કોડને તેમના હેતુ માટે નામ આપવામાં આવેલા ક્ષેત્રોમાં <code>config</code> ઉદાહરણમાં તેમને શોધવાનું કહેવામાં આવે છે.</p>
+<h4 id="config-માટે-કનસટરકટર-બનાવવું"><a class="header" href="#config-માટે-કનસટરકટર-બનાવવું"><code>Config</code> માટે કન્સ્ટ્રક્ટર બનાવવું</a></h4>
+<p>આગળ સુધી, અમે આદેશ વાક્ય તર્કને <code>main</code> માંથી બહાર કાઢીને <code>parse_config</code> ફંક્શનમાં મૂક્યો છે. આમ કરવાથી અમને સમજાયું કે <code>query</code> અને <code>file_path</code> મૂલ્યો સંબંધિત હતા, અને તે સંબંધ અમારા કોડમાં દર્શાવવો જોઈએ. પછી અમે <code>Config</code> સ્ટ્રક્ટ ઉમેર્યો જેથી <code>query</code> અને <code>file_path</code> ના સંબંધિત હેતુને નામ આપી શકાય અને <code>parse_config</code> ફંક્શનમાંથી મૂલ્યોના નામોને સ્ટ્રક્ટ ક્ષેત્ર નામો તરીકે પરત કરી શકાય.</p>
+<p>આથી, હવે કે <code>parse_config</code> કાર્યક્રમનો હેતુ <code>Config</code> ઉદાહરણ બનાવવાનો છે, તો આપણે <code>parse_config</code> ને એક સામાન્ય કાર્યક્રમથી <code>Config</code> રચના સાથે સંકળાયેલ <code>new</code> નામના કાર્યક્રમમાં બદલી શકીએ છીએ. આ પરિવર્તન કરવાથી કોડ વધુ રૂઢિચુસ્ત બનશે. આપણે પ્રમાણિત લાયબ્રેરીમાં પ્રકારોના ઉદાહરણો બનાવી શકીએ છીએ, જેમ કે <code>String</code>, <code>String::new</code> બોલાવીને. એ જ રીતે, <code>parse_config</code> ને <code>Config</code> સાથે સંકળાયેલ <code>new</code> કાર્યક્રમમાં બદલીને, આપણે <code>Config</code> ના ઉદાહરણો <code>Config::new</code> બોલાવીને બનાવી શકીશું. યાદી 12-7 દર્શાવે છે કે આપણે કયા ફેરફારો કરવા પડશે.</p>
+<listing number="12-7" file-name="src/main.rs" caption="Changing `parse_config` into `Config::new`">
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-07/src/main.rs:here}}
+</listing>
+અમે `main` ને અપડેટ કર્યું છે જ્યાં અમે `parse_config` ને બોલાવતા હતા, હવે `Config::new` ને બોલાવવા માટે. અમે `parse_config` નું નામ બદલીને `new` કર્યું છે અને તેને `impl` બ્લોકમાં ખસેડ્યું છે, જે `new` ફંક્શનને `Config` સાથે સાંકળે છે. ખાતરી કરવા માટે આ કોડ ફરીથી કમ્પાઈલ કરો કે તે યોગ્ય રીતે કાર્ય કરે છે.
+<h3 id="ભૂલ-વયવસથાપન-સુધારવું"><a class="header" href="#ભૂલ-વયવસથાપન-સુધારવું">ભૂલ વ્યવસ્થાપન સુધારવું</a></h3>
+<p>હવે આપણે ભૂલ વ્યવસ્થાપન સુધારવાનું કાર્ય કરીશું. યાદ રાખો કે <code>args</code> વેક્ટરના અનુક્રમણિકા ૧ અથવા ૨ પર રહેલા મૂલ્યોને મેળવવાનો પ્રયત્ન કરવાથી, જો વેક્ટરમાં ત્રણ કરતાં ઓછી વસ્તુઓ હોય તો પ્રોગ્રામ અટકી જશે (panic). કોઈ પણ દલીલો વગર પ્રોગ્રામ ચલાવી જુઓ; તે આ પ્રમાણે દેખાશે:</p>
+<p>{{#include ../listings/ch12-an-io-project/listing-12-07/output.txt}}
+<code>index out of bounds: the len is 1 but the index is 1</code> એ એક ભૂલ સંદેશ છે જે પ્રોગ્રામરો માટે બનાવાયેલો છે. તે આપણા અંતિમ વપરાશકર્તાઓને તેઓ શું કરવું જોઈએ તે સમજવામાં મદદ કરશે નહીં. ચાલો હવે તેને સુધારીએ.</p>
+<h4 id="સુધારિત-ભૂલ-સંદેશ"><a class="header" href="#સુધારિત-ભૂલ-સંદેશ">સુધારિત ભૂલ સંદેશ</a></h4>
+<p>લિસ્ટિંગ ૧૨-૮ માં, આપણે <code>new</code> વિધેયમાં એક ચકાસણી ઉમેરીશું જે ખાતરી કરશે કે સ્લાઈસ ઇન્ડેક્સ ૧ અને ઇન્ડેક્સ ૨ ને ઍક્સેસ કરતા પહેલાં પૂરતી લાંબી છે. જો સ્લાઈસ પૂરતી લાંબી ન હોય, તો કાર્યક્રમ ગભરાઈ જશે (panic) અને વધુ સારો ભૂલ સંદેશ પ્રદર્શિત કરશે.</p>
+<listing number="12-8" file-name="src/main.rs" caption="Adding a check for the number of arguments">
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-08/src/main.rs:here}}
+</listing>
+આ કોડ Listing 9-13 માં આપણે લખેલ `Guess::new` ફંક્શન જેવો જ છે, જ્યાં આપણે માન્ય મૂલ્યોની રેન્જની બહારના `value` આર્ગ્યુમેન્ટ માટે `panic!` બોલાવ્યો હતો. અહીં મૂલ્યોની રેન્જ તપાસવાને બદલે, અમે ચકાસી રહ્યા છીએ કે `args` ની લંબાઈ ઓછામાં ઓછી `3` છે અને ફંક્શનનો બાકીનો ભાગ એ ધારણા હેઠળ કાર્ય કરી શકે છે કે આ શરત પૂરી થઈ ગઈ છે. જો `args` માં ત્રણથી ઓછા આઇટમ હોય, તો આ શરત `true` થશે, અને અમે પ્રોગ્રામને તાત્કાલિક સમાપ્ત કરવા માટે `panic!` મેક્રોને બોલાવીશું.
+<p>આ <code>new</code> માં થોડી વધારાની કોડ લીટીઓ સાથે, ચાલો પ્રોગ્રામને ફરીથી કોઈ દલીલો વગર ચલાવીએ અને જોઈએ કે હવે ભૂલ કેવી દેખાય છે:</p>
+<p>{{#include ../listings/ch12-an-io-project/listing-12-08/output.txt}}
+આ પરિણામ વધુ સારું છે: આપણી પાસે હવે એક યોગ્ય ભૂલ સંદેશ છે. જો કે, આપણી પાસે બિનજરૂરી માહિતી પણ છે જે અમે અમારા વપરાશકર્તાઓને આપવા માંગતા નથી. કદાચ આપણે યાદી 9-13 માં ઉપયોગ કરેલી પદ્ધતિ અહીં વાપરવા માટે શ્રેષ્ઠ નથી: <code>panic!</code> ને પ્રોગ્રામિંગ સમસ્યા માટે અને વપરાશની સમસ્યા માટે નહીં, ચર્ચા કરાયેલ પ્રકરણ 9 મુજબ વધુ યોગ્ય છે. તેના બદલે, આપણે બીજી તકનીકનો ઉપયોગ કરીશું જે તમે પ્રકરણ 9 માં શીખ્યા છો— એક <code>Result</code> પરત કરવું જે સફળતા અથવા ભૂલ દર્શાવે છે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h4 id="result-પરત-કરવું-panic-બોલાવવાને-બદલે"><a class="header" href="#result-પરત-કરવું-panic-બોલાવવાને-બદલે"><code>Result</code> પરત કરવું, <code>panic!</code> બોલાવવાને બદલે</a></h4>
+<p>આપણે તેના બદલે એક <code>Result</code> મૂલ્ય પરત કરી શકીએ છીએ, જેમાં સફળતાના કિસ્સામાં <code>Config</code> ઇન્સ્ટન્સ હશે અને ભૂલના કિસ્સામાં સમસ્યાનું વર્ણન હશે. આપણે કાર્ય નામ પણ <code>new</code> થી <code>build</code> માં બદલીશું, કારણ કે ઘણા પ્રોગ્રામરો અપેક્ષા રાખે છે કે <code>new</code> કાર્યો ક્યારેય નિષ્ફળ ન જાય. જ્યારે <code>Config::build</code>, <code>main</code> સાથે વાતચીત કરે છે, ત્યારે આપણે સમસ્યા હતી તે દર્શાવવા માટે <code>Result</code> પ્રકારનો ઉપયોગ કરી શકીએ છીએ. પછી, આપણે <code>Err</code> વિવિધતાને અમારા વપરાશકર્તાઓ માટે વધુ વ્યવહારુ ભૂલમાં રૂપાંતરિત કરવા માટે <code>main</code> માં ફેરફાર કરી શકીએ છીએ, જેમાં <code>thread 'main'</code> અને <code>RUST_BACKTRACE</code> વિશેની આસપાસનો લખાણ શામેલ નથી જે <code>panic!</code> કૉલ દ્વારા થાય છે.</p>
+<p>Listing 12-9 દર્શાવે છે કે આપણે <code>Config::build</code> નામના ફંક્શનના વળતર મૂલ્યમાં અને ફંક્શનના મુખ્ય ભાગમાં શું ફેરફાર કરવાની જરૂર છે, જેની આવશ્યકતા <code>Result</code>  વળતર આપવાની છે. નોંધ કરો કે આ કોડ ત્યાં સુધી કમ્પાઇલ થશે નહીં જ્યાં સુધી આપણે <code>main</code> ને પણ અપડેટ ન કરીએ, જે આપણે આગામી યાદીમાં કરીશું.</p>
+<listing number="12-9" file-name="src/main.rs" caption="Returning a `Result` from `Config::build`">
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-09/src/main.rs:here}}
+</listing>
+Our `build` function returns a `Result` with a `Config` instance in the success case and a string literal in the error case. Our error values will always be string literals that have the `'static` lifetime. અમારું `build` વિધેય એક `Result` પરત કરે છે જેમાં સફળતાના કિસ્સામાં `Config` ઇન્સ્ટન્સ અને ભૂલના કિસ્સામાં સ્ટ્રિંગ લિટરલ હોય છે. અમારી ભૂલની કિંમતો હંમેશાં સ્ટ્રિંગ લિટરલ હશે જે `'static` આયુષ્ય ધરાવે છે. We’ve
+<p>made two changes in the body of the function: Instead of calling <code>panic!</code> when the user doesn’t pass enough arguments, we now return an <code>Err</code> value, and we’ve wrapped the <code>Config</code> return value in an <code>Ok</code>. These changes make the function conform to its new type signature. અમે વિધેયના મુખ્ય ભાગમાં બે પરિવર્તનો કર્યા છે: જ્યારે વપરાશકર્તા પૂરતા આર્ગ્યુમેન્ટ્સ નથી આપતા ત્યારે <code>panic!</code> કૉલ કરવાને બદલે, હવે અમે એક <code>Err</code> મૂલ્ય પરત કરીએ છીએ અને <code>Config</code> ની પરત થતી કિંમતને <code>Ok</code> માં લપેટીએ છીએ. આ પરિવર્તનો વિધેયને તેના નવા પ્રકારના હસ્તાક્ષરનું પાલન કરાવે છે.</p>
+<p><code>Config::build</code> માંથી <code>Err</code> મૂલ્ય પાછું આપીને, <code>main</code> કાર્ય મુખ્ય <code>build</code> કાર્યમાંથી પાછા મળેલા <code>Result</code> મૂલ્યને નિયંત્રિત કરી શકે છે અને ભૂલની સ્થિતિમાં પ્રક્રિયાને વધુ સ્વચ્છ રીતે સમાપ્ત કરી શકે છે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h4 id="calling-configbuild-and-handling-errors"><a class="header" href="#calling-configbuild-and-handling-errors">Calling <code>Config::build</code> and Handling Errors</a></h4>
+<p>અવ્યવસ્થાપન (error) વ્યવહાર કરવા અને વપરાશકર્તા-મૈત્રીપૂર્ણ સંદેશ છાપવા માટે, આપણે <code>main</code> ને અપડેટ કરવાની જરૂર છે જેથી તે <code>Result</code> ને સંભાળી શકે જે <code>Config::build</code> દ્વારા પરત કરવામાં આવે છે, જે સૂચિ 12-10 માં દર્શાવેલ છે. આપણે આદેશ વાધું સાધન (command line tool) ને શૂન્ય સિવાયની અવ્યવસ્થાપન કોડ સાથે સમાપ્ત કરવાની જવાબદારી પણ સ્વીકારવાનું છોડી દઈશું અને તેના બદલે તેને જાતે અમલમાં મૂકીશું. શૂન્ય સિવાયનો બહાર નીકળવાનો દરજ્જો (exit status) એ એક સંમેલન છે જે આપણા કાર્યક્રમ દ્વારા બોલાવવામાં આવતી પ્રક્રિયાને સંકેત આપવા માટે કે કાર્યક્રમ અવ્યવસ્થાપન સ્થિતિ સાથે સમાપ્ત થયો હતો.</p>
+<listing number="12-10" file-name="src/main.rs" caption="Exiting with an error code if building a `Config` fails">
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-10/src/main.rs:here}}
+</listing>
+આ યાદીમાં, અમે એક એવી પદ્ધતિનો ઉપયોગ કર્યો છે જેનું આપણે હજી વિગતવાર વર્ણન કર્યું નથી: `unwrap_or_else`, જે સ્ટાન્ડર્ડ લાઈબ્રેરી દ્વારા `Result<t, e="">` પર વ્યાખ્યાયિત થયેલ છે. `unwrap_or_else` નો ઉપયોગ કરીને, આપણી પાસે કસ્ટમ, નોન-`panic!` ભૂલ નિયંત્રણ કરવાની ક્ષમતા છે. જો `Result` એ `Ok` મૂલ્ય હોય, તો આ પદ્ધતિનું વર્તન `unwrap` જેવું જ હોય છે: તે અંદરના મૂલ્યને પરત કરે છે જે `Ok` ઘેરી લે છે. જો કે, જો મૂલ્ય `Err` મૂલ્ય હોય, તો આ પદ્ધતિ ક્લોઝરમાં રહેલા કોડને બોલાવે છે, જે એક અનામી ફંક્શન છે જેને આપણે `unwrap_or_else` ને દલીલ તરીકે વ્યાખ્યાયિત કરીએ છીએ અને પસાર કરીએ છીએ. આપણે પ્રકરણ 13 માં ક્લોઝર વિશે વધુ વિગતવાર વાત કરીશું. અત્યારે, તમારે ફક્ત એટલું જ જાણવાની જરૂર છે કે `unwrap_or_else` એ `Err` ના અંદરના મૂલ્યને પાસ કરશે, જે આ કિસ્સામાં સ્થિર સ્ટ્રિંગ `"not enough arguments"` છે જેને આપણે યાદી 12-9 માં ઉમેર્યું હતું, તે આપણા ક્લોઝરમાં દલીલ `err` તરીકે દેખાય છે. ક્લોઝરમાં રહેલો કોડ જ્યારે ચાલે છે ત્યારે `err` મૂલ્યનો ઉપયોગ કરી શકે છે.
+<p>અમે <code>use</code> લીટી ઉમેરી છે જેથી કરીને <code>process</code> ને પ્રમાણિત લાયબ્રેરીમાંથી અવકાશમાં લાવવામાં આવે. ભૂલની સ્થિતિમાં ચલાવવામાં આવનાર ક્લોઝર (closure) નો કોડ માત્ર બે લીટીનો છે: અમે <code>err</code> મૂલ્ય છાપીએ છીએ અને પછી <code>process::exit</code> ને બોલાવીએ છીએ. <code>process::exit</code> ફંક્શન તરત જ પ્રોગ્રામને બંધ કરી દેશે અને બહાર નીકળવાની સ્થિતિ કોડ તરીકે આપવામાં આવેલી સંખ્યા પરત કરશે. આ Listing 12-8 માં અમે ઉપયોગ કરેલ <code>panic!</code> આધારિત હેન્ડલિંગ જેવું જ છે, પરંતુ હવે અમને વધારાનું આઉટપુટ મળતું નથી. ચાલો પ્રયત્ન કરીએ:</p>
+<p>{{#include ../listings/ch12-an-io-project/listing-12-10/output.txt}}
+મહાન! આ પરિણામ અમારા વપરાશકર્તાઓ માટે વધુ મૈત્રીપૂર્ણ છે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="extracting-logic-from-main"><a class="header" href="#extracting-logic-from-main">Extracting Logic from <code>main</code></a></h3>
+<p>હવે આપણે રૂપરેખાંકન વિશ્લેષણનું પુનર્ગઠન પૂર્ણ કરી લીધું છે, તો ચાલો કાર્યક્રમના તર્ક તરફ વળીએ. જેમ કે આપણે “Binary પ્રોજેક્ટ્સમાં ચિંતાઓને અલગ કરવી” માં જણાવ્યું હતું, આપણે <code>run</code> નામનું એક વિધેય બહાર કાઢીશું, જે <code>main</code> વિધેયમાં હાલના તમામ તર્કના ભાગ રૂપે રહેશે અને રૂપરેખાંકન સેટઅપ અથવા ભૂલોને નિયંત્રિત કરવામાં સામેલ નથી. જ્યારે આપણે પૂર્ણ કરીશું, ત્યારે <code>main</code> વિધેય સંક્ષિપ્ત અને નિરીક્ષણ દ્વારા ચકાસવા માટે સરળ હશે, અને આપણી પાસે અન્ય તમામ તર્ક માટે પરીક્ષણો લખવાની ક્ષમતા હશે.</p>
+<p>Listing 12-11 દર્શાવે છે <code>run</code> કાર્યને બહાર કાઢવાની નાની, ક્રમિક પ્રગતિ.</p>
+<listing number="12-11" file-name="src/main.rs" caption="Extracting a `run` function containing the rest of the program logic">
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-11/src/main.rs:here}}
+</listing>
+run કાર્ય હવે `main` માંથી બાકી રહેલા તમામ તર્ક ધરાવે છે, ફાઈલ વાંચવાથી આરંભીને. `run` કાર્ય `Config` ઉદાહરણને દલીલ તરીકે સ્વીકારે છે.
+<!-- Old headings. Do not remove or links may break. -->
+<h4 id="returning-errors-from-run"><a class="header" href="#returning-errors-from-run">Returning Errors from <code>run</code></a></h4>
+<p>બાકીના કાર્યક્રમ તર્કને <code>run</code> ફંક્શનમાં અલગ કર્યા પછી, આપણે ભૂલ વ્યવસ્થાપનને સુધારી શકીએ છીએ, જેમ કે આપણે Listing 12-9 માં <code>Config::build</code> સાથે કર્યું હતું. <code>expect</code> કૉલ કરીને પ્રોગ્રામને ગભરાવવા દેવાને બદલે, જ્યારે કંઈક ખોટું થાય ત્યારે <code>run</code> ફંક્શન એક <code>Result&lt;T, E&gt;</code> પરત કરશે. આનાથી આપણને <code>main</code> માં વપરાશકર્તા-મૈત્રીપૂર્ણ રીતે ભૂલોને નિયંત્રિત કરવા સંબંધિત તર્કને વધુ મજબૂત બનાવવાની મંજૂરી મળશે. Listing 12-12 <code>run</code> ના હસ્તાક્ષર અને શરીર માં જરૂરી ફેરફારો દર્શાવે છે.</p>
+<listing number="12-12" file-name="src/main.rs" caption="Changing the `run` function to return `Result`">
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-12/src/main.rs:here}}
+</listing>
+We’ve made three significant changes here. અહીં ત્રણ મહત્ત્વના પરિવર્તનો કર્યા છે. પ્રથમ, અમે `run` ફંક્શનનો વળતર પ્રકાર `Result&lt;(), Box<dyn error="">&gt;` માં બદલ્યો છે. આ ફંક્શન અગાઉ એકમ પ્રકાર, `()` , પરત કરતું હતું, અને અમે તેને `Ok` કેસમાં પરત થતા મૂલ્ય
+<p>તરીકે જાળવી રાખીએ છીએ. ભૂલ પ્રકાર માટે, અમે ટ્રેઇટ ઑબ્જેક્ટ <code>Box&lt;dyn Error&gt;</code> નો ઉપયોગ કર્યો છે (અને અમે <code>use</code> વિધાન સાથે ટોચ પર <code>std::error::Error</code> ને અવકાશમાં લાવ્યા). અમે પ્રકરણ ૧૮ માં ટ્રેઇટ ઑબ્જેક્ટ્સ આવરી લઈશું. અત્યારે, ફક્ત એટલું જ જાણો કે <code>Box&lt;dyn Error&gt;</code> નો અર્થ એ છે કે ફંક્શન <code>Error</code> ટ્રેઇટ લાગુ કરતો પ્રકાર પરત કરશે, પરંતુ આપણે તે વળતર મૂલ્ય કયો ચોક્કસ પ્રકાર હશે તે સ્પષ્ટ કરવાની જરૂર નથી. આ આપણને વિવિધ ભૂલ પરિસ્થિતિઓમાં અલગ-અલગ પ્રકારના ભૂલ મૂલ્યો પરત કરવાની સુગમતા આપે છે. <code>dyn</code> કીવર્ડ dynamic માટે ટૂંકું છે.</p>
+<p>બીજું, અમે <code>expect</code> ફંક્શનને દૂર કર્યું છે અને તેના બદલે <code>?</code> ઓપરેટરનો ઉપયોગ કર્યો છે, જે વિશે આપણે પ્રકરણ ૯ માં વાત કરી હતી. ભૂલ આવે ત્યારે <code>panic!</code> કરવાના બદલે, <code>?</code> વર્તમાન ફંક્શનમાંથી ભૂલનું મૂલ્ય પાછું આપશે જેથી કોલર તેને નિયંત્રિત કરી શકે.</p>
+<p>ત્રીજું, <code>run</code> ફંક્શન હવે સફળતાની સ્થિતિમાં <code>Ok</code> મૂલ્ય આપે છે. અમે <code>run</code> ફંક્શનના સફળતા પ્રકારને હસ્તાક્ષરમાં <code>()</code> તરીકે જાહેર કર્યો છે, જેનો અર્થ થાય છે કે આપણે એકમ પ્રકારના મૂલ્યને <code>Ok</code> મૂલ્યમાં લપેટી લેવું પડશે. આ <code>Ok(())</code> સિન્ટેક્સ શરૂઆતમાં થોડું વિચિત્ર લાગી શકે છે. પરંતુ <code>()</code> નો આ રીતે ઉપયોગ કરવો એ સૂચવવાનો પ્રમાણભૂત માર્ગ છે કે અમે <code>run</code> તેના આડઅસરો માટે જ બોલાવી રહ્યા છીએ; તે કોઈ એવું મૂલ્ય આપતું નથી જેની આપણને જરૂર હોય.</p>
+<p>જ્યારે તમે આ કોડ ચલાવો છો, ત્યારે તે કમ્પાઇલ થશે પરંતુ એક ચેતવણી પ્રદર્શિત કરશે:</p>
+<p>{{#include ../listings/ch12-an-io-project/listing-12-12/output.txt}}
+Rust જણાવે છે કે આપણી કોડ <code>Result</code> મૂલ્યને અવગણ્યું અને આ <code>Result</code> કોઈ ભૂલ સૂચવી શકે છે. પરંતુ આપણે ચકાસતા નથી કે ભૂલ આવી છે કે નહીં, અને કમ્પાઇલર આપણને યાદ અપાવે છે કે આપણે સંભવતઃ અહીં ભૂલ-નિવારણ કોડ રાખવાનો હતો! ચાલો હવે તે સમસ્યાને સુધારીએ.</p>
+<h4 id="run-દવારા-પરત-થતી-ભૂલોનું-સંચાલન-main-માં"><a class="header" href="#run-દવારા-પરત-થતી-ભૂલોનું-સંચાલન-main-માં"><code>run</code> દ્વારા પરત થતી ભૂલોનું સંચાલન <code>main</code> માં</a></h4>
+<p>અમે ભૂલો ચકાસીશું અને તેનું નિવારણ એક એવી પદ્ધતિનો ઉપયોગ કરીને કરીશું જે આપણે Listing 12-10 માં <code>Config::build</code> સાથે વાપરી હતી, પરંતુ થોડો તફાવત છે:</p>
+<p>ફાઈલનું નામ: src/main.rs</p>
+<p>{{#rustdoc_include ../listings/ch12-an-io-project/no-listing-01-handling-errors-in-main/src/main.rs:here}}
+We use <code>if let</code> rather than <code>unwrap_or_else</code> to check whether <code>run</code> returns an <code>Err</code> value and to call <code>process::exit(1)</code> if it does. આપણે <code>unwrap_or_else</code> ને બદલે <code>if let</code> વાપરીએ છીએ, જેથી ચકાસી શકાય કે <code>run</code> કોઈ <code>Err</code> મૂલ્ય આપે છે કે નહીં અને જો તેવું હોય તો <code>process::exit(1)</code> ને બોલાવી શકાય. <code>run</code> કાર્યક્રમ એવું કોઈ મૂલ્ય આપતો નથી જેને આપણે <code>unwrap</code> કરવા માંગીએ છીએ, જે રીતે <code>Config::build</code> <code>Config</code> ઉદાહરણ આપે છે. કારણ કે <code>run</code> સફળતાના કિસ્સામાં <code>()</code> આપે છે, તેથી આપણને માત્ર ભૂલ શોધવામાં રસ છે, માટે આપણને <code>unwrap_or_else</code> દ્વારા મેળવેલા મૂલ્યની જરૂર નથી, જે ફક્ત <code>()</code> જ હશે. The bodies of the <code>if let</code> and the <code>unwrap_or_else</code></p>
+<p>functions are the same in both cases: We print the error and exit. <code>if let</code> અને <code>unwrap_or_else</code> કાર્યો બંને કિસ્સાઓમાં સમાન હોય છે: આપણે ભૂલ છાપીએ છીએ અને બહાર નીકળી જઈએ છીએ.</p>
+<h3 id="splitting-code-into-a-library-crate"><a class="header" href="#splitting-code-into-a-library-crate">Splitting Code into a Library Crate</a></h3>
+<p>આપણી <code>minigrep</code> યોજના અત્યાર સુધી સારી દેખાઈ રહી છે! હવે આપણે src/main.rs ફાઇલને વિભાજીત કરીશું અને થોડો કોડ src/lib.rs ફાઇલમાં મૂકીશું. આ રીતે, આપણે કોડની ચકાસણી કરી શકીશું અને src/main.rs ફાઇલમાં ઓછી જવાબદારીઓ રહેશે.</p>
+<p>ચાલો આપણે src/lib.rs માં ટેક્સ્ટ શોધવા માટે જવાબદાર કોડ વ્યાખ્યાયિત કરીએ, src/main.rs માં નહીં. આ આપણને (અથવા આપણા <code>minigrep</code> લાયબ્રેરીનો ઉપયોગ કરનાર કોઈ પણ વ્યક્તિને) શોધવાનું કાર્ય વધુ સંદર્ભોમાં બોલાવવા દેશે, આપણી <code>minigrep</code> બાઈનરી સિવાય.</p>
+<p>સૌ પ્રથમ, આપણે <code>search</code> વિધેયની નિશાની (signature) src/lib.rs માં Listing 12-13 માં દર્શાવ્યા પ્રમાણે વ્યાખ્યાયિત કરીએ, જેમાં <code>unimplemented!</code> મેક્રોને બોલાવતું શરીર (body) હશે. જ્યારે આપણે અમલીકરણ ભરીશું ત્યારે આપણે નિશાની વિશે વધુ વિગતવાર સમજાવીશું.</p>
+<listing number="12-13" file-name="src/lib.rs" caption="Defining the `search` function in *src/lib.rs*">
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}
+</listing>
+આપણે `pub` કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી `search` ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!
+<p>હવે આપણે <code>src/lib.rs</code> માં વ્યાખ્યાયિત કરેલા કોડને <code>src/main.rs</code> માં બાઈનરી ક્રેટના અવકાશમાં લાવવાની અને તેને બોલાવવાની જરૂર છે, જે યાદી 12-14 માં દર્શાવેલ છે.</p>
+<listing number="12-14" file-name="src/main.rs" caption="Using the `minigrep` library crate’s `search` function in *src/main.rs*">
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}
+</listing>
+આપણે `use minigrep::search` લાઇન ઉમેરીએ છીએ જેથી કરીને `search` કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, `run` કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે `search` કાર્યને બોલાવીએ છીએ અને `config.query` મૂલ્ય અને `contents` ને દલીલો તરીકે પસાર કરીએ છીએ. પછી, `run` એક `for` લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે `search` દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે `main` કાર્યમાં રહેલા `println!` કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).
+<p>નોંધ શોધ કાર્ય બધા પરિણામોને એક વેક્ટર (vector) માં ભેગા કરીને પરત લાવશે, જે છાપવામાં આવે તે પહેલાં. મોટા ફાઈલોમાં શોધ કરતી વખતે આ અમલીકરણ (implementation) ધીમું થઈ શકે છે, કારણ કે પરિણામો તરત જ છાપવામાં આવતા નથી; આપણે પ્રકરણ ૧૩ માં પુનરાવર્તકો (iterators) નો ઉપયોગ કરીને આને સુધારવાનો</p>
+<p>એક સંભવિત માર્ગ ચર્ચા કરીશું. સારું થયું! ઘણું કામ થયું, પરંતુ ભવિષ્યમાં સફળતા માટે આપણે પોતાને તૈયાર કર્યા છીએ. હવે ભૂલોને નિયંત્રિત કરવી ખૂબ સરળ છે, અને આપણે કોડને વધુ મોડ્યુલર (modular) બનાવ્યો છે. લગભગ બધું જ કાર્ય અહીંથી src/lib.rs માં થશે.</p>
+<p>ચાલો આ નવું પ્રાપ્ત થયેલ મોડ્યુલારિટીનો લાભ લઈએ અને કંઈક એવું કરીએ જે જૂના કોડ સાથે મુશ્કેલ હતું પરંતુ નવા કોડ સાથે સરળ છે: આપણે કેટલાક પરીક્ષણો લખીશું!</p>
+</dyn></t,>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch12-02-reading-a-file.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch12-04-testing-the-librarys-functionality.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch12-02-reading-a-file.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch12-04-testing-the-librarys-functionality.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

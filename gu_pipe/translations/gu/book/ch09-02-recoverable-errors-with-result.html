@@ -1,0 +1,391 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Recoverable Errors with Result - ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-7ed1a93d.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-0e4ce700.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h2 id="પુનઃપરાપત-કરી-શકાય-તેવી-ભૂલો-result-સાથે"><a class="header" href="#પુનઃપરાપત-કરી-શકાય-તેવી-ભૂલો-result-સાથે">પુનઃપ્રાપ્ત કરી શકાય તેવી ભૂલો <code>Result</code> સાથે</a></h2>
+<p>મોટીભાગની ભૂલો એટલી ગંભીર હોતી નથી કે પ્રોગ્રામને સંપૂર્ણપણે બંધ થવું પડે. કેટલીકવાર જ્યારે કોઈ ફંક્શન નિષ્ફળ જાય છે, ત્યારે તેનું કારણ સરળતાથી સમજાવી અને પ્રતિસાદ આપી શકાય છે. ઉદાહરણ તરીકે, જો તમે કોઈ ફાઈલ ખોલવાનો પ્રયાસ કરો છો અને તે કાર્ય નિષ્ફળ જાય છે કારણ કે ફાઈલ અસ્તિત્વમાં નથી, તો તમે પ્રક્રિયાને સમાપ્ત કરવાને બદલે ફાઈલ બનાવી શકો છો.</p>
+<p>અગાઉ “ <code>Result</code> સાથે સંભવિત નિષ્ફળતાનું નિયંત્રણ“ માં પ્રકરણ 2 માંથી યાદ કરો કે  <code>Result</code>  એનમ બે પ્રકારના વિકલ્પો ધરાવે છે, <code>Ok</code> અને <code>Err</code>, જે નીચે મુજબ વ્યાખ્યાયિત થયેલ છે:</p>
+<p>enum Result&lt;T, E&gt; {
+Ok(T),
+Err(E),
+}
+<code>T</code> અને <code>E</code> સામાન્ય પ્રકારના પરિમાણો છે: આપણે જનરિક્સ વિશે પ્રકરણ ૧૦ માં વધુ વિગતવાર ચર્ચા કરીશું. અત્યારે તમારે જે જાણવાની જરૂર છે તે એ છે કે <code>T</code> એ સફળતાની સ્થિતિમાં <code>Ok</code> વિવિધતા (variant) માં પાછો આપવામાં આવનાર મૂલ્યનો પ્રકાર દર્શાવે છે, અને <code>E</code> એ નિષ્ફળતાની સ્થિતિમાં <code>Err</code> વિવિધતામાં પાછો આપવામાં આવનાર ભૂલનો પ્રકાર દર્શાવે છે. કારણ કે <code>Result</code> પાસે આ સામાન્ય પ્રકારના પરિમાણો છે, અમે <code>Result</code> પ્રકાર અને તેના પર વ્યાખ્યાયિત કાર્યોનો ઉપયોગ ઘણી અલગ-અલગ પરિસ્થિતિઓમાં કરી શકીએ છીએ જ્યાં અમે પાછો આપવા માંગીએ છીએ તે સફળ મૂલ્ય અને ભૂલ મૂલ્ય અલગ હોઈ શકે છે.</p>
+<p>ચાલો આપણે એવા વિધેય (function) ને કહીએ જે <code>Result</code> મૂલ્ય આપે છે, કારણ કે તે નિષ્ફળ થઈ શકે છે. યાદી 9-3 માં, આપણે એક ફાઈલ ખોલવાનો પ્રયત્ન કરીએ છીએ.</p>
+<listing number="9-3" file-name="src/main.rs" caption="Opening a file">
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-03/src/main.rs}}
+</listing>
+`File::open` નું વળતર પ્રકાર `Result<t, e="">` છે. સામાન્ય પરિમાણ `T` ને `File::open` ના અમલીકરણ દ્વારા સફળ મૂલ્યનો પ્રકાર, `std::fs::File`, સાથે ભરાયેલું છે, જે એક ફાઇલ હેન્ડલ છે. ભૂલ મૂલ્યમાં વપરાતો `E` નો પ્રકાર `std::io::Error` છે. આ વળતર પ્રકાર સૂચવે છે કે `File::open` ની કૉલ સફળ થઈ શકે છે અને આપણને વાંચવા અથવા લખવાની મંજૂરી હોય તેવા ફાઇલ હેન્ડલને પરત કરી શકે છે. ફંક્શન કૉલમાં નિષ્ફળતા પણ આવી શકે છે: ઉદાહરણ તરીકે, ફાઈલ અસ્તિત્વમાં ન હોઈ શકે, અથવા આપણી પાસે ફાઇલને ઍક્સેસ કરવાની પરવાનગી ન હોઈ શકે. `File::open` ફંક્શનને જણાવવાની રીતની જરૂર છે કે તે સફળ થયું કે નિષ્ફળ ગયું અને તે જ સમયે આપણને કાં તો ફાઇલ હેન્ડલ અથવા ભૂલ માહિતી આપવી જોઈએ. આ માહિતી બરાબર `Result` એનમ દ્વારા આપવામાં આવે છે.
+<p>In the case where <code>File::open</code> succeeds, the value in the variable <code>greeting_file_result</code> will be an instance of <code>Ok</code> that contains a file handle. In the case where it fails, the value in <code>greeting_file_result</code> will be an instance of <code>Err</code> that contains more information about the kind of error that occurred. જ્યારે <code>File::open</code> સફળ થાય છે, ત્યારે ચલ <code>greeting_file_result</code> માં રહેલું મૂલ્ય <code>Ok</code> નું ઉદાહરણ હશે જેમાં ફાઇલ હેન્ડલ સમાવિષ્ટ હશે. જ્યારે તે નિષ્ફળ જાય છે, ત્યારે <code>greeting_file_result</code> માં રહેલું મૂલ્ય <code>Err</code> નું ઉદાહરણ હશે જેમાં કયા પ્રકારની ભૂલ આવી હતી તેની વધુ માહિતી હશે. We need to add to</p>
+<p>the code in Listing 9-3 to take different actions depending on the value <code>File::open</code> returns. Listing 9-4 shows one way to handle the <code>Result</code> using a basic tool, the <code>match</code> expression that we discussed in Chapter 6. આપણે લિસ્ટિંગ 9-3 માં રહેલા કોડમાં ફેરફાર કરવો પડશે જેથી <code>File::open</code> જે મૂલ્ય આપે છે તેના આધારે અલગ-અલગ ક્રિયાઓ કરી શકાય. લિસ્ટિંગ 9-4 દર્શાવે છે કે <code>Result</code> ને નિયંત્રિત કરવાનો એક માર્ગ મૂળભૂત સાધન, <code>match</code> અભિવ્યક્તિનો ઉપયોગ કરવો છે જેની ચર્ચા આપણે પ્રકરણ 6 માં કરી હતી.</p>
+<listing number="9-4" file-name="src/main.rs" caption="Using a `match` expression to handle the `Result` variants that might be returned">
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-04/src/main.rs}}
+</listing>
+Note that, like the `Option` enum, the `Result` enum and its variants have been brought into scope by the prelude, so we don’t need to specify `Result::` before the `Ok` and `Err` variants in the `match` arms.
+<p>જ્યારે પરિણામ <code>Ok</code> હોય છે, ત્યારે આ કોડ <code>Ok</code> પ્રકારની અંદર રહેલા <code>file</code> મૂલ્યને પાછું આપશે, અને પછી તે ફાઇલ હેન્ડલ મૂલ્યને <code>greeting_file</code> ચલને સોંપવામાં આવશે. <code>match</code> પછી, આપણે વાંચવા અથવા લખવા માટે ફાઇલ હેન્ડલનો ઉપયોગ કરી શકીએ છીએ.</p>
+<p>અન્ય <code>match</code> ભાગ <code>match</code> ના અન્ય ભાગમાં, આપણે <code>File::open</code> માંથી <code>Err</code> મૂલ્ય મેળવવાની સ્થિતિને હેન્ડલ કરીએ છીએ. આ ઉદાહરણમાં, આપણે <code>panic!</code> મેક્રોને બોલાવવાનું પસંદ કર્યું છે. જો આપણી વર્તમાન ડિરેક્ટરીમાં hello.txt નામની કોઈ ફાઈલ ન હોય અને આપણે આ કોડ ચલાવીએ, તો આપણે <code>panic!</code> મેક્રોમાંથી નીચે મુજબનું પરિણામ જોઈશું:</p>
+<p>{{#include ../listings/ch09-error-handling/listing-09-04/output.txt}}
+સામાન્ય રીતે, આ નિષ્કર્ષ આપણને બરાબર શું ખોટું થયું તે જણાવે છે.</p>
+<h3 id="વિવિધ-ભૂલો-સાથે-મેળ-ખાતું"><a class="header" href="#વિવિધ-ભૂલો-સાથે-મેળ-ખાતું">વિવિધ ભૂલો સાથે મેળ ખાતું</a></h3>
+<p>Listing 9-4 માં રહેલું કોડ <code>panic!</code> કરશે, ભલે <code>File::open</code> નિષ્ફળ થવાનું કારણ ગમે તે હોય. જો કે, આપણે જુદા જુદા નિષ્ફળતા કારણો માટે અલગ અલગ ક્રિયાઓ કરવા માંગીએ છીએ. જો <code>File::open</code> એ કારણે નિષ્ફળ જાય કે ફાઈલ અસ્તિત્વમાં નથી, તો આપણે ફાઈલ બનાવવી અને નવી ફાઈલનું હેન્ડલ પરત કરવું છે. જો <code>File::open</code> અન્ય કોઈ કારણસર નિષ્ફળ જાય—ઉદાહરણ તરીકે, આપણી પાસે ફાઈલ ખોલવાની પરવાનગી ન હોય—તો પણ આપણે કોડને Listing 9-4 માં જે રીતે <code>panic!</code> થયો હતો તે જ રીતે <code>panic!</code> કરવો છે. આ માટે, આપણે એક અંદર <code>match</code> અભિવ્યક્તિ ઉમેરીએ છીએ, જે Listing 9-5 માં દર્શાવેલ છે.</p>
+<listing number="9-5" file-name="src/main.rs" caption="Handling different kinds of errors in different ways">
+<!-- ignore this test because otherwise it creates hello.txt which causes other
+tests to fail lol -->
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-05/src/main.rs}}
+</listing>
+The type of the value that `File::open` returns inside the `Err` variant is `io::Error`, which is a struct provided by the standard library. This struct has a method, `kind`, that we can call to get an `io::ErrorKind` value. The enum `io::ErrorKind` is provided by the standard library and has variants representing the different kinds of errors that might result from an `io` operation. The variant we want to use is `ErrorKind::NotFound`, which indicates the file we’re trying to open doesn’t exist yet. So, we match on `greeting_file_result`, but we also have an inner match on `error.kind()`.
+<p>આપણે આંતરિક <code>match</code> માં જે શરત ચકાસવા માંગીએ છીએ તે એ છે કે <code>error.kind()</code> દ્વારા પરત કરેલ મૂલ્ય <code>ErrorKind</code> enum ના <code>NotFound</code> પ્રકારનું છે કે નહીં. જો એમ હોય, તો આપણે <code>File::create</code> વડે ફાઈલ બનાવવાનો પ્રયત્ન કરીએ છીએ. પરંતુ, કારણ કે <code>File::create</code> પણ નિષ્ફળ થઈ શકે છે, આપણને આંતરિક <code>match</code> અભિવ્યક્તિમાં બીજો ભાગ જોઈએ છે. જ્યારે ફાઈલ બનાવી શકાતી નથી, ત્યારે એક અલગ ભૂલ સંદેશ છાપવામાં આવે છે. બાહ્ય <code>match</code> નો બીજો ભાગ એ જ રહે છે, તેથી ખૂટતી ફાઈલ સિવાયની કોઈપણ ભૂલ પર પ્રોગ્રામ ગભરાઈ જાય છે.</p>
+<h4 id="alternatives-to-using-match-with-resultt-e"><a class="header" href="#alternatives-to-using-match-with-resultt-e">Alternatives to Using <code>match</code> with <code>Result&lt;T, E&gt;</code></a></h4>
+<p>એ ઘણું <code>match</code> છે! <code>match</code> અભિવ્યક્તિ ઘણી ઉપયોગી તો છે જ પણ તે મૂળભૂત પણ છે. પ્રકરણ ૧૩ માં, તમે ક્લોઝર વિશે શીખશો, જેનો ઉપયોગ <code>Result&lt;T, E&gt;</code> પર વ્યાખ્યાયિત થયેલ ઘણી પદ્ધતિઓ સાથે થાય છે. આ પદ્ધતિઓ <code>match</code> વાપરવા કરતાં વધુ સંક્ષિપ્ત હોઈ શકે છે જ્યારે તમારા કોડમાં <code>Result&lt;T, E&gt;</code> મૂલ્યોને હેન્ડલ કરવામાં આવે છે.</p>
+<p>ઉદાહરણ તરીકે, અહીં યાદી ૯-૫ માં દર્શાવેલ સમાન તર્ક લખવાની બીજી રીત છે, આ વખતે ક્લોઝર અને <code>unwrap_or_else</code> પદ્ધતિનો ઉપયોગ કરીને:</p>
+<!-- CAN'T EXTRACT SEE https://github.com/rust-lang/mdBook/issues/1127 -->
+<p>use std::fs::File;
+use std::io::ErrorKind;</p>
+<p>fn main() {
+let greeting_file = File::open(“hello.txt”).unwrap_or_else(|error| {
+if error.kind() == ErrorKind::NotFound {
+File::create(“hello.txt”).unwrap_or_else(|error| {
+panic!(“Problem creating the file: {error:?}”);
+})
+} else {
+panic!(“Problem opening the file: {error:?}”);
+}
+});
+}
+જોકે આ કોડમાં લિસ્ટિંગ 9-5 જેવું જ વર્તન છે, તેમાં કોઈ <code>match</code> અભિવ્યક્તિઓ નથી અને તે વાંચવામાં સરળ છે. પ્રકરણ 13 વાંચ્યા પછી આ ઉદાહરણ પર પાછા આવો અને સ્ટાન્ડર્ડ લાઈબ્રેરી દસ્તાવેજીકરણમાં <code>unwrap_or_else</code> પદ્ધતિ જુઓ. ભૂલો સાથે કામ કરતી વખતે ઘણી વધુ પદ્ધતિઓ મોટી, જટિલ <code>match</code> અભિવ્યક્તિઓને સાફ કરી શકે છે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h4 id="shortcuts-for-panic-on-error"><a class="header" href="#shortcuts-for-panic-on-error">Shortcuts for Panic on Error</a></h4>
+<p><code>match</code> નો ઉપયોગ પૂરતો સારો છે, પરંતુ તે થોડો લાંબો હોઈ શકે છે અને હંમેશા હેતુને સ્પષ્ટ કરતો નથી. <code>Result&lt;T, E&gt;</code> પ્રકારમાં ઘણા સહાયક વિધિઓ વ્યાખ્યાયિત થયેલ છે જે વિવિધ, વધુ ચોક્કસ કાર્યો કરવા માટે છે. <code>unwrap</code> વિધિ એ એક સંક્ષિપ્ત વિધિ છે જે <code>match</code> અભિવ્યક્તિની જેમ જ અમલમાં મૂકવામાં આવી છે જે આપણે યાદી 9-4 માં લખ્યું હતું. જો <code>Result</code> નું મૂલ્ય <code>Ok</code> પ્રકારનું હોય, તો <code>unwrap</code> અંદરના મૂલ્યને પરત કરશે. જો <code>Result</code> <code>Err</code> પ્રકારનું હોય, તો <code>unwrap</code> આપમેળે <code>panic!</code> મેક્રોને બોલાવશે. અહીં <code>unwrap</code> ના ઉપયોગનું ઉદાહરણ છે:</p>
+<listing file-name="src/main.rs">
+{{#rustdoc_include ../listings/ch09-error-handling/no-listing-04-unwrap/src/main.rs}}
+</listing>
+જો આપણે આ કોડ `hello.txt` ફાઈલ વગર ચલાવીએ, તો આપણને `panic!` કૉલ દ્વારા એક ભૂલ સંદેશ દેખાશે જે `unwrap` પદ્ધતિ ઉત્પન્ન કરે છે:
+<!-- manual-regeneration
+cd listings/ch09-error-handling/no-listing-04-unwrap
+cargo run
+copy and paste relevant text
+-->
+<p>thread ‘main’ panicked at src/main.rs:4:49:
+called <code>Result::unwrap()</code> on an <code>Err</code> value: Os { code: 2, kind: NotFound, message: “No such file or directory” }
+એ જ રીતે, <code>expect</code> પદ્ધતિ આપણને <code>panic!</code> ભૂલ સંદેશ પણ પસંદ કરવાની પરવાનગી આપે છે. <code>unwrap</code> ને બદલે <code>expect</code> વાપરવું અને સારા ભૂલ સંદેશો આપવાથી તમારા ઇરાદાને વ્યક્ત કરી શકાય છે અને ગભરાટનું મૂળ શોધવાનું સરળ બનાવી શકાય છે. <code>expect</code> નું વાક્યરચના આ પ્રમાણે દેખાય છે:</p>
+<listing file-name="src/main.rs">
+{{#rustdoc_include ../listings/ch09-error-handling/no-listing-05-expect/src/main.rs}}
+</listing>
+આપણે `expect` નો ઉપયોગ `unwrap` ની જેમ જ કરીએ છીએ: ફાઈલ હેન્ડલ પરત કરવા અથવા `panic!` મેક્રોને બોલાવવા માટે. `expect` દ્વારા `panic!` માં વપરાતો ભૂલ સંદેશ એ પરિમાણ હશે જે આપણે `expect` ને આપીએ છીએ, ડિફોલ્ટ `panic!` સંદેશ જે `unwrap` વાપરે છે તેના બદલે. આ તેવું દેખાય છે:
+<!-- manual-regeneration
+cd listings/ch09-error-handling/no-listing-05-expect
+cargo run
+copy and paste relevant text
+-->
+<p>thread ‘main’ panicked at src/main.rs:5:10:
+hello.txt should be included in this project: Os { code: 2, kind: NotFound, message: “No such file or directory” }
+ઉત્પાદન-ગુણવત્તાવાળા કોડમાં, મોટાભાગના Rustaceans <code>unwrap</code> ને બદલે <code>expect</code> પસંદ કરે છે અને તે જણાવે છે કે શા માટે ક્રિયા હંમેશાં સફળ થવાની અપેક્ષા છે. આમ, જો તમારી ધારણાઓ ખોટી સાબિત થાય, તો તમારી પાસે ડીબગીંગ (debugging) માટે વધુ માહિતી ઉપલબ્ધ હોય છે.</p>
+<h3 id="ભૂલનો-ફેલાવો"><a class="header" href="#ભૂલનો-ફેલાવો">ભૂલનો ફેલાવો</a></h3>
+<p>જ્યારે કોઈ વિધેયની અમલીકરણમાં એવી કોઈ વસ્તુ હોય જે નિષ્ફળ થઈ શકે છે, ત્યારે ભૂલને વિધેયમાં જ હેન્ડલ કરવાને બદલે, તમે ભૂલને કોલિંગ કોડ પર પાછી મોકલી શકો છો જેથી તે નક્કી કરી શકે કે શું કરવું. આને ભૂલનો ફેલાવો કહેવામાં આવે છે અને તે કોલિંગ કોડને વધુ નિયંત્રણ આપે છે, જ્યાં તમારા કોડના સંદર્ભમાં ઉપલબ્ધ હોય તેના કરતાં વધુ માહિતી અથવા તર્ક હોઈ શકે છે કે ભૂલને કેવી રીતે હેન્ડલ કરવી.</p>
+<p>ઉદાહરણ તરીકે, યાદી 9-6 એક એવું વિધેય દર્શાવે છે જે ફાઈલમાંથી વપરાશકર્તા નામ વાંચે છે. જો ફાઈલ અસ્તિત્વમાં ન હોય અથવા વાંચી શકાતી ન હોય, તો આ વિધેય તે ભૂલોને કોલિંગ કોડ પર પાછી મોકલશે.</p>
+<listing number="9-6" file-name="src/main.rs" caption="A function that returns errors to the calling code using `match`">
+<!-- Deliberately not using rustdoc_include here; the `main` function in the
+file panics. We do want to include it for reader experimentation purposes, but
+don't want to include it for rustdoc testing purposes. -->
+{{#include ../listings/ch09-error-handling/listing-09-06/src/main.rs:here}}
+</listing>
+આ કાર્યને ઘણો ટૂંકો રીતે લખી શકાય છે, પરંતુ આપણે ભૂલ વ્યવસ્થાપન (error handling) સમજવા માટે પહેલાં તેને જાતે જ કરીએ છીએ; અંતે, આપણે ટૂંકા માર્ગ બતાવીશું. ચાલો પ્રથમ કાર્યના વળતર પ્રકાર (return type) જોઈએ: `Result<string, io::error="">`. આનો અર્થ એ થાય છે કે કાર્ય `Result<t, e="">` પ્રકારનું મૂલ્ય આપી રહ્યું છે, જ્યાં સામાન્ય પરિમાણ `T` ને `String` ના નક્કર પ્રકારથી અને સામાન્ય પ્રકાર `E` ને `io::Error` ના નક્કર પ્રકારથી ભરવામાં આવ્યું છે.
+<p>જો આ કાર્ય સફળતાપૂર્વક પૂર્ણ થાય, તો આ કાર્યને બોલાવતો કોડ <code>Ok</code> મૂલ્ય મેળવે છે, જેમાં <code>String</code> હોય છે — જે ફાઈલમાંથી આ કાર્ય વાંચેલો <code>username</code> છે. જો આ કાર્યમાં કોઈ સમસ્યા આવે, તો બોલાવતો કોડ <code>Err</code> મૂલ્ય મેળવે છે, જેમાં <code>io::Error</code> ની એક પ્રત હોય છે, જે સમસ્યાઓ વિશે વધુ માહિતી ધરાવે છે. અમે આ કાર્યના વળતર પ્રકાર તરીકે <code>io::Error</code> પસંદ કર્યું કારણ કે તે ફંક્શનના શરીરમાં આપણે જે કામગીરી કરી રહ્યા છીએ તેમાં નિષ્ફળતા આવી શકે છે, જેમ કે <code>File::open</code> ફંક્શન અને <code>read_to_string</code> પદ્ધતિ, બંને આ પ્રકારનું ભૂલ મૂલ્ય આપે છે.</p>
+<p>ફંક્શનનો મુખ્ય ભાગ <code>File::open</code> ફંક્શનને બોલાવીને શરૂ થાય છે. પછી, આપણે <code>Result</code> મૂલ્યને લિસ્ટિંગ 9-4 માં રહેલા <code>match</code> જેવો જ <code>match</code> વડે નિયંત્રિત કરીએ છીએ. જો <code>File::open</code> સફળ થાય, તો પેટર્ન ચલ <code>file</code> માં રહેલું ફાઇલ હેન્ડલ મ્યુટેબલ ચલ <code>username_file</code> માં આવે છે અને ફંક્શન આગળ વધે છે. <code>Err</code> સ્થિતિમાં, આપણે <code>panic!</code> ને બોલાવવાને બદલે, <code>return</code> કીવર્ડનો ઉપયોગ કરીએ છીએ જેથી ફંક્શનમાંથી વહેલા બહાર નીકળી શકાય અને <code>File::open</code> માંથી મળેલ ભૂલ મૂલ્ય, હવે પેટર્ન ચલ <code>e</code> માં, આ ફંક્શનની ભૂલ મૂલ્ય તરીકે કોલિંગ કોડને પાછું મોકલી શકાય.</p>
+<p>આથી, જો આપણી પાસે <code>username_file</code> માં એક ફાઈલ હેન્ડલ હોય, તો વિધેય (function) ત્યારબાદ <code>username</code> ચલ (variable) માં નવું <code>String</code> બનાવે છે અને <code>username_file</code> માં રહેલા ફાઈલ હેન્ડલ પર <code>read_to_string</code> પદ્ધતિને બોલાવે છે જેથી ફાઈલની સામગ્રીને <code>username</code> માં વાંચી શકાય. <code>read_to_string</code> પદ્ધતિ પણ એક <code>Result</code> આપે છે, કારણ કે તે નિષ્ફળ થઈ શકે છે, ભલે <code>File::open</code> સફળ થયું હોય. તેથી, આપણને બીજા <code>match</code> ની જરૂર છે જેથી તે <code>Result</code> ને નિયંત્રિત કરી શકાય: જો <code>read_to_string</code> સફળ થાય, તો આપણું વિધેય સફળ થાય છે અને આપણે ફાઈલમાંથી મેળવેલા વપરાશકર્તાના નામ (username)ને <code>Ok</code> માં લપેટીને પાછા આપીએ છીએ. જો <code>read_to_string</code> નિષ્ફળ જાય, તો આપણે એ જ રીતે ભૂલનું મૂલ્ય પાછું આપીએ છીએ જે રીતે આપણે <code>File::open</code> ના પરિણામને નિયંત્રિત કરતા <code>match</code> માં ભૂલનું મૂલ્ય પાછું આપ્યું હતું. તેમ છતાં, આપણે સ્પષ્ટપણે <code>return</code> કહેવાની જરૂર નથી, કારણ કે આ વિધેયની છેલ્લી અભિવ્યક્તિ (expression) છે.</p>
+<p>આ કોડને બોલાવતો કોડ ત્યારબાદ કાં તો <code>Ok</code> મૂલ્ય મેળવશે જેમાં વપરાશકર્તા નામ સમાવિષ્ટ હશે અથવા <code>Err</code> મૂલ્ય મેળવશે જેમાં <code>io::Error</code> સમાવિષ્ટ હશે. કયો નિર્ણય લેવો તે બોલાવતા કોડ પર નિર્ભર છે. જો બોલાવતો કોડ <code>Err</code> મૂલ્ય મેળવે, તો તે <code>panic!</code> કરીને કાર્યક્રમ ક્રેશ કરી શકે છે, એક નિશ્ચિત વપરાશકર્તા નામનો ઉપયોગ કરી શકે છે, અથવા કોઈ ફાઈલ સિવાયના સ્ત્રોતમાંથી વપરાશકર્તા નામ શોધી શકે છે. આપણે એ જાણવા માટે પૂરતી માહિતી નથી કે બોલાવતો કોડ શું કરવાનો પ્રયત્ન કરી રહ્યો છે, તેથી અમે સફળતા અથવા ભૂલની તમામ માહિતી ઉપરની તરફ મોકલી દઈએ જેથી તે યોગ્ય રીતે તેનું સંચાલન કરી શકે.</p>
+<p>આ ભૂલોને આગળ વધારવાની આ રીત Rust માં એટલી સામાન્ય છે કે Rust આને સરળ બનાવવા માટે પ્રશ્ન નિશાની ઓપરેટર <code>?</code> આપે છે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h4 id="-ચિહન-સંકષેપ"><a class="header" href="#-ચિહન-સંકષેપ"><code>?</code> ચિહ્ન સંક્ષેપ</a></h4>
+<p>ચિત્રલિપી 9-7 દર્શાવે છે કે <code>read_username_from_file</code> નું એક અમલીકરણ છે જેનું કાર્ય ચિત્રલિપી 9-6 માં રહેલા અમલીકરણ સમાન છે, પરંતુ આ અમલીકરણ <code>?</code> ચિહ્નનો ઉપયોગ કરે છે.</p>
+<listing number="9-7" file-name="src/main.rs" caption="A function that returns errors to the calling code using the `?` operator">
+<!-- Deliberately not using rustdoc_include here; the `main` function in the
+file panics. We do want to include it for reader experimentation purposes, but
+don't want to include it for rustdoc testing purposes. -->
+{{#include ../listings/ch09-error-handling/listing-09-07/src/main.rs:here}}
+</listing>
+? ચિહ્નનું વિવરણ `Result` મૂલ્ય પછી મૂકવામાં આવેલું `?` ચિહ્ન, Listing 9-6 માં આપણે `Result` મૂલ્યોને નિયંત્રિત કરવા માટે વ્યાખ્યાયિત કરેલા `match` અભિવ્યક્તિની જેમ જ કાર્ય કરે છે. જો `Result` નું મૂલ્ય `Ok` હોય, તો `Ok` ની અંદરનું મૂલ્ય આ અભિવ્યક્તિમાંથી પાછું આવે છે અને પ્રોગ્રામ ચાલુ રહે છે. જો મૂલ્ય `Err` હોય, તો `Err` સમગ્ર ફંક્શનમાંથી પાછું આવે છે, જાણે કે આપણે `return` કીવર્ડનો ઉપયોગ કર્યો હોય, જેથી ભૂલનું મૂલ્ય કોલિંગ કોડમાં પ્રસારિત થાય.
+<p>અહીંયા યાદી 9-6 માંથી <code>match</code> અભિવ્યક્તિ શું કરે છે અને <code>?</code> નિરેક્ષક શું કરે છે તેમાં તફાવત છે: <code>?</code> નિરેક્ષક પર બોલાવવામાં આવેલ ભૂલ મૂલ્યો <code>from</code> કાર્ય દ્વારા પસાર થાય છે, જે <code>From</code> લક્ષણમાં વ્યાખ્યાયિત થયેલ છે, પ્રમાણભૂત પુસ્તકાલયમાં, જેનો ઉપયોગ એક પ્રકારના મૂલ્યોને બીજા પ્રકારમાં રૂપાંતરિત કરવા માટે થાય છે. જ્યારે <code>?</code> નિરેક્ષક <code>from</code> કાર્યને બોલાવે છે, ત્યારે પ્રાપ્ત ભૂલ પ્રકાર વર્તમાન કાર્યના વળતર પ્રકારમાં વ્યાખ્યાયિત થયેલ ભૂલ પ્રકારમાં રૂપાંતરિત થાય છે. આ ઉપયોગી છે જ્યારે કોઈ કાર્ય એક ભૂલ પ્રકાર પરત કરે છે જે કાર્ય નિષ્ફળ થવાની તમામ રીતોનું પ્રતિનિધિત્વ કરે છે, ભલે ભાગો ઘણાં વિવિધ કારણોસર નિષ્ફળ જાય.</p>
+<p>ઉદાહરણ તરીકે, આપણે યાદી 9-7 માં <code>read_username_from_file</code> વિધેયને એક કસ્ટમ ભૂલ પ્રકાર નામ <code>OurError</code> પરત કરવા બદલી શકીએ છીએ જે આપણે વ્યાખ્યાયિત કરીએ છીએ. જો આપણે એવું પણ વ્યાખ્યાયિત કરીએ કે <code>impl From&lt;io::Error&gt; for OurError</code>, તો <code>io::Error</code> માંથી <code>OurError</code> નું ઉદાહરણ બનાવવા માટે, તો <code>read_username_from_file</code> વિધેયના મુખ્ય ભાગમાં વપરાયેલ  <code>?</code> ઓપરેટર <code>from</code> ને બોલાશે અને ભૂલ પ્રકારોને કોઈ વધારાનો કોડ ઉમેર્યા વિના રૂપાંતરિત કરશે.</p>
+<p>યાદી 9-7 ના સંદર્ભમાં, <code>File::open</code> કૉલના અંતે આવેલું  <code>?</code> ચિહ્ન <code>Ok</code> ની અંદરની કિંમતને ચલ <code>username_file</code> માં પરત કરશે. જો કોઈ ભૂલ થાય, તો  <code>?</code> ઓપરેટર સમગ્ર વિધેયમાંથી વહેલા બહાર નીકળી જશે અને કોઈપણ  <code>Err</code> કિંમતને કોલિંગ કોડને આપશે. એ જ બાબત <code>read_to_string</code> કૉલના અંતે આવેલા  <code>?</code> માટે પણ લાગુ પડે છે.</p>
+<p><code>?</code> ચિહ્ન દૂર કરે છે ઘણી બધી પુનરાવર્તિત પ્રક્રિયાઓ અને આ કાર્યની અમલીકરણ સરળ બનાવે છે. અમે <code>?</code> પછી તરત જ પદ્ધતિ કૉલ્સને જોડીને આ કોડને વધુ ટૂંકો પણ કરી શકીએ છીએ, જે યાદી 9-8 માં દર્શાવેલ છે.</p>
+<listing number="9-8" file-name="src/main.rs" caption="Chaining method calls after the `?` operator">
+<!-- Deliberately not using rustdoc_include here; the `main` function in the
+file panics. We do want to include it for reader experimentation purposes, but
+don't want to include it for rustdoc testing purposes. -->
+{{#include ../listings/ch09-error-handling/listing-09-08/src/main.rs:here}}
+</listing>
+અમે નવું `String`  `username` માં બનાવવાની ક્રિયાને ફંક્શનની શરૂઆતમાં ખસેડી છે; તે ભાગ બદલાયો નથી. `username_file` નામનું ચલ (variable) બનાવવાને બદલે, અમે `read_to_string` કૉલને સીધું જ `File::open("hello.txt")?` ના પરિણામ પર જોડી દીધું છે. હજી પણ `read_to_string` કૉલના અંતે  `?`  હાલ્યા કરે છે, અને જ્યારે `File::open` અને `read_to_string` બંને સફળ થાય ત્યારે અમે હજી પણ `Ok` મૂલ્ય ધરાવતા `username` ને પરત કરીએ છીએ, નહિ કે ભૂલોને. કાર્યક્ષમતા ફરીથી યાદી 9-6 અને યાદી 9-7 જેવી જ છે; આ ફક્ત તેને લખવાની એક અલગ, વધુ સુગમ (ergonomic) રીત છે.
+<p>ચિત્રલિપિ 9-9 દર્શાવે છે કે <code>fs::read_to_string</code> નો ઉપયોગ કરીને આને વધુ ટૂંકું કેવી રીતે બનાવવું.</p>
+<listing number="9-9" file-name="src/main.rs" caption="Using `fs::read_to_string` instead of opening and then reading the file">
+<!-- Deliberately not using rustdoc_include here; the `main` function in the
+file panics. We do want to include it for reader experimentation purposes, but
+don't want to include it for rustdoc testing purposes. -->
+{{#include ../listings/ch09-error-handling/listing-09-09/src/main.rs:here}}
+</listing>
+Reading a file into a string is a fairly common operation, so the standard library provides the convenient `fs::read_to_string` function that opens the file, creates a new `String`, reads the contents of the file, puts the contents into that `String`, and returns it. Of course, using `fs::read_to_string` doesn’t give us the opportunity to explain all the error handling, so we did it the longer way first. ફાઈલને સ્ટ્રિંગમાં વાંચવી એ એક સામાન્ય કાર્ય છે, તેથી સ્ટાન્ડર્ડ લાયબ્રેરી અનુકૂળ `fs::read_to_string` વિધેય પ્રદાન કરે છે જે ફાઈલ ખોલે છે, નવું `String` બનાવે છે, ફાઈલની સામગ્રી વાંચે છે, તે સામગ્રીને તે `String` માં મૂકે છે અને તેને પરત કરે છે. અલબત્ત, `fs::read_to_string` વાપરવાથી આપણને તમામ ભૂલ નિયંત્રણ સમજાવવાની તક મળતી નથી, તેથી અમે પહેલા લાંબો રસ્તો અપનાવ્યો.
+<!-- Old headings. Do not remove or links may break. -->
+<h4 id="-ચિહન-કયાં-વાપરવું"><a class="header" href="#-ચિહન-કયાં-વાપરવું"><code>?</code> ચિહ્ન ક્યાં વાપરવું</a></h4>
+<p><code>?</code> ચિહ્ન માત્ર એવા જ વિધેયોમાં વાપરી શકાય છે જેમના વળતર પ્રકાર (return type) તે મૂલ્ય સાથે સુસંગત હોય જેના પર <code>?</code> વપરાય છે. આ એટલા માટે છે કારણ કે <code>?</code> ચિહ્ન વ્યાખ્યા પ્રમાણે કાર્યમાંથી એક પ્રારંભિક વળતર (early return) કરવા માટે નિર્ધારિત થયેલું છે, જે રીતે આપણે યાદી 9-6 માં  <code>match</code> અભિવ્યક્તિનો ઉપયોગ કર્યો હતો. યાદી 9-6 માં, <code>match</code> એક <code>Result</code> મૂલ્યનો ઉપયોગ કરી રહ્યું હતું, અને પ્રારંભિક વળતર શાખા (arm) એક <code>Err(e)</code> મૂલ્ય પરત કરે છે. વિધેયનો વળતર પ્રકાર <code>Result</code> હોવો જરૂરી છે જેથી તે આ <code>return</code> સાથે સુસંગત રહે.</p>
+<p>યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે <code>?</code> ઓપરેટરનો ઉપયોગ <code>main</code> ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે <code>?</code> વાપરીએ છીએ.</p>
+<listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
+</listing>
+આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
+<p>{{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
+આ ભૂલ દર્શાવે છે કે આપણે <code>?</code> ઓપરેટરનો ઉપયોગ માત્ર એવા જ ફંક્શનમાં કરી શકીએ છીએ જે <code>Result</code>, <code>Option</code>, અથવા અન્ય પ્રકાર પરત કરે છે જે <code>FromResidual</code> લાગુ કરે છે.</p>
+<p>આ ભૂલ સુધારવા માટે, તમારી પાસે બે વિકલ્પો છે. એક વિકલ્પ એ છે કે તમારા ફંક્શનનો રીટર્ન પ્રકાર બદલો જેથી તે તમે <code>?</code> ઓપરેટર સાથે ઉપયોગ કરી રહ્યાં છો તે મૂલ્ય સાથે સુસંગત હોય, જ્યાં સુધી તમને કોઈ પ્રતિબંધ ન હોય. બીજો વિકલ્પ એ છે કે <code>match</code> અથવા <code>Result&lt;T, E&gt;</code> નાં એક પદ્ધતિનો ઉપયોગ કરવો જેથી <code>Result&lt;T, E&gt;</code> ને યોગ્ય રીતે હેન્ડલ કરી શકાય.</p>
+<p>અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે <code>?</code> નો ઉપયોગ <code>Option&lt;T&gt;</code> મૂલ્યો સાથે પણ થઈ શકે છે. <code>Result</code> પર <code>?</code> વાપરવા જેવું જ, તમે <code>Option</code> પર <code>?</code> માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે <code>Option</code> આપે છે. <code>Option&lt;T&gt;</code> પર <code>?</code> ઓપરેટરનું વર્તન <code>Result&lt;T, E&gt;</code> પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય <code>None</code> હોય, તો તે કાર્યમાંથી તરત જ <code>None</code> પાછું આપવામાં આવશે. જો મૂલ્ય <code>Some</code> હોય, તો <code>Some</code> ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.</p>
+<listing number="9-11" caption="Using the `?` operator on an `Option&lt;T&gt;` value">
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
+</listing>
+આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ દલીલ લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
+<p><code>?</code> નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર <code>chars</code> કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે <code>last</code> કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક <code>Option</code> છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો <code>text</code> ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે <code>"\nhi"</code> . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે <code>Some</code> પ્રકારમાં પાછો આવશે. વચ્ચેનું <code>?</code> ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે <code>Option</code> પર <code>?</code> ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા <code>match</code> અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.</p>
+<p>નોંધ કરો કે તમે <code>Result</code> ધરાવતા ફંક્શનમાં <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, અને તમે <code>Option</code> ધરાવતા ફંક્શનમાં પણ <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, પરંતુ તમે આ બંનેને મિક્સ કરી શકતા નથી. <code>?</code> ઓપરેટર આપોઆપ <code>Result</code> ને <code>Option</code> માં રૂપાંતરિત કરતું નથી અથવા ઊલટું; તે કિસ્સાઓમાં, તમારે <code>Result</code> પર <code>ok</code> મેથડ અથવા <code>Option</code> પર <code>ok_or</code> મેથડ જેવી પદ્ધતિઓનો ઉપયોગ કરીને રૂપાંતરણ સ્પષ્ટપણે કરવું જોઈએ. હવે સુધી, આપણે જે</p>
+<p><code>main</code> ફંક્શનનો ઉપયોગ કર્યો છે તે બધા <code>()</code> રિટર્ન કરે છે. <code>main</code> ફંક્શન વિશેષ છે કારણ કે તે એક્ઝિક્યુટેબલ પ્રોગ્રામનો પ્રવેશ બિંદુ અને બહાર નીકળવાનો બિંદુ છે, અને પ્રોગ્રામની અપેક્ષા મુજબ વર્તવા માટે તેના રિટર્ન પ્રકાર પર નિયંત્રણો હોય છે.</p>
+<p>સદનસીબે, <code>main</code> એક <code>Result&lt;(), E&gt;</code> પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે <code>main</code> ના વળતર પ્રકારને <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> માં બદલ્યા છે અને અંતમાં <code>Ok(())</code> નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.</p>
+<listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result&lt;(), E&gt;` allows the use of the `?` operator on `Result` values.">
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
+</listing>
+`Box<dyn error="">` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn error="">` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn error="">` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ ફક્ત `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box
+<p>જ્યારે એક <code>main</code> ફંક્શન <code>Result&lt;(), E&gt;</code> પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ <code>Ok(())</code> સાથે <code>main</code> પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો <code>main</code> કોઈ <code>Err</code> મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ <code>0</code> પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ <code>0</code> સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.</p>
+<p><code>main</code> ફંક્શન <code>std::process::Termination</code> ટ્રેઇટને અમલમાં મૂકતી કોઈપણ પ્રકારો પાછી આપી શકે છે, જેમાં એક ફંક્શન <code>report</code> હોય છે જે <code>ExitCode</code> પરત કરે છે. તમારા પોતાના પ્રકારો માટે <code>Termination</code> ટ્રેઇટનો અમલ કેવી રીતે કરવો તે અંગે વધુ માહિતી માટે સ્ટાન્ડર્ડ લાઈબ્રેરી દસ્તાવેજીકરણનો સંદર્ભ લો.</p>
+<p>હવે કે આપણે <code>panic!</code> બોલાવવા અથવા <code>Result</code> પાછળ કરવાની વિગતોની ચર્ચા કરી છે, તો ચાલો આપણે એ વાત પર પાછા ફરીએ કે કયા સંજોગોમાં શું યોગ્ય છે તે નક્કી કેવી રીતે કરવું.</p>
+</dyn></dyn></dyn></char></t,></string,></t,>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch09-01-unrecoverable-errors-with-panic.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch09-03-to-panic-or-not-to-panic.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch09-01-unrecoverable-errors-with-panic.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch09-03-to-panic-or-not-to-panic.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

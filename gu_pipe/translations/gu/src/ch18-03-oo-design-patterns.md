@@ -1,0 +1,201 @@
+## વસ્તુલક્ષી ડિઝાઇન પેટર્નનું અમલીકરણ
+
+સ્ટેટ પેટર્ન (state pattern) એક વસ્તુલક્ષી ડિઝાઇન પેટર્ન છે. આ પેટર્નની મુખ્ય બાબત એ છે કે આપણે સ્થિતિઓનો સમૂહ વ્યાખ્યાયિત કરીએ છીએ જે મૂલ્ય (value) આંતરિક રીતે ધરાવી શકે છે. આ સ્થિતિઓને સ્થિતિ વસ્તુઓના (state objects) સમૂહ દ્વારા રજૂ કરવામાં આવે છે, અને મૂલ્યનું વર્તન તેની સ્થિતિના આધારે બદલાય છે. આપણે એક બ્લોગ પોસ્ટ સ્ટ્રક્ચર (struct) ના ઉદાહરણ પરથી કામ કરીશું જેમાં તેની સ્થિતિ રાખવા માટે એક ક્ષેત્ર હશે, જે “ડ્રાફ્ટ” (draft), “સમીક્ષા” (review), અથવા “પ્રકાશિત” (published) સમૂહમાંથી સ્થિતિ વસ્તુ હશે.
+
+The state objects share functionality: રાજ્ય વસ્તુઓ કાર્યક્ષમતા વહેંચે છે: Rustમાં, અલબત્ત, આપણે વસ્તુઓ અને વારસાને બદલે struct અને traitsનો ઉપયોગ કરીએ છીએ. દરેક રાજ્ય વસ્તુ પોતાની વર્તણૂક માટે અને ક્યારે બીજી રાજ્યમાં પરિવર્તન કરવું જોઈએ તે નક્કી કરવા માટે જવાબદાર હોય છે. જે મૂલ્ય (value) રાજ્ય વસ્તુને ધરાવે છે તે રાજ્યોની અલગ-અલગ વર્તણૂકો અથવા સ્થળાંતરના સમય વિશે કંઈ જાણતું નથી. The advantage of using the state pattern is that, when the business requirements of the program change, we won’t need to change the code of the value holding
+
+the state or the code that uses the value. We’ll only need to update the code inside one of the state objects to change its rules or perhaps add more state objects. રાજ્ય પેટર્નનો ઉપયોગ કરવાનો ફાયદો એ છે કે, જ્યારે કાર્યક્રમના વ્યવસાયિક (business) જરૂરિયાતો બદલાય છે, ત્યારે આપણે રાજ્યને ધરાવતા મૂલ્ય (value) નો કોડ અથવા તે કોડને બદલવાની જરૂર રહેશે નહીં જે મૂલ્યનો ઉપયોગ કરે છે. આપણે ફક્ત એક રાજ્ય વસ્તુની અંદરના કોડને અપડેટ કરવાની જરૂર પડશે તેના નિયમો બદલવા માટે અથવા કદાચ વધુ રાજ્ય વસ્તુઓ ઉમેરવા માટે.
+
+First, we’re going to implement the state pattern in a more traditional object-oriented way. Then, we’ll use an approach that’s a bit more natural in Rust. Let’s dig in to incrementally implement a blog post workflow using the state pattern. સૌ પ્રથમ, આપણે સ્ટેટ પેટર્નને વધુ પરંપરાગત વસ્તુ-લક્ષી રીતે અમલમાં મૂકવાના છીએ. ત્યારબાદ, આપણે એક એવી રીતનો ઉપયોગ કરીશું જે Rust માં થોડી વધારે સ્વાભાવિક છે. ચાલો, ક્રમશઃ બ્લોગ પોસ્ટ વર્કફ્લોને સ્ટેટ પેટર્નનો ઉપયોગ કરીને અમલમાં મૂકીએ. The final functionality
+
+will look like this: અંતિમ કાર્યક્ષમતા આ પ્રમાણે હશે: A blog post starts as
+
+an empty draft. બ્લોગ પોસ્ટ ખાલી ડ્રાફ્ટ તરીકે શરૂ થાય છે. When the draft is done,
+
+a review of the post is requested. જ્યારે ડ્રાફ્ટ પૂર્ણ થાય છે, ત્યારે પોસ્ટની સમીક્ષા માટે વિનંતી કરવામાં આવે છે. When the post is
+
+approved, it gets published. જ્યારે પોસ્ટ મંજૂર થાય છે, ત્યારે તે પ્રકાશિત થાય છે. Only published
+
+blog posts return content to print so that unapproved posts can’t accidentally be published. માત્ર પ્રકાશિત બ્લોગ પોસ્ટ્સ જ છાપવા માટેની સામગ્રી આપે છે જેથી કરીને અનમંજૂર પોસ્ટ્સ આકસ્મિક રીતે પ્રકાશિત ન
+
+કોઈપણ અન્ય ફેરફારો પોસ્ટ પર કરવાનો પ્રયાસ કરવામાં આવે તો તેની અસર થવી જોઈએ નહીં. દાખલા તરીકે, જો આપણે સમીક્ષા માટે વિનંતી કરતા પહેલાં બ્લોગ પોસ્ટનો ડ્રાફ્ટ મંજૂર કરવાનો પ્રયાસ કરીએ, તો પોસ્ટ અપ્રકાશિત ડ્રાફ્ટ જ રહેવું જોઈએ.
+
+<!-- Old headings. Do not remove or links may break. -->
+### પરંપરાગત વસ્તુલક્ષી શૈલીનો પ્રયાસ
+
+સમાન સમસ્યાને ઉકેલવા માટે કોડને રચવાની અસંખ્ય રીતો છે, જેમાં દરેકની અલગ-અલગ આપઘાતકો (trade-offs) રહેલી છે. આ વિભાગનું અમલીકરણ વધુ પરંપરાગત વસ્તુલક્ષી શૈલીનું છે, જે Rust માં લખવું શક્ય છે, પરંતુ તે Rust ની કેટલીક શક્તિઓનો લાભ લેતું નથી. પછીથી, અમે એક અલગ ઉકેલ દર્શાવીશું જે હજી પણ વસ્તુલક્ષી ડિઝાઇન પેટર્નનો ઉપયોગ કરે છે, પરંતુ એવી રીતે રચાયેલ છે કે જે વસ્તુલક્ષી અનુભવ ધરાવતા પ્રોગ્રામરોને ઓછું પરિચિત લાગે. અમે બે ઉકેલોની તુલના કરીશું જેથી કરીને અન્ય ભાષાઓમાં કોડ કરતાં Rust કોડને અલગ રીતે ડિઝાઇન કરવાના આપઘાતકોનો અનુભવ કરી શકાય.
+
+Listing 18-11 ઉપક્રમ 18-11 આ કાર્યપ્રવાહને કોડ સ્વરૂપે દર્શાવે છે: આ `blog` નામની પુસ્તકાલય ક્રેટમાં અમે અમલમાં મૂકવાની API નો એક ઉદાહરણ ઉપયોગ છે. હજુ આ સંકલિત થશે નહીં, કારણ કે આપણે હજી સુધી `blog` ક્રેટનો અમલ કર્યો નથી.
+
+<Listing number="18-11" file-name="src/main.rs" caption="Code that demonstrates the desired behavior we want our `blog` crate to have">
+{{#rustdoc_include ../listings/ch18-oop/listing-18-11/src/main.rs:all}}
+</Listing>
+આપણે વપરાશકર્તાને `Post::new` વડે નવું ડ્રાફ્ટ બ્લોગ પોસ્ટ બનાવવાની છૂટ આપવા માંગીએ છીએ. આપણે બ્લોગ પોસ્ટમાં લખાણ ઉમેરવાની પણ છૂટ આપવી જોઈએ. જો આપણે મંજૂરી પહેલાં પોસ્ટની સામગ્રી મેળવવાનો પ્રયત્ન કરીએ, તો આપણને કોઈ લખાણ મળવું જોઈએ નહીં, કારણ કે પોસ્ટ હજી ડ્રાફ્ટ છે. અમે નિદર્શન હેતુ માટે કોડમાં `assert_eq!` ઉમેર્યું છે. આ માટે એક ઉત્તમ યુનિટ પરીક્ષણ એ તપાસવાનું હશે કે ડ્રાફ્ટ બ્લોગ પોસ્ટ `content` પદ્ધતિમાંથી ખાલી સ્ટ્રિંગ આપે છે, પરંતુ આપણે આ ઉદાહરણ માટે પરીક્ષણો લખવાના નથી.
+
+આગળ, આપણને પોસ્ટની સમીક્ષા માટે વિનંતી સક્રિય કરવી છે, અને આપણે `content` ને સમીક્ષાની રાહ જોઇએ ત્યારે ખાલી સ્ટ્રિંગ પરત કરાવવું છે. જ્યારે પોસ્ટને મંજૂરી મળે છે, ત્યારે તેને પ્રકાશિત થવું જોઈએ, એટલે કે પોસ્ટનો લખાણ પાછો આવે જ્યારે `content` બોલાવવામાં આવે.
+
+ધ્યાનમાં રાખો કે આપણે ફક્ત `Post` પ્રકાર સાથે ક્રિયાપ્રતિક્રિયા કરી રહ્યા છીએ તે પ્રકાર સાથે જ. આ પ્રકાર સ્ટેટ પેટર્નનો ઉપયોગ કરશે અને એક મૂલ્ય ધરાવશે જે ત્રણ સ્ટેટ ઓબ્જેક્ટ્સમાંથી એક હશે જે પોસ્ટની વિવિધ સ્થિતિઓ દર્શાવે છે—ડ્રાફ્ટ, સમીક્ષા અથવા પ્રકાશિત. એક સ્થિતિથી બીજી સ્થિતિમાં બદલાવ `Post` પ્રકારની અંદર આંતરિક રીતે સંચાલિત થશે. સ્થિતિઓમાં ફેરફાર આપણી લાયબ્રેરીના વપરાશકર્તાઓ દ્વારા `Post` ઇન્સ્ટન્સ પર બોલાવવામાં આવતી પદ્ધતિઓના પ્રતિભાવમાં થાય છે, પરંતુ તેમને સ્થિતિમાં સીધા ફેરફારોનું સંચાલન કરવાની જરૂર નથી. ઉપરાંત, વપરાશકર્તાઓ ભૂલ કરી શકતા નથી, જેમ કે સમીક્ષા પહેલા પોસ્ટ પ્રકાશિત કરવી.
+
+<!-- Old headings. Do not remove or links may break. -->
+#### `Post` વ્યાખ્યાયિત કરવું અને નવું ઉદાહરણ બનાવવું
+
+ચાલો પુસ્તકાલયના અમલીકરણની શરૂઆત કરીએ! આપણે જાણીએ છીએ કે આપણને એક જાહેર `Post` struct જોઈએ છે જે કેટલીક સામગ્રી ધરાવે છે, તેથી આપણે struct ની વ્યાખ્યા અને `new` સાથે સંકળાયેલ જાહેર વિધેયથી શરૂઆત કરીશું, જે `Post` નું ઉદાહરણ બનાવવા માટે વપરાશે, જે યાદી 18-12 માં દર્શાવેલ છે. અમે એક ખાનગી `State` trait પણ બનાવીશું જે તમામ `Post` ના સ્ટેટ ઓબ્જેક્ટ્સ માટે વર્તણૂક વ્યાખ્યાયિત કરશે.
+
+પછી, `Post` માં એક ખાનગી ક્ષેત્રમાં `Option<T>` માં `Box<dyn State>` નું trait object હશે, જે સ્ટેટ ઓબ્જેક્ટને રાખવા માટે વપરાશે. તમે થોડીવારમાં જોશો કે શા માટે `Option<T>` જરૂરી છે.
+
+<Listing number="18-12" file-name="src/lib.rs" caption="Definition of a `Post` struct and a `new` function that creates a new `Post` instance, a `State` trait, and a `Draft` struct">
+{{#rustdoc_include ../listings/ch18-oop/listing-18-12/src/lib.rs}}
+</Listing>
+State ટ્રેઇટની વ્યાખ્યા `State` ટ્રેઇટ વિવિધ પોસ્ટ સ્થિતિઓ દ્વારા ઉપયોગમાં લેવાતા વર્તનને વ્યાખ્યાયિત કરે છે. `Draft`, `PendingReview` અને `Published` જેવી સ્થિતિ વસ્તુઓ `State` ટ્રેઇટનો અમલ કરશે. હાલ માટે, આ ટ્રેઇટમાં કોઈ પદ્ધતિઓ નથી, અને આપણે માત્ર `Draft` સ્થિતિને વ્યાખ્યાયિત કરીને શરૂઆત કરીશું કારણ કે પોસ્ટ કઈ સ્થિતિમાં આરંભ થવી જોઈએ તે આ છે. જ્યારે આપણે
+
+નવું `Post` બનાવીએ છીએ, ત્યારે આપણે તેની `state` ક્ષેત્રને `Some` મૂલ્ય પર સેટ કરીએ છીએ જે `Box` ધરાવે છે. આ `Box` `Draft` સ્ટ્રક્ચરના નવા ઉદાહરણ તરફ નિર્દેશ કરે છે. આ સુનિશ્ચિત કરે છે કે જ્યારે પણ આપણે `Post` નું નવું ઉદાહરણ બનાવીએ છીએ, ત્યારે તે ડ્રાફ્ટ તરીકે શરૂ થાય છે. કારણ કે `Post` ની `state` ક્ષેત્ર ખાનગી છે, તેથી અન્ય કોઈ સ્થિતિમાં `Post` બનાવવાનો કોઈ રસ્તો નથી! `Post::new` ફંક્શનમાં, આપણે `content` ક્ષેત્રને એક નવું, ખાલી `String` પર સેટ કરીએ છીએ.
+
+#### પોસ્ટની સામગ્રીના લખાણને સંગ્રહિત કરવું
+
+અમે યાદ કર્યું કે સૂચિ ૧૮-૧૧ માં આપણે એક પદ્ધતિ `add_text` ને બોલાવી શકીએ છીએ અને તેને `&str` પસાર કરી શકીએ છીએ જેનો ઉપયોગ બ્લોગ પોસ્ટની લખાણ સામગ્રી તરીકે થાય છે. અમે આને એક પદ્ધતિ તરીકે અમલમાં મૂકીએ છીએ, `content` ક્ષેત્રને `pub` તરીકે જાહેર કરવાને બદલે, જેથી પાછળથી આપણે એક એવી પદ્ધતિ અમલમાં મૂકી શકીએ જે `content` ક્ષેત્રના ડેટા કેવી રીતે વાંચવો તે નિયંત્રિત કરશે. `add_text` પદ્ધતિ પ્રમાણમાં સરળ છે, તેથી ચાલો સૂચિ ૧૮-૧૩ માં `impl Post` બ્લોકમાં અમલીકરણ ઉમેરીએ.
+
+<Listing number="18-13" file-name="src/lib.rs" caption="Implementing the `add_text` method to add text to a post’s `content`">
+{{#rustdoc_include ../listings/ch18-oop/listing-18-13/src/lib.rs:here}}
+</Listing>
+`add_text` પદ્ધતિ `self` નો પરિવર્તનશીલ સંદર્ભ લે છે કારણ કે અમે `Post` ઉદાહરણમાં ફેરફાર કરી રહ્યા છીએ જેના પર `add_text` બોલાવવામાં આવે છે. પછી અમે `content` માં રહેલા `String` પર `push_str` ને બોલાવીએ છીએ અને `text` દલીલને ઉમેરવા માટે પસાર કરીએ છીએ જે સાચવેલા `content` માં ઉમેરાય છે. આ વર્તન પોસ્ટની સ્થિતિ પર આધારિત નથી, તેથી તે રાજ્ય પેટર્નનો ભાગ નથી. `add_text` પદ્ધતિ સંપૂર્ણપણે `state` ક્ષેત્ર સાથે ક્રિયાપ્રતિક્રિયા કરતી નથી, પરંતુ તે અમારી ઇચ્છિત વર્તનમાંનો એક ભાગ છે જે અમે ટેકો આપવા માંગીએ છીએ.
+
+<!-- Old headings. Do not remove or links may break. -->
+#### ડ્રાફ્ટ પોસ્ટની સામગ્રી ખાલી છે તેની ખાતરી કરવી
+
+આપણે `add_text` ને બોલાવ્યા પછી અને આપણી પોસ્ટમાં થોડી સામગ્રી ઉમેર્યા પછી પણ, આપણે `content` પદ્ધતિને ખાલી સ્ટ્રિંગ સ્લાઇસ પરત કરાવવી જોઈએ કારણ કે પોસ્ટ હજી ડ્રાફ્ટ સ્થિતિમાં છે, જે યાદી 18-11 માં પ્રથમ `assert_eq!` દ્વારા દર્શાવવામાં આવ્યું છે. હાલ માટે, ચાલો `content` પદ્ધતિને સૌથી સરળ વસ્તુ સાથે અમલમાં મૂકીએ જે આ જરૂરિયાત પૂરી કરશે: હંમેશા ખાલી સ્ટ્રિંગ સ્લાઇસ પરત કરવી. આપણે તેને પછીથી બદલીશું જ્યારે આપણે પોસ્ટની સ્થિતિ બદલવાની ક્ષમતાનો અમલ કરીશું જેથી તે પ્રકાશિત થઈ શકે. અત્યાર સુધી, પોસ્ટ્સ ફક્ત ડ્રાફ્ટ સ્થિતિમાં જ હોઈ શકે છે, તેથી પોસ્ટની સામગ્રી હંમેશા ખાલી હોવી જોઈએ. યાદી 18-14 આ પ્લેસહોલ્ડર અમલીકરણ દર્શાવે છે.
+
+<Listing number="18-14" file-name="src/lib.rs" caption="Adding a placeholder implementation for the `content` method on `Post` that always returns an empty string slice">
+{{#rustdoc_include ../listings/ch18-oop/listing-18-14/src/lib.rs:here}}
+</Listing>
+આ `content` પદ્ધતિ ઉમેરવાથી, સૂચિ ૧૮-૧૧ થી પ્રથમ `assert_eq!` સુધીનું બધું જ ધાર્યા પ્રમાણે કાર્ય કરે છે.
+
+<!-- Old headings. Do not remove or links may break. -->
+#### વિનંતી કરીને સમીક્ષા મેળવવી, જે પોસ્ટની સ્થિતિમાં પરિવર્તન લાવે છે
+
+પછી, આપણે કાર્યક્ષમતા ઉમેરવાની જરૂર છે કે પોસ્ટની સમીક્ષા માટે વિનંતી કરવી, જેનાથી તેની સ્થિતિ `Draft` થી `PendingReview` માં બદલાય. લિસ્ટિંગ 18-15 આ કોડ દર્શાવે છે.
+
+<Listing number="18-15" file-name="src/lib.rs" caption="Implementing `request_review` methods on `Post` and the `State` trait">
+{{#rustdoc_include ../listings/ch18-oop/listing-18-15/src/lib.rs:here}}
+</Listing>
+આપણે `Post` ને એક જાહેર પદ્ધતિ નામકું `request_review` આપીએ છીએ જે `self` નો પરિવર્તનશીલ સંદર્ભ લેશે. પછી, આપણે વર્તમાન `Post` સ્થિતિ પર આંતરિક `request_review` પદ્ધતિને બોલાવીએ છીએ, અને આ બીજી `request_review` પદ્ધતિ વર્તમાન સ્થિતિનો ઉપયોગ કરે છે અને નવી સ્થિતિ આપે છે.
+
+આપણે `State` લક્ષણ (trait) માં `request_review` પદ્ધતિ ઉમેરીએ છીએ; જે તમામ પ્રકારો આ લક્ષણને અમલમાં મૂકે છે તેઓ હવે `request_review` પદ્ધતિને અમલમાં મૂકવાની જરૂર પડશે. નોંધ કરો કે પદ્ધતિના પ્રથમ પરિમાણ તરીકે `self`, `&self`, અથવા `&mut self` ને બદલે, આપણી પાસે `self: Box<Self>` છે. આ વાક્યરચનાનો અર્થ એ થાય છે કે પદ્ધતિ ફક્ત ત્યારે જ માન્ય છે જ્યારે તેને `Box` ધરાવતા પ્રકાર પર બોલાવવામાં આવે. આ વાક્યરચના `Box<Self>` નો ઉપયોગ કરે છે, જૂની સ્થિતિને અમાન્ય કરે છે જેથી `Post` ની સ્થિતિ મૂલ્ય નવી સ્થિતિમાં રૂપાંતરિત થઈ શકે.
+
+જૂની સ્થિતિનો ઉપયોગ કરવા માટે, `request_review` પદ્ધતિને સ્થિતિ મૂલ્યનું માલિકી લેવું જરૂરી છે. અહીં `Post` ના `state` ક્ષેત્રમાં રહેલો `Option` મહત્વનો છે: અમે `take` પદ્ધતિને બોલાવીએ છીએ જેથી `state` ક્ષેત્રમાંથી `Some` મૂલ્ય બહાર કાઢી શકાય અને તેની જગ્યાએ `None` છોડી દેવામાં આવે, કારણ કે Rust આપણને struct માં ખાલી ક્ષેત્રો રાખવા દેતું નથી. આનાથી અમને `Post` માંથી `state` મૂલ્ય ખસેડવાની મંજૂરી મળે છે, તેને ઉછીના લેવાને બદલે. પછી, અમે પોસ્ટની `state` મૂલ્યને આ ક્રિયાનું પરિણામ સેટ કરીશું.
+
+We need to set `state` to `None` temporarily rather than setting it directly with code like `self.state = self.state.request_review();` to get ownership of the `state` value. This ensures that `Post` can’t use the old `state` value after we’ve transformed it into a new state. આપણે `state` ને સીધો કોડ જેમ કે `self.state = self.state.request_review();` વડે બદલવાને બદલે, કામચલાઉ રૂપે `None` પર સેટ કરવાની જરૂર છે, જેથી `state` મૂલ્યની માલિકી મેળવી શકાય. આ સુનિશ્ચિત કરે છે કે `Post` આપણા દ્વારા નવું સ્વરૂપ આપ્યા પછી જૂના `state` મૂલ્યનો ઉપયોગ કરી શકશે નહીં. The
+
+`request_review` method on `Draft` returns a new, boxed instance of a new `PendingReview` struct, which represents the state when a post is waiting for a review. The `PendingReview` struct also implements the `request_review` method but doesn’t do any transformations. Rather, it returns itself because when we request a review on a post already in the `PendingReview` state, it should stay in the `PendingReview` state. `Draft` પરનું `request_review` પદ્ધતિ એક નવું, બોક્સ્ડ ઉદાહરણ (instance) આપે છે, જે `PendingReview` સ્ટ્રક્ટનું હોય છે, જે દર્શાવે છે કે પોસ્ટ સમીક્ષાની રાહ જોઈ રહી છે તે સ્થિતિ. `PendingReview` સ્ટ્રક્ટ પણ `request_review` પદ્ધતિનો અમલ કરે છે પરંતુ કોઈ પરિવર્તન કરતું નથી. તેના બદલે, તે પોતાને જ પાછું આપે છે કારણ કે જ્યારે આપણે પહેલાથી જ `PendingReview` સ્થિતિમાં રહેલી પોસ્ટની સમીક્ષા માટે વિનંતી કરીએ છીએ, ત્યારે તે `PendingReview` સ્થિતિમાં જ રહેવું જોઈએ.
+
+હવે આપણે સ્થિતિ પેટર્નના લાભો જોવાનું શરૂ કરી શકીએ છીએ: `Post` પરની `request_review` પદ્ધતિ તેની `state` મૂલ્ય ગમે તે હોય, સમાન જ રહે છે. દરેક સ્થિતિ પોતાના નિયમો માટે જવાબદાર છે.
+
+આપણે `Post` પરની `content` પદ્ધતિને જેમ છે તેમ રાખીશું, જે ખાલી સ્ટ્રિંગ સ્લાઇસ પાછી આપશે. હવે આપણે `PendingReview` સ્થિતિમાં તેમજ `Draft` સ્થિતિમાં પણ એક `Post` રાખી શકીએ છીએ, પરંતુ આપણે `PendingReview` સ્થિતિમાં પણ સમાન વર્તન જોઈએ છે. યાદી 18-11 હવે બીજા `assert_eq!` કૉલ સુધી કામ કરે છે!
+
+<!-- Old headings. Do not remove or links may break. -->
+#### Adding `approve` to Change `content` 's Behavior
+
+`approve` પદ્ધતિ `request_review` પદ્ધતિ જેવી જ હશે: તે `state` ને એ મૂલ્ય પર સેટ કરશે કે જે વર્તમાન સ્થિતિ મંજૂર થાય ત્યારે હોવું જોઈએ, જેમ કે લિસ્ટિંગ 18-16 માં દર્શાવેલ છે.
+
+<Listing number="18-16" file-name="src/lib.rs" caption="Implementing the `approve` method on `Post` and the `State` trait">
+{{#rustdoc_include ../listings/ch18-oop/listing-18-16/src/lib.rs:here}}
+</Listing>
+We add the `approve` method to the `State` trait and add a new struct that implements `State`, the `Published` state. અમે `State` લક્ષણ (trait) માં `approve`
+
+પદ્ધતિ ઉમેરીએ છીએ અને એક નવું struct ઉમેરીએ છીએ જે `State` લાગુ કરે છે, જે `Published` સ્થિતિ છે. જે રીતે `request_review` `PendingReview` પર કાર્ય કરે છે, તેવી જ રીતે જો આપણે `Draft` પર `approve` પદ્ધતિને બોલાવીએ, તો તેનો કોઈ અસર થશે નહીં કારણ કે `approve` `self` પાછું આપશે. જ્યારે આપણે `PendingReview` પર `approve` બોલાવીએ છીએ, ત્યારે તે `Published` struct નું એક નવું, boxed instance પાછું આપે છે. `Published` struct `State` લક્ષણ (trait) લાગુ કરે છે, અને બંને `request_review` પદ્ધતિ અને `approve` પદ્ધતિ માટે, તે પોતાને પાછું આપે છે કારણ કે પોસ્ટ `Published` સ્થિતિમાં જ રહેવી જોઈએ એવા કિસ્સાઓમાં.
+
+હવે આપણે `Post` પર `content` પદ્ધતિને અપડેટ કરવાની જરૂર છે. આપણે ઈચ્છીએ છીએ કે `content` માંથી મળતું મૂલ્ય `Post` ની વર્તમાન સ્થિતિ પર આધારિત હોય, તેથી આપણે `state` પર વ્યાખ્યાયિત કરેલી `content` પદ્ધતિમાં `Post` પ્રતિનિધિત્વ કરશે, જે Listing 18-17 માં દર્શાવેલ છે.
+
+<Listing number="18-17" file-name="src/lib.rs" caption="Updating the `content` method on `Post` to delegate to a `content` method on `State`">
+{{#rustdoc_include ../listings/ch18-oop/listing-18-17/src/lib.rs:here}}
+</Listing>
+કારણ કે ધ્યેય છે કે આ નિયમો બધા સ્ટ્રક્ચર્સની અંદર રહે જે `State` અમલમાં મૂકે છે, અમે `content` પદ્ધતિને `state` માં રહેલા મૂલ્ય પર બોલાવીએ છીએ અને પોસ્ટ ઇન્સ્ટન્સ (એટલે ​​કે `self`) ને દલીલ તરીકે પસાર કરીએ છીએ. પછી, અમે તે મૂલ્ય પરત કરીએ છીએ જે `content` પદ્ધતિનો ઉપયોગ કરીને `state` મૂલ્યમાંથી મળે છે.
+
+અમે `Option` પર `as_ref` પદ્ધતિ બોલાવીએ છીએ કારણ કે અમને `Option` ની અંદર રહેલા મૂલ્યનો સંદર્ભ જોઈએ છે, મૂલ્યની માલિકી નહીં. કારણ કે `state` એ `Option<Box<dyn State>>` છે, જ્યારે અમે `as_ref` બોલાવીએ છીએ, ત્યારે `Option<&Box<dyn State>>` પરત કરવામાં આવે છે. જો અમે `as_ref` ન બોલાવ્યું હોત, તો અમને ભૂલ મળતી, કારણ કે અમે ફંક્શન પેરામીટરના ઉછીના લીધેલા `&self` માંથી `state` ને ખસેડી શકતા નથી.
+
+We then call the `unwrap` method, which we know will never panic because we know the methods on `Post` ensure that `state` will always contain a `Some` value when those methods are done. This is one of the cases we talked about in the “When You Have More Information Than the Compiler” section of Chapter 9 when we know that a `None` value is never possible, even though the compiler isn’t able to understand that. પછી અમે `unwrap` પદ્ધતિને બોલાવીએ છીએ, જે આપણે જાણીએ છીએ કે તે ક્યારેય ગભરાશે નહીં કારણ કે આપણે જાણીએ છીએ કે `Post` પરની પદ્ધતિઓ ખાતરી કરે છે કે `state` હંમેશાં `Some` મૂલ્ય ધરાવશે જ્યારે તે પદ્ધતિઓ પૂર્ણ થાય છે. આ એવા કિસ્સાઓમાંનું એક છે જેની ચર્ચા અમે પ્રકરણ 9 ના "જ્યારે તમારી પાસે કમ્પાઇલર કરતાં વધુ માહિતી હોય" વિભાગમાં કરી હતી, જ્યારે આપણે જાણીએ છીએ કે `None` મૂલ્ય શક્ય નથી, ભલે કમ્પાઇલર તે
+
+સમજી શકતો ન હોય. At this point, when we call `content` on the `&Box<dyn State>`, deref coercion will take effect on the `&` and the `Box` so that the `content` method will ultimately be called on the type that implements the `State` trait. That means we need to add `content` to the `State` trait definition, and that is where we’ll put the logic for what content to return depending on which state we have, as shown in Listing 18-18. આ સમયે, જ્યારે અમે `&Box<dyn State>` પર `content` ને બોલાવીએ છીએ, ત્યારે deref coercion `&` અને `Box` પર લાગુ થશે જેથી `content` પદ્ધતિ આખરે જે પ્રકાર દ્વારા અમલમાં મૂકવામાં આવે છે તેના પર બોલાવવામાં આવશે. એનો અર્થ એ થાય કે આપણે `State` ટ્રેઇટ વ્યાખ્યામાં `content` ઉમેરવાની જરૂર છે, અને ત્યાં અમે કયા સ્ટેટની વાત કરીએ છીએ તેના આધારે શું સામગ્રી આપવી તે માટેના તર્ક મૂકીશું, જે Listing 18-18 માં દર્શાવેલ છે.
+
+<Listing number="18-18" file-name="src/lib.rs" caption="Adding the `content` method to the `State` trait">
+{{#rustdoc_include ../listings/ch18-oop/listing-18-18/src/lib.rs:here}}
+</Listing>
+અમે `content` પદ્ધતિ માટે એક નિશ્ચિત અમલીકરણ ઉમેરીએ છીએ જે ખાલી string slice આપે છે. એનો અર્થ એ થાય કે આપણે `Draft` અને `PendingReview` struct પર `content` અમલમાં મૂકવાની જરૂર નથી. `Published` struct `content` પદ્ધતિને ઓવરરાઇડ કરશે અને `post.content` માં રહેલા મૂલ્યને આપશે. અનુકૂળ હોવા છતાં, `State` પરની `content` પદ્ધતિ `Post` ની સામગ્રી નક્કી કરે છે, જે `State` અને `Post` ની જવાબદારી વચ્ચે ભેદભાવ ભૂંસી નાખે છે.
+
+ધ્યાનમાં રાખો કે આપણે આ પદ્ધતિ પર lifetime annotations (જીવનકાળ નોંધણીઓ)ની જરૂર છે, જે વિશે આપણે પ્રકરણ 10 માં ચર્ચા કરી હતી. અમે એક `post` નો reference દલીલ તરીકે લઈ રહ્યા છીએ અને તે `post` ના ભાગનો reference આપી રહ્યા છીએ, તેથી પાછો મળેલા reference નો જીવનકાળ `post` દલીલના જીવનકાળ સાથે સંબંધિત છે.
+
+અને આટલું પૂરું – હવે લિસ્ટિંગ ૧૮-૧૧ નાં બધાં જ કાર્ય કરે છે! આપણે રાજ્ય (state) પેટર્ન બ્લોગ પોસ્ટ વર્કફ્લોના નિયમો સાથે અમલમાં મૂકી છે. નિયમો સંબંધિત તર્ક રાજ્ય વસ્તુઓમાં રહેલો છે, જે `Post` માં પથરાયેલો નથી.
+
+### શા માટે એનુંમ નથી?
+
+તમે વિચારતા હશો કે શા માટે અમે વિવિધ શક્ય પોસ્ટ સ્થિતિઓને પ્રકારો તરીકે દર્શાવવા માટે એનુંમનો ઉપયોગ ન કર્યો. તે ચોક્કસપણે એક સંભવિત ઉકેલ છે; પ્રયત્ન કરો અને અંતિમ પરિણામોની સરખામણી કરીને જુઓ કે તમને કયો વધુ પસંદ છે! એનુંમનો ઉપયોગ કરવાથી થતો એક ગેરલાભ એ છે કે એનુંમના મૂલ્યને તપાસતી દરેક જગ્યાએ તમામ સંભવિત પ્રકારોને નિયંત્રિત કરવા માટે `match` અભિવ્યક્તિ અથવા તેના જેવું કંઈક જરૂરી રહેશે. આ વર્તમાન ટ્રેઇટ ઑબ્જેક્ટ ઉકેલ કરતાં વધુ પુનરાવર્તિત થઈ શકે છે.
+
+<!-- Old headings. Do not remove or links may break. -->
+#### સ્થિતિ પેટર્નનું મૂલ્યાંકન
+
+અમે દર્શાવ્યું છે કે Rust, object-oriented સ્થિતિ (state) પેટર્નને અમલમાં મૂકવા સક્ષમ છે, જે પોસ્ટ માટે દરેક સ્થિતિમાં અલગ-અલગ પ્રકારના વર્તનની encapsulation કરે છે. `Post` પરની પદ્ધતિઓ વિવિધ વર્તણૂકો વિશે કંઈ જાણતી નથી. અમે કોડને જે રીતે ગોઠવ્યો છે, તેના કારણે આપણે માત્ર એક જ જગ્યાએ જોવું પડશે કે પ્રકાશિત પોસ્ટ કેવી રીતે વર્તી શકે છે: `Published` struct પરના `State` trait નું અમલીકરણ.
+
+જો આપણે વૈકલ્પિક અમલીકરણ બનાવ્યું હોત જે સ્થિતિ પેટર્નનો ઉપયોગ ન કરતું હોય, તો આપણે `Post` પરની પદ્ધતિઓમાં અથવા મુખ્ય કોડમાં પણ `match` અભિવ્યક્તિઓનો ઉપયોગ કર્યો હોત, જે પોસ્ટની સ્થિતિ તપાસે છે અને તે સ્થળોએ વર્તનમાં ફેરફાર કરે છે. એનો અર્થ એ થાય કે પોસ્ટ પ્રકાશિત સ્થિતિમાં હોય તેની તમામ અસરોને સમજવા માટે આપણે ઘણી જગ્યાએ જોવું પડત.
+
+With the state pattern, the `Post` methods and the places we use `Post` don’t need `match` expressions, and to add a new state, we would only need to add a new struct and implement the trait methods on that one struct in one location. રાજ્ય (state) પેટર્ન સાથે, `Post` પદ્ધતિઓ અને જ્યાં આપણે `Post` નો ઉપયોગ કરીએ છીએ તે સ્થળોને `match` અભિવ્યક્તિઓની જરૂર નથી, અને નવું રાજ્ય ઉમેરવા માટે, આપણે ફક્ત એક નવો struct ઉમેરવાની અને તે struct પર trait પદ્ધતિઓનો અમલ
+
+કરવાની જરૂર પડશે. The implementation using the state pattern is easy to extend to add more functionality. To see the simplicity of maintaining code that uses the state pattern, try a few of these suggestions: રાજ્ય પેટર્નનો ઉપયોગ કરીને અમલીકરણ વધારાની કાર્યક્ષમતા ઉમેરવાનું સરળ બનાવે છે. રાજ્ય પેટર્નનો ઉપયોગ કરતા કોડ જાળવવાની સરળતા જોવા માટે, આ સૂચનોમાંથી થોડા પ્રયાસ કરો:
+
+Add a `reject` method that changes the post’s state from `PendingReview` back to `Draft`. એક `reject` પદ્ધતિ ઉમેરો જે પોસ્ટના રાજ્યને `PendingReview` થી પાછા `Draft` માં બદલે છે.
+
+Require two calls to `approve` before the state can be changed to `Published`. રાજ્યને `Published` સ્થિતિમાં બદલતા પહેલાં બે વાર `approve` કરવું આવશ્યક છે. Allow users to
+
+add text content only when a post is in the `Draft` state. Hint: have the state object responsible for what might change about the content but not responsible for modifying the `Post`. માત્ર ત્યારે જ વપરાશકર્તાઓને લખાણ ઉમેરવાની મંજૂરી આપો જ્યારે પોસ્ટ `Draft` સ્થિતિમાં હોય. સંકેત: એવી રાજ્ય વસ્તુ રાખો જે વિષયવસ્તુમાં શું ફેરફાર થઈ શકે છે તેના માટે જવાબદાર હોય, પરંતુ `Post` માં ફેરફાર કરવા માટે નહીં.
+
+એક ખામી એ છે કે, રાજ્ય પેટર્ન સાથે, રાજ્યો સંક્રમણોનો અમલ કરે છે, જેના કારણે કેટલાક રાજ્યો એકબીજા સાથે જોડાયેલા હોય છે. જો આપણે `PendingReview` અને `Published` વચ્ચે બીજું રાજ્ય ઉમેરીએ, જેમ કે `Scheduled`, તો આપણે `PendingReview` માં કોડ બદલવો પડશે જેથી તે `Scheduled` માં સંક્રમણ કરી શકે. જો `PendingReview` ને નવા રાજ્યના ઉમેરા સાથે બદલવાની જરૂર ન પડે તો ઓછું કામ થાય, પરંતુ તેનો અર્થ એ થશે કે બીજી ડિઝાઇન પેટર્ન પર સ્વિચ કરવું.
+
+બીજો ગંભીર દોષ એ છે કે આપણે અમુક તર્કનું પુનરાવર્તન કર્યું છે. આ પુનરાવર્તનને દૂર કરવા માટે, આપણે `request_review` અને `approve` પદ્ધતિઓ માટે ડિફોલ્ટ અમલીકરણો બનાવવાનો પ્રયાસ કરી શકીએ છીએ જે `self` પરત કરે. જો કે, આ કામ નહીં કરે: જ્યારે `State` ને એક trait object તરીકે વાપરવામાં આવે છે, ત્યારે trait ને ખબર હોતી નથી કે ચોક્કસ `self` શું હશે, તેથી રીટર્ન પ્રકાર કમ્પાઇલ સમયે જાણીતો નથી. (આ અગાઉ ઉલ્લેખિત dyn સુસંગતતા નિયમોમાંનું
+
+એક છે.) અન્ય પુનરાવર્તનમાં `Post` પરની `request_review` અને `approve` પદ્ધતિઓના સમાન અમલીકરણોનો સમાવેશ થાય છે. બંને પદ્ધતિઓ `Option::take` નો ઉપયોગ `Post` ના `state` ક્ષેત્ર સાથે કરે છે, અને જો `state` `Some` હોય, તો તેઓ રેપ્ડ મૂલ્યના સમાન પદ્ધતિના અમલીકરણમાં પ્રતિનિધિત્વ કરે છે અને `state` ક્ષેત્રનું નવું મૂલ્ય પરિણામ પર સેટ કરે છે. જો `Post` પર ઘણી બધી પદ્ધતિઓ હોત જે આ પેટર્ન અનુસરે, તો આપણે પુનરાવર્તન દૂર કરવા માટે એક macro વ્યાખ્યાયિત કરવાનું વિચારી શકીએ છીએ (અध्याय 20 માં “Macros” વિભાગ જુઓ).
+
+વસ્તુલક્ષી ભાષાઓ માટે વ્યાખ્યાયિત કરેલાં રાજ્ય પેટર્નને બરાબર અમલમાં મૂકીને, આપણે Rustની શક્તિનો પૂરો ઉપયોગ કરી શકતા નથી. ચાલો કેટલાક ફેરફારો જોઈએ જે `blog`  crateમાં કરી શકાય છે જેથી અમાન્ય રાજ્યો અને સંક્રમણો કમ્પાઇલ સમયની ભૂલોમાં પરિણમે.
+
+### એન્કોડિંગ સ્થિતિઓ અને વર્તન પ્રકારો તરીકે
+
+અમે તમને બતાવીશું કે કેવી રીતે રાજ્ય પેટર્નને ફરીથી વિચારીને અલગ વેપાર મેળવી શકાય છે. બહારના કોડને સ્થિતિઓ અને સંક્રમણો વિશે જાણકારી ન હોય તે રીતે સંપૂર્ણપણે સમાવવાનું બદલે, અમે સ્થિતિઓને વિવિધ પ્રકારોમાં એન્કોડ કરીશું. પરિણામે, Rustની પ્રકાર-ચકાસણી પ્રણાલી `compiler` ભૂલ જારી કરીને ડ્રાફ્ટ પોસ્ટ્સનો ઉપયોગ કરવાનો પ્રયાસ અટકાવશે જ્યાં ફક્ત પ્રકાશિત પોસ્ટ્સને મંજૂરી હોય છે.
+
+ચાલો લિસ્ટિંગ 18-11 માં `main` નો પ્રથમ ભાગ ધ્યાનમાં લઈએ:
+
+<Listing file-name="src/main.rs">
+{{#rustdoc_include ../listings/ch18-oop/listing-18-11/src/main.rs:here}}
+</Listing>
+અમે હજી `Post::new` નો ઉપયોગ કરીને ડ્રાફ્ટ સ્થિતિમાં નવા પોસ્ટ્સ બનાવવાની અને પોસ્ટની સામગ્રીમાં લખાણ ઉમેરવાની ક્ષમતાને સક્ષમ કરીએ છીએ. પરંતુ ડ્રાફ્ટ પોસ્ટ પર ખાલી સ્ટ્રિંગ પાછળ આપતું `content` પદ્ધતિ રાખવાને બદલે, અમે એવું કરીશું કે ડ્રાફ્ટ પોસ્ટ્સ પાસે `content` પદ્ધતિ જ ન હોય. આ રીતે, જો આપણે ડ્રાફ્ટ પોસ્ટની સામગ્રી મેળવવાનો પ્રયત્ન કરીએ, તો આપણને એક કમ્પાઇલર ભૂલ મળશે જે જણાવશે કે પદ્ધતિ અસ્તિત્વમાં નથી. પરિણામે, ઉત્પાદનમાં (production) ડ્રાફ્ટ પોસ્ટની સામગ્રી આકસ્મિક રીતે પ્રદર્શિત કરવી અશક્ય બની જશે કારણ કે તે કોડ કમ્પાઇલ થશે જ નહીં. સૂચિ ૧૮-૧૯ `Post` સ્ટ્રક્ટ અને `DraftPost` સ્ટ્રક્ટની વ્યાખ્યા તેમજ દરેક પરની પદ્ધતિઓ દર્શાવે છે.
+
+<Listing number="18-19" file-name="src/lib.rs" caption="A `Post` with a `content` method and a `DraftPost` without a `content` method">
+{{#rustdoc_include ../listings/ch18-oop/listing-18-19/src/lib.rs}}
+</Listing>
+Both the `Post` and `DraftPost` structs have a private `content` field that stores the blog post text. બંને `Post` અને `DraftPost` સ્ટ્રક્ચરમાં એક ખાનગી `content` ક્ષેત્ર છે જે બ્લોગ પોસ્ટના લખાણનો સંગ્રહ કરે છે. આ સ્ટ્રક્ચર્સમાં હવે `state` ક્ષેત્ર નથી, કારણ કે આપણે સ્ટ્રક્ચરના પ્રકારોમાં સ્થિતિનું એન્કોડિંગ ખસેડી રહ્યા છીએ. `Post` સ્ટ્રક્ચર પ્રકાશિત પોસ્ટ રજૂ કરશે અને તેમાં એક `content` પદ્ધતિ હશે જે `content`
+
+પરત કરે છે. આપણે હજી પણ એક `Post::new` ફંક્શન ધરાવીએ છીએ, પરંતુ તે પહેલાં `Post` નું ઉદાહરણ પરત કરવાને બદલે, તે હવે `DraftPost` નું ઉદાહરણ પરત કરે છે. કારણ કે `content` ખાનગી છે અને એવા કોઈ ફંક્શન્સ નથી જે `Post` પરત કરે છે, તેથી હાલમાં `Post` નું ઉદાહરણ બનાવવું શક્ય નથી.
+
+`DraftPost` સ્ટ્રક્ચર અને `add_text` પદ્ધતિ `DraftPost` સ્ટ્રક્ચરમાં એક `add_text` પદ્ધતિ છે, તેથી આપણે `content` માં લખાણ ઉમેરી શકીએ છીએ જે પહેલાં હતું તેમ, પરંતુ ધ્યાન રાખો કે `DraftPost` માં `content` પદ્ધતિ વ્યાખ્યાયિત નથી! આથી હવે પ્રોગ્રામ ખાતરી કરે છે કે બધાં પોસ્ટ્સ ડ્રાફ્ટ પોસ્ટ તરીકે શરૂ થાય છે, અને ડ્રાફ્ટ પોસ્ટ્સમાં તેમનું લખાણ પ્રદર્શન માટે ઉપલબ્ધ નથી. આ નિયંત્રણોને તોડવાનો કોઈપણ પ્રયત્ન કમ્પાઇલર ભૂલ તરફ દોરી જશે.
+
+<!-- Old headings. Do not remove or links may break. -->
+તો, આપણે પ્રકાશિત પોસ્ટ કેવી રીતે મેળવીએ? આપણને એ નિયમ લાગુ કરવો છે કે ડ્રાફ્ટ પોસ્ટને પ્રકાશિત કરી શકાય તે પહેલાં તેની સમીક્ષા અને મંજૂરી લેવી જરૂરી છે. પેન્ડિંગ સમીક્ષા સ્થિતિમાં રહેલી પોસ્ટે હજી સુધી કોઈ સામગ્રી દર્શાવવી જોઈએ નહીં. ચાલો આ નિયંત્રણો ઉમેરીને અમલ કરીએ, બીજો struct `PendingReviewPost` ઉમેરીને, `DraftPost` પર `request_review` પદ્ધતિ વ્યાખ્યાયિત કરીને જે `PendingReviewPost` આપે અને `PendingReviewPost` પર `approve` પદ્ધતિ વ્યાખ્યાયિત કરીને જે `Post` આપે, જે લિસ્ટિંગ 18-20 માં દર્શાવેલ છે.
+
+<Listing number="18-20" file-name="src/lib.rs" caption="A `PendingReviewPost` that gets created by calling `request_review` on `DraftPost` and an `approve` method that turns a `PendingReviewPost` into a published `Post`">
+{{#rustdoc_include ../listings/ch18-oop/listing-18-20/src/lib.rs:here}}
+</Listing>
+request_review અને approve પદ્ધતિઓ `request_review` અને `approve` પદ્ધતિઓ `self` નું માલિકી સ્થાનાંતરણ કરે છે, આથી `DraftPost` અને `PendingReviewPost` ઉદાહરણો વપરાશ પામે છે અને ક્રમશઃ `PendingReviewPost` અને પ્રકાશિત `Post` માં રૂપાંતરિત થાય છે. આ રીતે, આપણે `request_review` પદ્ધતિને બોલાવ્યા પછી કોઈપણ લટકેલા `DraftPost` ઉદાહરણો નહીં રાખીએ, અને એવું જ આગળ વધે છે. `PendingReviewPost` struct પર `content` પદ્ધતિ વ્યાખ્યાયિત નથી, તેથી તેની સામગ્રી વાંચવાનો પ્રયાસ કરવાથી compiler error આવે છે, જેમ કે `DraftPost` સાથે થાય છે. કારણ કે પ્રકાશિત `Post` ઉદાહરણ મેળવવાનો એકમાત્ર રસ્તો એ છે કે `PendingReviewPost` પર `approve` પદ્ધતિને બોલાવવી, અને `PendingReviewPost` મેળવવાનો એકમાત્ર રસ્તો એ છે કે `DraftPost` પર `request_review` પદ્ધતિને બોલાવવી, આપણે હવે બ્લોગ પોસ્ટ વર્કફ્લોને type system માં એન્કોડ કર્યો છે.
+
+પરંતુ આપણે `main` માં થોડા નાના ફેરફારો પણ કરવા પડશે. `request_review` અને `approve` પદ્ધતિઓ struct ને બદલવાને બદલે નવા ઉદાહરણો પરત કરે છે, તેથી આપણે પરત થયેલા ઉદાહરણોને સાચવવા માટે વધુ `let post =` છાયા સોંપણીઓ ઉમેરવાની જરૂર છે. આપણને ડ્રાફ્ટ અને બાકી રહેલા સમીક્ષા પોસ્ટ્સની સામગ્રી ખાલી સ્ટ્રિંગ હોવી જોઈએ તેવા દાવા પણ રાખી શકાતા નથી, અને તેની જરૂર પણ નથી: આપણે હવે તે સ્થિતિમાં પોસ્ટ્સની સામગ્રીનો ઉપયોગ કરવાનો પ્રયાસ કરતી કોડને કમ્પાઇલ કરી શકતા નથી. `main` માં અપડેટેડ કોડ લિસ્ટિંગ 18-21 માં દર્શાવેલ છે.
+
+<Listing number="18-21" file-name="src/main.rs" caption="Modifications to `main` to use the new implementation of the blog post workflow">
+{{#rustdoc_include ../listings/ch18-oop/listing-18-21/src/main.rs}}
+</Listing>
+આપણે `main` માં જે ફેરફારો કરવા પડ્યા તે `post` ને ફરીથી સોંપવા માટેનો અર્થ એ છે કે આ અમલીકરણ હવે સંપૂર્ણપણે વસ્તુ-લક્ષી સ્થિતિ પેટર્નનું પાલન કરતું નથી: સ્થિતિઓ વચ્ચેના પરિવર્તનો હવે `Post` અમલીકરણની અંદર સંપૂર્ણપણે બંધાયેલા નથી. જોકે, આપણને જે લાભ થયો છે તે એ છે કે પ્રકાર સિસ્ટમ અને કમ્પાઇલ સમયે થતી પ્રકાર ચકાસણીને કારણે અમાન્ય સ્થિતિઓ હવે શક્ય નથી! આ સુનિશ્ચિત કરે છે કે અમુક ભૂલો, જેમ કે પ્રકાશિત ન થયેલ પોસ્ટની સામગ્રીનું પ્રદર્શન, ઉત્પાદનમાં પહોંચે તે પહેલાં જ શોધી કાઢવામાં આવશે.
+
+Try the tasks suggested at the start of this section on the `blog` crate as it is after Listing 18-21 to see what you think about the design of this version of the code. આ વિભાગની શરૂઆતમાં સૂચવેલા કાર્યો `blog` ક્રેટ પર જુઓ, જે યાદી ૧૮-૨૧ પછીનું છે, અને તમને આ કોડના વર્તમાન સ્વરૂપની ડિઝાઇન વિશે શું લાગે છે તે જાણો. નોંધ કરો કે આ ડિઝાઇનનાં કેટલાંક કાર્યો પહેલાંથી જ પૂર્ણ થયેલા હોઈ શકે છે. We’ve seen that even though Rust is capable of
+
+implementing object-oriented design patterns, other patterns, such as encoding state into the type system, are also available in Rust. These patterns have different trade-offs. Although you might be very familiar with object-oriented patterns, rethinking the problem to take advantage of Rust’s features can provide benefits, such as preventing some bugs at compile time. Object-oriented patterns won’t always be the best solution in Rust due to certain features, like ownership, that object-oriented languages don’t have. જો કે Rust વસ્તુલક્ષી (object-oriented) ડિઝાઇન પેટર્નનાં અમલીકરણ સક્ષમ છે, તેમ છતાં અન્ય પેટર્ન, જેમ કે પ્રકાર પ્રણાલીમાં સ્થિતિનું એન્કોડિંગ કરવું, Rust માં ઉપલબ્ધ છે. આ પેટર્નમાં વિવિધ ત્યાગ હોય છે. ભલે તમે વસ્તુલક્ષી પેટર્નથી ખૂબ પરિચિત હોવ, Rustની વિશેષતાઓનો લાભ લેવા માટે સમસ્યાને ફરીથી વિચારવાથી ફાયદો થઈ શકે છે, જેમ કે કમ્પાઇલ સમયે કેટલીક ભૂલો અટકાવવી. અમુક વિશેષતાઓને લીધે, વસ્તુલક્ષી પેટર્ન હંમેશાં Rust માં શ્રેષ્ઠ ઉકેલ ન હોઈ શકે, જેમ કે માલિકી (ownership).
+
+## સારાંશ
+
+તમે આ પ્રકરણ વાંચ્યા પછી એવું વિચારતા હોવ કે Rust એક વસ્તુલક્ષી ભાષા છે કે નહીં, પરંતુ હવે તમે જાણો છો કે તમે લક્ષણ વસ્તુઓ (trait objects) નો ઉપયોગ કરીને Rust માં કેટલાક વસ્તુલક્ષી સુવિધાઓ મેળવી શકો છો. ગતિશીલ વિતરણ (dynamic dispatch) તમારા કોડને થોડીક રનટાઇમ કામગીરીના બદલામાં કેટલીક લવચીકતા આપી શકે છે. તમે આ લવચીકતાનો ઉપયોગ વસ્તુલક્ષી પેટર્નને અમલમાં મૂકવા માટે કરી શકો છો જે તમારા કોડની જાળવણીમાં મદદ કરી શકે છે. Rust માં અન્ય સુવિધાઓ પણ છે, જેમ કે માલિકી (ownership), જે વસ્તુલક્ષી ભાષાઓ પાસે નથી. વસ્તુલક્ષી પેટર્ન હંમેશાં Rust ની શક્તિઓનો લાભ લેવાનો શ્રેષ્ઠ માર્ગ ન હોઈ શકે, પરંતુ તે એક ઉપલબ્ધ વિકલ્પ છે.
+
+આગળ, આપણે પેટર્ન જોશું, જે Rustની અન્ય વિશેષતાઓ પૈકી એક છે, જે ઘણી લવચીકતા સક્ષમ કરે છે. અમે પુસ્તકમાં તેમનો સંક્ષિપ્ત ઉલ્લેખ કર્યો છે પરંતુ હજી સુધી તેમની સંપૂર્ણ ક્ષમતા જોઈ નથી. ચાલો આગળ વધીએ!
+

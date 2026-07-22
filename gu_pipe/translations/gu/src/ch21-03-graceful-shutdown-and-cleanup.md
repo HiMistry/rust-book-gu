@@ -1,0 +1,115 @@
+## Graceful Shutdown and Cleanup
+
+Listing 21-20 માં રહેલો કોડ આપણી ધારણા મુજબ થ્રેડ પૂલના ઉપયોગથી વિનંતીઓને અસિંક્રોનસ રીતે પ્રતિસાદ આપી રહ્યો છે. `workers`, `id`, અને `thread` ક્ષેત્રો સંબંધિત કેટલીક ચેતવણીઓ મળે છે, જે આપણને યાદ અપાવે છે કે આપણે કોઈ પણ વસ્તુની સફાઈ કરી રહ્યા નથી. જ્યારે આપણે ઓછી સરળ ctrl - C પદ્ધતિનો ઉપયોગ કરીને મુખ્ય થ્રેડને સ્થગિત કરીએ છીએ, ત્યારે અન્ય તમામ થ્રેડો પણ તરત જ બંધ થઈ જાય છે, ભલે તેઓ વિનંતી પૂરી કરવાના મધ્યમાં હોય.
+
+Next, then, we’ll implement the `Drop` trait to call `join` on each of the threads in the pool so that they can finish the requests they’re working on before closing. Then, we’ll implement a way to tell the threads they should stop accepting new requests and shut down. To see this code in action, we’ll modify our server to accept only two requests before gracefully shutting down its thread pool. પછી, આપણે `Drop` ટ્રેઇટનો અમલ કરીશું જેથી પૂલના દરેક થ્રેડ પર `join` કૉલ કરી શકાય, જેથી તેઓ બંધ થાય તે પહેલાં તેઓ જે વિનંતીઓ પર કામ કરી રહ્યા છે તેને પૂર્ણ કરી શકે. ત્યારબાદ, આપણે એક એવી રીત અમલમાં મૂકીશું કે જેનાથી થ્રેડોને ખબર પડે કે તેઓ નવી વિનંતીઓ સ્વીકારવાનું બંધ કરે અને શટડાઉન કરે. આ કોડને ક્રિયામાં જોવા માટે, આપણે આપણા સર્વરને માત્ર બે વિનંતીઓ સ્વીકારવા માટે સંશોધિત કરીશું, ત્યારબાદ તેની થ્રેડ પૂલને સરળતાથી શટડાઉન કરી દેશે.
+
+One thing to notice as we go: None of this affects the parts of the code that handle executing the closures, so everything here would be the same if we were using a thread pool for an async runtime. એક બાબત ધ્યાનમાં રાખવાની છે કે જેમ જેમ આપણે આગળ વધીશું તેમ, આમાંથી કંઈપણ એ કોડના તે ભાગોને અસર કરતું નથી જે ક્લોઝર ચલાવવાનું સંભાળે છે, તેથી અહીં બધું એવું જ રહેશે જો આપણે અસિંક્રન રનટાઇમ માટે થ્રેડ પૂલનો ઉપયોગ કરી રહ્યા હોઈએ.
+
+### `Drop` લક્ષણનો અમલ  `ThreadPool` પર
+
+ચાલો આપણી થ્રેડ પૂલ પર `Drop` લક્ષણનો અમલ કરવાનું શરૂ કરીએ. જ્યારે પૂલને છોડી દેવામાં આવે છે, ત્યારે આપણાં તમામ થ્રેડોએ તેમના કાર્ય પૂર્ણ થાય તે સુનિશ્ચિત કરવા માટે જોડાવા જોઈએ. સૂચિ 21-22 `Drop` અમલીકરણનો પ્રથમ પ્રયાસ દર્શાવે છે; આ કોડ હજી સંપૂર્ણપણે કામ કરશે નહીં.
+
+<Listing number="21-22" file-name="src/lib.rs" caption="Joining each thread when the thread pool goes out of scope">
+{{#rustdoc_include ../listings/ch21-web-server/listing-21-22/src/lib.rs:here}}
+</Listing>
+પ્રથમ, અમે થ્રેડ પૂલ `workers` ના દરેક ઘટકમાંથી પસાર થઈએ છીએ. અમે `&mut` નો ઉપયોગ કરીએ છીએ કારણ કે `self` એ પરિવર્તનશીલ સંદર્ભ છે, અને અમારે `worker` ને પણ બદલવાની જરૂર છે. દરેક `worker` માટે, અમે એક સંદેશ છાપીએ છીએ જેમાં જણાવવામાં આવ્યું છે કે આ ચોક્કસ `Worker` ઉદાહરણ બંધ થઈ રહ્યું છે, અને પછી અમે તે `Worker` ઉદાહરણના થ્રેડ પર `join` કૉલ કરીએ છીએ. જો `join` કૉલમાં નિષ્ફળતા આવે, તો અમે `unwrap` નો ઉપયોગ કરીને Rust ને ગભરાટમાં મૂકીએ છીએ અને અણઘડ શટડાઉન (shutdown) માં જઈએ છીએ.
+
+અહીં એ ભૂલ છે જે અમને આ કોડ કમ્પાઇલ કરતી વખતે મળે છે:
+
+{{#include ../listings/ch21-web-server/listing-21-22/output.txt}}
+અપરાધ જણાવે છે કે આપણે `join` ને બોલાવી શકતા નથી, કારણ કે આપણી પાસે દરેક `worker` નો પરિવર્તનશીલ ઉછીના લીધેલું છે અને `join` તેના દલીલનું માલિકી લે છે. આ સમસ્યાને ઉકેલવા માટે, આપણે થ્રેડને `thread` ધરાવતા `Worker` ઇન્સ્ટન્સમાંથી ખસેડવાની જરૂર છે જેથી `join` થ્રેડનો ઉપયોગ કરી શકે. આ કરવાની એક રીત એ છે કે આપણે લિસ્ટિંગ 18-15 માં લીધેલા અભિગમને અનુસરવો. જો `Worker` પાસે `Option<thread::JoinHandle<()> >` હોત, તો આપણે `Option` પર `take` પદ્ધતિને બોલાવી શક્યા હોત જેથી મૂલ્યને `Some` વિવિધતામાંથી ખસેડી શકાય અને `None` વિવિધતા પાછળ છોડી દેવામાં આવે. બીજા શબ્દોમાં કહીએ તો, ચાલતો `Worker` પાસે `thread` માં `Some` વિવિધતા હશે, અને જ્યારે આપણે `Worker` ને સાફ કરવા માંગતા હોઈએ, ત્યારે આપણે `Some` ને `None` સાથે બદલી દઈશું જેથી `Worker` પાસે ચલાવવા માટે થ્રેડ ન હોય.
+
+જો કે, આ પરિસ્થિતિ માત્ર ત્યારે જ ઊભી થશે જ્યારે `Worker` ને છોડી દેવામાં આવે. બદલામાં, આપણે `Option<thread::JoinHandle<()>>` સાથે કામ કરવું પડશે જ્યાં પણ આપણે `worker.thread` ને પ્રવેશ મેળવીએ છીએ. રૂઢિચુસ્ત Rust માં `Option` નો ઘણી વાર ઉપયોગ થાય છે, પરંતુ જ્યારે તમે તમારી જાતને એવી કોઈ વસ્તુને `Option` માં લપેટી નાખો છો જે તમને ખબર છે કે હંમેશા હાજર રહેશે, તો આ પ્રકારના ઉપાય તરીકે, તમારા કોડને વધુ સ્વચ્છ અને ભૂલ-મુક્ત બનાવવા માટે વૈકલ્પિક અભિગમો શોધવાનું એક સારો વિચાર છે.
+
+આ કિસ્સામાં, એક વધુ સારો વિકલ્પ અસ્તિત્વમાં છે: `Vec::drain` પદ્ધતિ. તે સ્વીકારે છે કે કઈ વસ્તુઓ દૂર કરવી તે નિર્ધારિત કરવા માટે રેન્જ પરિમાણ અને તે વસ્તુઓના ઇટરેટર પરત કરે છે. `..` રેન્જ સિન્ટેક્સ પસાર કરવાથી વેક્ટરની દરેક કિંમત દૂર થઈ જશે.
+
+તો, આપણે `ThreadPool` ના `drop` અમલીકરણ આ રીતે અપડેટ કરવાની જરૂર છે:
+
+<Listing file-name="src/lib.rs">
+{{#rustdoc_include ../listings/ch21-web-server/no-listing-04-update-drop-definition/src/lib.rs:here}}
+</Listing>
+આ કમ્પાઇલરની ભૂલ નિવારણ કરે છે અને આપણી કોડમાં અન્ય કોઈ ફેરફાર જરૂરી નથી. નોંધ કરો કે, `drop` બોલાવી શકાય છે જ્યારે પ્રોગ્રામ ગભરાય છે (panicking), તેથી `unwrap` પણ ગભરાય શકે છે અને બેવડા ગભરાટનું કારણ બની શકે છે, જે તાત્કાલિક પ્રોગ્રામને ક્રેશ કરે છે અને ચાલુ રહેલી કોઈપણ સફાઈનો અંત લાવે છે. આ એક ઉદાહરણ પ્રોગ્રામ માટે ઠીક છે, પરંતુ ઉત્પાદન કોડ માટે આ ભલામણ કરવામાં આવતું નથી.
+
+### Signaling to the Threads to Stop Listening for Jobs
+
+આપણે કરેલા તમામ ફેરફારો સાથે, આપણો કોડ કોઈપણ ચેતવણી વગર કમ્પાઇલ થાય છે. જોકે, ખરાબ સમાચાર એ છે કે આ કોડ હજી આપણી ધાર્યા પ્રમાણે કાર્ય કરતો નથી. મુખ્ય બાબત એ છે કે `Worker` ઇન્સ્ટન્સના થ્રેડો દ્વારા ચલાવવામાં આવતા ક્લોઝર્સમાં રહેલી તર્કસંગતતા: હાલમાં, આપણે `join` ને બોલાવીએ છીએ, પરંતુ તે થ્રેડોને બંધ નહીં કરે, કારણ કે તેઓ કાયમ માટે નોકરીઓ શોધવા માટે `loop` કરે છે. જો આપણે આપણી વર્તમાન `drop` અમલીકરણ સાથે `ThreadPool` ને છોડી દેવાનો પ્રયત્ન કરીએ, તો મુખ્ય થ્રેડ અનિશ્ચિતકાળ સુધી પ્રથમ થ્રેડ પૂર્ણ થાય તેની રાહ જોતા બ્લોક થશે.
+
+આ સમસ્યા નિવારવા માટે, આપણે `ThreadPool` ના `drop` અમલીકરણમાં અને પછી `Worker` લૂપમાં ફેરફાર કરવો પડશે.
+
+સૌ પ્રથમ, આપણે `sender` ને છોડતા પહેલા થ્રેડો પૂરા થાય તેની રાહ જોવાના બદલે, સ્પષ્ટપણે `sender` ને છોડવા માટે `ThreadPool` ના `drop` અમલીકરણને બદલીશું. સૂચિ 21-23 માં `sender` ને સ્પષ્ટપણે છોડવા માટે `ThreadPool` માં કરેલા ફેરફારો દર્શાવવામાં આવ્યા છે. થ્રેડની જેમ અહીં, આપણે `Option::take` વડે `ThreadPool` માંથી `sender` ને ખસેડી શકવા માટે `Option` નો ઉપયોગ કરવો જરૂરી છે.
+
+<Listing number="21-23" file-name="src/lib.rs" caption="Explicitly dropping `sender` before joining the `Worker` threads">
+{{#rustdoc_include ../listings/ch21-web-server/listing-21-23/src/lib.rs:here}}
+</Listing>
+`sender` ને છોડી દેવાથી ચેનલ બંધ થઈ જાય છે, જે દર્શાવે છે કે હવે કોઈ સંદેશાઓ મોકલવામાં આવશે નહીં. જ્યારે આવું થાય છે, ત્યારે `Worker` ઇન્સ્ટન્સ દ્વારા અનંત લૂપમાં કરવામાં આવતા તમામ `recv` કૉલ્સ ભૂલ પાછી આપે છે. યાદી 21-24 માં, અમે `Worker` લૂપને એવી રીતે બદલીએ છીએ કે તે તે સ્થિતિમાં લૂપમાંથી શાંતિથી બહાર નીકળી જાય, એટલે કે થ્રેડો `ThreadPool` ના `drop` અમલીકરણ દ્વારા તેમના પર `join` કૉલ કરવામાં આવે ત્યારે પૂર્ણ થઈ જશે.
+
+<Listing number="21-24" file-name="src/lib.rs" caption="Explicitly breaking out of the loop when `recv` returns an error">
+{{#rustdoc_include ../listings/ch21-web-server/listing-21-24/src/lib.rs:here}}
+</Listing>
+આ કોડને ક્રિયામાં જોવા માટે, ચાલો `main` ને એવી રીતે બદલીએ કે તે માત્ર બે વિનંતીઓ સ્વીકારે અને પછી સર્વરને શાંતિથી બંધ કરી દે, જે યાદી 21-25 માં દર્શાવેલ છે.
+
+<Listing number="21-25" file-name="src/main.rs" caption="Shutting down the server after serving two requests by exiting the loop">
+{{#rustdoc_include ../listings/ch21-web-server/listing-21-25/src/main.rs:here}}
+</Listing>
+તમે વાસ્તવિક વેબ સર્વરને માત્ર બે વિનંતીઓ પૂરી કર્યા પછી બંધ થવા દેતા ન હોત. આ કોડ ફક્ત દર્શાવે છે કે સુયોગ્ય શટડાઉન અને સફાઈ
+
+કાર્યરત ક્રમમાં છે. `take` પદ્ધતિ `Iterator` ટ્રેઇટમાં વ્યાખ્યાયિત થયેલી છે અને પુનરાવર્તનને વધુમાં વધુ પ્રથમ બે વસ્તુઓ સુધી મર્યાદિત કરે છે. `ThreadPool` `main` ના અંતે અવકાશમાંથી બહાર નીકળી જશે, અને `drop` અમલીકરણ ચાલશે. સર્વરને
+
+`cargo run` સાથે શરૂ કરો અને ત્રણ વિનંતીઓ કરો. ત્રીજી વિનંતીમાં ભૂલ થવી જોઈએ, અને તમારા ટર્મિનલમાં તમને આના જેવું આઉટપુટ દેખાશે:
+
+<!-- manual-regeneration
+cd listings/ch21-web-server/listing-21-25
+cargo run
+curl http://127.0.0.1:7878
+curl http://127.0.0.1:7878
+curl http://127.0.0.1:7878
+third request will error because server will have shut down
+copy output below
+Can't automate because the output depends on making requests
+-->
+$ cargo run
+   Compiling hello v0.1.0 (file:///projects/hello)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.41s
+     Running `target/debug/hello`
+Worker 0 got a job; executing.
+Shutting down.
+Shutting down worker 0
+Worker 3 got a job; executing.
+Worker 1 disconnected; shutting down.
+Worker 2 disconnected; shutting down.
+Worker 3 disconnected; shutting down.
+Worker 0 disconnected; shutting down.
+Shutting down worker 1
+Shutting down worker 2
+Shutting down worker 3
+તમે `Worker` ID અને સંદેશાઓની અલગ ક્રમમાં છાપાયેલી ગોઠવણી જોઈ શકો છો. આ કોડ કેવી રીતે કાર્ય કરે છે તે સંદેશાઓ દ્વારા જાણી શકાય છે: `Worker` ઉદાહરણો 0 અને 3 ને પ્રથમ બે વિનંતીઓ મળી હતી. બીજું જોડાણ પછી સર્વર જોડાણો સ્વીકારવાનું બંધ કરી દે છે, અને `ThreadPool` પર `Drop` અમલીકરણ `Worker 3` પોતાનું કાર્ય શરૂ કરે તે પહેલાં જ ચાલુ થાય છે. `sender` ને દૂર કરવાથી તમામ `Worker` ઉદાહરણો ડિસ્કનેક્ટ થઈ જાય છે અને તેમને બંધ થવાનો સંકેત આપવામાં આવે છે. દરેક `Worker` ઉદાહરણ ડિસ્કનેક્ટ થયા પછી એક સંદેશ છાપે છે, અને ત્યારબાદ થ્રેડ પૂલ દરેક `Worker` થ્રેડ પૂર્ણ થાય તેની રાહ જોવા માટે `join` ને બોલાવે છે.
+
+Notice one interesting aspect of this particular execution: આ ચોક્કસ અમલ (execution) ના એક રસપ્રદ પાસા પર ધ્યાન આપો: `ThreadPool` એ `sender` ને છોડી દીધો હતો, અને કોઈ પણ `Worker` પાસે ભૂલ પહોંચે તે પહેલાં આપણે `Worker 0` ને જોડાણ (join) કરવાનો પ્રયત્ન કર્યો. `Worker 0` એ હજી સુધી `recv` દ્વારા ભૂલ મેળવી ન હતી, તેથી મુખ્ય થ્રેડ (thread) અટકી ગયો, `Worker 0` પૂર્ણ થાય તેની રાહ જોઈ રહ્યો હતો. તે દરમિયાન, `Worker 3` ને એક કાર્ય મળ્યું અને પછી બધા થ્રેડને ભૂલ મળી. જ્યારે `Worker 0` પૂર્ણ થયો, ત્યારે મુખ્ય થ્રેડે બાકીના `Worker` ઉદાહરણો પૂર્ણ થાય તેની રાહ જોઈ. તે સમયે, તેઓએ તેમના લૂપ્સમાંથી બહાર નીકળીને બંધ કરી દીધા હતા.
+
+અભિનંદન! આપણે આપણી project પૂર્ણ કરી છે; આપણી પાસે એક મૂળભૂત web server છે જે asynchronously પ્રતિસાદ આપવા માટે thread pool નો ઉપયોગ કરે છે. આપણે server નું સરળતાથી શટડાઉન (shutdown) કરી શકીએ છીએ, જે pool માં રહેલા તમામ threads ને સાફ કરે
+
+છે. સંદર્ભ માટે અહીં સંપૂર્ણ code છે:
+
+<Listing file-name="src/main.rs">
+{{#rustdoc_include ../listings/ch21-web-server/no-listing-07-final-code/src/main.rs}}
+</Listing>
+<Listing file-name="src/lib.rs">
+{{#rustdoc_include ../listings/ch21-web-server/no-listing-07-final-code/src/lib.rs}}
+</Listing>
+આપણે અહીં વધુ કરી શક્યા હોત! જો તમે આ કાર્યક્રમમાં સુધારા કરવાનું ચાલુ રાખવા માંગતા હો, તો અહીં કેટલાક વિચારો છે:
+
+`ThreadPool` અને તેની જાહેર પદ્ધતિઓ માટે વધુ દસ્તાવેજીકરણ ઉમેરો.
+
+પુસ્તકાલયની કાર્યક્ષમતાના પરીક્ષણો ઉમેરો.
+
+`unwrap` ના કોલ્સને વધુ મજબૂત ભૂલ વ્યવસ્થાપન સાથે બદલો.
+
+વેબ વિનંતીઓ પૂરી પાડવા સિવાય અન્ય કોઈ કાર્ય કરવા માટે `ThreadPool` નો ઉપયોગ કરો.
+
+crates.io પર થ્રેડ પુલ ક્રેટ શોધો અને તેના બદલે તે ક્રેટનો ઉપયોગ કરીને સમાન વેબ સર્વર લાગુ કરો. પછી, તેની API અને અમારી દ્વારા અમલમાં મૂકાયેલ થ્રેડ પુલની મજબૂતાઈ સાથે સરખામણી કરો.
+
+## સારાંશ
+
+ખૂબ સારું! તમે પુસ્તકના અંત સુધી પહોંચી ગયા છો! અમે તમને Rustના આ પ્રવાસમાં અમારી સાથે જોડાવા બદલ આભાર માનીએ છીએ. હવે તમે તમારા પોતાના Rust પ્રોજેક્ટ્સ અમલમાં મૂકવા અને અન્ય લોકોના પ્રોજેક્ટ્સમાં મદદ કરવા માટે તૈયાર છો. ધ્યાનમાં રાખો કે Rustaceansનો એક આવકારદાયક સમુદાય છે જે તમને તમારી Rust યાત્રામાં આવતી કોઈપણ મુશ્કેલીઓ દૂર કરવામાં મદદ કરવા માટે ઉત્સુક હશે.
+

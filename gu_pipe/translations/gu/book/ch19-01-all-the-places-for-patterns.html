@@ -1,0 +1,327 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>All the Places Patterns Can Be Used - ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-7ed1a93d.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-0e4ce700.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h2 id="તમામ-સથળોએ-પેટરનનો-ઉપયોગ-થઈ-શકે-છે"><a class="header" href="#તમામ-સથળોએ-પેટરનનો-ઉપયોગ-થઈ-શકે-છે">તમામ સ્થળોએ પેટર્નનો ઉપયોગ થઈ શકે છે</a></h2>
+<p>પેટર્ન Rustમાં અનેક સ્થળોએ દેખાય છે, અને તમે ઘણા સમયથી તેનો ઉપયોગ કરતા આવ્યાં છો! આ વિભાગમાં પેટર્ન ક્યાં માન્ય છે તે અંગે ચર્ચા કરવામાં આવી છે.</p>
+<h3 id="match-અંગો"><a class="header" href="#match-અંગો"><code>match</code> અંગો</a></h3>
+<p>જેમ કે પ્રકરણ ૬ માં ચર્ચા કરવામાં આવી છે, તેમ આપણે <code>match</code> અભિવ્યક્તિઓના અંગોમાં પ્રકારણીઓનો ઉપયોગ કરીએ છીએ. રૂઢિચુસ્ત રીતે, <code>match</code> અભિવ્યક્તિઓ એ કીવર્ડ <code>match</code>, એક મૂલ્ય જેની સાથે સરખામણી કરવી છે, અને એક અથવા વધુ મેળ ખાતા અંગોથી બનેલા હોય છે જેમાં એક પ્રકારણી અને એક અભિવ્યક્તિ હોય છે જે તે અંગના પ્રકારણી સાથે મળીએ તો ચલાવવામાં આવે છે, જેમ કે:</p>
+<!--
+  Manually formatted rather than using Markdown intentionally: Markdown does not
+  support italicizing code in the body of a block like this!
+-->
+<pre><code>match <em>VALUE</em> {
+    <em>PATTERN</em> =&gt; <em>EXPRESSION</em>,
+    <em>PATTERN</em> =&gt; <em>EXPRESSION</em>,
+    <em>PATTERN</em> =&gt; <em>EXPRESSION</em>,
+}</code></pre>
+
+<p>અહીંયાથી ઉદાહરણ તરીકે, લિસ્ટિંગ ૬-૫ માંથી <code>match</code> અભિવ્યક્તિ દર્શાવેલ છે, જે ચલ <code>x</code> માં રહેલા <code>Option&lt;i32&gt;</code> મૂલ્ય સાથે મેળ ખાય છે:</p>
+<p>match x {
+None =&gt; None,
+Some(i) =&gt; Some(i + 1),
+}
+The patterns in this <code>match</code> expression are the <code>None</code> and <code>Some(i)</code> to the left of each arrow. આ <code>match</code> અભિવ્યક્તિમાં</p>
+<p>રહેલાં દાખલાં એ દરેક તીરની ડાબી બાજુએ <code>None</code> અને <code>Some(i)</code> છે. એક આવશ્યકતા એ છે કે <code>match</code> અભિવ્યક્તિઓ સંપૂર્ણ હોવી જોઈએ, એટલે કે <code>match</code> અભિવ્યક્તિમાં રહેલી કિંમત માટેની તમામ શક્યતાઓ ધ્યાનમાં લેવી જોઈએ. દરેક શક્યતાને આવરી લીધી છે કે નહીં તે સુનિશ્ચિત કરવાનો એક માર્ગ એ છે કે છેલ્લા ભાગ માટે એક સામાન્ય દાખલો ધરાવવો: ઉદાહરણ તરીકે, કોઈપણ કિંમતના સાથે મેળ ખાતું ચલ નામ ક્યારેય નિષ્ફળ જતું નથી અને આમ બાકીના તમામ કેસોને આવરી લે છે.</p>
+<p>The particular pattern <code>_</code> will match anything, but it never binds to a variable, so it’s often used in the last match arm. The <code>_</code> pattern can be useful when you want to ignore any value not specified, for example. We’ll cover the <code>_</code> pattern in more detail in “Ignoring Values in a Pattern” later in this chapter. ચોક્કસ પેટર્ન <code>_</code> કોઈપણ વસ્તુ સાથે મેળ ખાય છે, પરંતુ તે ક્યારેય ચલ (variable) ને જોડેલું હોતું નથી, તેથી તે ઘણીવાર છેલ્લાં મેચ આર્મમાં વપરાય છે. જ્યારે તમે કોઈ પણ અસ્પષ્ટિત મૂલ્યને અવગણવા માંગતા હોવ ત્યારે <code>_</code> પેટર્ન ઉપયોગી થઈ શકે છે, દાખલા તરીકે. અમે આ પ્રકરણમાં આગળ “પેટર્નમાં મૂલ્યોને અવગણવા” વિષయంలో <code>_</code> પેટર્નને વધુ વિગતવાર આવરી લઈશું.</p>
+<h3 id="let-વિધાનો"><a class="header" href="#let-વિધાનો"><code>let</code> વિધાનો</a></h3>
+<p>અગાઉના પ્રકરણમાં, આપણે માત્ર <code>match</code> અને <code>if let</code> સાથે પેટર્નનો ઉપયોગ વિશે જ ચર્ચા કરી હતી, પરંતુ હકીકતમાં, આપણે <code>let</code> વિધાનો સહિત અન્ય સ્થળોએ પણ પેટર્નનો ઉપયોગ કર્યો છે. ઉદાહરણ તરીકે, આ સરળ <code>let</code> સાથે ચલ નિસ્યંદન (variable assignment) ધ્યાનમાં લો:</p>
+<p>let x = 5;
+દરેક વખતે તમે <code>let</code> વિધાનનો ઉપયોગ કર્યો હોય, ત્યારે તમે પેટર્નનો ઉપયોગ કર્યો હોય, ભલે તમને ખબર ન હોય! વધુ સત્તાવાર રીતે, એક <code>let</code> વિધાન આના જેવું દેખાય છે:</p>
+<!--
+  Manually formatted rather than using Markdown intentionally: Markdown does not
+  support italicizing code in the body of a block like this!
+-->
+<pre>
+<code>let <em>PATTERN</em> = <em>EXPRESSION</em>;</code>
+</pre>
+
+<p><code>let x = 5;</code> જેવી વિધાનમાં PATTERN સ્લોટમાં ચલનું નામ હોય, તો તે માત્ર એક સરળ પ્રકારની પેટર્ન છે. Rust અભિવ્યક્તિને પેટર્ન સામે સરખાવે છે અને તે શોધે તેવા કોઈપણ નામો સોંપે છે. તેથી, <code>let x = 5;</code> ઉદાહરણમાં, <code>x</code> એ એક પેટર્ન છે જેનો અર્થ થાય છે “અહીં જે મેળ ખાય છે તેને ચલ <code>x</code> સાથે જોડો.” કારણ કે નામ <code>x</code> આખી પેટર્ન છે, આ પેટર્ન અસરકારક રીતે “ચલ <code>x</code> સાથે બધું બાંધો, ગમે તે મૂલ્ય હોય” એવો અર્થ સૂચવે છે.</p>
+<p>ચોક્કસ <code>let</code> ના પેટર્ન-મેચિંગ પાસાને વધુ સ્પષ્ટ રીતે સમજવા માટે, યાદી ૧૯-૧ જુઓ, જે <code>let</code> સાથે એક પેટર્નનો ઉપયોગ કરીને ટ્યૂપલને વિઘટિત કરે છે.</p>
+<listing number="19-1" caption="Using a pattern to destructure a tuple and create three variables at once">
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-01/src/main.rs:here}}
+</listing>
+અહીં, આપણે એક ટ્યૂપલને પેટર્ન સામે સરખાવે છે. Rust મૂલ્ય `(1, 2, 3)` ને પેટર્ન `(x, y, z)` સાથે સરખાવે છે અને જુએ છે કે મૂલ્ય પેટર્નને બંધબેસે છે—એટલે કે, તે જુએ છે કે બંનેમાં સમાન સંખ્યામાં ઘટકો છે—તેથી Rust `1` ને `x`, `2` ને `y`, અને `3` ને `z` સાથે જોડે છે. તમે આ ટ્યૂપલ પેટર્નને ત્રણ વ્યક્તિગત ચલ પેટર્નનું નેસ્ટિંગ તરીકે વિચારી શકો છો.
+<p>જો પેટર્નમાં ઘટકોની સંખ્યા ટ્યૂપલમાં ઘટકોની સંખ્યા સાથે મેળ ખાતી નથી, તો સમગ્ર પ્રકાર મેળ ખાતો નથી અને આપણને કમ્પાઇલર ભૂલ મળશે. ઉદાહરણ તરીકે, યાદી 19-2 ત્રણ ઘટકો ધરાવતા ટ્યૂપલને બે ચલમાં વિઘટિત કરવાનો પ્રયાસ દર્શાવે છે, જે કામ કરશે નહીં.</p>
+<listing number="19-2" caption="Incorrectly constructing a pattern whose variables don’t match the number of elements in the tuple">
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-02/src/main.rs:here}}
+</listing>
+આ કોડને કમ્પાઇલ કરવાના પ્રયત્નોથી આ પ્રકારની ભૂલ આવે છે:
+<p>{{#include ../listings/ch19-patterns-and-matching/listing-19-02/output.txt}}
+આ ભૂલ નિવારવા માટે, આપણે ટ્યૂપલમાં રહેલા એક અથવા વધુ મૂલ્યોને અવગણી શકીએ છીએ <code>_</code> અથવા <code>..</code> નો ઉપયોગ કરીને, જે તમે “પેટર્નમાં મૂલ્યોને અવગણવું” વિભાગમાં જોશો. જો સમસ્યા એ હોય કે પેટર્નમાં ઘણાં બધાં ચલ છે, તો ઉકેલ એ છે કે પ્રકારોને મેળ ખાતા બનાવવા માટે ચલ દૂર કરવા જેથી ચલોની સંખ્યા ટ્યૂપલના ઘટકોની સંખ્યા જેટલી થાય.</p>
+<h3 id="conditional-if-let-expressions"><a class="header" href="#conditional-if-let-expressions">Conditional <code>if let</code> Expressions</a></h3>
+<p>અગાઉના પ્રકરણ ૬ માં, આપણે ચર્ચા કરી હતી કે <code>if let</code> અભિવ્યક્તિઓનો ઉપયોગ મુખ્યત્વે એક <code>match</code> ની સમકક્ષ લખવાની ટૂંકી રીત તરીકે કેવી રીતે કરવો. જો વૈકલ્પિક હોય તો, <code>if let</code> માં એક અનુરૂપ <code>else</code> હોઈ શકે છે જેમાં પેટર્ન <code>if let</code> સાથે મેળ ખાતી નથી તેવા કિસ્સામાં ચલાવવાનો કોડ હોય છે.</p>
+<p>લિસ્ટિંગ ૧૯-૩ દર્શાવે છે કે <code>if let</code>, <code>else if</code>, અને <code>else if let</code> અભિવ્યક્તિઓને મિશ્રિત કરવી પણ શક્ય છે. આવું કરવાથી આપણને <code>match</code> અભિવ્યક્તિ કરતાં વધુ લવચીકતા મળે છે જેમાં આપણે માત્ર એક જ મૂલ્યની સરખામણી પેટર્ન સાથે કરી શકીએ છીએ. ઉપરાંત, Rust ને <code>if let</code>, <code>else if</code>, અને <code>else if let</code> શરતોની શ્રેણીમાં સંબંધિત હોવાની જરૂર નથી.</p>
+<p>Listing 19-3 નો કોડ Listing 19-3 માં રહેલો કોડ નક્કી કરે છે કે તમારી પૃષ્ઠભૂમિ કયો રંગ ધારણ કરે, જે અનેક શરતો માટેના પરીક્ષણોની શ્રેણી પર આધારિત છે. આ ઉદાહરણ માટે, અમે એવા ચલ (variable) બનાવ્યા છે જેમાં અગાઉથી નિશ્ચિત મૂલ્યો હોય, જે વાસ્તવિક કાર્યક્રમ વપરાશકર્તા ઇનપુટ (user input) દ્વારા મેળવી શકે છે.</p>
+<listing number="19-3" file-name="src/main.rs" caption="Mixing `if let`, `else if`, `else if let`, and `else`">
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-03/src/main.rs}}
+</listing>
+જો વપરાશકર્તા પોતાની મનપસંદ રંગ પસંદ કરે છે, તો તે રંગ પૃષ્ઠભૂમિ તરીકે વપરાય છે. જો કોઈ મનપસંદ રંગ પસંદ ન કર્યો હોય અને આજ મંગળવાર હોય, તો પૃષ્ઠભૂમિનો રંગ લીલો હોય છે. અન્યથા, જો વપરાશકર્તા પોતાની ઉંમરને String સ્વરૂપે આપે અને અમે તેને સંખ્યા તરીકે સફળતાપૂર્વક parse કરી શકીએ, તો રંગ જાંબલી અથવા નારંગી હોઈ શકે છે, જે સંખ્યાના મૂલ્ય પર આધાર રાખે છે. જો આ શરતોમાંથી કોઈ પણ લાગુ ન થાય, તો પૃષ્ઠભૂમિનો રંગ વાદળી હોય છે.
+<p>આ શરતી માળખું અમને જટિલ જરૂરિયાતોને પહોંચી વળવામાં મદદ કરે છે. અહીં આપેલા hardcoded મૂલ્યો સાથે, આ ઉદાહરણ <code>Using purple as the background color</code> પ્રિન્ટ કરશે.</p>
+<p>તમે જોઈ શકો છો કે <code>if let</code> નવા ચલ (variable) પણ રજૂ કરી શકે છે જે સમાન રીતે <code>match</code> આર્મને કરે છે, જેમ કે લાઈન <code>if let Ok(age) = age</code> એક નવું <code>age</code> ચલ રજૂ કરે છે જેમાં <code>Ok</code> પ્રકારની અંદર રહેલું મૂલ્ય હોય છે, જે હાલના <code>age</code> ચલને છાંકી દે છે. આનો અર્થ એ થાય છે કે આપણે <code>if age &gt; 30</code> શરતને તે બ્લોકમાં મૂકવાની જરૂર છે: આપણે આ બે શરતોને <code>if let Ok(age) = age &amp;&amp; age &gt; 30</code> માં ભેગી કરી શકતા નથી. આપણને ૩૦ સાથે સરખાવવા માટેનું નવું <code>age</code> ત્યારે જ માન્ય બને છે જ્યારે નવી અવધિ કૌંસ વળાંકથી શરૂ થાય છે.</p>
+<p><code>if let</code> અભિવ્યક્તિઓ વાપરવાના ગેરલાભ એ છે કે કમ્પાઇલર સંપૂર્ણતા માટે તપાસ કરતો નથી, જ્યારે <code>match</code> અભિવ્યક્તિઓ સાથે તે કરે છે. જો આપણે અંતિમ <code>else</code> બ્લોકને અવગણ્યો હોત અને તેથી અમુક પરિસ્થિતિઓને હેન્ડલ કરવાનું ચૂકી ગયા હોત, તો કમ્પાઇલર સંભવિત તાર્કિક ભૂલ વિશે આપણને ચેતવણી ન કરતો હોત.</p>
+<h3 id="while-let-શરતી-લૂપસ"><a class="header" href="#while-let-શરતી-લૂપસ"><code>while let</code> શરતી લૂપ્સ</a></h3>
+<p><code>if let</code> ની રચના સમાન, <code>while let</code> શરતી લૂપ એક <code>while</code> લૂપને ચાલુ રાખવા માટે પરવાનગી આપે છે જ્યાં સુધી પેટર્ન મેળ ખાતી રહે. સૂચિ ૧૯-૪ માં, અમે એક <code>while let</code> લૂપ બતાવીએ છીએ જે થ્રેડ્સ વચ્ચે મોકલવામાં આવેલા સંદેશાઓની રાહ જુએ છે, પરંતુ આ કિસ્સામાં <code>Result</code> ની તપાસ કરે છે <code>Option</code> ની બદલે.</p>
+<listing number="19-4" caption="Using a `while let` loop to print values for as long as `rx.recv()` returns `Ok`">
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-04/src/main.rs:here}}
+</listing>
+આ ઉદાહરણ `1`, `2`, અને પછી `3` છાપે છે. `recv` પદ્ધતિ ચેનલની રીસીવર બાજુથી પ્રથમ સંદેશ લે છે અને `Ok(value)` પરત કરે છે. જ્યારે આપણે પ્રકરણ ૧૬ માં પહેલીવાર `recv` જોયો હતો, ત્યારે આપણે સીધો જ ભૂલને અનરેપ કરી હતી, અથવા આપણે એક `for` લૂપનો ઉપયોગ કરીને પુનરાવર્તક તરીકે તેની સાથે ક્રિયાપ્રતિક્રિયા કરી હતી. જો કે, સૂચિ ૧૯-૪ બતાવે છે તેમ, આપણે `while let` નો પણ ઉપયોગ કરી શકીએ છીએ, કારણ કે `recv` પદ્ધતિ દરેક વખતે સંદેશો આવે ત્યાં સુધી `Ok` પરત કરે છે, જ્યાં સુધી મોકલનાર અસ્તિત્વમાં હોય, અને પછી મોકલનાર બાજુ ડિસ્કનેક્ટ થાય ત્યારે `Err` ઉત્પન્ન કરે છે.
+<h3 id="for-લૂપસ"><a class="header" href="#for-લૂપસ"><code>for</code> લૂપ્સ</a></h3>
+<p>એક <code>for</code> લૂપમાં, કીવર્ડ <code>for</code> પછી તરત આવતું મૂલ્ય એક પ્રકારનું રૂપ છે. ઉદાહરણ તરીકે, <code>for x in y</code> માં, <code>x</code> એ રૂપ છે. સૂચિ ૧૯-૫ દર્શાવે છે કે કેવી રીતે રૂપનો ઉપયોગ <code>for</code> લૂપમાં ટ્યૂપલને વિઘટિત કરવા, અથવા તો ભાગ પાડવા માટે કરી શકાય છે, જે <code>for</code> લૂપનો એક ભાગ છે.</p>
+<listing number="19-5" caption="Using a pattern in a `for` loop to destructure a tuple">
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-05/src/main.rs:here}}
+</listing>
+માહિતી ૧૯-૫ માં આપેલ કોડ નીચે મુજબ છાપશે:
+<p>{{#include ../listings/ch19-patterns-and-matching/listing-19-05/output.txt}}
+અમે <code>enumerate</code> પદ્ધતિનો ઉપયોગ કરીને એક iterator ને અનુકૂલિત કરીએ છીએ જેથી તે એક મૂલ્ય અને તે મૂલ્ય માટે અનુક્રમણિકા (index) ઉત્પન્ન કરે, જે ટ્યૂપલમાં મૂકવામાં આવે. પ્રથમ ઉત્પન્ન થયેલું મૂલ્ય <code>(0, 'a')</code> ટ્યૂપલ છે. જ્યારે આ મૂલ્યને <code>(index, value)</code> પેટર્ન સાથે મેળવવામાં આવે છે, ત્યારે index <code>0</code> હશે અને value <code>'a'</code> હશે, જે આઉટપુટની પ્રથમ રેખા છાપશે.</p>
+<h3 id="કારય-પરિમાણો"><a class="header" href="#કારય-પરિમાણો">કાર્ય પરિમાણો</a></h3>
+<p>કાર્ય પરિમાણો પણ પેટર્ન હોઈ શકે છે. લિસ્ટિંગ ૧૯-૬ માં આપેલ કોડ, જે <code>foo</code> નામનું કાર્ય વ્યાખ્યાયિત કરે છે અને તે <code>x</code> નામના એક પરિમાણ ને <code>i32</code> પ્રકારનો સ્વીકારે છે, તે હવેથી પરિચિત લાગશે.</p>
+<listing number="19-6" caption="A function signature using patterns in the parameters">
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-06/src/main.rs:here}}
+</listing>
+`x` ભાગ એક પ્રકાર છે! જેમ આપણે `let` સાથે કર્યું હતું, તેમ આપણે કાર્યના પરિમાણોમાં એક ટ્યૂપલને પણ પ્રકાર સાથે સરખાવી શકીએ છીએ. સૂચિ ૧૯-૭ ટ્યૂપલમાં રહેલા મૂલ્યોને વિભાજિત કરે છે જ્યારે આપણે તેને કાર્યમાં મોકલીએ છીએ.
+<listing number="19-7" file-name="src/main.rs" caption="A function with parameters that destructure a tuple">
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-07/src/main.rs}}
+</listing>
+આ કોડ `Current location: (3, 5)` છાપે છે. મૂલ્યો `&amp;(3, 5)` પેટર્ન `&amp;(x, y)` સાથે મેળ ખાય છે, તેથી `x` એ મૂલ્ય `3` છે અને `y` એ મૂલ્ય `5` છે.
+<p>આપણે ક્લોઝર પરિમાણ સૂચિમાં પણ પેટર્નનો ઉપયોગ કરી શકીએ છીએ જે રીતે ફંક્શન પરિમાણ સૂચિમાં કરીએ છીએ, કારણ કે ક્લોઝર ફંક્શન જેવા જ હોય છે, જે વિશે પ્રકરણ ૧૩ માં ચર્ચા કરવામાં આવી છે.</p>
+<p>આ સમયે, તમે પેટર્નનો ઉપયોગ કરવાની ઘણી રીતો જોઈ હશે, પરંતુ પેટર્ન દરેક જગ્યાએ સમાન રીતે કામ કરતા નથી જ્યાં આપણે તેનો ઉપયોગ કરી શકીએ છીએ. કેટલીક જગ્યાએ, પેટર્ન અચકાઉ (irrefutable) હોવા જોઈએ; અન્ય સંજોગોમાં, તે ખંડિત (refutable) થઈ શકે છે. હવે આપણે આ બે વિભાવનાઓની ચર્ચા કરીશું.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch19-00-patterns.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch19-02-refutability.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch19-00-patterns.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch19-02-refutability.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

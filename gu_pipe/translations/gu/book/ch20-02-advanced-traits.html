@@ -1,0 +1,377 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Advanced Traits - ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-7ed1a93d.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-0e4ce700.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h2 id="અદયતન-લકષણો"><a class="header" href="#અદયતન-લકષણો">અદ્યતન લક્ષણો</a></h2>
+<p>આપણે અગાઉ પ્રકરણ ૧૦ માં “લક્ષણો સાથે વર્તાયેલ વર્તણૂક વ્યાખ્યાયિત કરવી” વિભાગમાં લક્ષણો વિશે વાત કરી હતી, પરંતુ આપણે વધુ ઊંડા વિગતોની ચર્ચા કરી ન હતી. હવે જ્યારે તમને Rust વિશે વધુ ખબર છે, ત્યારે આપણે વિગતવાર બાબતો પર ધ્યાન કેન્દ્રિત કરી શકીએ છીએ.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="defining-traits-with-associated-types"><a class="header" href="#defining-traits-with-associated-types">Defining Traits with Associated Types</a></h3>
+<p>સંબંધિત પ્રકારો (Associated types) એક પ્રકારના સ્થાને ચિહ્ન અને એક લક્ષણ (trait) ને જોડે છે, જેથી લક્ષણની પદ્ધતિ વ્યાખ્યાઓમાં આ સ્થાનાંતરિત પ્રકારોનો ઉપયોગ કરી શકાય. લક્ષણના અમલકર્તા (implementor) એ અમલીકરણ માટે વપરાયેલ નક્કર પ્રકારને સ્થાને ચિહ્ન પ્રકાર તરીકે સ્પષ્ટ કરશે. આ રીતે, આપણે એક લક્ષણ વ્યાખ્યાયિત કરી શકીએ છીએ જે કેટલાક પ્રકારોનો ઉપયોગ કરે છે પરંતુ તે પ્રકારો શું છે તે જાણવાની જરૂર નથી જ્યાં સુધી લક્ષણનું અમલીકરણ કરવામાં ન આવે.</p>
+<p>આ પ્રકરણમાં વર્ણવેલ મોટાભાગની અદ્યતન વિશેષતાઓ ભાગ્યે જ જરૂરી હોય છે એમ કહ્યું છે. સંબંધિત પ્રકારો મધ્યમાં ક્યાંક છે: તેનો ઉપયોગ પુસ્તકની બાકીના ભાગમાં સમજાવવામાં આવેલા લક્ષણો કરતાં ઓછો થાય છે, પરંતુ આ પ્રકરણમાં ચર્ચા કરાયેલ અન્ય ઘણી વિશેષતાઓની તુલનામાં વધુ સામાન્ય રીતે થાય છે.</p>
+<p>એક સંકળાયેલ પ્રકાર સાથેના લક્ષણનું ઉદાહરણ એક સંકળાયેલ પ્રકાર નામિત <code>Item</code> છે, જેનાં મૂલ્યોના પ્રકારને રજૂ કરે છે, જે પ્રકાર <code>Iterator</code> લક્ષણને અમલમાં મુકે છે. <code>Iterator</code> લક્ષણની વ્યાખ્યા યાદી 20-13 માં દર્શાવેલ છે.</p>
+<listing number="20-13" caption="The definition of the `Iterator` trait that has an associated type `Item`">
+{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-13/src/lib.rs}}
+</listing>
+The `Item` Type `Item` પ્રકાર એક અસ્થાયી સ્થાનાંતર છે, અને `next` પદ્ધતિની વ્યાખ્યા દર્શાવે છે કે તે `Option<self::item>` પ્રકારનાં મૂલ્યો પરત કરશે. `Iterator` લક્ષણના અમલીકરણકર્તાઓ `Item` માટે નક્કર પ્રકારનો ઉલ્લેખ કરશે, અને `next` પદ્ધતિ તે નક્કર પ્રકારના મૂલ્ય ધરાવતું `Option` પરત કરશે. સંબંધિત
+<p>પ્રકારો સામાન્ય રીતે જનરિક્સ જેવી જ લાગી શકે છે, જેમાં આપણે ફંક્શનને કયા પ્રકારનાં ડેટાને સંભાળી શકે છે તે નિર્દિષ્ટ કર્યા વિના વ્યાખ્યાયિત કરવાની મંજૂરી આપે છે. આ બે ખ્યાલો વચ્ચેનો તફાવત તપાસવા માટે, અમે <code>Counter</code> નામના પ્રકાર પર <code>Iterator</code> લક્ષણનું અમલીકરણ જોઈશું જે <code>Item</code> પ્રકારને <code>u32</code> તરીકે નિર્દિષ્ટ કરે છે:</p>
+<listing file-name="src/lib.rs">
+{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-22-iterator-on-counter/src/lib.rs:ch19}}
+</listing>
+આ સિન્ટેક્સ સામાન્ય રીતે જનરિક્સ (generics) જેવું લાગે છે. તો, શા માટે લિસ્ટિંગ ૨૦-૧૪ માં દર્શાવ્યા પ્રમાણે જનરિક્સ સાથે  `Iterator` ટ્રેઇટને વ્યાખ્યાયિત ન કરીએ?
+<listing number="20-14" caption="A hypothetical definition of the `Iterator` trait using generics">
+{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-14/src/lib.rs}}
+</listing>
+The difference is that when using generics, as in Listing 20-14, we must annotate the types in each implementation; because we can also implement `Iterator<string>` for `Counter` or any other type, we could have multiple implementations of `Iterator` for `Counter`. In other words, when a trait has a generic parameter, it can be implemented for a type multiple times, changing the concrete types of the generic type parameters each time. When we use the `next` method on `Counter`, we would have to provide type annotations to indicate which implementation of `Iterator` we want to use.
+<p>સાથે સંકળાયેલ પ્રકારો સાથે, આપણને પ્રકારોની નોંધ કરવાની જરૂર નથી, કારણ કે આપણે એક જ પ્રકાર પર trait ને ઘણી વખત અમલમાં મૂકી શકતા નથી. લિસ્ટિંગ ૨૦-૧૩ માં, જે associée પ્રકારોનો ઉપયોગ કરીને વ્યાખ્યાયિત કરે છે, અમે <code>Item</code> ના પ્રકારને માત્ર એક જ વાર પસંદ કરી શકીએ છીએ કારણ કે ત્યાં માત્ર એક જ <code>impl Iterator for Counter</code> હોઈ શકે છે. આપણે સ્પષ્ટ કરવાની જરૂર નથી કે આપણે <code>Counter</code> પર <code>next</code> કૉલ કરીએ ત્યારે <code>u32</code> મૂલ્યોના iterator જોઈએ છીએ.</p>
+<p>સાથે સંકળાયેલ પ્રકારો trait ના કરારનો પણ ભાગ બને છે: trait ના અમલીકરણકર્તાઓએ associée પ્રકારના placeholder માટે એક પ્રકાર પ્રદાન કરવો આવશ્યક છે. associée પ્રકારોમાં ઘણીવાર એવું નામ હોય છે જે વર્ણવે છે કે પ્રકારનો ઉપયોગ કેવી રીતે કરવામાં આવશે, અને API દસ્તાવેજીકરણમાં associée પ્રકારનું દસ્તાવેજીકરણ કરવી એ સારી પ્રથા છે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="using-default-generic-parameters-and-operator-overloading"><a class="header" href="#using-default-generic-parameters-and-operator-overloading">Using Default Generic Parameters and Operator Overloading</a></h3>
+<p>જ્યારે આપણે સામાન્ય પ્રકારના પરિમાણોનો ઉપયોગ કરીએ છીએ, ત્યારે આપણે સામાન્ય પ્રકાર માટે એક ડિફોલ્ટ નક્કર પ્રકાર સ્પષ્ટ કરી શકીએ છીએ. આ trait ના અમલીકરણકર્તાઓને જો ડિફોલ્ટ પ્રકાર કામ કરે તો નક્કર પ્રકાર સ્પષ્ટ કરવાની જરૂરિયાત દૂર કરે છે. તમે <code>&lt;PlaceholderType=ConcreteType&gt;</code> સિન્ટેક્સ સાથે સામાન્ય પ્રકાર જાહેર કરતી વખતે ડિફોલ્ટ પ્રકાર સ્પષ્ટ કરો છો.</p>
+<p>આ તકનીક ક્યારે ઉપયોગી છે તેનું એક ઉત્તમ ઉદાહરણ ઓપરેટર ઓવરલોડિંગ (operator overloading) સાથેની પરિસ્થિતિ છે, જેમાં તમે ચોક્કસ પરિસ્થિતિઓમાં ઓપરેટર (જેમ કે <code>+</code>) નું વર્તન કસ્ટમાઇઝ કરો છો.</p>
+<p>Rust તમને પોતાના ઓપરેટર બનાવવાની કે કોઈપણ અનિશ્ચિત ઓપરેટરને વધારે પડતા ભાર આપવાની અનુમતિ આપતું નથી. પરંતુ તમે <code>std::ops</code> માં દર્શાવેલ ક્રિયાઓ અને અનુરૂપ traits ને અમલમાં મૂકીને વધારે ભાર આપી શકો છો. ઉદાહરણ તરીકે, યાદી 20-15 માં, અમે બે <code>Point</code> ઇન્સ્ટન્સને એકસાથે ઉમેરવા માટે <code>+</code> ઓપરેટરને વધારે ભાર આપીએ છીએ. અમે આ <code>Point</code> struct પર <code>Add</code> trait ને અમલમાં મૂકીને કરીએ છીએ.</p>
+<listing number="20-15" file-name="src/main.rs" caption="Implementing the `Add` trait to overload the `+` operator for `Point` instances">
+{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-15/src/main.rs}}
+</listing>
+The `add` Method `add` પદ્ધતિ બે `Point` સંસ્થાઓના `x` મૂલ્યો અને બે `Point` સંસ્થાઓના `y` મૂલ્યો ઉમેરીને એક નવી `Point` બનાવે છે. `Add` લક્ષણનો એક સાંકળિત પ્રકાર નામ `Output` છે, જે `add` પદ્ધતિમાંથી પાછો મળતો પ્રકાર નક્કી કરે
+<p>છે. આ કોડમાં ડિફૉલ્ટ સામાન્ય પ્રકાર <code>Add</code> લક્ષણમાં રહેલો છે. અહીં તેની વ્યાખ્યા છે:</p>
+<p>trait Add&lt;Rhs=Self&gt; {
+type Output;</p>
+<pre><code>fn add(self, rhs: Rhs) -&gt; Self::Output;
+</code></pre>
+<p>}
+આ કોડ સામાન્ય રીતે પરિચિત દેખાશે: એક trait જેમાં એક method અને સંકળાયેલ type છે. નવું ભાગ <code>Rhs=Self</code> છે: આ syntax ને default type parameters કહેવામાં આવે છે. <code>Rhs</code> generic type parameter (જે “right-hand side” માટે ટૂંકું નામ છે) એ <code>add</code> method માં <code>rhs</code> પરિમાણનો type વ્યાખ્યાયિત કરે છે. જો આપણે <code>Add</code> trait ના અમલીકરણ વખતે <code>Rhs</code> માટે કોઈ ચોક્કસ type નો ઉલ્લેખ ન કરીએ, તો <code>Rhs</code> નો type <code>Self</code> પર default થશે, જે એ type હશે જેના પર આપણે <code>Add</code> નો અમલ કરી રહ્યા છીએ.</p>
+<p>જ્યારે આપણે <code>Point</code> માટે <code>Add</code> અમલમાં મૂક્યું, ત્યારે આપણે <code>Rhs</code> માટે ડિફોલ્ટનો ઉપયોગ કર્યો કારણ કે આપણે બે <code>Point</code> ઇન્સ્ટન્સ ઉમેરવા માંગતા હતા. ચાલો એક એવું ઉદાહરણ જોઈએ જ્યાં આપણે <code>Add</code> ટ્રેઇટને અમલમાં મૂકીએ છીએ જ્યાં આપણે ડિફોલ્ટનો ઉપયોગ કરવાને બદલે <code>Rhs</code> પ્રકારને કસ્ટમાઇઝ કરવા માંગીએ છીએ.</p>
+<p>આપણી પાસે બે સ્ટ્રક્ચર્સ છે, <code>Millimeters</code> અને <code>Meters</code>, જે જુદા જુદા એકમોમાં મૂલ્યો ધરાવે છે. આ હાલના પ્રકારને બીજા સ્ટ્રક્ચરમાં પાતળું આવરણ આપવું એ ન્યૂટાઇપ પેટર્ન તરીકે ઓળખાય છે, જેને આપણે “Implementing External Traits with the Newtype Pattern” વિભાગમાં વધુ વિગતવાર વર્ણવવામાં આવ્યું છે. આપણે મિલીમીટરમાં મૂલ્યોને મીટરમાં મૂલ્યો સાથે ઉમેરવા માંગીએ છીએ અને <code>Add</code> નું અમલીકરણ યોગ્ય રીતે રૂપાંતરણ કરે તેવું ઇચ્છવું છે. આપણે <code>Millimeters</code> માટે <code>Meters</code> ને <code>Rhs</code> તરીકે <code>Add</code> નો અમલ કરી શકીએ છીએ, જે લિસ્ટિંગ 20-16 માં દર્શાવેલ છે.</p>
+<listing number="20-16" file-name="src/lib.rs" caption="Implementing the `Add` trait on `Millimeters` to add `Millimeters` and `Meters`">
+{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-16/src/lib.rs}}
+</listing>
+એકમોમાં `મિલીમીટર` અને `મીટર` ઉમેરવા માટે, આપણે `impl Add<meters>` સ્પષ્ટ કરીએ છીએ જેથી `Rhs` પ્રકારના પરિમાણનું મૂલ્ય `Self` ની બદલે સેટ થાય.
+<p>તમે બે મુખ્ય રીતે ડિફોલ્ટ પ્રકારના પરિમાણોનો ઉપયોગ કરશો:</p>
+<p>હાલના કોડને તોડ્યા વિના એક પ્રકારને વિસ્તારવા માટે,</p>
+<p>અને ચોક્કસ કિસ્સાઓમાં કસ્ટમાઇઝેશન કરવાની મંજૂરી આપવા માટે જેમાં મોટાભાગના વપરાશકર્તાઓને જરૂર નહીં હોય.</p>
+<p>The standard library’s <code>Add</code> trait is an example of the second purpose: Usually, you’ll add two like types, but the <code>Add</code> trait provides the ability to customize beyond that. Using a default type parameter in the <code>Add</code> trait definition means you don’t have to specify the extra parameter most of the time. In other words, a bit of implementation boilerplate isn’t needed, making it easier to use the trait. સ્ટાન્ડર્ડ લાયબ્રેરીનું <code>Add</code> ટ્રેઇટ બીજા હેતુનું ઉદાહરણ છે: સામાન્ય રીતે, તમે બે સમાન પ્રકારો ઉમેરશો, પરંતુ <code>Add</code> ટ્રેઇટ તમને તેની બહાર પણ કસ્ટમાઇઝ કરવાની ક્ષમતા પૂરી પાડે છે. <code>Add</code> ટ્રેઇટની વ્યાખ્યામાં ડિફોલ્ટ પ્રકાર પરિમાણનો ઉપયોગ કરવાથી તમારે મોટાભાગના સમય વધારાના પરિમાણને સ્પષ્ટ કરવાની જરૂર નથી રહેતી. બીજા શબ્દોમાં કહીએ તો, અમલીકરણનું થોડું બોઇલરપ્લેટ જરૂરી નથી, જેનાથી ટ્રેઇટનો ઉપયોગ કરવો સરળ</p>
+<p>બને છે. The first purpose is similar to the second but in reverse: If you want to add a type parameter to an existing trait, you can give it a default to allow extension of the functionality of the trait without breaking the existing implementation code. પહેલો હેતુ બીજા જેવો જ છે પરંતુ વિરુદ્ધ છે: જો તમે કોઈ હાલના ટ્રેઇટમાં પ્રકાર પરિમાણ ઉમેરવા માંગતા હો, તો તમે તેને ડિફોલ્ટ આપી શકો છો જેથી ટ્રેઇટની કાર્યક્ષમતાને હાલના અમલીકરણ કોડને તોડ્યા વિના વધારી શકાય.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="સમાન-નામના-વિધિઓને-સપષટ-કરવા"><a class="header" href="#સમાન-નામના-વિધિઓને-સપષટ-કરવા">સમાન નામના વિધિઓને સ્પષ્ટ કરવા</a></h3>
+<p>Rust માં એવું કશું નથી જે કોઈ trait માં બીજા trait ના વિધિ જેટલું જ નામ ધરાવતું વિધિ હોવા અટકાવે, ન તો Rust તમને એક જ type પર બંને traits ને અમલમાં મૂકતા અટકાવે છે. એ જ રીતે, type પર સીધું જ વિધિ અમલમાં મૂકવું પણ શક્ય છે જે traits ના વિધિઓ જેટલું નામ ધરાવે છે.</p>
+<p>સમાન નામનાં વિધિઓને બોલાવતી વખતે, તમારે Rust ને કયું વાપરવું છે તે જણાવવું પડશે. Listing 20-17 માં આપેલા કોડને ધ્યાનમાં લો જ્યાં આપણે બે traits, <code>Pilot</code> અને <code>Wizard</code>, વ્યાખ્યાયિત કર્યા છે, જેમાં બંને પાસે <code>fly</code> નામનું વિધિ છે. પછી આપણે <code>Human</code> type પર બંને traits ને અમલમાં મૂકીએ છીએ, જે પહેલાથી જ <code>fly</code> નામનું વિધિ ધરાવે છે. દરેક <code>fly</code> વિધિ કંઈક અલગ કરે છે.</p>
+<listing number="20-17" file-name="src/main.rs" caption="Two traits are defined to have a `fly` method and are implemented on the `Human` type, and a `fly` method is implemented on `Human` directly.">
+{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-17/src/main.rs:here}}
+</listing>
+જ્યારે આપણે `Human` ના ઉદાહરણ પર `fly` ને બોલાવીએ છીએ, ત્યારે કમ્પાઇલર આપોઆપ જ તે પદ્ધતિને બોલાવે છે જે પ્રકાર પર સીધી રીતે અમલમાં મુકાયેલી છે, જે યાદી ૨૦-૧૮ માં દર્શાવેલ છે.
+<listing number="20-18" file-name="src/main.rs" caption="Calling `fly` on an instance of `Human`">
+{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-18/src/main.rs:here}}
+</listing>
+આ કોડ ચલાવવાથી `*હાથ જોરથી હલાવતા*` પ્રિન્ટ થશે, જે દર્શાવે છે કે Rust એ `Human` પર અમલમાં મૂકેલી `fly` પદ્ધતિને સીધી
+<p>રીતે બોલાવી. <code>Pilot</code> અથવા <code>Wizard</code> લક્ષણોમાંથી <code>fly</code> પદ્ધતિઓને બોલાવવા માટે, આપણે વધુ સ્પષ્ટ વાક્યરચનાનો ઉપયોગ કરવો પડશે જે દર્શાવે છે કે આપણે કઈ <code>fly</code> પદ્ધતિનો ઉલ્લેખ કરીએ છીએ. સૂચિ 20-19 આ વાક્યરચનાનું નિદર્શન કરે છે.</p>
+<listing number="20-19" file-name="src/main.rs" caption="Specifying which trait’s `fly` method we want to call">
+{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-19/src/main.rs:here}}
+</listing>
+Specifying the trait name before the method name clarifies to Rust which implementation of `fly` we want to call. We could also write `Human::fly(&amp;person)` , which is equivalent to the `person.fly()` that we used in Listing 20-19, but this is a bit longer to write if we don’t need to disambiguate. વર્ગનામના ઉલ્લેખને પદ્ધતિના નામ પહેલાં સ્પષ્ટ કરવાથી Rust ને ખબર પડે છે કે કયું `fly` અમલીકરણ બોલાવું છે. આપણે `Human::fly(&amp;person)` પણ લખી શકીએ, જે Listing 20-19 માં વપરાયેલ `person.fly()` સમાન છે, પરંતુ જો આપણને ભેદ પાડવાની જરૂર ન હોય તો તે થોડું
+<p>લાંબુ લાગે છે. આ કોડ ચલાવવાથી નીચે મુજબ છાપવામાં આવે છે:</p>
+<p>{{#include ../listings/ch20-advanced-features/listing-20-19/output.txt}}
+કારણ કે <code>fly</code> પદ્ધતિ <code>self</code> પરિમાણ લે છે, જો આપણી પાસે બે પ્રકારો હોત જે એક trait અમલમાં મૂકે છે, તો Rust એ trait નું કયું અમલીકરણ વાપરવું તે <code>self</code> ના પ્રકારના આધારે નક્કી કરી શકતું હતું.</p>
+<p>જો કે, સંલગ્ન કાર્યો (functions) જે પદ્ધતિઓ નથી, તેઓ <code>self</code> પરિમાણ લેતા નથી. જ્યારે બહુવિધ પ્રકારો અથવા traits હોય છે જે સમાન કાર્ય નામ સાથે non-method કાર્યો વ્યાખ્યાયિત કરે છે, ત્યારે Rust ને હંમેશા ખબર હોતી નથી કે તમે કયા પ્રકારનો ઉલ્લેખ કરી રહ્યા છો સિવાય કે તમે સંપૂર્ણ રીતે લાયક વાક્યરચના (syntax) નો ઉપયોગ કરો. દાખલા તરીકે, યાદી 20-20 માં, અમે એક પ્રાણી આશ્રય માટે trait બનાવીએ છીએ જે તમામ બચ્ચાં કૂતરાંને Spot નામ આપવા માંગે છે. અમે <code>Animal</code> trait સાથે એક સંલગ્ન non-method કાર્ય <code>baby_name</code> બનાવીએ છીએ. <code>Animal</code> trait ને struct <code>Dog</code> માટે અમલમાં મૂકવામાં આવે છે, જેના પર અમે સીધું જ એક સંલગ્ન non-method કાર્ય <code>baby_name</code> પણ પ્રદાન કરીએ છીએ.</p>
+<listing number="20-20" file-name="src/main.rs" caption="A trait with an associated function and a type with an associated function of the same name that also implements the trait">
+{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-20/src/main.rs}}
+</listing>
+અમે `Dog` પ્રકાર પર વ્યાખ્યાયિત થયેલ `baby_name` સાંકળ કાર્યમાં બધા કૂતરાઓને સ્પૉટ નામ આપવા માટે કોડનો અમલ કરીએ છીએ. `Dog` પ્રકાર પણ `Animal` લક્ષણનો અમલ કરે છે, જે તમામ પ્રાણીઓમાં રહેલા લક્ષણોનું વર્ણન કરે છે. નાના કૂતરાઓને બચ્ચા કહેવામાં આવે છે, અને તે `Animal` લક્ષણના `Dog` પરના અમલીકરણમાં વ્યક્ત થાય છે `baby_name` કાર્ય સાથે સંકળાયેલ છે.
+<p><code>main</code> માં, અમે <code>Dog::baby_name</code> કાર્યને બોલાવીએ છીએ, જે સીધું જ <code>Dog</code> પર વ્યાખ્યાયિત થયેલ સાંકળ કાર્યને બોલાવે છે. આ કોડ નીચે મુજબ છાપે છે:</p>
+<p>{{#include ../listings/ch20-advanced-features/listing-20-20/output.txt}}
+આ પરિણામ આપણને જોઈતું નથી. આપણે <code>Animal</code> ટ્રેઇટ પર અમલમાં મુકાયેલ <code>Dog</code> સાથે <code>baby_name</code> ફંક્શનને બોલાવવા માંગીએ છીએ, જેથી કોડ <code>A baby dog is called a puppy</code> પ્રિન્ટ કરે. લિસ્ટિંગ 20-19 માં આપણે જે ટ્રેઇટ નામ સ્પષ્ટ કરવાની પદ્ધતિનો ઉપયોગ કર્યો તે અહીં મદદરૂપ થતો નથી; જો આપણે <code>main</code> ને લિસ્ટિંગ 20-21 ના કોડમાં બદલીએ, તો આપણને કમ્પાઇલેશન એરર મળશે.</p>
+<listing number="20-21" file-name="src/main.rs" caption="Attempting to call the `baby_name` function from the `Animal` trait, but Rust doesn’t know which implementation to use">
+{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-21/src/main.rs:here}}
+</listing>
+કારણ કે `Animal::baby_name` માં `self` પરિમાણ નથી, અને અન્ય પ્રકારો પણ હોઈ શકે છે જે `Animal` લક્ષણને અમલમાં મૂકે છે, Rust નક્કી કરી શકતું નથી કે આપણે કયા `Animal::baby_name` અમલીકરણ જોઈએ છીએ. આપણને આ compiler ભૂલ મળશે:
+<p>{{#include ../listings/ch20-advanced-features/listing-20-21/output.txt}}
+અસ્પષ્ટતા દૂર કરવા અને Rustને જણાવવા માટે કે આપણે <code>Dog</code> માટે <code>Animal</code> નું અમલીકરણ વાપરવા માંગીએ છીએ, અન્ય કોઈ type માટે નહીં, તો આપણે સંપૂર્ણ રીતે લખાણનો ઉપયોગ કરવો જરૂરી છે. સૂચિ 20-22 દર્શાવે છે કે સંપૂર્ણ રીતે લખાણનો કેવી રીતે ઉપયોગ કરવો.</p>
+<listing number="20-22" file-name="src/main.rs" caption="Using fully qualified syntax to specify that we want to call the `baby_name` function from the `Animal` trait as implemented on `Dog`">
+{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-22/src/main.rs:here}}
+</listing>
+અમે Rust ને ખૂણાના કૌંસમાં એક પ્રકારનું નિદર્શન આપી રહ્યા છીએ, જે દર્શાવે છે કે અમે `Animal` ટ્રેઇટ પરથી `baby_name` પદ્ધતિને `Dog` દ્વારા અમલમાં મૂકવા માંગીએ છીએ, એવું કહીને કે અમે આ કાર્ય માટે `Dog` પ્રકારને `Animal` તરીકે ગણવા માંગીએ છીએ. આ કોડ હવે આપણને જે જોઈએ છે તે છાપશે:
+<p>{{#include ../listings/ch20-advanced-features/listing-20-22/output.txt}}
+સામાન્ય રીતે, સંપૂર્ણ નિશ્ચિત સિન્ટેક્સ આ પ્રમાણે વ્યાખ્યાયિત કરવામાં આવે છે:</p>
+<p><type as="" trait="">::function(receiver_if_method, next_arg, …);
+For associated functions that aren’t methods, there would not be a <code>receiver</code> : There would only be the list of other arguments. You could use fully qualified syntax everywhere that you call functions or methods. However, you’re allowed to omit any part of this syntax that Rust can figure out from other information in the program. You only need to use this more verbose syntax in cases where there are multiple implementations that use the same name and Rust needs help to identify which implementation you want to call. સંબંધિત કાર્યો માટે જે પદ્ધતિઓ નથી, ત્યાં કોઈ <code>receiver</code> હોતું નથી: ત્યાં માત્ર અન્ય દલીલોની યાદી જ હોય છે. તમે સંપૂર્ણ રીતે લંબિત વાક્યરચનાનો ઉપયોગ દરેક જગ્યાએ કરી શકો છો જ્યાં તમે કાર્યો અથવા પદ્ધતિઓને બોલાવો છો. જો કે, તમને આ વાક્યરચનાના કોઈપણ ભાગને બાકાત રાખવાની મંજૂરી છે જે Rust પ્રોગ્રામમાં અન્ય માહિતીમાંથી જાણી શકે છે. તમારે ફક્ત આ વધુ વિસ્તૃત વાક્યરચનાનો ઉપયોગ એવા કિસ્સાઓમાં કરવાની જરૂર છે જ્યાં બહુવિધ અમલીકરણો હોય છે જે સમાન નામનો ઉપયોગ કરે છે અને Rust ને ઓળખવામાં મદદની જરૂર પડે છે કે તમે કયું અમલીકરણ બોલાવવા માંગો છો.</type></p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="સુપરટરેઇટસનો-ઉપયોગ-કરવો"><a class="header" href="#સુપરટરેઇટસનો-ઉપયોગ-કરવો">સુપરટ્રેઇટ્સનો ઉપયોગ કરવો</a></h3>
+<p>ક્યારેક તમે એવા ટ્રેઇટ વ્યાખ્યા (trait definition) લખી શકો છો જે બીજા ટ્રેઇટ પર આધારિત હોય: પ્રથમ ટ્રેઇટને અમલમાં મૂકવા માટે, તમારે ઇચ્છવું જોઈએ કે તે પ્રકાર બીજો ટ્રેઇટ પણ અમલમાં મૂકે. તમે આ એટલા માટે કરશો જેથી તમારી ટ્રેઇટ વ્યાખ્યા બીજા ટ્રેઇટના સંલગ્ન વસ્તુઓનો ઉપયોગ કરી શકે. જે ટ્રેઇટ પર તમારી ટ્રેઇટ વ્યાખ્યા આધારિત છે તેને તમારા ટ્રેઇટનું સુપરટ્રેઇટ કહેવામાં આવે છે.</p>
+<p>ઉદાહરણ તરીકે, ચાલો કહીએ કે આપણે એક <code>OutlinePrint</code> ટ્રેઇટ બનાવવા માંગીએ છીએ જેમાં <code>outline_print</code> નામની પદ્ધતિ (method) હશે જે આપેલ મૂલ્યને ફોર્મેટ કરીને છાપશે જેથી તે તારાઓથી ઘેરાયેલું હોય. એટલે કે, જો આપણી પાસે <code>Point</code> સ્ટ્રક્ચુર હોય જે <code>Display</code> પ્રમાણભૂત લાઈબ્રેરી ટ્રેઇટને અમલમાં મૂકે છે અને પરિણામ <code>(x, y)</code> આવે છે, તો જ્યારે આપણે <code>outline_print</code> ને <code>Point</code> ઇન્સ્ટન્સ પર કૉલ કરીએ છીએ જેમાં <code>x</code> માટે <code>1</code> અને <code>y</code> માટે <code>3</code> હોય, તો તેણે નીચે મુજબ છાપવું જોઈએ:</p>
+<hr>
+<ul>
+<li>
+<pre><code>   *
+</code></pre>
+</li>
+<li>(1, 3) *</li>
+<li>
+<pre><code>   *
+</code></pre>
+</li>
+</ul>
+<hr>
+<p><code>outline_print</code> પદ્ધતિના અમલીકરણમાં, આપણે <code>Display</code> લક્ષણની કાર્યક્ષમતાનો ઉપયોગ કરવા માંગીએ છીએ. તેથી, આપણે સ્પષ્ટ કરવું પડશે કે <code>OutlinePrint</code> લક્ષણ માત્ર એવા પ્રકારો માટે જ કામ કરશે જે <code>Display</code> પણ લાગુ કરે છે અને <code>OutlinePrint</code> ને જરૂરી કાર્યક્ષમતા પૂરી પાડે છે. આપણે લક્ષણ વ્યાખ્યામાં <code>OutlinePrint: Display</code> સ્પષ્ટ કરીને આ કરી શકીએ છીએ. આ તકનીક લક્ષણમાં લક્ષણ બંધ ઉમેરવા જેવું જ છે. સૂચિ 20-23 માં <code>OutlinePrint</code> લક્ષણનું એક અમલીકરણ દર્શાવવામાં આવ્યું છે.</p>
+<listing number="20-23" file-name="src/main.rs" caption="Implementing the `OutlinePrint` trait that requires the functionality from `Display`">
+{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-23/src/main.rs:here}}
+</listing>
+Because we’ve specified that `OutlinePrint` requires the `Display` trait, we can use the `to_string` function that is automatically implemented for any type that implements `Display`. If we tried to use `to_string` without adding a colon and specifying the `Display` trait after the trait name, we’d get an error saying that no method named `to_string` was found for the type `&amp;Self` in the current scope. આપણે ઉલ્લેખ કર્યો છે કે `OutlinePrint` ને `Display` લક્ષણની આવશ્યકતા છે, તેથી આપણે `to_string` કાર્યનો ઉપયોગ કરી શકીએ છીએ જે કોઈપણ પ્રકાર માટે આપમેળે અમલમાં મુકાય છે જે `Display` લાગુ કરે છે. જો આપણે કોલન ઉમેર્યા વિના અને લક્ષણના નામ પછી `Display` લક્ષણને સ્પષ્ટ કર્યા વિના `to_string` નો ઉપયોગ કરવાનો પ્રયાસ કરીએ, તો
+<p>આપણને એક ભૂલ મળશે જેમાં જણાવવામાં આવ્યું હશે કે વર્તમાન અવકાશમાં <code>&amp;Self</code> પ્રકાર માટે <code>to_string</code> નામનું કોઈ કાર્ય મળ્યું નથી. Let’s see what happens when we try to implement <code>OutlinePrint</code> on a type that doesn’t implement <code>Display</code>, such as the <code>Point</code> struct:</p>
+<listing file-name="src/main.rs">
+{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-02-impl-outlineprint-for-point/src/main.rs:here}}
+</listing>
+આપણે એક ભૂલ સંદેશાપામે છીએ કે `Display` જરૂરી છે પણ અમલમાં નથી મૂકાયું:
+<p>{{#include ../listings/ch20-advanced-features/no-listing-02-impl-outlineprint-for-point/output.txt}}
+આ સમસ્યા નિવારવા માટે, અમે <code>Point</code> પર <code>Display</code> અમલમાં મૂકીશું અને <code>OutlinePrint</code> ને જરૂરી શરત સંતોષીશું, આ પ્રમાણે:</p>
+<listing file-name="src/main.rs">
+{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-03-impl-display-for-point/src/main.rs:here}}
+</listing>
+પછી, `OutlinePrint` ટ્રેઇટને `Point` પર અમલમાં મૂકવાથી તે સફળતાપૂર્વક કમ્પાઇલ થશે, અને અમે `outline_print` ને `Point` ઇન્સ્ટન્સ પર બોલાવી શકીશું જેથી તેને તારાની રૂપરેખામાં દર્શાવી શકાય.
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="implementing-external-traits-with-the-newtype-pattern"><a class="header" href="#implementing-external-traits-with-the-newtype-pattern">Implementing External Traits with the Newtype Pattern</a></h3>
+<p>અગાઉના પ્રકરણ ૧૦ માં “એક પ્રકાર પર લક્ષણ અમલમાં મૂકવું” વિભાગમાં, અમે અনাথ નિયમનો ઉલ્લેખ કર્યો હતો કે જેમાં જણાવવામાં આવ્યું છે કે આપણને ફક્ત ત્યારે જ કોઈ લક્ષણને એક પ્રકાર પર અમલમાં મૂકવાની મંજૂરી છે જો લક્ષણ અથવા પ્રકાર, અથવા બંને, અમારી ક્રેટ સ્થાનિક હોય. ન્યૂટાઇપ પેટર્નનો ઉપયોગ કરીને આ નિયંત્રણને ટાળવું શક્ય છે, જેમાં એક ટ્યુપલ સ્ટ્રક્ચર બનાવવાનો સમાવેશ થાય છે. (અમે પ્રકરણ ૫ માં “ટ્યુપલ સ્ટ્રક્ચર્સ સાથે વિવિધ પ્રકારો બનાવવું” વિભાગમાં ટ્યુપલ સ્ટ્રક્ચર્સ વિશે વાત કરી હતી.) ટ્યુપલ સ્ટ્રક્ચરમાં એક ક્ષેત્ર હશે અને જે પ્રકાર માટે અમે લક્ષણ અમલમાં મૂકવા માંગીએ છીએ તેના માટે પાતળું આવરણ તરીકે કામ કરશે. પછી, આવરણ પ્રકાર અમારી ક્રેટ સ્થાનિક હોય છે, અને અમે આવરણ પર લક્ષણ અમલમાં મૂકી શકીએ છીએ. ન્યૂટાઇપ એ એક શબ્દ છે જે હેસ્કેલ પ્રોગ્રામિંગ ભાષામાંથી ઉદ્ભવ્યો છે. આ પેટર્નનો ઉપયોગ કરવાથી કોઈ રનટાઈમ પ્રદર્શન દંડ નથી, અને કમ્પાઇલ સમયે આવરણ પ્રકાર દૂર થઈ જાય છે.</p>
+<p>એક ઉદાહરણ તરીકે, ચાલો આપણે <code>Vec&lt;T&gt;</code> પર <code>Display</code> અમલમાં મૂકવા માંગીએ છીએ, જે અનાથ નિયમ (orphan rule) આપણને સીધું કરવાની મંજૂરી આપતો નથી, કારણ કે <code>Display</code> ટ્રેઇટ અને <code>Vec&lt;T&gt;</code> પ્રકાર અમારી ક્રેટની બહાર વ્યાખ્યાયિત થયેલ છે. આપણે એક <code>Wrapper</code> સ્ટ્રક્ચર બનાવી શકીએ છીએ જે <code>Vec&lt;T&gt;</code> ની ઇન્સ્ટન્સ ધરાવે છે; પછી, આપણે <code>Wrapper</code> પર <code>Display</code> અમલમાં મૂકી શકીએ છીએ અને <code>Vec&lt;T&gt;</code> મૂલ્યનો ઉપયોગ કરી શકીએ છીએ, જેમ કે લિસ્ટિંગ 20-24 માં દર્શાવેલ છે.</p>
+<listing number="20-24" file-name="src/main.rs" caption="Creating a `Wrapper` type around `Vec&lt;String&gt;` to implement `Display`">
+{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-24/src/main.rs}}
+</listing>
+`Display` ની અમલીકરણ પદ્ધતિ `self.0` નો ઉપયોગ કરે છે જેથી અંદરના `Vec<t>` ને સુલભ બનાવી શકાય, કારણ કે `Wrapper` એક ટ્યૂપ struct છે અને `Vec<t>` એ ટ્યૂપમાં ઇન્ડેક્સ 0 પર રહેલો ઘટક છે. ત્યારબાદ, આપણે `Wrapper` પર `Display`
+<p>trait ની કાર્યક્ષમતાનો ઉપયોગ કરી શકીએ છીએ. આ પદ્ધતિનો ગેરલાભ એ છે કે <code>Wrapper</code> એક નવો પ્રકાર છે, તેથી તે જે મૂલ્ય ધરાવે છે તેની પદ્ધતિઓ ધરાવતો નથી. આપણે <code>Wrapper</code> પર <code>Vec&lt;T&gt;</code> ની બધી પદ્ધતિઓ સીધી રીતે અમલમાં મૂકવી પડે, જેથી તે પદ્ધતિઓ <code>self.0</code> ને સોંપે, જેનાથી આપણને <code>Wrapper</code> ને બરાબર <code>Vec&lt;T&gt;</code> જેવું જ ગણી શકાય. જો આપણે ઈચ્છીએ કે નવા પ્રકારમાં અંદરના પ્રકારની દરેક પદ્ધતિ હોય, તો <code>Wrapper</code> પર <code>Deref</code> trait નો અમલ કરવો એ એક ઉકેલ હોઈ શકે (આપણે પ્રકરણ 15 માં “સ્માર્ટ પોઇન્ટર્સને નિયમિત રેફરન્સ જેમ ગણવા” વિભાગમાં <code>Deref</code> trait નો અમલ વિશે ચર્ચા કરી હતી). જો આપણે <code>Wrapper</code> પ્રકારને અંદરના પ્રકારની બધી પદ્ધતિઓ ધરાવતો ન હોય એવું ઈચ્છીએ—ઉદાહરણ તરીકે, <code>Wrapper</code> પ્રકારનું વર્તન મર્યાદિત કરવા માટે—તો આપણે ફક્ત જોઈતી પદ્ધતિઓને જાતે જ અમલમાં મૂકવી પડે.</p>
+<p>આ નવું પ્રકારની પેટર્ન અન્ય સ્થિતિઓમાં પણ ઉપયોગી છે, જ્યાં લક્ષણો (traits) સામેલ ન હોય. ચાલો ધ્યાન બદલીએ અને Rust ના પ્રકાર સિસ્ટમ સાથે ક્રિયાપ્રતિક્રિયા કરવાની કેટલીક અદ્યતન રીતો જોઈએ.</p>
+</t></t></meters></string></self::item>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch20-01-unsafe-rust.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch20-03-advanced-types.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch20-01-unsafe-rust.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch20-03-advanced-types.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

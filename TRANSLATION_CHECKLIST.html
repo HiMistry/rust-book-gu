@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rust Book Gujarati Translation Checklist</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 1100px; margin: 2em auto; padding: 0 1em; line-height: 1.6; color: #222; background: #fafafa; }
+h1 { color: #111; border-bottom: 2px solid #c0392b; padding-bottom: 0.4em; }
+h2 { color: #2c3e50; margin: 1.5em 0 0.5em; font-size: 1.2em; border-left: 4px solid #3498db; padding-left: 0.6em; }
+.stats { background: #fff; padding: 1em 1.5em; border-radius: 8px; margin: 1em 0; display: flex; gap: 2em; flex-wrap: wrap; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.stat-item { display: flex; flex-direction: column; }
+.stat-label { font-size: 0.7em; text-transform: uppercase; color: #888; letter-spacing: 0.05em; }
+.stat-value { font-size: 1.3em; font-weight: bold; }
+.summary-bar { display: flex; gap: 1.5em; align-items: center; margin: 1em 0; }
+.progress-bar { flex: 1; height: 22px; background: #e0e0e0; border-radius: 11px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #3498db, #27ae60); transition: width 0.5s; border-radius: 11px; }
+table { width: 100%; border-collapse: collapse; margin: 0.5em 0 1.5em; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-radius: 6px; overflow: hidden; }
+th { text-align: left; padding: 0.6em 0.8em; background: #2c3e50; color: #fff; font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.06em; }
+td { padding: 0.5em 0.8em; border-bottom: 1px solid #eee; font-size: 0.9em; vertical-align: middle; }
+tr:hover td { background: #f0f7ff; }
+tr:last-child td { border-bottom: none; }
+td.section { font-weight: 600; background: #f8f9fa; }
+td.sub { padding-left: 2em; font-size: 0.85em; color: #555; }
+td.trans-status { text-align: center; width: 90px; font-size: 1.1em; }
+td.verify-status { text-align: center; width: 100px; }
+td.timestamp { font-family: monospace; font-size: 0.78em; color: #666; width: 150px; }
+.verify-select { padding: 0.25em 0.4em; font-size: 0.85em; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; }
+.icon-done { color: #27ae60; }
+.icon-progress { color: #3498db; animation: pulse 1.5s infinite; }
+.icon-pending { color: #bdc3c7; }
+@keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+.badge-done { background: #27ae60; color: #fff; padding: 0.15em 0.5em; border-radius: 3px; font-size: 0.75em; }
+.badge-pending { background: #ecf0f1; color: #95a5a6; padding: 0.15em 0.5em; border-radius: 3px; font-size: 0.75em; }
+.badge-progress { background: #3498db; color: #fff; padding: 0.15em 0.5em; border-radius: 3px; font-size: 0.75em; }
+.footer { margin-top: 2em; padding: 1em; background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); font-size: 0.85em; color: #555; }
+.footer a { color: #3498db; }
+</style>
+</head>
+<body>
+
+<h1> Rust Book → Gujarati Translation Checklist</h1>
+
+<div class="stats" id="status">
+  <div class="stat-item">
+    <span class="stat-label">Status</span>
+    <span class="stat-value" id="overall-status" style="color:#3498db;"> IN PROGRESS</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-label">Files Translated</span>
+    <span class="stat-value"><span id="files-translated">112</span> / 112</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-label">Files Verified</span>
+    <span class="stat-value"><span id="files-verified">0</span> / 112</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-label">Model</span>
+    <span class="stat-value" style="font-size:1em;">Gemma3:12b</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-label">Elapsed</span>
+    <span class="stat-value" style="font-size:1em;" id="elapsed">9h 15m</span>
+  </div>
+</div>
+
+<div class="summary-bar">
+  <span style="font-weight:bold;">Translation Progress:</span>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress-fill" style="width:88%;"></div>
+  </div>
+  <span id="progress-pct">88%</span>
+</div>
+
+<script>
+// Live elapsed time counter
+const startTime = new Date('2026-07-22T16:10:00');
+function updateElapsed() {
+  const now = new Date();
+  const diff = Math.floor((now - startTime) / 1000);
+  const h = Math.floor(diff / 3600);
+  const m = Math.floor((diff % 3600) / 60);
+  document.getElementById('elapsed').textContent = h + 'h ' + m + 'm';
+}
+setInterval(updateElapsed, 60000);
+updateElapsed();
+</script>
+
+<h2> Pilot Setup (Completed)</h2>
+<table>
+  <tr><th>Configuration Item</th><th>Status</th><th>Verified</th></tr>
+  <tr><td>Glossary emptied → free translation</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="verify-status"><span class="badge-done">Pass</span></td></tr>
+  <tr><td>System prompt: Sanskrit-origin rule + English-terms list</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="verify-status"><span class="badge-done">Pass</span></td></tr>
+  <tr><td>Heading fix: merge + strip # in word-proportional split</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="verify-status"><span class="badge-done">Pass</span></td></tr>
+  <tr><td>gu-theme.css: Gujarati font stack</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="verify-status"><span class="badge-done">Pass</span></td></tr>
+</table>
+
+<h2> Appendices & Front Matter</h2>
+<table>
+  <tr><th>Section</th><th>Translation</th><th>Finished</th><th>Verification</th></tr>
+  <tr><td>Appendix A: Keywords</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-16:12:41</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td>Appendix B: Operators &amp; Symbols</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-16:14:45</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td>Appendix C: Derivable Traits</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-18:04:42</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td>Appendix D: Useful Dev Tools</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-18:44:11</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td>Appendix E: Editions</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-19:13:15</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td>Appendix F: Translation of the Book</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-19:13:33</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td>Appendix G: Nightly Rust</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-19:17:05</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td>Introduction</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-19:21:16</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td>Foreword</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-02:45:26</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td>Title Page</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-02:45:51</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+</table>
+
+<h2> Part I: Basic Rust</h2>
+<table>
+  <tr><th>Chapter</th><th>Sub-section</th><th>Translation</th><th>Finished</th><th>Verification</th></tr>
+  <tr><td class="section" rowspan="4">Ch01: Getting Started</td><td>Ch01-00: Getting Started</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-19:21:24</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch01-01: Installation</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-19:23:50</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch01-02: Hello, World!</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-19:26:49</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch01-03: Hello, Cargo!</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-19:31:14</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr style="background:#f0faff;"><td class="section" rowspan="1">Ch02: Guessing Game</td><td class="sub">Ch02-00: Guessing Game Tutorial (1 file, 186 groups)</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-19:46:12</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="section" rowspan="5">Ch03: Common Concepts</td><td class="sub">Ch03-00: Overview</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-19:46:40</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch03-01: Variables &amp; Mutability</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-19:50:18</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch03-02: Data Types</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-19:57:33</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch03-03: Functions</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-20:02:10</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch03-04: Comments + Ch03-05: Control Flow</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-20:08:59</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+</table>
+
+<h2> Part II: Ownership & Types</h2>
+<table>
+  <tr><th>Chapter</th><th>Sub-section</th><th>Translation</th><th>Finished</th><th>Verification</th></tr>
+  <tr><td class="section" rowspan="4">Ch04: Ownership</td><td class="sub">Ch04-00: Understanding Ownership</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-20:09:09</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch04-01: What is Ownership?</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-20:21:20</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch04-02: References &amp; Borrowing</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-20:25:19</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch04-03: Slices</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-20:29:52</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="section" rowspan="4">Ch05: Structs</td><td class="sub">Ch05-00: Using Structs</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-20:30:15</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch05-01: Defining Structs</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-20:34:31</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch05-02: Example Structs</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-20:38:28</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch05-03: Method Syntax</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-20:43:02</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="section" rowspan="4">Ch06: Enums &amp; Match</td><td class="sub">Ch06-00: Enums</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-20:43:19</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch06-01: Defining an Enum</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-20:49:08</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch06-02: The match Control Flow</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-20:53:58</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch06-03: if let</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-20:56:16</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+</table>
+
+<h2> Part III: Project Management</h2>
+<table>
+  <tr><th>Chapter</th><th>Sub-section</th><th>Translation</th><th>Finished</th><th>Verification</th></tr>
+  <tr><td class="section" rowspan="6">Ch07: Packages &amp; Modules</td><td class="sub">Ch07-00: Managing Growing Projects</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-20:57:30</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch07-01: Packages &amp; Crates</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-20:59:02</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch07-02: Defining Modules</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-21:02:14</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch07-03: Paths in Module Tree</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-21:08:08</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch07-04: use Keyword</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-21:20:04</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch07-05: Separating Modules</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-21:22:34</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="section" rowspan="4">Ch08: Collections</td><td class="sub">Ch08-00: Common Collections</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-21:23:08</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch08-01: Vectors</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-21:27:20</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch08-02: Strings</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-21:33:50</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch08-03: Hash Maps</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-21:38:05</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="section" rowspan="4">Ch09: Error Handling</td><td class="sub">Ch09-00: Error Handling</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-21:38:38</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch09-01: Unrecoverable Errors (panic)</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-21:41:10</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch09-02: Recoverable Errors (Result)</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-21:50:17</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch09-03: To panic or Not</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-21:55:27</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+</table>
+
+<h2> Part IV: Advanced Features</h2>
+<table>
+  <tr><th>Chapter</th><th>Sub-section</th><th>Translation</th><th>Finished</th><th>Verification</th></tr>
+  <tr><td class="section" rowspan="4">Ch10: Generics &amp; Traits</td><td class="sub">Ch10-00: Generic Types</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-21:57:41</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch10-01: Syntax</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-22:02:57</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch10-02: Traits</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-22:10:26</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch10-03: Lifetime Syntax</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-22:21:27</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="section" rowspan="4">Ch11: Testing</td><td class="sub">Ch11-00: Testing</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-22:22:26</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch11-01: Writing Tests</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-22:31:43</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch11-02: Running Tests</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-22:34:39</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch11-03: Test Organization</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-22:39:33</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="section" rowspan="7">Ch12: I/O Project</td><td class="sub">Ch12-00: An I/O Project</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-22:40:32</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch12-01: Command Line Arguments</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-22:42:47</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch12-02: Reading a File</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-22:43:33</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch12-03: Error Handling &amp; Modularity</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-22:52:55</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch12-04: Testing the Library</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-22:56:10</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch12-05: Environment Variables</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-22:59:34</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch12-06: stderr Output</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-23:01:14</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="section" rowspan="5">Ch13: Functional Features</td><td class="sub">Ch13-00: Functional Features</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-23:01:45</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch13-01: Closures</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-23:09:24</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch13-02: Iterators</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-23:20:49</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch13-03: Improving I/O Project</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-23:24:09</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch13-04: Performance</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-23:25:19</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="section" rowspan="6">Ch14: Cargo &amp; Crates.io</td><td class="sub">Ch14-00: More About Cargo</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-23:25:38</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch14-01: Release Profiles</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-23:26:46</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch14-02: Publishing to crates.io</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-23:34:57</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch14-03: Cargo Workspaces</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-23:38:53</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch14-04: Installing Binaries</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-23:39:38</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch14-05: Extending Cargo</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-23:39:59</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="section" rowspan="7">Ch15: Smart Pointers</td><td class="sub">Ch15-00: Smart Pointers</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-23:41:14</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch15-01: Box&lt;T&gt;</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-23:48:36</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch15-02: Deref Trait</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-23:54:06</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch15-03: Drop Trait</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-23:56:57</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch15-04: Rc&lt;T&gt;</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-00:00:12</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch15-05: Interior Mutability</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-00:07:27</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch15-06: Reference Cycles</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-00:13:28</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="section" rowspan="5">Ch16: Concurrency</td><td class="sub">Ch16-00: Fearless Concurrency</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-00:14:37</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch16-01: Threads</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-00:18:23</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch16-02: Message Passing</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-00:22:15</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch16-03: Shared State</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-00:27:12</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch16-04: Sync &amp; Send</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-00:29:13</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="section" rowspan="7">Ch17: Async/Await</td><td class="sub">Ch17-00: Async/Await</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-00:32:34</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch17-01: Futures &amp; Syntax</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-00:39:33</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch17-02: Concurrency with Async</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-00:45:59</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch17-03: More Futures</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-00:49:23</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch17-04: Streams</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-00:51:09</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch17-05: Traits for Async</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-00:59:50</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch17-06: Futures, Tasks, Threads</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-01:02:08</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+</table>
+
+<h2> Part V: Design Patterns & Advanced Topics</h2>
+<table>
+  <tr><th>Chapter</th><th>Sub-section</th><th>Translation</th><th>Finished</th><th>Verification</th></tr>
+  <tr><td class="section" rowspan="4">Ch18: OOP</td><td class="sub">Ch18-00: OOP Features</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-01:02:31</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch18-01: What is OO?</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-01:05:52</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch18-02: Trait Objects</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-01:10:31</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch18-03: OO Design Patterns</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-01:26:14</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="section" rowspan="4">Ch19: Patterns</td><td class="sub">Ch19-00: Patterns</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-01:26:55</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch19-01: All Places for Patterns</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-23-01:31:06</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch19-02: Refutability</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-01:32:44</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch19-03: Pattern Syntax</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-01:43:39</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+</table>
+
+<h2> Part VI: Advanced Features (cont.)</h2>
+<table>
+  <tr><th>Chapter</th><th>Sub-section</th><th>Translation</th><th>Finished</th><th>Verification</th></tr>
+  <tr><td class="section" rowspan="6">Ch20: Advanced Features</td><td class="sub">Ch20-00: Advanced Features</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-01:44:10</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch20-01: Unsafe Rust</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-01:55:12</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch20-02: Advanced Traits</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-02:02:20</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch20-03: Advanced Types</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-02:07:21</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch20-04: Advanced Functions &amp; Closures</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-02:10:29</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch20-05: Macros</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-02:19:37</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+</table>
+
+<h2> Part VII: Final Project</h2>
+<table>
+  <tr><th>Chapter</th><th>Sub-section</th><th>Translation</th><th>Finished</th><th>Verification</th></tr>
+  <tr><td class="section" rowspan="4">Ch21: Web Server</td><td class="sub">Ch21-00: Final Project</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-02:20:24</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch21-01: Single-Threaded</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-02:28:53</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch21-02: Multithreaded</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-02:40:38</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+  <tr><td class="sub">Ch21-03: Graceful Shutdown</td><td class="trans-status"><span class="icon-done">&#10004;</span></td><td class="timestamp">2026-07-22-02:44:19</td><td class="verify-status"><select class="verify-select"><option>Pending</option><option>Pass</option><option>Needs Review</option></select></td></tr>
+</table>
+
+<h2> Final Steps</h2>
+<table>
+  <tr><th>Task</th><th>Status</th><th>Verification</th></tr>
+  <tr><td>Verify output quality (sample chapters)</td><td class="trans-status"><span class="icon-pending">&#9711;</span></td><td class="verify-status"><span class="badge-pending">Pending</span></td></tr>
+  <tr><td>Create TRANSLATION_NOTES.md</td><td class="trans-status"><span class="icon-pending">&#9711;</span></td><td class="verify-status"><span class="badge-pending">Pending</span></td></tr>
+  <tr><td>Build EPUB</td><td class="trans-status"><span class="icon-pending">&#9711;</span></td><td class="verify-status"><span class="badge-pending">Pending</span></td></tr>
+  <tr><td>git commit &amp; push</td><td class="trans-status"><span class="icon-pending">&#9711;</span></td><td class="verify-status"><span class="badge-pending">Pending</span></td></tr>
+</table>
+
+<div class="footer">
+  <strong>Links:</strong><br>
+  Original English Book: <a href="https://doc.rust-lang.org/book/" target="_blank">doc.rust-lang.org/book/</a><br>
+  Original Source: <a href="https://github.com/rust-lang/book" target="_blank">github.com/rust-lang/book</a><br>
+  Gujarati Translation: <a href="https://github.com/HiMistry/rust-book-gu" target="_blank">github.com/HiMistry/rust-book-gu</a><br><br>
+  <strong>Legend:</strong>
+  <span class="icon-done">&#10004;</span> Done /
+  <span class="icon-progress">&#8635;</span> In Progress /
+  <span class="icon-pending">&#9711;</span> Pending
+  &nbsp;|&nbsp; <strong>Model:</strong> Gemma3:12b (local Ollama) &nbsp;|&nbsp; <strong>Pipeline PID:</strong> 40047
+</div>
+
+<script>
+// Update file counts
+function updateCounts() {
+  const transIcons = document.querySelectorAll('.icon-done, .icon-progress');
+  const allTrans = document.querySelectorAll('.trans-status');
+  let done = 0, progress = 0;
+  allTrans.forEach(td => {
+    if (td.querySelector('.icon-done')) done++;
+    if (td.querySelector('.icon-progress')) progress++;
+  });
+  document.getElementById('files-translated').textContent = done;
+  const pct = Math.round((done / 112) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+
+  const verifAll = document.querySelectorAll('.verify-select');
+  let verified = 0;
+  verifAll.forEach(sel => { if (sel.value === 'Pass') verified++; });
+  document.getElementById('files-verified').textContent = verified;
+}
+updateCounts();
+
+// Save state to localStorage
+document.querySelectorAll('.verify-select').forEach(sel => {
+  sel.addEventListener('change', saveVerifyState);
+});
+function saveVerifyState() {
+  const state = {};
+  document.querySelectorAll('.verify-select').forEach(sel => {
+    const row = sel.closest('tr');
+    const key = row ? (row.querySelector('.section') || row.querySelector('td:first-child'))?.textContent?.trim() || Math.random() : Math.random();
+    state[key] = sel.value;
+  });
+  localStorage.setItem('trpl-verify-state', JSON.stringify(state));
+}
+function loadVerifyState() {
+  try {
+    const raw = localStorage.getItem('trpl-verify-state');
+    if (!raw) return;
+    const state = JSON.parse(raw);
+    document.querySelectorAll('.verify-select').forEach(sel => {
+      const row = sel.closest('tr');
+      const key = row ? (row.querySelector('.section') || row.querySelector('td:first-child'))?.textContent?.trim() || '' : '';
+      if (key && state[key]) sel.value = state[key];
+    });
+  } catch(e) {}
+  updateCounts();
+}
+loadVerifyState();
+</script>
+</body>
+</html>
