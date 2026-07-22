@@ -1,0 +1,6 @@
+Cargo.lock
+target/
+.vscode/
+/book
+.DS_Store
+/gu_pipe/translate/target/

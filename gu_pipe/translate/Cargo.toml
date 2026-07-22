@@ -1,0 +1,27 @@
+[package]
+name = "translate"
+description = "Translate The Rust Programming Language book from English to Gujarati using local Ollama models"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# HTTP client for talking to Ollama's API at localhost:11434.
+# We use the "blocking" feature so the code runs synchronously (no async/await),
+# which keeps the program simpler and easier to understand.
+reqwest = { version = "0.12", features = ["blocking", "json"] }
+
+# JSON parsing for config.json, glossary.json, and progress.json.
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Markdown parser that walks through a .md file event by event.
+# Each event is either a tag (heading, paragraph, code block) or text.
+# We use it to identify prose that needs translation vs code that does not.
+pulldown-cmark = "0.12"
+
+# Command-line argument parser.
+# Defines --src, --model, --out, --resume, --build-epub flags.
+clap = { version = "4", features = ["derive"] }
+
+# File globbing for matching source file patterns like "ch01-*.md"
+glob = "0.3"

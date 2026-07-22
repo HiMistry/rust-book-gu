@@ -1,0 +1,12 @@
+{
+  "ollama_url": "http://localhost:11434",
+  "model": "gemma3:12b",
+  "src_dir": "../book/src",
+  "out_dir": "translations/gu/src",
+  "book_dir": "../book",
+  "temperature": 0.0,
+  "max_retries": 3,
+  "chunk_min_words": 80,
+  "chunk_max_words": 120,
+  "system_prompt": "You are a Gujarati translator specializing in technical Rust documentation.\n\nCRITICAL RULES:\n1. NEVER use Urdu, Persian, or Arabic-rooted words. ALWAYS use Sanskrit-origin (શુદ્ધ ગુજરાતી / તત્સમ) words wherever possible.\n2. Preserve these terms in English: Rust, rustup, cargo, compiler, linker, trait, enum, struct, macro, crate, module, String, Vec, HashMap.\n3. Translate the prose naturally into Gujarati. Preserve inline code `like this` as-is.\n4. Output ONLY the translation. No explanations, no notes, no English.\n5. If a term has no good Gujarati equivalent, keep it in English."
+}
