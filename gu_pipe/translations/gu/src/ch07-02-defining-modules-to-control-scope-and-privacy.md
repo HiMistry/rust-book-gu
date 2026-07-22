@@ -1,7 +1,7 @@
 <!-- Old headings. Do not remove or links may break. -->
-## નિયંત્રણ ક્ષેત્ર અને ગોપનીયતા સાથે મોડ્યુલ્સ
+## Control Scope and Privacy with Modules
 
-આ વિભાગમાં, આપણે મોડ્યુલ્સ અને મોડ્યુલ સિસ્ટમના અન્ય ભાગો વિશે વાત કરીશું, ખાસ કરીને પાથ (paths), જે તમને વસ્તુઓને નામ આપવા દે છે; `use` કીવર્ડ જે પાથને ક્ષેત્રમાં લાવે છે; અને વસ્તુઓને જાહેર કરવા માટે `pub` કીવર્ડ. આપણે `as` કીવર્ડ, બાહ્ય પેકેજો અને ગ્લોબ ઓપરેટર વિશે પણ ચર્ચા કરીશું.
+આ વિભાગમાં, આપણે મોડ્યુલ્સ અને મોડ્યુલ સિસ્ટમના અન્ય ભાગો વિશે વાત કરીશું, વિશેષ કરીને પાથ (paths), જે તમને વસ્તુઓને નામ આપવા દે છે; `use` કીવર્ડ જે પાથને ક્ષેત્રમાં લાવે છે; અને વસ્તુઓને જાહેર કરવા માટે `pub` કીવર્ડ. આપણે `as` કીવર્ડ, બાહ્ય પેકેજો અને ગ્લોબ ઓપરેટર વિશે પણ ચર્ચા કરીશું.
 
 ### Modules Cheat Sheet
 
@@ -25,9 +25,9 @@ src/garden/vegetables.rs ફાઈલમાં src/garden/vegetables/mod.rs
 
 પ્રાઇવેટ વિરુદ્ધ પબ્લિક : એક મોડ્યુલનો કોડ ડિફૉલ્ટ રૂપે તેના પેરેન્ટ મોડ્યુલ્સથી છુપા રાખવામાં આવે છે. કોઈ મોડ્યુલને પબ્લિક બનાવવા માટે, તેને `pub mod` સાથે જાહેર કરો, `mod` ને બદલે. પબ્લિક મોડ્યુલમાં રહેલા આઇટમને પણ પબ્લિક બનાવવા માટે, તેમના ઘોષણાઓ પહેલાં `pub` નો ઉપયોગ કરો.
 
-`use` કીવર્ડ : કોઈ અવકાશમાં, `use` કીવર્ડ વસ્તુઓ માટે શોર્ટકટ બનાવે છે જેથી કરીને લાંબા માર્ગોનું પુનરાવર્તન ટાળી શકાય. કોઈપણ અવકાશમાં જે `crate::garden::vegetables::Asparagus` ને સંદર્ભિત કરી શકે છે, તમે `use crate::garden::vegetables::Asparagus;` સાથે શોર્ટકટ બનાવી શકો છો, અને ત્યારબાદ તમારે ફક્ત `Asparagus` લખવાની જરૂર પડશે તે પ્રકારનો ઉપયોગ અવકાશમાં કરવા માટે.
+`use` કીવર્ડ : કોઈ અવકાશમાં, `use` કીવર્ડ વસ્તુઓ માટે શોર્ટકટ બનાવે છે જેથી કરીને લાંબા માર્ગોનું પુનરાવર્તન ટાળી શકાય. કોઈપણ અવકાશમાં જે `crate::garden::vegetables::Asparagus` ને સંદર્ભિત કરી શકે છે, તમે `use crate::garden::vegetables::Asparagus;` સાથે શોર્ટકટ બનાવી શકો છો, અને ત્યારબાદ તમારે માત્ર `Asparagus` લખવાની જરૂર પડશે તે પ્રકારનો ઉપયોગ અવકાશમાં કરવા માટે.
 
-અહીં, આપણે `backyard` નામની એક બાઈનરી ક્રેટ બનાવીએ છીએ જે આ નિયમો દર્શાવે છે. ક્રેટનું ડિરેક્ટરી, જે backyard નામનું પણ છે, તેમાં આ ફાઇલો અને ડિરેક્ટરીઓ શામેલ છે:
+અહીં, આપણે `backyard` નામની એક બાઈનરી ક્રેટ બનાવીએ છીએ જે આ નિયમો દર્શાવે છે. ક્રેટનું ડિરેક્ટરી, જે backyard નામનું પણ છે, તેમાં આ ફાઇલો અને ડિરેક્ટરીઓ સમાવિષ્ટ છે:
 
 backyard
 ├── Cargo.lock
@@ -37,7 +37,7 @@ backyard
     │   └── vegetables.rs
     ├── garden.rs
     └── main.rs
-આ કિસ્સામાં, ક્રેટ રૂટ ફાઈલ src/main.rs છે, અને તેમાં આ બાબતો શામેલ છે:
+આ કિસ્સામાં, ક્રેટ રૂટ ફાઈલ src/main.rs છે, અને તેમાં આ બાબતો સમાવિષ્ટ છે:
 
 <Listing file-name="src/main.rs">
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/main.rs}}
@@ -65,11 +65,11 @@ backyard
 <Listing number="7-1" file-name="src/lib.rs" caption="A `front_of_house` module containing other modules that then contain functions">
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-01/src/lib.rs}}
 </Listing>
-We define a module with the `mod` keyword followed by the name of the module (in this case, `front_of_house`). The body of the module then goes inside curly brackets. Inside modules, we can place other modules, as in this case with the modules `hosting` and `serving`. Modules can also hold definitions for other items, such as structs, enums, constants, traits, and as in Listing 7-1, functions. આપણે એક મોડ્યુલ વ્યાખ્યાયિત કરીએ છીએ જેમાં `mod` કીવર્ડ ત્યારબાદ મોડ્યુલનું નામ આવે છે (આ કિસ્સામાં, `front_of_house`). મોડ્યુલનો ભાગ પછી કુંડાકી અક્ષરો (`curly brackets`) ની અંદર જાય છે. મોડ્યુલોની અંદર, આપણે અન્ય મોડ્યુલો પણ મૂકી શકીએ છીએ, જેમ કે આ કિસ્સામાં `hosting` અને `serving` મોડ્યુલો છે. મોડ્યુલો અન્ય વસ્તુઓ માટે વ્યાખ્યાઓ પણ રાખી શકે છે, જેમ કે structs, enums, constants, traits અને Listing 7-1 માં દર્શાવેલ functions.
+આપણે એક મોડ્યુલ વ્યાખ્યાયિત કરીએ છીએ જેમાં `mod` કીવર્ડ ત્યારબાદ મોડ્યુલનું નામ આવે છે (આ કિસ્સામાં, `front_of_house`). મોડ્યુલનો ભાગ પછી કુંડાકી અક્ષરો (`curly brackets`) ની અંદર જાય છે. મોડ્યુલોની અંદર, આપણે અન્ય મોડ્યુલો પણ મૂકી શકીએ છીએ, જેમ કે આ કિસ્સામાં `hosting` અને `serving` મોડ્યુલો છે. મોડ્યુલો અન્ય વસ્તુઓ માટે વ્યાખ્યાઓ પણ રાખી શકે છે, જેમ કે structs, enums, constants, traits અને Listing 7-1 માં દર્શાવેલ functions.
 
-By using modules, we can group related definitions together and name why they’re related. Programmers using this code can navigate the code based on the groups rather than having to read through all the definitions, making it easier to find the definitions relevant to them. Programmers adding new functionality to this code would know where to place the code to keep the program organized. મોડ્યુલોનો ઉપયોગ કરીને, આપણે સંબંધિત વ્યાખ્યાઓને એકસાથે જૂથબદ્ધ કરી શકીએ છીએ અને નામ આપી શકીએ છીએ કે તેઓ શા માટે સંબંધિત છે. આ કોડનો ઉપયોગ કરતા પ્રોગ્રામરો વ્યાખ્યાઓ વાંચવાને બદલે જૂથોના આધારે કોડ નેવિગેટ કરી શકે છે, જેનાથી તેમના માટે સુસંગત વ્યાખ્યાઓ શોધવાનું સરળ બને છે. આ કોડમાં નવી કાર્યક્ષમતા ઉમેરતા પ્રોગ્રામરોને પ્રોગ્રામને વ્યવસ્થિત રાખવા માટે કોડ ક્યાં મૂકવો તે ખબર પડશે.
+મોડ્યુલોનો ઉપયોગ કરીને, આપણે સંબંધિત વ્યાખ્યાઓને એકસાથે જૂથબદ્ધ કરી શકીએ છીએ અને નામ આપી શકીએ છીએ કે તેઓ શા માટે સંબંધિત છે. આ કોડનો ઉપયોગ કરતા પ્રોગ્રામરો વ્યાખ્યાઓ વાંચવાને બદલે જૂથોના આધારે કોડ નેવિગેટ કરી શકે છે, જેનાથી તેમના માટે સુસંગત વ્યાખ્યાઓ શોધવાનું સરળ બને છે. આ કોડમાં નવી કાર્યક્ષમતા ઉમેરતા પ્રોગ્રામરોને પ્રોગ્રામને વ્યવસ્થિત રાખવા માટે કોડ ક્યાં મૂકવો તે ખબર પડશે.
 
-Earlier, we mentioned that src/main.rs and src/lib.rs are called crate roots . અગાઉ, અમે ઉલ્લેખ કર્યો હતો કે src/main.rs અને src/lib.rs ને `crate` મૂળ કહેવામાં આવે છે. આ નામ આપવાનું કારણ એ છે કે આ બે ફાઇલોની સામગ્રી એક મોડ્યુલ બનાવે છે જેનું નામ `crate` છે, જે `crate` ના મોડ્યુલ માળખાના મૂળમાં હોય છે, જેને મોડ્યુલ વૃક્ષ પણ કહેવાય છે. Listing 7-2 shows the module tree for the structure
+અગાઉ, અમે ઉલ્લેખ કર્યો હતો કે src/main.rs અને src/lib.rs ને `crate` મૂળ કહેવામાં આવે છે. આ નામ આપવાનું કારણ એ છે કે આ બે ફાઇલોની સામગ્રી એક મોડ્યુલ બનાવે છે જેનું નામ `crate` છે, જે `crate` ના મોડ્યુલ માળખાના મૂળમાં હોય છે, જેને મોડ્યુલ વૃક્ષ પણ કહેવાય છે. Listing 7-2 shows the module tree for the structure
 
 in Listing 7-1. લિસ્ટિંગ 7-2 માં સ્ટ્રક્ચર માટેનું મોડ્યુલ વૃક્ષ દર્શાવવામાં આવ્યું છે જે લિસ્ટિંગ 7-1 માં છે.
 

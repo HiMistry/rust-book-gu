@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-7ed1a93d.js";
+            window.path_to_searchindex_js = "searchindex-55c5f58b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -183,7 +183,7 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <!-- Old headings. Do not remove or links may break. -->
-<h2 id="send-અને-sync-સાથે-વિસતૃત-સંવતંતરતા"><a class="header" href="#send-અને-sync-સાથે-વિસતૃત-સંવતંતરતા"><code>Send</code> અને <code>Sync</code> સાથે વિસ્તૃત સંવતંત્રતા</a></h2>
+<h2 id="extensible-concurrency-with-send-and-sync"><a class="header" href="#extensible-concurrency-with-send-and-sync">Extensible Concurrency with <code>Send</code> and <code>Sync</code></a></h2>
 <p>રસપ્રદ રીતે, આ પ્રકરણમાં અત્યાર સુધી આપણે જે સંવતંત્રતા (concurrency) નાં લક્ષણોની ચર્ચા કરી છે, તેમાંથી લગભગ દરેક પ્રમાણિત શ્રેણી (standard library) નો ભાગ રહ્યા છે, ભાષાનો નહીં. સંવતંત્રતાને નિયંત્રિત કરવા માટે તમારી પાસે વિકલ્પો માત્ર ભાષા અથવા પ્રમાણિત શ્રેણી સુધી મર્યાદિત નથી; તમે તમારી પોતાની સંવતંત્રતાનાં લક્ષણો લખી શકો છો અથવા અન્ય લોકો દ્વારા લખાયેલાં વાપરી શકો છો.</p>
 <p>જો કે, મુખ્ય સંવતંત્રતાનાં ખ્યાલો જે ભાષામાં જડિત છે (embedded) પ્રમાણિત શ્રેણીમાં નહીં, તે <code>std::marker</code> નાં <code>Send</code> અને <code>Sync</code> લક્ષણો છે.</p>
 <!-- Old headings. Do not remove or links may break. -->
@@ -192,16 +192,16 @@
 <p>આથી, Rustનું પ્રકાર પ્રણાલી અને trait મર્યાદાઓ ખાતરી કરે છે કે તમે ક્યારેય અજાણતામાં <code>Rc&lt;T&gt;</code> મૂલ્યને થ્રેડ્સ વચ્ચે સુરક્ષિત રીતે મોકલી શકતા નથી. જ્યારે આપણે યાદી 16-14 માં આવું કરવાનો પ્રયત્ન કર્યો, ત્યારે આપણને એવો સંદેશ મળ્યો: <code>the trait `Send` is not implemented for `Rc&lt;Mutex&lt;i32&gt;&gt;</code> . જ્યારે આપણે <code>Arc&lt;T&gt;</code> પર સ્વિચ કર્યું, જે <code>Send</code> લાગુ કરે છે, ત્યારે કોડ કમ્પાઇલ થયો.</p>
 <p>કોઈપણ પ્રકાર જે સંપૂર્ણપણે <code>Send</code> પ્રકારોથી બનેલો હોય તેને પણ આપમેળે <code>Send</code> તરીકે ચિહ્નિત કરવામાં આવે છે. લગભગ બધાં પ્રાથમિક પ્રકારો <code>Send</code> હોય છે, કાચું pointer સિવાય, જેની આપણે પ્રકરણ 20 માં ચર્ચા કરીશું.</p>
 <!-- Old headings. Do not remove or links may break. -->
-<h3 id="બહુવિધ-થરેડોથી-પરવેશ-કરવો"><a class="header" href="#બહુવિધ-થરેડોથી-પરવેશ-કરવો">બહુવિધ થ્રેડોથી પ્રવેશ કરવો</a></h3>
+<h3 id="accessing-from-multiple-threads"><a class="header" href="#accessing-from-multiple-threads">Accessing from Multiple Threads</a></h3>
 <p><code>Sync</code> માર્કર ટ્રેઇટ સૂચવે છે કે <code>Sync</code> લાગુ કરતી પ્રકારને અનેક થ્રેડોમાંથી સુરક્ષિત રીતે સંદર્ભિત કરી શકાય છે. બીજા શબ્દોમાં કહીએ તો, કોઈપણ પ્રકાર <code>T</code> <code>Sync</code> લાગુ કરે છે જો <code>&amp;T</code> ( <code>T</code> નો અમૂર્ત સંદર્ભ) <code>Send</code> લાગુ કરે, જેનો અર્થ થાય છે કે સંદર્ભને સુરક્ષિત રીતે અન્ય થ્રેડ પર મોકલી શકાય છે. <code>Send</code> ની જેમ, પ્રાથમિક પ્રકારો બધા <code>Sync</code> લાગુ કરે છે, અને એવા પ્રકારોથી બનેલા પ્રકારો જે <code>Sync</code> લાગુ કરે છે તેઓ પણ <code>Sync</code> લાગુ કરે છે.</p>
 <p>સ્માર્ટ પોઇન્ટર <code>Rc&lt;T&gt;</code> પણ સમાન કારણોસર <code>Sync</code> લાગુ કરતું નથી કે જે તે <code>Send</code> લાગુ કરતું નથી. <code>RefCell&lt;T&gt;</code> પ્રકાર (જે વિશે આપણે પ્રકરણ 15 માં વાત કરી હતી) અને સંબંધિત <code>Cell&lt;T&gt;</code> પ્રકારોનું પરિબાર <code>Sync</code> લાગુ કરતું નથી. <code>RefCell&lt;T&gt;</code> દ્વારા કરવામાં આવતું બોરો ચેકિંગનું અમલીકરણ રનટાઇમ પર થ્રેડ-સુરક્ષિત નથી. સ્માર્ટ પોઇન્ટર <code>Mutex&lt;T&gt;</code> <code>Sync</code> લાગુ કરે છે અને તેનો ઉપયોગ બહુવિધ થ્રેડો સાથે પ્રવેશ વહેંચવા માટે થઈ શકે છે, જે તમે “<code>Mutex&lt;T&gt;</code> ના સંયુક્ત પ્રવેશ” માં જોયું હતું.</p>
-<h3 id="જાતે-send-અને-sync-અમલમાં-મૂકવું-એ-અસુરકષિત-છે"><a class="header" href="#જાતે-send-અને-sync-અમલમાં-મૂકવું-એ-અસુરકષિત-છે">જાતે <code>Send</code> અને <code>Sync</code> અમલમાં મૂકવું એ અસુરક્ષિત છે</a></h3>
+<h3 id="implementing-send-and-sync-manually-is-unsafe"><a class="header" href="#implementing-send-and-sync-manually-is-unsafe">Implementing <code>Send</code> and <code>Sync</code> Manually Is Unsafe</a></h3>
 <p>કારણ કે જે પ્રકારો સંપૂર્ણપણે અન્ય પ્રકારોથી બનેલા હોય, જે <code>Send</code> અને <code>Sync</code> લક્ષણો (traits) લાગુ કરે છે, તેઓ આપમેળે જ <code>Send</code> અને <code>Sync</code> લાગુ કરે છે, તેથી આપણે તે લક્ષણો જાતે અમલમાં મૂકવાની જરૂર નથી. માર્કર લક્ષણો તરીકે, તેમની પાસે અમલ કરવા માટે કોઈ પદ્ધતિઓ પણ નથી. તેઓ માત્ર ચાલતી વસ્તુઓ સંબંધિત અચિવૃત્તિઓને (invariants) લાગુ કરવા માટે ઉપયોગી છે.</p>
 <p>આ લક્ષણો જાતે અમલમાં મૂકવાથી અસુરક્ષિત Rust કોડ અમલમાં આવે છે. આપણે પ્રકરણ ૨૦ માં અસુરક્ષિત Rust કોડનો ઉપયોગ વિશે વાત કરીશું; હાલમાં, મહત્વપૂર્ણ માહિતી એ છે કે <code>Send</code> અને <code>Sync</code> ભાગોથી બનેલા ન હોય તેવા નવા ચાલતા પ્રકારો બનાવતી વખતે સલામતીની ખાતરીઓ જાળવવા માટે કાળજીપૂર્વક વિચારવું જરૂરી છે. “ધ રસ્ટોનોમિકોન” આ ખાતરીઓ અને તેને કેવી રીતે જાળવવી તે વિશે વધુ માહિતી ધરાવે છે.</p>
-<h2 id="સારાંશ"><a class="header" href="#સારાંશ">સારાંશ</a></h2>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
 <p>આ પુસ્તકમાં તમને એકસાથે થતા કાર્યો (concurrency) વારંવાર જોવા મળશે: આગામી પ્રકરણ અસમકાલીન પ્રોગ્રામિંગ (async programming) પર ધ્યાન કેન્દ્રિત કરે છે, અને પ્રકરણ ૨૧ નો પ્રોજેક્ટ આ પ્રકરણમાં દર્શાવેલ વિભાવનાઓનો ઉપયોગ નાના ઉદાહરણો કરતાં વધુ વાસ્તવિક પરિસ્થિતિમાં કરશે.</p>
 <p>જેમ અગાઉ જણાવવામાં આવ્યું છે, કારણ કે Rust એકસાથે થતા કાર્યોને નિયંત્રિત કરવાની ઘણી રીતો ભાષાનો ભાગ નથી, તેથી ઘણા એકસાથે થતા કાર્યોના ઉકેલો crates તરીકે અમલમાં મૂકાય છે. આ standard library કરતાં વધુ ઝડપથી વિકસિત થાય છે, તેથી બહુ-થ્રેડેડ (multithreaded) પરિસ્થિતિઓમાં ઉપયોગ કરવા માટે વર્તમાન, અત્યાધુનિક crates શોધવાનું ધ્યાન રાખો.</p>
-<p>The Rust standard library provides channels for message passing and smart pointer types, such as <code>Mutex&lt;T&gt;</code> and <code>Arc&lt;T</code> , that are safe to use in concurrent contexts. The type system and the borrow checker ensure that the code using these solutions won’t end up with data races or invalid references. Once you get your code to compile, you can rest assured that it will happily run on multiple threads without the kinds of hard-to-track-down bugs common in other languages. Concurrent programming is no longer a concept to be afraid of: Go forth and make your programs concurrent, fearlessly! રસ્ટનું પ્રમાણિત પુસ્તકાલય સંદેશા પ્રસારણ માટે ચેનલો અને સ્માર્ટ પોઇન્ટર પ્રકારો પૂરા પાડે છે, જેમ કે <code>Mutex&lt;T&gt;</code> અને <code>Arc&lt;T&gt;</code>, જે એક સાથે ચાલતા સંદર્ભોમાં ઉપયોગ કરવા સુરક્ષિત છે. પ્રકારની સિસ્ટમ અને બોરો ચેકર ખાતરી કરે છે કે આ ઉકેલોનો ઉપયોગ કરતા કોડમાં ડેટા રેસ અથવા અમાન્ય સંદર્ભો નહીં આવે. એકવાર તમે તમારો કોડ કમ્પાઇલ કરી લો, પછી તમને ખાતરી થઈ શકે છે કે તે મુશ્કેલથી શોધી શકાય તેવા અન્ય ભાષાઓમાં સામાન્ય ભૂલો વિના બહુવિધ થ્રેડો પર ખુશીથી ચાલશે. એક સાથેનું પ્રોગ્રામિંગ હવે ડરવાની કોઈ બાબત નથી: આગળ વધો અને તમારા પ્રોગ્રામને એક સાથે કરો, નિરાભિરોહપણે!</p>
+<p>રસ્ટનું પ્રમાણિત પુસ્તકાલય સંદેશા પ્રસારણ માટે ચેનલો અને સ્માર્ટ પોઇન્ટર પ્રકારો પૂરા પાડે છે, જેમ કે <code>Mutex&lt;T&gt;</code> અને <code>Arc&lt;T&gt;</code>, જે એક સાથે ચાલતા સંદર્ભોમાં ઉપયોગ કરવા સુરક્ષિત છે. પ્રકારની સિસ્ટમ અને બોરો ચેકર ખાતરી કરે છે કે આ ઉકેલોનો ઉપયોગ કરતા કોડમાં ડેટા રેસ અથવા અમાન્ય સંદર્ભો નહીં આવે. એકવાર તમે તમારો કોડ કમ્પાઇલ કરી લો, પછી તમને ખાતરી થઈ શકે છે કે તે મુશ્કેલથી શોધી શકાય તેવા અન્ય ભાષાઓમાં સામાન્ય ભૂલો વિના બહુવિધ થ્રેડો પર ખુશીથી ચાલશે. એક સાથેનું પ્રોગ્રામિંગ હવે ડરવાની કોઈ બાબત નથી: આગળ વધો અને તમારા પ્રોગ્રામને એક સાથે કરો, નિરાભિરોહપણે!</p>
 
                     </main>
 

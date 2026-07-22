@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-7ed1a93d.js";
+            window.path_to_searchindex_js = "searchindex-55c5f58b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -182,11 +182,11 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="હેલો-વરલડ"><a class="header" href="#હેલો-વરલડ">હેલો, વર્લ્ડ!</a></h2>
+                        <h2 id="hello-world"><a class="header" href="#hello-world">Hello, World!</a></h2>
 <p>હવે તમે Rust સ્થાપિત કરી લીધું છે, તો હવે પહેલું Rust કાર્યક્રમ લખવાનો સમય આવી ગયો છે. નવી ભાષા શીખતી વખતે કોઈ નાનું કાર્યક્રમ છાપવો એ પરંપરા છે જે <code>Hello, world!</code> લખાણ સ્ક્રીન પર દર્શાવે છે, તેથી આપણે પણ તે જ કરીશું!</p>
 <p>નોંધ: આ પુસ્તક કમાન્ડ લાઇનથી થોડી પૃથ્થઈ પરિચય હોવાનું માને છે. Rust તમારા સંપાદન કે સાધન અથવા તમારો કોડ ક્યાં રહે છે તેના વિશે કોઈ ચોક્કસ માંગણી કરતું નથી, તેથી જો તમે કમાન્ડ લાઇનને બદલે IDE વાપરવાનું પસંદ કરો છો, તો તમારા મનપસંદ IDE નો ઉપયોગ કરી શકો છો. ઘણા IDEs હવે Rust માટે થોડી ઘણી મદદ પૂરી પાડે છે; વિગતો માટે IDE ના દસ્તાવેજ તપાસો. Rust ટીમ <code>rust-analyzer</code> દ્વારા મહાન IDE મદદ આપવા પર ધ્યાન કેન્દ્રિત કરી રહી છે. વધુ માહિતી માટે Appendix D જુઓ.</p>
 <!-- Old headings. Do not remove or links may break. -->
-<h3 id="પરોજેકટ-ડિરેકટરી-સેટઅપ"><a class="header" href="#પરોજેકટ-ડિરેકટરી-સેટઅપ">પ્રોજેક્ટ ડિરેક્ટરી સેટઅપ</a></h3>
+<h3 id="project-directory-setup"><a class="header" href="#project-directory-setup">Project Directory Setup</a></h3>
 <p>તમે એક ડિરેક્ટરી બનાવીને શરૂઆત કરશો જ્યાં તમે તમારો Rust કોડ સંગ્રહિત કરશો. Rust ને એનાથી કોઈ ફરક પડતો નથી કે તમારો કોડ ક્યાં રહે છે, પરંતુ આ પુસ્તકમાં આપેલાં વ્યાયમો અને પ્રોજેક્ટ્સ માટે, અમે તમારા હોમ ડિરેક્ટરીમાં એક <code>projects</code> ડિરેક્ટરી બનાવવાની અને બધાં પ્રોજેક્ટ્સ ત્યાં રાખવાની ભલામણ કરીએ છીએ.</p>
 <p>એક ટર્મિનલ ખોલો અને <code>projects</code> ડિરેક્ટરી અને “Hello, world!” પ્રોજેક્ટ માટેની ડિરેક્ટરી બનાવવા માટે નીચેના આદેશો દાખલ કરો.</p>
 <p>Linux, macOS, અને Windows પર PowerShell માટે, આ દાખલ કરો:</p>
@@ -219,11 +219,11 @@ Hello, world!
 <p>rustc main.rs
 .\main
 Hello, world!
-Regardless of your operating system, the string <code>Hello, world!</code> should print to the terminal. If you don’t see this output, refer back to the “Troubleshooting” part of the Installation section for ways to get help. તમારા ઓપરેટિંગ સિસ્ટમ કેવું હોય વાંધો નહિ, <code>Hello, world!</code> એ આઉટપુટ ટર્મિનલ પર દેખાવા જોઈએ. જો તમને આ આઉટપુટ ના દેખાય, તો સહાય મેળવવા માટે ઇન્સ્ટોલેશન વિભાગના “Troubleshooting” ભાગમાં પાછા જાઓ. If <code>Hello, world!</code> did print,</p>
+તમારા ઓપરેટિંગ સિસ્ટમ કેવું હોય વાંધો નહિ, <code>Hello, world!</code> એ આઉટપુટ ટર્મિનલ પર દેખાવા જોઈએ. જો તમને આ આઉટપુટ ના દેખાય, તો સહાય મેળવવા માટે ઇન્સ્ટોલેશન વિભાગના “Troubleshooting” ભાગમાં પાછા જાઓ. If <code>Hello, world!</code> did print,</p>
 </blockquote>
-<p>congratulations! You’ve officially written a Rust program. That makes you a Rust programmer—welcome! જો <code>Hello, world!</code> છપાયું હોય, તો અભિનંદન! તમે સત્તાવાર રીતે એક Rust કાર્યક્રમ લખ્યો છે. એ તમને એક Rust પ્રોગ્રામર બનાવે છે—સ્વાગત છે!</p>
+<p>જો <code>Hello, world!</code> છપાયું હોય, તો અભિનંદન! તમે સત્તાવાર રીતે એક Rust કાર્યક્રમ લખ્યો છે. એ તમને એક Rust પ્રોગ્રામર બનાવે છે—સ્વાગત છે!</p>
 <!-- Old headings. Do not remove or links may break. -->
-<h3 id="rust-કારયકરમની-રચના"><a class="header" href="#rust-કારયકરમની-રચના">Rust કાર્યક્રમની રચના</a></h3>
+<h3 id="the-anatomy-of-a-rust-program"><a class="header" href="#the-anatomy-of-a-rust-program">The Anatomy of a Rust Program</a></h3>
 <p>ચાલો આ “Hello, world!” કાર્યક્રમને વિગતવાર જોઈએ. અહીં પ્રથમ ભાગ છે:</p>
 <p>fn main() {</p>
 <p>}
@@ -233,11 +233,11 @@ These lines define a function named <code>main</code>. The <code>main</code> fun
 <p><code>main</code> ફંક્શનનો મુખ્ય ભાગ નીચેના કોડ ધરાવે છે:</p>
 <p>println!(“Hello, world!”);
 આ લીટી આ નાનકડા કાર્યક્રમમાં તમામ કાર્ય કરે છે: તે સ્ક્રીન પર લખાણ છાપે છે. અહીં ત્રણ મહત્વપૂર્ણ વિગતો ધ્યાન રાખવા જેવી છે.</p>
-<p>પ્રથમ, <code>println!</code> એક Rust મેક્રોને બોલાવે છે. જો તેના બદલે કોઈ ફંક્શન બોલાવવામાં આવ્યું હોત, તો તેને <code>println</code> ( <code>!</code> વગર) તરીકે દાખલ કરવામાં આવતું હોત. Rust મેક્રો એ કોડ લખવાનો એક માર્ગ છે જે Rust વાક્યરચનાને વિસ્તારવા માટે કોડ જનરેટ કરે છે, અને આપણે તેના વિશે પ્રકરણ 20 માં વધુ વિગતવાર ચર્ચા કરીશું. અત્યારે, તમારે ફક્ત એટલું જ જાણવાની જરૂર છે કે <code>!</code> નો ઉપયોગ કરવો એ સામાન્ય ફંક્શનને બદલે મેક્રોને બોલાવવા સમાન છે અને મેક્રો હંમેશાં ફંક્શન જેવા નિયમોનું પાલન કરતા નથી.</p>
-<p>બીજું, તમે <code>"Hello, world!"</code> સ્ટ્રિંગ જુઓ છો. અમે આ સ્ટ્રિંગને <code>println!</code> ને દલીલ તરીકે પસાર કરીએ છીએ, અને સ્ટ્રિંગ સ્ક્રીન પર છપાય છે. ત્રીજું, આપણે</p>
+<p>પ્રથમ, <code>println!</code> એક Rust મેક્રોને બોલાવે છે. જો તેના બદલે કોઈ ફંક્શન બોલાવવામાં આવ્યું હોત, તો તેને <code>println</code> ( <code>!</code> વગર) તરીકે દાખલ કરવામાં આવતું હોત. Rust મેક્રો એ કોડ લખવાનો એક માર્ગ છે જે Rust વાક્યરચનાને વિસ્તારવા માટે કોડ જનરેટ કરે છે, અને આપણે તેના વિશે પ્રકરણ 20 માં વધુ વિગતવાર ચર્ચા કરીશું. અત્યારે, તમારે માત્ર એટલું જ જાણવાની જરૂર છે કે <code>!</code> નો ઉપયોગ કરવો એ સામાન્ય ફંક્શનને બદલે મેક્રોને બોલાવવા સમાન છે અને મેક્રો હંમેશાં ફંક્શન જેવા નિયમોનું પાલન કરતા નથી.</p>
+<p>બીજું, તમે <code>"Hello, world!"</code> સ્ટ્રિંગ જુઓ છો. અમે આ સ્ટ્રિંગને <code>println!</code> ને Argument તરીકે પસાર કરીએ છીએ, અને સ્ટ્રિંગ સ્ક્રીન પર છપાય છે. ત્રીજું, આપણે</p>
 <p>લીટીને સેમિકોલન ( <code>;</code> ) સાથે સમાપ્ત કરીએ છીએ, જે દર્શાવે છે કે આ અભિવ્યક્તિ પૂર્ણ થઈ ગઈ છે, અને આગામી શરૂ થવા માટે તૈયાર છે. મોટાભાગની Rust કોડની લીટીઓ સેમિકોલનથી અંતિમ થાય છે.</p>
 <!-- Old headings. Do not remove or links may break. -->
-<h3 id="કંપન-અને-ચલાવણી"><a class="header" href="#કંપન-અને-ચલાવણી">કંપન અને ચલાવણી</a></h3>
+<h3 id="compilation-and-execution"><a class="header" href="#compilation-and-execution">Compilation and Execution</a></h3>
 <p>તમે હમણાં જ એક નવું બનાવેલું કાર્યક્રમ ચલાવ્યો છે, તો ચાલો આ પ્રક્રિયાના દરેક તબક્કાની તપાસ કરીએ.</p>
 <p>Rust કાર્યક્રમ ચલાવતા પહેલાં, તમારે તેને Rust કંપક (compiler) દ્વારા કમ્પાઇલ કરવું આવશ્યક છે, જેમાં <code>rustc</code> આદેશ દાખલ કરીને અને તમારા સ્ત્રોત ફાઈલનું નામ પસાર કરીને, જેમ કે:</p>
 <p>$ rustc main.rs
@@ -254,9 +254,9 @@ main.rs
 આ દર્શાવે છે કે સ્ત્રોત કોડ ફાઈલ કઈ સાથે .rs એક્સ્ટેંશન ધરાવે છે, એક્ઝિક્યુટેબલ ફાઈલ (Windows પર main.exe, પરંતુ અન્ય તમામ પ્લેટફોર્મ પર main), અને, Windows વાપરતી વખતે, એક ફાઈલ જેમાં ડીબગીંગ માહિતી હોય જે .pdb એક્સ્ટેંશન સાથે હોય. અહીંથી, તમે main અથવા main.exe ફાઈલ ચલાવો છો, આ રીતે:</p>
 </blockquote>
 <p>$ ./main # or .\main on Windows
-If your main.rs is your “Hello, world!” program, this line prints <code>Hello, world!</code> to your terminal. જો તમારું main.rs ફાઈલ “હેલો, વર્લ્ડ!” પ્રોગ્રામ છે, તો આ લીટી તમારા ટર્મિનલમાં <code>Hello, world!</code> છાપે છે.</p>
-<p>If you’re more familiar with a dynamic language, such as Ruby, Python, or JavaScript, you might not be used to compiling and running a program as separate steps. Rust is an ahead-of-time compiled language, meaning you can compile a program and give the executable to someone else, and they can run it even without having Rust installed. If you give someone a .rb , .py , or .js file, they need to have a Ruby, Python, or JavaScript implementation installed (respectively). But in those languages, you only need one command to compile and run your program. Everything is a trade-off in language design. જો તમે ડાયનેમિક ભાષાથી વધુ પરિચિત છો, જેમ કે રૂબી, પાયથોન અથવા JavaScript, તો તમને પ્રોગ્રામને અલગ તબક્કામાં કમ્પાઇલ કરવું અને ચલાવવું સામાન્ય ન લાગી શકે. Rust એ એક અગાઉથી કમ્પાઈલ કરેલી ભાષા છે, જેનો અર્થ થાય છે કે તમે પ્રોગ્રામને કમ્પાઇલ કરી શકો છો અને તેને કોઈ બીજાને આપી શકો છો, અને તેઓ Rust ઇન્સ્ટોલ કર્યા વિના પણ ચલાવી શકે છે. જો તમે કોઈને .rb , .py , અથવા .js ફાઈલ આપો છો, તો તેમને રૂબી, પાયથોન અથવા JavaScript અમલીકરણ ઇન્સ્ટોલ કરવું પડશે (ક્રમશઃ). પરંતુ તે ભાષાઓમાં, તમારે તમારા પ્રોગ્રામને કમ્પાઇલ કરવા અને ચલાવવા માટે ફક્ત એક જ આદેશની જરૂર પડે છે. ભાષા ડિઝાઇન હંમેશાં આપ-લેનું પરિણામ હોય છે.</p>
-<p><code>rustc</code> વડે ફક્ત કમ્પાઇલ કરવું સરળ પ્રોગ્રામ માટે ઠીક છે, પરંતુ જેમ જેમ તમારી યોજના વિશાળ બનશે, તેમ તમને બધા વિકલ્પોનું સંચાલન કરવું અને તમારા કોડને વહેંચવાનું સરળ બનાવવું જોઈશે. હવે પછી, અમે Cargo સાધનપરિચય કરાવશે, જે તમને વાસ્તવિક દુનિયાના Rust પ્રોગ્રામ લખવામાં મદદ કરશે.</p>
+જો તમારું main.rs ફાઈલ “હેલો, વર્લ્ડ!” પ્રોગ્રામ છે, તો આ લીટી તમારા ટર્મિનલમાં <code>Hello, world!</code> છાપે છે.</p>
+<p>જો તમે ડાયનેમિક ભાષાથી વધુ પરિચિત છો, જેમ કે રૂબી, પાયથોન અથવા JavaScript, તો તમને પ્રોગ્રામને અલગ તબક્કામાં કમ્પાઇલ કરવું અને ચલાવવું સામાન્ય ન લાગી શકે. Rust એ એક અગાઉથી કમ્પાઈલ કરેલી ભાષા છે, જેનો અર્થ થાય છે કે તમે પ્રોગ્રામને કમ્પાઇલ કરી શકો છો અને તેને કોઈ બીજાને આપી શકો છો, અને તેઓ Rust ઇન્સ્ટોલ કર્યા વિના પણ ચલાવી શકે છે. જો તમે કોઈને .rb , .py , અથવા .js ફાઈલ આપો છો, તો તેમને રૂબી, પાયથોન અથવા JavaScript અમલીકરણ ઇન્સ્ટોલ કરવું પડશે (ક્રમશઃ). પરંતુ તે ભાષાઓમાં, તમારે તમારા પ્રોગ્રામને કમ્પાઇલ કરવા અને ચલાવવા માટે માત્ર એક જ આદેશની જરૂર પડે છે. ભાષા ડિઝાઇન હંમેશાં આપ-લેનું પરિણામ હોય છે.</p>
+<p><code>rustc</code> વડે માત્ર કમ્પાઇલ કરવું સરળ પ્રોગ્રામ માટે ઠીક છે, પરંતુ જેમ જેમ તમારી યોજના વિશાળ બનશે, તેમ તમને બધા વિકલ્પોનું સંચાલન કરવું અને તમારા કોડને વહેંચવાનું સરળ બનાવવું જોઈશે. હવે પછી, અમે Cargo સાધનપરિચય કરાવશે, જે તમને વાસ્તવિક દુનિયાના Rust પ્રોગ્રામ લખવામાં મદદ કરશે.</p>
 
                     </main>
 

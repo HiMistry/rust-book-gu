@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-7ed1a93d.js";
+            window.path_to_searchindex_js = "searchindex-55c5f58b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -182,15 +182,15 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="નિયંતરણ-પરવાહ"><a class="header" href="#નિયંતરણ-પરવાહ">નિયંત્રણ પ્રવાહ</a></h2>
+                        <h2 id="control-flow"><a class="header" href="#control-flow">Control Flow</a></h2>
 <p>કોઈ શરત <code>true</code> હોય તો અમુક કોડ ચલાવવાની ક્ષમતા અને કોઈ શરત <code>true</code> રહે ત્યાં સુધી અમુક કોડ વારંવાર ચલાવવાની ક્ષમતા એ મોટાભાગની પ્રોગ્રામિંગ ભાષાઓના મૂળભૂત ઘટકો છે. Rust કોડના પ્રવાહને નિયંત્રિત કરવા માટે સૌથી સામાન્ય રચનાઓ <code>if</code> અભિવ્યક્તિઓ અને લૂપ્સ છે.</p>
-<h3 id="if-અભિવયકતિઓ"><a class="header" href="#if-અભિવયકતિઓ"><code>if</code> અભિવ્યક્તિઓ</a></h3>
+<h3 id="if-expressions"><a class="header" href="#if-expressions"><code>if</code> Expressions</a></h3>
 <p>એક <code>if</code> અભિવ્યક્તિ તમને શરતો પર આધારિત તમારા કોડને વિભાજિત કરવાની મંજૂરી આપે છે. તમે એક શરત પ્રદાન કરો છો અને પછી જણાવો છો, “જો આ શરત પૂરી થાય, તો આ કોડ બ્લોક ચલાવો. જો શરત પૂરી ન થાય, તો આ કોડ બ્લોક ચલાવશો નહીં.”</p>
 <p><code>if</code> અભિવ્યક્તિને અન્વેષણ કરવા માટે તમારા પ્રોજેક્ટ્સ ડિરેક્ટરીમાં branches નામનો એક નવો પ્રોજેક્ટ બનાવો. src/main.rs ફાઇલમાં નીચે મુજબ ઇનપુટ કરો:</p>
 <p>ફાઇલનામ: src/main.rs</p>
 <p>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-26-if-true/src/main.rs}}
-if અભિવ્યક્તિઓ બધી <code>if</code> અભિવ્યક્તિઓ <code>if</code> કીવર્ડથી શરૂ થાય છે, ત્યારબાદ એક શરત આવે છે. આ કિસ્સામાં, શરત તપાસે છે કે ચલ <code>number</code> નું મૂલ્ય 5 થી ઓછું છે કે નહીં. જો શરત <code>true</code> હોય તો અમલમાં મૂકવા માટે કોડનો બ્લોક તરત જ શરતના અંતે ચોકની નિશાની ({}) માં મૂકવામાં આવે છે. <code>if</code> અભિવ્યક્તિઓમાં શરતો સાથે સંકળાયેલા કોડના બ્લોક્સને કેટલીકવાર આર્મ્ઝ કહેવામાં આવે છે, જેમ કે આપણે પ્રકરણ 2 ના “અનુમાનને ગુપ્ત સંખ્યા સાથે સરખાવવું” વિભાગમાં ચર્ચા કરેલા <code>match</code> અભિવ્યક્તિઓમાં આર્મ્ઝ હોય છે.</p>
-<p>વૈકલ્પિક રીતે, અમે અહીં <code>else</code> અભિવ્યક્તિ પણ ઉમેરી શકીએ છીએ, જેથી જો શરત <code>false</code> હોય તો પ્રોગ્રામને ચલાવવા માટે વૈકલ્પિક કોડ બ્લોક મળે. જો તમે <code>else</code> અભિવ્યક્તિ ન આપો અને શરત <code>false</code> હોય, તો પ્રોગ્રામ ફક્ત <code>if</code> બ્લોક છોડી દેશે અને આગલા કોડ ભાગ પર આગળ વધશે. આ કોડ</p>
+if અભિવ્યક્તિઓ બધી <code>if</code> અભિવ્યક્તિઓ <code>if</code> કીવર્ડથી શરૂ થાય છે, ત્યારબાદ એક શરત આવે છે. આ કિસ્સામાં, શરત તપાસે છે કે variable <code>number</code> નું મૂલ્ય 5 થી ઓછું છે કે નહીં. જો શરત <code>true</code> હોય તો અમલમાં મૂકવા માટે કોડનો બ્લોક તરત જ શરતના અંતે ચોકની નિશાની ({}) માં મૂકવામાં આવે છે. <code>if</code> અભિવ્યક્તિઓમાં શરતો સાથે સંકળાયેલા કોડના બ્લોક્સને કેટલીકવાર આર્મ્ઝ કહેવામાં આવે છે, જેમ કે આપણે પ્રકરણ 2 ના “અનુમાનને ગુપ્ત સંખ્યા સાથે સરખાવવું” વિભાગમાં ચર્ચા કરેલા <code>match</code> અભિવ્યક્તિઓમાં આર્મ્ઝ હોય છે.</p>
+<p>વૈકલ્પિક રીતે, અમે અહીં <code>else</code> અભિવ્યક્તિ પણ ઉમેરી શકીએ છીએ, જેથી જો શરત <code>false</code> હોય તો પ્રોગ્રામને ચલાવવા માટે વૈકલ્પિક કોડ બ્લોક મળે. જો તમે <code>else</code> અભિવ્યક્તિ ન આપો અને શરત <code>false</code> હોય, તો પ્રોગ્રામ માત્ર <code>if</code> બ્લોક છોડી દેશે અને આગલા કોડ ભાગ પર આગળ વધશે. આ કોડ</p>
 <p>ચલાવવાનો પ્રયાસ કરો; તમારે નીચેનું પરિણામ જોવું જોઈએ:</p>
 <p>{{#include ../listings/ch03-common-programming-concepts/no-listing-26-if-true/output.txt}}
 ચાલો <code>number</code> નું મૂલ્ય એવું બદલીએ કે જે શરતને <code>false</code> બનાવે, અને જોઈએ કે શું થાય છે:</p>
@@ -206,31 +206,31 @@ if અભિવ્યક્તિઓ બધી <code>if</code> અભિવ્�
 <p>ફાઈલનામ: src/main.rs</p>
 <p>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-29-if-not-equal-0/src/main.rs}}
 આ કોડ ચલાવવાથી <code>number was something other than zero</code> પ્રિન્ટ થશે.</p>
-<h4 id="બહુવિધ-શરતોનું-સંચાલન-else-if-સાથે"><a class="header" href="#બહુવિધ-શરતોનું-સંચાલન-else-if-સાથે">બહુવિધ શરતોનું સંચાલન <code>else if</code> સાથે</a></h4>
+<h4 id="handling-multiple-conditions-with-else-if"><a class="header" href="#handling-multiple-conditions-with-else-if">Handling Multiple Conditions with <code>else if</code></a></h4>
 <p>તમે <code>if</code> અને <code>else</code> ને <code>else if</code> અભિવ્યક્તિમાં જોડીને બહુવિધ શરતોનો ઉપયોગ કરી શકો છો. ઉદાહરણ તરીકે:</p>
 <p>ફાઈલનામ: src/main.rs</p>
 <p>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-30-else-if/src/main.rs}}
 આ કાર્યક્રમ ચાર સંભવિત માર્ગો લઈ શકે છે. તેને ચલાવ્યા પછી, તમારે નીચે મુજબનું પરિણામ જોવું જોઈએ:</p>
 <p>{{#include ../listings/ch03-common-programming-concepts/no-listing-30-else-if/output.txt}}
-જ્યારે આ કાર્યક્રમ ચલાય છે, ત્યારે તે દરેક <code>if</code> અભિવ્યક્તિને વારાફરતી તપાસે છે અને જે શરત <code>true</code> હોય તેવા પ્રથમ ભાગનું પાલન કરે છે. નોંધ કરો કે ભલે 6 એ 2 વડે વિભાજ્ય હોય, છતાં આપણે આઉટપુટ <code>number is divisible by 2</code> જોતા નથી, ન તો આપણે <code>else</code> બ્લોકમાંથી <code>number is not divisible by 4, 3, or 2</code> લખાણ જોઈએ છીએ. આ એટલા માટે છે કે Rust ફક્ત પ્રથમ <code>true</code> શરત માટે બ્લોકનું પાલન કરે છે, અને એકવાર તેને તે મળી જાય પછી, તે બાકીની શરતોને પણ તપાસતું નથી.</p>
+જ્યારે આ કાર્યક્રમ ચલાય છે, ત્યારે તે દરેક <code>if</code> અભિવ્યક્તિને વારાફરતી તપાસે છે અને જે શરત <code>true</code> હોય તેવા પ્રથમ ભાગનું પાલન કરે છે. નોંધ કરો કે ભલે 6 એ 2 વડે વિભાજ્ય હોય, છતાં આપણે આઉટપુટ <code>number is divisible by 2</code> જોતા નથી, ન તો આપણે <code>else</code> બ્લોકમાંથી <code>number is not divisible by 4, 3, or 2</code> લખાણ જોઈએ છીએ. આ એટલા માટે છે કે Rust માત્ર પ્રથમ <code>true</code> શરત માટે બ્લોકનું પાલન કરે છે, અને એકવાર તેને તે મળી જાય પછી, તે બાકીની શરતોને પણ તપાસતું નથી.</p>
 <p>અતિશય <code>else if</code> અભિવ્યક્તિઓ વાપરવાથી કોડ અવ્યવસ્થિત થઈ શકે છે, તેથી જો તમારી પાસે એક કરતાં વધુ હોય, તો તમે તમારા કોડને સુધારી શકો છો. પ્રકરણ ૬ એક શક્તિશાળી Rust શાખા રચના <code>match</code> વિશે વર્ણવે છે જે આવા કિસ્સાઓ માટે ઉપયોગી છે.</p>
-<h4 id="if-નો-ઉપયોગ--let-વિધાનમાં"><a class="header" href="#if-નો-ઉપયોગ--let-વિધાનમાં"><code>if</code> નો ઉપયોગ  <code>let</code> વિધાનમાં</a></h4>
-<p>કારણ કે <code>if</code> એક અભિવ્યક્તિ છે, આપણે તેનો ઉપયોગ <code>let</code> વિધાનની જમણી બાજુએ ચલને મૂલ્ય સોંપવા માટે કરી શકીએ છીએ, જે યાદી 3-2 માં દર્શાવેલ છે.</p>
+<h4 id="using-if-in-a-let-statement"><a class="header" href="#using-if-in-a-let-statement">Using <code>if</code> in a <code>let</code> Statement</a></h4>
+<p>કારણ કે <code>if</code> એક અભિવ્યક્તિ છે, આપણે તેનો ઉપયોગ <code>let</code> વિધાનની જમણી બાજુએ variable મૂલ્ય સોંપવા માટે કરી શકીએ છીએ, જે યાદી 3-2 માં દર્શાવેલ છે.</p>
 <listing number="3-2" file-name="src/main.rs" caption="Assigning the result of an `if` expression to a variable">
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-02/src/main.rs}}
 </listing>
-`number` ચલને `if` અભિવ્યક્તિના પરિણામ પર આધારિત મૂલ્ય સાથે જોડી દેવામાં આવશે. જુઓ કે શું થાય છે તે જોવા માટે આ કોડ ચલાવો:
+`number` variable `if` અભિવ્યક્તિના પરિણામ પર આધારિત મૂલ્ય સાથે જોડી દેવામાં આવશે. જુઓ કે શું થાય છે તે જોવા માટે આ કોડ ચલાવો:
 <p>{{#include ../listings/ch03-common-programming-concepts/listing-03-02/output.txt}}
 યાદ રાખવું કે કોડ બ્લોક્સ અંતિમ અભિવ્યક્તિનું મૂલ્યાંકન કરે છે, અને સંખ્યાઓ પણ અભિવ્યક્તિઓ જ હોય છે. આ કિસ્સામાં, સમગ્ર <code>if</code> અભિવ્યક્તિ કયા કોડ બ્લોક ચલાવવામાં આવે તેના પર આધારિત છે. આનો અર્થ એ થાય છે કે <code>if</code> ના દરેક ભાગમાંથી પરિણામો મળવાની સંભાવના ધરાવતા મૂલ્યો સમાન પ્રકારના હોવા જોઈએ; યાદી 3-2 માં, <code>if</code> ભાગ અને <code>else</code> ભાગ બંનેના પરિણામો <code>i32</code> પૂર્ણાંકો હતા. જો પ્રકારો મેળ ખાતા ન હોય, તો નીચે આપેલ ઉદાહરણમાં જેમ કે, આપણને ભૂલ મળશે:</p>
 <p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે. <code>rust fn main() { println!("Hello, world!"); } </code> આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
 <p>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-31-arms-must-return-same-type/src/main.rs}}
 જ્યારે આપણે આ કોડને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ છીએ, ત્યારે આપણને ભૂલ મળશે. <code>if</code> અને <code>else</code> વિભાગોમાં મૂલ્ય પ્રકારો સુસંગત નથી, અને Rust ચોક્કસપણે પ્રોગ્રામમાં સમસ્યા ક્યાં શોધવી તે દર્શાવે છે:</p>
 <p>{{#include ../listings/ch03-common-programming-concepts/no-listing-31-arms-must-return-same-type/output.txt}}
-<code>if</code> બ્લોકમાં રહેલું અભિવ્યક્તિ એક પૂર્ણાંકમાં મૂલ્યાંકન કરે છે, અને <code>else</code> બ્લોકમાં રહેલું અભિવ્યક્તિ એક શબ્દમાળામાં મૂલ્યાંકન કરે છે. આ કામ નહીં કરે, કારણ કે ચલને એક જ પ્રકાર હોવો જોઈએ, અને Rust ને કમ્પાઇલ સમયે ચોક્કસપણે ખબર હોવી જરૂરી છે કે <code>number</code> ચલનો પ્રકાર શું છે. <code>number</code> ના પ્રકારને જાણવાથી કમ્પાઈલરને ચકાસણી કરવાની મંજૂરી મળે છે કે <code>number</code> નો ઉપયોગ દરેક જગ્યાએ માન્ય પ્રકાર છે. જો <code>number</code> નો પ્રકાર ફક્ત રનટાઇમ પર નક્કી થતો હોત, તો Rust તે કરી શકતું ન હતું; કમ્પાઈલર વધુ જટિલ બની જાત અને તેણે કોઈપણ ચલ માટે બહુવિધ સંભવિત પ્રકારોને ટ્રેક કરવા પડે તો કોડ વિશે ઓછા વચનો આપ્યા સિવાય.</p>
-<h3 id="પુનરાવરતન-સાથે-લૂપસ"><a class="header" href="#પુનરાવરતન-સાથે-લૂપસ">પુનરાવર્તન સાથે લૂપ્સ</a></h3>
+<code>if</code> બ્લોકમાં રહેલું અભિવ્યક્તિ એક પૂર્ણાંકમાં મૂલ્યાંકન કરે છે, અને <code>else</code> બ્લોકમાં રહેલું અભિવ્યક્તિ એક શબ્દમાળામાં મૂલ્યાંકન કરે છે. આ કામ નહીં કરે, કારણ કે variable એક જ પ્રકાર હોવો જોઈએ, અને Rust ને કમ્પાઇલ સમયે ચોક્કસપણે ખબર હોવી જરૂરી છે કે <code>number</code> variable’s પ્રકાર શું છે. <code>number</code> ના પ્રકારને જાણવાથી કમ્પાઈલરને ચકાસણી કરવાની મંજૂરી મળે છે કે <code>number</code> નો ઉપયોગ દરેક જગ્યાએ માન્ય પ્રકાર છે. જો <code>number</code> નો પ્રકાર માત્ર રનટાઇમ પર નક્કી થતો હોત, તો Rust તે કરી શકતું ન હતું; કમ્પાઈલર વધુ જટિલ બની જાત અને તેણે કોઈપણ variable માટે બહુવિધ સંભવિત પ્રકારોને ટ્રેક કરવા પડે તો કોડ વિશે ઓછા વચનો આપ્યા સિવાય.</p>
+<h3 id="repetition-with-loops"><a class="header" href="#repetition-with-loops">Repetition with Loops</a></h3>
 <p>કોડના બ્લોકને ઘણી વખત ચલાવવું ઘણીવાર ઉપયોગી બને છે. આ કાર્ય માટે, Rust વિવિધ લૂપ્સ પ્રદાન કરે છે, જે લૂપ બોડીની અંદરના કોડમાંથી અંત સુધી ચાલે અને પછી તરત જ શરૂઆતથી પાછા ફરે છે. લૂપ્સ સાથે પ્રયોગ કરવા માટે, ચાલો એક નવું પ્રોજેક્ટ બનાવીએ જેને loops કહેવાય.</p>
 <p>Rust પાસે ત્રણ પ્રકારના લૂપ્સ છે: <code>loop</code>, <code>while</code> અને <code>for</code>. ચાલો દરેકને અજમાવીએ.</p>
-<h4 id="પુનરાવરતિત-કોડ-loop-સાથે"><a class="header" href="#પુનરાવરતિત-કોડ-loop-સાથે">પુનરાવર્તિત કોડ <code>loop</code> સાથે</a></h4>
+<h4 id="repeating-code-with-loop"><a class="header" href="#repeating-code-with-loop">Repeating Code with <code>loop</code></a></h4>
 <p><code>loop</code> કીવર્ડ Rust ને જણાવે છે કે કોડનો બ્લોક વારંવાર ચલાવો, કાના કારણ કે અનંત ગાળા માટે અથવા જ્યાં સુધી તમે તેને સ્પષ્ટપણે બંધ કરવાનું ન કહો.</p>
 <p>ઉદાહરણ તરીકે, તમારી <code>loops</code> ડિરેક્ટરીમાં આવેલી src/main.rs ફાઈલને આ પ્રમાણે બદલો:</p>
 <p>ફાઈલનું નામ: src/main.rs</p>
@@ -252,18 +252,18 @@ again!
 ^Cagain!
 <code>^C</code> આ પ્રતીક દર્શાવે છે કે જ્યાં તમે ctrl - C દબાવ્યું હતું.</p>
 <p>તમે <code>again!</code> શબ્દ છાપેલું જોઈ શકો છો અથવા ન પણ જોઈ શકો, જે <code>^C</code> પછી આવે છે, આ બાબત કોડ લૂપમાં ક્યાં હતો તેના પર આધાર રાખે છે જ્યારે તેને વિક્ષેપ સંકેત મળ્યો હતો.</p>
-<p>ખુણાઉં, Rust કોડનો ઉપયોગ કરીને લૂપમાંથી બહાર નીકળવાનો પણ એક માર્ગ પૂરો પાડે છે. તમે લૂપની અંદર <code>break</code> કીવર્ડ મૂકી શકો છો જેથી પ્રોગ્રામને ક્યારે લૂપનું અમલ બંધ કરવું તે જણાવો. યાદ કરો કે આપણે આ “Quitting After a Correct Guess” બીજા પ્રકરણના વિભાગમાં અનુમાન લગાવવાની રમતમાં કર્યું હતું, જ્યારે વપરાશકર્તાએ સાચો નંબર અનુમાન લગાવીને રમત જીતી ત્યારે પ્રોગ્રામમાંથી બહાર નીકળવા માટે.</p>
+<p>ખુણાઉં, Rust કોડનો ઉપયોગ કરીને લૂપમાંથી બહાર નીકળવાનો પણ એક માર્ગ પૂરો પાડે છે. તમે લૂપની અંદર <code>break</code> કીવર્ડ મૂકી શકો છો જેથી પ્રોગ્રામને ક્યારે લૂપનું અમલ બંધ કરવું તે જણાવો. યાદ કરો કે આપણે આ “Quitting After a Correct Guess” બીજા પ્રકરણના વિભાગમાં અનુમાન લગાવવાની રમતમાં કર્યું હતું, જ્યારે userએ સાચો નંબર અનુમાન લગાવીને રમત જીતી ત્યારે પ્રોગ્રામમાંથી બહાર નીકળવા માટે.</p>
 <p>અમે અનુમાન લગાવવાની રમતમાં <code>continue</code> નો પણ ઉપયોગ કર્યો હતો, જે લૂપમાં પ્રોગ્રામને આ લૂપના વર્તમાન પુનરાવર્તનમાં બાકી રહેલા કોડને અવગણવા અને આગામી પુનરાવર્તન પર જવાનો આદેશ આપે છે.</p>
 <h4 id="returning-values-from-loops"><a class="header" href="#returning-values-from-loops">Returning Values from Loops</a></h4>
 <p>એક <code>loop</code> નો ઉપયોગ એવાં કાર્યને ફરીથી પ્રયત્ન કરવા માટે થાય છે જે નિષ્ફળ થઈ શકે, જેમ કે કોઈ થ્રેડનું કાર્ય પૂર્ણ થયું છે કે નહીં તે તપાસવું. તમારે તે કાર્યના પરિણામને પણ લૂપમાંથી બહારની કોડમાં મોકલવાની જરૂર પડી શકે છે. આવું કરવા માટે, તમે <code>break</code> અભિવ્યક્તિ પછી જે મૂલ્ય પરત કરવું હોય તે ઉમેરી શકો છો; તે મૂલ્ય લૂપમાંથી પરત કરવામાં આવશે જેથી કરીને તમે તેનો ઉપયોગ કરી શકો, જે અહીં દર્શાવેલ છે:</p>
 <p>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-33-return-value-from-loop/src/main.rs}}
-લૂપ પહેલાં, અમે <code>counter</code> નામનું ચલ જાહેર કરીએ છીએ અને તેને <code>0</code> થી શરૂઆત કરીએ છીએ. ત્યારબાદ, અમે <code>result</code> નામનું ચલ જાહેર કરીએ છીએ જે લૂપમાંથી મળેલ મૂલ્ય રાખશે. લૂપના દરેક પુનરાવર્તનમાં, અમે <code>counter</code> ચલમાં <code>1</code> ઉમેરીએ છીએ, અને પછી તપાસીએ છીએ કે શું <code>counter</code>  <code>10</code> બરાબર છે. જ્યારે તે હોય છે, ત્યારે અમે <code>break</code> કીવર્ડનો ઉપયોગ <code>counter * 2</code> મૂલ્ય સાથે કરીએ છીએ. લૂપ પછી, અમે <code>result</code> માં મૂલ્ય સોંપવા માટે વપરાતા વિધાનને સમાપ્ત કરવા માટે અર્ધવિરામ ચિહ્નનો ઉપયોગ કરીએ છીએ. અંતે, અમે <code>result</code> માં રહેલું મૂલ્ય છાપીએ છીએ, જે આ કિસ્સામાં <code>20</code> છે.</p>
-<p>તમે લૂપની અંદરથી પણ <code>return</code> કરી શકો છો. જ્યારે <code>break</code> ફક્ત વર્તમાન લૂપમાંથી બહાર નીકળે છે, ત્યારે <code>return</code> હંમેશાં વર્તમાન ફંક્શનમાંથી બહાર નીકળી જાય છે.</p>
+લૂપ પહેલાં, અમે <code>counter</code> નામનું variable જાહેર કરીએ છીએ અને તેને <code>0</code> થી શરૂઆત કરીએ છીએ. ત્યારબાદ, અમે <code>result</code> નામનું variable જાહેર કરીએ છીએ જે લૂપમાંથી મળેલ મૂલ્ય રાખશે. લૂપના દરેક પુનરાવર્તનમાં, અમે <code>counter</code> variable <code>1</code> ઉમેરીએ છીએ, અને પછી તપાસીએ છીએ કે શું <code>counter</code>  <code>10</code> બરાબર છે. જ્યારે તે હોય છે, ત્યારે અમે <code>break</code> કીવર્ડનો ઉપયોગ <code>counter * 2</code> મૂલ્ય સાથે કરીએ છીએ. લૂપ પછી, અમે <code>result</code> માં મૂલ્ય સોંપવા માટે વપરાતા વિધાનને સમાપ્ત કરવા માટે અર્ધવિરામ ચિહ્નનો ઉપયોગ કરીએ છીએ. અંતે, અમે <code>result</code> માં રહેલું મૂલ્ય છાપીએ છીએ, જે આ કિસ્સામાં <code>20</code> છે.</p>
+<p>તમે લૂપની અંદરથી પણ <code>return</code> કરી શકો છો. જ્યારે <code>break</code> માત્ર વર્તમાન લૂપમાંથી બહાર નીકળે છે, ત્યારે <code>return</code> હંમેશાં વર્તમાન ફંક્શનમાંથી બહાર નીકળી જાય છે.</p>
 <!-- Old headings. Do not remove or links may break. -->
-<h4 id="ચકર-લેબલસથી-ભેદ-પાડવો"><a class="header" href="#ચકર-લેબલસથી-ભેદ-પાડવો">ચક્ર લેબલ્સથી ભેદ પાડવો</a></h4>
+<h4 id="disambiguating-with-loop-labels"><a class="header" href="#disambiguating-with-loop-labels">Disambiguating with Loop Labels</a></h4>
 <p>જો તમારી પાસે ચક્રોની અંદર ચકરો હોય, તો <code>break</code> અને <code>continue</code> તે સમયે સૌથી અંદરના ચક્ર પર લાગુ પડે છે. તમે વૈકલ્પિક રીતે એક ચક્ર પર ચક્ર લેબલ સ્પષ્ટ કરી શકો છો, જેનો ઉપયોગ તમે <code>break</code> અથવા <code>continue</code> સાથે તે લેબલવાળા ચક્ર પર લાગુ કરવા માટે કરી શકો છો, તેના બદલે સૌથી અંદરના ચક્ર પર. ચક્ર લેબલ્સ એકલ અવધરેણીથી શરૂ થવા જોઈએ. અહીં બે નેસ્ટેડ ચક્રોનું ઉદાહરણ છે:</p>
 <p>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-5-loop-labels/src/main.rs}}
-લૂપનું લેબલ બાહ્ય લૂપને <code>'counting_up</code>’ નામનું લેબલ છે, અને તે 0 થી 2 સુધી ગણશે. લેબલ વગરનું આંતરિક લૂપ 10 થી 9 સુધી ઉતરશે. પહેલો <code>break</code> જે લેબલનો ઉલ્લેખ કરતો નથી, તે ફક્ત આંતરિક લૂપમાંથી બહાર નીકળી જશે. <code>break 'counting_up;</code> વિધાન બાહ્ય લૂપમાંથી બહાર નીકળી જશે. આ કોડ છાપે છે:</p>
+લૂપનું લેબલ બાહ્ય લૂપને <code>'counting_up</code>’ નામનું લેબલ છે, અને તે 0 થી 2 સુધી ગણશે. લેબલ વગરનું આંતરિક લૂપ 10 થી 9 સુધી ઉતરશે. પહેલો <code>break</code> જે લેબલનો ઉલ્લેખ કરતો નથી, તે માત્ર આંતરિક લૂપમાંથી બહાર નીકળી જશે. <code>break 'counting_up;</code> વિધાન બાહ્ય લૂપમાંથી બહાર નીકળી જશે. આ કોડ છાપે છે:</p>
 <p>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-5-loop-labels/output.txt}}</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h4 id="streamlining-conditional-loops-with-while"><a class="header" href="#streamlining-conditional-loops-with-while">Streamlining Conditional Loops with while</a></h4>
@@ -279,7 +279,7 @@ again!
 </listing>
 અહીં, કોડ એરેના ઘટકોમાંથી ગણતરી કરે છે. તે ઇન્ડેક્સ `0` થી આરંભ થાય છે અને પછી લૂપ ચલાવે છે જ્યાં સુધી તે એરેના અંતિમ ઇન્ડેક્સ સુધી ન પહોંચે (એટલે કે, જ્યારે `index &lt; 5` હવે `true` ન હોય). આ કોડ ચલાવવાથી એરેના દરેક ઘટક છાપાશે:
 <p>{{#include ../listings/ch03-common-programming-concepts/listing-03-04/output.txt}}
-All five array values appear in the terminal, as expected. Even though <code>index</code> will reach a value of <code>5</code> at some point, the loop stops executing before trying to fetch a sixth value from the array. પાંચેય એરે મૂલ્યો ટર્મિનલમાં દેખાય છે, જે અપેક્ષિત છે. ભલે <code>index</code> નું મૂલ્ય અમુક સમયે <code>5</code> સુધી પહોંચી જાય, તેમ છતાં લૂપ એરેમાંથી છઠ્ઠું મૂલ્ય મેળવવાનો પ્રયત્ન કરતા પહેલા જ બંધ થઈ જાય</p>
+પાંચેય એરે મૂલ્યો ટર્મિનલમાં દેખાય છે, જે અપેક્ષિત છે. ભલે <code>index</code> નું મૂલ્ય અમુક સમયે <code>5</code> સુધી પહોંચી જાય, તેમ છતાં લૂપ એરેમાંથી છઠ્ઠું મૂલ્ય મેળવવાનો પ્રયત્ન કરતા પહેલા જ બંધ થઈ જાય</p>
 <p>છે. However, this approach is error-prone; we could cause the program to panic if the index value or test condition is incorrect. For example, if you changed the definition of the <code>a</code> array to have four elements but forgot to update the condition to <code>while index &lt; 4</code>, the code would panic. It’s also slow, because the compiler adds runtime code to perform the conditional check of whether the index is within the bounds of the array on every iteration through the loop. જો કે, આ અભિગમ ભૂલયુક્ત છે; જો અનુક્રમણિકાનું મૂલ્ય અથવા પરીક્ષણ શરત ખોટી હોય તો આપણે પ્રોગ્રામને ગભરાવવાનું કારણ બની શકે છે. ઉદાહરણ તરીકે, જો તમે <code>a</code> એરેની વ્યાખ્યામાં ચાર ઘટકો ઉમેર્યા હોય પરંતુ શરતને <code>while index &lt; 4</code> માં અપડેટ કરવાનું ભૂલી જાઓ છો, તો કોડ ગભરાઈ જશે. તે ધીમું પણ છે, કારણ કે કમ્પાઇલર દરેક લૂપ પુનરાવર્તન દરમિયાન એરેની સીમામાં અનુક્રમણિકા છે કે નહીં તેની શરતી ચકાસણી કરવા માટે રનટાઇમ કોડ ઉમેરે છે.</p>
 <p>વૈકલ્પિક રીતે, તમે <code>for</code> લૂપનો ઉપયોગ કરી શકો છો અને સંગ્રહમાં દરેક વસ્તુ માટે અમુક કોડ ચલાવી શકો છો. <code>for</code> લૂપ એ યાદી 3-5 માં દર્શાવેલ કોડ જેવું દેખાય છે.</p>
 <listing number="3-5" file-name="src/main.rs" caption="Looping through each element of a collection using a `for` loop">
@@ -287,13 +287,13 @@ All five array values appear in the terminal, as expected. Even though <code>ind
 </listing>
 જ્યારે આપણે આ કોડ ચલાવીશું, ત્યારે આપણને યાદી 3-4 માં જે પરિણામ દેખાય છે તેવું જ પરિણામ જોવા મળશે. વધુ મહત્વની વાત એ છે કે, હવે આપણે કોડની સુરક્ષામાં વધારો કર્યો છે અને એવા ભૂલો થવાની શક્યતાને દૂર કરી છે જે એરેના અંતથી આગળ વધી જવા અથવા પૂરતી દૂર ન જવાથી આવી શકે છે. `for` લૂપમાંથી ઉત્પન્ન થયેલ મશીન કોડ પણ વધુ કાર્યક્ષમ હોઈ શકે છે કારણ કે દરેક પુનરાવર્તનમાં એરેની લંબાઈ સાથે અનુક્રમણિકાની સરખામણી કરવાની જરૂર નથી.
 <p><code>for</code> લૂપનો ઉપયોગ કરીને, જો તમે એરેમાં રહેલા મૂલ્યોની સંખ્યા બદલો તો તમારે અન્ય કોડને બદલવાની જરૂર નહીં પડે, જે યાદી 3-4 માં વપરાયેલી પદ્ધતિ સાથે થવું જોઈએ.</p>
-<p>The safety and conciseness of <code>for</code> loops make them the most commonly used loop construct in Rust. Even in situations in which you want to run some code a certain number of times, as in the countdown example that used a <code>while</code> loop in Listing 3-3, most Rustaceans would use a <code>for</code> loop. The way to do that would be to use a <code>Range</code>, provided by the standard library, which generates all numbers in sequence starting from one number and ending before another number. Rustમાં <code>for</code> લૂપની સલામતી અને સંક્ષિપ્તતા તેને સૌથી વધુ વપરાયેલ લૂપ રચના બનાવે છે. ભલે તમે અમુક કોડને ચોક્કસ સંખ્યામાં વખત ચલાવવા માંગતા હો, જેમ કે Listing 3-3 માં ગણતરી ઉલટાવવાનું ઉદાહરણ હતું, મોટા ભાગના Rustaceans <code>for</code> લૂપનો ઉપયોગ કરશે. આવું કરવા માટે, સ્ટાન્ડર્ડ લાઇબ્રેરી દ્વારા પૂરા પાડવામાં આવેલ <code>Range</code> નો ઉપયોગ કરવો જોઈએ, જે એક સંખ્યાથી શરૂ કરીને બીજી સંખ્યા પહેલાં સમાપ્ત થતી તમામ સંખ્યાઓનું ક્રમશઃ ઉત્પાદન કરે છે.</p>
+<p><code>while</code> માં <code>for</code> લૂપની સલામતી અને સંક્ષિપ્તતા તેને સૌથી વધુ વપરાયેલ લૂપ રચના બનાવે છે. ભલે તમે અમુક કોડને ચોક્કસ સંખ્યામાં વખત ચલાવવા માંગતા હો, જેમ કે Listing 3-3 માં ગણતરી ઉલટાવવાનું ઉદાહરણ હતું, મોટા ભાગના Rustaceans <code>for</code> લૂપનો ઉપયોગ કરશે. આવું કરવા માટે, સ્ટાન્ડર્ડ લાઇબ્રેરી દ્વારા પૂરા પાડવામાં આવેલ <code>Range</code> નો ઉપયોગ કરવો જોઈએ, જે એક સંખ્યાથી શરૂ કરીને બીજી સંખ્યા પહેલાં સમાપ્ત થતી તમામ સંખ્યાઓનું ક્રમશઃ ઉત્પાદન કરે છે.</p>
 <p>અહીં <code>for</code> લૂપ અને અન્ય એક પદ્ધતિ <code>rev</code> નો ઉપયોગ કરીને ગણતરી કેવી દેખાશે તે દર્શાવેલું છે, જે શ્રેણીને ઉલટાવે છે:</p>
 <p>ફાઈલનું નામ: src/main.rs</p>
 <p>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-34-for-range/src/main.rs}}
 આ કોડ થોડો વધુ સુખદ છે, ખરું ને?</p>
-<h2 id="સારાંશ"><a class="header" href="#સારાંશ">સારાંશ</a></h2>
-<p>તમે સફળ થયા! આ એક મોટું પ્રકરણ હતું: તમે ચલ (variable), સ્કેલર (scalar) અને સંયોજન ડેટા પ્રકારો, વિધેયો (function), ટિપ્પણીઓ (comments), <code>if</code> અભિવ્યક્તિઓ (expressions), અને લૂપ્સ (loops) વિશે શીખ્યા! આ પ્રકરણમાં ચર્ચા કરાયેલ ખ્યાલો સાથે પ્રેક્ટિસ કરવા માટે, નીચે મુજબના કાર્યો કરવા માટે પ્રોગ્રામ બનાવો:</p>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>તમે સફળ થયા! આ એક મોટું પ્રકરણ હતું: તમે variable (variable), સ્કેલર (scalar) અને સંયોજન ડેટા પ્રકારો, વિધેયો (function), ટિપ્પણીઓ (comments), <code>if</code> અભિવ્યક્તિઓ (expressions), અને લૂપ્સ (loops) વિશે શીખ્યા! આ પ્રકરણમાં ચર્ચા કરાયેલ ખ્યાલો સાથે પ્રેક્ટિસ કરવા માટે, નીચે મુજબના કાર્યો કરવા માટે પ્રોગ્રામ બનાવો:</p>
 <p>ફahrenheit અને Celsius વચ્ચે તાપમાન રૂપાંતરિત કરો.</p>
 <p>n વાન Fibonacci સંખ્યા જનરેટ કરો.</p>
 <p>“The Twelve Days of Christmas” ના રોમાંચક ગીત (Christmas carol) ના શબ્દો છાપો, ગીતમાં રહેલી પુનરાવર્તનનો લાભ લો.</p>

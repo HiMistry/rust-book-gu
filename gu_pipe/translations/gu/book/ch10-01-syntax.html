@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-7ed1a93d.js";
+            window.path_to_searchindex_js = "searchindex-55c5f58b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -182,19 +182,19 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="સામાનય-માહિતી-પરકારો"><a class="header" href="#સામાનય-માહિતી-પરકારો">સામાન્ય માહિતી પ્રકારો</a></h2>
+                        <h2 id="generic-data-types"><a class="header" href="#generic-data-types">Generic Data Types</a></h2>
 <p>અમે સામાન્ય (generic) નો ઉપયોગ કરીને વસ્તુઓ માટે વ્યાખ્યાઓ બનાવીએ છીએ જેમ કે કાર્ય હસ્તાક્ષરો અથવા struct, જેનો ઉપયોગ આપણે અનેક વિવિધ નક્કર (concrete) માહિતી પ્રકારો સાથે કરી શકીએ છીએ. ચાલો પ્રથમ જોઈએ કે કેવી રીતે functions, structs, enums, અને methods સામાન્યનો ઉપયોગ કરીને વ્યાખ્યાયિત કરવા. ત્યારબાદ, આપણે ચર્ચા કરીશું કે સામાન્ય કોડની કાર્યક્ષમતાને કેવી રીતે અસર કરે છે.</p>
-<h3 id="કારય-નિરુપણમાં"><a class="header" href="#કારય-નિરુપણમાં">કાર્ય નિરુપણમાં</a></h3>
-<p>જ્યારે આપણે સામાન્ય પ્રકારના ડેટાને પરિમાણો અને વળતર મૂલ્ય તરીકે દર્શાવતા હોય તેમ, જનરિક્સને કાર્યની હસ્તાક્ષરમાં (signature) મૂકવામાં આવે છે. આ રીતે કોડ વધુ લવચીક બને છે અને કાર્ય વપરાશકર્તાઓ માટે વધુ કાર્યક્ષમતા પૂરી પાડે છે, સાથે સાથે કોડની નકલ થતી અટકાવે છે.</p>
+<h3 id="in-function-definitions"><a class="header" href="#in-function-definitions">In Function Definitions</a></h3>
+<p>જ્યારે આપણે સામાન્ય પ્રકારના ડેટાને પરિમાણો અને વળતર મૂલ્ય તરીકે દર્શાવતા હોય તેમ, જનરિક્સને કાર્યની હસ્તાક્ષરમાં (signature) મૂકવામાં આવે છે. આ રીતે કોડ વધુ લવચીક બને છે અને કાર્ય userઓ માટે વધુ કાર્યક્ષમતા પૂરી પાડે છે, સાથે સાથે કોડની નકલ થતી અટકાવે છે.</p>
 <p>આપણે <code>largest</code> કાર્ય ચાલુ રાખીએ, સૂચિ 10-4 બે કાર્યો દર્શાવે છે જે સ્લાઇસમાં સૌથી મોટું મૂલ્ય શોધે છે. ત્યારબાદ આપણે આ બધાને એક જનરિક્સનો ઉપયોગ કરતા એકકાર્યમાં જોડીશું.</p>
 <listing number="10-4" file-name="src/main.rs" caption="Two functions that differ only in their names and in the types in their signatures">
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-04/src/main.rs:here}}
 </listing>
-The `largest_i32` Function `largest_i32` વિધેય એListing 10-3 માં આપણે જે કાઢ્યું તે છે, જે સ્લાઇસમાં સૌથી મોટું `i32` શોધે છે. `largest_char` વિધેય સ્લાઇસમાં સૌથી મોટું `char` શોધે છે. બંને વિધેયોના મુખ્ય ભાગ સમાન કોડ ધરાવે છે, તેથી ચાલો આપણે એક જ વિધેયમાં સામાન્ય પ્રકાર પરિમાણ (generic type parameter) દાખલ કરીને આ બિનજરૂરીયાત દૂર કરીએ. એક
-<p>નવા એકલ વિધેયમાં પ્રકારોને પરિમાણિત કરવા માટે, આપણે પ્રકાર પરિમાણને નામ આપવું પડશે, જેવી રીતે આપણે વિધેયના મૂલ્ય પરિમાણો (value parameters) માટે કરીએ છીએ. તમે કોઈપણ ઓળખકર્તા (identifier) નો પ્રકાર પરિમાણ તરીકે ઉપયોગ કરી શકો છો. પરંતુ આપણે <code>T</code> નો ઉપયોગ કરીશું, કારણ કે, સંમેલન મુજબ, Rust માં પ્રકાર પરિમાણ નામો ટૂંકા હોય છે, ઘણીવાર ફક્ત એક અક્ષર હોય છે, અને Rust નું પ્રકાર નામકરણ સંમેલન UpperCamelCase હોય છે. પ્રકાર માટે ટૂંકું, <code>T</code> એ મોટાભાગના Rust પ્રોગ્રામરોની ડિફૉલ્ટ પસંદગી છે.</p>
+`largest_i32` વિધેય એListing 10-3 માં આપણે જે કાઢ્યું તે છે, જે સ્લાઇસમાં સૌથી મોટું `i32` શોધે છે. `largest_char` વિધેય સ્લાઇસમાં સૌથી મોટું `char` શોધે છે. બંને વિધેયોના મુખ્ય ભાગ સમાન કોડ ધરાવે છે, તેથી ચાલો આપણે એક જ વિધેયમાં સામાન્ય પ્રકાર પરિમાણ (generic type parameter) દાખલ કરીને આ બિનજરૂરીયાત દૂર કરીએ. એક
+<p>નવા એકલ વિધેયમાં પ્રકારોને પરિમાણિત કરવા માટે, આપણે પ્રકાર પરિમાણને નામ આપવું પડશે, જેવી રીતે આપણે વિધેયના મૂલ્ય પરિમાણો (value parameters) માટે કરીએ છીએ. તમે કોઈપણ ઓળખકર્તા (identifier) નો પ્રકાર પરિમાણ તરીકે ઉપયોગ કરી શકો છો. પરંતુ આપણે <code>T</code> નો ઉપયોગ કરીશું, કારણ કે, સંમેલન મુજબ, Rust માં પ્રકાર પરિમાણ નામો ટૂંકા હોય છે, ઘણીવાર માત્ર એક અક્ષર હોય છે, અને Rust નું પ્રકાર નામકરણ સંમેલન UpperCamelCase હોય છે. પ્રકાર માટે ટૂંકું, <code>T</code> એ મોટાભાગના Rust પ્રોગ્રામરોની ડિફૉલ્ટ પસંદગી છે.</p>
 <p>જ્યારે આપણે ફંક્શનના મુખ્ય ભાગમાં કોઈ પરિમાણનો ઉપયોગ કરીએ છીએ, ત્યારે કમ્પાઇલરને ખબર પડે તે માટે આપણે પરિમાણનું નામ હસ્તાક્ષરમાં જાહેર કરવું જોઈએ કે તેનો અર્થ શું છે. એ જ રીતે, જ્યારે આપણે ફંક્શન હસ્તાક્ષરમાં પ્રકાર પરિમાણના નામને વાપરીએ છીએ, ત્યારે આપણે તેનો ઉપયોગ કરતા પહેલા પ્રકાર પરિમાણનું નામ જાહેર કરવું જોઈએ. સામાન્ય <code>largest</code> ફંક્શનને વ્યાખ્યાયિત કરવા માટે, આપણે ખૂણાંની અંદર, <code>&lt;&gt;</code>, ફંક્શનના નામ અને પરિમાણ યાદી વચ્ચે પ્રકાર નામના ઘોષણાઓ મૂકીએ છીએ, જેમ કે:</p>
 <p>fn largest<t>(list: &amp;[T]) -&gt; &amp;T {
-We read this definition as “The function <code>largest</code> is generic over some type <code>T</code> .” આ વ્યાખ્યાને આપણે આ રીતે સમજીએ છીએ: “કાર્ય <code>largest</code> અમુક પ્રકાર <code>T</code> પર સામાન્ય છે.” આ કાર્યમાં એક પરિમાણ નામ <code>list</code> છે, જે પ્રકાર <code>T</code> ના મૂલ્યોની સ્લાઇસ છે. <code>largest</code> કાર્ય સમાન પ્રકાર <code>T</code> ના મૂલ્યનો સંદર્ભ આપશે. Listing</t></p>
+આ વ્યાખ્યાને આપણે આ રીતે સમજીએ છીએ: “કાર્ય <code>largest</code> અમુક પ્રકાર <code>T</code> પર સામાન્ય છે.” આ કાર્યમાં એક પરિમાણ નામ <code>list</code> છે, જે પ્રકાર <code>T</code> ના મૂલ્યોની સ્લાઇસ છે. <code>largest</code> કાર્ય સમાન પ્રકાર <code>T</code> ના મૂલ્યનો સંદર્ભ આપશે. Listing</t></p>
 <p>10-5 દર્શાવે છે કે સામાન્ય ડેટા પ્રકારને તેના હસ્તાક્ષરમાં ઉપયોગ કરીને <code>largest</code> કાર્યની વ્યાખ્યા કેવી રીતે જોડવી. આ યાદી એ પણ બતાવે છે કે આપણે <code>i32</code> મૂલ્યો અથવા <code>char</code> મૂલ્યોની સ્લાઇસ સાથે કાર્યને કેવી રીતે બોલાવી શકીએ છીએ. નોંધ કરો કે આ કોડ હજી કમ્પાઇલ થશે નહીં.</p>
 <listing number="10-5" file-name="src/main.rs" caption="The `largest` function using generic type parameters; this doesn’t compile yet">
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/src/main.rs}}
@@ -202,7 +202,7 @@ We read this definition as “The function <code>largest</code> is generic over 
 જો આપણે આ કોડ અત્યારે જ કંપાઇલ કરીએ, તો આપણને આ ભૂલ મળશે:
 <p>{{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/output.txt}}
 std::cmp::PartialOrd મદદરૂપ લખાણમાં <code>std::cmp::PartialOrd</code> નો ઉલ્લેખ છે, જે એક trait છે, અને આપણે આગલા વિભાગમાં traits વિશે વાત કરીશું. હાલ માટે, જાણો કે આ ભૂલ જણાવે છે કે <code>largest</code> નું શરીર બધા સંભવિત પ્રકારો માટે કામ કરશે નહીં કે જે <code>T</code> હોઈ શકે છે. કારણ કે આપણે શરીર માં type <code>T</code> ના મૂલ્યોની સરખામણી કરવા માંગીએ છીએ, આપણે માત્ર એવા પ્રકારોનો જ ઉપયોગ કરી શકીએ છીએ જેના મૂલ્યોને ક્રમબદ્ધ કરી શકાય. સરખામણીઓ સક્ષમ કરવા માટે, પ્રમાણિત library પાસે <code>std::cmp::PartialOrd</code> trait છે જે તમે types પર અમલમાં મૂકી શકો છો (આ trait વિશે વધુ માહિતી માટે Appendix C જુઓ). Listing 10-5 ને સુધારવા માટે, આપણે મદદરૂપ લખાણની સૂચનાને અનુસરીને <code>T</code> માટે માન્ય પ્રકારોને માત્ર એવા પ્રકારો સુધી મર્યાદિત કરી શકીએ છીએ જે <code>PartialOrd</code> અમલમાં મૂકે છે. આથી listing compile થશે, કારણ કે પ્રમાણિત library <code>i32</code> અને <code>char</code> બંને પર <code>PartialOrd</code> અમલમાં મૂકે છે.</p>
-<h3 id="માળખાની-વયાખયાઓમાં"><a class="header" href="#માળખાની-વયાખયાઓમાં">માળખાની વ્યાખ્યાઓમાં</a></h3>
+<h3 id="in-struct-definitions"><a class="header" href="#in-struct-definitions">In Struct Definitions</a></h3>
 <p>આપણે <code>&lt;&gt;</code> વાક્યરચનાનો ઉપયોગ કરીને એક અથવા વધુ ક્ષેત્રોમાં સામાન્ય પ્રકાર પરિમાણનો ઉપયોગ કરવા માટે માળખાઓ પણ વ્યાખ્યાયિત કરી શકીએ છીએ. સૂચિ ૧૦-૬ એક <code>Point&lt;T&gt;</code> માળખું વ્યાખ્યાયિત કરે છે જે કોઈપણ પ્રકારના <code>x</code> અને <code>y</code> યામ મૂલ્યોને જાળવી રાખે છે.</p>
 <listing number="10-6" file-name="src/main.rs" caption="A `Point&lt;T&gt;` struct that holds `x` and `y` values of type `T`">
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-06/src/main.rs}}
@@ -219,7 +219,7 @@ struct વ્યાખ્યાઓમાં સામાન્યતાઓ (gene
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-08/src/main.rs}}
 </listing>
 હવે `Point` નાં તમામ ઉદાહરણો સ્વીકાર્ય છે! તમે વ્યાખ્યામાં જેટલા જનરિક પ્રકાર પરિમાણો (generic type parameters) ઇચ્છો તેટલા વાપરી શકો છો, પરંતુ વધારે પડતાં વાપરવાથી તમારો કોડ વાંચવામાં મુશ્કેલ બની શકે છે. જો તમને તમારા કોડમાં ઘણાં જનરિક પ્રકારોની જરૂર જણાય, તો એનો અર્થ એ થઈ શકે કે તમારા કોડને નાના ભાગોમાં પુનર્ગઠન કરવાની જરૂર છે.
-<h3 id="સમૂહ-વયાખયાઓમાં"><a class="header" href="#સમૂહ-વયાખયાઓમાં">સમૂહ વ્યાખ્યાઓમાં</a></h3>
+<h3 id="in-enum-definitions"><a class="header" href="#in-enum-definitions">In Enum Definitions</a></h3>
 <p>જે રીતે આપણે struct સાથે કર્યું હતું, તેમ આપણે સામાન્ય ડેટા પ્રકારોને તેમનાં વિવિધ સ્વરૂપોમાં સમાવવા માટે સમૂહો (enums) પણ વ્યાખ્યાયિત કરી શકીએ છીએ. ચાલો ફરી એકવાર <code>Option&lt;T&gt;</code> સમૂહ પર નજર કરીએ જે પ્રમાણભૂત પુસ્તકાલય પ્રદાન કરે છે, જેનો આપણે પ્રકરણ ૬ માં ઉપયોગ કર્યો હતો.</p>
 <p>enum Option<t> {
 Some(T),
@@ -231,9 +231,9 @@ None,
 Ok(T),
 Err(E),
 }
-The <code>Result</code> enum is generic over two types, <code>T</code> and <code>E</code> , and has two variants: <code>Ok</code> , which holds a value of type <code>T</code> , and <code>Err</code> , which holds a value of type <code>E</code> . <code>Result</code> એનુમ બે પ્રકારો, <code>T</code> અને <code>E</code> માટે સામાન્ય છે, અને તેના બે સ્વરૂપો છે: <code>Ok</code>, જે પ્રકાર <code>T</code> નું મૂલ્ય ધરાવે છે, અને <code>Err</code>, જે પ્રકાર <code>E</code> નું મૂલ્ય ધરાવે છે. આ વ્યાખ્યા એ વાતને અનુકૂળ બનાવે છે કે <code>Result</code> એનુમનો ઉપયોગ ગમે ત્યાં કરી શકાય જ્યાં આપણી પાસે કોઈ ક્રિયા હોય જે સફળ થઈ શકે (અમુક પ્રકારના <code>T</code> મૂલ્યનું પરિણામ આપે) અથવા નિષ્ફળ જાય (અમુક પ્રકારના <code>E</code> ભૂલનું પરિણામ આપે). હકીકતમાં, આ જ આપણે યાદી 9-3 માં એક <code>file</code> ખોલવા માટે વાપર્યું હતું, જ્યાં <code>T</code> ને સફળતાપૂર્વક <code>file</code> ખોલતી વખતે <code>std::fs::File</code> પ્રકારથી ભરવામાં આવ્યું હતું અને <code>E</code> ને <code>std::io::Error</code> પ્રકારથી ભરવામાં આવ્યું હતું જ્યારે <code>file</code> ખોલવામાં સમસ્યા હતી.</p>
+એનુમ બે પ્રકારો, <code>T</code> અને <code>E</code> માટે સામાન્ય છે, અને તેના બે સ્વરૂપો છે: <code>Ok</code>, જે પ્રકાર <code>T</code> નું મૂલ્ય ધરાવે છે, અને <code>Err</code>, જે પ્રકાર <code>E</code> નું મૂલ્ય ધરાવે છે. આ વ્યાખ્યા એ વાતને અનુકૂળ બનાવે છે કે <code>Result</code> એનુમનો ઉપયોગ ગમે ત્યાં કરી શકાય જ્યાં આપણી પાસે કોઈ ક્રિયા હોય જે સફળ થઈ શકે (અમુક પ્રકારના <code>T</code> મૂલ્યનું પરિણામ આપે) અથવા નિષ્ફળ જાય (અમુક પ્રકારના <code>E</code> ભૂલનું પરિણામ આપે). હકીકતમાં, આ જ આપણે યાદી 9-3 માં એક <code>file</code> ખોલવા માટે વાપર્યું હતું, જ્યાં <code>T</code> ને સફળતાપૂર્વક <code>file</code> ખોલતી વખતે <code>std::fs::File</code> પ્રકારથી ભરવામાં આવ્યું હતું અને <code>E</code> ને <code>std::io::Error</code> પ્રકારથી ભરવામાં આવ્યું હતું જ્યારે <code>file</code> ખોલવામાં સમસ્યા હતી.</p>
 <p>જ્યારે તમે તમારા કોડમાં અનેક <code>struct</code> અથવા <code>enum</code> વ્યાખ્યાઓ જુઓ છો જે માત્ર તેમનાં મૂલ્યોના પ્રકારોમાં અલગ પડે છે, ત્યારે તમે સામાન્ય પ્રકારોનો ઉપયોગ કરીને બિનજરૂરીયાત કામથી દૂર રહી શકો છો.</p>
-<h3 id="પદધતિ-વયાખયાઓમાં"><a class="header" href="#પદધતિ-વયાખયાઓમાં">પદ્ધતિ વ્યાખ્યાઓમાં</a></h3>
+<h3 id="in-method-definitions"><a class="header" href="#in-method-definitions">In Method Definitions</a></h3>
 <p>આપણે સ્ટ્રક્ચર્સ અને ઇનમ્સ પર પદ્ધતિઓ અમલમાં મૂકી શકીએ છીએ (જેમ કે આપણે પ્રકરણ 5 માં કર્યું હતું) અને તેમની વ્યાખ્યાઓમાં સામાન્ય પ્રકારોનો પણ ઉપયોગ કરી શકીએ છીએ. સૂચિ 10-9 દર્શાવે છે કે  <code>Point&lt;T&gt;</code>  સ્ટ્રક્ચર, જે આપણે સૂચિ 10-6 માં વ્યાખ્યાયિત કર્યું હતું, તેના પર નામકું પદ્ધતિ  <code>x</code>  અમલમાં મૂકવામાં આવી છે.</p>
 <listing number="10-9" file-name="src/main.rs" caption="Implementing a method named `x` on the `Point&lt;T&gt;` struct that will return a reference to the `x` field of type `T`">
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-09/src/main.rs}}
@@ -249,7 +249,7 @@ The <code>Result</code> enum is generic over two types, <code>T</code> and <code
 <listing number="10-11" file-name="src/main.rs" caption="A method that uses generic types that are different from its struct’s definition">
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-11/src/main.rs}}
 </listing>
-`main` માં, આપણે એક `Point` વ્યાખ્યાયિત કર્યો છે જેમાં `x` માટે `i32` (મૂલ્ય `5` સાથે) અને `y` માટે `f64` (મૂલ્ય `10.4` સાથે) છે. `p2` ચલ એ `Point` struct છે જેમાં `x` માટે સ્ટ્રિંગ સ્લાઇસ (મૂલ્ય `"Hello"` સાથે) અને `y` માટે `char` (મૂલ્ય `c` સાથે) છે. `p1` પર `mixup` ને `p2` દલીલ સાથે બોલાવવાથી આપણને `p3` મળે છે, જેમાં `x` માટે `i32` હશે કારણ કે `x`, `p1` માંથી આવ્યું છે. `p3` ચલમાં `y` માટે `char` હશે કારણ કે `y`, `p2` માંથી આવ્યું છે. `println!` મેક્રો કૉલ `p3.x = 5, p3.y = c` પ્રિન્ટ કરશે.
+`main` માં, આપણે એક `Point` વ્યાખ્યાયિત કર્યો છે જેમાં `x` માટે `i32` (મૂલ્ય `5` સાથે) અને `y` માટે `f64` (મૂલ્ય `10.4` સાથે) છે. `p2` variable એ `Point` struct છે જેમાં `x` માટે સ્ટ્રિંગ સ્લાઇસ (મૂલ્ય `"Hello"` સાથે) અને `y` માટે `char` (મૂલ્ય `c` સાથે) છે. `p1` પર `mixup` ને `p2` Argument સાથે બોલાવવાથી આપણને `p3` મળે છે, જેમાં `x` માટે `i32` હશે કારણ કે `x`, `p1` માંથી આવ્યું છે. `p3` variable `y` માટે `char` હશે કારણ કે `y`, `p2` માંથી આવ્યું છે. `println!` મેક્રો કૉલ `p3.x = 5, p3.y = c` પ્રિન્ટ કરશે.
 <p>આ ઉદાહરણનો હેતુ એવા સંજોગો દર્શાવવાનો છે જેમાં અમુક સામાન્ય પરિમાણો <code>impl</code> સાથે જાહેર કરવામાં આવે છે અને અમુક પદ્ધતિ વ્યાખ્યા સાથે જાહેર કરવામાં આવે છે. અહીં, સામાન્ય પરિમાણો <code>X1</code> અને <code>Y1</code> <code>impl</code> પછી જાહેર કરવામાં આવ્યા છે કારણ કે તે struct વ્યાખ્યા સાથે સંકળાયેલા છે. સામાન્ય પરિમાણો <code>X2</code> અને <code>Y2</code> <code>fn mixup</code> પછી જાહેર કરવામાં આવ્યા છે કારણ કે તેઓ માત્ર પદ્ધતિ માટે જ સુસંગત છે.</p>
 <h3 id="performance-of-code-using-generics"><a class="header" href="#performance-of-code-using-generics">Performance of Code Using Generics</a></h3>
 <p>તમે આશ્ચર્ય પામી રહ્યા હશો કે સામાન્ય પ્રકારના પરિમાણોનો ઉપયોગ કરતી વખતે રનટાઇમ ખર્ચ થાય છે કે નહીં. સારી વાત એ છે કે સામાન્ય પ્રકારોનો ઉપયોગ કરવાથી તમારી કાર્યક્રમ એટલી ધીમી નહીં પડે જેટલી તે નક્કર પ્રકારો સાથે ચાલતી હોય ત્યારે પડત.</p>

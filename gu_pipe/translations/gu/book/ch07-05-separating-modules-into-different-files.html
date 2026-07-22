@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-7ed1a93d.js";
+            window.path_to_searchindex_js = "searchindex-55c5f58b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -182,7 +182,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="જુદા-જુદા-ફાઈલોમાં-મોડયુલોને-વિભાજીત-કરવા"><a class="header" href="#જુદા-જુદા-ફાઈલોમાં-મોડયુલોને-વિભાજીત-કરવા">જુદા જુદા ફાઈલોમાં મોડ્યુલોને વિભાજીત કરવા</a></h2>
+                        <h2 id="separating-modules-into-different-files"><a class="header" href="#separating-modules-into-different-files">Separating Modules into Different Files</a></h2>
 <p>આગળ સુધી, આ પ્રકરણના બધા ઉદાહરણો એક જ ફાઈલમાં અનેક મોડ્યુલો વ્યાખ્યાયિત કરે છે. જ્યારે મોડ્યુલો મોટા થાય છે, ત્યારે કોડને સરળતાથી સમજવા માટે તેમની વ્યાખ્યાઓને અલગ ફાઈલમાં ખસેડવાની જરૂર પડી શકે છે.</p>
 <p>ઉદાહરણ તરીકે, ચાલો Listing 7-17 માં રહેલા અનેક રેસ્ટોરન્ટ મોડ્યુલો ધરાવતા કોડથી શરૂઆત કરીએ. આપણે આ મોડ્યુલોને ફાઈલોમાં બહાર કાઢીશું, જેથી બધા મોડ્યુલો ક્રેટ રૂટ ફાઈલમાં વ્યાખ્યાયિત ન હોય. આ સ્થિતિમાં, ક્રેટ રૂટ ફાઈલ src/lib.rs છે, પરંતુ આ પ્રક્રિયા બાઈનરી ક્રેટ્સ સાથે પણ કામ કરે છે જેની ક્રેટ રૂટ ફાઈલ src/main.rs છે.</p>
 <p>પ્રથમ, આપણે <code>front_of_house</code> મોડ્યુલને તેના પોતાના ફાઈલમાં સ્થાનાંતરિત કરીશું. <code>front_of_house</code> મોડ્યુલની અંદરનો કોડ દૂર કરો, માત્ર <code>mod front_of_house;</code> ઘોષણા જ રાખો, જેથી src/lib.rs માં Listing 7-21 માં દર્શાવેલ કોડ રહે. નોંધ કરો કે જ્યાં સુધી આપણે Listing 7-22 માં src/front_of_house.rs ફાઈલ બનાવતા નથી ત્યાં સુધી આ કમ્પાઇલ થશે નહીં.</p>
@@ -194,7 +194,7 @@
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/front_of_house.rs}}
 </listing>
 નોંધ એક `mod` ઘોષણા તમારા મોડ્યુલ વૃક્ષમાં એકવાર જ લોડ કરવી જોઈએ. એકવાર કમ્પાઇલરને ખબર પડે કે ફાઈલ પ્રોજેક્ટનો ભાગ છે (અને તમે `mod` વિધાન ક્યાં મૂક્યું છે તેના કારણે મોડ્યુલ વૃક્ષમાં કોડ ક્યાં રહેલો છે તે પણ જાણે છે), તો તમારા પ્રોજેક્ટની અન્ય ફાઇલોએ લોડ કરેલી ફાઇલના કોડનો સંદર્ભ લેવા માટે, જ્યાં તે જાહેર કરવામાં આવી હતી ત્યાંનો પાથ વાપરવો જોઈએ, જે "મોડ્યુલ વૃક્ષમાં વસ્તુનો સંદર્ભ લેવા માટેના પાથ" વિભાગમાં સમજાવવામાં આવ્યું છે. બીજા શબ્દોમાં કહીએ તો, `mod` એ "સમાવેશ" ક્રિયા નથી કે જે તમે અન્ય પ્રોગ્રામિંગ ભાષાઓમાં જોઈ હશે.
-<p>Next, we’ll extract the <code>hosting</code> module to its own file. પછી, આપણે <code>hosting</code> મોડ્યુલને તેના પોતાના ફાઈલમાં સ્થાનાંતરિત કરીશું. પ્રક્રિયા થોડી અલગ છે કારણ કે <code>hosting</code> એ <code>front_of_house</code> નું પેટા મોડ્યુલ છે, મૂળ મોડ્યુલનું નહીં. આપણે <code>hosting</code> માટેની ફાઈલ એક નવી ડિરેક્ટરીમાં મૂકીશું જે મોડ્યુલ વૃક્ષમાં તેના પૂર્વજોના નામ પરથી નામિત કરવામાં આવશે, આ કિસ્સામાં</p>
+<p>પછી, આપણે <code>hosting</code> મોડ્યુલને તેના પોતાના ફાઈલમાં સ્થાનાંતરિત કરીશું. પ્રક્રિયા થોડી અલગ છે કારણ કે <code>hosting</code> એ <code>front_of_house</code> નું પેટા મોડ્યુલ છે, મૂળ મોડ્યુલનું નહીં. આપણે <code>hosting</code> માટેની ફાઈલ એક નવી ડિરેક્ટરીમાં મૂકીશું જે મોડ્યુલ વૃક્ષમાં તેના પૂર્વજોના નામ પરથી નામિત કરવામાં આવશે, આ કિસ્સામાં</p>
 <p>src/front_of_house. <code>hosting</code> ને ખસેડવાનું શરૂ કરવા માટે, આપણે src/front_of_house.rs ને માત્ર <code>hosting</code> મોડ્યુલની ઘોષણા ધરાવવા માટે બદલીશું:</p>
 <listing file-name="src/front_of_house.rs">
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house.rs}}

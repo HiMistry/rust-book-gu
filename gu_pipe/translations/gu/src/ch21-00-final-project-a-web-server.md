@@ -8,13 +8,13 @@
 
 TCP અને HTTP વિશે થોડું શીખો.
 
-Listen for TCP connections on a socket. એક સોકેટ પર TCP જોડાણો સાંભળો.
+એક સોકેટ પર TCP જોડાણો સાંભળો.
 
 Parse a small number of HTTP requests. થોડી સંખ્યામાં HTTP વિનંતીઓનું વિશ્લેષણ કરો.
 
 Create a proper HTTP response. યોગ્ય HTTP પ્રતિભાવ બનાવો.
 
-Improve the throughput of our server with a thread pool. થ્રેડ પૂલ વડે આપણી સર્વરની કાર્યક્ષમતા વધારો.
+થ્રેડ પૂલ વડે આપણી સર્વરની કાર્યક્ષમતા વધારો.
 
 <img alt="Screenshot of a web browser visiting the address 127.0.0.1:8080 displaying a webpage with the text content “Hello! Hi from Rust”" src="img/trpl21-01.png" class="center" style="width: 50%;" />
 Figure 21-1: આપણો અંતિમ સંયુક્ત પ્રોજેક્ટ

@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-7ed1a93d.js";
+            window.path_to_searchindex_js = "searchindex-55c5f58b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -184,9 +184,9 @@
                     <main>
                         <!-- Old headings. Do not remove or links may break. -->
 <h2 id="streams-futures-in-sequence"><a class="header" href="#streams-futures-in-sequence">Streams: Futures in Sequence</a></h2>
-<p>યાદ કરો કે આપણે અગાઉ આ પ્રકરણના “સંદેશાવ્યવહાર” વિભાગમાં આપણી async ચેનલ માટે રીસીવરનો ઉપયોગ કેવી રીતે કર્યો હતો. Async <code>recv</code> પદ્ધતિ સમય જતાં વસ્તુઓની શ્રેણી ઉત્પન્ન કરે છે. આ એક વધુ સામાન્ય પેટર્નનું ઉદાહરણ છે જેને પ્રવાહ કહેવામાં આવે છે. ઘણી વિભાવનાઓને સ્વાભાવિક રીતે પ્રવાહો તરીકે રજૂ કરી શકાય છે: કતારમાં ઉપલબ્ધ થતી વસ્તુઓ, ફાઇલસિસ્ટમમાંથી ક્રમશઃ ડેટાના ટુકડા ખેંચીને લાવવામાં આવે છે જ્યારે સંપૂર્ણ ડેટાસેટ કમ્પ્યુટરની મેમરી માટે ખૂબ મોટો હોય, અથવા નેટવર્ક પર સમય જતાં આવતો ડેટા. કારણ કે પ્રવાહો futures છે, અમે તેનો ઉપયોગ અન્ય કોઈપણ પ્રકારના future સાથે કરી શકીએ છીએ અને તેને રસપ્રદ રીતે જોડી શકીએ છીએ. ઉદાહરણ તરીકે, આપણે ઘણા બધા નેટવર્ક કૉલ્સને ટાળવા માટે ઘટનાઓને જૂથબદ્ધ કરી શકીએ છીએ, લાંબા સમય સુધી ચાલતા કામગીરીની શ્રેણીઓ પર સમયમર્યાદા સેટ કરી શકીએ છીએ અથવા બિનજરૂરી કાર્ય કરવાનું ટાળવા માટે વપરાશકર્તા ઇન્ટરફેસની ઘટનાઓને નિયંત્રિત કરી શકીએ છીએ.</p>
-<p>We saw a sequence of items back in Chapter 13 અમે પ્રકરણ ૧૩ માં એક વસ્તુઓની શ્રેણી જોઈ હતી, જ્યારે અમે “The Iterator Trait and the <code>next</code> Method” વિભાગમાં Iterator trait ને તપાસ્યું હતું, પરંતુ iterator અને async channel receiver વચ્ચે બે તફાવત છે. પ્રથમ તફાવત સમયનો છે: iterators synchronous હોય છે, જ્યારે channel receiver asynchronous હોય છે. બીજો તફાવત API નો છે. <code>Iterator</code> સાથે સીધું કાર્ય કરતી વખતે, અમે તેનું synchronous <code>next</code> પદ્ધતિને બોલાવીએ છીએ. <code>trpl::Receiver</code> સ્ટ્રીમ સાથે ખાસ કરીને, અમે એક asynchronous <code>recv</code> પદ્ધતિને બદલે બોલાવી હતી. અન્યથા, આ APIs ખૂબ સમાન લાગે છે, અને તે સામ્યતા કોઈ સંયોગ નથી. સ્ટ્રીમ એ iteration નું asynchronous સ્વરૂપ જેવું છે. જો કે <code>trpl::Receiver</code> ખાસ કરીને સંદેશો મેળવવા માટે રાહ જુએ છે, તો સામાન્ય હેતુની સ્ટ્રીમ API ઘણું વ્યાપક છે: તે <code>Iterator</code> ની જેમ જ આગલી વસ્તુ પ્રદાન કરે છે, પરંતુ asynchronously.</p>
-<p>The similarity between iterators and streams in Rust means we can actually create a stream from any iterator. As with an iterator, we can work with a stream by calling its <code>next</code> method and then awaiting the output, as in Listing 17-21, which won’t compile yet. Rustમાં ઇટરેટર (iterator) અને સ્ટ્રીમ (stream) વચ્ચેની સમાનતાનો અર્થ એ થાય છે કે આપણે કોઈપણ ઇટરેટરથી સ્ટ્રીમ બનાવી શકીએ છીએ. એક ઇટરેટરની જેમ, આપણે તેની <code>next</code> પદ્ધતિને બોલાવીને અને પછી આઉટપુટની રાહ જોઈને સ્ટ્રીમ સાથે કાર્ય કરી શકીએ છીએ, જે યાદી 17-21માં દર્શાવેલ છે, જે હજી કમ્પાઇલ (compile) થશે નહીં.</p>
+<p>યાદ કરો કે આપણે અગાઉ આ પ્રકરણના “સંદેશાવ્યવહાર” વિભાગમાં આપણી async ચેનલ માટે રીસીવરનો ઉપયોગ કેવી રીતે કર્યો હતો. Async <code>recv</code> પદ્ધતિ સમય જતાં વસ્તુઓની શ્રેણી ઉત્પન્ન કરે છે. આ એક વધુ સામાન્ય પેટર્નનું ઉદાહરણ છે જેને પ્રવાહ કહેવામાં આવે છે. ઘણી વિભાવનાઓને સ્વાભાવિક રીતે પ્રવાહો તરીકે રજૂ કરી શકાય છે: કતારમાં ઉપલબ્ધ થતી વસ્તુઓ, ફાઇલસિસ્ટમમાંથી ક્રમશઃ ડેટાના ટુકડા ખેંચીને લાવવામાં આવે છે જ્યારે સંપૂર્ણ ડેટાસેટ કમ્પ્યુટરની મેમરી માટે ખૂબ મોટો હોય, અથવા નેટવર્ક પર સમય જતાં આવતો ડેટા. કારણ કે પ્રવાહો futures છે, અમે તેનો ઉપયોગ અન્ય કોઈપણ પ્રકારના future સાથે કરી શકીએ છીએ અને તેને રસપ્રદ રીતે જોડી શકીએ છીએ. ઉદાહરણ તરીકે, આપણે ઘણા બધા નેટવર્ક કૉલ્સને ટાળવા માટે ઘટનાઓને જૂથબદ્ધ કરી શકીએ છીએ, લાંબા સમય સુધી ચાલતા કામગીરીની શ્રેણીઓ પર સમયમર્યાદા સેટ કરી શકીએ છીએ અથવા બિનજરૂરી કાર્ય કરવાનું ટાળવા માટે user ઇન્ટરફેસની ઘટનાઓને નિયંત્રિત કરી શકીએ છીએ.</p>
+<p>અમે પ્રકરણ ૧૩ માં એક વસ્તુઓની શ્રેણી જોઈ હતી, જ્યારે અમે “The Iterator Trait and the <code>next</code> Method” વિભાગમાં Iterator trait ને તપાસ્યું હતું, પરંતુ iterator અને async channel receiver વચ્ચે બે તફાવત છે. પ્રથમ તફાવત સમયનો છે: iterators synchronous હોય છે, જ્યારે channel receiver asynchronous હોય છે. બીજો તફાવત API નો છે. <code>Iterator</code> સાથે સીધું કાર્ય કરતી વખતે, અમે તેનું synchronous <code>next</code> પદ્ધતિને બોલાવીએ છીએ. <code>trpl::Receiver</code> સ્ટ્રીમ સાથે વિશેષ કરીને, અમે એક asynchronous <code>recv</code> પદ્ધતિને બદલે બોલાવી હતી. અન્યથા, આ APIs ખૂબ સમાન લાગે છે, અને તે સામ્યતા કોઈ સંયોગ નથી. સ્ટ્રીમ એ iteration નું asynchronous સ્વરૂપ જેવું છે. જો કે <code>trpl::Receiver</code> વિશેષ કરીને સંદેશો મેળવવા માટે રાહ જુએ છે, તો સામાન્ય હેતુની સ્ટ્રીમ API ઘણું વ્યાપક છે: તે <code>Iterator</code> ની જેમ જ આગલી વસ્તુ પ્રદાન કરે છે, પરંતુ asynchronously.</p>
+<p>માં ઇટરેટર (iterator) અને સ્ટ્રીમ (stream) વચ્ચેની સમાનતાનો અર્થ એ થાય છે કે આપણે કોઈપણ ઇટરેટરથી સ્ટ્રીમ બનાવી શકીએ છીએ. એક ઇટરેટરની જેમ, આપણે તેની <code>next</code> પદ્ધતિને બોલાવીને અને પછી આઉટપુટની રાહ જોઈને સ્ટ્રીમ સાથે કાર્ય કરી શકીએ છીએ, જે યાદી 17-21માં દર્શાવેલ છે, જે હજી કમ્પાઇલ (compile) થશે નહીં.</p>
 <listing number="17-21" caption="Creating a stream from an iterator and printing its values" file-name="src/main.rs">
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-21/src/main.rs:stream}}
 </listing>
@@ -197,30 +197,31 @@ cd listings/ch17-async-await/listing-17-21
 cargo build
 copy only the error output
 -->
-<p>error[E0599]: no method named <code>next</code> found for struct <code>tokio_stream::iter::Iter</code> in the current scope
-–&gt; src/main.rs:10:40
-|
+<pre><code class="language-text">error[E0599]: no method named `next` found for struct `tokio_stream::iter::Iter` in the current scope
+  --&gt; src/main.rs:10:40
+   |
 10 |         while let Some(value) = stream.next().await {
-|                                        ^^^^
-|
-= help: items from traits can only be used if the trait is in scope
-help: the following traits which provide <code>next</code> are implemented but not in scope; perhaps you want to import one of them
-|
+   |                                        ^^^^
+   |
+   = help: items from traits can only be used if the trait is in scope
+help: the following traits which provide `next` are implemented but not in scope; perhaps you want to import one of them
+   |
 1  + use crate::trpl::StreamExt;
-|
+   |
 1  + use futures_util::stream::stream::StreamExt;
-|
+   |
 1  + use std::iter::Iterator;
-|
+   |
 1  + use std::str::pattern::Searcher;
-|
-help: there is a method <code>try_next</code> with a similar name
-|
+   |
+help: there is a method `try_next` with a similar name
+   |
 10 |         while let Some(value) = stream.try_next().await {
-|                                        ~~~~~~~~
-As this output explains, the reason for the compiler error is that we need the right trait in scope to be able to use the <code>next</code> method. Given our discussion so far, you might reasonably expect that trait to be <code>Stream</code>, but it’s actually <code>StreamExt</code>. Short for extension, <code>Ext</code> is a common pattern in the Rust community for extending one trait with another. આ આઉટપુટ સમજાવે છે તેમ, કમ્પાઇલરની ભૂલનું કારણ એ છે કે <code>next</code> પદ્ધતિનો ઉપયોગ કરવા માટે યોગ્ય ટ્રેઇટ કાર્યક્ષેત્રમાં હોવી જરૂરી છે. અત્યાર સુધીની આપણી ચર્ચાને ધ્યાનમાં રાખીને, તમે તે ટ્રેઇટ <code>Stream</code> હોવાની અપેક્ષા રાખી શકો છો, પરંતુ હકીકતમાં તે <code>StreamExt</code> છે. એક્સ્ટેંશન માટે ટૂંકું નામ, <code>Ext</code> એ Rust સમુદાયમાં એક સામાન્ય રીત છે જે અન્ય ટ્રેઇટ સાથે ટ્રેઇટને વિસ્તારવા માટે વપરાય છે. The <code>Stream</code></p>
-<p>trait defines a low-level interface that effectively combines the <code>Iterator</code> and <code>Future</code> traits. <code>StreamExt</code> supplies a higher-level set of APIs on top of <code>Stream</code>, including the <code>next</code> method as well as other utility methods similar to those provided by the <code>Iterator</code> trait. <code>Stream</code> and <code>StreamExt</code> are not yet part of Rust’s standard library, but most ecosystem crates use similar definitions. <code>Stream</code> ટ્રેઇટ એક નીચલા સ્તરનું ઇન્ટરફેસ વ્યાખ્યાયિત કરે છે જે અસરકારક રીતે <code>Iterator</code> અને <code>Future</code> ટ્રેઇટ્સને જોડે છે. <code>StreamExt</code> <code>Stream</code> ઉપર ઉચ્ચ-સ્તરના API નો સમૂહ પૂરો પાડે છે, જેમાં <code>next</code> પદ્ધતિ તેમજ <code>Iterator</code> ટ્રેઇટ દ્વારા આપવામાં આવતી અન્ય ઉપયોગી પદ્ધતિઓનો સમાવેશ થાય છે. <code>Stream</code> અને <code>StreamExt</code> હજી સુધી Rust ના સ્ટાન્ડર્ડ લાઇબ્રેરીનો ભાગ નથી, પરંતુ મોટાભાગના ઇકોસિસ્ટમ crates સમાન વ્યાખ્યાઓનો ઉપયોગ કરે છે.</p>
-<p>The fix to the compiler error is to add a <code>use</code> statement for <code>trpl::StreamExt</code>, as in Listing 17-22. સંકલક ભૂલનું નિવારણ એ <code>trpl::StreamExt</code> માટે <code>use</code> વિધાન ઉમેરવાનું છે, જેવો ઉલ્લેખ લિસ્ટિંગ ૧૭-૨૨ માં છે.</p>
+   |                                        ~~~~~~~~
+</code></pre>
+<p>આ આઉટપુટ સમજાવે છે તેમ, કમ્પાઇલરની ભૂલનું કારણ એ છે કે <code>next</code> પદ્ધતિનો ઉપયોગ કરવા માટે યોગ્ય ટ્રેઇટ કાર્યક્ષેત્રમાં હોવી જરૂરી છે. અત્યાર સુધીની આપણી ચર્ચાને ધ્યાનમાં રાખીને, તમે તે ટ્રેઇટ <code>Stream</code> હોવાની અપેક્ષા રાખી શકો છો, પરંતુ હકીકતમાં તે <code>StreamExt</code> છે. એક્સ્ટેંશન માટે ટૂંકું નામ, <code>Ext</code> એ Rust સમુદાયમાં એક સામાન્ય રીત છે જે અન્ય ટ્રેઇટ સાથે ટ્રેઇટને વિસ્તારવા માટે વપરાય છે.</p>
+<p>ટ્રેઇટ એક નીચલા સ્તરનું ઇન્ટરફેસ વ્યાખ્યાયિત કરે છે જે અસરકારક રીતે <code>Iterator</code> અને <code>Future</code> ટ્રેઇટ્સને જોડે છે. <code>StreamExt</code> <code>Stream</code> ઉપર ઉચ્ચ-સ્તરના API નો સમૂહ પૂરો પાડે છે, જેમાં <code>next</code> પદ્ધતિ તેમજ <code>Iterator</code> ટ્રેઇટ દ્વારા આપવામાં આવતી અન્ય ઉપયોગી પદ્ધતિઓનો સમાવેશ થાય છે. <code>Stream</code> અને <code>StreamExt</code> હજી સુધી Rust ના સ્ટાન્ડર્ડ લાઇબ્રેરીનો ભાગ નથી, પરંતુ મોટાભાગના ઇકોસિસ્ટમ crates સમાન વ્યાખ્યાઓનો ઉપયોગ કરે છે.</p>
+<p>સંકલક ભૂલનું નિવારણ એ <code>trpl::StreamExt</code> માટે <code>use</code> વિધાન ઉમેરવાનું છે, જેવો ઉલ્લેખ લિસ્ટિંગ ૧૭-૨૨ માં છે.</p>
 <listing number="17-22" caption="Successfully using an iterator as the basis for a stream" file-name="src/main.rs">
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-22/src/main.rs:all}}
 </listing>

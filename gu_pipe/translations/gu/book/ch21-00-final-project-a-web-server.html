@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-7ed1a93d.js";
+            window.path_to_searchindex_js = "searchindex-55c5f58b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -187,10 +187,10 @@
 <p>અમારા અંતિમ પ્રોજેક્ટ માટે, અમે એક વેબ સર્વર બનાવીશું જે “Hello!” કહેશે અને વેબ બ્રાઉઝરમાં આકૃતિ 21-1 જેવું દેખાશે.</p>
 <p>વેબ સર્વર બનાવવા માટેની અમારી યોજના અહીં છે:</p>
 <p>TCP અને HTTP વિશે થોડું શીખો.</p>
-<p>Listen for TCP connections on a socket. એક સોકેટ પર TCP જોડાણો સાંભળો.</p>
+<p>એક સોકેટ પર TCP જોડાણો સાંભળો.</p>
 <p>Parse a small number of HTTP requests. થોડી સંખ્યામાં HTTP વિનંતીઓનું વિશ્લેષણ કરો.</p>
 <p>Create a proper HTTP response. યોગ્ય HTTP પ્રતિભાવ બનાવો.</p>
-<p>Improve the throughput of our server with a thread pool. થ્રેડ પૂલ વડે આપણી સર્વરની કાર્યક્ષમતા વધારો.</p>
+<p>થ્રેડ પૂલ વડે આપણી સર્વરની કાર્યક્ષમતા વધારો.</p>
 <img alt="Screenshot of a web browser visiting the address 127.0.0.1:8080 displaying a webpage with the text content “Hello! Hi from Rust”" src="img/trpl21-01.png" class="center" style="width: 50%;" />
 Figure 21-1: આપણો અંતિમ સંયુક્ત પ્રોજેક્ટ
 <p>આપણે આરંભ કરીએ તે પહેલાં, આપણે બે વિગતો જણાવવી જોઈએ. પ્રથમ, આપણે જે પદ્ધતિ વાપરવાનાં છીએ તે Rust વડે વેબ સર્વર બનાવવા માટેનો શ્રેષ્ઠ માર્ગ નહીં હોય. સમુદાયના સભ્યોએ crates.io પર ઉપલબ્ધ ઉત્પાદન-તૈયાર <code>crate</code> ની ઘણી સંખ્યા પ્રકાશિત કરી છે, જે આપણને બનાવવાની સરખામણીમાં વધુ સંપૂર્ણ વેબ સર્વર અને થ્રેડ પૂલ અમલીકરણો પ્રદાન કરે છે. જો કે, આ પ્રકરણનો આપણો હેતુ તમને શીખવામાં મદદ કરવાનો છે, સરળ માર્ગ પસંદ કરવાનો નહીં. કારણ કે Rust એ સિસ્ટમ પ્રોગ્રામિંગ ભાષા છે, અમે જે સ્તરીકરણનું સ્તર જોઈએ છીએ તે પસંદ કરી શકીએ છીએ અને અન્ય ભાષાઓમાં શક્ય અથવા વ્યવહારુ કરતાં નીચલા સ્તર પર જઈ શકીએ છીએ.</p>

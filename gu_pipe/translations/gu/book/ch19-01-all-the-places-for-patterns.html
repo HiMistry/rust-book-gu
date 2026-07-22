@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-7ed1a93d.js";
+            window.path_to_searchindex_js = "searchindex-55c5f58b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -182,9 +182,9 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="તમામ-સથળોએ-પેટરનનો-ઉપયોગ-થઈ-શકે-છે"><a class="header" href="#તમામ-સથળોએ-પેટરનનો-ઉપયોગ-થઈ-શકે-છે">તમામ સ્થળોએ પેટર્નનો ઉપયોગ થઈ શકે છે</a></h2>
+                        <h2 id="all-the-places-patterns-can-be-used"><a class="header" href="#all-the-places-patterns-can-be-used">All the Places Patterns Can Be Used</a></h2>
 <p>પેટર્ન Rustમાં અનેક સ્થળોએ દેખાય છે, અને તમે ઘણા સમયથી તેનો ઉપયોગ કરતા આવ્યાં છો! આ વિભાગમાં પેટર્ન ક્યાં માન્ય છે તે અંગે ચર્ચા કરવામાં આવી છે.</p>
-<h3 id="match-અંગો"><a class="header" href="#match-અંગો"><code>match</code> અંગો</a></h3>
+<h3 id="match-arms"><a class="header" href="#match-arms"><code>match</code> Arms</a></h3>
 <p>જેમ કે પ્રકરણ ૬ માં ચર્ચા કરવામાં આવી છે, તેમ આપણે <code>match</code> અભિવ્યક્તિઓના અંગોમાં પ્રકારણીઓનો ઉપયોગ કરીએ છીએ. રૂઢિચુસ્ત રીતે, <code>match</code> અભિવ્યક્તિઓ એ કીવર્ડ <code>match</code>, એક મૂલ્ય જેની સાથે સરખામણી કરવી છે, અને એક અથવા વધુ મેળ ખાતા અંગોથી બનેલા હોય છે જેમાં એક પ્રકારણી અને એક અભિવ્યક્તિ હોય છે જે તે અંગના પ્રકારણી સાથે મળીએ તો ચલાવવામાં આવે છે, જેમ કે:</p>
 <!--
   Manually formatted rather than using Markdown intentionally: Markdown does not
@@ -196,16 +196,16 @@
     <em>PATTERN</em> =&gt; <em>EXPRESSION</em>,
 }</code></pre>
 
-<p>અહીંયાથી ઉદાહરણ તરીકે, લિસ્ટિંગ ૬-૫ માંથી <code>match</code> અભિવ્યક્તિ દર્શાવેલ છે, જે ચલ <code>x</code> માં રહેલા <code>Option&lt;i32&gt;</code> મૂલ્ય સાથે મેળ ખાય છે:</p>
+<p>અહીંયાથી ઉદાહરણ તરીકે, લિસ્ટિંગ ૬-૫ માંથી <code>match</code> અભિવ્યક્તિ દર્શાવેલ છે, જે variable <code>x</code> માં રહેલા <code>Option&lt;i32&gt;</code> મૂલ્ય સાથે મેળ ખાય છે:</p>
 <p>match x {
 None =&gt; None,
 Some(i) =&gt; Some(i + 1),
 }
-The patterns in this <code>match</code> expression are the <code>None</code> and <code>Some(i)</code> to the left of each arrow. આ <code>match</code> અભિવ્યક્તિમાં</p>
-<p>રહેલાં દાખલાં એ દરેક તીરની ડાબી બાજુએ <code>None</code> અને <code>Some(i)</code> છે. એક આવશ્યકતા એ છે કે <code>match</code> અભિવ્યક્તિઓ સંપૂર્ણ હોવી જોઈએ, એટલે કે <code>match</code> અભિવ્યક્તિમાં રહેલી કિંમત માટેની તમામ શક્યતાઓ ધ્યાનમાં લેવી જોઈએ. દરેક શક્યતાને આવરી લીધી છે કે નહીં તે સુનિશ્ચિત કરવાનો એક માર્ગ એ છે કે છેલ્લા ભાગ માટે એક સામાન્ય દાખલો ધરાવવો: ઉદાહરણ તરીકે, કોઈપણ કિંમતના સાથે મેળ ખાતું ચલ નામ ક્યારેય નિષ્ફળ જતું નથી અને આમ બાકીના તમામ કેસોને આવરી લે છે.</p>
-<p>The particular pattern <code>_</code> will match anything, but it never binds to a variable, so it’s often used in the last match arm. The <code>_</code> pattern can be useful when you want to ignore any value not specified, for example. We’ll cover the <code>_</code> pattern in more detail in “Ignoring Values in a Pattern” later in this chapter. ચોક્કસ પેટર્ન <code>_</code> કોઈપણ વસ્તુ સાથે મેળ ખાય છે, પરંતુ તે ક્યારેય ચલ (variable) ને જોડેલું હોતું નથી, તેથી તે ઘણીવાર છેલ્લાં મેચ આર્મમાં વપરાય છે. જ્યારે તમે કોઈ પણ અસ્પષ્ટિત મૂલ્યને અવગણવા માંગતા હોવ ત્યારે <code>_</code> પેટર્ન ઉપયોગી થઈ શકે છે, દાખલા તરીકે. અમે આ પ્રકરણમાં આગળ “પેટર્નમાં મૂલ્યોને અવગણવા” વિષయంలో <code>_</code> પેટર્નને વધુ વિગતવાર આવરી લઈશું.</p>
-<h3 id="let-વિધાનો"><a class="header" href="#let-વિધાનો"><code>let</code> વિધાનો</a></h3>
-<p>અગાઉના પ્રકરણમાં, આપણે માત્ર <code>match</code> અને <code>if let</code> સાથે પેટર્નનો ઉપયોગ વિશે જ ચર્ચા કરી હતી, પરંતુ હકીકતમાં, આપણે <code>let</code> વિધાનો સહિત અન્ય સ્થળોએ પણ પેટર્નનો ઉપયોગ કર્યો છે. ઉદાહરણ તરીકે, આ સરળ <code>let</code> સાથે ચલ નિસ્યંદન (variable assignment) ધ્યાનમાં લો:</p>
+<code>None</code> <code>Some(i)</code> આ <code>match</code> અભિવ્યક્તિમાં</p>
+<p>રહેલાં દાખલાં એ દરેક તીરની ડાબી બાજુએ <code>None</code> અને <code>Some(i)</code> છે. એક આવશ્યકતા એ છે કે <code>match</code> અભિવ્યક્તિઓ સંપૂર્ણ હોવી જોઈએ, એટલે કે <code>match</code> અભિવ્યક્તિમાં રહેલી કિંમત માટેની તમામ શક્યતાઓ ધ્યાનમાં લેવી જોઈએ. દરેક શક્યતાને આવરી લીધી છે કે નહીં તે સુનિશ્ચિત કરવાનો એક માર્ગ એ છે કે છેલ્લા ભાગ માટે એક સામાન્ય દાખલો ધરાવવો: ઉદાહરણ તરીકે, કોઈપણ કિંમતના સાથે મેળ ખાતું variable નામ ક્યારેય નિષ્ફળ જતું નથી અને આમ બાકીના તમામ કેસોને આવરી લે છે.</p>
+<p>ચોક્કસ પેટર્ન <code>_</code> કોઈપણ વસ્તુ સાથે મેળ ખાય છે, પરંતુ તે ક્યારેય variable (variable) ને જોડેલું હોતું નથી, તેથી તે ઘણીવાર છેલ્લાં મેચ આર્મમાં વપરાય છે. જ્યારે તમે કોઈ પણ અસ્પષ્ટિત મૂલ્યને અવગણવા માંગતા હોવ ત્યારે <code>_</code> પેટર્ન ઉપયોગી થઈ શકે છે, દાખલા તરીકે. અમે આ પ્રકરણમાં આગળ “પેટર્નમાં મૂલ્યોને અવગણવા” વિષయంలో <code>_</code> પેટર્નને વધુ વિગતવાર આવરી લઈશું.</p>
+<h3 id="let-statements"><a class="header" href="#let-statements"><code>let</code> Statements</a></h3>
+<p>અગાઉના પ્રકરણમાં, આપણે માત્ર <code>match</code> અને <code>if let</code> સાથે પેટર્નનો ઉપયોગ વિશે જ ચર્ચા કરી હતી, પરંતુ હકીકતમાં, આપણે <code>let</code> વિધાનો સહિત અન્ય સ્થળોએ પણ પેટર્નનો ઉપયોગ કર્યો છે. ઉદાહરણ તરીકે, આ સરળ <code>let</code> સાથે variable નિસ્યંદન (variable assignment) ધ્યાનમાં લો:</p>
 <p>let x = 5;
 દરેક વખતે તમે <code>let</code> વિધાનનો ઉપયોગ કર્યો હોય, ત્યારે તમે પેટર્નનો ઉપયોગ કર્યો હોય, ભલે તમને ખબર ન હોય! વધુ સત્તાવાર રીતે, એક <code>let</code> વિધાન આના જેવું દેખાય છે:</p>
 <!--
@@ -216,37 +216,37 @@ The patterns in this <code>match</code> expression are the <code>None</code> and
 <code>let <em>PATTERN</em> = <em>EXPRESSION</em>;</code>
 </pre>
 
-<p><code>let x = 5;</code> જેવી વિધાનમાં PATTERN સ્લોટમાં ચલનું નામ હોય, તો તે માત્ર એક સરળ પ્રકારની પેટર્ન છે. Rust અભિવ્યક્તિને પેટર્ન સામે સરખાવે છે અને તે શોધે તેવા કોઈપણ નામો સોંપે છે. તેથી, <code>let x = 5;</code> ઉદાહરણમાં, <code>x</code> એ એક પેટર્ન છે જેનો અર્થ થાય છે “અહીં જે મેળ ખાય છે તેને ચલ <code>x</code> સાથે જોડો.” કારણ કે નામ <code>x</code> આખી પેટર્ન છે, આ પેટર્ન અસરકારક રીતે “ચલ <code>x</code> સાથે બધું બાંધો, ગમે તે મૂલ્ય હોય” એવો અર્થ સૂચવે છે.</p>
+<p><code>let x = 5;</code> જેવી વિધાનમાં PATTERN સ્લોટમાં ચલનું નામ હોય, તો તે માત્ર એક સરળ પ્રકારની પેટર્ન છે. Rust અભિવ્યક્તિને પેટર્ન સામે સરખાવે છે અને તે શોધે તેવા કોઈપણ નામો સોંપે છે. તેથી, <code>let x = 5;</code> ઉદાહરણમાં, <code>x</code> એ એક પેટર્ન છે જેનો અર્થ થાય છે “અહીં જે મેળ ખાય છે તેને variable <code>x</code> સાથે જોડો.” કારણ કે નામ <code>x</code> આખી પેટર્ન છે, આ પેટર્ન અસરકારક રીતે “variable <code>x</code> સાથે બધું બાંધો, ગમે તે મૂલ્ય હોય” એવો અર્થ સૂચવે છે.</p>
 <p>ચોક્કસ <code>let</code> ના પેટર્ન-મેચિંગ પાસાને વધુ સ્પષ્ટ રીતે સમજવા માટે, યાદી ૧૯-૧ જુઓ, જે <code>let</code> સાથે એક પેટર્નનો ઉપયોગ કરીને ટ્યૂપલને વિઘટિત કરે છે.</p>
 <listing number="19-1" caption="Using a pattern to destructure a tuple and create three variables at once">
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-01/src/main.rs:here}}
 </listing>
-અહીં, આપણે એક ટ્યૂપલને પેટર્ન સામે સરખાવે છે. Rust મૂલ્ય `(1, 2, 3)` ને પેટર્ન `(x, y, z)` સાથે સરખાવે છે અને જુએ છે કે મૂલ્ય પેટર્નને બંધબેસે છે—એટલે કે, તે જુએ છે કે બંનેમાં સમાન સંખ્યામાં ઘટકો છે—તેથી Rust `1` ને `x`, `2` ને `y`, અને `3` ને `z` સાથે જોડે છે. તમે આ ટ્યૂપલ પેટર્નને ત્રણ વ્યક્તિગત ચલ પેટર્નનું નેસ્ટિંગ તરીકે વિચારી શકો છો.
-<p>જો પેટર્નમાં ઘટકોની સંખ્યા ટ્યૂપલમાં ઘટકોની સંખ્યા સાથે મેળ ખાતી નથી, તો સમગ્ર પ્રકાર મેળ ખાતો નથી અને આપણને કમ્પાઇલર ભૂલ મળશે. ઉદાહરણ તરીકે, યાદી 19-2 ત્રણ ઘટકો ધરાવતા ટ્યૂપલને બે ચલમાં વિઘટિત કરવાનો પ્રયાસ દર્શાવે છે, જે કામ કરશે નહીં.</p>
+અહીં, આપણે એક ટ્યૂપલને પેટર્ન સામે સરખાવે છે. Rust મૂલ્ય `(1, 2, 3)` ને પેટર્ન `(x, y, z)` સાથે સરખાવે છે અને જુએ છે કે મૂલ્ય પેટર્નને બંધબેસે છે—એટલે કે, તે જુએ છે કે બંનેમાં સમાન સંખ્યામાં ઘટકો છે—તેથી Rust `1` ને `x`, `2` ને `y`, અને `3` ને `z` સાથે જોડે છે. તમે આ ટ્યૂપલ પેટર્નને ત્રણ વ્યક્તિગત variable પેટર્નનું નેસ્ટિંગ તરીકે વિચારી શકો છો.
+<p>જો પેટર્નમાં ઘટકોની સંખ્યા ટ્યૂપલમાં ઘટકોની સંખ્યા સાથે મેળ ખાતી નથી, તો સમગ્ર પ્રકાર મેળ ખાતો નથી અને આપણને કમ્પાઇલર ભૂલ મળશે. ઉદાહરણ તરીકે, યાદી 19-2 ત્રણ ઘટકો ધરાવતા ટ્યૂપલને બે variable વિઘટિત કરવાનો પ્રયાસ દર્શાવે છે, જે કામ કરશે નહીં.</p>
 <listing number="19-2" caption="Incorrectly constructing a pattern whose variables don’t match the number of elements in the tuple">
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-02/src/main.rs:here}}
 </listing>
 આ કોડને કમ્પાઇલ કરવાના પ્રયત્નોથી આ પ્રકારની ભૂલ આવે છે:
 <p>{{#include ../listings/ch19-patterns-and-matching/listing-19-02/output.txt}}
-આ ભૂલ નિવારવા માટે, આપણે ટ્યૂપલમાં રહેલા એક અથવા વધુ મૂલ્યોને અવગણી શકીએ છીએ <code>_</code> અથવા <code>..</code> નો ઉપયોગ કરીને, જે તમે “પેટર્નમાં મૂલ્યોને અવગણવું” વિભાગમાં જોશો. જો સમસ્યા એ હોય કે પેટર્નમાં ઘણાં બધાં ચલ છે, તો ઉકેલ એ છે કે પ્રકારોને મેળ ખાતા બનાવવા માટે ચલ દૂર કરવા જેથી ચલોની સંખ્યા ટ્યૂપલના ઘટકોની સંખ્યા જેટલી થાય.</p>
+આ ભૂલ નિવારવા માટે, આપણે ટ્યૂપલમાં રહેલા એક અથવા વધુ મૂલ્યોને અવગણી શકીએ છીએ <code>_</code> અથવા <code>..</code> નો ઉપયોગ કરીને, જે તમે “પેટર્નમાં મૂલ્યોને અવગણવું” વિભાગમાં જોશો. જો સમસ્યા એ હોય કે પેટર્નમાં ઘણાં બધાં variable છે, તો ઉકેલ એ છે કે પ્રકારોને મેળ ખાતા બનાવવા માટે variable દૂર કરવા જેથી variable’s સંખ્યા ટ્યૂપલના ઘટકોની સંખ્યા જેટલી થાય.</p>
 <h3 id="conditional-if-let-expressions"><a class="header" href="#conditional-if-let-expressions">Conditional <code>if let</code> Expressions</a></h3>
 <p>અગાઉના પ્રકરણ ૬ માં, આપણે ચર્ચા કરી હતી કે <code>if let</code> અભિવ્યક્તિઓનો ઉપયોગ મુખ્યત્વે એક <code>match</code> ની સમકક્ષ લખવાની ટૂંકી રીત તરીકે કેવી રીતે કરવો. જો વૈકલ્પિક હોય તો, <code>if let</code> માં એક અનુરૂપ <code>else</code> હોઈ શકે છે જેમાં પેટર્ન <code>if let</code> સાથે મેળ ખાતી નથી તેવા કિસ્સામાં ચલાવવાનો કોડ હોય છે.</p>
 <p>લિસ્ટિંગ ૧૯-૩ દર્શાવે છે કે <code>if let</code>, <code>else if</code>, અને <code>else if let</code> અભિવ્યક્તિઓને મિશ્રિત કરવી પણ શક્ય છે. આવું કરવાથી આપણને <code>match</code> અભિવ્યક્તિ કરતાં વધુ લવચીકતા મળે છે જેમાં આપણે માત્ર એક જ મૂલ્યની સરખામણી પેટર્ન સાથે કરી શકીએ છીએ. ઉપરાંત, Rust ને <code>if let</code>, <code>else if</code>, અને <code>else if let</code> શરતોની શ્રેણીમાં સંબંધિત હોવાની જરૂર નથી.</p>
-<p>Listing 19-3 નો કોડ Listing 19-3 માં રહેલો કોડ નક્કી કરે છે કે તમારી પૃષ્ઠભૂમિ કયો રંગ ધારણ કરે, જે અનેક શરતો માટેના પરીક્ષણોની શ્રેણી પર આધારિત છે. આ ઉદાહરણ માટે, અમે એવા ચલ (variable) બનાવ્યા છે જેમાં અગાઉથી નિશ્ચિત મૂલ્યો હોય, જે વાસ્તવિક કાર્યક્રમ વપરાશકર્તા ઇનપુટ (user input) દ્વારા મેળવી શકે છે.</p>
+<p>Listing 19-3 નો કોડ Listing 19-3 માં રહેલો કોડ નક્કી કરે છે કે તમારી પૃષ્ઠભૂમિ કયો રંગ ધારણ કરે, જે અનેક શરતો માટેના પરીક્ષણોની શ્રેણી પર આધારિત છે. આ ઉદાહરણ માટે, અમે એવા variable (variable) બનાવ્યા છે જેમાં અગાઉથી નિશ્ચિત મૂલ્યો હોય, જે વાસ્તવિક કાર્યક્રમ user ઇનપુટ (user input) દ્વારા મેળવી શકે છે.</p>
 <listing number="19-3" file-name="src/main.rs" caption="Mixing `if let`, `else if`, `else if let`, and `else`">
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-03/src/main.rs}}
 </listing>
-જો વપરાશકર્તા પોતાની મનપસંદ રંગ પસંદ કરે છે, તો તે રંગ પૃષ્ઠભૂમિ તરીકે વપરાય છે. જો કોઈ મનપસંદ રંગ પસંદ ન કર્યો હોય અને આજ મંગળવાર હોય, તો પૃષ્ઠભૂમિનો રંગ લીલો હોય છે. અન્યથા, જો વપરાશકર્તા પોતાની ઉંમરને String સ્વરૂપે આપે અને અમે તેને સંખ્યા તરીકે સફળતાપૂર્વક parse કરી શકીએ, તો રંગ જાંબલી અથવા નારંગી હોઈ શકે છે, જે સંખ્યાના મૂલ્ય પર આધાર રાખે છે. જો આ શરતોમાંથી કોઈ પણ લાગુ ન થાય, તો પૃષ્ઠભૂમિનો રંગ વાદળી હોય છે.
+જો user પોતાની મનપસંદ રંગ પસંદ કરે છે, તો તે રંગ પૃષ્ઠભૂમિ તરીકે વપરાય છે. જો કોઈ મનપસંદ રંગ પસંદ ન કર્યો હોય અને આજ મંગળવાર હોય, તો પૃષ્ઠભૂમિનો રંગ લીલો હોય છે. અન્યથા, જો user પોતાની ઉંમરને String સ્વરૂપે આપે અને અમે તેને સંખ્યા તરીકે સફળતાપૂર્વક parse કરી શકીએ, તો રંગ જાંબલી અથવા નારંગી હોઈ શકે છે, જે સંખ્યાના મૂલ્ય પર આધાર રાખે છે. જો આ શરતોમાંથી કોઈ પણ લાગુ ન થાય, તો પૃષ્ઠભૂમિનો રંગ વાદળી હોય છે.
 <p>આ શરતી માળખું અમને જટિલ જરૂરિયાતોને પહોંચી વળવામાં મદદ કરે છે. અહીં આપેલા hardcoded મૂલ્યો સાથે, આ ઉદાહરણ <code>Using purple as the background color</code> પ્રિન્ટ કરશે.</p>
-<p>તમે જોઈ શકો છો કે <code>if let</code> નવા ચલ (variable) પણ રજૂ કરી શકે છે જે સમાન રીતે <code>match</code> આર્મને કરે છે, જેમ કે લાઈન <code>if let Ok(age) = age</code> એક નવું <code>age</code> ચલ રજૂ કરે છે જેમાં <code>Ok</code> પ્રકારની અંદર રહેલું મૂલ્ય હોય છે, જે હાલના <code>age</code> ચલને છાંકી દે છે. આનો અર્થ એ થાય છે કે આપણે <code>if age &gt; 30</code> શરતને તે બ્લોકમાં મૂકવાની જરૂર છે: આપણે આ બે શરતોને <code>if let Ok(age) = age &amp;&amp; age &gt; 30</code> માં ભેગી કરી શકતા નથી. આપણને ૩૦ સાથે સરખાવવા માટેનું નવું <code>age</code> ત્યારે જ માન્ય બને છે જ્યારે નવી અવધિ કૌંસ વળાંકથી શરૂ થાય છે.</p>
+<p>તમે જોઈ શકો છો કે <code>if let</code> નવા variable (variable) પણ રજૂ કરી શકે છે જે સમાન રીતે <code>match</code> આર્મને કરે છે, જેમ કે લાઈન <code>if let Ok(age) = age</code> એક નવું <code>age</code> variable રજૂ કરે છે જેમાં <code>Ok</code> પ્રકારની અંદર રહેલું મૂલ્ય હોય છે, જે હાલના <code>age</code> variable છાંકી દે છે. આનો અર્થ એ થાય છે કે આપણે <code>if age &gt; 30</code> શરતને તે બ્લોકમાં મૂકવાની જરૂર છે: આપણે આ બે શરતોને <code>if let Ok(age) = age &amp;&amp; age &gt; 30</code> માં ભેગી કરી શકતા નથી. આપણને ૩૦ સાથે સરખાવવા માટેનું નવું <code>age</code> ત્યારે જ માન્ય બને છે જ્યારે નવી અવધિ કૌંસ વળાંકથી શરૂ થાય છે.</p>
 <p><code>if let</code> અભિવ્યક્તિઓ વાપરવાના ગેરલાભ એ છે કે કમ્પાઇલર સંપૂર્ણતા માટે તપાસ કરતો નથી, જ્યારે <code>match</code> અભિવ્યક્તિઓ સાથે તે કરે છે. જો આપણે અંતિમ <code>else</code> બ્લોકને અવગણ્યો હોત અને તેથી અમુક પરિસ્થિતિઓને હેન્ડલ કરવાનું ચૂકી ગયા હોત, તો કમ્પાઇલર સંભવિત તાર્કિક ભૂલ વિશે આપણને ચેતવણી ન કરતો હોત.</p>
-<h3 id="while-let-શરતી-લૂપસ"><a class="header" href="#while-let-શરતી-લૂપસ"><code>while let</code> શરતી લૂપ્સ</a></h3>
+<h3 id="while-let-conditional-loops"><a class="header" href="#while-let-conditional-loops"><code>while let</code> Conditional Loops</a></h3>
 <p><code>if let</code> ની રચના સમાન, <code>while let</code> શરતી લૂપ એક <code>while</code> લૂપને ચાલુ રાખવા માટે પરવાનગી આપે છે જ્યાં સુધી પેટર્ન મેળ ખાતી રહે. સૂચિ ૧૯-૪ માં, અમે એક <code>while let</code> લૂપ બતાવીએ છીએ જે થ્રેડ્સ વચ્ચે મોકલવામાં આવેલા સંદેશાઓની રાહ જુએ છે, પરંતુ આ કિસ્સામાં <code>Result</code> ની તપાસ કરે છે <code>Option</code> ની બદલે.</p>
 <listing number="19-4" caption="Using a `while let` loop to print values for as long as `rx.recv()` returns `Ok`">
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-04/src/main.rs:here}}
 </listing>
 આ ઉદાહરણ `1`, `2`, અને પછી `3` છાપે છે. `recv` પદ્ધતિ ચેનલની રીસીવર બાજુથી પ્રથમ સંદેશ લે છે અને `Ok(value)` પરત કરે છે. જ્યારે આપણે પ્રકરણ ૧૬ માં પહેલીવાર `recv` જોયો હતો, ત્યારે આપણે સીધો જ ભૂલને અનરેપ કરી હતી, અથવા આપણે એક `for` લૂપનો ઉપયોગ કરીને પુનરાવર્તક તરીકે તેની સાથે ક્રિયાપ્રતિક્રિયા કરી હતી. જો કે, સૂચિ ૧૯-૪ બતાવે છે તેમ, આપણે `while let` નો પણ ઉપયોગ કરી શકીએ છીએ, કારણ કે `recv` પદ્ધતિ દરેક વખતે સંદેશો આવે ત્યાં સુધી `Ok` પરત કરે છે, જ્યાં સુધી મોકલનાર અસ્તિત્વમાં હોય, અને પછી મોકલનાર બાજુ ડિસ્કનેક્ટ થાય ત્યારે `Err` ઉત્પન્ન કરે છે.
-<h3 id="for-લૂપસ"><a class="header" href="#for-લૂપસ"><code>for</code> લૂપ્સ</a></h3>
+<h3 id="for-loops"><a class="header" href="#for-loops"><code>for</code> Loops</a></h3>
 <p>એક <code>for</code> લૂપમાં, કીવર્ડ <code>for</code> પછી તરત આવતું મૂલ્ય એક પ્રકારનું રૂપ છે. ઉદાહરણ તરીકે, <code>for x in y</code> માં, <code>x</code> એ રૂપ છે. સૂચિ ૧૯-૫ દર્શાવે છે કે કેવી રીતે રૂપનો ઉપયોગ <code>for</code> લૂપમાં ટ્યૂપલને વિઘટિત કરવા, અથવા તો ભાગ પાડવા માટે કરી શકાય છે, જે <code>for</code> લૂપનો એક ભાગ છે.</p>
 <listing number="19-5" caption="Using a pattern in a `for` loop to destructure a tuple">
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-05/src/main.rs:here}}
@@ -254,7 +254,7 @@ The patterns in this <code>match</code> expression are the <code>None</code> and
 માહિતી ૧૯-૫ માં આપેલ કોડ નીચે મુજબ છાપશે:
 <p>{{#include ../listings/ch19-patterns-and-matching/listing-19-05/output.txt}}
 અમે <code>enumerate</code> પદ્ધતિનો ઉપયોગ કરીને એક iterator ને અનુકૂલિત કરીએ છીએ જેથી તે એક મૂલ્ય અને તે મૂલ્ય માટે અનુક્રમણિકા (index) ઉત્પન્ન કરે, જે ટ્યૂપલમાં મૂકવામાં આવે. પ્રથમ ઉત્પન્ન થયેલું મૂલ્ય <code>(0, 'a')</code> ટ્યૂપલ છે. જ્યારે આ મૂલ્યને <code>(index, value)</code> પેટર્ન સાથે મેળવવામાં આવે છે, ત્યારે index <code>0</code> હશે અને value <code>'a'</code> હશે, જે આઉટપુટની પ્રથમ રેખા છાપશે.</p>
-<h3 id="કારય-પરિમાણો"><a class="header" href="#કારય-પરિમાણો">કાર્ય પરિમાણો</a></h3>
+<h3 id="function-parameters"><a class="header" href="#function-parameters">Function Parameters</a></h3>
 <p>કાર્ય પરિમાણો પણ પેટર્ન હોઈ શકે છે. લિસ્ટિંગ ૧૯-૬ માં આપેલ કોડ, જે <code>foo</code> નામનું કાર્ય વ્યાખ્યાયિત કરે છે અને તે <code>x</code> નામના એક પરિમાણ ને <code>i32</code> પ્રકારનો સ્વીકારે છે, તે હવેથી પરિચિત લાગશે.</p>
 <listing number="19-6" caption="A function signature using patterns in the parameters">
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-06/src/main.rs:here}}

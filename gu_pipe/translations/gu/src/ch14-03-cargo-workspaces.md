@@ -1,10 +1,10 @@
-## Cargo વર્કસ્પેસ
+## Cargo Workspaces
 
 પ્રકરણ ૧૨ માં, આપણે એક પેકેજ બનાવ્યું હતું જેમાં બાઈનરી `crate` અને લાઈબ્રેરી `crate` બંનેનો સમાવેશ થતો હતો. જેમ જેમ તમારી યોજના આગળ વધે છે, તેમ તેમ તમને લાગી શકે છે કે લાઈબ્રેરી `crate` વધુ મોટી થતી જાય છે અને તમે તમારા પેકેજને વધુ ભાગોમાં વિભાજીત કરવા માંગો છો. Cargo એક એવી સુવિધા આપે છે જેને વર્કસ્પેસ કહેવાય છે, જે એકસાથે વિકસાવવામાં આવતા બહુવિધ સંબંધિત પેકેજોનું સંચાલન કરવામાં મદદ કરી શકે છે.
 
-### કાર્યસ્થળ બનાવવું
+### Creating a Workspace
 
-કાર્યસ્થળ એ પેકેજોનો સમૂહ છે જે સમાન `Cargo.lock` અને આઉટપુટ ડિરેક્ટરી વહેંચે છે. ચાલો આપણે કાર્યસ્થળનો ઉપયોગ કરીને એક પ્રોજેક્ટ બનાવીએ—આપણે સરળ કોડનો ઉપયોગ કરીશું જેથી આપણે કાર્યસ્થળની રચના પર ધ્યાન કેન્દ્રિત કરી શકીએ. કાર્યસ્થળને રચવાના ઘણાં વિવિધ માર્ગો છે, તેથી આપણે ફક્ત એક સામાન્ય રીત બતાવીશું. આપણી પાસે એક બાઈનરી અને બે લાયબ્રેરીઓ ધરાવતું કાર્યસ્થળ હશે. બાઈનરી, જે મુખ્ય કાર્યક્ષમતા પ્રદાન કરશે, તે બે લાયબ્રેરીઓ પર આધારિત રહેશે. એક લાયબ્રેરી `add_one` ફંક્શન પ્રદાન કરશે અને બીજી લાયબ્રેરી `add_two` ફંક્શન પ્રદાન કરશે. આ ત્રણ `crate` સમાન કાર્યસ્થળનો ભાગ હશે. આપણે નવા ડિરેક્ટરી બનાવીને શરૂઆત કરીશું:
+કાર્યસ્થળ એ પેકેજોનો સમૂહ છે જે સમાન `Cargo.lock` અને આઉટપુટ ડિરેક્ટરી વહેંચે છે. ચાલો આપણે કાર્યસ્થળનો ઉપયોગ કરીને એક પ્રોજેક્ટ બનાવીએ—આપણે સરળ કોડનો ઉપયોગ કરીશું જેથી આપણે કાર્યસ્થળની રચના પર ધ્યાન કેન્દ્રિત કરી શકીએ. કાર્યસ્થળને રચવાના ઘણાં વિવિધ માર્ગો છે, તેથી આપણે માત્ર એક સામાન્ય રીત બતાવીશું. આપણી પાસે એક બાઈનરી અને બે લાયબ્રેરીઓ ધરાવતું કાર્યસ્થળ હશે. બાઈનરી, જે મુખ્ય કાર્યક્ષમતા પ્રદાન કરશે, તે બે લાયબ્રેરીઓ પર આધારિત રહેશે. એક લાયબ્રેરી `add_one` ફંક્શન પ્રદાન કરશે અને બીજી લાયબ્રેરી `add_two` ફંક્શન પ્રદાન કરશે. આ ત્રણ `crate` સમાન કાર્યસ્થળનો ભાગ હશે. આપણે નવા ડિરેક્ટરી બનાવીને શરૂઆત કરીશું:
 
 $ mkdir add
 $ cd add
@@ -37,9 +37,9 @@ $ cargo new adder
 │   └── src
 │       └── main.rs
 └── target
-The workspace has one target directory at the top level that the compiled artifacts will be placed into; the `adder` package doesn’t have its own target directory. Even if we were to run `cargo build` from inside the adder directory, the compiled artifacts would still end up in add/target rather than add/adder/target . Cargo structures the target directory in a workspace like this because the crates in a workspace are meant to depend on each other. If each crate had its own target directory, each crate would have to recompile each of the other crates in the workspace to place the artifacts in its own target directory. By sharing one target directory, the crates can avoid unnecessary rebuilding. કાર્યસ્થળમાં એક લક્ષ્ય ડિરેક્ટરી ટોચના સ્તર પર હોય છે જેમાં કમ્પાઈલ કરેલા આર્ટિફેક્ટ્સ મૂકવામાં આવે છે; `adder` પેકેજની પોતાની લક્ષ્ય ડિરેક્ટરી નથી. ભલે આપણે `adder` ડિરેક્ટરીની અંદરથી `cargo build` ચલાવીએ, તો પણ કમ્પાઈલ કરેલા આર્ટિફેક્ટ્સ add/target માં જ આવશે, add/adder/target માં નહીં. કાર્ગો કાર્યસ્થળમાં લક્ષ્ય ડિરેક્ટરીને આ રીતે ગોઠવે છે કારણ કે વર્કસ્પેસમાં રહેલા ક્રેટ્સ એકબીજા પર આધાર રાખવા માટે બનાવાયેલા હોય છે. જો દરેક ક્રેટની પોતાની લક્ષ્ય ડિરેક્ટરી હોત, તો દરેક ક્રેટને વર્કસ્પેસમાંના અન્ય તમામ ક્રેટ્સને ફરીથી કમ્પાઈલ કરવા પડ્યા હોત જેથી આર્ટિફેક્ટ્સ તેની પોતાની લક્ષ્ય ડિરેક્ટરીમાં મૂકી શકાય. એક જ લક્ષ્ય ડિરેક્ટરી વહેંચીને, ક્રેટ્સ બિનજરૂરી પુનઃનિર્માણ ટાળી શકે છે.
+કાર્યસ્થળમાં એક લક્ષ્ય ડિરેક્ટરી ટોચના સ્તર પર હોય છે જેમાં કમ્પાઈલ કરેલા આર્ટિફેક્ટ્સ મૂકવામાં આવે છે; `adder` પેકેજની પોતાની લક્ષ્ય ડિરેક્ટરી નથી. ભલે આપણે `adder` ડિરેક્ટરીની અંદરથી `cargo build` ચલાવીએ, તો પણ કમ્પાઈલ કરેલા આર્ટિફેક્ટ્સ add/target માં જ આવશે, add/adder/target માં નહીં. કાર્ગો કાર્યસ્થળમાં લક્ષ્ય ડિરેક્ટરીને આ રીતે ગોઠવે છે કારણ કે વર્કસ્પેસમાં રહેલા ક્રેટ્સ એકબીજા પર આધાર રાખવા માટે બનાવાયેલા હોય છે. જો દરેક ક્રેટની પોતાની લક્ષ્ય ડિરેક્ટરી હોત, તો દરેક ક્રેટને વર્કસ્પેસમાંના અન્ય તમામ ક્રેટ્સને ફરીથી કમ્પાઈલ કરવા પડ્યા હોત જેથી આર્ટિફેક્ટ્સ તેની પોતાની લક્ષ્ય ડિરેક્ટરીમાં મૂકી શકાય. એક જ લક્ષ્ય ડિરેક્ટરી વહેંચીને, ક્રેટ્સ બિનજરૂરી પુનઃનિર્માણ ટાળી શકે છે.
 
-### કાર્યસ્થળમાં બીજું પેકેજ બનાવવું
+### Creating the Second Package in the Workspace
 
 હવે, કાર્યસ્થળમાં બીજા સભ્ય પેકેજનું નિર્માણ કરીએ અને તેને `add_one` નામ આપીએ. `add_one` નામની નવી લાયબ્રેરી ક્રેટ બનાવો:
 
@@ -71,7 +71,7 @@ $ cargo new add_one --lib
 │   └── src
 │       └── main.rs
 └── target
-In the `add_one/src/lib.rs` file, let’s add an `add_one` function: ફાઈલ `add_one/src/lib.rs` માં, ચાલો એક `add_one` વિધેય
+ફાઈલ `add_one/src/lib.rs` માં, ચાલો એક `add_one` વિધેય
 
 ઉમેરીએ: Filename: add_one/src/lib.rs
 
@@ -99,7 +99,7 @@ $ cargo build
    Compiling add_one v0.1.0 (file:///projects/add/add_one)
    Compiling adder v0.1.0 (file:///projects/add/adder)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.22s
-To run the binary crate from the add directory, we can specify which package in the workspace we want to run by using the `-p` argument and the package name with `cargo run` : આ બાઈનરી `crate` ને `add` ડિરેક્ટરીમાંથી ચલાવવા માટે, આપણે `-p` આર્ગ્યુમેન્ટ અને પેકેજ નામના ઉપયોગથી વર્કસ્પેસમાં કયું પેકેજ ચલાવવું છે તે સ્પષ્ટ કરી શકીએ છીએ: `cargo run`.
+આ બાઈનરી `crate` ને `add` ડિરેક્ટરીમાંથી ચલાવવા માટે, આપણે `-p` આર્ગ્યુમેન્ટ અને પેકેજ નામના ઉપયોગથી વર્કસ્પેસમાં કયું પેકેજ ચલાવવું છે તે સ્પષ્ટ કરી શકીએ છીએ: `cargo run`.
 
 <!-- manual-regeneration
 cd listings/ch14-more-about-cargo/listing-14-07/add
@@ -113,7 +113,7 @@ Hello, world! 10 plus one is 11!
 આ કોડ adder/src/main.rs માં ચલાવવામાં આવે છે, જે `add_one` ક્રેટ પર આધારિત છે.
 
 <!-- Old headings. Do not remove or links may break. -->
-### બાહ્ય પેકેજ પર આધાર રાખવો
+### Depending on an External Package
 
 ધ્યાન કરો કે વર્કસ્પેસમાં માત્ર એક જ Cargo.lock ફાઈલ ટોપ લેવલ પર છે, દરેક ક્રેટની ડિરેક્ટરીમાં નહીં. આ સુનિશ્ચિત કરે છે કે બધા ક્રેટ્સ તમામ નિર્ભરતાઓના સમાન સંસ્કરણનો ઉપયોગ કરી રહ્યા છે. જો આપણે `rand` પેકેજને adder/Cargo.toml અને add_one/Cargo.toml ફાઇલોમાં ઉમેરીએ, તો Cargo તે બંનેને `rand` ના એક સંસ્કરણમાં ઉકેલશે અને તેને એક જ Cargo.lock માં નોંધશે. વર્કસ્પેસના બધા ક્રેટ્સ સમાન નિર્ભરતાનો ઉપયોગ કરે છે એનો અર્થ થાય છે કે ક્રેટ્સ હંમેશા એકબીજા સાથે સુસંગત રહેશે. ચાલો `rand` ક્રેટને add_one/Cargo.toml ફાઇલના `[dependencies]` વિભાગમાં ઉમેરીએ જેથી આપણે `add_one` ક્રેટમાં `rand` ક્રેટનો ઉપયોગ કરી શકીએ:
 
@@ -122,7 +122,7 @@ Hello, world! 10 plus one is 11!
 * ch02-00-guessing-game-tutorial.md
 * ch07-04-bringing-paths-into-scope-with-the-use-keyword.md
 -->
-add_one/Cargo.toml આ `Cargo.toml` ફાઈલ એક `crate` માટે રૂપરેખાંકન માહિતી ધરાવે છે. આ રૂપરેખાંકનમાં `crate`નું નામ, સંસ્કરણ, લેખક અને અન્ય સંબંધિત વિગતો શામેલ છે જે `rustup` અને `cargo` જેવા સાધનો દ્વારા ઉપયોગમાં લેવાય છે. આ ફાઈલ `project`ના મૂળ ડિરેક્ટરીમાં સ્થિત હોવી જોઈએ. [package] name = "add_one" version = "0.1.0" authors = ["Your Name <your_email@example.com>"] edition = "2021" [dependencies]
+add_one/Cargo.toml આ `Cargo.toml` ફાઈલ એક `crate` માટે રૂપરેખાંકન માહિતી ધરાવે છે. આ રૂપરેખાંકનમાં `crate`નું નામ, સંસ્કરણ, લેખક અને અન્ય સંબંધિત વિગતો સમાવિષ્ટ છે જે `rustup` અને `cargo` જેવા સાધનો દ્વારા ઉપયોગમાં લેવાય છે. આ ફાઈલ `project`ના મૂળ ડિરેક્ટરીમાં સ્થિત હોવી જોઈએ. [package] name = "add_one" version = "0.1.0" authors = ["Your Name <your_email@example.com>"] edition = "2021" [dependencies]
 
 {{#include ../listings/ch14-more-about-cargo/no-listing-03-workspace-with-external-dependency/add/add_one/Cargo.toml:6:7}}
 હવે આપણે `use rand;` ને add_one/src/lib.rs ફાઈલમાં ઉમેરી શકીએ છીએ, અને `cargo build` આદેશ ચલાવીને સમગ્ર વર્કસ્પેસ બનાવવાથી `rand` ક્રેટે આયાત થશે અને સંકલિત થશે. આપણને એક ચેતવણી મળશે કારણ કે આપણે જે `rand` ને અવકાશમાં લાવ્યા છીએ તેનો ઉલ્લેખ નથી કરી રહ્યા:
@@ -168,7 +168,7 @@ error[E0432]: unresolved import `rand`
 
 જો વર્કસ્પેસમાં રહેલા ક્રેટે એક જ આધારિત પેકેજ (dependency) ના અસંગત સંસ્કરણોનો ઉલ્લેખ કરે છે, તો Cargo દરેકને ઉકેલવાનો પ્રયત્ન કરશે પરંતુ શક્ય હોય ત્યાં સુધી ઓછા સંસ્કરણોનો ઉપયોગ કરવાનો પ્રયાસ કરશે.
 
-### કાર્યક્ષેત્રમાં પરીક્ષણ ઉમેરવું
+### Adding a Test to a Workspace
 
 વધુ એક સુધારણા માટે, ચાલો `add_one::add_one` વિધેયનું પરીક્ષણ `add_one` ક્રેટમાં ઉમેરીએ:
 

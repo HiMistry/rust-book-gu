@@ -1,28 +1,28 @@
-## Appendix E: આવૃત્તિઓ
+## Appendix E: Editions
 
 પ્રકરણ ૧ માં, તમે જોયું કે `cargo new` તમારી Cargo.toml ફાઈલમાં આવૃત્તિ વિશે થોડું મેટાડેટા ઉમેરે છે. આ ખંડ સમજાવે છે કે એનો અર્થ શું થાય છે!
 
-Rust ભાષા અને compiler છ અઠવાડિયાના રિલીઝ ચક્ર ધરાવે છે, એટલે કે વપરાશકર્તાઓ સતત નવી સુવિધાઓ મેળવે છે. અન્ય પ્રોગ્રામિંગ ભાષાઓ મોટા ફેરફારો ઓછી વાર બહાર પાડે છે; Rust નાના અપડેટ્સ વધુ વાર બહાર પાડે છે. થોડા સમય પછી, આ બધા નાના ફેરફારોનો સરવાળો થાય છે. પરંતુ રિલીઝથી રિલીઝ સુધી, એવું કહેવું મુશ્કેલ બની શકે છે કે, “વાહ, Rust 1.10 અને Rust 1.31 ની વચ્ચે, Rust માં ઘણો બદલાવ આવ્યો છે!”
+Rust ભાષા અને compiler છ અઠવાડિયાના રિલીઝ ચક્ર ધરાવે છે, એટલે કે userઓ સતત નવી સુવિધાઓ મેળવે છે. અન્ય પ્રોગ્રામિંગ ભાષાઓ મોટા ફેરફારો ઓછી વાર બહાર પાડે છે; Rust નાના અપડેટ્સ વધુ વાર બહાર પાડે છે. થોડા સમય પછી, આ બધા નાના ફેરફારોનો સરવાળો થાય છે. પરંતુ રિલીઝથી રિલીઝ સુધી, એવું કહેવું મુશ્કેલ બની શકે છે કે, “વાહ, Rust 1.10 અને Rust 1.31 ની વચ્ચે, Rust માં ઘણો બદલાવ આવ્યો છે!”
 
-Every three years or so, the Rust team produces a new Rust edition . ત્રણ વર્ષોમાં એકવાર, Rust ટીમ નવું Rust આવૃત્તિ (edition) બહાર પાડે છે. દરેક આવૃત્તિ એવાં લક્ષણોને સ્પષ્ટ પેકેજ સાથે જોડે છે જેમાં સંપૂર્ણપણે અપડેટ કરેલું દસ્તાવેજીકરણ અને સાધનો હોય છે. નવા આવૃત્તિઓ સામાન્ય છ-અઠવાડિયાના પ્રકાશન પ્રક્રિયાનો ભાગ રૂપે બહાર આવે છે. Editions serve different purposes for different people: આવૃત્તિઓ જુદા જુદા લોકો માટે જુદા જુદા હેતુ પૂરા પાડે છે: For
+ત્રણ વર્ષોમાં એકવાર, Rust ટીમ નવું Rust આવૃત્તિ (edition) બહાર પાડે છે. દરેક આવૃત્તિ એવાં લક્ષણોને સ્પષ્ટ પેકેજ સાથે જોડે છે જેમાં સંપૂર્ણપણે અપડેટ કરેલું દસ્તાવેજીકરણ અને સાધનો હોય છે. નવા આવૃત્તિઓ સામાન્ય છ-અઠવાડિયાના પ્રકાશન પ્રક્રિયાનો ભાગ રૂપે બહાર આવે છે. Editions serve different purposes for different people: આવૃત્તિઓ જુદા જુદા લોકો માટે જુદા જુદા હેતુ પૂરા પાડે છે: For
 
 active Rust users, a new edition brings together incremental changes into an
 
-easy-to-understand package. સક્રિય Rust વપરાશકર્તાઓ માટે, નવું આવૃત્તિ ક્રમશઃ ફેરફારોને સમજવામાં સરળ પેકેજમાં એકત્રિત કરે છે. For non-users, a new edition signals that some major
+easy-to-understand package. સક્રિય Rust userઓ માટે, નવું આવૃત્તિ ક્રમશઃ ફેરફારોને સમજવામાં સરળ પેકેજમાં એકત્રિત કરે છે. For non-users, a new edition signals that some major
 
-advancements have landed, which might make Rust worth another look. બિન-વપરાશકર્તાઓ માટે, નવું આવૃત્તિ સૂચવે છે કે કેટલાક મોટા પ્રગતિઓ થઈ છે, જે Rust ને ફરીથી તપાસવા યોગ્ય બનાવી શકે છે.
+બિન-userઓ માટે, નવું આવૃત્તિ સૂચવે છે કે કેટલાક મોટા પ્રગતિઓ થઈ છે, જે Rust ને ફરીથી તપાસવા યોગ્ય બનાવી શકે છે.
 
 જેઓ Rust વિકસાવી રહ્યા છે તેમના માટે, નવું આવૃત્તિ સમગ્ર પ્રોજેક્ટ માટે એક મહોરું પૂરું પાડે છે.
 
-At the time of this writing, four Rust editions are available: Rust 2015, Rust 2018, Rust 2021, and Rust 2024. લેખનકાળ દરમિયાન, ચાર Rust આવૃત્તિઓ ઉપલબ્ધ છે: Rust 2015, Rust 2018, Rust 2021 અને
+લેખનકાળ દરમિયાન, ચાર Rust આવૃત્તિઓ ઉપલબ્ધ છે: Rust 2015, Rust 2018, Rust 2021 અને
 
 Rust 2024. આ પુસ્તક Rust 2024 આવૃત્તિના રૂઢિપ્રયોગોનો ઉપયોગ કરીને લખાયું છે. The `edition` કી Cargo.toml માં દર્શાવે છે કે કમ્પાઇલર તમારા કોડ માટે કઈ આવૃત્તિનો ઉપયોગ કરવો જોઈએ. જો કી અસ્તિત્વમાં ન હોય, તો Rust
 
 પૂર્વ સુસંગતતાનાં કારણોસર `2015` ને આવૃત્તિ મૂલ્ય તરીકે વાપરે છે. દરેક પ્રોજેક્ટ ડિફૉલ્ટ 2015 આવૃત્તિ સિવાય અન્ય આવૃત્તિ પસંદ કરી શકે છે. આવૃત્તિઓમાં અસંગત ફેરફારો હોઈ શકે છે, જેમ કે નવું કીવર્ડ ઉમેરવું જે કોડમાં ઓળખકર્તાઓ સાથે સંઘર્ષ કરે છે. જો કે, જ્યાં સુધી તમે તે ફેરફારોને સ્વીકારતા નથી, ત્યાં સુધી તમે Rust કમ્પાઇલર વર્ઝનને અપગ્રેડ કરો છો છતાં પણ તમારો કોડ ચાલુ રહેશે.
 
-All Rust compiler versions support any edition that existed prior to that compiler’s release, and they can link crates of any supported editions together. Edition changes only affect the way the compiler initially parses code. Therefore, if you’re using Rust 2015 and one of your dependencies uses Rust 2018, your project will compile and be able to use that dependency. The opposite situation, where your project uses Rust 2018 and a dependency uses Rust 2015, works as well. બધી જ Rust કમ્પાઇલર આવૃત્તિઓ તે કમ્પાઇલરના પ્રકાશન પહેલાં અસ્તિત્વમાં રહેલા કોઈપણ એડિશનને સમર્થન આપે છે, અને તેઓ કોઈપણ સમર્થિત એડિશનના crate ને એકસાથે જોડી શકે છે. એડિશનમાં થતા ફેરફારો ફક્ત કમ્પાઇલર દ્વારા કોડની પ્રારંભિક વિશ્લેષણ કરવાની રીતને અસર કરે છે. તેથી, જો તમે Rust 2015 નો ઉપયોગ કરી રહ્યા છો અને તમારી નિર્ભરતાઓમાં (dependencies) થી એક Rust 2018 નો ઉપયોગ કરે છે, તો તમારો પ્રોજેક્ટ કમ્પાઇલ થશે અને તે નિર્ભરતાનો ઉપયોગ કરી શકશે. વિપરીત પરિસ્થિતિ, જ્યાં તમારો પ્રોજેક્ટ
+બધી જ Rust કમ્પાઇલર આવૃત્તિઓ તે કમ્પાઇલરના પ્રકાશન પહેલાં અસ્તિત્વમાં રહેલા કોઈપણ એડિશનને સમર્થન આપે છે, અને તેઓ કોઈપણ સમર્થિત એડિશનના crate ને એકસાથે જોડી શકે છે. એડિશનમાં થતા ફેરફારો માત્ર કમ્પાઇલર દ્વારા કોડની પ્રારંભિક વિશ્લેષણ કરવાની રીતને અસર કરે છે. તેથી, જો તમે Rust 2015 નો ઉપયોગ કરી રહ્યા છો અને તમારી નિર્ભરતાઓમાં (dependencies) થી એક Rust 2018 નો ઉપયોગ કરે છે, તો તમારો પ્રોજેક્ટ કમ્પાઇલ થશે અને તે નિર્ભરતાનો ઉપયોગ કરી શકશે. વિપરીત પરિસ્થિતિ, જ્યાં તમારો પ્રોજેક્ટ
 
-Rust 2018 નો ઉપયોગ કરે છે અને નિર્ભરતા Rust 2015 નો ઉપયોગ કરે છે, તે પણ કામ કરે છે. To be clear: Most features will be available on all editions. Developers using any Rust edition will continue to see improvements as new stable releases are made. However, in some cases, mainly when new keywords are added, some new features might only be available in later editions. You will need to switch editions if you want to take advantage of such features. સ્પષ્ટ કરવા માટે: મોટાભાગની વિશેષતાઓ (features) તમામ એડિશન પર ઉપલબ્ધ રહેશે. કોઈપણ Rust એડિશનનો ઉપયોગ કરતા વિકાસકર્તાઓને નવા સ્થિર પ્રકાશન સાથે સુધારાઓ દેખાશે. જો કે, અમુક કિસ્સાઓમાં, મુખ્યત્વે જ્યારે નવી કીવર્ડ્સ ઉમેરવામાં આવે છે, ત્યારે કેટલીક નવી વિશેષતાઓ ફક્ત પાછળની એડિશનમાં જ ઉપલબ્ધ
+Rust 2018 નો ઉપયોગ કરે છે અને નિર્ભરતા Rust 2015 નો ઉપયોગ કરે છે, તે પણ કામ કરે છે. To be clear: Most features will be available on all editions. Developers using any Rust edition will continue to see improvements as new stable releases are made. However, in some cases, mainly when new keywords are added, some new features might only be available in later editions. You will need to switch editions if you want to take advantage of such features. સ્પષ્ટ કરવા માટે: મોટાભાગની વિશેષતાઓ (features) તમામ એડિશન પર ઉપલબ્ધ રહેશે. કોઈપણ Rust એડિશનનો ઉપયોગ કરતા વિકાસકર્તાઓને નવા સ્થિર પ્રકાશન સાથે સુધારાઓ દેખાશે. જો કે, અમુક કિસ્સાઓમાં, મુખ્યત્વે જ્યારે નવી કીવર્ડ્સ ઉમેરવામાં આવે છે, ત્યારે કેટલીક નવી વિશેષતાઓ માત્ર પાછળની એડિશનમાં જ ઉપલબ્ધ
 
 વધુ વિગતો માટે, ધ રસ્ટ એડિશન ગાઈડ જુઓ. આ એક સંપૂર્ણ પુસ્તક છે જે આવૃત્તિઓ વચ્ચેના તફાવતોની યાદી આપે છે અને સમજાવે છે કે `cargo fix` દ્વારા તમારી કોડને નવી આવૃત્તિમાં આપોઆપ કેવી રીતે અપગ્રેડ કરવી.
 

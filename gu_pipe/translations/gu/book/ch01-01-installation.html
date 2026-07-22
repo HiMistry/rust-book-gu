@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-7ed1a93d.js";
+            window.path_to_searchindex_js = "searchindex-55c5f58b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -182,30 +182,30 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="સથાપન"><a class="header" href="#સથાપન">સ્થાપન</a></h2>
+                        <h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
 <p>પ્રથમ પગલું એ Rustનું સ્થાપન કરવાનું છે. આપણે <code>rustup</code> દ્વારા Rust ડાઉનલોડ કરીશું, જે Rust આવૃત્તિઓ અને સંલગ્ન સાધનોનું વ્યવસ્થાપન કરવા માટેનું એક કમાન્ડ લાઇન સાધન છે. ડાઉનલોડ માટે તમારે ઇન્ટરનેટ જોડાણની જરૂર પડશે.</p>
 <p>નોંધ: જો તમે કોઈ કારણસર <code>rustup</code> વાપરવાનું પસંદ ન કરો, તો વધુ વિકલ્પો માટે કૃપા કરીને અન્ય Rust સ્થાપન પદ્ધતિઓ પાનાં જુઓ.</p>
 <p>નીચેના પગલાં Rust કમ્પાઇલરનું નવીનતમ સ્થિર સંસ્કરણ સ્થાપિત કરે છે. Rustની સ્થિરતા ખાતરીઓ સુનિશ્ચિત કરે છે કે પુસ્તકમાં આપેલા તમામ ઉદાહરણો જે કમ્પાઇલ થાય છે, તે નવા Rust સંસ્કરણો સાથે પણ કમ્પાઇલ થતા રહેશે. આઉટપુટ સંસ્કરણો વચ્ચે થોડું અલગ હોઈ શકે છે કારણ કે Rust ઘણીવાર ભૂલ સંદેશાઓ અને ચેતવણીઓમાં સુધારો કરે છે. બીજા શબ્દોમાં કહીએ તો, તમે આ પગલાંઓનો ઉપયોગ કરીને સ્થાપિત કરેલ Rustનું કોઈપણ નવું, સ્થિર સંસ્કરણ આ પુસ્તકની સામગ્રી સાથે અપેક્ષા મુજબ કાર્ય કરશે.</p>
-<h3 id="આદેશ-વાકય-વિધિ"><a class="header" href="#આદેશ-વાકય-વિધિ">આદેશ વાક્ય વિધિ</a></h3>
+<h3 id="installing-rustup-on-linux-or-macos"><a class="header" href="#installing-rustup-on-linux-or-macos">Installing <code>rustup</code> on Linux or macOS</a></h3>
 <p>આ પ્રકરણમાં અને સમગ્ર પુસ્તકમાં, અમે ટર્મિનલમાં વપરાતા કેટલાક આદેશો દર્શાવીશું. જે લીટીઓ તમારે ટર્મિનલમાં દાખલ કરવાની છે તે <code>$</code> થી શરૂ થાય છે. તમારે <code>$</code> અક્ષર ટાઇપ કરવાની જરૂર નથી; તે દરેક આદેશની શરૂઆત દર્શાવવા માટે વપરાતો આદેશ વાક્ય સંકેત છે. <code>$</code> થી શરૂ ન થતી લીટીઓ સામાન્ય રીતે પાછલા આદેશનું પરિણામ દર્શાવે છે. વધુમાં, PowerShell-વિશિષ્ટ ઉદાહરણો <code>&gt;</code> નો ઉપયોગ કરશે, <code>$</code> ને બદલે.</p>
-<h3 id="rustup-લિનકસ-અથવા-macos-પર-સથાપિત-કરવું"><a class="header" href="#rustup-લિનકસ-અથવા-macos-પર-સથાપિત-કરવું"><code>rustup</code> લિનક્સ અથવા macOS પર સ્થાપિત કરવું</a></h3>
+<h3 id="installing-rustup-on-windows"><a class="header" href="#installing-rustup-on-windows">Installing <code>rustup</code> on Windows</a></h3>
 <p>જો તમે લિનક્સ અથવા macOS વાપરી રહ્યા છો, તો એક ટર્મિનલ ખોલો અને નીચેનો આદેશ દાખલ કરો:</p>
 <p>$ curl –proto ‘=https’ –tlsv1.2 https://sh.rustup.rs -sSf | sh
 આદેશ આ આદેશ એક સ્ક્રિપ્ટ ડાઉનલોડ કરે છે અને <code>rustup</code> સાધનનું સ્થાપન આરંભ કરે છે, જે Rust નું નવીનતમ સ્થિર સંસ્કરણ સ્થાપિત કરે છે. તમને તમારા પાસવર્ડ માટે પૂછવામાં આવી શકે છે. જો સ્થાપન સફળ થાય, તો નીચેની લીટી દેખાશે:</p>
 <p>Rust is installed now. Great!
-તમે એક લિંકર પણ જરૂર પડશે, જે એક એવું કાર્યક્રમ છે કે જે Rust તેના સંકલિત પરિણામોને એક ફાઈલમાં જોડવા માટે વાપરે છે. સંભવતઃ તમારી પાસે તે પહેલાંથી જ હશે. જો તમને લિંકર ભૂલો આવે, તો તમારે C કમ્પાઇલર સ્થાપિત કરવું જોઈએ, જેમાં સામાન્ય રીતે લિંકર શામેલ હોય છે. C કમ્પાઇલર એ પણ ઉપયોગી છે કારણ કે કેટલાક સામાન્ય Rust પેકેજો C કોડ પર આધાર રાખે છે અને તેને C કમ્પાઇલરની જરૂર પડશે.</p>
+તમે એક લિંકર પણ જરૂર પડશે, જે એક એવું કાર્યક્રમ છે કે જે Rust તેના સંકલિત પરિણામોને એક ફાઈલમાં જોડવા માટે વાપરે છે. સંભવતઃ તમારી પાસે તે પહેલાંથી જ હશે. જો તમને લિંકર ભૂલો આવે, તો તમારે C કમ્પાઇલર સ્થાપિત કરવું જોઈએ, જેમાં સામાન્ય રીતે લિંકર સમાવિષ્ટ હોય છે. C કમ્પાઇલર એ પણ ઉપયોગી છે કારણ કે કેટલાક સામાન્ય Rust પેકેજો C કોડ પર આધાર રાખે છે અને તેને C કમ્પાઇલરની જરૂર પડશે.</p>
 <p>macOS પર, તમે આ કમાન્ડ ચલાવીને C કમ્પાઇલર મેળવી શકો છો:</p>
 <p>$ xcode-select –install
-Linux વપરાશકર્તાઓ સામાન્ય રીતે તેમના વિતરણની દસ્તાવેજીકરણ અનુસાર GCC અથવા Clang સ્થાપિત કરે છે. ઉદાહરણ તરીકે, જો તમે Ubuntu વાપરતા હોવ, તો તમે <code>build-essential</code> પેકેજ સ્થાપિત કરી શકો છો.</p>
-<h3 id="installing-rustup-on-windows"><a class="header" href="#installing-rustup-on-windows">Installing <code>rustup</code> on Windows</a></h3>
+Linux userઓ સામાન્ય રીતે તેમના વિતરણની દસ્તાવેજીકરણ અનુસાર GCC અથવા Clang સ્થાપિત કરે છે. ઉદાહરણ તરીકે, જો તમે Ubuntu વાપરતા હોવ, તો તમે <code>build-essential</code> પેકેજ સ્થાપિત કરી શકો છો.</p>
+<h3 id="troubleshooting"><a class="header" href="#troubleshooting">Troubleshooting</a></h3>
 <p>Windows પર, https://www.rust-lang.org/tools/install ની મુલાકાત લો અને Rust સ્થાપિત કરવા માટેની સૂચનાઓ અનુસરો. સ્થાપન પ્રક્રિયા દરમિયાન, તમને Visual Studio સ્થાપિત કરવાનું કહેવામાં આવશે. આ એક લિંકર અને પ્રોગ્રામ્સ કમ્પાઇલ કરવા માટે જરૂરી મૂળ લાઇબ્રેરીઓ પૂરી પાડે છે. જો તમને આ પગલામાં વધુ મદદની જરૂર હોય, તો https://rust-lang.github.io/rustup/installation/windows-msvc.html જુઓ.</p>
 <p>આ પુસ્તકના બાકીના ભાગમાં એવા આદેશોનો ઉપયોગ કરવામાં આવશે જે cmd.exe અને PowerShell બંનેમાં કાર્ય કરે છે. જો કોઈ ચોક્કસ તફાવત હોય, તો અમે કયો ઉપયોગ કરવો તે સમજાવીશું.</p>
-<h3 id="મુશકેલીનિવારણ"><a class="header" href="#મુશકેલીનિવારણ">મુશ્કેલીનિવારણ</a></h3>
+<h3 id="updating-and-uninstalling"><a class="header" href="#updating-and-uninstalling">Updating and Uninstalling</a></h3>
 <p>ચકાસવા માટે કે તમે યોગ્ય રીતે Rust સ્થાપિત કર્યું છે કે નહીં, એક શેલ ખોલો અને આ લીટી દાખલ કરો:</p>
 <p>$ rustc –version
 તમે નવીનતમ સ્થિર આવૃત્તિ માટે સંસ્કરણ નંબર, કમિટ હેશ અને કમિટ તિથિ જોશો, જે નીચેના ફોર્મેટમાં હશે:</p>
 <p>rustc x.y.z (abcabcabc yyyy-mm-dd)
-જો તમે આ માહિતી જુઓ છો, તો તમે સફળતાપૂર્વક Rust સ્થાપિત કર્યું છે! જો તમે આ માહિતી ન જુઓ, તો તપાસો કે Rust તમારા <code>%PATH%</code> સિસ્ટમ ચલ માં નીચે મુજબ છે.</p>
+જો તમે આ માહિતી જુઓ છો, તો તમે સફળતાપૂર્વક Rust સ્થાપિત કર્યું છે! જો તમે આ માહિતી ન જુઓ, તો તપાસો કે Rust તમારા <code>%PATH%</code> સિસ્ટમ variable માં નીચે મુજબ છે.</p>
 <p>Windows CMD માં, ઉપયોગ કરો:</p>
 <blockquote>
 <p>echo %PATH%
@@ -217,19 +217,19 @@ Linux વપરાશકર્તાઓ સામાન્ય રીતે ત�
 </blockquote>
 <p>$ echo $PATH
 જો આ બધું યોગ્ય હોય અને Rust હજી કાર્યરત ન થાય, તો મદદ મેળવવા માટે ઘણા સ્થળો છે. સમુદાય પાના પર અન્ય Rustaceans (અમે આપણીને કહીએ છીએ એ એક મૂર્ખ નામ) નો સંપર્ક કેવી રીતે કરવો તે જાણો.</p>
-<h3 id="અપડેટ-અને-અનઇનસટોલ-કરવું"><a class="header" href="#અપડેટ-અને-અનઇનસટોલ-કરવું">અપડેટ અને અનઇન્સ્ટોલ કરવું</a></h3>
+<h3 id="reading-the-local-documentation"><a class="header" href="#reading-the-local-documentation">Reading the Local Documentation</a></h3>
 <p>એકવાર Rust <code>rustup</code> દ્વારા સ્થાપિત થઈ જાય પછી, નવું પ્રકાશિત થયેલ સંસ્કરણમાં અપડેટ કરવું સરળ છે. તમારા શેલમાંથી, નીચેની અપડેટ સ્ક્રિપ્ટ ચલાવો:</p>
 <p>$ rustup update
 Rust અને <code>rustup</code> ને અનિન્સ્ટોલ કરવા માટે તમારા શેલમાંથી નીચેની અનિન્સ્ટોલ સ્ક્રિપ્ટ ચલાવો:</p>
 <p>$ rustup self uninstall</p>
 <!-- Old headings. Do not remove or links may break. -->
-<h3 id="reading-the-local-documentation"><a class="header" href="#reading-the-local-documentation">Reading the Local Documentation</a></h3>
+<h3 id="using-text-editors-and-ides"><a class="header" href="#using-text-editors-and-ides">Using Text Editors and IDEs</a></h3>
 <p>Rustનું સ્થાપન સ્થાનિક દસ્તાવેજનો નકલ પણ સામેલ કરે છે, જેથી તમે તેને ઓફલાઈન વાંચી શકો. સ્થાનિક દસ્તાવેજ તમારા બ્રાઉઝરમાં ખોલવા માટે <code>rustup doc</code> ચલાવો. કોઈપણ સમયે જ્યારે કોઈ પ્રકાર</p>
 <p>અથવા કાર્ય પ્રમાણિત લાયબ્રેરી દ્વારા આપવામાં આવે અને તમને ખબર ન હોય કે તે શું કરે છે અથવા તેનો ઉપયોગ કેવી રીતે કરવો, તો જાણવા માટે એપ્લિકેશન પ્રોગ્રામિંગ ઈન્ટરફેસ (API) દસ્તાવેજનો ઉપયોગ કરો!</p>
 <!-- Old headings. Do not remove or links may break. -->
-<h3 id="using-text-editors-and-ides"><a class="header" href="#using-text-editors-and-ides">Using Text Editors and IDEs</a></h3>
-<p>આ પુસ્તક એવું ધારી લેતું નથી કે તમે Rust કોડ લખવા માટે કયા સાધનો વાપરો છો. લગભગ કોઈપણ ટેક્સ્ટ એડિટર કામ કરી શકે છે! જોકે, ઘણાં ટેક્સ્ટ એડિટર્સ અને સંકલિત વિકાસ પર્યાવરણો (IDEs) માં Rust માટે બનેલું સમર્થન હોય છે. તમે હંમેશા Rust વેબસાઇટ પરના સાધનો પાનાં પર ઘણા એડિટર્સ અને IDEsની પ્રમાણમાં અદ્યતન યાદી શોધી શકો છો.</p>
 <h3 id="working-offline-with-this-book"><a class="header" href="#working-offline-with-this-book">Working Offline with This Book</a></h3>
+<p>આ પુસ્તક એવું ધારી લેતું નથી કે તમે Rust કોડ લખવા માટે કયા સાધનો વાપરો છો. લગભગ કોઈપણ ટેક્સ્ટ એડિટર કામ કરી શકે છે! જોકે, ઘણાં ટેક્સ્ટ એડિટર્સ અને સંકલિત વિકાસ પર્યાવરણો (IDEs) માં Rust માટે બનેલું સમર્થન હોય છે. તમે હંમેશા Rust વેબસાઇટ પરના સાધનો પાનાં પર ઘણા એડિટર્સ અને IDEsની પ્રમાણમાં અદ્યતન યાદી શોધી શકો છો.</p>
+<h3 id="working-offline-with-this-book-1"><a class="header" href="#working-offline-with-this-book-1">Working Offline with This Book</a></h3>
 <p>ઘણી ઉદાહરણોમાં, અમે સ્ટાન્ડર્ડ લાઈબ્રેરીથી આગળના Rust પેકેજોનો ઉપયોગ કરીશું. તે ઉદાહરણો દ્વારા કાર્યરત થવા માટે, તમારે ઇન્ટરનેટ કનેક્શનની જરૂર પડશે અથવા તો નિર્ભારીતાઓને અગાઉથી ડાઉનલોડ કરવાની રહેશે. નિર્ભારીતાઓને અગાઉથી ડાઉનલોડ કરવા માટે, તમે નીચેના આદેશો ચલાવી શકો છો. (અમે <code>cargo</code> શું છે અને આ દરેક આદેશો શું કરે છે તે પછીથી વિગતવાર સમજાવીશું.)</p>
 <p>$ cargo new get-dependencies
 $ cd get-dependencies

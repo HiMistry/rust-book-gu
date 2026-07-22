@@ -15,7 +15,7 @@
 </Listing>
 As our starting point, we set up our `main` function with `trpl::block_on` so that our top-level function can be async. શરૂઆત તરીકે,
 
-આપણે આપણું `main` વિધેય `trpl::block_on` સાથે ગોઠવીએ છીએ જેથી આપણું ઉચ્ચ સ્તરનું વિધેય અસિંક (async) બની શકે. નોંધ: આ પ્રકરણમાં હવેથી દરેક ઉદાહરણમાં આ ચોક્કસ આવરણ કોડ `trpl::block_on` સાથે `main` માં શામેલ હશે, તેથી આપણે ઘણીવાર તેને છોડી દઈશું જેમ કે આપણે `main` સાથે
+આપણે આપણું `main` વિધેય `trpl::block_on` સાથે ગોઠવીએ છીએ જેથી આપણું ઉચ્ચ સ્તરનું વિધેય અસિંક (async) બની શકે. નોંધ: આ પ્રકરણમાં હવેથી દરેક ઉદાહરણમાં આ ચોક્કસ આવરણ કોડ `trpl::block_on` સાથે `main` માં સમાવિષ્ટ હશે, તેથી આપણે ઘણીવાર તેને છોડી દઈશું જેમ કે આપણે `main` સાથે
 
 કરીએ છીએ. તમારા કોડમાં તેને ઉમેરવાનું યાદ રાખો! પછી આપણે તે બ્લોકમાં બે લૂપ્સ લખીએ છીએ, જેમાં દરેક `trpl::sleep` કૉલ હોય છે, જે આગામી સંદેશ મોકલતા પહેલા અડધો સેકન્ડ (500 મિલીસેકન્ડ) રાહ જુએ છે. આપણે એક લૂપને `trpl::spawn_task` ના શરીરમાં મૂકીએ છીએ અને બીજાને ટોપ-લેવલ `for` લૂપમાં મૂકીએ છીએ. આપણે `sleep` કૉલ્સ પછી `await` પણ ઉમેરીએ છીએ.
 
@@ -98,18 +98,18 @@ hi number 9 from the first task!
 <!-- Old headings. Do not remove or links may break. -->
 ### Sending Data Between Two Tasks Using Message Passing
 
-ભવિષ્ય વચ્ચે માહિતી વહેંચવી એ પણ પરિચિત હશે: આપણે ફરીથી સંદેશા મોકલવાની પદ્ધતિનો ઉપયોગ કરીશું, પરંતુ આ વખતે પ્રકારો (types) અને વિધેયો (functions) ના અસમકાલીન (async) સંસ્કરણો સાથે. આપણે "થ્રેડ્સ વચ્ચે સંદેશા મોકલીને ડેટા ટ્રાન્સફર કરવો" પ્રકરણ ૧૬ ના વિભાગમાં જેટલો અલગ માર્ગ લીધો હતો, તેનાથી થોડો અલગ માર્ગ લઈશું, જેથી થ્રેડ-આધારિત અને ફ્યુચર્સ-આધારિત એકરૂપતા (concurrency) વચ્ચેના મુખ્ય તફાવતો દર્શાવી શકાય. લિસ્ટિંગ ૧૭-૯ માં, આપણે ફક્ત એક જ અસમકાલીન બ્લોકથી શરૂઆત કરીશું— અલગ કાર્ય (task) શરૂ કર્યા વિના, જેમ કે આપણે પહેલાં એક અલગ થ્રેડ શરૂ કર્યો હતો.
+ભવિષ્ય વચ્ચે માહિતી વહેંચવી એ પણ પરિચિત હશે: આપણે ફરીથી સંદેશા મોકલવાની પદ્ધતિનો ઉપયોગ કરીશું, પરંતુ આ વખતે પ્રકારો (types) અને વિધેયો (functions) ના અસમકાલીન (async) સંસ્કરણો સાથે. આપણે "થ્રેડ્સ વચ્ચે સંદેશા મોકલીને ડેટા ટ્રાન્સફર કરવો" પ્રકરણ ૧૬ ના વિભાગમાં જેટલો અલગ માર્ગ લીધો હતો, તેનાથી થોડો અલગ માર્ગ લઈશું, જેથી થ્રેડ-આધારિત અને ફ્યુચર્સ-આધારિત એકરૂપતા (concurrency) વચ્ચેના મુખ્ય તફાવતો દર્શાવી શકાય. લિસ્ટિંગ ૧૭-૯ માં, આપણે માત્ર એક જ અસમકાલીન બ્લોકથી શરૂઆત કરીશું— અલગ કાર્ય (task) શરૂ કર્યા વિના, જેમ કે આપણે પહેલાં એક અલગ થ્રેડ શરૂ કર્યો હતો.
 
 <Listing number="17-9" caption="Creating an async channel and assigning the two halves to `tx` and `rx`" file-name="src/main.rs">
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-09/src/main.rs:channel}}
 </Listing>
-અહીં, આપણે `trpl::channel` નો ઉપયોગ કરીએ છીએ, જે બહુવિધ ઉત્પાદક અને એકલ ગ્રાહક ચેનલ API નું અસિંક્રૉનસ સંસ્કરણ છે જેનો આપણે પ્રકરણ ૧૬ માં થ્રેડો સાથે ઉપયોગ કર્યો હતો. API નું અસિંક્રૉનસ સંસ્કરણ થ્રેડ-આધારિત સંસ્કરણ કરતાં થોડું અલગ છે: તે અમૂટ (mutable) રીસીવર `rx` નો ઉપયોગ કરે છે, બદલે અવિભાજ્ય (immutable) રીસીવરનો, અને તેની `recv` પદ્ધતિ સીધી કિંમત ઉત્પન્ન કરવાને બદલે એક ફ્યુચર ઉત્પન્ન કરે છે જેને આપણે રાહ જોવાની જરૂર છે. હવે આપણે પ્રેષકથી ગ્રાહક સુધી સંદેશાઓ મોકલી શકીએ છીએ. નોંધ કરો કે આપણે અલગ થ્રેડ અથવા કાર્ય શરૂ કરવાની જરૂર નથી; આપણે ફક્ત `rx.recv` કૉલની રાહ જોવાની જરૂર છે.
+અહીં, આપણે `trpl::channel` નો ઉપયોગ કરીએ છીએ, જે બહુવિધ ઉત્પાદક અને એકલ ગ્રાહક ચેનલ API નું અસિંક્રૉનસ સંસ્કરણ છે જેનો આપણે પ્રકરણ ૧૬ માં થ્રેડો સાથે ઉપયોગ કર્યો હતો. API નું અસિંક્રૉનસ સંસ્કરણ થ્રેડ-આધારિત સંસ્કરણ કરતાં થોડું અલગ છે: તે અમૂટ (mutable) રીસીવર `rx` નો ઉપયોગ કરે છે, બદલે અવિભાજ્ય (immutable) રીસીવરનો, અને તેની `recv` પદ્ધતિ સીધી કિંમત ઉત્પન્ન કરવાને બદલે એક ફ્યુચર ઉત્પન્ન કરે છે જેને આપણે રાહ જોવાની જરૂર છે. હવે આપણે પ્રેષકથી ગ્રાહક સુધી સંદેશાઓ મોકલી શકીએ છીએ. નોંધ કરો કે આપણે અલગ થ્રેડ અથવા કાર્ય શરૂ કરવાની જરૂર નથી; આપણે માત્ર `rx.recv` કૉલની રાહ જોવાની જરૂર છે.
 
 The synchronous `Receiver::recv` method in `std::mpsc::channel` blocks until it receives a message. The `trpl::Receiver::recv` method does not, because it is async. Instead of blocking, it hands control back to the runtime until either a message is received or the send side of the channel closes. By contrast, we don’t await the `send` call, because it doesn’t block. It doesn’t need to, because the channel we’re sending it into is unbounded.
 
 Note: Because all of this async code runs in an async block in a `trpl::block_on` call, everything within it can avoid blocking. However, the code outside it will block on the `block_on` function returning. That’s the whole point of the `trpl::block_on` function: it lets you choose where to block on some set of async code, and thus where to transition between sync and async code.
 
-Notice two things about this example. First, the message will arrive right away. Second, although we use a future here, there’s no concurrency yet. Everything in the listing happens in sequence, just as it would if there were no futures involved. આ ઉદાહરણમાં બે બાબતો ધ્યાન આપવા જેવી છે. પ્રથમ, સંદેશ તરત જ પહોંચશે. બીજું, ભલે આપણે અહીં future નો ઉપયોગ કરીએ છીએ, પરંતુ હજુ concurrency નથી.
+આ ઉદાહરણમાં બે બાબતો ધ્યાન આપવા જેવી છે. પ્રથમ, સંદેશ તરત જ પહોંચશે. બીજું, ભલે આપણે અહીં future નો ઉપયોગ કરીએ છીએ, પરંતુ હજુ concurrency નથી.
 
 યાદીમાં બધું ક્રમશઃ જ બનશે, જેમ કે જો futures સામેલ ન હોય તો થાત. ચાલો પ્રથમ ભાગને સંબોધિત કરીએ સંદેશોની શ્રેણી મોકલીને અને તેમની વચ્ચે થોડો સમય આરામ કરીને, જે Listing 17-10 માં દર્શાવેલ છે.
 
@@ -133,7 +133,7 @@ The `rx.recv` Call `rx.recv` આદેશ એક ફ્યુચર ઉત્પ
 
 લિસ્ટિંગ 17-10 માં માત્ર એક જ async બ્લોક છે, તેથી તેમાં બધું જ રેખીય રીતે ચાલે છે. હજી પણ કોઈ સમન્વય (concurrency) નથી. બધા `tx.send` કૉલ્સ થાય છે, ત્યારબાદ બધા `trpl::sleep` કૉલ્સ અને તેમના સંલગ્ન અપેક્ષા બિંદુઓ (await points). ત્યારબાદ જ `while let` લૂપ `recv` કૉલ્સ પરના કોઈપણ `await` બિંદુઓમાંથી પસાર થઈ શકે છે.
 
-આપણે જે વર્તન જોઈએ છે, જ્યાં દરેક સંદેશ વચ્ચે વિરામ આવે છે, તેના માટે આપણે `tx` અને `rx` ક્રિયાઓ તેમના પોતાના async બ્લોક્સમાં મૂકવાની જરૂર છે, જે Listing 17-11 માં દર્શાવેલ છે. પછી રનટાઈમ `trpl::join` નો ઉપયોગ કરીને દરેકને અલગથી ચલાવી શકે છે, બરાબર જેમ Listing 17-8 માં હતું. ફરીથી, આપણે `trpl::join` બોલાવવાનો પરિણામ આતુરતાથી જોવાની જરૂર છે, વ્યક્તિગત ફ્યુચર્સ નહીં. જો આપણે વ્યક્તિગત ફ્યુચર્સ ક્રમમાં આતુરતાથી જોયું તો આપણે ફક્ત સિક્વન્સિયલ પ્રવાહમાં પાછા આવી જઈશું—બરાબર જે કરવાનું આપણે નથી ઈચ્છતા.
+આપણે જે વર્તન જોઈએ છે, જ્યાં દરેક સંદેશ વચ્ચે વિરામ આવે છે, તેના માટે આપણે `tx` અને `rx` ક્રિયાઓ તેમના પોતાના async બ્લોક્સમાં મૂકવાની જરૂર છે, જે Listing 17-11 માં દર્શાવેલ છે. પછી રનટાઈમ `trpl::join` નો ઉપયોગ કરીને દરેકને અલગથી ચલાવી શકે છે, બરાબર જેમ Listing 17-8 માં હતું. ફરીથી, આપણે `trpl::join` બોલાવવાનો પરિણામ આતુરતાથી જોવાની જરૂર છે, વ્યક્તિગત ફ્યુચર્સ નહીં. જો આપણે વ્યક્તિગત ફ્યુચર્સ ક્રમમાં આતુરતાથી જોયું તો આપણે માત્ર સિક્વન્સિયલ પ્રવાહમાં પાછા આવી જઈશું—બરાબર જે કરવાનું આપણે નથી ઈચ્છતા.
 
 <!-- We cannot test this one because it never stops! -->
 <Listing number="17-11" caption="Separating `send` and `recv` into their own `async` blocks and awaiting the futures for those blocks" file-name="src/main.rs">
@@ -141,7 +141,7 @@ The `rx.recv` Call `rx.recv` આદેશ એક ફ્યુચર ઉત્પ
 </Listing>
 ફેરફાર કરેલા કોડ સાથે યાદી ૧૭-૧૧ માં, સંદેશાઓ ૨ સેકન્ડ પછી એકસાથે છાપવાને બદલે, ૫૦૦ મિલિસેકન્ડના અંતરાલ પર છાપાય છે.
 
-#### માલિકીને અસમકાલીન બ્લોકમાં ખસેડવી
+#### Moving Ownership Into an Async Block
 
 જોકે, કાર્યક્રમ હજી પણ સમાપ્ત થતો નથી, કારણ કે `while let` લૂપ `trpl::join` સાથે કેવી રીતે ક્રિયાપ્રતિક્રિયા કરે છે.
 
@@ -155,7 +155,7 @@ The `rx.recv` Call `rx.recv` આદેશ એક ફ્યુચર ઉત્પ
 
 `rx.recv` ની રાહ જોવા પર `None` ત્યારે જ પાછું આવશે જ્યારે ચેનલનો બીજો છેડો બંધ કરવામાં આવે.
 
-The channel will close only if we call `rx.close` or when the sender side, `tx`, is dropped. ચેનલ તો ત્યારે જ બંધ થશે જ્યારે આપણે `rx.close` કૉલ
+`tx` ચેનલ તો ત્યારે જ બંધ થશે જ્યારે આપણે `rx.close` કૉલ
 
 કરીશું અથવા જ્યારે સેન્ડર ભાગ, `tx`, નાશ પામશે. આપણે `rx.close` ક્યાંય કૉલ કરતા નથી, અને `tx` ત્યારે જ નાશ પામશે જ્યારે સૌથી બહારનું async બ્લોક જે `trpl::block_on` ને
 

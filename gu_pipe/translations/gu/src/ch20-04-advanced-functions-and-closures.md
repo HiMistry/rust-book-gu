@@ -1,23 +1,23 @@
-## અદ્યતન વિધેયો અને ક્લોઝર્સ
+## Advanced Functions and Closures
 
-આ વિભાગમાં વિધેયો અને ક્લોઝર્સ સંબંધિત કેટલીક અદ્યતન વિશેષતાઓનું વર્ણન છે, જેમાં વિધેય નિર્દેશકો અને ક્લોઝર્સ પરત કરવાનો સમાવેશ થાય છે.
+આ વિભાગમાં વિધેયો અને ક્લોઝર્સ સંબંધિત કેટલીક અદ્યતન વિશેષતાઓનું વર્ણન છે, જેમાં વિધેય pointerો અને ક્લોઝર્સ પરત કરવાનો સમાવેશ થાય છે.
 
 ### Function Pointers
 
 અમે ક્લોઝરને ફંક્શનમાં કેવી રીતે પસાર કરવા તેની ચર્ચા કરી છે; તમે નિયમિત ફંક્શનને પણ ફંક્શનમાં પસાર કરી શકો છો! આ તકનીક ત્યારે ઉપયોગી છે જ્યારે તમે નવું ક્લોઝર વ્યાખ્યાયિત કરવાને બદલે, પહેલાથી વ્યાખ્યાયિત કરેલા ફંક્શનને પસાર કરવા માંગો છો. ફંક્શન `fn` પ્રકારમાં રૂપાંતર પામે છે (નાની 'f' સાથે), જેને `Fn` ક્લોઝર ટ્રેઇટ સાથે મૂંઝવવું જોઈએ નહીં. `fn` પ્રકારને ફંક્શન પોઈન્ટર કહેવામાં આવે છે. ફંક્શન પોઈન્ટર વડે ફંક્શન પસાર કરવાથી તમે ફંક્શનને અન્ય ફંક્શનના આર્ગ્યુમેન્ટ તરીકે વાપરી શકશો.
 
-The syntax for specifying that a parameter is a function pointer is similar to that of closures, as shown in Listing 20-28, where we’ve defined a function `add_one` that adds 1 to its parameter. The function `do_twice` takes two parameters: a function pointer to any function that takes an `i32` parameter and returns an `i32` , and one `i32` value. The `do_twice` function calls the function `f` twice, passing it the `arg` value, then adds the two function call results together. The `main` function calls `do_twice` with the arguments `add_one` and `5` . કારણ નિર્ધારિત કરવા માટેનું વાક્યરચના, ક્લોઝર્સ (closures) જેવું જ છે, જે યાદી 20-28 માં દર્શાવેલ છે, જ્યાં અમે એક વિધેય `add_one` વ્યાખ્યાયિત કર્યું છે જે તેના પરિમાણમાં 1 ઉમેરે છે. વિધેય `do_twice` બે પરિમાણો લે છે: કોઈપણ વિધેયનો ફંક્શન પોઇન્ટર જે `i32` પરિમાણ લે છે અને `i32` પરત કરે છે, અને એક `i32` મૂલ્ય. `do_twice` વિધેય `f` વિધેયને બે વાર બોલાવે છે, તેને `arg` મૂલ્ય પાસ કરે છે, પછી બંને ફંક્શન કૉલ પરિણામોને એકસાથે ઉમેરે છે. `main` વિધેય `do_twice` ને દલીલો `add_one` અને `5` સાથે બોલાવે છે.
+કારણ નિર્ધારિત કરવા માટેનું વાક્યરચના, ક્લોઝર્સ (closures) જેવું જ છે, જે યાદી 20-28 માં દર્શાવેલ છે, જ્યાં અમે એક વિધેય `add_one` વ્યાખ્યાયિત કર્યું છે જે તેના પરિમાણમાં 1 ઉમેરે છે. વિધેય `do_twice` બે પરિમાણો લે છે: કોઈપણ વિધેયનો ફંક્શન પોઇન્ટર જે `i32` પરિમાણ લે છે અને `i32` પરત કરે છે, અને એક `i32` મૂલ્ય. `do_twice` વિધેય `f` વિધેયને બે વાર બોલાવે છે, તેને `arg` મૂલ્ય પાસ કરે છે, પછી બંને ફંક્શન કૉલ પરિણામોને એકસાથે ઉમેરે છે. `main` વિધેય `do_twice` ને Argumentો `add_one` અને `5` સાથે બોલાવે છે.
 
 <Listing number="20-28" file-name="src/main.rs" caption="Using the `fn` type to accept a function pointer as an argument">
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-28/src/main.rs}}
 </Listing>
-આ કોડ `The answer is: 12` છાપે છે. અમે ઉલ્લેખ કરીએ છીએ કે `do_twice` માં પરિમાણ `f` એ એક `fn` છે જે એક `i32` પ્રકારનું પરિમાણ લે છે અને `i32` પરત કરે છે. અમે પછી `do_twice` ના શરીરમાં `f` ને બોલાવી શકીએ છીએ. `main` માં, અમે `add_one` નામનું કાર્ય પ્રથમ દલીલ તરીકે `do_twice` ને આપી શકીએ છીએ.
+આ કોડ `The answer is: 12` છાપે છે. અમે ઉલ્લેખ કરીએ છીએ કે `do_twice` માં પરિમાણ `f` એ એક `fn` છે જે એક `i32` પ્રકારનું પરિમાણ લે છે અને `i32` પરત કરે છે. અમે પછી `do_twice` ના શરીરમાં `f` ને બોલાવી શકીએ છીએ. `main` માં, અમે `add_one` નામનું કાર્ય પ્રથમ Argument તરીકે `do_twice` ને આપી શકીએ છીએ.
 
 ક્લોઝરથી વિપરીત, `fn` એક લક્ષણ નથી પરંતુ એક પ્રકાર છે, તેથી અમે સીધા જ પરિમાણ પ્રકાર તરીકે `fn` નો ઉલ્લેખ કરીએ છીએ, જેની સાથે `Fn` લક્ષણોમાંથી એકને લઈને સામાન્ય પ્રકારના પરિમાણને જાહેર કરતા નથી.
 
-Function pointers implement all three of the closure traits ( `Fn` , `FnMut` , and `FnOnce` ) વિધેય નિર્દેશકો ત્રણેય ક્લોઝર લક્ષણોનો અમલ કરે છે ( `Fn` , `FnMut` , અને `FnOnce` ), જેનો અર્થ થાય છે કે તમે હંમેશાં વિધેય નિર્દેશકને ક્લોઝરની અપેક્ષા રાખતા વિધેયના દલીલ તરીકે આપી શકો છો. તમારા વિધેયો જનરીક પ્રકાર અને એક ક્લોઝર લક્ષણનો ઉપયોગ કરીને લખવાનું શ્રેષ્ઠ છે જેથી તમારા વિધેયો
+વિધેય pointerો ત્રણેય ક્લોઝર લક્ષણોનો અમલ કરે છે ( `Fn` , `FnMut` , અને `FnOnce` ), જેનો અર્થ થાય છે કે તમે હંમેશાં વિધેય pointerને ક્લોઝરની અપેક્ષા રાખતા વિધેયના Argument તરીકે આપી શકો છો. તમારા વિધેયો જનરીક પ્રકાર અને એક ક્લોઝર લક્ષણનો ઉપયોગ કરીને લખવાનું શ્રેષ્ઠ છે જેથી તમારા વિધેયો
 
-કાર્યો અથવા ક્લોઝરો બંને સ્વીકારી શકે. એવું કહેવા છતાં, જ્યાં તમે માત્ર `fn` સ્વીકારવા માંગતા હોવ તેવો એક દાખલો બાહ્ય કોડ સાથે જોડાણ કરતી વખતે છે જે ક્લોઝર ધરાવતો નથી: C વિધેયો કાર્યોને દલીલ તરીકે સ્વીકારી શકે છે, પરંતુ C માં ક્લોઝર નથી.
+કાર્યો અથવા ક્લોઝરો બંને સ્વીકારી શકે. એવું કહેવા છતાં, જ્યાં તમે માત્ર `fn` સ્વીકારવા માંગતા હોવ તેવો એક દાખલો બાહ્ય કોડ સાથે જોડાણ કરતી વખતે છે જે ક્લોઝર ધરાવતો નથી: C વિધેયો કાર્યોને Argument તરીકે સ્વીકારી શકે છે, પરંતુ C માં ક્લોઝર નથી.
 
 એક બંધન (ક્લોઝર) વ્યાખ્યાયિત કરેલું કે નામવાળું વિધેય ક્યાં વાપરી શકાય તેનું ઉદાહરણ આપવા માટે, ચાલો પ્રમાણભૂત લાયબ્રેરીમાં `Iterator` ટ્રેઇટ દ્વારા પૂરા પાડવામાં આવેલ `map` પદ્ધતિના ઉપયોગને જોઈએ. સંખ્યાઓનું વેક્ટરને શબ્દોના વેક્ટરમાં રૂપાંતરિત કરવા માટે `map` પદ્ધતિનો ઉપયોગ કરવા માટે, આપણે એક બંધન વાપરી શકીએ છીએ, જે યાદી 20-29 માં દર્શાવેલ છે.
 
@@ -33,7 +33,7 @@ Function pointers implement all three of the closure traits ( `Fn` , `FnMut` , a
 
 વિધેયનો ઉપયોગ કરી રહ્યા છીએ, જે ધોરણ પુસ્તકાલય દ્વારા કોઈપણ પ્રકાર માટે લાગુ કરવામાં આવ્યો છે જે `Display` લાગુ કરે છે. પ્રકરણ 6 માં “એનમ
 
-મૂલ્યો” વિભાગને યાદ કરો કે આપણે વ્યાખ્યાયિત કરેલા દરેક એનમ ભિન્નતાનું નામ પણ એક પ્રારંભિક વિધેય બને છે. આપણે આ પ્રારંભિક વિધેયોને ફંક્શન પોઇન્ટર તરીકે ઉપયોગ કરી શકીએ છીએ જે ક્લોઝર લક્ષણોનો અમલ કરે છે, જેનો અર્થ થાય છે કે આપણે ક્લોઝર લેતા પદ્ધતિઓ માટે આ પ્રારંભિક વિધેયોને દલીલો તરીકે સ્પષ્ટ કરી શકીએ છીએ, જેમ કે યાદી 20-31 માં જોયું છે.
+મૂલ્યો” વિભાગને યાદ કરો કે આપણે વ્યાખ્યાયિત કરેલા દરેક એનમ ભિન્નતાનું નામ પણ એક પ્રારંભિક વિધેય બને છે. આપણે આ પ્રારંભિક વિધેયોને ફંક્શન પોઇન્ટર તરીકે ઉપયોગ કરી શકીએ છીએ જે ક્લોઝર લક્ષણોનો અમલ કરે છે, જેનો અર્થ થાય છે કે આપણે ક્લોઝર લેતા પદ્ધતિઓ માટે આ પ્રારંભિક વિધેયોને Argumentો તરીકે સ્પષ્ટ કરી શકીએ છીએ, જેમ કે યાદી 20-31 માં જોયું છે.
 
 <Listing number="20-31" caption="Using an enum initializer with the `map` method to create a `Status` instance from numbers">
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-31/src/main.rs:here}}
@@ -57,7 +57,7 @@ Function pointers implement all three of the closure traits ( `Fn` , `FnMut` , a
 અહીં બે વિધેયો છે, `returns_closure` અને `returns_initialized_closure`, જે બંને `impl Fn(i32) -> i32` પરત કરે છે. નોંધ કરો કે તેઓ જે ક્લોઝર પરત કરે છે તે અલગ છે, ભલે તેઓ સમાન પ્રકારનું અમલીકરણ કરે. જો આપણે આને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ, તો Rust આપણને જણાવે છે કે તે કામ કરશે નહીં:
 
 {{#include ../listings/ch20-advanced-features/listing-20-33/output.txt}}
-The error message tells us that whenever we return an `impl Trait` , Rust creates a unique opaque type , a type where we cannot see into the details of what Rust constructs for us, nor can we guess the type Rust will generate to write ourselves. So, even though these functions return closures that implement the same trait, `Fn(i32) -> i32` , the opaque types Rust generates for each are distinct. (This is similar to how Rust produces different concrete types for distinct async blocks even when they have the same output type, as we saw in “The `Pin` Type and the `Unpin` Trait” in Chapter 17.) We have seen a solution to this problem a few times now: We can use a trait object, as in Listing 20-34. ભૂલ સંદેશ જણાવે છે કે જ્યારે પણ આપણે `impl Trait` પરત કરીએ છીએ, ત્યારે Rust એક અનોખી અસ્પષ્ટ પ્રકાર (opaque type) બનાવે છે; એવો પ્રકાર જેમાં આપણે Rust આપણી માટે જે બનાવે છે તેની વિગતો જોઈ શકતા નથી, અને ન તો આપણે અનુમાન લગાવી શકીએ કે Rust કયો પ્રકાર ઉત્પન્ન કરશે. તેથી, ભલે આ કાર્યો સમાન ટ્રેઇટ લાગુ કરતા ક્લોઝર (closure) પરત કરે છે, `Fn(i32) -> i32` , પણ Rust દરેક માટે બનાવેલા અસ્પષ્ટ પ્રકારો અલગ હોય છે. (આ એ જ રીતે મળતું આવે છે કે જે રીતે Rust જુદા જુદા async બ્લોક્સ માટે અલગ-અલગ કોંક્રિટ પ્રકારો ઉત્પન્ન કરે છે, ભલે તેમનો આઉટપુટ પ્રકાર સમાન હોય, જે આપણે પ્રકરણ 17 માં “The `Pin` Type and the `Unpin` Trait” માં જોયું હતું.) આપણને હવે આ સમસ્યાનો ઉકેલ ઘણી વાર જોવા મળ્યો છે: આપણે ટ્રેઇટ ઓબ્જેક્ટ (trait object) નો ઉપયોગ કરી શકીએ છીએ, જેમ કે Listing 20-34 માં દર્શાવેલ છે.
+ભૂલ સંદેશ જણાવે છે કે જ્યારે પણ આપણે `impl Trait` પરત કરીએ છીએ, ત્યારે Rust એક અનોખી અસ્પષ્ટ પ્રકાર (opaque type) બનાવે છે; એવો પ્રકાર જેમાં આપણે Rust આપણી માટે જે બનાવે છે તેની વિગતો જોઈ શકતા નથી, અને ન તો આપણે અનુમાન લગાવી શકીએ કે Rust કયો પ્રકાર ઉત્પન્ન કરશે. તેથી, ભલે આ કાર્યો સમાન ટ્રેઇટ લાગુ કરતા ક્લોઝર (closure) પરત કરે છે, `Fn(i32) -> i32` , પણ Rust દરેક માટે બનાવેલા અસ્પષ્ટ પ્રકારો અલગ હોય છે. (આ એ જ રીતે મળતું આવે છે કે જે રીતે Rust જુદા જુદા async બ્લોક્સ માટે અલગ-અલગ કોંક્રિટ પ્રકારો ઉત્પન્ન કરે છે, ભલે તેમનો આઉટપુટ પ્રકાર સમાન હોય, જે આપણે પ્રકરણ 17 માં “The `Pin` Type and the `Unpin` Trait” માં જોયું હતું.) આપણને હવે આ સમસ્યાનો ઉકેલ ઘણી વાર જોવા મળ્યો છે: આપણે ટ્રેઇટ ઓબ્જેક્ટ (trait object) નો ઉપયોગ કરી શકીએ છીએ, જેમ કે Listing 20-34 માં દર્શાવેલ છે.
 
 <Listing number="20-34" caption="Creating a `Vec<T>` of closures defined by functions that return `Box<dyn Fn>` so that they have the same type">
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-34/src/main.rs:here}}
