@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-55c5f58b.js";
+            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -245,25 +245,42 @@
 <p>કાચી ઓળખકર્તાઓ એ સિન્ટેક્સ છે જે તમને કીવર્ડ્સનો ઉપયોગ કરવાની મંજૂરી આપે છે જ્યાં સામાન્ય રીતે મંજૂરી ન હોય. તમે <code>r#</code> સાથે કીવર્ડને જોડીને કાચી ઓળખકર્તાનો ઉપયોગ કરો છો.</p>
 <p>ઉદાહરણ તરીકે, <code>match</code> એક કીવર્ડ છે. જો તમે નીચેના ફંક્શનને કમ્પાઇલ કરવાનો પ્રયાસ કરો છો જે <code>match</code> ને તેના નામ તરીકે વાપરે છે:</p>
 <p>ફાઈલનું નામ: src/main.rs</p>
-<p>fn match(needle: &amp;str, haystack: &amp;str) -&gt; bool {
-haystack.contains(needle)
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>```rust
+fn match(needle: &amp;str, haystack: &amp;str) -&gt; bool {
+    haystack.contains(needle)
 }
-તમે આ ભૂલ મેળવશો:</p>
-<p>error: expected identifier, found keyword <code>match</code>
-–&gt; src/main.rs:4:4
-|
+<span class="boring">}</span></code></pre>
+<pre><code>તમે આ ભૂલ મેળવશો:
+
+```text
+```text
+error: expected identifier, found keyword `match`
+ --&gt; src/main.rs:4:4
+  |
 4 | fn match(needle: &amp;str, haystack: &amp;str) -&gt; bool {
-|    ^^^^^ expected identifier, found keyword
-ભૂલ દર્શાવે છે કે તમે કીવર્ડ <code>match</code> ને વિધેય ઓળખકર્તા તરીકે વાપરી શકતા નથી. <code>match</code> ને વિધેય નામ તરીકે વાપરવા માટે, તમારે કાચો ઓળખકર્તા સિન્ટેક્સ વાપરવો પડશે, જેમ કે આ:</p>
-<p>ફાઈલનામ: src/main.rs</p>
-<p>fn r#match(needle: &amp;str, haystack: &amp;str) -&gt; bool {
-haystack.contains(needle)
-}</p>
-<p>fn main() {
-assert!(r#match(“foo”, “foobar”));
+  |    ^^^^^ expected identifier, found keyword
+</code></pre>
+<pre><code>ભૂલ દર્શાવે છે કે તમે કીવર્ડ `match` ને વિધેય ઓળખકર્તા તરીકે વાપરી શકતા નથી. `match` ને વિધેય નામ તરીકે વાપરવા માટે, તમારે કાચો ઓળખકર્તા સિન્ટેક્સ વાપરવો પડશે, જેમ કે આ:
+
+ફાઈલનામ: src/main.rs
+
+```rust
+```rust
+fn r#match(needle: &amp;str, haystack: &amp;str) -&gt; bool {
+    haystack.contains(needle)
 }
-આ કોડ કોઈપણ ભૂલો વગર સંપાઈ જશે. નોંધ કરો કે ફંક્શનના નામની વ્યાખ્યામાં તેમજ <code>main</code> માં જ્યાં ફંક્શન બોલાવવામાં આવે છે ત્યાં <code>r#</code> પ્રિફિક્સ છે.</p>
-<p>કાચા ઓળખકર્તાઓ તમને તમારી પસંદગીનું કોઈપણ શબ્દ ઓળખકર્તા તરીકે વાપરવાની મંજૂરી આપે છે, ભલે તે શબ્દ અનામત કીવર્ડ હોય. આ આપણને ઓળખકર્તા નામો પસંદ કરવામાં વધુ સ્વતંત્રતા આપે છે, અને એવા પ્રોગ્રામમાં એકીકૃત થવા દે છે જ્યાં આ શબ્દો કીવર્ડ નથી. વિશેષરૂપે, કાચા ઓળખકર્તાઓ તમને અન્ય Rust આવૃત્તિઓ (edition) માં લખાયેલા પુસ્તકાલયોનો ઉપયોગ કરવાની મંજૂરી આપે છે. ઉદાહરણ તરીકે, <code>try</code> 2015 ની આવૃત્તિમાં કીવર્ડ નથી પરંતુ 2018, 2021 અને 2024 આવૃત્તિઓમાં કીવર્ડ છે. જો તમે 2015 આવૃત્તિનો ઉપયોગ કરીને લખાયેલા પુસ્તકાલય પર આધાર રાખો છો અને તેમાં <code>try</code> ફંક્શન છે, તો તમારે તે ફંક્શનને તમારી કોડમાં પાછળની આવૃત્તિઓ (later editions) માંથી બોલાવવા માટે કાચા ઓળખકર્તા વાક્યરચના, <code>r#try</code> નો ઉપયોગ કરવો પડશે. વધુ માહિતી માટે, Appendix E જુઓ.</p>
+
+fn main() {
+    assert!(r#match("foo", "foobar"));
+}
+</code></pre>
+<pre><code>આ કોડ કોઈપણ ભૂલો વગર સંપાઈ જશે. નોંધ કરો કે ફંક્શનના નામની વ્યાખ્યામાં તેમજ `main` માં જ્યાં ફંક્શન બોલાવવામાં આવે છે ત્યાં `r#` પ્રિફિક્સ છે.
+
+કાચા ઓળખકર્તાઓ તમને તમારી પસંદગીનું કોઈપણ શબ્દ ઓળખકર્તા તરીકે વાપરવાની મંજૂરી આપે છે, ભલે તે શબ્દ અનામત કીવર્ડ હોય. આ આપણને ઓળખકર્તા નામો પસંદ કરવામાં વધુ સ્વતંત્રતા આપે છે, અને એવા પ્રોગ્રામમાં એકીકૃત થવા દે છે જ્યાં આ શબ્દો કીવર્ડ નથી. વિશેષરૂપે, કાચા ઓળખકર્તાઓ તમને અન્ય Rust આવૃત્તિઓ (edition) માં લખાયેલા પુસ્તકાલયોનો ઉપયોગ કરવાની મંજૂરી આપે છે. ઉદાહરણ તરીકે, `try` 2015 ની આવૃત્તિમાં કીવર્ડ નથી પરંતુ 2018, 2021 અને 2024 આવૃત્તિઓમાં કીવર્ડ છે. જો તમે 2015 આવૃત્તિનો ઉપયોગ કરીને લખાયેલા પુસ્તકાલય પર આધાર રાખો છો અને તેમાં `try` ફંક્શન છે, તો તમારે તે ફંક્શનને તમારી કોડમાં પાછળની આવૃત્તિઓ (later editions) માંથી બોલાવવા માટે કાચા ઓળખકર્તા વાક્યરચના, `r#try` નો ઉપયોગ કરવો પડશે. વધુ માહિતી માટે, Appendix E જુઓ.
+
+</code></pre>
 
                     </main>
 

@@ -10,33 +10,61 @@
 
 ફાઇલનામ: src/main.rs
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-26-if-true/src/main.rs}}
+```
+```
 if અભિવ્યક્તિઓ બધી `if` અભિવ્યક્તિઓ `if` કીવર્ડથી શરૂ થાય છે, ત્યારબાદ એક શરત આવે છે. આ કિસ્સામાં, શરત તપાસે છે કે variable `number` નું મૂલ્ય 5 થી ઓછું છે કે નહીં. જો શરત `true` હોય તો અમલમાં મૂકવા માટે કોડનો બ્લોક તરત જ શરતના અંતે ચોકની નિશાની ({}) માં મૂકવામાં આવે છે. `if` અભિવ્યક્તિઓમાં શરતો સાથે સંકળાયેલા કોડના બ્લોક્સને કેટલીકવાર આર્મ્ઝ કહેવામાં આવે છે, જેમ કે આપણે પ્રકરણ 2 ના “અનુમાનને ગુપ્ત સંખ્યા સાથે સરખાવવું” વિભાગમાં ચર્ચા કરેલા `match` અભિવ્યક્તિઓમાં આર્મ્ઝ હોય છે.
 
 વૈકલ્પિક રીતે, અમે અહીં `else` અભિવ્યક્તિ પણ ઉમેરી શકીએ છીએ, જેથી જો શરત `false` હોય તો પ્રોગ્રામને ચલાવવા માટે વૈકલ્પિક કોડ બ્લોક મળે. જો તમે `else` અભિવ્યક્તિ ન આપો અને શરત `false` હોય, તો પ્રોગ્રામ માત્ર `if` બ્લોક છોડી દેશે અને આગલા કોડ ભાગ પર આગળ વધશે. આ કોડ
 
 ચલાવવાનો પ્રયાસ કરો; તમારે નીચેનું પરિણામ જોવું જોઈએ:
 
+```console
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-26-if-true/output.txt}}
+```
+```
 ચાલો `number` નું મૂલ્ય એવું બદલીએ કે જે શરતને `false` બનાવે, અને જોઈએ કે શું થાય છે:
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-27-if-false/src/main.rs:here}}
+```
+```
 ફરીથી કાર્યક્રમ ચલાવો અને પરિણામ જુઓ:
 
+```console
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-27-if-false/output.txt}}
+```
+```
 એ નોંધવું પણ મહત્વનું છે કે આ કોડમાં શરત `bool` પ્રકારની હોવી જોઈએ. જો શરત `bool` ન હોય, તો આપણને ભૂલ મળશે. ઉદાહરણ તરીકે, નીચેના કોડ ચલાવવાનો પ્રયાસ કરો:
 
 ફાઈલનું નામ: src/main.rs
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-28-if-condition-must-be-bool/src/main.rs}}
+```
+```
 જો શરતનું મૂલ્યાંકન આ સમયે `3` ના મૂલ્ય પર થાય છે, અને Rust એક ભૂલ ઉત્પન્ન કરે છે:
 
+```console
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-28-if-condition-must-be-bool/output.txt}}
+```
+```
 ભૂલ સૂચવે છે કે Rust ને `bool` અપેક્ષિત હતું પરંતુ એક પૂર્ણાંક મળ્યો. રૂબી અને JavaScript જેવા ભાષાઓથી વિપરીત, Rust આપોઆપ બિન-બુલિયન પ્રકારોને બુલિયનમાં રૂપાંતર કરવાનો પ્રયત્ન કરશે નહીં. તમારે સ્પષ્ટપણે જણાવવું જોઈએ અને હંમેશાં `if` સાથે બુલિયન શરત પ્રદાન કરવી જોઈએ. જો આપણે ઈચ્છીએ કે `if` કોડ બ્લોક માત્ર ત્યારે જ ચાલે જ્યારે કોઈ સંખ્યા `0` બરાબર ન હોય, ઉદાહરણ તરીકે, તો અમે `if` અભિવ્યક્તિને નીચે મુજબ બદલી શકીએ છીએ:
 
 ફાઈલનામ: src/main.rs
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-29-if-not-equal-0/src/main.rs}}
+```
+```
 આ કોડ ચલાવવાથી `number was something other than zero` પ્રિન્ટ થશે.
 
 #### Handling Multiple Conditions with `else if`
@@ -45,10 +73,18 @@ if અભિવ્યક્તિઓ બધી `if` અભિવ્યક્ત�
 
 ફાઈલનામ: src/main.rs
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-30-else-if/src/main.rs}}
+```
+```
 આ કાર્યક્રમ ચાર સંભવિત માર્ગો લઈ શકે છે. તેને ચલાવ્યા પછી, તમારે નીચે મુજબનું પરિણામ જોવું જોઈએ:
 
+```console
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-30-else-if/output.txt}}
+```
+```
 જ્યારે આ કાર્યક્રમ ચલાય છે, ત્યારે તે દરેક `if` અભિવ્યક્તિને વારાફરતી તપાસે છે અને જે શરત `true` હોય તેવા પ્રથમ ભાગનું પાલન કરે છે. નોંધ કરો કે ભલે 6 એ 2 વડે વિભાજ્ય હોય, છતાં આપણે આઉટપુટ `number is divisible by 2` જોતા નથી, ન તો આપણે `else` બ્લોકમાંથી `number is not divisible by 4, 3, or 2` લખાણ જોઈએ છીએ. આ એટલા માટે છે કે Rust માત્ર પ્રથમ `true` શરત માટે બ્લોકનું પાલન કરે છે, અને એકવાર તેને તે મળી જાય પછી, તે બાકીની શરતોને પણ તપાસતું નથી.
 
 અતિશય `else if` અભિવ્યક્તિઓ વાપરવાથી કોડ અવ્યવસ્થિત થઈ શકે છે, તેથી જો તમારી પાસે એક કરતાં વધુ હોય, તો તમે તમારા કોડને સુધારી શકો છો. પ્રકરણ ૬ એક શક્તિશાળી Rust શાખા રચના `match` વિશે વર્ણવે છે જે આવા કિસ્સાઓ માટે ઉપયોગી છે.
@@ -58,19 +94,35 @@ if અભિવ્યક્તિઓ બધી `if` અભિવ્યક્ત�
 કારણ કે `if` એક અભિવ્યક્તિ છે, આપણે તેનો ઉપયોગ `let` વિધાનની જમણી બાજુએ variable મૂલ્ય સોંપવા માટે કરી શકીએ છીએ, જે યાદી 3-2 માં દર્શાવેલ છે.
 
 <Listing number="3-2" file-name="src/main.rs" caption="Assigning the result of an `if` expression to a variable">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-02/src/main.rs}}
+```
+```
 </Listing>
 `number` variable `if` અભિવ્યક્તિના પરિણામ પર આધારિત મૂલ્ય સાથે જોડી દેવામાં આવશે. જુઓ કે શું થાય છે તે જોવા માટે આ કોડ ચલાવો:
 
+```console
+```console
 {{#include ../listings/ch03-common-programming-concepts/listing-03-02/output.txt}}
+```
+```
 યાદ રાખવું કે કોડ બ્લોક્સ અંતિમ અભિવ્યક્તિનું મૂલ્યાંકન કરે છે, અને સંખ્યાઓ પણ અભિવ્યક્તિઓ જ હોય છે. આ કિસ્સામાં, સમગ્ર `if` અભિવ્યક્તિ કયા કોડ બ્લોક ચલાવવામાં આવે તેના પર આધારિત છે. આનો અર્થ એ થાય છે કે `if` ના દરેક ભાગમાંથી પરિણામો મળવાની સંભાવના ધરાવતા મૂલ્યો સમાન પ્રકારના હોવા જોઈએ; યાદી 3-2 માં, `if` ભાગ અને `else` ભાગ બંનેના પરિણામો `i32` પૂર્ણાંકો હતા. જો પ્રકારો મેળ ખાતા ન હોય, તો નીચે આપેલ ઉદાહરણમાં જેમ કે, આપણને ભૂલ મળશે:
 
 ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે "Hello, world!" છાપે છે. ```rust fn main() { println!("Hello, world!"); } ``` આ કાર્યક્રમ `main` નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે `main` કાર્ય પ્રથમ ચલાવવામાં આવે છે. `println!` એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે "Hello, world!" છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે `cargo run` command વાપરી શકો છો.
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-31-arms-must-return-same-type/src/main.rs}}
+```
+```
 જ્યારે આપણે આ કોડને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ છીએ, ત્યારે આપણને ભૂલ મળશે. `if` અને `else` વિભાગોમાં મૂલ્ય પ્રકારો સુસંગત નથી, અને Rust ચોક્કસપણે પ્રોગ્રામમાં સમસ્યા ક્યાં શોધવી તે દર્શાવે છે:
 
+```console
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-31-arms-must-return-same-type/output.txt}}
+```
+```
 `if` બ્લોકમાં રહેલું અભિવ્યક્તિ એક પૂર્ણાંકમાં મૂલ્યાંકન કરે છે, અને `else` બ્લોકમાં રહેલું અભિવ્યક્તિ એક શબ્દમાળામાં મૂલ્યાંકન કરે છે. આ કામ નહીં કરે, કારણ કે variable એક જ પ્રકાર હોવો જોઈએ, અને Rust ને કમ્પાઇલ સમયે ચોક્કસપણે ખબર હોવી જરૂરી છે કે `number` variable's પ્રકાર શું છે. `number` ના પ્રકારને જાણવાથી કમ્પાઈલરને ચકાસણી કરવાની મંજૂરી મળે છે કે `number` નો ઉપયોગ દરેક જગ્યાએ માન્ય પ્રકાર છે. જો `number` નો પ્રકાર માત્ર રનટાઇમ પર નક્કી થતો હોત, તો Rust તે કરી શકતું ન હતું; કમ્પાઈલર વધુ જટિલ બની જાત અને તેણે કોઈપણ variable માટે બહુવિધ સંભવિત પ્રકારોને ટ્રેક કરવા પડે તો કોડ વિશે ઓછા વચનો આપ્યા સિવાય.
 
 ### Repetition with Loops
@@ -87,7 +139,11 @@ Rust પાસે ત્રણ પ્રકારના લૂપ્સ છે: 
 
 ફાઈલનું નામ: src/main.rs
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-loop/src/main.rs}}
+```
+```
 જ્યારે આપણે આ કાર્યક્રમ ચલાવીશું, ત્યારે આપણે `again!` છાપેલું વારંવાર અને સતત જોઈશું જ્યાં સુધી આપણે કાર્યક્રમને જાતે જ રોકીએ નહીં. મોટાભાગના ટર્મિનલ્સ ctrl - C કીબોર્ડ શૉર્ટકટને સપોર્ટ કરે છે જેથી કોઈ કાર્યક્રમ જે અનંત લૂપમાં ફસાયો હોય તેને અવરોધિત કરી શકાય. પ્રયત્ન કરો:
 
 <!-- manual-regeneration
@@ -95,6 +151,8 @@ cd listings/ch03-common-programming-concepts/no-listing-32-loop
 cargo run
 CTRL-C
 -->
+```console
+```console
 $ cargo run
    Compiling loops v0.1.0 (file:///projects/loops)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.08s
@@ -104,6 +162,8 @@ again!
 again!
 again!
 ^Cagain!
+```
+```
 `^C` આ પ્રતીક દર્શાવે છે કે જ્યાં તમે ctrl - C દબાવ્યું હતું.
 
 તમે `again!` શબ્દ છાપેલું જોઈ શકો છો અથવા ન પણ જોઈ શકો, જે `^C` પછી આવે છે, આ બાબત કોડ લૂપમાં ક્યાં હતો તેના પર આધાર રાખે છે જ્યારે તેને વિક્ષેપ સંકેત મળ્યો હતો.
@@ -116,7 +176,11 @@ again!
 
 એક `loop` નો ઉપયોગ એવાં કાર્યને ફરીથી પ્રયત્ન કરવા માટે થાય છે જે નિષ્ફળ થઈ શકે, જેમ કે કોઈ થ્રેડનું કાર્ય પૂર્ણ થયું છે કે નહીં તે તપાસવું. તમારે તે કાર્યના પરિણામને પણ લૂપમાંથી બહારની કોડમાં મોકલવાની જરૂર પડી શકે છે. આવું કરવા માટે, તમે `break` અભિવ્યક્તિ પછી જે મૂલ્ય પરત કરવું હોય તે ઉમેરી શકો છો; તે મૂલ્ય લૂપમાંથી પરત કરવામાં આવશે જેથી કરીને તમે તેનો ઉપયોગ કરી શકો, જે અહીં દર્શાવેલ છે:
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-33-return-value-from-loop/src/main.rs}}
+```
+```
 લૂપ પહેલાં, અમે `counter` નામનું variable જાહેર કરીએ છીએ અને તેને `0` થી શરૂઆત કરીએ છીએ. ત્યારબાદ, અમે `result` નામનું variable જાહેર કરીએ છીએ જે લૂપમાંથી મળેલ મૂલ્ય રાખશે. લૂપના દરેક પુનરાવર્તનમાં, અમે `counter` variable `1` ઉમેરીએ છીએ, અને પછી તપાસીએ છીએ કે શું `counter`  `10` બરાબર છે. જ્યારે તે હોય છે, ત્યારે અમે `break` કીવર્ડનો ઉપયોગ `counter * 2` મૂલ્ય સાથે કરીએ છીએ. લૂપ પછી, અમે `result` માં મૂલ્ય સોંપવા માટે વપરાતા વિધાનને સમાપ્ત કરવા માટે અર્ધવિરામ ચિહ્નનો ઉપયોગ કરીએ છીએ. અંતે, અમે `result` માં રહેલું મૂલ્ય છાપીએ છીએ, જે આ કિસ્સામાં `20` છે.
 
 તમે લૂપની અંદરથી પણ `return` કરી શકો છો. જ્યારે `break` માત્ર વર્તમાન લૂપમાંથી બહાર નીકળે છે, ત્યારે `return` હંમેશાં વર્તમાન ફંક્શનમાંથી બહાર નીકળી જાય છે.
@@ -126,17 +190,29 @@ again!
 
 જો તમારી પાસે ચક્રોની અંદર ચકરો હોય, તો `break` અને `continue` તે સમયે સૌથી અંદરના ચક્ર પર લાગુ પડે છે. તમે વૈકલ્પિક રીતે એક ચક્ર પર ચક્ર લેબલ સ્પષ્ટ કરી શકો છો, જેનો ઉપયોગ તમે `break` અથવા `continue` સાથે તે લેબલવાળા ચક્ર પર લાગુ કરવા માટે કરી શકો છો, તેના બદલે સૌથી અંદરના ચક્ર પર. ચક્ર લેબલ્સ એકલ અવધરેણીથી શરૂ થવા જોઈએ. અહીં બે નેસ્ટેડ ચક્રોનું ઉદાહરણ છે:
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-5-loop-labels/src/main.rs}}
+```
+```
 લૂપનું લેબલ બાહ્ય લૂપને `'counting_up`' નામનું લેબલ છે, અને તે 0 થી 2 સુધી ગણશે. લેબલ વગરનું આંતરિક લૂપ 10 થી 9 સુધી ઉતરશે. પહેલો `break` જે લેબલનો ઉલ્લેખ કરતો નથી, તે માત્ર આંતરિક લૂપમાંથી બહાર નીકળી જશે. `break 'counting_up;` વિધાન બાહ્ય લૂપમાંથી બહાર નીકળી જશે. આ કોડ છાપે છે:
 
+```console
+```console
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-5-loop-labels/output.txt}}
+```
+```
 <!-- Old headings. Do not remove or links may break. -->
 #### Streamlining Conditional Loops with while
 
 એક કાર્યક્રમને ઘણીવાર એક ચક્ર (loop) ની અંદર શરતનું મૂલ્યાંકન કરવાની જરૂર પડે છે. જ્યાં સુધી શરત `true` હોય ત્યાં સુધી ચક્ર ચાલે છે. જ્યારે શરત `true` રહેવાનું બંધ કરે છે, ત્યારે કાર્યક્રમ `break` ને બોલાવે છે, જે ચક્રને રોકે છે. `loop`, `if`, `else`, અને `break` ના સંયોજનનો ઉપયોગ કરીને આ પ્રકારનું વર્તન અમલમાં મૂકવું શક્ય છે; જો તમે ઈચ્છો તો તમે હવે એક કાર્યક્રમમાં તે પ્રયાસ કરી શકો છો. જો કે, આ પેટર્ન એટલી સામાન્ય છે કે Rust પાસે તેના માટે બનેલ ભાષાની રચના છે, જેને `while` ચક્ર કહેવામાં આવે છે. લિસ્ટિંગ 3-3 માં, અમે ત્રણ વખત કાર્યક્રમને ચક્ર કરવા માટે `while` નો ઉપયોગ કરીએ છીએ, દરેક વખતે ગણતરી ઘટાડીએ છીએ, અને પછી, ચક્ર પછી, એક સંદેશ છાપવા અને બહાર નીકળવા માટે.
 
 <Listing number="3-3" file-name="src/main.rs" caption="Using a `while` loop to run code while a condition evaluates to `true`">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-03/src/main.rs}}
+```
+```
 </Listing>
 આ રચના `loop`, `if`, `else`, અને `break` ના ઉપયોગથી જરૂરી થતી ઘણી બધી અંદરની રચનાઓ (nesting) દૂર કરે છે, અને તે વધુ સ્પષ્ટ છે. જ્યાં સુધી કોઈ શરત `true` હોય ત્યાં સુધી કોડ ચાલે છે; અન્યથા, તે લૂપમાંથી બહાર નીકળી જાય છે.
 
@@ -145,11 +221,19 @@ again!
 તમે જ્યારે કોઈ સંગ્રહના ઘટકો પર ચક્રીય થવા માંગતા હોવ, ત્યારે `while` રચનાનો ઉપયોગ કરવાનું પસંદ કરી શકો છો, જેમ કે એરે. ઉદાહરણ તરીકે, યાદી 3-4 માં દર્શાવેલ લૂપ એરે `a` ના દરેક ઘટકને છાપે છે.
 
 <Listing number="3-4" file-name="src/main.rs" caption="Looping through each element of a collection using a `while` loop">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-04/src/main.rs}}
+```
+```
 </Listing>
 અહીં, કોડ એરેના ઘટકોમાંથી ગણતરી કરે છે. તે ઇન્ડેક્સ `0` થી આરંભ થાય છે અને પછી લૂપ ચલાવે છે જ્યાં સુધી તે એરેના અંતિમ ઇન્ડેક્સ સુધી ન પહોંચે (એટલે કે, જ્યારે `index < 5` હવે `true` ન હોય). આ કોડ ચલાવવાથી એરેના દરેક ઘટક છાપાશે:
 
+```console
+```console
 {{#include ../listings/ch03-common-programming-concepts/listing-03-04/output.txt}}
+```
+```
 પાંચેય એરે મૂલ્યો ટર્મિનલમાં દેખાય છે, જે અપેક્ષિત છે. ભલે `index` નું મૂલ્ય અમુક સમયે `5` સુધી પહોંચી જાય, તેમ છતાં લૂપ એરેમાંથી છઠ્ઠું મૂલ્ય મેળવવાનો પ્રયત્ન કરતા પહેલા જ બંધ થઈ જાય
 
 છે. However, this approach is error-prone; we could cause the program to panic if the index value or test condition is incorrect. For example, if you changed the definition of the `a` array to have four elements but forgot to update the condition to `while index < 4`, the code would panic. It’s also slow, because the compiler adds runtime code to perform the conditional check of whether the index is within the bounds of the array on every iteration through the loop. જો કે, આ અભિગમ ભૂલયુક્ત છે; જો અનુક્રમણિકાનું મૂલ્ય અથવા પરીક્ષણ શરત ખોટી હોય તો આપણે પ્રોગ્રામને ગભરાવવાનું કારણ બની શકે છે. ઉદાહરણ તરીકે, જો તમે `a` એરેની વ્યાખ્યામાં ચાર ઘટકો ઉમેર્યા હોય પરંતુ શરતને `while index < 4` માં અપડેટ કરવાનું ભૂલી જાઓ છો, તો કોડ ગભરાઈ જશે. તે ધીમું પણ છે, કારણ કે કમ્પાઇલર દરેક લૂપ પુનરાવર્તન દરમિયાન એરેની સીમામાં અનુક્રમણિકા છે કે નહીં તેની શરતી ચકાસણી કરવા માટે રનટાઇમ કોડ ઉમેરે છે.
@@ -157,7 +241,11 @@ again!
 વૈકલ્પિક રીતે, તમે `for` લૂપનો ઉપયોગ કરી શકો છો અને સંગ્રહમાં દરેક વસ્તુ માટે અમુક કોડ ચલાવી શકો છો. `for` લૂપ એ યાદી 3-5 માં દર્શાવેલ કોડ જેવું દેખાય છે.
 
 <Listing number="3-5" file-name="src/main.rs" caption="Looping through each element of a collection using a `for` loop">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-05/src/main.rs}}
+```
+```
 </Listing>
 જ્યારે આપણે આ કોડ ચલાવીશું, ત્યારે આપણને યાદી 3-4 માં જે પરિણામ દેખાય છે તેવું જ પરિણામ જોવા મળશે. વધુ મહત્વની વાત એ છે કે, હવે આપણે કોડની સુરક્ષામાં વધારો કર્યો છે અને એવા ભૂલો થવાની શક્યતાને દૂર કરી છે જે એરેના અંતથી આગળ વધી જવા અથવા પૂરતી દૂર ન જવાથી આવી શકે છે. `for` લૂપમાંથી ઉત્પન્ન થયેલ મશીન કોડ પણ વધુ કાર્યક્ષમ હોઈ શકે છે કારણ કે દરેક પુનરાવર્તનમાં એરેની લંબાઈ સાથે અનુક્રમણિકાની સરખામણી કરવાની જરૂર નથી.
 
@@ -169,7 +257,11 @@ again!
 
 ફાઈલનું નામ: src/main.rs
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-34-for-range/src/main.rs}}
+```
+```
 આ કોડ થોડો વધુ સુખદ છે, ખરું ને?
 
 ## Summary

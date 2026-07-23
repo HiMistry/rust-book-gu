@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-55c5f58b.js";
+            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -184,35 +184,46 @@
                     <main>
                         <h2 id="accepting-command-line-arguments"><a class="header" href="#accepting-command-line-arguments">Accepting Command Line Arguments</a></h2>
 <p>ચાલો હંમેશની જેમ, <code>cargo new</code> વડે નવી યોજના બનાવીએ. આપણે આપણી યોજનાને <code>minigrep</code> નામ આપીશું જેથી તે તમારા સિસ્ટમ પર પહેલેથી જ રહેલા <code>grep</code> સાધનથી અલગ પડે:</p>
-<p>$ cargo new minigrep
-Created binary (application) <code>minigrep</code> project
+<pre><code class="language-console">$ cargo new minigrep
+     Created binary (application) `minigrep` project
 $ cd minigrep
-પહેલું કાર્ય પ્રથમ કાર્ય એ છે કે <code>minigrep</code> તેના બે આદેશ વાક્ય Argumentો સ્વીકારે; ફાઈલ પાથ અને શોધવા માટેની સ્ટ્રિંગ. એટલે કે, આપણે આપણું પ્રોગ્રામ <code>cargo run</code> સાથે ચલાવવા માંગીએ છીએ, બે હાયફન દર્શાવે છે કે પછીની Argumentો આપણા પ્રોગ્રામ માટે છે, <code>cargo</code> માટે નહીં, શોધવા માટેની એક સ્ટ્રિંગ અને જેમાં શોધવાનું છે તે ફાઈલનો પાથ, આ પ્રમાણે:</p>
-<p>$ cargo run – searchstring example-filename.txt
-હાલમાં, <code>cargo new</code> દ્વારા ઉત્પન્ન થયેલ કાર્યક્રમ આપણને આપેલાં પરિણામોને પ્રક્રિયા કરી શકતો નથી. crates.io પર કેટલાક હાલનાં પુસ્તકાલયો આદેશ વાક્ય પરિણામો સ્વીકારતા કાર્યક્રમને લખવામાં મદદ કરી શકે છે, પરંતુ તમે હજી આ ખ્યાલ શીખી રહ્યા છો, તેથી ચાલો આપણે જાતે જ આ ક્ષમતાનો અમલ કરીએ.</p>
+</code></pre>
+<p>પહેલું કાર્ય પ્રથમ કાર્ય એ છે કે <code>minigrep</code> તેના બે આદેશ વાક્ય Argumentો સ્વીકારે; ફાઈલ પાથ અને શોધવા માટેની સ્ટ્રિંગ. એટલે કે, આપણે આપણું પ્રોગ્રામ <code>cargo run</code> સાથે ચલાવવા માંગીએ છીએ, બે હાયફન દર્શાવે છે કે પછીની Argumentો આપણા પ્રોગ્રામ માટે છે, <code>cargo</code> માટે નહીં, શોધવા માટેની એક સ્ટ્રિંગ અને જેમાં શોધવાનું છે તે ફાઈલનો પાથ, આ પ્રમાણે:</p>
+<pre><code class="language-console">$ cargo run -- searchstring example-filename.txt
+</code></pre>
+<p>હાલમાં, <code>cargo new</code> દ્વારા ઉત્પન્ન થયેલ કાર્યક્રમ આપણને આપેલાં પરિણામોને પ્રક્રિયા કરી શકતો નથી. crates.io પર કેટલાક હાલનાં પુસ્તકાલયો આદેશ વાક્ય પરિણામો સ્વીકારતા કાર્યક્રમને લખવામાં મદદ કરી શકે છે, પરંતુ તમે હજી આ ખ્યાલ શીખી રહ્યા છો, તેથી ચાલો આપણે જાતે જ આ ક્ષમતાનો અમલ કરીએ.</p>
 <h3 id="reading-the-argument-values"><a class="header" href="#reading-the-argument-values">Reading the Argument Values</a></h3>
 <p><code>minigrep</code> ને આપણે તેમાં પાસ કરીએ છીએ તે કમાન્ડ લાઇન Argumentોના મૂલ્યો વાંચવા માટે સક્ષમ કરવા માટે, આપણને Rust ના પ્રમાણિત પુસ્તકાલયમાં પૂરા પાડવામાં આવેલ <code>std::env::args</code> કાર્યની જરૂર પડશે. આ કાર્ય <code>minigrep</code> ને પાસ કરવામાં આવેલ કમાન્ડ લાઇન Argumentોના iterator આપે છે. આપણે પ્રકરણ 13 માં iterator વિશે સંપૂર્ણ માહિતી મેળવીશું. અત્યારે, તમારે iterator વિશે માત્ર બે વિગતો જાણવાની જરૂર છે: Iterator મૂલ્યોની શ્રેણી ઉત્પન્ન કરે છે, અને આપણે vector જેવી collection માં રૂપાંતર કરવા માટે iterator પર <code>collect</code> પદ્ધતિને બોલાવી શકીએ છીએ, જેમાં iterator દ્વારા ઉત્પાદિત તમામ ઘટકો હોય છે.</p>
 <p>યાદી ૧૨-૧ માં આપેલ કોડ તમારા <code>minigrep</code> કાર્યક્રમને કોઈપણ આદેશ વાક્ય Argumentો વાંચવાની અને પછી તે મૂલ્યોને વેક્ટર માં એકત્ર કરવાની મંજૂરી આપે છે.</p>
 <listing number="12-1" file-name="src/main.rs" caption="Collecting the command line arguments into a vector and printing them">
+```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-01/src/main.rs}}
+```
 </listing>
 સૌ પ્રથમ, આપણે `std::env` મોડ્યુલને `use` વિધાન સાથે કાર્યક્ષેત્રમાં લાવીએ છીએ જેથી કરીને આપણે તેના `args` વિધેયનો ઉપયોગ કરી શકીએ. નોંધ કરો કે `std::env::args` વિધેય બે સ્તરોના મોડ્યુલોમાં જડેલું છે. જેમ આપણે પ્રકરણ 7 માં ચર્ચા કરી હતી, જ્યારે ઇચ્છિત વિધેય એક કરતાં વધુ મોડ્યુલોમાં જડેલું હોય, ત્યારે આપણે પિતૃ મોડ્યુલને કાર્યક્ષેત્રમાં લાવવાનું પસંદ કર્યું છે, વિધેયને નહીં. આમ કરવાથી, આપણે `std::env` માંથી અન્ય વિધેયોનો સરળતાથી ઉપયોગ કરી શકીએ છીએ. તે `use std::env::args` ઉમેરવા અને પછી માત્ર `args` સાથે વિધેયને બોલાવવા કરતાં ઓછું અસ્પષ્ટ છે, કારણ કે `args` ને વર્તમાન મોડ્યુલમાં વ્યાખ્યાયિત થયેલ વિધેય માટે ભૂલથી સમજી શકાય છે.
-<h3 id="saving-the-argument-values-in-variables"><a class="header" href="#saving-the-argument-values-in-variables">Saving the Argument Values in Variables</a></h3>
+<blockquote>
+<h3 id="the-args-function-and-invalid-unicode"><a class="header" href="#the-args-function-and-invalid-unicode">The <code>args</code> Function and Invalid Unicode</a></h3>
 <p>નોંધ કરો કે <code>std::env::args</code> જો કોઈ Argumentમાં અમાન્ય યુનિકોડ હોય તો ગભરાટ (panic) પાડે છે. જો તમારી કાર્યક્રમને અમાન્ય યુનિકોડ ધરાવતી Argumentો સ્વીકારવાની જરૂર હોય, તો <code>std::env::args_os</code> વાપરો. તે વિધેય એક પુનરાવર્તક (iterator) આપે છે જે <code>OsString</code> મૂલ્યો ઉત્પન્ન કરે છે તેના બદલે <code>String</code> મૂલ્યો. અમે અહીં સરળતા માટે <code>std::env::args</code> વાપર્યું છે કારણ કે <code>OsString</code> મૂલ્યો પ્લેટફોર્મ પ્રમાણે અલગ પડે છે અને <code>String</code> મૂલ્યો કરતાં વધુ જટિલ હોય છે.</p>
+</blockquote>
+<h3 id="saving-the-argument-values-in-variables"><a class="header" href="#saving-the-argument-values-in-variables">Saving the Argument Values in Variables</a></h3>
 <p><code>main</code> ની પ્રથમ લીટી પર, અમે <code>env::args</code> બોલાવીએ છીએ, અને તરત જ <code>collect</code> નો ઉપયોગ કરીએ છીએ જેથી પુનરાવર્તકને એક વેક્ટર માં ફેરવી શકાય જેમાં પુનરાવર્તકે ઉત્પન્ન કરેલા તમામ મૂલ્યો હોય. અમે <code>collect</code> વિધેયનો ઉપયોગ કરીને ઘણા પ્રકારના સંગ્રહો (collections) બનાવી શકીએ છીએ, તેથી અમે <code>args</code> ના પ્રકારને સ્પષ્ટપણે નોંધાવીએ છીએ જેથી અમે સ્ટ્રિંગ્સનું વેક્ટર જોઈએ તે દર્શાવી શકીએ. જોકે તમારે ખૂબ જ ઓછું જરૂર પડે છે Rust માં પ્રકારો નોંધાવવા માટે, <code>collect</code> એવું વિધેય છે જેને તમારે ઘણીવાર નોંધાવવાની જરૂર પડે છે કારણ કે Rust તમને કયા પ્રકારનો સંગ્રહ જોઈએ છે તે અનુમાન કરી શકતું નથી.</p>
 <p>અંતે, આપણે ડિબગ મેક્રોનો ઉપયોગ કરીને વેક્ટર છાપીએ છીએ. ચાલો સૌપ્રથમ કોઈ Argument વગર કોડ ચલાવીને પછી બે Argumentો સાથે પ્રયત્ન કરીએ:</p>
-<p>{{#include ../listings/ch12-an-io-project/listing-12-01/output.txt}}
-{{#include ../listings/ch12-an-io-project/output-only-01-with-args/output.txt}}
-વેદના કરો કે વેક્ટરની પ્રથમ કિંમત <code>"target/debug/minigrep"</code> છે, જે આપણી બાઈનરીનું નામ છે. આ C માં Argument સૂચિના વર્તન સાથે મેળ ખાય છે, જેનાથી કાર્યક્રમો તેમના અમલ દરમિયાન તેમને બોલાવવા માટે વપરાયેલા નામને ઉપયોગ કરી શકે છે. સંદેશાઓમાં પ્રગટ કરવા અથવા કમાન્ડ લાઇન ઉપનામનો ઉપયોગ કરીને કાર્યક્રમને બોલાવવામાં આવ્યો હોય તે મુજબ કાર્યક્રમના વર્તનને બદલવા માટે પ્રોગ્રામના નામની ઍક્સેસ હોવી ઘણીવાર અનુકૂળ હોય છે. પરંતુ આ પ્રકરણના હેતુઓ માટે, અમે તેને અવગણીશું અને માત્ર આપણને જરૂરી બે Argumentો જ સાચવશું.</p>
-<h3 id="આરગયુમેનટ-મૂલયોને-ચલણમાં-સંગરહિત-કરવા"><a class="header" href="#આરગયુમેનટ-મૂલયોને-ચલણમાં-સંગરહિત-કરવા">આર્ગ્યુમેન્ટ મૂલ્યોને ચલણમાં સંગ્રહિત કરવા</a></h3>
+<pre><code class="language-console">{{#include ../listings/ch12-an-io-project/listing-12-01/output.txt}}
+</code></pre>
+<pre><code class="language-console">{{#include ../listings/ch12-an-io-project/output-only-01-with-args/output.txt}}
+</code></pre>
+<p>વેદના કરો કે વેક્ટરની પ્રથમ કિંમત <code>"target/debug/minigrep"</code> છે, જે આપણી બાઈનરીનું નામ છે. આ C માં Argument સૂચિના વર્તન સાથે મેળ ખાય છે, જેનાથી કાર્યક્રમો તેમના અમલ દરમિયાન તેમને બોલાવવા માટે વપરાયેલા નામને ઉપયોગ કરી શકે છે. સંદેશાઓમાં પ્રગટ કરવા અથવા કમાન્ડ લાઇન ઉપનામનો ઉપયોગ કરીને કાર્યક્રમને બોલાવવામાં આવ્યો હોય તે મુજબ કાર્યક્રમના વર્તનને બદલવા માટે પ્રોગ્રામના નામની ઍક્સેસ હોવી ઘણીવાર અનુકૂળ હોય છે. પરંતુ આ પ્રકરણના હેતુઓ માટે, અમે તેને અવગણીશું અને માત્ર આપણને જરૂરી બે Argumentો જ સાચવશું.</p>
 <p>પ્રોગ્રામ હાલમાં કમાન્ડ લાઇન આર્ગ્યુમેન્ટ તરીકે દર્શાવેલ મૂલ્યોને મેળવી શકે છે. હવે આપણે પ્રોગ્રામના બાકીના ભાગમાં ઉપયોગ માટે બંને આર્ગ્યુમેન્ટના મૂલ્યોને variable સંગ્રહિત કરવાની જરૂર છે. Listing 12-2 માં તે દર્શાવેલું છે.</p>
 <listing number="12-2" file-name="src/main.rs" caption="Creating variables to hold the query argument and file path argument">
+```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-02/src/main.rs}}
+```
 </listing>
 `file_path` અમે જોયું તેમ કે જ્યારે આપણે વેક્ટર છાપ્યું હતું, ત્યારે કાર્યક્રમનું નામ વેક્ટરમાં પ્રથમ મૂલ્ય લે છે `args[0]` પર, તેથી અમે ઇન્ડેક્સ 1 થી Argumentો શરૂ કરીએ છીએ. પહેલી Argument `minigrep` જે શોધવા માટેની સ્ટ્રિંગ છે, તેથી અમે પહેલી Argumentનો સંદર્ભ variable `query` માં મૂકીએ છીએ.
 <p>બીજી Argument ફાઇલ પાથ હશે, તેથી અમે બીજી Argumentનો સંદર્ભ variable <code>file_path</code> માં મૂકીએ છીએ. અમે કામચલાઉ રીતે આ variable’s મૂલ્યો છાપીએ છીએ કે કોડ આપણી ધાર્યા મુજબ કાર્ય કરી રહ્યો છે કે નહીં તે સાબિત કરવા માટે. ચાલો આ કાર્યક્રમ ફરીથી Argumentો <code>test</code> અને <code>sample.txt</code> સાથે ચલાવીએ:</p>
-<p>{{#include ../listings/ch12-an-io-project/listing-12-02/output.txt}}
-મહાન, કાર્યક્રમ ચાલી રહ્યો છે! આપણને જરૂરી Argumentોના મૂલ્યો યોગ્ય ચલણમાં સાચવવામાં આવી રહ્યા છે. પછીથી અમે અમુક સંભવિત ભૂલવાળી પરિસ્થિતિઓને પહોંચી વળવા માટે ભૂલ વ્યવસ્થાપન ઉમેરીશું, જેમ કે જ્યારે user કોઈ Argumentો પ્રદાન ન કરે; હાલમાં, અમે તે પરિસ્થિતિને અવગણીશું અને ફાઈલ-વાંચન ક્ષમતાઓ ઉમેરવાનું કાર્ય કરીશું.</p>
+<pre><code class="language-console">{{#include ../listings/ch12-an-io-project/listing-12-02/output.txt}}
+</code></pre>
+<p>મહાન, કાર્યક્રમ ચાલી રહ્યો છે! આપણને જરૂરી Argumentોના મૂલ્યો યોગ્ય ચલણમાં સાચવવામાં આવી રહ્યા છે. પછીથી અમે અમુક સંભવિત ભૂલવાળી પરિસ્થિતિઓને પહોંચી વળવા માટે ભૂલ વ્યવસ્થાપન ઉમેરીશું, જેમ કે જ્યારે user કોઈ Argumentો પ્રદાન ન કરે; હાલમાં, અમે તે પરિસ્થિતિને અવગણીશું અને ફાઈલ-વાંચન ક્ષમતાઓ ઉમેરવાનું કાર્ય કરીશું.</p>
 
                     </main>
 

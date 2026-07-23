@@ -11,13 +11,21 @@
 એક સામાન્ય સંદર્ભ એ એક પ્રકારનો પોઇન્ટર છે, અને પોઇન્ટરને એક દિશા તરીકે વિચારી શકાય છે જે કોઈ અન્ય સ્થળે સંગ્રહિત મૂલ્ય તરફ નિર્દેશ કરે છે. લિસ્ટિંગ 15-6 માં, આપણે એક `i32` મૂલ્યનો સંદર્ભ બનાવીએ છીએ અને પછી સંદર્ભ દ્વારા મૂલ્યને અનુસરવા માટે ડિરેફરન્સ ઓપરેટરનો ઉપયોગ કરીએ છીએ.
 
 <Listing number="15-6" file-name="src/main.rs" caption="Using the dereference operator to follow a reference to an `i32` value">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-06/src/main.rs}}
+```
+```
 </Listing>
 variable `x` માં `i32` મૂલ્ય `5` છે. અમે `y` ને `x` નો સંદર્ભ સમાન કરીએ છીએ. આપણે ખાતરી કરી શકીએ કે `x` એ `5` બરાબર છે. જો કે, જો આપણે `y` માં રહેલા મૂલ્ય વિશે કોઈ ખાતરી કરવા માંગતા હોઈએ, તો આપણે `*y` વાપરવું પડશે જેથી સંદર્ભને અનુસરી શકાય અને તે જે મૂલ્ય તરફ નિર્દેશ કરે છે તેને મેળવી શકાય (આથી, ડિરેફરન્સ). આમ, કમ્પાઇલર વાસ્તવિક મૂલ્યની તુલના કરી શકે. એકવાર આપણે `y` ને ડિરેફરન્સ કરીએ, પછી આપણી પાસે પૂર્ણાંક મૂલ્યની ઍક્સેસ હોય છે જે `y` નિર્દેશ કરે છે, જેને આપણે `5` સાથે સરખાવી શકીએ છીએ.
 
 જો આપણે `assert_eq!(5, y);` લખવાનો પ્રયત્ન કર્યો હોત, તો આપણને આ કમ્પાઈલેશન ભૂલ મળતી હોત:
 
+```console
+```console
 {{#include ../listings/ch15-smart-pointers/output-only-01-comparing-to-reference/output.txt}}
+```
+```
 સંખ્યા અને સંખ્યાના સંદર્ભની સરખામણી કરવાની મંજૂરી નથી, કારણ કે તે બંને અલગ પ્રકારના છે. આપણે મૂલ્ય મેળવવા માટે સંદર્ભને અનુસરવા માટે ડિરેફરન્સ ઓપરેટરનો ઉપયોગ કરવો જોઈએ.
 
 ### Using `Box<T>` Like a Reference
@@ -25,7 +33,11 @@ variable `x` માં `i32` મૂલ્ય `5` છે. અમે `y` ને `x
 આપણે યાદી ૧૫-૬ માંના કોડને `Box<T>` નો ઉપયોગ કરવા માટે ફરીથી લખી શકીએ છીએ, તેના બદલે સંદર્ભ; યાદી ૧૫-૭ માં `Box<T>` પર વપરાયેલ ડિરેફરન્સ ઓપરેટર, યાદી ૧૫-૬ માં સંદર્ભ પર વપરાયેલ ડિરેફરન્સ ઓપરેટરની જેમ જ કાર્ય કરે છે.
 
 <Listing number="15-7" file-name="src/main.rs" caption="Using the dereference operator on a `Box<i32>`">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-07/src/main.rs}}
+```
+```
 </Listing>
 મુખ્ય ભેદ આ છે કે Listing 15-7 અને Listing 15-6 વચ્ચે અહીં આપણે `y` ને એક બોક્સના ઉદાહરણ તરીકે સેટ કરીએ છીએ જે `x` ના નકલ કરેલા મૂલ્ય તરફ નિર્દેશ કરે છે, તેના બદલે `x` ના મૂલ્ય તરફ નિર્દેશ કરતા સંદર્ભ (reference). છેલ્લાં ખાતરીપત્રમાં, આપણે બોક્સના pointerને અનુસરવા માટે ડિરેફરન્સ ઓપરેટરનો ઉપયોગ કરી શકીએ છીએ જે રીતે આપણે કર્યું હતું જ્યારે `y` એક સંદર્ભ હતો. હવે પછી, આપણે `Box<T>` વિશેષતાની શોધ કરીશું કે જે આપણને ડિરેફરન્સ ઓપરેટરનો ઉપયોગ કરવાની સક્ષમ કરે છે, આપણી પોતાની બોક્સ પ્રકાર વ્યાખ્યાયિત કરીને.
 
@@ -38,18 +50,30 @@ variable `x` માં `i32` મૂલ્ય `5` છે. અમે `y` ને `x
 `Box<T>` પ્રકારની વ્યાખ્યા `Box<T>` પ્રકાર આખરે એક ઘટક સાથેના ટ્યૂપ સ્ટ્રક્ચર તરીકે વ્યાખ્યાયિત થયેલ છે, તેથી સૂચિ ૧૫-૮ `MyBox<T>` પ્રકારને એ જ રીતે વ્યાખ્યાયિત કરે છે. અમે `new` ફંક્શનને પણ વ્યાખ્યાયિત કરીશું જે `Box<T>` પર વ્યાખ્યાયિત `new` ફંક્શન સાથે મેળ ખાય છે.
 
 <Listing number="15-8" file-name="src/main.rs" caption="Defining a `MyBox<T>` type">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-08/src/main.rs:here}}
+```
+```
 </Listing>
 આપણે `MyBox` નામનું struct વ્યાખ્યાયિત કરીએ છીએ અને એક સામાન્ય પરિમાણ `T` જાહેર કરીએ છીએ કારણ કે આપણે આપણી type ને કોઈપણ પ્રકારના મૂલ્યો ધરાવવાનું છે. `MyBox` type એ એક tuple struct છે જેમાં `T` પ્રકારનો એક ઘટક છે. `MyBox::new` function એક `T` પ્રકારનું પરિમાણ લે છે અને `MyBox` instance પરત કરે છે જે પાસ કરેલા મૂલ્યને સમાવે છે. Let’s try adding the `main` function in Listing 15-7 to Listing 15-8 and changing it to use the
 
 ચાલો Listing 15-7 માં `main` function ને Listing 15-8 માં ઉમેરવાનો પ્રયાસ કરીએ અને તેને `MyBox<T>` type નો ઉપયોગ કરવા માટે બદલીએ જે આપણે વ્યાખ્યાયિત કર્યું છે, `Box<T>` ને બદલે. Listing 15-9 માં રહેલો code compile થશે નહીં, કારણ કે Rust ને ખબર નથી કે `MyBox` ને કેવી રીતે dereference કરવું.
 
 <Listing number="15-9" file-name="src/main.rs" caption="Attempting to use `MyBox<T>` in the same way we used references and `Box<T>`">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-09/src/main.rs:here}}
+```
+```
 </Listing>
 અહીં પરિણામી કમ્પાઈલ એરર છે:
 
+```console
+```console
 {{#include ../listings/ch15-smart-pointers/listing-15-09/output.txt}}
+```
+```
 અમારું `MyBox<T>` પ્રકારને ઉકેલી શકાતો નથી કારણ કે અમે અમારા પ્રકાર પર તે ક્ષમતા અમલમાં મૂકી નથી. `*` ચિહ્ન સાથે ઉકેલવાની મંજૂરી આપવા માટે, આપણે `Deref` લક્ષણ (trait) અમલમાં મૂકવું જોઈએ.
 
 <!-- Old headings. Do not remove or links may break. -->
@@ -58,7 +82,11 @@ variable `x` માં `i32` મૂલ્ય `5` છે. અમે `y` ને `x
 જેમ કે પ્રકરણ ૧૦ માં "એક પ્રકાર પર લક્ષણનો અમલ" માં ચર્ચા કરવામાં આવી છે, એક લક્ષણને અમલમાં મૂકવા માટે આપણે તેના જરૂરી વિધિઓ (methods) માટે અમલીકરણો આપવા પડે છે. પ્રમાણિત પુસ્તકાલય દ્વારા પૂરા પાડવામાં આવેલ `Deref` લક્ષણ, આપણને `deref` નામની એક વિધિનો અમલ કરવાની આવશ્યકતા રાખે છે જે `self` ને ઉછીના લે છે અને આંતરિક ડેટા માટે સંદર્ભ (reference) આપે છે. યાદી ૧૫-૧૦ માં `MyBox<T>` ની વ્યાખ્યામાં ઉમેરવા માટે `Deref` નો અમલ દર્શાવેલ છે.
 
 <Listing number="15-10" file-name="src/main.rs" caption="Implementing `Deref` on `MyBox<T>`">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-10/src/main.rs:here}}
+```
+```
 </Listing>
 `type Target = T;` આ સિન્ટેક્સ `Deref` ટ્રેઇટ માટે સંકળાયેલ પ્રકાર (associated type) વ્યાખ્યાયિત કરે છે. સંકળાયેલ પ્રકારો જનરિક પેરામીટર જાહેર કરવાની એક થોડી અલગ રીત છે, પરંતુ હાલમાં તમારે તેમના વિશે ચિંતા કરવાની જરૂર નથી; આપણે પ્રકરણ ૨૦ માં તેમના વિશે વધુ વિગતવાર વાત કરીશું. We fill in the body of the `deref` method with `&self.0` so that `deref` returns a reference
 
@@ -68,7 +96,11 @@ variable `x` માં `i32` મૂલ્ય `5` છે. અમે `y` ને `x
 
 જ્યારે આપણે Listing 15-9 માં `*y` દાખલ કર્યું, ત્યારે પડછાયામાં Rust એ આ કોડ ચલાવ્યો:
 
+```rust
+```rust
 *(y.deref())
+```
+```
 Rust `*` ઓપરેટરને `deref` પદ્ધતિના આહ્વાન અને ત્યારબાદ સાદા ડિરેફરન્સ સાથે બદલે છે, જેથી આપણે એ વિચારવાની જરૂર ન પડે કે આપણે `deref` પદ્ધતિને આહ્વાન કરવી જોઈએ કે નહીં. આ Rust લક્ષણ આપણને એવા કોડ લખવાની મંજૂરી આપે છે જે નિયમિત સંદર્ભ અથવા `Deref` અમલ કરતી પ્ર type સાથે સમાન
 
 રીતે કાર્ય કરે છે. `deref` પદ્ધતિ શા માટે મૂલ્યનો સંદર્ભ પરત કરે છે, અને કૌંસની બહાર `*(y.deref())` માં સાદો ડિરેફરન્સ હજી પણ જરૂરી કેમ છે, એ માલિકી પ્રણાલી સાથે સંબંધિત છે. જો `deref` પદ્ધતિ સીધું મૂલ્ય પરત કરે તેના બદલે મૂલ્યનો સંદર્ભ પરત કરે, તો મૂલ્ય `self` માંથી ખસેડવામાં આવશે. આપણે `MyBox<T>` માં આંતરિક મૂલ્યની માલિકી લેવા માંગતા નથી, અથવા મોટાભાગના કિસ્સાઓમાં જ્યાં આપણે ડિરેફરન્સ ઓપરેટરનો ઉપયોગ કરીએ છીએ.
@@ -85,19 +117,31 @@ Deref ઉચ્ચારણ ઉમેરવામાં આવ્યું Rust 
 કરી શકે છે. Deref ઉચ્ચારણને ક્રિયામાં જોવા માટે, ચાલો `MyBox<T>` પ્રકારનો ઉપયોગ કરીએ જે આપણે લિસ્ટિંગ 15-8 માં વ્યાખ્યાયિત કર્યો હતો તેમજ લિસ્ટિંગ 15-10 માં ઉમેરવામાં આવેલા `Deref` ના અમલીકરણનો પણ ઉપયોગ કરીએ. લિસ્ટિંગ 15-11 એક ફંક્શનની વ્યાખ્યા દર્શાવે છે જેમાં સ્ટ્રિંગ સ્લાઇસ પેરામીટર છે.
 
 <Listing number="15-11" file-name="src/main.rs" caption="A `hello` function that has the parameter `name` of type `&str`">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-11/src/main.rs:here}}
+```
+```
 </Listing>
 આપણે `hello` વિધેયને સ્ટ્રિંગ સ્લાઇસ Argument તરીકે બોલાવી શકીએ છીએ, જેમ કે `hello("Rust");`. ડેરફ કોર્ઝનથી `hello` ને `MyBox<String>` પ્રકારના મૂલ્યના સંદર્ભ સાથે બોલાવવાનું શક્ય બને છે, જે યાદી 15-12 માં દર્શાવેલ છે.
 
 <Listing number="15-12" file-name="src/main.rs" caption="Calling `hello` with a reference to a `MyBox<String>` value, which works because of deref coercion">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-12/src/main.rs:here}}
+```
+```
 </Listing>
 અહીં આપણે `hello` વિધેયને Argument `&m` સાથે બોલાવી રહ્યા છીએ, જે `MyBox<String>` મૂલ્યનો સંદર્ભ છે. કારણ કે આપણે `MyBox<T>` પર `Deref` લક્ષણ લાગુ કર્યું છે યાદી 15-10 માં, Rust `&MyBox<String>` ને `&String` માં રૂપાંતરિત કરી શકે છે `deref` વિધેયને બોલાવીને. પ્રમાણિત પુસ્તકાલય `String` પર `Deref` નું અમલીકરણ પૂરું પાડે છે જે સ્ટ્રિંગ સ્લાઇસ આપે છે, અને આ `Deref` માટે API દસ્તાવેજીકરણમાં દર્શાવેલ છે. Rust ફરીથી `deref` વિધેયને બોલાવે છે જેથી `&String` ને `&str` માં રૂપાંતરિત કરી શકાય, જે `hello` વિધેયની વ્યાખ્યા સાથે મેળ ખાય છે.
 
 જો Rust દ્વારા ડિરેફ સહસંબંધ (deref coercion) અમલમાં ન હોત, તો આપણે `&MyBox<String>` પ્રકારના મૂલ્ય સાથે `hello` ને બોલાવવા માટે લિસ્ટિંગ ૧૫-૧૩ માં આપેલ કોડ લખવો પડત, લિસ્ટિંગ ૧૫-૧૨ માં આપેલ કોડને બદલે.
 
 <Listing number="15-13" file-name="src/main.rs" caption="The code we would have to write if Rust didn’t have deref coercion">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-13/src/main.rs:here}}
+```
+```
 </Listing>
 `(*m)` આ `MyBox<String>` ને `String` માં રૂપાંતરિત કરે છે. ત્યારબાદ, `&` અને `[..]` સમગ્ર `String` નો એક સ્ટ્રિંગ સ્લાઇસ લે છે જેથી `hello` ના હસ્તાક્ષર સાથે મેળ ખાય. આ કોડ વગર ડેરફ સંવર્ધન (deref coercion) વાંચવા, લખવા અને સમજવામાં મુશ્કેલ છે, જેમાં આ બધા પ્રતીકો સામેલ છે. ડેરફ સંવર્ધન Rust ને આપોઆપ આ રૂપાંતરણોને નિયંત્રિત કરવાની મંજૂરી આપે છે. જ્યારે
 

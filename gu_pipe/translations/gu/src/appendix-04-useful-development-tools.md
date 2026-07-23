@@ -8,7 +8,11 @@
 
 Rust સ્થાપનોમાં `rustfmt` મૂળભૂત રીતે સમાવિષ્ટ હોય છે, તેથી તમારી પાસે પહેલાથી જ પ્રોગ્રામ્સ `rustfmt` અને `cargo-fmt` તમારા સિસ્ટમ પર હોવા જોઈએ. આ બે આદેશો `rustc` અને `cargo` સાથે સમાન છે જેમાં `rustfmt` વધુ સૂક્ષ્મ નિયંત્રણ આપે છે અને `cargo-fmt` એ Cargo નો ઉપયોગ કરતા પ્રોજેક્ટની સંમેલનોને સમજે છે. કોઈપણ Cargo પ્રોજેક્ટને ફોર્મેટ કરવા માટે, નીચે મુજબ દાખલ કરો:
 
+```console
+```console
 $ cargo fmt
+```
+```
 આ આદેશ ચલાવવાથી વર્તમાન `crate` માં રહેલું બધું જ Rust કોડ ફરીથી ફોર્મેટ થશે. આ માત્ર કોડની શૈલીમાં ફેરફાર લાવવું જોઈએ, કોડના અર્થમાં નહીં. `rustfmt` વિશે વધુ માહિતી માટે, તેના દસ્તાવેજો જુઓ.
 
 ### Fix Your Code with `rustfix`
@@ -17,12 +21,18 @@ $ cargo fmt
 
 ફાઈલનું નામ: src/main.rs
 
+```rust
+```rust
 fn main() {
     let mut x = 42;
     println!("{x}");
 }
+```
+```
 અહીં, અમે variable `x` ને પરિવર્તનશીલ (mutable) તરીકે વ્યાખ્યાયિત કરી રહ્યા છીએ, પરંતુ અમે હકીકતમાં તેમાં કોઈ ફેરફાર કરતા નથી. Rust આપણને તેના વિશે ચેતવણી આપે છે:
 
+```console
+```console
 $ cargo build
    Compiling myprogram v0.1.0 (file:///projects/myprogram)
 warning: variable does not need to be mutable
@@ -34,20 +44,30 @@ warning: variable does not need to be mutable
   |         help: remove this `mut`
   |
   = note: `#[warn(unused_mut)]` on by default
+```
+```
 ચેતવણી સૂચવે છે કે આપણે `mut` કીવર્ડ દૂર કરવો જોઈએ. આપણે `rustfix` સાધનનો ઉપયોગ કરીને આપોઆપ તે સૂચન લાગુ કરી શકીએ છીએ, આદેશ `cargo fix` ચલાવીને:
 
+```console
+```console
 $ cargo fix
     Checking myprogram v0.1.0 (file:///projects/myprogram)
       Fixing src/main.rs (1 fix)
     Finished dev [unoptimized + debuginfo] target(s) in 0.59s
+```
+```
 જ્યારે આપણે ફરીથી src/main.rs જોઈએ, ત્યારે આપણે જોઈશું કે `cargo fix` એ કોડમાં પરિવર્તન કર્યું છે:
 
 ફાઈલનું નામ: src/main.rs
 
+```rust
+```rust
 fn main() {
     let x = 42;
     println!("{x}");
 }
+```
+```
 variable `x` હવે અપરિવર્તનશીલ છે, અને ચેતવણી હવે દેખાતી નથી. તમે તમારા
 
 કોડને વિવિધ Rust આવૃત્તિઓ વચ્ચે બદલવા માટે `cargo fix` આદેશનો પણ ઉપયોગ કરી શકો છો. આવૃત્તિઓ વિશે Appendix E માં માહિતી આપવામાં આવી છે.
@@ -58,18 +78,28 @@ variable `x` હવે અપરિવર્તનશીલ છે, અને �
 
 કોઈપણ Cargo પ્રોજેક્ટ પર ક્લિપીના લિન્ટ્સ ચલાવવા માટે, નીચે મુજબ દાખલ કરો:
 
+```console
+```console
 $ cargo clippy
+```
+```
 ઉદાહરણ તરીકે, જો તમે એક એવી કાર્યક્રમ લખો છો જે ગાણિતિક અચળાંકનું આશરે મૂલ્ય વાપરે છે, જેમ કે પાઇ, તો આ કાર્યક્રમ કરે છે:
 
 <Listing file-name="src/main.rs">
+```rust
+```rust
 fn main() {
     let x = 3.1415;
     let r = 8.0;
     println!("the area of the circle is {}", x * r * r);
 }
+```
+```
 </Listing>
 આ પ્રોજેક્ટ પર `cargo clippy` ચલાવવાથી આ ભૂલ આવે છે:
 
+```text
+```text
 error: approximate value of `f{32, 64}::consts::PI` found
  --> src/main.rs:2:13
   |
@@ -79,16 +109,22 @@ error: approximate value of `f{32, 64}::consts::PI` found
   = note: `#[deny(clippy::approx_constant)]` on by default
   = help: consider using the constant directly
   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
+```
+```
 આ ભૂલ તમને જણાવે છે કે Rust પાસે પહેલેથી જ વધુ ચોક્કસ `PI` અચળાંક વ્યાખ્યાયિત થયેલ છે, અને જો તમે અચળાંકનો ઉપયોગ કરો તો તમારું કાર્યક્રમ વધુ સચોટ બનશે. પછી તમારે તમારા કોડને `PI` અચળાંકનો ઉપયોગ કરવા માટે બદલવો જોઈએ.
 
 નીચે આપેલ કોડ Clippy તરફથી કોઈ ભૂલો કે ચેતવણીઓ ઉત્પન્ન કરતો નથી:
 
 <Listing file-name="src/main.rs">
+```rust
+```rust
 fn main() {
     let x = std::f64::consts::PI;
     let r = 8.0;
     println!("the area of the circle is {}", x * r * r);
 }
+```
+```
 </Listing>
 વધુ માહિતી માટે, ક્લિપીનું દસ્તાવેજીકરણ જુઓ.
 

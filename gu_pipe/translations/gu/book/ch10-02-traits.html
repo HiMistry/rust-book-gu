@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-55c5f58b.js";
+            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -191,7 +191,11 @@
 <p>ઉદાહરણ તરીકે, ધારો કે આપણી પાસે અનેક <code>struct</code> છે જે વિવિધ પ્રકારની અને માત્રાની લખાણ ધરાવે છે: એક <code>NewsArticle</code> <code>struct</code> જે કોઈ ચોક્કસ સ્થળે નોંધાયેલ સમાચારની વાર્તા ધરાવે છે અને એક <code>SocialPost</code> જે વધુમાં વધુ ૨૮૦ અક્ષરો સાથે મેટાડેટા પણ ધરાવે છે જે દર્શાવે છે કે તે નવી પોસ્ટ છે, ફરીથી પોસ્ટ કરવામાં આવી છે, અથવા અન્ય પોસ્ટનો જવાબ છે.</p>
 <p>આપણે એક મીડિયા એગ્રીગેટર ક્રેટ <code>aggregator</code> બનાવવાની ઈચ્છા કરીએ છીએ જે <code>NewsArticle</code> અથવા <code>SocialPost</code> ઇન્સ્ટન્સમાં સંગ્રહિત ડેટાના સારાંશ દર્શાવી શકે. આ માટે, આપણને દરેક પ્રકારનો સારાંશ જરૂરી છે, અને અમે તે સારાંશ મેળવવા માટે એક ઇન્સ્ટન્સ પર <code>summarize</code> પદ્ધતિને બોલાવીશું. સૂચિ 10-12 જાહેર <code>Summary</code> ટ્રેઇટની વ્યાખ્યા દર્શાવે છે જે આ વર્તન વ્યક્ત કરે છે.</p>
 <listing number="10-12" file-name="src/lib.rs" caption="A `Summary` trait that consists of the behavior provided by a `summarize` method">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-12/src/lib.rs}}
+```
+```
 </listing>
 અહીં, આપણે `trait` કીવર્ડનો ઉપયોગ કરીને એક લક્ષણ જાહેર કરીએ છીએ અને પછી લક્ષણનું નામ, જે આ કિસ્સામાં `Summary` છે. આપણે લક્ષણને `pub` તરીકે પણ જાહેર કરીએ છીએ જેથી અન્ય ક્રેટે (crates) આ ક્રેટે પર આધારિત રહીને આ લક્ષણનો ઉપયોગ કરી શકે, જે આપણે થોડા ઉદાહરણોમાં જોઈશું. કુંજી કૌંસની અંદર, આપણે પદ્ધતિ હસ્તાક્ષરો (method signatures) જાહેર કરીએ છીએ જે તે પ્રકારોના વર્તનની સમજૂતી આપે છે જે આ લક્ષણને અમલમાં મૂકે છે, જે આ કિસ્સામાં `fn
 <p>summarize(&amp;self) -&gt; String<code>છે. પદ્ધતિ હસ્તાક્ષર પછી, કુંજી કૌંસની અંદર અમલીકરણ આપવાને બદલે, આપણે અર્ધવિરામ (semicolon) નો ઉપયોગ કરીએ છીએ. આ લક્ષણને અમલમાં મૂકતો દરેક પ્રકાર પદ્ધતિના શરીર માટે પોતાનું કસ્ટમ વર્તન પ્રદાન કરે છે. કમ્પાઇલર ખાતરી કરશે કે</code>Summary<code>લક્ષણ ધરાવતા કોઈપણ પ્રકારમાં</code>summarize` પદ્ધતિ આ હસ્તાક્ષર સાથે ચોક્કસપણે વ્યાખ્યાયિત થયેલ હશે.</p>
@@ -199,85 +203,192 @@
 <h3 id="implementing-a-trait-on-a-type"><a class="header" href="#implementing-a-trait-on-a-type">Implementing a Trait on a Type</a></h3>
 <p>હવે આપણે <code>Summary</code> લક્ષણની ઇચ્છિત હસ્તાક્ષરો નિર્ધારિત કર્યા છે, પછી આપણે આપણાં મીડિયા એકત્રીકરણમાં રહેલા પ્રકારો પર તેને અમલમાં મૂકી શકીએ છીએ. સૂચિ 10-13 <code>NewsArticle</code> સ્ટ્રક્ચર પર <code>Summary</code> લક્ષણનું એક અમલીકરણ દર્શાવે છે જે હેડલાઇન, લેખક અને સ્થાનનો ઉપયોગ કરીને <code>summarize</code> નું વળતર મૂલ્ય બનાવે છે. <code>SocialPost</code> સ્ટ્રક્ચર માટે, આપણે <code>summarize</code> ને user નામ દ્વારા અનુસરવામાં આવે છે, ત્યારબાદ પોસ્ટના સમગ્ર લખાણ તરીકે વ્યાખ્યાયિત કરીએ છીએ, એવું ધારીને કે પોસ્ટની સામગ્રી પહેલાથી જ 280 અક્ષરો સુધી મર્યાદિત છે.</p>
 <listing number="10-13" file-name="src/lib.rs" caption="Implementing the `Summary` trait on the `NewsArticle` and `SocialPost` types">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-13/src/lib.rs:here}}
+```
+```
 </listing>
 પ્રકાર પર લક્ષણ (trait) અમલમાં મૂકવું એ સામાન્ય પદ્ધતિઓ અમલમાં મૂકવા જેવું જ છે. તફાવત એ છે કે `impl` પછી, આપણે જે લક્ષણને અમલમાં મૂકવા માંગીએ છીએ તેનું નામ લખીએ છીએ, ત્યારબાદ `for` કીવર્ડનો ઉપયોગ કરીએ છીએ અને પછી આપણે જે પ્રકાર માટે લક્ષણ અમલમાં મૂકવા માંગીએ છીએ તેનું નામ સ્પષ્ટ કરીએ છીએ. `impl` બ્લોકમાં, આપણે તે પદ્ધતિ હસ્તાક્ષરો (signatures) મૂકીએ છીએ જે લક્ષણ વ્યાખ્યામાં નિર્ધારિત કરવામાં આવ્યા છે. દરેક હસ્તાક્ષર પછી અર્ધવિરામ મૂકવાના બદલે, આપણે કદબિંદુઓનો ઉપયોગ કરીએ છીએ અને લક્ષણની પદ્ધતિઓ માટે ચોક્કસ વર્તન ભરપૂર કરીએ છીએ જે વિશેષ પ્રકાર માટે હોવું જોઈએ.
 <p>હવે પુસ્તકાલયે <code>NewsArticle</code> અને <code>SocialPost</code> પર <code>Summary</code> લક્ષણ (trait) અમલમાં મૂક્યું છે, તેથી હવે ક્રેટના userઓ <code>NewsArticle</code> અને <code>SocialPost</code> નાં ઉદાહરણો પર નિયમિત પદ્ધતિઓ (methods) ની જેમ જ લક્ષણની પદ્ધતિઓને બોલાવી શકે છે. એકમાત્ર ભેદ એ છે કે userએ પ્રકારોની સાથે લક્ષણને પણ કાર્યક્ષેત્રમાં લાવવું પડશે. અહીં એક ઉદાહરણ છે કે કેવી રીતે બાઈનરી ક્રેટ આપણી <code>aggregator</code> પુસ્તકાલય ક્રેટનો ઉપયોગ કરી શકે છે:</p>
-<p>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-01-calling-trait-method/src/main.rs}}
-આ કોડ <code>1 નવું પોસ્ટ: horse_ebooks: અલબત્ત, જેવો કે તમે કદાચ પહેલાથી જ જાણો છો, લોકો</code></p>
-<p>છાપે છે. અન્ય ક્રેટે (crates) જે <code>aggregator</code> પર આધાર રાખે છે તેઓ પણ પોતાના પ્રકારો પર <code>Summary</code> અમલમાં મૂકવા માટે <code>Summary</code> ટ્રેઇટને કાર્યક્ષેત્રમાં લાવી શકે છે. એક નિયંત્રણ ધ્યાનમાં લેવું જોઈએ કે આપણે માત્ર ત્યારે જ કોઈ પ્રકાર પર ટ્રેઇટનો અમલ કરી શકીએ છીએ જો ટ્રેઇટ અથવા પ્રકાર, અથવા બંને, આપણા ક્રેટે સ્થાનિક હોય. ઉદાહરણ તરીકે, આપણે <code>Display</code> જેવા સ્ટાન્ડર્ડ લાઈબ્રેરી ટ્રેઇટ્સને <code>SocialPost</code> જેવા કસ્ટમ પ્રકાર પર અમલમાં મૂકી શકીએ છીએ જે આપણા <code>aggregator</code> ક્રેટેની કાર્યક્ષમતાનો ભાગ છે કારણ કે પ્રકાર <code>SocialPost</code> આપણા <code>aggregator</code> ક્રેટે સ્થાનિક છે. આપણે <code>Summary</code> ને પણ <code>Vec&lt;T&gt;</code> પર અમલમાં મૂકી શકીએ છીએ આપણા <code>aggregator</code> ક્રેટેમાં કારણ કે ટ્રેઇટ <code>Summary</code> આપણા <code>aggregator</code> ક્રેટે સ્થાનિક છે.</p>
-<p>પણ આપણે બાહ્ય પ્રકારો પર બાહ્ય લક્ષણો અમલમાં મૂકી શકતા નથી. ઉદાહરણ તરીકે, આપણે <code>Display</code> લક્ષણને <code>Vec&lt;T&gt;</code> પર આપણા <code>aggregator</code> ક્રેટમાં અમલમાં મૂકી શકતા નથી, કારણ કે <code>Display</code> અને <code>Vec&lt;T&gt;</code> બંને સ્ટાન્ડર્ડ લાઈબ્રેરીમાં વ્યાખ્યાયિત છે અને આપણા <code>aggregator</code> ક્રેટ માટે સ્થાનિક નથી. આ નિયંત્રણ એક ગુણધર્મના ભાગ છે જેને સુસંગતતા (coherence) કહેવાય છે, અને વિશેષ કરીને અનાથા નિયમ (orphan rule), જેનું નામ એટલા માટે આપવામાં આવ્યું છે કારણ કે પિતૃ પ્રકાર હાજર નથી. આ નિયમ ખાતરી કરે છે કે અન્ય લોકોનો કોડ તમારા કોડને તોડી શકતો નથી અને ઊલટું. જો આ નિયમ ન હોત, તો બે ક્રેટ એક જ પ્રકાર માટે એક જ લક્ષણને અમલમાં મૂકી શકે છે, અને Rust ને ખબર નહીં પડે કે કયો અમલ વાપરવો.</p>
-<!-- Old headings. Do not remove or links may break. -->
-<h3 id="using-default-implementations"><a class="header" href="#using-default-implementations">Using Default Implementations</a></h3>
-<p>કેટલીકવાર, કોઈ traitના તમામ methods માટે અમલીકરણો ફરજિયાત કરવાને બદલે, અમુક અથવા બધા methods માટે default વર્તન ધરાવવું ઉપયોગી થઈ શકે છે. પછી, જ્યારે આપણે કોઈ ચોક્કસ type પર traitનું અમલીકરણ કરીએ છીએ, ત્યારે આપણે દરેક methodના default વર્તનને જાળવી શકીએ છીએ અથવા તેને override કરી શકીએ છીએ.</p>
-<p>ઉપયોગિતા 10-14 માં, આપણે <code>Summary</code> traitની <code>summarize</code> method માટે એક default stringનો ઉલ્લેખ કર્યો છે, માત્ર method signatureને વ્યાખ્યાયિત કરવાને બદલે, જેવું કે આપણે ઉપયોગિતા 10-12 માં કર્યું હતું.</p>
-<listing number="10-14" file-name="src/lib.rs" caption="Defining a `Summary` trait with a default implementation of the `summarize` method">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>```rust
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-01-calling-trait-method/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<pre><code>આ કોડ `1 નવું પોસ્ટ: horse_ebooks: અલબત્ત, જેવો કે તમે કદાચ પહેલાથી જ જાણો છો, લોકો`
+
+છાપે છે. અન્ય ક્રેટે (crates) જે `aggregator` પર આધાર રાખે છે તેઓ પણ પોતાના પ્રકારો પર `Summary` અમલમાં મૂકવા માટે `Summary` ટ્રેઇટને કાર્યક્ષેત્રમાં લાવી શકે છે. એક નિયંત્રણ ધ્યાનમાં લેવું જોઈએ કે આપણે માત્ર ત્યારે જ કોઈ પ્રકાર પર ટ્રેઇટનો અમલ કરી શકીએ છીએ જો ટ્રેઇટ અથવા પ્રકાર, અથવા બંને, આપણા ક્રેટે સ્થાનિક હોય. ઉદાહરણ તરીકે, આપણે `Display` જેવા સ્ટાન્ડર્ડ લાઈબ્રેરી ટ્રેઇટ્સને `SocialPost` જેવા કસ્ટમ પ્રકાર પર અમલમાં મૂકી શકીએ છીએ જે આપણા `aggregator` ક્રેટેની કાર્યક્ષમતાનો ભાગ છે કારણ કે પ્રકાર `SocialPost` આપણા `aggregator` ક્રેટે સ્થાનિક છે. આપણે `Summary` ને પણ `Vec&lt;T&gt;` પર અમલમાં મૂકી શકીએ છીએ આપણા `aggregator` ક્રેટેમાં કારણ કે ટ્રેઇટ `Summary` આપણા `aggregator` ક્રેટે સ્થાનિક છે.
+
+પણ આપણે બાહ્ય પ્રકારો પર બાહ્ય લક્ષણો અમલમાં મૂકી શકતા નથી. ઉદાહરણ તરીકે, આપણે `Display` લક્ષણને `Vec&lt;T&gt;` પર આપણા `aggregator` ક્રેટમાં અમલમાં મૂકી શકતા નથી, કારણ કે `Display` અને `Vec&lt;T&gt;` બંને સ્ટાન્ડર્ડ લાઈબ્રેરીમાં વ્યાખ્યાયિત છે અને આપણા `aggregator` ક્રેટ માટે સ્થાનિક નથી. આ નિયંત્રણ એક ગુણધર્મના ભાગ છે જેને સુસંગતતા (coherence) કહેવાય છે, અને વિશેષ કરીને અનાથા નિયમ (orphan rule), જેનું નામ એટલા માટે આપવામાં આવ્યું છે કારણ કે પિતૃ પ્રકાર હાજર નથી. આ નિયમ ખાતરી કરે છે કે અન્ય લોકોનો કોડ તમારા કોડને તોડી શકતો નથી અને ઊલટું. જો આ નિયમ ન હોત, તો બે ક્રેટ એક જ પ્રકાર માટે એક જ લક્ષણને અમલમાં મૂકી શકે છે, અને Rust ને ખબર નહીં પડે કે કયો અમલ વાપરવો.
+
+&lt;!-- Old headings. Do not remove or links may break. --&gt;
+### Using Default Implementations
+
+કેટલીકવાર, કોઈ traitના તમામ methods માટે અમલીકરણો ફરજિયાત કરવાને બદલે, અમુક અથવા બધા methods માટે default વર્તન ધરાવવું ઉપયોગી થઈ શકે છે. પછી, જ્યારે આપણે કોઈ ચોક્કસ type પર traitનું અમલીકરણ કરીએ છીએ, ત્યારે આપણે દરેક methodના default વર્તનને જાળવી શકીએ છીએ અથવા તેને override કરી શકીએ છીએ.
+
+ઉપયોગિતા 10-14 માં, આપણે `Summary` traitની `summarize` method માટે એક default stringનો ઉલ્લેખ કર્યો છે, માત્ર method signatureને વ્યાખ્યાયિત કરવાને બદલે, જેવું કે આપણે ઉપયોગિતા 10-12 માં કર્યું હતું.
+
+&lt;Listing number="10-14" file-name="src/lib.rs" caption="Defining a `Summary` trait with a default implementation of the `summarize` method"&gt;
+```rust
+```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-14/src/lib.rs:here}}
-</listing>
+</code></pre>
+<pre><code>&lt;/Listing&gt;
 `NewsArticle` ના ઉદાહરણોનો સારાંશ આપવા માટે ડિફોલ્ટ અમલીકરણનો ઉપયોગ કરવા માટે, આપણે `impl Summary for NewsArticle {}` સાથે ખાલી `impl` બ્લોક સ્પષ્ટ કરીએ છીએ.
-<p>ભલે આપણે હવે સીધા <code>NewsArticle</code> પર <code>summarize</code> પદ્ધતિને વ્યાખ્યાયિત ન કરતા હોઈએ, આપણે ડિફોલ્ટ અમલીકરણ પ્રદાન કર્યું છે અને ઉલ્લેખ કર્યો છે કે <code>NewsArticle</code> <code>Summary</code> ટ્રેઇટનો અમલ કરે છે. પરિણામે, આપણે હજી પણ <code>NewsArticle</code> ના ઉદાહરણ પર <code>summarize</code> પદ્ધતિને બોલાવી શકીએ છીએ, આ રીતે:</p>
-<p>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-02-calling-default-impl/src/main.rs:here}}
-આ કોડ <code>New article available! (Read more...)</code> છાપે છે.</p>
-<p>મૂળભૂત અમલીકરણ બનાવવું એ આપણને Listing 10-13 માં <code>SocialPost</code> પર <code>Summary</code> ના અમલીકરણમાં કંઈપણ બદલવાની જરૂર નથી. આનું કારણ એ છે કે ડિફોલ્ટ અમલીકરણને ઓવરરાઇડ કરવા માટેનું વાક્યરચના એ ટ્રેઇટ પદ્ધતિને અમલમાં મૂકવા માટેની વાક્યરચના સમાન છે જેમાં ડિફોલ્ટ અમલીકરણ નથી.</p>
-<p>ડિફોલ્ટ અમલીકરણો સમાન ટ્રેઇટમાં અન્ય પદ્ધતિઓને બોલાવી શકે છે, ભલે તે અન્ય પદ્ધતિઓમાં ડિફોલ્ટ અમલીકરણ ન હોય. આ રીતે, એક ટ્રેઇટ ઘણી ઉપયોગી કાર્યક્ષમતા પ્રદાન કરી શકે છે અને માત્ર અમલકર્તાઓને તેનો નાનો ભાગ સ્પષ્ટ કરવાની જરૂર પડે છે. ઉદાહરણ તરીકે, આપણે <code>Summary</code> ટ્રેઇટને <code>summarize_author</code> પદ્ધતિ સાથે વ્યાખ્યાયિત કરી શકીએ છીએ જેનું અમલીકરણ જરૂરી છે, અને પછી <code>summarize</code> પદ્ધતિને વ્યાખ્યાયિત કરી શકીએ છીએ જેમાં ડિફોલ્ટ અમલીકરણ હોય છે જે <code>summarize_author</code> પદ્ધતિને બોલાવે છે:</p>
-<p>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/lib.rs:here}}
-આ <code>Summary</code> નાં આ સંસ્કરણનો ઉપયોગ કરવા માટે, આપણે માત્ર એટલું જ વ્યાખ્યાયિત કરવું જોઈએ કે જ્યારે કોઈ પ્રકાર પર લક્ષણ (trait) અમલમાં મુકવામાં આવે ત્યારે <code>summarize_author</code> કેવી રીતે કાર્ય કરે.</p>
-<p>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/lib.rs:impl}}
-નિર્ણિત કર્યા પછી <code>summarize_author</code>, અમે <code>SocialPost</code> struct ના ઉદાહરણો પર <code>summarize</code> ને બોલાવી શકીએ છીએ, અને <code>summarize</code> નું આદશ અમલીકરણ આપેલ <code>summarize_author</code> ની વ્યાખ્યાને બોલાવશે. કારણ કે આપણે <code>summarize_author</code> અમલમાં મૂક્યું છે, <code>Summary</code> trait એ આપણને <code>summarize</code> પદ્ધતિનું વર્તન આપ્યું છે, કોઈપણ વધુ કોડ લખવાની જરૂરિયાત વિના. આ આ પ્રમાણે દેખાય છે:</p>
-<p>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/main.rs:here}}
-આ કોડ `1 નવું પોસ્ટ: (વધુ માહિતી @horse_ebooks… પાસેથી</p>
-<p>મેળવો)` છાપે છે. નોંધ કરો કે તે જ પદ્ધતિના ઓવરરાઇડિંગ અમલીકરણમાંથી ડિફોલ્ટ અમલીકરણને બોલાવવું શક્ય નથી.</p>
-<!-- Old headings. Do not remove or links may break. -->
-<h3 id="using-traits-as-parameters"><a class="header" href="#using-traits-as-parameters">Using Traits as Parameters</a></h3>
-<p>હવે તમે પાત્રોને વ્યાખ્યાયિત અને અમલમાં મૂકવાની રીત જાણો છો, તો ચાલો એ તપાસીએ કે કેવી રીતે પાત્રોનો ઉપયોગ કરીને કાર્યોને વ્યાખ્યાયિત કરી શકાય છે જે ઘણાં વિવિધ પ્રકારો સ્વીકારે છે. આપણે <code>Summary</code> પાત્રનો ઉપયોગ કરીશું જે આપણે <code>NewsArticle</code> અને <code>SocialPost</code> પ્રકારો પર Listing 10-13 માં અમલમાં મૂક્યો હતો, જેથી <code>notify</code> કાર્યને વ્યાખ્યાયિત કરી શકાય જે તેના <code>item</code> પરિમાણ પર <code>summarize</code> પદ્ધતિને બોલાવે છે, જે કોઈ એવા પ્રકારનો હોય છે જે <code>Summary</code> પાત્રનો અમલ કરે છે. આ કરવા માટે, આપણે <code>impl Trait</code> વાક્યરચનાનો ઉપયોગ કરીએ છીએ, જેમ કે:</p>
-<p>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-04-traits-as-parameters/src/lib.rs:here}}
-નિશ્ચિત પ્રકારને બદલે <code>item</code> પરિમાણ માટે, અમે <code>impl</code> કીવર્ડ અને ટ્રેઇટ નામનો ઉલ્લેખ કરીએ છીએ. આ પરિમાણ એ કોઈપણ પ્રકારને સ્વીકારે છે જે નિર્દિષ્ટ ટ્રેઇટનું પાલન કરે છે. In the body of <code>notify</code>, we can call any methods on <code>item</code> that come from the <code>Summary</code> trait, such as <code>summarize</code>. <code>notify</code> ના ભાગમાં, અમે <code>Summary</code> ટ્રેઇટમાંથી આવતા <code>item</code> પરની કોઈપણ પદ્ધતિઓને બોલાવી શકીએ છીએ, જેમ કે <code>summarize</code>. We can call <code>notify</code> and pass in any instance of <code>NewsArticle</code> or <code>SocialPost</code>. અમે <code>notify</code> ને બોલાવી શકીએ છીએ અને <code>NewsArticle</code> અથવા <code>SocialPost</code> ના કોઈપણ ઉદાહરણને પસાર કરી શકીએ છીએ. Code that calls the function with any other type, such as a <code>String</code> or an <code>i32</code>, won’t compile, because those types don’t implement <code>Summary</code>. કોડ જે અન્ય કોઈ પ્રકાર સાથે ફંક્શનને બોલાવે છે, જેમ કે <code>String</code> અથવા <code>i32</code>, તે કમ્પાઇલ થશે નહીં, કારણ કે તે પ્રકારો <code>Summary</code> નું પાલન કરતા નથી.</p>
-<!-- Old headings. Do not remove or links may break. -->
-<h4 id="trait-bound-syntax"><a class="header" href="#trait-bound-syntax">Trait Bound Syntax</a></h4>
-<p><code>impl Trait</code> વાક્યરચના સરળ કેસો માટે કામ કરે છે, પરંતુ તે ખરેખર એક લાંબા સ્વરૂપ માટે વાક્ય શર્કરા (syntax sugar) છે, જેને trait bound કહેવાય છે; તે આ પ્રમાણે દેખાય છે:</p>
-<p>pub fn notify&lt;T: Summary&gt;(item: &amp;T) {
-println!(“Breaking news! {}”, item.summarize());
+
+ભલે આપણે હવે સીધા `NewsArticle` પર `summarize` પદ્ધતિને વ્યાખ્યાયિત ન કરતા હોઈએ, આપણે ડિફોલ્ટ અમલીકરણ પ્રદાન કર્યું છે અને ઉલ્લેખ કર્યો છે કે `NewsArticle` `Summary` ટ્રેઇટનો અમલ કરે છે. પરિણામે, આપણે હજી પણ `NewsArticle` ના ઉદાહરણ પર `summarize` પદ્ધતિને બોલાવી શકીએ છીએ, આ રીતે:
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-02-calling-default-impl/src/main.rs:here}}
+</code></pre>
+<pre><code>આ કોડ `New article available! (Read more...)` છાપે છે.
+
+મૂળભૂત અમલીકરણ બનાવવું એ આપણને Listing 10-13 માં `SocialPost` પર `Summary` ના અમલીકરણમાં કંઈપણ બદલવાની જરૂર નથી. આનું કારણ એ છે કે ડિફોલ્ટ અમલીકરણને ઓવરરાઇડ કરવા માટેનું વાક્યરચના એ ટ્રેઇટ પદ્ધતિને અમલમાં મૂકવા માટેની વાક્યરચના સમાન છે જેમાં ડિફોલ્ટ અમલીકરણ નથી.
+
+ડિફોલ્ટ અમલીકરણો સમાન ટ્રેઇટમાં અન્ય પદ્ધતિઓને બોલાવી શકે છે, ભલે તે અન્ય પદ્ધતિઓમાં ડિફોલ્ટ અમલીકરણ ન હોય. આ રીતે, એક ટ્રેઇટ ઘણી ઉપયોગી કાર્યક્ષમતા પ્રદાન કરી શકે છે અને માત્ર અમલકર્તાઓને તેનો નાનો ભાગ સ્પષ્ટ કરવાની જરૂર પડે છે. ઉદાહરણ તરીકે, આપણે `Summary` ટ્રેઇટને `summarize_author` પદ્ધતિ સાથે વ્યાખ્યાયિત કરી શકીએ છીએ જેનું અમલીકરણ જરૂરી છે, અને પછી `summarize` પદ્ધતિને વ્યાખ્યાયિત કરી શકીએ છીએ જેમાં ડિફોલ્ટ અમલીકરણ હોય છે જે `summarize_author` પદ્ધતિને બોલાવે છે:
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/lib.rs:here}}
+</code></pre>
+<pre><code>આ `Summary` નાં આ સંસ્કરણનો ઉપયોગ કરવા માટે, આપણે માત્ર એટલું જ વ્યાખ્યાયિત કરવું જોઈએ કે જ્યારે કોઈ પ્રકાર પર લક્ષણ (trait) અમલમાં મુકવામાં આવે ત્યારે `summarize_author` કેવી રીતે કાર્ય કરે.
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/lib.rs:impl}}
+</code></pre>
+<pre><code>નિર્ણિત કર્યા પછી `summarize_author`, અમે `SocialPost` struct ના ઉદાહરણો પર `summarize` ને બોલાવી શકીએ છીએ, અને `summarize` નું આદશ અમલીકરણ આપેલ `summarize_author` ની વ્યાખ્યાને બોલાવશે. કારણ કે આપણે `summarize_author` અમલમાં મૂક્યું છે, `Summary` trait એ આપણને `summarize` પદ્ધતિનું વર્તન આપ્યું છે, કોઈપણ વધુ કોડ લખવાની જરૂરિયાત વિના. આ આ પ્રમાણે દેખાય છે:
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/main.rs:here}}
+</code></pre>
+<pre><code>આ કોડ `1 નવું પોસ્ટ: (વધુ માહિતી @horse_ebooks... પાસેથી
+
+મેળવો)` છાપે છે. નોંધ કરો કે તે જ પદ્ધતિના ઓવરરાઇડિંગ અમલીકરણમાંથી ડિફોલ્ટ અમલીકરણને બોલાવવું શક્ય નથી.
+
+&lt;!-- Old headings. Do not remove or links may break. --&gt;
+### Using Traits as Parameters
+
+હવે તમે પાત્રોને વ્યાખ્યાયિત અને અમલમાં મૂકવાની રીત જાણો છો, તો ચાલો એ તપાસીએ કે કેવી રીતે પાત્રોનો ઉપયોગ કરીને કાર્યોને વ્યાખ્યાયિત કરી શકાય છે જે ઘણાં વિવિધ પ્રકારો સ્વીકારે છે. આપણે `Summary` પાત્રનો ઉપયોગ કરીશું જે આપણે `NewsArticle` અને `SocialPost` પ્રકારો પર Listing 10-13 માં અમલમાં મૂક્યો હતો, જેથી `notify` કાર્યને વ્યાખ્યાયિત કરી શકાય જે તેના `item` પરિમાણ પર `summarize` પદ્ધતિને બોલાવે છે, જે કોઈ એવા પ્રકારનો હોય છે જે `Summary` પાત્રનો અમલ કરે છે. આ કરવા માટે, આપણે `impl Trait` વાક્યરચનાનો ઉપયોગ કરીએ છીએ, જેમ કે:
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-04-traits-as-parameters/src/lib.rs:here}}
+</code></pre>
+<pre><code>નિશ્ચિત પ્રકારને બદલે `item` પરિમાણ માટે, અમે `impl` કીવર્ડ અને ટ્રેઇટ નામનો ઉલ્લેખ કરીએ છીએ. આ પરિમાણ એ કોઈપણ પ્રકારને સ્વીકારે છે જે નિર્દિષ્ટ ટ્રેઇટનું પાલન કરે છે. In the body of `notify`, we can call any methods on `item` that come from the `Summary` trait, such as `summarize`. `notify` ના ભાગમાં, અમે `Summary` ટ્રેઇટમાંથી આવતા `item` પરની કોઈપણ પદ્ધતિઓને બોલાવી શકીએ છીએ, જેમ કે `summarize`. We can call `notify` and pass in any instance of `NewsArticle` or `SocialPost`. અમે `notify` ને બોલાવી શકીએ છીએ અને `NewsArticle` અથવા `SocialPost` ના કોઈપણ ઉદાહરણને પસાર કરી શકીએ છીએ. Code that calls the function with any other type, such as a `String` or an `i32`, won’t compile, because those types don’t implement `Summary`. કોડ જે અન્ય કોઈ પ્રકાર સાથે ફંક્શનને બોલાવે છે, જેમ કે `String` અથવા `i32`, તે કમ્પાઇલ થશે નહીં, કારણ કે તે પ્રકારો `Summary` નું પાલન કરતા નથી.
+
+&lt;!-- Old headings. Do not remove or links may break. --&gt;
+#### Trait Bound Syntax
+
+`impl Trait` વાક્યરચના સરળ કેસો માટે કામ કરે છે, પરંતુ તે ખરેખર એક લાંબા સ્વરૂપ માટે વાક્ય શર્કરા (syntax sugar) છે, જેને trait bound કહેવાય છે; તે આ પ્રમાણે દેખાય છે:
+
+```rust
+```rust
+pub fn notify&lt;T: Summary&gt;(item: &amp;T) {
+    println!("Breaking news! {}", item.summarize());
 }
-આ લાંબો પ્રકાર અગાઉના વિભાગમાં આપેલા ઉદાહરણ સમાન છે પણ વધુ વિગતવાર છે. આપણે સામાન્ય પ્રકાર પરિમાણની ઘોષણા સાથે કોલન પછી અને ખૂણાકીય કૌંસની અંદર લક્ષણોની સીમાઓ મૂકીએ છીએ.</p>
-<p><code>impl Trait</code> વાક્યરચના અનુકૂળ છે અને સરળ કિસ્સાઓમાં વધુ સંક્ષિપ્ત કોડ બનાવે છે, જ્યારે સંપૂર્ણ લક્ષણ સીમા વાક્યરચના અન્ય કિસ્સાઓમાં વધુ જટિલતા વ્યક્ત કરી શકે છે. ઉદાહરણ તરીકે, આપણી પાસે બે પરિમાણો હોઈ શકે છે જે <code>Summary</code> લાગુ કરે છે. <code>impl Trait</code> વાક્યરચના સાથે આવું કરવાથી આ રીતે દેખાય છે:</p>
-<p>pub fn notify(item1: &amp;impl Summary, item2: &amp;impl Summary) {
-<code>impl Trait</code> નો ઉપયોગ કરવો યોગ્ય છે જો આપણે આ કાર્યને <code>item1</code> અને <code>item2</code> ને અલગ-અલગ પ્રકારો (જેટલા <code>Summary</code> લાગુ કરે છે) રાખવાની મંજૂરી આપવા માંગતા હોઈએ. જો આપણે બંને પરિમાણોને સમાન પ્રકારનો બનાવવો હોય, તો આપણે એક લક્ષણ બંધન (trait bound) નો ઉપયોગ કરવો જોઈએ, આ પ્રમાણે:</p>
-<p>pub fn notify&lt;T: Summary&gt;(item1: &amp;T, item2: &amp;T) {
-સામાન્ય પ્રકાર <code>T</code>, જે <code>item1</code> અને <code>item2</code> પરિમાણોના પ્રકાર તરીકે ઉલ્લેખિત છે, તે કાર્યને એવી રીતે મર્યાદિત કરે છે કે જેથી <code>item1</code> અને <code>item2</code> માટે Argument તરીકે પસાર થતા મૂલ્યનો નક્કર પ્રકાર સમાન હોવો જોઈએ.</p>
-<!-- Old headings. Do not remove or links may break. -->
-<h4 id="multiple-trait-bounds-with-the--syntax"><a class="header" href="#multiple-trait-bounds-with-the--syntax">Multiple Trait Bounds with the <code>+</code> Syntax</a></h4>
-<p>આપણે એક કરતાં વધુ ટ્રેઇટ બાઉન્ડ પણ સ્પષ્ટ કરી શકીએ છીએ. ધારો કે આપણે <code>notify</code> ને <code>display</code> ફોર્મેટિંગ તેમજ <code>summarize</code> પર <code>item</code> પર વાપરવા માંગીએ છીએ: આપણે <code>notify</code> વ્યાખ્યામાં સ્પષ્ટ કરીએ છીએ કે <code>item</code> એ <code>Display</code> અને <code>Summary</code> બંને અમલમાં મૂકવા જોઈએ. આપણે <code>+</code> સિન્ટેક્સનો ઉપયોગ કરીને આ કરી શકીએ છીએ:</p>
-<p>pub fn notify(item: &amp;(impl Summary + Display)) {
-<code>+</code> વાક્યરચના સામાન્ય પ્રકારો પર લક્ષણ સીમાઓ સાથે પણ માન્ય છે:</p>
-<p>pub fn notify&lt;T: Summary + Display&gt;(item: &amp;T) {
-બે લક્ષણોની શરતો નિર્ધારિત થયા પછી, <code>notify</code> નો ભાગ <code>summarize</code> ને બોલાવી શકે છે અને <code>item</code> ને ફોર્મેટ કરવા માટે <code>{}</code> નો ઉપયોગ કરી શકે છે.</p>
-<h4 id="clearer-trait-bounds-with-where-clauses"><a class="header" href="#clearer-trait-bounds-with-where-clauses">Clearer Trait Bounds with <code>where</code> Clauses</a></h4>
-<p>અતિશય ટ્રેઇટ બાઉન્ડ્સ હોવાના ગેરફાયદા છે. દરેક સામાન્ય પ્રકારના પોતાના ટ્રેઇટ બાઉન્ડ્સ હોય છે, તેથી અનેક સામાન્ય પ્રકાર પરિમાણો ધરાવતા વિધેયોમાં કાર્યના નામ અને તેના પરિમાણ યાદી વચ્ચે ઘણાં ટ્રેઇટ બાઉન્ડ માહિતી હોઈ શકે છે, જે વિધેય હસ્તાક્ષરને વાંચવામાં મુશ્કેલ બનાવે છે. આ કારણોસર, Rust પાસે વિધેય હસ્તાક્ષર પછી <code>where</code> કલમમાં ટ્રેઇટ બાઉન્ડ્સ સ્પષ્ટ કરવા માટે વૈકલ્પિક વાક્ય રચના છે. તેથી, આ લખવાને બદલે:</p>
-<p>fn some_function&lt;T: Display + Clone, U: Clone + Debug&gt;(t: &amp;T, u: &amp;U) -&gt; i32 {
-આપણે <code>where</code> કલમનો ઉપયોગ કરી શકીએ છીએ, આ પ્રમાણે:</p>
-<p>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-07-where-clause/src/lib.rs:here}}
-આ વિધેયનું નિદર્શણ ઓછું અવ્યવસ્થિત છે: વિધેય નામ, પરિમાણ યાદી અને વળતર પ્રકાર એકબીજાની નજીક હોય છે, જેtrait મર્યાદાઓ વગરના વિધેય જેવું જ લાગે છે.</p>
-<h3 id="returning-types-that-implement-traits"><a class="header" href="#returning-types-that-implement-traits">Returning Types That Implement Traits</a></h3>
-<p>આપણે <code>impl Trait</code> વાક્યરચનાને પાછા આપવાની સ્થિતિમાં પણ ઉપયોગ કરી શકીએ છીએ, જેથી કોઈ ચોક્કસ પ્રકારનું મૂલ્ય પાછું આપી શકાય જે લક્ષણ (trait)નો અમલ કરે છે, જે અહીં દર્શાવેલ છે:</p>
-<p>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-05-returning-impl-trait/src/lib.rs:here}}
-<code>impl Summary</code> માટે રિટર્ન પ્રકાર તરીકે ઉપયોગ કરીને, અમે ઉલ્લેખિત કરીએ છીએ કે <code>returns_summarizable</code> ફંક્શન અમુક પ્રકારનું વળતર આપે છે જે <code>Summary</code> લક્ષણનો અમલ કરે છે, પરંતુ નક્કર પ્રકારનું નામ આપ્યા વિના. આ કિસ્સામાં, <code>returns_summarizable</code> એક <code>SocialPost</code> નું વળતર આપે છે, પરંતુ આ ફંક્શનને બોલાવતો કોડ એ</p>
-<p>જાણવાની જરૂર નથી. The ability to specify a return type only by the trait it implements is especially useful in the context of closures and iterators, which we cover in Chapter 13. Closures and iterators create types that only the compiler knows or types that are very long to specify. The <code>impl Trait</code> syntax lets you concisely specify that a function returns some type that implements the <code>Iterator</code> trait without needing to write out a very long type. માત્ર લક્ષણ દ્વારા રિટર્ન પ્રકારનો ઉલ્લેખ કરવાની ક્ષમતા, વિશેષ કરીને ક્લોઝર અને ઇટરેટરના સંદર્ભમાં ઉપયોગી છે, જેનું વર્ણન આપણે પ્રકરણ ૧૩ માં કરીશું. ક્લોઝર અને ઇટરેટર એવા પ્રકારો બનાવે છે જે માત્ર કમ્પાઇલર જાણે છે અથવા જેનો ઉલ્લેખ કરવો ખૂબ લાંબો હોય છે. <code>impl Trait</code> વાક્યરચના તમને સંક્ષિપ્તમાં સ્પષ્ટ કરવાની મંજૂરી આપે છે કે એક ફંક્શન અમુક પ્રકારનું વળતર આપે છે જે <code>Iterator</code> લક્ષણનો અમલ કરે છે, વિના ખૂબ લાંબા પ્રકારને લખવાની જરૂરિયાત.</p>
-<p>જો કે, તમે <code>impl Trait</code> માત્ર ત્યારે જ વાપરી શકો છો જ્યારે તમે એક જ પ્રકારનું વળતર આપી રહ્યા હોવ. દાખલા તરીકે, આ કોડ જે <code>NewsArticle</code> અથવા <code>SocialPost</code> બંને વળતર આપે છે અને વળતરનો પ્રકાર <code>impl Summary</code> તરીકે દર્શાવવામાં આવ્યો છે, તે કામ નહીં કરે:</p>
-<p>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-06-impl-trait-returns-one-type/src/lib.rs:here}}
-<code>NewsArticle</code> અથવા <code>SocialPost</code> બંને પાછા આપવાની મંજૂરી નથી, કારણ કે કમ્પાઇલર (compiler) માં <code>impl Trait</code> વાક્યરચનાનો અમલ કરવાની રીત અંગેના નિયંત્રણો છે. અમે પ્રકરણ ૧૮ ના “Trait વસ્તુઓનો ઉપયોગ કરીને સામાન્ય વર્તનનું નિરૂપણ” વિભાગમાં આ પ્રકારનું કાર્ય કેવી રીતે લખવું તે આવરી લઈશું.</p>
-<h3 id="using-trait-bounds-to-conditionally-implement-methods"><a class="header" href="#using-trait-bounds-to-conditionally-implement-methods">Using Trait Bounds to Conditionally Implement Methods</a></h3>
-<p>generic પ્રકાર પરિમાણોનો ઉપયોગ કરતી <code>impl</code> બ્લોક સાથે ટ્રેઇટ બાઉન્ડનો ઉપયોગ કરીને, અમે નિર્દિષ્ટ ટ્રેઇટ્સને અમલમાં મૂકતા પ્રકારો માટે પદ્ધતિઓને શરતી રીતે અમલમાં મૂકી શકીએ છીએ. ઉદાહરણ તરીકે, લિસ્ટિંગ 10-15 માં <code>Pair&lt;T&gt;</code> પ્રકાર હંમેશાં <code>new</code> ફંક્શનને અમલમાં મૂકે છે જે <code>Pair&lt;T&gt;</code> નું નવું ઇન્સ્ટન્સ પાછું આપે છે (યાદ કરો કે પ્રકરણ 5 ના “પદ્ધતિ સિન્ટેક્સ” વિભાગમાં <code>Self</code> એ <code>impl</code> બ્લોકના પ્રકારનું ઉપનામ છે, જે આ કિસ્સામાં <code>Pair&lt;T&gt;</code> છે). પરંતુ આગામી <code>impl</code> બ્લોકમાં, <code>Pair&lt;T&gt;</code> માત્ર <code>cmp_display</code> પદ્ધતિને અમલમાં મૂકે છે જો તેના આંતરિક પ્રકાર <code>T</code> <code>PartialOrd</code> ટ્રેઇટને અમલમાં મૂકે છે જે સરખામણી સક્ષમ કરે છે અને <code>Display</code> ટ્રેઇટને અમલમાં મૂકે છે જે પ્રિન્ટિંગ સક્ષમ કરે છે.</p>
-<listing number="10-15" file-name="src/lib.rs" caption="Conditionally implementing methods on a generic type depending on trait bounds">
+</code></pre>
+<pre><code>આ લાંબો પ્રકાર અગાઉના વિભાગમાં આપેલા ઉદાહરણ સમાન છે પણ વધુ વિગતવાર છે. આપણે સામાન્ય પ્રકાર પરિમાણની ઘોષણા સાથે કોલન પછી અને ખૂણાકીય કૌંસની અંદર લક્ષણોની સીમાઓ મૂકીએ છીએ.
+
+`impl Trait` વાક્યરચના અનુકૂળ છે અને સરળ કિસ્સાઓમાં વધુ સંક્ષિપ્ત કોડ બનાવે છે, જ્યારે સંપૂર્ણ લક્ષણ સીમા વાક્યરચના અન્ય કિસ્સાઓમાં વધુ જટિલતા વ્યક્ત કરી શકે છે. ઉદાહરણ તરીકે, આપણી પાસે બે પરિમાણો હોઈ શકે છે જે `Summary` લાગુ કરે છે. `impl Trait` વાક્યરચના સાથે આવું કરવાથી આ રીતે દેખાય છે:
+
+```rust
+```rust
+pub fn notify(item1: &amp;impl Summary, item2: &amp;impl Summary) {
+</code></pre>
+<pre><code>`impl Trait` નો ઉપયોગ કરવો યોગ્ય છે જો આપણે આ કાર્યને `item1` અને `item2` ને અલગ-અલગ પ્રકારો (જેટલા `Summary` લાગુ કરે છે) રાખવાની મંજૂરી આપવા માંગતા હોઈએ. જો આપણે બંને પરિમાણોને સમાન પ્રકારનો બનાવવો હોય, તો આપણે એક લક્ષણ બંધન (trait bound) નો ઉપયોગ કરવો જોઈએ, આ પ્રમાણે:
+
+```rust
+```rust
+pub fn notify&lt;T: Summary&gt;(item1: &amp;T, item2: &amp;T) {
+</code></pre>
+<pre><code>સામાન્ય પ્રકાર `T`, જે `item1` અને `item2` પરિમાણોના પ્રકાર તરીકે ઉલ્લેખિત છે, તે કાર્યને એવી રીતે મર્યાદિત કરે છે કે જેથી `item1` અને `item2` માટે Argument તરીકે પસાર થતા મૂલ્યનો નક્કર પ્રકાર સમાન હોવો જોઈએ.
+
+&lt;!-- Old headings. Do not remove or links may break. --&gt;
+#### Multiple Trait Bounds with the `+` Syntax
+
+આપણે એક કરતાં વધુ ટ્રેઇટ બાઉન્ડ પણ સ્પષ્ટ કરી શકીએ છીએ. ધારો કે આપણે `notify` ને `display` ફોર્મેટિંગ તેમજ `summarize` પર `item` પર વાપરવા માંગીએ છીએ: આપણે `notify` વ્યાખ્યામાં સ્પષ્ટ કરીએ છીએ કે `item` એ `Display` અને `Summary` બંને અમલમાં મૂકવા જોઈએ. આપણે `+` સિન્ટેક્સનો ઉપયોગ કરીને આ કરી શકીએ છીએ:
+
+```rust
+```rust
+pub fn notify(item: &amp;(impl Summary + Display)) {
+</code></pre>
+<pre><code>`+` વાક્યરચના સામાન્ય પ્રકારો પર લક્ષણ સીમાઓ સાથે પણ માન્ય છે:
+
+```rust
+```rust
+pub fn notify&lt;T: Summary + Display&gt;(item: &amp;T) {
+</code></pre>
+<pre><code>બે લક્ષણોની શરતો નિર્ધારિત થયા પછી, `notify` નો ભાગ `summarize` ને બોલાવી શકે છે અને `item` ને ફોર્મેટ કરવા માટે `{}` નો ઉપયોગ કરી શકે છે.
+
+#### Clearer Trait Bounds with `where` Clauses
+
+અતિશય ટ્રેઇટ બાઉન્ડ્સ હોવાના ગેરફાયદા છે. દરેક સામાન્ય પ્રકારના પોતાના ટ્રેઇટ બાઉન્ડ્સ હોય છે, તેથી અનેક સામાન્ય પ્રકાર પરિમાણો ધરાવતા વિધેયોમાં કાર્યના નામ અને તેના પરિમાણ યાદી વચ્ચે ઘણાં ટ્રેઇટ બાઉન્ડ માહિતી હોઈ શકે છે, જે વિધેય હસ્તાક્ષરને વાંચવામાં મુશ્કેલ બનાવે છે. આ કારણોસર, Rust પાસે વિધેય હસ્તાક્ષર પછી `where` કલમમાં ટ્રેઇટ બાઉન્ડ્સ સ્પષ્ટ કરવા માટે વૈકલ્પિક વાક્ય રચના છે. તેથી, આ લખવાને બદલે:
+
+```rust
+```rust
+fn some_function&lt;T: Display + Clone, U: Clone + Debug&gt;(t: &amp;T, u: &amp;U) -&gt; i32 {
+</code></pre>
+<pre><code>આપણે `where` કલમનો ઉપયોગ કરી શકીએ છીએ, આ પ્રમાણે:
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-07-where-clause/src/lib.rs:here}}
+</code></pre>
+<pre><code>આ વિધેયનું નિદર્શણ ઓછું અવ્યવસ્થિત છે: વિધેય નામ, પરિમાણ યાદી અને વળતર પ્રકાર એકબીજાની નજીક હોય છે, જેtrait મર્યાદાઓ વગરના વિધેય જેવું જ લાગે છે.
+
+### Returning Types That Implement Traits
+
+આપણે `impl Trait` વાક્યરચનાને પાછા આપવાની સ્થિતિમાં પણ ઉપયોગ કરી શકીએ છીએ, જેથી કોઈ ચોક્કસ પ્રકારનું મૂલ્ય પાછું આપી શકાય જે લક્ષણ (trait)નો અમલ કરે છે, જે અહીં દર્શાવેલ છે:
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-05-returning-impl-trait/src/lib.rs:here}}
+</code></pre>
+<pre><code>`impl Summary` માટે રિટર્ન પ્રકાર તરીકે ઉપયોગ કરીને, અમે ઉલ્લેખિત કરીએ છીએ કે `returns_summarizable` ફંક્શન અમુક પ્રકારનું વળતર આપે છે જે `Summary` લક્ષણનો અમલ કરે છે, પરંતુ નક્કર પ્રકારનું નામ આપ્યા વિના. આ કિસ્સામાં, `returns_summarizable` એક `SocialPost` નું વળતર આપે છે, પરંતુ આ ફંક્શનને બોલાવતો કોડ એ
+
+જાણવાની જરૂર નથી. The ability to specify a return type only by the trait it implements is especially useful in the context of closures and iterators, which we cover in Chapter 13. Closures and iterators create types that only the compiler knows or types that are very long to specify. The `impl Trait` syntax lets you concisely specify that a function returns some type that implements the `Iterator` trait without needing to write out a very long type. માત્ર લક્ષણ દ્વારા રિટર્ન પ્રકારનો ઉલ્લેખ કરવાની ક્ષમતા, વિશેષ કરીને ક્લોઝર અને ઇટરેટરના સંદર્ભમાં ઉપયોગી છે, જેનું વર્ણન આપણે પ્રકરણ ૧૩ માં કરીશું. ક્લોઝર અને ઇટરેટર એવા પ્રકારો બનાવે છે જે માત્ર કમ્પાઇલર જાણે છે અથવા જેનો ઉલ્લેખ કરવો ખૂબ લાંબો હોય છે. `impl Trait` વાક્યરચના તમને સંક્ષિપ્તમાં સ્પષ્ટ કરવાની મંજૂરી આપે છે કે એક ફંક્શન અમુક પ્રકારનું વળતર આપે છે જે `Iterator` લક્ષણનો અમલ કરે છે, વિના ખૂબ લાંબા પ્રકારને લખવાની જરૂરિયાત.
+
+જો કે, તમે `impl Trait` માત્ર ત્યારે જ વાપરી શકો છો જ્યારે તમે એક જ પ્રકારનું વળતર આપી રહ્યા હોવ. દાખલા તરીકે, આ કોડ જે `NewsArticle` અથવા `SocialPost` બંને વળતર આપે છે અને વળતરનો પ્રકાર `impl Summary` તરીકે દર્શાવવામાં આવ્યો છે, તે કામ નહીં કરે:
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-06-impl-trait-returns-one-type/src/lib.rs:here}}
+</code></pre>
+<pre><code>`NewsArticle` અથવા `SocialPost` બંને પાછા આપવાની મંજૂરી નથી, કારણ કે કમ્પાઇલર (compiler) માં `impl Trait` વાક્યરચનાનો અમલ કરવાની રીત અંગેના નિયંત્રણો છે. અમે પ્રકરણ ૧૮ ના "Trait વસ્તુઓનો ઉપયોગ કરીને સામાન્ય વર્તનનું નિરૂપણ" વિભાગમાં આ પ્રકારનું કાર્ય કેવી રીતે લખવું તે આવરી લઈશું.
+
+### Using Trait Bounds to Conditionally Implement Methods
+
+generic પ્રકાર પરિમાણોનો ઉપયોગ કરતી `impl` બ્લોક સાથે ટ્રેઇટ બાઉન્ડનો ઉપયોગ કરીને, અમે નિર્દિષ્ટ ટ્રેઇટ્સને અમલમાં મૂકતા પ્રકારો માટે પદ્ધતિઓને શરતી રીતે અમલમાં મૂકી શકીએ છીએ. ઉદાહરણ તરીકે, લિસ્ટિંગ 10-15 માં `Pair&lt;T&gt;` પ્રકાર હંમેશાં `new` ફંક્શનને અમલમાં મૂકે છે જે `Pair&lt;T&gt;` નું નવું ઇન્સ્ટન્સ પાછું આપે છે (યાદ કરો કે પ્રકરણ 5 ના "પદ્ધતિ સિન્ટેક્સ" વિભાગમાં `Self` એ `impl` બ્લોકના પ્રકારનું ઉપનામ છે, જે આ કિસ્સામાં `Pair&lt;T&gt;` છે). પરંતુ આગામી `impl` બ્લોકમાં, `Pair&lt;T&gt;` માત્ર `cmp_display` પદ્ધતિને અમલમાં મૂકે છે જો તેના આંતરિક પ્રકાર `T` `PartialOrd` ટ્રેઇટને અમલમાં મૂકે છે જે સરખામણી સક્ષમ કરે છે અને `Display` ટ્રેઇટને અમલમાં મૂકે છે જે પ્રિન્ટિંગ સક્ષમ કરે છે.
+
+&lt;Listing number="10-15" file-name="src/lib.rs" caption="Conditionally implementing methods on a generic type depending on trait bounds"&gt;
+```rust
+```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-15/src/lib.rs}}
-</listing>
+</code></pre>
+<pre><code>&lt;/Listing&gt;
 અમે અન્ય રીતે પણ એક trait ને કોઈપણ પ્રકાર માટે શરતી રૂપે અમલમાં મૂકી શકીએ છીએ જે અન્ય trait નો અમલ કરે છે. કોઈપણ પ્રકાર પરના trait ના અમલીકરણો કે જે trait ની સીમાઓ સંતોષે છે, તેને વ્યાપક અમલીકરણો કહેવામાં આવે છે અને તેનો ઉપયોગ Rust પ્રમાણિત પુસ્તકાલયમાં મોટા પ્રમાણમાં થાય છે. ઉદાહરણ તરીકે, પ્રમાણિત પુસ્તકાલય `Display` trait નો અમલ કરે તેવા કોઈપણ પ્રકાર પર `ToString` trait નો અમલ કરે છે. પ્રમાણિત પુસ્તકાલયમાં `impl` બ્લોક આ કોડ જેવો દેખાય છે:
-<p>impl&lt;T: Display&gt; ToString for T {
-// –snip–
+
+```rust
+```rust
+impl&lt;T: Display&gt; ToString for T {
+    // --snip--
 }
-કારણ કે પ્રમાણિત પુસ્તકાલયમાં આ વ્યાપક અમલીકરણ છે, અમે કોઈપણ પ્રકાર પર <code>ToString</code> લક્ષણ દ્વારા વ્યાખ્યાયિત કરેલા <code>to_string</code> પદ્ધતિને બોલાવી શકીએ છીએ જે <code>Display</code> લક્ષણને લાગુ કરે છે. ઉદાહરણ તરીકે, અમે પૂર્ણાંકોને તેમના અનુરૂપ <code>String</code> મૂલ્યોમાં રૂપાંતરિત કરી શકીએ છીએ <code>like this</code> કારણ કે પૂર્ણાંકો <code>Display</code> લાગુ કરે છે:</p>
-<p>let s = 3.to_string();
-વ્યાપક અમલીકરણો ટ્રેઇટના દસ્તાવેજીકરણમાં “અમલીકરણકર્તાઓ” વિભાગમાં દેખાય છે. Traits and trait bounds let</p>
-<p>ટ્રેઇટ્સ અને ટ્રેઇટ બાઉન્ડ્સ આપણને સામાન્ય પ્રકારના પરિમાણોનો ઉપયોગ કરીને કોડ લખવાની મંજૂરી આપે છે જેથી કરીને બિનજરૂરીયાત ઘટાડી શકાય, પરંતુ કમ્પાઇલરને જણાવે છે કે આપણે સામાન્ય પ્રકારમાં ચોક્કસ વર્તન જોઈએ છીએ. ત્યારબાદ કમ્પાઇલર ટ્રેઇટ બાઉન્ડ માહિતીનો ઉપયોગ કરીને ચકાસી શકે છે કે આપણા કોડ સાથે વપરાતા તમામ નક્કર પ્રકારો યોગ્ય વર્તન પ્રદાન કરે છે. ગતિશીલ રીતે લખાયેલ ભાષાઓમાં, જો આપણે કોઈ પદ્ધતિને એવા પ્રકાર પર બોલાવીએ જેણે તે પદ્ધતિ વ્યાખ્યાયિત કરી નથી, તો આપણને રનટાઇમ પર ભૂલ મળશે. પરંતુ Rust આ ભૂલોને કમ્પાઇલ સમય સુધી ખસેડે છે જેથી કરીને આપણો કોડ ચાલવા માટે સક્ષમ થાય તે પહેલાં આપણે સમસ્યાઓ સુધારવા માટે મજબૂર થઈએ છીએ. વધુમાં, આપણે એવા કોડ લખવાની જરૂર નથી જે રનટાઇમ પર વર્તન તપાસે છે, કારણ કે આપણે પહેલેથી જ કમ્પાઇલ સમયે તપાસ કરી લીધી છે. આમ કરવાથી પ્રદર્શનમાં સુધારો થાય છે અને સામાન્યતાની લવચીકતાનો ત્યાગ કરવો પડતો નથી.</p>
+</code></pre>
+<pre><code>કારણ કે પ્રમાણિત પુસ્તકાલયમાં આ વ્યાપક અમલીકરણ છે, અમે કોઈપણ પ્રકાર પર `ToString` લક્ષણ દ્વારા વ્યાખ્યાયિત કરેલા `to_string` પદ્ધતિને બોલાવી શકીએ છીએ જે `Display` લક્ષણને લાગુ કરે છે. ઉદાહરણ તરીકે, અમે પૂર્ણાંકોને તેમના અનુરૂપ `String` મૂલ્યોમાં રૂપાંતરિત કરી શકીએ છીએ `like this` કારણ કે પૂર્ણાંકો `Display` લાગુ કરે છે:
+
+```rust
+```rust
+let s = 3.to_string();
+</code></pre>
+<pre><code>વ્યાપક અમલીકરણો ટ્રેઇટના દસ્તાવેજીકરણમાં "અમલીકરણકર્તાઓ" વિભાગમાં દેખાય છે. Traits and trait bounds let
+
+ટ્રેઇટ્સ અને ટ્રેઇટ બાઉન્ડ્સ આપણને સામાન્ય પ્રકારના પરિમાણોનો ઉપયોગ કરીને કોડ લખવાની મંજૂરી આપે છે જેથી કરીને બિનજરૂરીયાત ઘટાડી શકાય, પરંતુ કમ્પાઇલરને જણાવે છે કે આપણે સામાન્ય પ્રકારમાં ચોક્કસ વર્તન જોઈએ છીએ. ત્યારબાદ કમ્પાઇલર ટ્રેઇટ બાઉન્ડ માહિતીનો ઉપયોગ કરીને ચકાસી શકે છે કે આપણા કોડ સાથે વપરાતા તમામ નક્કર પ્રકારો યોગ્ય વર્તન પ્રદાન કરે છે. ગતિશીલ રીતે લખાયેલ ભાષાઓમાં, જો આપણે કોઈ પદ્ધતિને એવા પ્રકાર પર બોલાવીએ જેણે તે પદ્ધતિ વ્યાખ્યાયિત કરી નથી, તો આપણને રનટાઇમ પર ભૂલ મળશે. પરંતુ Rust આ ભૂલોને કમ્પાઇલ સમય સુધી ખસેડે છે જેથી કરીને આપણો કોડ ચાલવા માટે સક્ષમ થાય તે પહેલાં આપણે સમસ્યાઓ સુધારવા માટે મજબૂર થઈએ છીએ. વધુમાં, આપણે એવા કોડ લખવાની જરૂર નથી જે રનટાઇમ પર વર્તન તપાસે છે, કારણ કે આપણે પહેલેથી જ કમ્પાઇલ સમયે તપાસ કરી લીધી છે. આમ કરવાથી પ્રદર્શનમાં સુધારો થાય છે અને સામાન્યતાની લવચીકતાનો ત્યાગ કરવો પડતો નથી.
+
+</code></pre>
 
                     </main>
 

@@ -8,8 +8,12 @@
 
 નવો પ્રોજેક્ટ સ્થાપિત કરવા માટે, એ પ્રોજેક્ટ્સ ડિરેક્ટરી પર જાઓ જે તમે પ્રકરણ ૧ માં બનાવ્યું હતું અને આ રીતે Cargo નો ઉપયોગ કરીને નવો પ્રોજેક્ટ બનાવો:
 
+```console
+```console
 $ cargo new guessing_game
 $ cd guessing_game
+```
+```
 પ્રથમ આદેશ પ્રથમ આદેશ, `cargo new`, પ્રોજેક્ટનું નામ ( `guessing_game` ) પ્રથમ Argument તરીકે લે છે. બીજો આદેશ નવા પ્રોજેક્ટની ડિરેક્ટરીમાં બદલાય છે.
 
 ઉત્પન્ન થયેલ Cargo.toml ફાઈલ જુઓ:
@@ -22,17 +26,33 @@ cd no-listing-01-cargo-new
 cargo run > output.txt 2>&1
 cd ../../..
 -->
+```toml
+```toml
 ફાઈલ: Cargo.toml આ `Cargo.toml` ફાઈલ એક પ્રોજેક્ટની રૂપરેખા આપે છે. તેમાં પ્રોજેક્ટનું નામ, સંસ્કરણ (version), લેખક (author), અને અન્ય માહિતી હોય છે. આ ફાઈલ `cargo` દ્વારા ઉપયોગમાં લેવાય છે જેથી કરીને પ્રોજેક્ટને નિર્માણ (build) કરી શકાય, પરીક્ષણ (test) કરી શકાય, અને વિતરિત (distribute) કરી શકાય. આ ફાઈલમાં સામાન્ય રીતે નીચેની બાબતો સમાવિષ્ટ હોય છે: ```toml [package] name = "my_project" version = "0.1.0" authors = ["Your Name <your.email@example.com>"] edition = "2021" [dependencies] rand = "0.8.4" serde = { version = "1.0", features = ["derive"] } ``` `[package]` વિભાગ પ્રોજેક્ટ વિશેની મૂળભૂત માહિતી આપે છે. * `name`: પ્રોજેક્ટનું નામ. * `version`: પ્રોજેક્ટનું સંસ્કરણ. * `authors`: લેખકોની યાદી. * `edition`: Rust નું આવૃત્તિ (edition). `[dependencies]` વિભાગ અન્ય `crate` પર નિર્ભરતા (dependency) દર્શાવે છે. દરેક નિર્ભરતા માટે, તમે સંસ્કરણ અને વિશેષતાઓ (features) સ્પષ્ટ કરી શકો છો. ઉદાહરણ તરીકે, `rand = "0.8.4"` `rand` ના સંસ્કરણ 0.8.4 પર નિર્ભરતા દર્શાવે છે, અને `serde = { version = "1.0", features = ["derive"] }` `serde` ના સંસ્કરણ 1.0 પર નિર્ભરતા દર્શાવે છે અને `derive` વિશેષતાનો ઉપયોગ કરે છે. આ ફાઈલને સંપાદિત (edit) કરવા માટે, તમે કોઈપણ ટેક્સ્ટ એડિટરનો ઉપયોગ કરી શકો છો. પરંતુ ખાતરી કરો કે ફાઈલ TOML ફોર્મેટમાં છે.
 
+```
+```
+```toml
+```toml
 {{#include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/Cargo.toml}}
+```
+```
 જેમ તમે પ્રકરણ ૧ માં જોયું, `cargo new` તમારા માટે "હેલો, વર્લ્ડ!" કાર્યક્રમ બનાવે છે. src/main.rs ફાઈલ તપાસો:
 
 ફાઈલનામ: src/main.rs
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/src/main.rs}}
+```
+```
 હવે ચાલો આ “Hello, world!” કાર્યક્રમ સંકલિત કરીએ અને એ જ પગલામાં `cargo run` આદેશનો ઉપયોગ કરીને ચલાવીએ:
 
+```console
+```console
 {{#include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/output.txt}}
+```
+```
 The `run` Command `run` આદેશ પ્રોજેક્ટ પર ઝડપથી પુનરાવર્તન કરવા માટે ઉપયોગી છે, જેમ કે આપણે આ રમતમાં કરીશું, દરેક પુનરાવર્તનની ચકાસણી કર્યા પછી આગળ વધતા
 
 પહેલાં. src/main.rs ફાઈલ ફરી ખોલો. તમે આ ફાઈલમાં બધો કોડ લખશો.
@@ -42,37 +62,65 @@ The `run` Command `run` આદેશ પ્રોજેક્ટ પર ઝડ�
 અનુમાન લગાવવાની રમત કાર્યક્રમના પ્રથમ ભાગમાં user પાસેથી ઇનપુટ માંગવામાં આવશે, તે ઇનપુટની પ્રક્રિયા કરવામાં આવશે અને ખાતરી કરવામાં આવશે કે ઇનપુટ અપેક્ષિત સ્વરૂપમાં છે. શરૂ કરવા માટે, આપણે ખેલાડીને અનુમાન દાખલ કરવાની મંજૂરી આપીશું. Listing 2-1 નો કોડ src/main.rs માં દાખલ કરો.
 
 <Listing number="2-1" file-name="src/main.rs" caption="Code that gets a guess from the user and prints it">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:all}}
+```
+```
 </Listing>
 આ કોડમાં ઘણી માહિતી છે, તેથી ચાલો તેને લીટી દર લીટી જોઈએ. user પાસેથી ઇનપુટ મેળવવા અને પછી પરિણામને આઉટપુટ તરીકે છાપવા માટે, આપણે `io` ઇનપુટ/આઉટપુટ લાયબ્રેરીને કાર્યક્ષેત્રમાં લાવવાની જરૂર છે. `io` લાયબ્રેરી પ્રમાણિત લાયબ્રેરીમાંથી આવે છે, જેને `std` કહેવામાં આવે છે:
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:io}}
+```
+```
 સામાન્ય રીતે, Rust પાસે પ્રમાણિત લાયબ્રેરીમાં વ્યાખ્યાયિત વસ્તુઓનો સમૂહ હોય છે જે દરેક કાર્યક્રમના ક્ષેત્રમાં લાવવામાં આવે છે. આ સમૂહને પ્રલુડ (prelude) કહેવામાં આવે છે, અને
 
 તમે તેમાં બધું જ પ્રમાણિત લાયબ્રેરી દસ્તાવેજીકરણમાં જોઈ શકો છો. જો તમે જે પ્રકાર વાપરવા માંગો છો તે પ્રલુડમાં નથી, તો તમારે `use` વિધાન સાથે સ્પષ્ટપણે તે પ્રકારને ક્ષેત્રમાં લાવવો પડશે. `std::io` લાયબ્રેરીનો ઉપયોગ કરવાથી તમને ઘણી ઉપયોગી સુવિધાઓ મળે છે, જેમાં user પાસેથી ઇનપુટ સ્વીકારવાની ક્ષમતાનો સમાવેશ થાય છે.
 
 જેમ તમે પ્રકરણ ૧ માં જોયું, `main` કાર્યક્રમમાં પ્રવેશનું પ્રવેશદ્વાર છે:
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:main}}
+```
+```
 ફંક્શન ઘોષણા `fn` વાક્યરચના નવું ફંક્શન જાહેર કરે છે; કૌંસ, `()` , સૂચવે છે કે કોઈ પરિમાણો નથી; અને કુંજી કળશ, `{` , ફંક્શનના પદનો પ્રારંભ કરે
 
 છે. જેમ તમે પ્રથમ પ્રકરણમાં પણ શીખ્યા તેમ, `println!` એક મેક્રો છે જે સ્ક્રીન પર સ્ટ્રિંગ છાપે છે:
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:print}}
+```
+```
 આ કોડ એક પ્રશ્ન દર્શાવે છે કે આ રમત શું છે અને user પાસેથી ઇનપુટ માંગે છે.
 
 ### Storing Values with Variables
 
 પછી, આપણે userના ઇનપુટને સંગ્રહ કરવા માટે એક variable બનાવશું, આ પ્રમાણે:
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:string}}
+```
+```
 હવે આ કાર્યક્રમ રસપ્રદ બની રહ્યો છે! આ નાની લીટીમાં ઘણું બધું થઈ રહ્યું છે. આપણે `let` વિધાનનો ઉપયોગ variable બનાવવા માટે કરીએ છીએ. અહીં બીજું ઉદાહરણ છે:
 
+```rust
+```rust
 let apples = 5;
+```
+```
 આ લીટી એક નવું variable નામ `apples` બનાવે છે અને તેને મૂલ્ય `5` સાથે જોડે છે. Rust માં, variables મૂળભૂત રીતે પરિવર્તનહીન હોય છે, એટલે કે એકવાર આપણે variable મૂલ્ય આપીએ, તો તે મૂલ્ય બદલાશે નહીં. આપણે પ્રકરણ 3 માં "variables અને પરિવર્તનશીલતા" વિભાગમાં આ વિભાવનાની વિગતવાર ચર્ચા કરીશું. variable પરિવર્તનશીલ બનાવવા માટે, આપણે variable નામના પહેલાં `mut` ઉમેરીએ છીએ:
 
+```rust
+```rust
 let apples = 5; // immutable
 let mut bananas = 5; // mutable
+```
+```
 Note: નોંધ: `//` ચિહ્નથી શરૂ થતી લીટી એક ટિપ્પણી છે જે લીટીના અંત સુધી ચાલુ રહે છે. Rust આ ટિપ્પણીઓમાંની દરેક વસ્તુને અવગણે છે. આપણે પ્રકરણ ૩ માં ટિપ્પણીઓ વિશે
 
 વધુ વિગતવાર ચર્ચા કરીશું. અનુમાન લગાવવાની રમત પ્રોગ્રામ પર પાછા ફરતા, હવે તમે જાણો છો કે `let mut guess` એક પરિવર્તનશીલ variable (variable) નામના `guess` ને રજૂ કરશે. બરાબરની નિશાની (`=`) Rustને જણાવે છે કે આપણે હમણાં જ કોઈ વસ્તુને variable જોડવા માંગીએ છીએ. બરાબરની નિશાનીના જમણી બાજુએ એ મૂલ્ય છે જે `guess` સાથે જોડાયેલું છે, જે `String::new` કૉલનું પરિણામ છે, એક ફંક્શન જે `String` ની નવી ઉદાહરણ આપે છે. `String` એ પ્રમાણભૂત લાયબ્રેરી દ્વારા પૂરા પાડવામાં આવેલ એક સ્ટ્રિંગ પ્રકાર છે જે UTF-8 એન્કોડેડ ટેક્સ્ટનો વધેલો ભાગ છે.
@@ -85,7 +133,11 @@ Note: નોંધ: `//` ચિહ્નથી શરૂ થતી લીટી 
 
 યાદ રાખો કે આપણે `use std::io;` દ્વારા પ્રમાણિત લાયબ્રેરીમાંથી ઇનપુટ/આઉટપુટ કાર્યક્ષમતાનો સમાવેશ કર્યો હતો. હવે આપણે `io` મોડ્યુલમાંથી `stdin` વિધેયને બોલાવીશું, જે આપણને user ઇનપુટને નિયંત્રિત કરવાની મંજૂરી આપશે:
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:read}}
+```
+```
 જો આપણે કાર્યક્રમના આરંભે `use std::io;` સાથે `io` મોડ્યુલ આયાત ન કર્યું હોત, તો પણ આપણે તે ફંક્શનને `std::io::stdin` તરીકે લખીને વાપરી શક્યા હોત. `stdin` ફંક્શન `std::io::Stdin` નો એક દાખલો આપે છે, જે પ્રકાર એ તમારા ટર્મિનલ માટે પ્રમાણભૂત ઇનપુટનું સંચાલન કરે છે.
 
 આગળ, `.read_line(&mut guess)` લાઇન પ્રમાણભૂત ઇનપુટ સંચાલન પર `read_line` પદ્ધતિને બોલાવે છે જેથી user પાસેથી ઇનપુટ મેળવી શકાય. આપણે `&mut guess` ને પણ `read_line` માટે Argument તરીકે પસાર કરીએ છીએ, જેથી તે કયા સ્ટ્રિંગમાં userનું ઇનપુટ સંગ્રહિત કરવું તે જણાવે. `read_line` નું સંપૂર્ણ કાર્ય એ છે કે user પ્રમાણભૂત ઇનપુટમાં જે ટાઈપ કરે છે તેને એક સ્ટ્રિંગમાં ઉમેરવું (તેની સામગ્રીને ફરીથી લખ્યા વિના), તેથી આપણે તે સ્ટ્રિંગને Argument તરીકે પસાર કરીએ છીએ. સ્ટ્રિંગ Argument બદલી શકાય તેવી હોવી જોઈએ જેથી પદ્ધતિ સ્ટ્રિંગની સામગ્રીને બદલી શકે.
@@ -97,10 +149,18 @@ Note: નોંધ: `//` ચિહ્નથી શરૂ થતી લીટી 
 
 આ કોડની હારિકા પર અમે હજી કાર્યરત છીએ. હવે અમે ત્રીજી રેખા અંગે ચર્ચા કરી રહ્યા છીએ, પરંતુ નોંધ કરો કે તે એક જ તાર્કિક રેખાનો ભાગ છે. આગળનો ભાગ આ પદ્ધતિ છે:
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:expect}}
+```
+```
 આ કોડ આ રીતે લખી શક્યો હોત:
 
+```rust
+```rust
 io::stdin().read_line(&mut guess).expect("Failed to read line");
+```
+```
 જો કે, એક લાંબી લીટી વાંચવામાં મુશ્કેલી ઊભી કરે છે, તેથી તેને વિભાજીત કરવી શ્રેષ્ઠ છે. ઘણીવાર, નવું વક્રીય (newline) અને અન્ય ખાલી જગ્યાઓ ઉમેરવી એ સમજદારીપૂર્ણ છે જેથી ` .method_name()` વાક્યરચના સાથે પદ્ધતિને બોલાવતી વખતે લાંબી લીટીઓને તોડી શકાય. હવે ચાલો જોઈએ કે આ લીટી શું કરે છે.
 
 જેમ અગાઉ ઉલ્લેખ કર્યો છે, `read_line` user જે કંઈપણ દાખલ કરે છે તેને આપણે તેમાં પાસ કરીએ છીએ તે સ્ટ્રિંગમાં મૂકે છે, પરંતુ તે `Result` મૂલ્ય પણ પરત કરે છે. `Result` એ એક ગણનાત્મક પ્રકાર (enumeration) છે, જેને ઘણીવાર enum કહેવામાં આવે છે, જે એક પ્રકાર છે જે અનેક સંભવિત સ્થિતિઓમાં હોઈ શકે છે. આપણે દરેક સંભવિત સ્થિતિને વિવિધતા (variant) કહીએ છીએ.
@@ -111,7 +171,11 @@ io::stdin().read_line(&mut guess).expect("Failed to read line");
 
 જો તમે `expect` ને બોલાવશો નહીં, તો પ્રોગ્રામ કમ્પાઇલ થશે, પરંતુ તમને એક ચેતવણી મળશે:
 
+```console
+```console
 {{#include ../listings/ch02-guessing-game-tutorial/no-listing-02-without-expect/output.txt}}
+```
+```
 Rust ચેતવણી આપે છે કે તમે `read_line` થી મળેલ `Result` મૂલ્યનો ઉપયોગ કર્યો નથી, જે દર્શાવે છે કે કાર્યક્રમે સંભવિત ભૂલને નિયંત્રિત
 
 કરી નથી. ચેતવણી દબાવવાનો યોગ્ય માર્ગ એ ભૂલ-હાલનવારી કોડ લખવાનો છે, પરંતુ અમારા કિસ્સામાં અમે માત્ર એક સમસ્યા થાય ત્યારે આ કાર્યક્રમને ક્રેશ કરવા માંગીએ છીએ, તેથી અમે `expect` નો ઉપયોગ કરી શકીએ છીએ. પ્રકરણ 9 માં તમે ભૂલોમાંથી પુનઃપ્રાપ્તિ વિશે શીખી શકશો.
@@ -120,13 +184,21 @@ Rust ચેતવણી આપે છે કે તમે `read_line` થી મ
 
 બંધ કૌંસ સિવાય, અત્યાર સુધીના કોડમાં ચર્ચા કરવા માટે માત્ર એક જ લાઇન બાકી છે:
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:print_guess}}
+```
+```
 આ લીટી userના ઇનપુટને હવે સમાવતું String છાપે છે. `{}` એ એક અસ્થાનિક જગ્યા છે: `{}` ને નાના કીડીના પંજા તરીકે વિચારો જે મૂલ્યને જગાડે છે. જ્યારે ચલનું મૂલ્ય છાપવામાં આવે, ત્યારે ચલનું નામ કુંચકાંસની અંદર જઈ શકે છે. જ્યારે અભિવ્યક્તિનું પરિણામ છાપવું હોય, ત્યારે ફોર્મેટ સ્ટ્રિંગમાં ખાલી કુંચકાંસ મૂકો, અને પછી દરેક ખાલી કુંચકાંસના સ્થાને છાપવા માટે અલ્પવિરામથી અલગ કરેલી અભિવ્યક્તિઓની યાદી ઉમેરો. `println!` ને એક જ કોલમાં variable અને અભિવ્યક્તિનું પરિણામ છાપવું એ આ પ્રમાણે દેખાશે:
 
+```rust
+```rust
 let x = 5;
 let y = 10;
 
 println!("x = {x} and y + 2 = {}", y + 2);
+```
+```
 આ કોડ `x = 5 અને y + 2 = 12` છાપશે.
 
 ### Testing the First Part
@@ -138,6 +210,8 @@ cd listings/ch02-guessing-game-tutorial/listing-02-01/
 cargo clean
 cargo run
 input 6 -->
+```console
+```console
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.44s
@@ -146,6 +220,8 @@ Guess the number!
 Please input your guess.
 6
 You guessed: 6
+```
+```
 હવે, રમતનો પ્રથમ ભાગ પૂર્ણ થયેલો છે: અમે કીબોર્ડથી ઇનપુટ મેળવી રહ્યા છીએ અને પછી તેને છાપી રહ્યા છીએ.
 
 ## Generating a Secret Number
@@ -166,7 +242,11 @@ Cargo નું બાહ્ય ક્રેટ્સનું સંકલન �
 -->
 ફાઈલ: Cargo.toml આ `Cargo.toml` ફાઈલ એક પ્રોજેક્ટની રૂપરેખા આપે છે. તેમાં પ્રોજેક્ટનું નામ, સંસ્કરણ (version), લેખક (author), અને અન્ય માહિતી હોય છે. આ ફાઈલ `cargo` દ્વારા ઉપયોગમાં લેવાય છે જેથી કરીને પ્રોજેક્ટને નિર્માણ (build) કરી શકાય, પરીક્ષણ (test) કરી શકાય, અને વિતરિત (distribute) કરી શકાય. આ ફાઈલમાં સામાન્ય રીતે નીચેની બાબતો સમાવિષ્ટ હોય છે: ```toml [package] name = "my_project" version = "0.1.0" authors = ["Your Name <your.email@example.com>"] edition = "2021" [dependencies] rand = "0.8.4" serde = { version = "1.0", features = ["derive"] } ``` `[package]` વિભાગ પ્રોજેક્ટ વિશેની મૂળભૂત માહિતી આપે છે. * `name`: પ્રોજેક્ટનું નામ. * `version`: પ્રોજેક્ટનું સંસ્કરણ. * `authors`: લેખકોની યાદી. * `edition`: Rust નું આવૃત્તિ (edition). `[dependencies]` વિભાગ અન્ય `crate` પર નિર્ભરતા (dependency) દર્શાવે છે. દરેક નિર્ભરતા માટે, તમે સંસ્કરણ અને વિશેષતાઓ (features) સ્પષ્ટ કરી શકો છો. ઉદાહરણ તરીકે, `rand = "0.8.4"` `rand` ના સંસ્કરણ 0.8.4 પર નિર્ભરતા દર્શાવે છે, અને `serde = { version = "1.0", features = ["derive"] }` `serde` ના સંસ્કરણ 1.0 પર નિર્ભરતા દર્શાવે છે અને `derive` વિશેષતાનો ઉપયોગ કરે છે. આ ફાઈલને સંપાદિત (edit) કરવા માટે, તમે કોઈપણ ટેક્સ્ટ એડિટરનો ઉપયોગ કરી શકો છો. પરંતુ ખાતરી કરો કે ફાઈલ TOML ફોર્મેટમાં છે.
 
+```toml
+```toml
 {{#include ../listings/ch02-guessing-game-tutorial/listing-02-02/Cargo.toml:8:}}
+```
+```
 Cargo.toml ફાઈલમાં, હેડર પછી આવતો ભાગ તે વિભાગનો જ એક ભાગ છે જે બીજા વિભાગની શરૂઆત સુધી ચાલુ રહે છે. `[dependencies]` માં, તમે કાર્ગોને કયા બાહ્ય ક્રેટ્સ તમારી યોજના પર આધારિત છે અને તે ક્રેટ્સના કયા વર્ઝન જરૂરી છે તે જણાવો છો. આ કિસ્સામાં, અમે `rand` ક્રેટને સેમેન્ટીક વર્ઝન સ્પેશિફાયર `0.8.5` સાથે ઉલ્લેખિત કરીએ છીએ. કાર્ગો સેમેન્ટીક વર્ઝનિંગ (ઘણીવાર SemVer તરીકે ઓળખાય છે) સમજે છે, જે વર્ઝન નંબરો લખવા માટેનું એક ધોરણ છે. સ્પેશિફાયર `0.8.5` એ વાસ્તવમાં `^0.8.5` નું સંક્ષેપ છે, જેનો અર્થ થાય છે 0.8.5 અથવા તેનાથી ઉપરનું કોઈપણ વર્ઝન પરંતુ 0.9.0 થી નીચેનું વર્ઝન.
 
 Cargo આ 版本ને જાહેર API સાથે સુસંગત માને છે version 0.8.5, અને આ વિશિષ્ટતા ખાતરી કરે છે કે તમને નવીનતમ પેચ રીલીઝ મળશે જે આ પ્રકરણમાં આપેલા કોડ સાથે સંકલિત થશે. કોઈપણ version 0.9.0 અથવા તેનાથી વધારે નું API એ પહેલાંના ઉદાહરણોમાં વપરાયેલ API જેવું જ હશે તેની કોઈ ખાતરી નથી.
@@ -179,6 +259,8 @@ rm Cargo.lock
 cargo clean
 cargo build -->
 <Listing number="2-2" caption="The output from running `cargo build` after adding the `rand` crate as a dependency">
+```console
+```console
 $ cargo build
   Updating crates.io index
    Locking 15 packages to latest Rust 1.85.0 compatible versions
@@ -199,6 +281,8 @@ $ cargo build
  Compiling rand v0.8.5
  Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
   Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.48s
+```
+```
 </Listing>
 તમે જુદા જુદા વર્ઝન નંબરો (પણ તે બધા `code` સાથે સુસંગત રહેશે, SemVer ના આભારી!) અને અલગ-અલગ લીટીઓ જોઈ શકો છો (ઓપરેટિંગ સિસ્ટમ પર આધાર રાખીને), અને લીટીઓ અલગ ક્રમમાં હોઈ શકે છે.
 
@@ -214,9 +298,13 @@ project ને કમ્પાઇલ કરે છે. જો તમે તર�
 cd listings/ch02-guessing-game-tutorial/listing-02-02/
 touch src/main.rs
 cargo build -->
+```console
+```console
 $ cargo build
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.13s
+```
+```
 આ લીટીઓ દર્શાવે છે કે કાર્ગો માત્ર તમારા src/main.rs ફાઈલમાં કરેલા નાના ફેરફાર સાથે બિલ્ડને અપડેટ કરે છે. તમારી નિર્ભરતાઓમાં (dependencies) કોઈ ફેરફાર થયો નથી, તેથી કાર્ગો જાણે છે કે તે પહેલાં ડાઉનલોડ અને કમ્પાઇલ કરેલાં જે વસ્તુઓનો ફરીથી ઉપયોગ કરી શકે છે.
 
 <!-- Old headings. Do not remove or links may break. -->
@@ -235,10 +323,14 @@ cd listings/ch02-guessing-game-tutorial/listing-02-02/
 cargo update
 assuming there is a new 0.8.x version of rand; otherwise use another update
 as a guide to creating the hypothetical output shown here -->
+```console
+```console
 $ cargo update
     Updating crates.io index
      Locking 1 package to latest Rust 1.85.0 compatible version
     Updating rand v0.8.5 -> v0.8.6 (available: v0.999.0)
+```
+```
 Cargo 0.999.0 વિમોચનને અવગણે છે. આ સમયે, તમને તમારી Cargo.lock ફાઈલમાં પણ એક પરિવર્તન દેખાશે, જે નોંધશે કે તમે હવે `rand` ક્રેટનું કયું સંસ્કરણ વાપરી રહ્યા છો તે 0.8.6 છે. `rand` સંસ્કરણ 0.999.0 અથવા 0.999.x શ્રેણીના કોઈપણ સંસ્કરણનો ઉપયોગ કરવા માટે, તમારે Cargo.toml ફાઈલને આ પ્રમાણે અપડેટ કરવી પડશે (કારણ કે નીચેના ઉદાહરણો ધારે છે કે તમે `rand` 0.8 વાપરી રહ્યા છો, તેથી ખરેખર આ પરિવર્તન ન કરો):
 
 [dependencies]
@@ -252,7 +344,11 @@ rand = "0.999.0"
 ચાલો `rand` નો ઉપયોગ કરીને અનુમાન કરવા માટે એક સંખ્યા જનરેટ કરવાનું શરૂ કરીએ. આગામી પગલું src/main.rs ને અપડેટ કરવું છે, જે યાદી 2-3 માં દર્શાવેલ છે.
 
 <Listing number="2-3" file-name="src/main.rs" caption="Adding code to generate a random number">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-03/src/main.rs:all}}
+```
+```
 </Listing>
 પ્રથમ, અમે લાઈન `use rand::Rng;` ઉમેરીએ છીએ. `Rng` ટ્રેઇટ એ પદ્ધતિઓ વ્યાખ્યાયિત કરે છે જે રેન્ડમ નંબર જનરેટર અમલમાં મૂકે છે, અને તે પદ્ધતિઓનો ઉપયોગ કરવા માટે આ ટ્રેઇટ અવકાશમાં હોવી આવશ્યક છે. પ્રકરણ ૧૦ વિગતવાર ટ્રેઇટ્સને આવરી લેશે.
 
@@ -271,6 +367,8 @@ cargo run
 cargo run
 5
 -->
+```console
+```console
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.02s
@@ -289,6 +387,8 @@ The secret number is: 83
 Please input your guess.
 5
 You guessed: 5
+```
+```
 તમે જુદા જુદા આંકડા મેળવશો, અને તે બધા ૧ થી ૧૦૦ ની વચ્ચેના આંકડા જ હશે. ઉત્તમ કાર્ય!
 
 ## Comparing the Guess to the Secret Number
@@ -296,7 +396,11 @@ You guessed: 5
 હવે આપણી પાસે userનો ઇનપુટ અને એક યાદ્ચ્છિક સંખ્યા છે, તો આપણે તેમની સરખામણી કરી શકીએ છીએ. આ ક્રિયા સૂચિ 2-4 માં દર્શાવેલ છે. નોંધ કરો કે આ કોડ હજી કમ્પાઇલ થશે નહીં, જે અમે સમજાવીશું.
 
 <Listing number="2-4" file-name="src/main.rs" caption="Handling the possible return values of comparing two numbers">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-04/src/main.rs:here}}
+```
+```
 </Listing>
 સૌ પ્રથમ, આપણે બીજું `use` વિધાન ઉમેરીએ છીએ, જે `std::cmp::Ordering` પ્રકારને પ્રમાણિત પુસ્તકાલયમાંથી અવકાશમાં લાવે છે. `Ordering` પ્રકાર એ અન્ય enum છે અને તેમાં `Less`, `Greater`, અને `Equal` વિવિધતાઓ છે. આ ત્રણ પરિણામો છે જે બે મૂલ્યોની સરખામણી કરતી વખતે શક્ય છે.
 
@@ -314,17 +418,29 @@ A `match` અભિવ્યક્તિ આર્મ્ઝથી બનેલ�
 The error numbers in this output should be that of the code **WITHOUT** the
 anchor or snip comments
 -->
+```console
+```console
 {{#include ../listings/ch02-guessing-game-tutorial/listing-02-04/output.txt}}
+```
+```
 ભૂલનું મૂળ એ જણાવે છે કે પ્રકારો મેળ ખાતા નથી. Rust પાસે મજબૂત, સ્થિર પ્રકારની સિસ્ટમ છે. જોકે, તેની પાસે પ્રકાર અનુમાન પણ છે. જ્યારે આપણે `let mut guess = String::new()` લખ્યું, ત્યારે Rust એ અનુમાન લગાવી શક્યું કે `guess` એક `String` હોવું જોઈએ અને આપણને પ્રકાર લખવાની જરૂર ન પડી. `secret_number`, બીજી તરફ, એક સંખ્યા પ્રકાર છે. Rust ના કેટલાક સંખ્યા પ્રકારોમાં 1 અને 100 ની વચ્ચે મૂલ્ય હોઈ શકે છે: `i32`, ૩૨-બીટની સંખ્યા; `u32`, અનસાઈન્ડ ૩૨-બીટની સંખ્યા; `i64`, ૬૪-બીટની સંખ્યા; તેમજ અન્ય. અન્યથા ઉલ્લેખિત ન હોય તો, Rust ડિફૉલ્ટ રૂપે `i32` પર આવે છે, જે `secret_number` નો પ્રકાર છે સિવાય કે તમે અન્યત્ર પ્રકારની માહિતી ઉમેરો કે જેના કારણે Rust કોઈ અલગ સંખ્યાત્મક પ્રકારનું અનુમાન કરે. ભૂલનું કારણ એ છે કે Rust સ્ટ્રિંગ અને સંખ્યા પ્રકારની સરખામણી કરી શકતું નથી.
 
 આખરે, અમારો ધ્યેય એ `String` ને અંક પ્રકારમાં રૂપાંતરિત કરવાનો છે જે પ્રોગ્રામ ઇનપુટ તરીકે વાંચે છે, જેથી અમે તેને ગુપ્ત સંખ્યા સાથે સંખ્યાત્મક રીતે સરખાવી શકીએ. અમે આ કાર્ય `main` ફંક્શનના મુખ્ય ભાગમાં આ લીટી ઉમેરીને કરીએ છીએ:
 
 ફાઈલનું નામ: src/main.rs
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-03-convert-string-to-number/src/main.rs:here}}
+```
+```
 Please provide the text you want me to translate. I am ready when you are!
 
+```rust
+```rust
 let guess: u32 = guess.trim().parse().expect("Please type a number!");
+```
+```
 અમે `guess` નામનું variable બનાવીએ છીએ. પરંતુ અરે, શું પ્રોગ્રામ પાસે પહેલેથી જ `guess` નામનું variable નથી? હા છે, પરંતુ ઉપયોગી રીતે Rust આપણને `guess` ની અગાઉની કિંમતને નવી કિંમતે છુપાવવાની મંજૂરી આપે છે. છુપાવવાથી (Shadowing) આપણે `guess` variable's નામને ફરીથી વાપરી શકીએ છીએ, તેના બદલે બે અનોખા variables, જેમ કે `guess_str` અને `guess`, બનાવવા માટે દબાણ કરીએ છીએ. અમે આને પ્રકરણ ૩ માં વધુ વિગતવાર આવરી લઈશું, પરંતુ હાલમાં જાણો કે આ લક્ષણ ઘણીવાર ત્યારે વપરાય છે જ્યારે તમે એક પ્રકારની કિંમતને બીજા પ્રકારમાં રૂપાંતરિત કરવા માંગતા હોવ.
 
 આ નવા variable `guess.trim().parse()` અભિવ્યક્તિ સાથે જોડીએ છીએ. અભિવ્યક્તિમાં `guess` એ મૂળ `guess` variable's સંદર્ભ આપે છે, જેમાં ઇનપુટ એક શૃંખલા સ્વરૂપે હતું. `String` ઉદાહરણ પરની `trim` પદ્ધતિ શરૂ અને અંતમાં રહેલી ખાલી જગ્યાને દૂર કરશે, જે આપણે `u32` માં રૂપાંતર કરતા પહેલાં કરવું આવશ્યક છે, કારણ કે તે માત્ર આંકડાકીય માહિતી જ ધરાવી શકે છે. userએ `read_line` સંતોષવા અને પોતાનો અનુમાન ઇનપુટ કરવા માટે એન્ટર દબાવવું જોઈએ, જેનાથી શૃંખલામાં એક નવી લાઇન અક્ષર ઉમેરાય છે. ઉદાહરણ તરીકે, જો user 5 ટાઈપ કરે અને એન્ટર દબાવે, તો `guess` આના જેવું દેખાશે: `5\n`. અહીં, `\n` એટલે “નવી લાઇન”. (વિન્ડોઝ પર, એન્ટર દબાવવાથી કેરેજ રિટર્ન અને નવી લાઇન, `\r\n` બંને આવે છે.) `trim` પદ્ધતિ `\n` અથવા `\r\n` ને દૂર કરે છે, જેના પરિણામે માત્ર `5` રહે છે.
@@ -343,6 +459,8 @@ touch src/main.rs
 cargo run
   76
 -->
+```console
+```console
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.26s
@@ -353,6 +471,8 @@ Please input your guess.
   76
 You guessed: 76
 Too big!
+```
+```
 ચોખ્ખું! ભલે અનુમાન પહેલાં જગ્યાઓ ઉમેરવામાં આવી હોય, પ્રોગ્રામ હજી પણ સમજાયું કે userએ 76 અનુમાન લગાવ્યું છે. વિવિધ પ્રકારના ઇનપુટ સાથે અલગ વર્તન ચકાસવા માટે પ્રોગ્રામ થોડાં વાર ચલાવો: સંખ્યાને યોગ્ય રીતે અનુમાન કરો, ખૂબ ઊંચી સંખ્યાનો અનુમાન લગાવો અને ખૂબ નીચી સંખ્યાનો અનુમાન લગાવો.
 
 હવે આપણી પાસે રમતનો મોટો ભાગ કાર્યરત છે, પરંતુ user માત્ર એક જ અનુમાન કરી શકે છે. ચાલો તેને બદલીએ અને એક લૂપ ઉમેરીએ!
@@ -363,7 +483,11 @@ Too big!
 
 ફાઈલનામ: src/main.rs
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-04-looping/src/main.rs:here}}
+```
+```
 જેમ કે તમે જોઈ શકો છો, અમે અનુમાન ઇનપુટ પ્રોમ્પ્ટથી આગળ બધું જ એક લૂપમાં ખસેડ્યું છે. લૂપની અંદરની લીટીઓને વધુ ચાર જગ્યાઓથી ખાલી કરો અને પ્રોગ્રામ ફરીથી ચલાવો. પ્રોગ્રામ હવે કાયમ માટે બીજું અનુમાન માંગશે, જે વાસ્તવમાં એક નવી સમસ્યા ઊભી કરે છે. એવું લાગે તેમ નથી કે user બહાર નીકળી શકે!
 
 user હંમેશાં કીબોર્ડ શૉર્ટકટ ctrl - C નો ઉપયોગ કરીને પ્રોગ્રામને વિક્ષેપિત કરી શકે છે. પરંતુ આ અસંતોષજનક રાક્ષસમાંથી છૂટવાની બીજી રીત છે, જે `parse` ચર્ચામાં "ગુપ્ત સંખ્યા સાથે અનુમાનની સરખામણી" માં ઉલ્લેખ કર્યો હતો: જો user બિન-સંખ્યાત્મક જવાબ દાખલ કરે તો પ્રોગ્રામ ક્રેશ થઈ જશે. અમે userને બહાર નીકળવા દેવા માટે તેનો લાભ લઈ શકીએ છીએ, જે અહીં દર્શાવેલ છે:
@@ -377,6 +501,8 @@ cargo run
 (correct guess)
 quit
 -->
+```console
+```console
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.23s
@@ -401,6 +527,8 @@ quit
 thread 'main' panicked at src/main.rs:28:47:
 Please type a number!: ParseIntError { kind: InvalidDigit }
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+```
 `quit` લખવાથી રમત સમાપ્ત થઈ જશે, પરંતુ તમે નોંધશો તેમ, અન્ય કોઈપણ અંક સિવાયના ઇનપુટ દાખલ કરવાથી પણ તે જ પરિણામ આવશે. આ ઘણું નબળું છે; આપણે ઈચ્છીએ છીએ કે સાચો અંક અનુમાનિત થાય ત્યારે રમત પણ બંધ થવી જોઈએ.
 
 ### Quitting After a Correct Guess
@@ -409,7 +537,11 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 ફાઈલનામ: src/main.rs
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-05-quitting/src/main.rs:here}}
+```
+```
 `break` લીટી `You win!` પછી ઉમેરવાથી પ્રોગ્રામ લૂપમાંથી બહાર નીકળી જાય છે જ્યારે user ગુપ્ત સંખ્યા યોગ્ય રીતે અનુમાન કરે છે. લૂપમાંથી બહાર નીકળવાનો અર્થ એ પણ થાય છે કે પ્રોગ્રામમાંથી બહાર નીકળવું, કારણ કે લૂપ `main` નો અંતિમ ભાગ છે.
 
 ### Handling Invalid Input
@@ -417,7 +549,11 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 રમતની વર્તણૂકને વધુ સુધારવા માટે, જ્યારે user અંક સિવાયનો ઇનપુટ આપે ત્યારે પ્રોગ્રામ ક્રેશ થવાને બદલે, ચાલો રમતને તે ઇનપુટને અવગણવા દે જેથી કરીને user અનુમાન લગાવવાનું ચાલુ રાખી શકે. આપણે લિસ્ટિંગ 2-5 માં દર્શાવ્યા પ્રમાણે `guess` ને `String` થી `u32` માં રૂપાંતરિત કરતી લીટીમાં ફેરફાર કરીને આ કરી શકીએ છીએ.
 
 <Listing number="2-5" file-name="src/main.rs" caption="Ignoring a non-number guess and asking for another guess instead of crashing the program">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-05/src/main.rs:here}}
+```
+```
 </Listing>
 જો `parse` ભૂલ પર ક્રેશ થવાનું ટાળીને ભૂલનું સંચાલન કરવા માટે, અમે `expect` કૉલથી `match` અભિવ્યક્તિમાં જઈએ છીએ. યાદ રાખો કે `parse` એક `Result` પ્રકાર આપે છે અને `Result` એ એક enum છે જેમાં `Ok` અને `Err` પ્રકારો આવેલાં છે. અમે અહીં `match` અભિવ્યક્તિનો ઉપયોગ કરી રહ્યા છીએ, જેવી રીતે અમે `cmp` પદ્ધતિના `Ordering` પરિણામ સાથે
 
@@ -435,6 +571,8 @@ cargo run
 foo
 (correct guess)
 -->
+```console
+```console
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.13s
@@ -455,10 +593,16 @@ Please input your guess.
 61
 You guessed: 61
 You win!
+```
+```
 શાનદાર! એક નાનકડા અંતિમ સુધારણા સાથે, આપણે અનુમાન લગાવવાની રમત પૂરી કરીશું. યાદ કરો કે આ કાર્યક્રમ હજી સુધી ગુપ્ત સંખ્યા છાપી રહ્યો છે. પરીક્ષણ માટે તે સારું કામ કર્યું હતું, પરંતુ તેનાથી રમત બગડે છે. ચાલો `println!` ને દૂર કરીએ જે ગુપ્ત સંખ્યા દર્શાવે છે. સૂચિ 2-6 અંતિમ કોડ દર્શાવે છે.
 
 <Listing number="2-6" file-name="src/main.rs" caption="Complete guessing game code">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-06/src/main.rs}}
+```
+```
 </Listing>
 હવે, તમે અનુમાન લગાવવાની રમત સફળતાપૂર્વક બનાવેલી છે. અભિનંદન!
 

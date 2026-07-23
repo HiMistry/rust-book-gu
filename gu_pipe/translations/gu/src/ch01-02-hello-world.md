@@ -13,16 +13,24 @@
 
 Linux, macOS, અને Windows પર PowerShell માટે, આ દાખલ કરો:
 
+```console
+```console
 $ mkdir ~/projects
 $ cd ~/projects
 $ mkdir hello_world
 $ cd hello_world
+```
+```
 વિન્ડોઝ CMD માટે, આ દાખલ કરો:
 
+```cmd
+```cmd
 > mkdir "%USERPROFILE%\projects"
 > cd /d "%USERPROFILE%\projects"
 > mkdir hello_world
 > cd hello_world
+```
+```
 <!-- Old headings. Do not remove or links may break. -->
 ### Rust Program Basics
 
@@ -31,20 +39,32 @@ $ cd hello_world
 હવે બનાવેલી main.rs ફાઈલ ખોલો અને Listing 1-1 માં આપેલ કોડ દાખલ કરો.
 
 <Listing number="1-1" file-name="main.rs" caption="A program that prints `Hello, world!`">
+```rust
+```rust
 fn main() {
     println!("Hello, world!");
 }
+```
+```
 </Listing>
 ફાઈલ સાચવો અને તમારા ટર્મિનલ વિન્ડોમાં પાછા જાઓ ~/projects/hello_world ડિરેક્ટરીમાં. લિનક્સ અથવા મૅકઓએસ પર, ફાઈલને કમ્પાઇલ કરવા અને ચલાવવા માટે નીચેના આદેશો દાખલ કરો:
 
+```console
+```console
 $ rustc main.rs
 $ ./main
 Hello, world!
+```
+```
 વિન્ડોઝ પર, આદેશ `.\main` દાખલ કરો, `./main` ને બદલે:
 
+```powershell
+```powershell
 > rustc main.rs
 > .\main
 Hello, world!
+```
+```
 તમારા ઓપરેટિંગ સિસ્ટમ કેવું હોય વાંધો નહિ, `Hello, world!` એ આઉટપુટ ટર્મિનલ પર દેખાવા જોઈએ. જો તમને આ આઉટપુટ ના દેખાય, તો સહાય મેળવવા માટે ઇન્સ્ટોલેશન વિભાગના “Troubleshooting” ભાગમાં પાછા જાઓ. If `Hello, world!` did print,
 
 જો `Hello, world!` છપાયું હોય, તો અભિનંદન! તમે સત્તાવાર રીતે એક Rust કાર્યક્રમ લખ્યો છે. એ તમને એક Rust પ્રોગ્રામર બનાવે છે—સ્વાગત છે!
@@ -54,9 +74,13 @@ Hello, world!
 
 ચાલો આ "Hello, world!" કાર્યક્રમને વિગતવાર જોઈએ. અહીં પ્રથમ ભાગ છે:
 
+```rust
+```rust
 fn main() {
 
 }
+```
+```
 These lines define a function named `main`. The `main` function is special: It is always the first code that runs in every executable Rust program. Here, the first line declares a function named `main` that has no parameters and returns nothing. If there were parameters, they would go inside the parentheses (`()`).
 
 The function body is wrapped in `{}`. Rust requires curly brackets around all function bodies. It’s good style to place the opening curly bracket on the same line as the function declaration, adding one space in between.
@@ -65,7 +89,11 @@ The function body is wrapped in `{}`. Rust requires curly brackets around all fu
 
 `main` ફંક્શનનો મુખ્ય ભાગ નીચેના કોડ ધરાવે છે:
 
+```rust
+```rust
 println!("Hello, world!");
+```
+```
 આ લીટી આ નાનકડા કાર્યક્રમમાં તમામ કાર્ય કરે છે: તે સ્ક્રીન પર લખાણ છાપે છે. અહીં ત્રણ મહત્વપૂર્ણ વિગતો ધ્યાન રાખવા જેવી છે.
 
 પ્રથમ, `println!` એક Rust મેક્રોને બોલાવે છે. જો તેના બદલે કોઈ ફંક્શન બોલાવવામાં આવ્યું હોત, તો તેને `println` ( `!` વગર) તરીકે દાખલ કરવામાં આવતું હોત. Rust મેક્રો એ કોડ લખવાનો એક માર્ગ છે જે Rust વાક્યરચનાને વિસ્તારવા માટે કોડ જનરેટ કરે છે, અને આપણે તેના વિશે પ્રકરણ 20 માં વધુ વિગતવાર ચર્ચા કરીશું. અત્યારે, તમારે માત્ર એટલું જ જાણવાની જરૂર છે કે `!` નો ઉપયોગ કરવો એ સામાન્ય ફંક્શનને બદલે મેક્રોને બોલાવવા સમાન છે અને મેક્રો હંમેશાં ફંક્શન જેવા નિયમોનું પાલન કરતા નથી.
@@ -81,22 +109,38 @@ println!("Hello, world!");
 
 Rust કાર્યક્રમ ચલાવતા પહેલાં, તમારે તેને Rust કંપક (compiler) દ્વારા કમ્પાઇલ કરવું આવશ્યક છે, જેમાં `rustc` આદેશ દાખલ કરીને અને તમારા સ્ત્રોત ફાઈલનું નામ પસાર કરીને, જેમ કે:
 
+```console
+```console
 $ rustc main.rs
+```
+```
 જો તમને C અથવા C++ નો અનુભવ હોય, તો તમે નોંધશો કે આ `gcc` અથવા `clang` જેવું જ છે. સફળતાપૂર્વક કમ્પાઈલ કર્યા પછી, Rust એક બાઈનરી એક્ઝિક્યુટેબલ ફાઈલ
 
 ઉત્પન્ન કરે છે. Linux, macOS અને Windows પર PowerShell માં, તમે `ls` આદેશ તમારા શેલમાં દાખલ કરીને એક્ઝિક્યુટેબલ જોઈ શકો છો:
 
+```console
+```console
 $ ls
 main  main.rs
+```
+```
 Linux અને macOS પર, તમે બે ફાઈલો જોશો. Windows પર PowerShell સાથે, તમને એ જ ત્રણ ફાઈલો દેખાશે જે CMD વાપરતી વખતે દેખાત. Windows પર CMD સાથે, તમારે નીચે મુજબ કરવું જોઈએ:
 
+```cmd
+```cmd
 > dir /B %= the /B option says to only show the file names =%
 main.exe
 main.pdb
 main.rs
+```
+```
 આ દર્શાવે છે કે સ્ત્રોત કોડ ફાઈલ કઈ સાથે .rs એક્સ્ટેંશન ધરાવે છે, એક્ઝિક્યુટેબલ ફાઈલ (Windows પર main.exe, પરંતુ અન્ય તમામ પ્લેટફોર્મ પર main), અને, Windows વાપરતી વખતે, એક ફાઈલ જેમાં ડીબગીંગ માહિતી હોય જે .pdb એક્સ્ટેંશન સાથે હોય. અહીંથી, તમે main અથવા main.exe ફાઈલ ચલાવો છો, આ રીતે:
 
+```console
+```console
 $ ./main # or .\main on Windows
+```
+```
 જો તમારું main.rs ફાઈલ "હેલો, વર્લ્ડ!" પ્રોગ્રામ છે, તો આ લીટી તમારા ટર્મિનલમાં `Hello, world!` છાપે છે.
 
 જો તમે ડાયનેમિક ભાષાથી વધુ પરિચિત છો, જેમ કે રૂબી, પાયથોન અથવા JavaScript, તો તમને પ્રોગ્રામને અલગ તબક્કામાં કમ્પાઇલ કરવું અને ચલાવવું સામાન્ય ન લાગી શકે. Rust એ એક અગાઉથી કમ્પાઈલ કરેલી ભાષા છે, જેનો અર્થ થાય છે કે તમે પ્રોગ્રામને કમ્પાઇલ કરી શકો છો અને તેને કોઈ બીજાને આપી શકો છો, અને તેઓ Rust ઇન્સ્ટોલ કર્યા વિના પણ ચલાવી શકે છે. જો તમે કોઈને .rb , .py , અથવા .js ફાઈલ આપો છો, તો તેમને રૂબી, પાયથોન અથવા JavaScript અમલીકરણ ઇન્સ્ટોલ કરવું પડશે (ક્રમશઃ). પરંતુ તે ભાષાઓમાં, તમારે તમારા પ્રોગ્રામને કમ્પાઇલ કરવા અને ચલાવવા માટે માત્ર એક જ આદેશની જરૂર પડે છે. ભાષા ડિઝાઇન હંમેશાં આપ-લેનું પરિણામ હોય છે.

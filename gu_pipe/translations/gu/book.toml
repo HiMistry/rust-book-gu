@@ -44,10 +44,6 @@ command = "cargo run --manifest-path packages/mdbook-trpl/Cargo.toml --bin mdboo
 [preprocessor.trpl-listing]
 command = "cargo run --manifest-path packages/mdbook-trpl/Cargo.toml --bin mdbook-trpl-listing"
 output-mode = "default"
-
-[output.epub]
-optional = true
-
 [rust]
 edition = "2024"
 

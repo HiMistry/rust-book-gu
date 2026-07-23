@@ -9,7 +9,11 @@
 કારણ નિર્ધારિત કરવા માટેનું વાક્યરચના, ક્લોઝર્સ (closures) જેવું જ છે, જે યાદી 20-28 માં દર્શાવેલ છે, જ્યાં અમે એક વિધેય `add_one` વ્યાખ્યાયિત કર્યું છે જે તેના પરિમાણમાં 1 ઉમેરે છે. વિધેય `do_twice` બે પરિમાણો લે છે: કોઈપણ વિધેયનો ફંક્શન પોઇન્ટર જે `i32` પરિમાણ લે છે અને `i32` પરત કરે છે, અને એક `i32` મૂલ્ય. `do_twice` વિધેય `f` વિધેયને બે વાર બોલાવે છે, તેને `arg` મૂલ્ય પાસ કરે છે, પછી બંને ફંક્શન કૉલ પરિણામોને એકસાથે ઉમેરે છે. `main` વિધેય `do_twice` ને Argumentો `add_one` અને `5` સાથે બોલાવે છે.
 
 <Listing number="20-28" file-name="src/main.rs" caption="Using the `fn` type to accept a function pointer as an argument">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-28/src/main.rs}}
+```
+```
 </Listing>
 આ કોડ `The answer is: 12` છાપે છે. અમે ઉલ્લેખ કરીએ છીએ કે `do_twice` માં પરિમાણ `f` એ એક `fn` છે જે એક `i32` પ્રકારનું પરિમાણ લે છે અને `i32` પરત કરે છે. અમે પછી `do_twice` ના શરીરમાં `f` ને બોલાવી શકીએ છીએ. `main` માં, અમે `add_one` નામનું કાર્ય પ્રથમ Argument તરીકે `do_twice` ને આપી શકીએ છીએ.
 
@@ -22,12 +26,20 @@
 એક બંધન (ક્લોઝર) વ્યાખ્યાયિત કરેલું કે નામવાળું વિધેય ક્યાં વાપરી શકાય તેનું ઉદાહરણ આપવા માટે, ચાલો પ્રમાણભૂત લાયબ્રેરીમાં `Iterator` ટ્રેઇટ દ્વારા પૂરા પાડવામાં આવેલ `map` પદ્ધતિના ઉપયોગને જોઈએ. સંખ્યાઓનું વેક્ટરને શબ્દોના વેક્ટરમાં રૂપાંતરિત કરવા માટે `map` પદ્ધતિનો ઉપયોગ કરવા માટે, આપણે એક બંધન વાપરી શકીએ છીએ, જે યાદી 20-29 માં દર્શાવેલ છે.
 
 <Listing number="20-29" caption="Using a closure with the `map` method to convert numbers to strings">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-29/src/main.rs:here}}
+```
+```
 </Listing>
 અથવા, આપણે `map` ના આર્ગ્યુમેન્ટ તરીકે ક્લોઝરને બદલે કોઈ ફંક્શનનું નામ આપી શકીએ છીએ. સૂચિ ૨૦-૩૦ દર્શાવે છે કે તે કેવું દેખાશે.
 
 <Listing number="20-30" caption="Using the `String::to_string` function with the `map` method to convert numbers to strings">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-30/src/main.rs:here}}
+```
+```
 </Listing>
 નોંધ અહીં આપણે “ઉન્નત લક્ષણો” વિભાગમાં ઉલ્લેખિત સંપૂર્ણ લાયકાતવાળા સિન્ટેક્સનો ઉપયોગ કરવો જોઈએ કારણ કે `to_string` નામનું બહુવિધ વિધેય ઉપલબ્ધ છે. અહીં, આપણે `ToString` લક્ષણમાં વ્યાખ્યાયિત કરેલા `to_string`
 
@@ -36,7 +48,11 @@
 મૂલ્યો” વિભાગને યાદ કરો કે આપણે વ્યાખ્યાયિત કરેલા દરેક એનમ ભિન્નતાનું નામ પણ એક પ્રારંભિક વિધેય બને છે. આપણે આ પ્રારંભિક વિધેયોને ફંક્શન પોઇન્ટર તરીકે ઉપયોગ કરી શકીએ છીએ જે ક્લોઝર લક્ષણોનો અમલ કરે છે, જેનો અર્થ થાય છે કે આપણે ક્લોઝર લેતા પદ્ધતિઓ માટે આ પ્રારંભિક વિધેયોને Argumentો તરીકે સ્પષ્ટ કરી શકીએ છીએ, જેમ કે યાદી 20-31 માં જોયું છે.
 
 <Listing number="20-31" caption="Using an enum initializer with the `map` method to create a `Status` instance from numbers">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-31/src/main.rs:here}}
+```
+```
 </Listing>
 અહીં, આપણે `Status::Value` ઉદાહરણો દરેક `u32` મૂલ્યની શ્રેણીમાં બનાવીએ છીએ જેના પર `map` કાર્ય બોલાવવામાં આવે છે, `Status::Value` ના પ્રારંભિકા વિધેયનો ઉપયોગ કરીને. કેટલાક લોકોને આ શૈલી પસંદ હોય છે અને કેટલાક લોકોને ક્લોઝરનો ઉપયોગ કરવાનું પસંદ હોય છે. તે સમાન કોડમાં કમ્પાઇલ થાય છે, તેથી જે શૈલી તમને વધુ સ્પષ્ટ લાગે તેનો ઉપયોગ કરો.
 
@@ -47,20 +63,36 @@
 નિશ્ચિતપણે, તમે સામાન્ય રીતે `impl Trait` વાક્યરચનાનો ઉપયોગ કરશો જે આપણે પ્રકરણ ૧૦ માં શીખ્યા હતા. તમે કોઈપણ ફંક્શન પ્રકાર પરત કરી શકો છો, `Fn`, `FnOnce`, અને `FnMut` નો ઉપયોગ કરીને. ઉદાહરણ તરીકે, લિસ્ટિંગ ૨૦-૩૨ નો કોડ બરાબર કમ્પાઇલ થશે.
 
 <Listing number="20-32" caption="Returning a closure from a function using the `impl Trait` syntax">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-32/src/lib.rs}}
+```
+```
 </Listing>
 જો કે, જેમ આપણે પ્રકરણ ૧૩ માં “ક્લોઝર પ્રકારો અનુમાનિત અને નોંધણી” વિભાગમાં નોંધ્યું હતું તેમ, દરેક ક્લોઝર પોતાનો એક અલગ પ્રકાર પણ છે. જો તમારે બહુવિધ ફંક્શન્સ સાથે કામ કરવાની જરૂર હોય જે સમાન હસ્તાક્ષર પરંતુ જુદા જુદા અમલીકરણો ધરાવે છે, તો તમારે તેમના માટે ટ્રેઇટ ઑબ્જેક્ટનો ઉપયોગ કરવો પડશે. ધ્યાનમાં લો કે જો તમે Listing 20-33 માં દર્શાવેલ જેવું કોડ લખો છો તો શું થાય છે.
 
 <Listing file-name="src/main.rs" number="20-33" caption="Creating a `Vec<T>` of closures defined by functions that return `impl Fn` types">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-33/src/main.rs}}
+```
+```
 </Listing>
 અહીં બે વિધેયો છે, `returns_closure` અને `returns_initialized_closure`, જે બંને `impl Fn(i32) -> i32` પરત કરે છે. નોંધ કરો કે તેઓ જે ક્લોઝર પરત કરે છે તે અલગ છે, ભલે તેઓ સમાન પ્રકારનું અમલીકરણ કરે. જો આપણે આને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ, તો Rust આપણને જણાવે છે કે તે કામ કરશે નહીં:
 
+```text
+```text
 {{#include ../listings/ch20-advanced-features/listing-20-33/output.txt}}
+```
+```
 ભૂલ સંદેશ જણાવે છે કે જ્યારે પણ આપણે `impl Trait` પરત કરીએ છીએ, ત્યારે Rust એક અનોખી અસ્પષ્ટ પ્રકાર (opaque type) બનાવે છે; એવો પ્રકાર જેમાં આપણે Rust આપણી માટે જે બનાવે છે તેની વિગતો જોઈ શકતા નથી, અને ન તો આપણે અનુમાન લગાવી શકીએ કે Rust કયો પ્રકાર ઉત્પન્ન કરશે. તેથી, ભલે આ કાર્યો સમાન ટ્રેઇટ લાગુ કરતા ક્લોઝર (closure) પરત કરે છે, `Fn(i32) -> i32` , પણ Rust દરેક માટે બનાવેલા અસ્પષ્ટ પ્રકારો અલગ હોય છે. (આ એ જ રીતે મળતું આવે છે કે જે રીતે Rust જુદા જુદા async બ્લોક્સ માટે અલગ-અલગ કોંક્રિટ પ્રકારો ઉત્પન્ન કરે છે, ભલે તેમનો આઉટપુટ પ્રકાર સમાન હોય, જે આપણે પ્રકરણ 17 માં “The `Pin` Type and the `Unpin` Trait” માં જોયું હતું.) આપણને હવે આ સમસ્યાનો ઉકેલ ઘણી વાર જોવા મળ્યો છે: આપણે ટ્રેઇટ ઓબ્જેક્ટ (trait object) નો ઉપયોગ કરી શકીએ છીએ, જેમ કે Listing 20-34 માં દર્શાવેલ છે.
 
 <Listing number="20-34" caption="Creating a `Vec<T>` of closures defined by functions that return `Box<dyn Fn>` so that they have the same type">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-34/src/main.rs:here}}
+```
+```
 </Listing>
 આ કોડ યોગ્ય રીતે સંપાદિત થશે. ટ્રેઇટ ઓબ્જેક્ટ વિશે વધુ માહિતી માટે, પ્રકરણ ૧૮ માં “વહેંચાયેલ વર્તન પર અમૂર્ત કરવા માટે ટ્રેઇટ ઓબ્જેક્ટનો ઉપયોગ” વિભાગ
 

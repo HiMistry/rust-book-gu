@@ -14,7 +14,11 @@
 સૌ પ્રથમ, યાદી ૧૬-૬ માં, આપણે એક ચેનલ બનાવીશું પરંતુ તેનો ઉપયોગ નહીં કરીએ. નોંધ કરો કે આ હજી સુધી કમ્પાઇલ થશે નહીં કારણ કે Rust એ નક્કી કરી શકતું નથી કે આપણે ચેનલ દ્વારા કયા પ્રકારના મૂલ્યો મોકલવા માંગીએ છીએ.
 
 <Listing number="16-6" file-name="src/main.rs" caption="Creating a channel and assigning the two halves to `tx` and `rx`">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-06/src/main.rs}}
+```
+```
 </Listing>
 અમે `mpsc::channel` વિધેયનો ઉપયોગ કરીને નવું ચેનલ બનાવીએ છીએ; `mpsc` એટલે બહુવિધ ઉત્પાદક, એકગ્રહસ્ત. ટૂંકમાં, Rustના પ્રમાણભૂત પુસ્તકાલય દ્વારા ચેનલોનો અમલ એવો થાય છે કે ચેનલમાં બહુવિધ મોકલવાના છેડા હોઈ શકે છે જે મૂલ્યો ઉત્પન્ન કરે છે પરંતુ માત્ર એક જ મેળવવાનો છેડો હોય છે જે તે મૂલ્યોનો ઉપયોગ કરે છે. અનેક પ્રવાહો એક મોટા નદીમાં ભળી રહ્યાનું કલ્પના કરો: કોઈપણ પ્રવાહ દ્વારા મોકલવામાં આવેલી દરેક વસ્તુ અંતે એક નદીમાં પહોંચશે. અમે હાલમાં એક ઉત્પાદકથી શરૂઆત કરીશું, પરંતુ જ્યારે આ ઉદાહરણ કાર્યરત થશે ત્યારે અમે બહુવિધ ઉત્પાદકો ઉમેરીશું.
 
@@ -23,7 +27,11 @@ mpsc::channel કાર્ય `mpsc::channel` કાર્ય એક ટ્ય�
 ચાલો પ્રસારણ અંત (transmitting end) ને એક ઉત્પન્ન થયેલ થ્રેડમાં ખસેડીએ અને તેને એક String મોકલીએ જેથી ઉત્પન્ન થયેલ થ્રેડ મુખ્ય થ્રેડ સાથે વાતચીત કરે, જેની જેમ Listing 16-7 માં દર્શાવવામાં આવ્યું છે. આ એવું કરવા સમાન છે કે નદીના ઉપરવાસમાં એક રબર ડક મૂકવામાં આવે અથવા એક થ્રેડથી બીજા થ્રેડ પર ચેટ સંદેશ મોકલવામાં આવે.
 
 <Listing number="16-7" file-name="src/main.rs" caption='Moving `tx` to a spawned thread and sending `"hi"`'>
+```rust
+```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-07/src/main.rs}}
+```
+```
 </Listing>
 ફરીથી, આપણે `thread::spawn` નો ઉપયોગ કરીને નવું થ્રેડ બનાવી રહ્યા છીએ અને પછી `move` નો ઉપયોગ કરીને `tx` ને ક્લોઝરમાં ખસેડી રહ્યા છીએ જેથી કે સ્પોન થયેલ થ્રેડ `tx` નું માલિકી ધરાવે. સ્પોન થયેલ થ્રેડને ચેનલ દ્વારા સંદેશાઓ મોકલવા માટે ટ્રાન્સમીટરની માલિકી હોવી જરૂરી છે.
 
@@ -32,7 +40,11 @@ mpsc::channel કાર્ય `mpsc::channel` કાર્ય એક ટ્ય�
 Listing 16-8 માં, આપણને મુખ્ય થ્રેડમાં રીસીવર પાસેથી મૂલ્ય મળશે. આ પાણીના અંતિમ ભાગે નદીમાંથી રબર ડક પાછો મેળવવા જેવું અથવા ચેટ સંદેશાની પ્રાપ્તિ સમાન છે.
 
 <Listing number="16-8" file-name="src/main.rs" caption='Receiving the value `"hi"` in the main thread and printing it'>
+```rust
+```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-08/src/main.rs}}
+```
+```
 </Listing>
 પ્રાપ્તકર્તા પાસે બે ઉપયોગી પદ્ધતિઓ છે: `recv` અને `try_recv`. અમે `recv` નો ઉપયોગ કરી રહ્યા છીએ, જે 'પ્રાપ્તિ' માટે ટૂંકું નામ છે, જે મુખ્ય થ્રેડનું કાર્ય સ્થગિત કરશે અને જ્યાં સુધી મૂલ્ય ચેનલમાં મોકલવામાં ન આવે ત્યાં સુધી રાહ જોશે. એકવાર મૂલ્ય મોકલવામાં આવે, `recv` તે `Result<T, E>` માં પરત કરશે. જ્યારે પ્રસારક બંધ કરે છે, ત્યારે `recv` એક ભૂલ પરત કરશે જે દર્શાવે છે કે હવે વધુ મૂલ્યો આવશે નહીં.
 
@@ -45,7 +57,11 @@ Listing 16-8 માં, આપણને મુખ્ય થ્રેડમાં
 <!-- Not extracting output because changes to this output aren't significant;
 the changes are likely to be due to the threads running differently rather than
 changes in the compiler -->
+```text
+```text
 Got: hi
+```
+```
 મહાન!
 
 <!-- Old headings. Do not remove or links may break. -->
@@ -54,11 +70,19 @@ Got: hi
 માલિકીના નિયમો સંદેશ મોકલવામાં મહત્વપૂર્ણ ભાગ ભજવે છે, કારણ કે તે તમને સુરક્ષિત, એકસાથે ચાલતા કોડ લખવામાં મદદ કરે છે. એકસાથે ચાલતા પ્રોગ્રામિંગમાં ભૂલો અટકાવવી એ તમારી Rust પ્રોગ્રામ્સમાં માલિકી વિશે વિચારવાનો ફાયદો છે. ચાલો એક પ્રયોગ કરીએ જે દર્શાવે છે કે ચેનલ્સ અને માલિકી કેવી રીતે સાથે મળીને સમસ્યાઓ અટકાવે છે: આપણે યાદ કરેલ `val` મૂલ્યને ચેનલ દ્વારા મોકલ્યા પછી, સ્પોન્ડ થ્રેડમાં વાપરવાનો પ્રયત્ન કરીશું. આ કોડ શા માટે મંજૂર નથી તે જોવા માટે લિસ્ટિંગ 16-9 માં કોડ કમ્પાઇલ કરવાનો પ્રયાસ કરો.
 
 <Listing number="16-9" file-name="src/main.rs" caption="Attempting to use `val` after we’ve sent it down the channel">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-09/src/main.rs}}
+```
+```
 </Listing>
 અહીં, આપણે `val` ને ચેનલ દ્વારા `tx.send` મોકલ્યા પછી છાપવાનો પ્રયત્ન કરીએ છીએ. આ કરવાની મંજૂરી આપવી એ ખરાબ વિચાર છે: એકવાર મૂલ્ય બીજા થ્રેડને મોકલાઈ જાય પછી, તે થ્રેડ તેને વાપરતા પહેલાં આપણે બદલી શકે અથવા નાશ કરી શકે છે. સંભવિતપણે, અન્ય થ્રેડના ફેરફારો અસંગત અથવા અસ્તિત્વહીન ડેટાને કારણે ભૂલો અથવા અનપેક્ષિત પરિણામો લાવી શકે છે. જો કે, Rust આપણને યાદી 16-9 માં કોડ કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ તો એક ભૂલ આપે છે:
 
+```console
+```console
 {{#include ../listings/ch16-fearless-concurrency/listing-16-09/output.txt}}
+```
+```
 આપણી એકરૂપતાની ભૂલને કારણે કાળ-સમયની ભૂલ આવી છે. `send` વિધેય તેના પરિમાણનું માલિકી લે છે, અને જ્યારે મૂલ્ય ખસેડવામાં આવે છે ત્યારે પ્રાપ્તકર્તા તેની માલિકી લે છે. આનાથી આપણને અજાણતાં જ મૂલ્યનો ફરીથી ઉપયોગ કરતા અટકાવે છે; માલિકીની પ્રણાલી ચકાસણી કરે છે કે બધું યોગ્ય છે.
 
 <!-- Old headings. Do not remove or links may break. -->
@@ -69,7 +93,11 @@ Got: hi
 લિસ્ટિંગ ૧૬-૧૦ માં, અમે કેટલાક ફેરફારો કર્યા છે જે સાબિત કરશે કે લિસ્ટિંગ ૧૬-૮ નો કોડ એકસાથે ચાલી રહ્યો છે: સ્પૉન્ડ થ્રેડ હવે અનેક સંદેશાઓ મોકલશે અને દરેક સંદેશા વચ્ચે એક સેકન્ડ માટે થોભશે.
 
 <Listing number="16-10" file-name="src/main.rs" caption="Sending multiple messages and pausing between each one">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-10/src/main.rs}}
+```
+```
 </Listing>
 આ વખતે, ઉત્પન્ન થયેલ થ્રેડ પાસે સ્ટ્રિંગ્સનો વેક્ટર છે જે આપણે મુખ્ય થ્રેડને મોકલવા માંગીએ છીએ. અમે તેના પર પુનરાવર્તન કરીએ છીએ, દરેકને વ્યક્તિગત રીતે મોકલીએ છીએ, અને દરેક વચ્ચે `thread::sleep` ફંક્શનને એક સેકન્ડના `Duration` મૂલ્ય સાથે બોલાવીને થોભો કરીએ છીએ.
 
@@ -80,10 +108,14 @@ Got: hi
 <!-- Not extracting output because changes to this output aren't significant;
 the changes are likely to be due to the threads running differently rather than
 changes in the compiler -->
+```text
+```text
 Got: hi
 Got: from
 Got: the
 Got: thread
+```
+```
 કારણ કે આપણી પાસે કોઈ કોડ નથી જે `for` લૂપમાં થોભે અથવા વિલંબ કરે છે મુખ્ય થ્રેડમાં, અમે કહી શકીએ છીએ કે મુખ્ય થ્રેડ મૂલ્યો મેળવવા માટે રાહ જોઈ રહ્યો છે જે સ્પોન થયેલ થ્રેડમાંથી આવે છે.
 
 <!-- Old headings. Do not remove or links may break. -->
@@ -92,7 +124,11 @@ Got: thread
 અગાઉ અમે ઉલ્લેખ કર્યો હતો કે `mpsc` એ બહુવિધ ઉત્પાદક, એકલ ઉપભોક્તા માટેનું સંક્ષેપ હતું. ચાલો `mpsc` નો ઉપયોગ કરીએ અને સૂચિ 16-10 માં કોડને વિસ્તૃત કરીએ જેથી કરીને બહુવિધ થ્રેડો બનાવી શકાય જે તમામ સમાન રીસીવરને મૂલ્યો મોકલે. આપણે ટ્રાન્સમીટરની નકલ કરીને આવું કરી શકીએ છીએ, જે સૂચિ 16-11 માં દર્શાવેલ છે.
 
 <Listing number="16-11" file-name="src/main.rs" caption="Sending multiple messages from multiple producers">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-11/src/main.rs:here}}
+```
+```
 </Listing>
 આ સમયે, પ્રથમ સ્પોન થયેલ થ્રેડ બનાવતા પહેલાં, અમે ટ્રાન્સમીટર પર `clone` કૉલ કરીએ છીએ. આ આપણને એક નવું ટ્રાન્સમીટર આપશે જે આપણે પ્રથમ સ્પોન થયેલ થ્રેડને આપી શકીએ છીએ. અમે મૂળ ટ્રાન્સમીટરને બીજા સ્પોન થયેલ થ્રેડને આપીએ છીએ. આનાથી આપણને બે થ્રેડ મળે છે, દરેક એક જ રીસીવરને અલગ-અલગ સંદેશાઓ મોકલે છે.
 
@@ -101,6 +137,8 @@ Got: thread
 <!-- Not extracting output because changes to this output aren't significant;
 the changes are likely to be due to the threads running differently rather than
 changes in the compiler -->
+```text
+```text
 Got: hi
 Got: more
 Got: from
@@ -109,6 +147,8 @@ Got: for
 Got: the
 Got: thread
 Got: you
+```
+```
 તમે મૂલ્યો અન્ય ક્રમમાં જોઈ શકો છો, જે તમારા સિસ્ટમ પર આધાર રાખે છે. આ જ એ છે જે એકસાથે કાર્ય (concurrency) રસપ્રદ તેમજ મુશ્કેલ બનાવે છે. જો તમે `thread::sleep` સાથે પ્રયોગ કરો છો, અને જુદા જુદા થ્રેડમાં તેને વિવિધ મૂલ્યો આપો, તો દરેક વખતે પરિણામ અલગ આવશે અને તે અનિશ્ચિત (nondeterministic) હશે. હવે કે આપણે ચેનલો કેવી
 
 રીતે કાર્ય કરે છે તે જોયું છે, તો ચાલો એક અન્ય પદ્ધતિ જોઈએ જે એકસાથે કાર્ય (concurrency) કરે છે.

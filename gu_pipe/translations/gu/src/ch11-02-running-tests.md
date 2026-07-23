@@ -12,7 +12,11 @@
 
 જો તમે પરીક્ષણો સમાંતર ચલાવવા નથી માંગતા અથવા વપરાયેલ થ્રેડોની સંખ્યા પર વધુ વિગતવાર નિયંત્રણ મેળવવા માંગો છો, તો તમે `--test-threads` ધ્વજ અને તમે ઉપયોગ કરવા માંગો છો તે થ્રેડોની સંખ્યાને પરીક્ષણ બાઈનરીમાં મોકલી શકો છો. નીચેના ઉદાહરણ જુઓ:
 
+```console
+```console
 $ cargo test -- --test-threads=1
+```
+```
 અમે પરીક્ષણ થ્રેડોની સંખ્યા `1` પર સેટ કરીએ છીએ, જેથી પ્રોગ્રામ કોઈ પણ સમાંતરતાનો ઉપયોગ ન કરે. એક થ્રેડનો ઉપયોગ કરીને પરીક્ષણો ચલાવવામાં વધુ સમય લાગશે, પરંતુ જો તેઓ સ્થિતિ (state) વહેંચે તો પરીક્ષણો એકબીજા સાથે દખલ કરશે નહીં.
 
 ### Showing Function Output
@@ -22,19 +26,35 @@ $ cargo test -- --test-threads=1
 એક ઉદાહરણ તરીકે, યાદી 11-10 માં એક મૂર્ખ કાર્ય છે જે તેના પરિમાણનું મૂલ્ય છાપે છે અને 10 પરત કરે છે, તેમજ એક પરીક્ષણ જે પાસ થાય છે અને એક પરીક્ષણ જે નિષ્ફળ જાય છે.
 
 <Listing number="11-10" file-name="src/lib.rs" caption="Tests for a function that calls `println!`">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-10/src/lib.rs}}
+```
+```
 </Listing>
 જ્યારે આપણે આ પરીક્ષણો `cargo test` સાથે ચલાવીએ છીએ, ત્યારે આપણને નીચેનું પરિણામ જોવા મળશે:
 
+```console
+```console
 {{#include ../listings/ch11-writing-automated-tests/listing-11-10/output.txt}}
+```
+```
 નોંધ નિષ્ફળ થયેલ પરીક્ષણના સારાંશ આઉટપુટ વિભાગમાં `મને 8 મૂલ્ય મળ્યું` એવું દર્શાવવામાં આવે છે, જે પરીક્ષણ નિષ્ફળ થવાનું કારણ પણ બતાવે છે. જો આપણે સફળ પરીક્ષણો માટે છપાયેલા મૂલ્યો જોવા માંગતા હોઈએ,
 
 તો આપણે Rust ને `--show-output` વિકલ્પ સાથે સફળ પરીક્ષણોનું આઉટપુટ પણ દર્શાવવા કહી શકીએ છીએ:
 
+```console
+```console
 $ cargo test -- --show-output
+```
+```
 જ્યારે આપણે યાદી ૧૧-૧૦ માં પરીક્ષણો ફરીથી `--show-output` ધ્વજ સાથે ચલાવીએ છીએ, ત્યારે આપણને નીચેનું પરિણામ જોવા મળે છે:
 
+```console
+```console
 {{#include ../listings/ch11-writing-automated-tests/output-only-01-show-output/output.txt}}
+```
+```
 ### Running a Subset of Tests by Name
 
 સંપૂર્ણ પરીક્ષણ સમૂહ ચલાવવામાં કેટલીકવાર ઘણો સમય લાગી શકે છે. જો તમે કોઈ ચોક્કસ ક્ષેત્રના કોડ પર કામ કરી રહ્યા હો, તો તમે માત્ર તે પરીક્ષણો જ ચલાવવા માગી શકો છો જે તે કોડને સંબંધિત હોય. તમે `cargo test` ને એક Argument તરીકે ચલાવવા માટે ઇચ્છિત પરીક્ષણ(ઓ) ના નામ(ઓ) પસાર કરીને કયા પરીક્ષણો ચલાવવા તે પસંદ કરી શકો છો.
@@ -42,16 +62,28 @@ $ cargo test -- --show-output
 પ્રદર્શન કરવા માટે કે પરીક્ષણોનો ઉપગણ કેવી રીતે ચલાવવો, અમે પ્રથમ આપણી `add_two` કાર્ય માટે ત્રણ પરીક્ષણો બનાવીશું, જે યાદી 11-11 માં દર્શાવેલ છે, અને કયા ચલાવવા તે પસંદ કરીશું.
 
 <Listing number="11-11" file-name="src/lib.rs" caption="Three tests with three different names">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-11/src/lib.rs}}
+```
+```
 </Listing>
 જો આપણે કોઈ Argumentો આપ્યા વિના પરીક્ષણો ચલાવીએ, જેવું કે આપણે અગાઉ જોયું હતું, તો બધાં જ પરીક્ષણો સમાંતર રીતે ચાલશે:
 
+```console
+```console
 {{#include ../listings/ch11-writing-automated-tests/listing-11-11/output.txt}}
+```
+```
 #### Running Single Tests
 
 આપણે `cargo test` ને કોઈપણ પરીક્ષણ કાર્યનું નામ આપીને માત્ર તે જ પરીક્ષણ ચલાવી શકીએ છીએ:
 
+```console
+```console
 {{#include ../listings/ch11-writing-automated-tests/output-only-02-single-test/output.txt}}
+```
+```
 one_hundred માત્ર `one_hundred` નામ ધરાવતું પરીક્ષણ ચાલ્યું હતું; અન્ય બે પરીક્ષણો તે નામ સાથે મળ્યાં ન હતાં. પરીક્ષણ આઉટપુટ આપણને જણાવે છે કે કેટલા વધુ પરીક્ષણો ચાલી ન હતાં, જે અંતમાં `2 filtered out`
 
 દર્શાવે છે. આ રીતે બહુવિધ પરીક્ષણોના નામોનો ઉલ્લેખ કરી શકાતો નથી; માત્ર `cargo test` ને આપવામાં આવેલ પહેલો મૂલ્ય વપરાય છે. પરંતુ બહુવિધ પરીક્ષણો ચલાવવાનો એક માર્ગ છે.
@@ -60,7 +92,11 @@ one_hundred માત્ર `one_hundred` નામ ધરાવતું પર
 
 આપણે પરીક્ષણ નામના ભાગને સ્પષ્ટ કરી શકીએ છીએ, અને જે પરીક્ષણનું નામ તે મૂલ્ય સાથે મેળ ખાય છે તે ચલાવવામાં આવશે. ઉદાહરણ તરીકે, આપણા બે પરીક્ષણોના નામમાં `add` આવેલું હોવાથી, આપણે `cargo test add` લખીને તે બંને ચલાવી શકીએ છીએ:
 
+```console
+```console
 {{#include ../listings/ch11-writing-automated-tests/output-only-03-multiple-tests/output.txt}}
+```
+```
 આ આદેશ `add` નામના બધા પરીક્ષણો ચલાવ્યા અને `one_hundred` નામનો પરીક્ષણ દૂર કર્યો. નોંધ કરો કે જે મોડ્યુલમાં પરીક્ષણ આવે છે તે પરીક્ષણના નામનો ભાગ બને છે, તેથી આપણે મોડ્યુલના નામ પર ફિલ્ટર કરીને એક મોડ્યુલમાંના બધા પરીક્ષણો ચલાવી શકીએ છીએ.
 
 <!-- Old headings. Do not remove or links may break. -->
@@ -70,12 +106,24 @@ one_hundred માત્ર `one_hundred` નામ ધરાવતું પર
 
 ફાઈલનું નામ: src/lib.rs
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-11-ignore-a-test/src/lib.rs:here}}
+```
+```
 [test] પછી, અમે `#[ignore]` લીટીને જે પરીક્ષણ આપણે બાકાત રાખવા માંગીએ છીએ તેની સાથે ઉમેરીએ. હવે જ્યારે આપણે આપણાં પરીક્ષણો ચલાવીએ, ત્યારે `it_works` ચાલે છે, પરંતુ `expensive_test` નથી ચાલતું:
 
+```console
+```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-11-ignore-a-test/output.txt}}
+```
+```
 `expensive_test` કાર્ય અ Listed as `ignored`. જો આપણે માત્ર અવગણિત પરીક્ષણો ચલાવવા માંગતા હોઈએ, તો આપણે `cargo test -- --ignored` નો ઉપયોગ કરી શકીએ:
 
+```console
+```console
 {{#include ../listings/ch11-writing-automated-tests/output-only-04-running-ignored/output.txt}}
+```
+```
 તમે કયા પરીક્ષણો ચલાવવા માટે નિયંત્રણ રાખીને ખાતરી કરી શકો છો કે તમારા `cargo test` પરિણામો ઝડપથી પાછા મળશે. જ્યારે તમે એવા તબક્કે પહોંચો છો જ્યાં `ignored` પરીક્ષણોના પરિણામો તપાસવું યોગ્ય લાગે છે અને પરિણામોની રાહ જોવા માટે તમારી પાસે સમય હોય, ત્યારે તમે `cargo test -- --ignored` ને બદલે ચલાવી શકો છો. જો તમે તમામ પરીક્ષણો ચલાવવા માંગતા હો, પછી તે અવગણવામાં આવ્યા હોય કે ન હોય, તો તમે `cargo test -- --include-ignored` ચલાવી શકો છો.
 

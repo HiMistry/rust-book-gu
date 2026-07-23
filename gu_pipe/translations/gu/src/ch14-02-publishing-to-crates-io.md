@@ -11,7 +11,11 @@ Rust અને Cargo માં એવી વિશેષતાઓ છે જે 
 દસ્તાવેજીકરણ ટિપ્પણીઓ દસ્તાવેજીકરણ ટિપ્પણીઓ ત્રણ સ્લેશ, `///`, નો ઉપયોગ કરે છે, બે સ્લેશને બદલે, અને ફોર્મેટિંગ માટે માર્કડાઉન નોંધેશનને સમર્થન આપે છે. દસ્તાવેજીકરણ ટિપ્પણીઓને તેઓ જે વસ્તુનું વર્ણન કરે છે તે પહેલાં મૂકો. સૂચિ ૧૪-૧ `my_crate` નામના ક્રેટમાં `add_one` ફંક્શન માટેની દસ્તાવેજીકરણ ટિપ્પણીઓ દર્શાવે છે.
 
 <Listing number="14-1" file-name="src/lib.rs" caption="A documentation comment for a function">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-01/src/lib.rs}}
+```
+```
 </Listing>
 અહીં, અમે `add_one` ફંક્શન શું કરે છે તેનું વર્ણન આપીએ છીએ, `ઉદાહરણો` શીર્ષક સાથે એક વિભાગ શરૂ કરીએ છીએ અને પછી કોડ પ્રદાન કરીએ છીએ જે દર્શાવે છે કે `add_one` ફંક્શનનો ઉપયોગ કેવી રીતે કરવો. અમે આ દસ્તાવેજીકરણ ટિપ્પણીમાંથી HTML દસ્તાવેજીકરણ `cargo doc` ચલાવીને જનરેટ કરી શકીએ છીએ. આ આદેશ Rust સાથે વિતરિત `rustdoc` સાધન ચલાવે છે અને જનરેટ થયેલ HTML દસ્તાવેજીકરણને target/doc
 
@@ -41,12 +45,16 @@ cd listings/ch14-more-about-cargo/listing-14-01/
 cargo test
 copy just the doc-tests section below
 -->
+```text
+```text
    Doc-tests my_crate
 
 running 1 test
 test src/lib.rs - add_one (line 5) ... ok
 
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+```
+```
 હવે, જો આપણે ફંક્શન અથવા ઉદાહરણમાં કોઈ ફેરફાર કરીએ જેથી કરીને ઉદાહરણમાં રહેલું `assert_eq!` ગભરાટ (panic) પાડે અને ફરીથી `cargo test` ચલાવીએ, તો આપણે જોઈ શકીશું કે ડોક પરીક્ષણો (doc tests) એ વાત પકડી લે છે કે ઉદાહરણ અને કોડ એકબીજા સાથે સુસંગત નથી!
 
 <!-- Old headings. Do not remove or links may break. -->
@@ -57,7 +65,11 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 ઉદાહરણ તરીકે, `my_crate` ક્રેટના હેતુનું વર્ણન કરવા માટે, જેમાં `add_one` ફંક્શન છે, આપણે `//!` થી શરૂ થતી ડોક્યુમેન્ટેશન ટીકાઓ src/lib.rs ફાઈલની શરૂઆતમાં ઉમેરીએ છીએ, જે યાદી 14-2 માં દર્શાવેલ છે.
 
 <Listing number="14-2" file-name="src/lib.rs" caption="The documentation for the `my_crate` crate as a whole">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-02/src/lib.rs:here}}
+```
+```
 </Listing>
 માહિતી અહીં છેલ્લા લીટી પછી કોડ નથી જે `//!` થી શરૂ થાય છે. કારણ કે આપણે ટિપ્પણીઓ `//!` થી શરૂ કરી હતી `///` ને બદલે, અમે આ ટિપ્પણી ધરાવતી વસ્તુને દસ્તાવેજીકૃત કરી રહ્યા છીએ, ત્યારબાદની વસ્તુને નહીં. આ કિસ્સામાં, તે વસ્તુ src/lib.rs ફાઇલ છે, જે ક્રેટ રૂટ છે. આ ટિપ્પણીઓ સમગ્ર ક્રેટનું વર્ણન
 
@@ -80,7 +92,11 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 ઉપયોગ કરીને. ફરીથી નિકાસ કરવાથી એક સ્થાનમાં રહેલી જાહેર વસ્તુને બીજા સ્થાન પર જાહેર કરવામાં આવે છે, જાણે કે તે બીજા સ્થાન પર વ્યાખ્યાયિત થયેલી હોય. ઉદાહરણ તરીકે, માની લો કે આપણે `art` નામનું પુસ્તકાલય કલાત્મક વિભાવનાઓને મોડેલ કરવા માટે બનાવ્યું છે. આ પુસ્તકાલયમાં બે મોડ્યુલો છે: એક `kinds` મોડ્યુલ જેમાં `PrimaryColor` અને `SecondaryColor` નામના બે enum છે, અને એક `utils` મોડ્યુલ જેમાં `mix` નામનું function છે, જે Listing 14-3 માં દર્શાવેલ છે.
 
 <Listing number="14-3" file-name="src/lib.rs" caption="An `art` library with items organized into `kinds` and `utils` modules">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-03/src/lib.rs:here}}
+```
+```
 </Listing>
 આકૃતિ ૧૪-૩ દર્શાવે છે કે આ ક્રેટ માટે `cargo doc` દ્વારા જનરેટ થયેલ દસ્તાવેજીકરણના મુખ્ય પૃષ્ઠનું સ્વરૂપ કેવું હશે.
 
@@ -92,14 +108,22 @@ Figure 14-3: `art` દસ્તાવેજીકરણનું પ્રથમ
 બીજી ક્રેટ (crate) જે આ લાયબ્રેરી પર આધારિત છે, તેને `use` વિધાનની જરૂર પડશે, જે `art` માંથી વસ્તુઓને કાર્યક્ષેત્રમાં લાવશે, વર્તમાન રીતે વ્યાખ્યાયિત મોડ્યુલ માળખું સ્પષ્ટ કરીને. લિસ્ટિંગ 14-4 એ ક્રેટનું ઉદાહરણ દર્શાવે છે જે `PrimaryColor` અને `mix` વસ્તુઓનો ઉપયોગ કરે છે, જે `art` ક્રેટમાંથી આવે છે.
 
 <Listing number="14-4" file-name="src/main.rs" caption="A crate using the `art` crate’s items with its internal structure exported">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-04/src/main.rs}}
+```
+```
 </Listing>
 Listing 14-4 નો લેખક, જે `art` ક્રેટનો ઉપયોગ કરે છે, તેણે શોધવું પડ્યું કે `PrimaryColor` `kinds` મોડ્યુલમાં છે અને `mix` `utils` મોડ્યુલમાં છે. `art` ક્રેટનું મોડ્યુલ માળખું એ `art` ક્રેટ પર કામ કરતા વિકાસકર્તાઓ માટે વધુ સુસંગત છે, જે તેનો ઉપયોગ કરનારાઓ કરતાં. આંતરિક માળખું તેમાં `art` ક્રેટનો ઉપયોગ કેવી રીતે કરવો તે સમજવાનો પ્રયાસ કરી રહેલા વ્યક્તિ માટે કોઈ ઉપયોગી માહિતી ધરાવતું નથી, પરંતુ મૂંઝવણ ઊભી કરે છે કારણ કે તેનો ઉપયોગ કરતા વિકાસકર્તાઓએ શોધવું પડે છે કે ક્યાં જોવાનું છે, અને તેમણે `use` વિધાનોમાં મોડ્યુલ નામો સ્પષ્ટ કરવા પડે છે.
 
 જાહેર API માંથી આંતરિક વ્યવસ્થા દૂર કરવા માટે, આપણે લિસ્ટિંગ 14-3 માં `art` ક્રેટ કોડમાં ફેરફાર કરી શકીએ છીએ અને ટોચના સ્તર પરની વસ્તુઓને ફરીથી નિકાસ કરવા માટે `pub use` વિધાન ઉમેરી શકીએ છીએ, જે લિસ્ટિંગ 14-5 માં દર્શાવેલ છે.
 
 <Listing number="14-5" file-name="src/lib.rs" caption="Adding `pub use` statements to re-export items">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-05/src/lib.rs:here}}
+```
+```
 </Listing>
 આ ક્રેઇટ માટે `cargo doc` દ્વારા ઉત્પન્ન થતું API દસ્તાવેજીકરણ હવે મુખ્ય પૃષ્ઠ પર ફરીથી નિકાસ થયેલ વસ્તુઓને સૂચિબદ્ધ કરશે અને લિંક કરશે, જે આકૃતિ 14-4 માં દર્શાવ્યા મુજબ છે, જેનાથી `PrimaryColor` અને `SecondaryColor` પ્રકારો અને `mix` કાર્ય શોધવાનું સરળ બનશે.
 
@@ -109,7 +133,11 @@ Figure 14-4: `art` દસ્તાવેજીકરણનું પ્રથમ
 હજી પણ લિસ્ટિંગ 14-3 માંથી આંતરિક રચના જોઈ અને ઉપયોગ કરી શકે છે, જે લિસ્ટિંગ 14-4 માં દર્શાવેલ છે, અથવા તેઓ લિસ્ટિંગ 14-5 માં વધુ અનુકૂળ રચનાનો ઉપયોગ કરી શકે છે, જે લિસ્ટિંગ 14-6 માં બતાવ્યું છે.
 
 <Listing number="14-6" file-name="src/main.rs" caption="A program using the re-exported items from the `art` crate">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-06/src/main.rs:here}}
+```
+```
 </Listing>
 જ્યારે ઘણાં સંકલિત મોડ્યુલો હોય છે, ત્યારે ટોચના સ્તર પર પ્રકારોને `pub use` સાથે ફરીથી નિકાસ કરવાથી ક્રેટનો ઉપયોગ કરનારા લોકોના અનુભવમાં નોંધપાત્ર ફેરફાર થઈ શકે છે. Another common use of `pub use` is to re-export definitions of a dependency in the current crate to make that crate's definitions part of your crate’s public API. `pub use` નો બીજો સામાન્ય ઉપયોગ એ છે કે વર્તમાન ક્રેટમાં એક નિર્ભરતાની વ્યાખ્યાઓને ફરીથી નિકાસ કરવી જેથી તે ક્રેટની વ્યાખ્યાઓ તમારા ક્રેટના જાહેર API નો ભાગ બને. Creating a useful public API structure
 
@@ -119,18 +147,34 @@ Figure 14-4: `art` દસ્તાવેજીકરણનું પ્રથમ
 
 તમે કોઈપણ ક્રેટે પ્રકાશિત કરી શકો તે પહેલાં, તમારે crates.io પર એક ખાતું બનાવવાની અને API ટોકન મેળવવાની જરૂર છે. આવું કરવા માટે, crates.io ની મુખ્ય પાનાની મુલાકાત લો અને GitHub ખાતા દ્વારા લૉગ ઇન કરો. (GitHub ખાતું હાલમાં જરૂરી છે, પરંતુ ભવિષ્યમાં સાઇટ અન્ય રીતે ખાતું બનાવવા માટે પણ સમર્થ હોઈ શકે છે.) એકવાર તમે લૉગ ઇન થઈ જાઓ, પછી તમારા ખાતાની સેટિંગ્સ https://crates.io/me/ ની મુલાકાત લો અને તમારો API કી મેળવો. પછી, `cargo login` આદેશ ચલાવો અને જ્યારે પૂછવામાં આવે ત્યારે તમારો API કી પેસ્ટ કરો, જેમ કે:
 
+```console
+```console
 $ cargo login
 abcdefghijklmnopqrstuvwxyz012345
+```
+```
 આ આદેશ Cargo ને તમારી API ટોકન વિશે જણાવશે અને તેને સ્થાનિક રીતે ~/.cargo/credentials.toml માં સંગ્રહિત કરશે. નોંધ કરો કે આ ટોકન એક ગુપ્ત છે: તેને કોઈની સાથે વહેંચશો નહીં. જો તમે કોઈ પણ કારણસર તેની વહેંચણી કરી હોય, તો તમારે તેને રદ કરવી જોઈએ અને crates.io પર નવી ટોકન જનરેટ કરવી જોઈએ.
 
 ### Adding Metadata to a New Crate
 
+```toml
+```toml
 તમારી પાસે એક ક્રેટ છે જેને તમે પ્રકાશિત કરવા માંગો છો. પ્રકાશિત કરતા પહેલાં, તમારે ક્રેટની Cargo.toml ફાઈલના `[package]` વિભાગમાં અમુક મેટાડેટા ઉમેરવાની જરૂર પડશે. તમારા ક્રેટને
 
+```
+```
+```toml
+```toml
 એક અનોખું નામ જોઈએ છે. જ્યારે તમે સ્થાનિક રીતે એક ક્રેટ પર કામ કરી રહ્યા હોવ, ત્યારે તમે તેને ગમે તે નામ આપી શકો છો. જો કે, crates.io પરના ક્રેટ નામો પ્રથમ આવનારને પ્રથમ મળે (first-come, first-served) ના ધોરણે ફાળવવામાં આવે છે. એકવાર ક્રેટનું નામ લેવાઈ જાય પછી, બીજું કોઈ વ્યક્તિ તે જ નામ સાથે ક્રેટ પ્રકાશિત કરી શકતું નથી. ક્રેટ પ્રકાશિત કરવાનો પ્રયાસ કરતા પહેલાં, તમે જે નામનો ઉપયોગ કરવા માંગો છો તેની શોધ કરો. જો નામ વપરાયેલું હોય, તો તમારે બીજું નામ શોધવું પડશે અને `[package]` વિભાગમાં `name` ક્ષેત્રને નવા નામ સાથે સંપાદિત કરવું પડશે, જેમ કે:
 
+```
+```
+```toml
+```toml
 ફાઈલ: Cargo.toml આ `Cargo.toml` ફાઈલ એક પ્રોજેક્ટની રૂપરેખા આપે છે. તેમાં પ્રોજેક્ટનું નામ, સંસ્કરણ (version), લેખક (author), અને અન્ય માહિતી હોય છે. આ ફાઈલ `cargo` દ્વારા ઉપયોગમાં લેવાય છે જેથી કરીને પ્રોજેક્ટને નિર્માણ (build) કરી શકાય, પરીક્ષણ (test) કરી શકાય, અને વિતરિત (distribute) કરી શકાય. આ ફાઈલમાં સામાન્ય રીતે નીચેની બાબતો સમાવિષ્ટ હોય છે: ```toml [package] name = "my_project" version = "0.1.0" authors = ["Your Name <your.email@example.com>"] edition = "2021" [dependencies] rand = "0.8.4" serde = { version = "1.0", features = ["derive"] } ``` `[package]` વિભાગ પ્રોજેક્ટ વિશેની મૂળભૂત માહિતી આપે છે. * `name`: પ્રોજેક્ટનું નામ. * `version`: પ્રોજેક્ટનું સંસ્કરણ. * `authors`: લેખકોની યાદી. * `edition`: Rust નું આવૃત્તિ (edition). `[dependencies]` વિભાગ અન્ય `crate` પર નિર્ભરતા (dependency) દર્શાવે છે. દરેક નિર્ભરતા માટે, તમે સંસ્કરણ અને વિશેષતાઓ (features) સ્પષ્ટ કરી શકો છો. ઉદાહરણ તરીકે, `rand = "0.8.4"` `rand` ના સંસ્કરણ 0.8.4 પર નિર્ભરતા દર્શાવે છે, અને `serde = { version = "1.0", features = ["derive"] }` `serde` ના સંસ્કરણ 1.0 પર નિર્ભરતા દર્શાવે છે અને `derive` વિશેષતાનો ઉપયોગ કરે છે. આ ફાઈલને સંપાદિત (edit) કરવા માટે, તમે કોઈપણ ટેક્સ્ટ એડિટરનો ઉપયોગ કરી શકો છો. પરંતુ ખાતરી કરો કે ફાઈલ TOML ફોર્મેટમાં છે.
 
+```
+```
 [package]
 name = "guessing_game"
 ભલે તમે કોઈ વિશિષ્ટ નામ પસંદ કર્યું હોય, પણ જ્યારે તમે `cargo publish` આદેશ ચલાવીને આ ક્રેટ પ્રકાશિત કરો છો, ત્યારે તમને એક ચેતવણી અને ત્યારબાદ ભૂલ મળશે:
@@ -141,6 +185,8 @@ Create a new package with an unregistered name, making no further modifications
 cargo publish
 copy just the relevant lines below
 -->
+```console
+```console
 $ cargo publish
     Updating crates.io index
 warning: manifest has no description, license, license-file, documentation, homepage or repository.
@@ -150,6 +196,8 @@ error: failed to publish to registry at https://crates.io
 
 Caused by:
   the remote server responded with an error (status 400 Bad Request): missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for more information on configuring these fields
+```
+```
 આનું પરિણામ ભૂલમાં આવી શકે છે કેમ કે તમારી પાસે કેટલીક મહત્વપૂર્ણ માહિતીનો અભાવ છે: લોકો જાણતા હોય કે તમારું `crate` શું કરે છે અને તેઓ કયા શરતો હેઠળ તેનો ઉપયોગ કરી શકે છે, તે માટે વર્ણન અને પરવાનો જરૂરી છે. `Cargo.toml` માં, એક વર્ણન ઉમેરો જે માત્ર એક કે બે વાક્યોનું હોય, કારણ કે તે તમારા `crate` સાથે શોધ પરિણામોમાં દેખાશે. `license` ક્ષેત્ર માટે, તમારે પરવાના ઓળખકર્તા મૂલ્ય આપવું પડશે. લિનક્સ ફાઉન્ડેશનનું સોફ્ટવેર પેકેજ ડેટા એક્સચેન્જ (SPDX) આ મૂલ્ય માટે તમે જે ઓળખકર્તાઓનો ઉપયોગ કરી શકો છો તેની યાદી આપે છે. ઉદાહરણ તરીકે, જો તમે સ્પષ્ટ કરવા માંગતા હોવ કે તમે તમારા `crate` ને MIT પરવાના હેઠળ લાયસન્સ આપ્યું છે, તો `MIT` ઓળખકર્તા ઉમેરો:
 
 ફાઈલ: Cargo.toml આ `Cargo.toml` ફાઈલ એક પ્રોજેક્ટની રૂપરેખા આપે છે. તેમાં પ્રોજેક્ટનું નામ, સંસ્કરણ (version), લેખક (author), અને અન્ય માહિતી હોય છે. આ ફાઈલ `cargo` દ્વારા ઉપયોગમાં લેવાય છે જેથી કરીને પ્રોજેક્ટને નિર્માણ (build) કરી શકાય, પરીક્ષણ (test) કરી શકાય, અને વિતરિત (distribute) કરી શકાય. આ ફાઈલમાં સામાન્ય રીતે નીચેની બાબતો સમાવિષ્ટ હોય છે: ```toml [package] name = "my_project" version = "0.1.0" authors = ["Your Name <your.email@example.com>"] edition = "2021" [dependencies] rand = "0.8.4" serde = { version = "1.0", features = ["derive"] } ``` `[package]` વિભાગ પ્રોજેક્ટ વિશેની મૂળભૂત માહિતી આપે છે. * `name`: પ્રોજેક્ટનું નામ. * `version`: પ્રોજેક્ટનું સંસ્કરણ. * `authors`: લેખકોની યાદી. * `edition`: Rust નું આવૃત્તિ (edition). `[dependencies]` વિભાગ અન્ય `crate` પર નિર્ભરતા (dependency) દર્શાવે છે. દરેક નિર્ભરતા માટે, તમે સંસ્કરણ અને વિશેષતાઓ (features) સ્પષ્ટ કરી શકો છો. ઉદાહરણ તરીકે, `rand = "0.8.4"` `rand` ના સંસ્કરણ 0.8.4 પર નિર્ભરતા દર્શાવે છે, અને `serde = { version = "1.0", features = ["derive"] }` `serde` ના સંસ્કરણ 1.0 પર નિર્ભરતા દર્શાવે છે અને `derive` વિશેષતાનો ઉપયોગ કરે છે. આ ફાઈલને સંપાદિત (edit) કરવા માટે, તમે કોઈપણ ટેક્સ્ટ એડિટરનો ઉપયોગ કરી શકો છો. પરંતુ ખાતરી કરો કે ફાઈલ TOML ફોર્મેટમાં છે.
@@ -188,6 +236,8 @@ go to some valid crate, publish a new version
 cargo publish
 copy just the relevant lines below
 -->
+```console
+```console
 $ cargo publish
     Updating crates.io index
    Packaging guessing_game v0.1.0 (file:///projects/guessing_game)
@@ -202,6 +252,8 @@ note: waiting for `guessing_game v0.1.0` to be available at registry
 `crates-io`.
 You may press ctrl-c to skip waiting; the crate should be available shortly.
    Published guessing_game v0.1.0 at registry `crates-io`
+```
+```
 અભિનંદન! હવે તમે તમારું કોડ Rust સમુદાય સાથે વહેંચ્યું છે, અને કોઈપણ સરળતાથી તમારા crate ને તેમની project ની નિર્ભરતા તરીકે ઉમેરી શકે છે.
 
 ### Publishing a New Version of an Existing Crate
@@ -221,13 +273,21 @@ You may press ctrl-c to skip waiting; the crate should be available shortly.
 cargo yank carol-test --version 2.1.0
 cargo yank carol-test --version 2.1.0 --undo
 -->
+```console
+```console
 $ cargo yank --vers 1.0.1
     Updating crates.io index
         Yank guessing_game@1.0.1
+```
+```
 આદેશમાં `--undo` ઉમેરીને, તમે એક yank રદ કરી શકો છો અને પ્રોજેક્ટ્સને ફરીથી વર્ઝન પર આધાર રાખવાની મંજૂરી આપી શકો છો:
 
+```console
+```console
 $ cargo yank --vers 1.0.1 --undo
     Updating crates.io index
       Unyank guessing_game@1.0.1
+```
+```
 એક yank કોઈપણ કોડને દૂર કરતું નથી. ઉદાહરણ તરીકે, તે આકસ્મિક રીતે અપલોડ થયેલા રહસ્યો (secrets) ને પણ ભૂંસી નાખતું નથી. જો આવું થાય, તો તમારે તાત્કાલિક તે રહસ્યો ફરીથી સ્થાપિત કરવા જોઈએ.
 

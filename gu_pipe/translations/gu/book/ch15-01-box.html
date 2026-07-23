@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-55c5f58b.js";
+            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -194,7 +194,11 @@
 <p>અમે <code>Box&lt;T&gt;</code> માટે કૂળ સંગ્રહણના ઉપયોગની ચર્ચા કરીએ તે પહેલાં, અમે વાક્યરચના અને <code>Box&lt;T&gt;</code> ની અંદર સંગ્રહિત મૂલ્યો સાથે કેવી રીતે ક્રિયાપ્રતિક્રિયા કરવી તે આવરી લઈશું.</p>
 <p>પૃષ્ઠ 15-1 દર્શાવે છે કે કૂળનો ઉપયોગ કરીને <code>i32</code> મૂલ્યને કૂળ પર કેવી રીતે સંગ્રહિત કરવું.</p>
 <listing number="15-1" file-name="src/main.rs" caption="Storing an `i32` value on the heap using a box">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-01/src/main.rs}}
+```
+```
 </listing>
 અમે variable `b` ને એવી `Box` નું મૂલ્ય આપીએ છીએ જે `5` ની કિંમત તરફ નિર્દેશ કરે છે, જે હિપ પર ફાળવેલ છે. આ કાર્યક્રમ `b = 5` છાપશે; આ સ્થિતિમાં, અમે બોક્સમાં રહેલા ડેટાને એ જ રીતે મેળવી શકીએ છીએ જે રીતે જો તે ડેટા સ્ટેક પર હોત. કોઈપણ માલિકીવાળા મૂલ્યની જેમ, જ્યારે એક બોક્સ અવકાશમાંથી બહાર જાય છે, જેમ કે `b` `main` ના અંતે થાય છે, ત્યારે તે દૂર કરવામાં આવશે. આ દૂર કરવાની ક્રિયા બોક્સ (સ્ટેક પર સંગ્રહિત) અને તે જે ડેટા તરફ નિર્દેશ કરે છે (હિપ પર સંગ્રહિત) બંને માટે થાય છે.
 <p>એક મૂલ્યને હીપ પર મૂકવું બહુ ઉપયોગી નથી, તેથી તમે બોક્સને જાતે જ આ રીતે વાપરતા નહીં. <code>i32</code> જેવા મૂલ્યોને સ્ટેક પર રાખવા વધુ યોગ્ય છે, જ્યાં તેઓ મૂળભૂત રીતે સંગ્રહિત થાય છે, મોટાભાગની પરિસ્થિતિઓમાં. ચાલો એક એવા કિસ્સાને જોઈએ જ્યાં બોક્સ આપણને એવા પ્રકારો વ્યાખ્યાયિત કરવાની મંજૂરી આપે છે જે નહિંતર વ્યાખ્યાયિત કરવાની મંજૂરી ન મળતી.</p>
@@ -205,52 +209,95 @@
 <h4 id="understanding-the-cons-list"><a class="header" href="#understanding-the-cons-list">Understanding the Cons List</a></h4>
 <p>કન્સ યાદી એ એક માહિતી રચના છે જે લિસ્પ પ્રોગ્રામિંગ ભાષા અને તેના પ્રકારોમાંથી આવે છે, તે સંવૃત જોડીઓથી બનેલી હોય છે, અને તે લિસ્પનું સાંકળિત યાદીનું સ્વરૂપ છે. તેનું નામ લિસ્પમાં <code>cons</code> વિધેયાક (construct વિધેયાક માટે ટૂંકું) પરથી આવ્યું છે જે બે Argumentોમાંથી નવી જોડી બનાવે છે. <code>cons</code> ને મૂલ્ય અને બીજી જોડી ધરાવતી જોડી પર બોલાવીને, આપણે પુનરાવર્તિત જોડીઓથી બનેલી કન્સ યાદીઓનું નિર્માણ કરી શકીએ છીએ.</p>
 <p>અહીં એક ગૌણ કોડ ઉદાહરણ છે જે કન્સ યાદીનું પ્રતિનિધિત્વ કરે છે જેમાં <code>1, 2, 3</code> યાદી દરેક જોડીને કૌંસમાં દર્શાવેલ છે:</p>
-<p>(1, (2, (3, Nil)))
-દરેક વસ્તુમાં એક મૂલ્ય અને પછીની વસ્તુ હોય છે. યાદીનો અંતિમ વસ્તુ માત્ર એક મૂલ્ય ધરાવે છે જેને <code>Nil</code> કહેવાય છે, જેમાં કોઈ પછીની વસ્તુ નથી. <code>cons</code> વિધેયને પુનરાવર્તિત રીતે બોલાવીને એક યાદી બનાવવામાં આવે છે. આ પુનરાવૃત્તિના આધાર કેસને દર્શાવવા માટે પ્રમાણભૂત નામ <code>Nil</code> છે. નોંધ કરો કે આ “null” અથવા “nil” ખ્યાલથી અલગ છે જે પ્રકરણ ૬ માં ચર્ચા કરવામાં આવ્યો હતો, જે એક અમાન્ય અથવા ગેરહાજર મૂલ્ય છે.</p>
-<p>The cons યાદી સામાન્ય રીતે Rust માં વપરાતો ડેટા સ્ટ્રક્ચર નથી. મોટાભાગના સમયમાં જ્યારે તમારી પાસે Rust માં વસ્તુઓની યાદી હોય છે, ત્યારે <code>Vec&lt;T&gt;</code> વાપરવાનું વધુ સારું પસંદગી છે. અન્ય, વધુ જટિલ રિકર્સિવ ડેટા પ્રકારો વિવિધ પરિસ્થિતિઓમાં ઉપયોગી છે, પરંતુ આ પ્રકરણમાં cons યાદીથી શરૂ કરીને, અમે એ શોધ કરી શકીએ છીએ કે બોક્સ કેવી રીતે આપણને એક રિકર્સિવ ડેટા પ્રકાર વ્યાખ્યાયિત કરવા દે છે જેમાં બહુ ઓછો વિક્ષેપ પડે છે.</p>
-<p>ચિઠ્ઠી 15-2 માં cons યાદી માટે એક enum વ્યાખ્યા છે. નોંધ કરો કે આ કોડ હજી કમ્પાઇલ થશે નહીં, કારણ કે <code>List</code> પ્રકારનું જાણીતું કદ નથી, જે આપણે દર્શાવીશું.</p>
-<listing number="15-2" file-name="src/main.rs" caption="The first attempt at defining an enum to represent a cons list data structure of `i32` values">
+<pre><code class="language-text">```text
+(1, (2, (3, Nil)))
+</code></pre>
+<pre><code>દરેક વસ્તુમાં એક મૂલ્ય અને પછીની વસ્તુ હોય છે. યાદીનો અંતિમ વસ્તુ માત્ર એક મૂલ્ય ધરાવે છે જેને `Nil` કહેવાય છે, જેમાં કોઈ પછીની વસ્તુ નથી. `cons` વિધેયને પુનરાવર્તિત રીતે બોલાવીને એક યાદી બનાવવામાં આવે છે. આ પુનરાવૃત્તિના આધાર કેસને દર્શાવવા માટે પ્રમાણભૂત નામ `Nil` છે. નોંધ કરો કે આ "null" અથવા "nil" ખ્યાલથી અલગ છે જે પ્રકરણ ૬ માં ચર્ચા કરવામાં આવ્યો હતો, જે એક અમાન્ય અથવા ગેરહાજર મૂલ્ય છે.
+
+The cons યાદી સામાન્ય રીતે Rust માં વપરાતો ડેટા સ્ટ્રક્ચર નથી. મોટાભાગના સમયમાં જ્યારે તમારી પાસે Rust માં વસ્તુઓની યાદી હોય છે, ત્યારે `Vec&lt;T&gt;` વાપરવાનું વધુ સારું પસંદગી છે. અન્ય, વધુ જટિલ રિકર્સિવ ડેટા પ્રકારો વિવિધ પરિસ્થિતિઓમાં ઉપયોગી છે, પરંતુ આ પ્રકરણમાં cons યાદીથી શરૂ કરીને, અમે એ શોધ કરી શકીએ છીએ કે બોક્સ કેવી રીતે આપણને એક રિકર્સિવ ડેટા પ્રકાર વ્યાખ્યાયિત કરવા દે છે જેમાં બહુ ઓછો વિક્ષેપ પડે છે.
+
+ચિઠ્ઠી 15-2 માં cons યાદી માટે એક enum વ્યાખ્યા છે. નોંધ કરો કે આ કોડ હજી કમ્પાઇલ થશે નહીં, કારણ કે `List` પ્રકારનું જાણીતું કદ નથી, જે આપણે દર્શાવીશું.
+
+&lt;Listing number="15-2" file-name="src/main.rs" caption="The first attempt at defining an enum to represent a cons list data structure of `i32` values"&gt;
+```rust
+```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-02/src/main.rs:here}}
-</listing>
+</code></pre>
+<pre><code>&lt;/Listing&gt;
 નોંધ: આ ઉદાહરણ માટે, અમે માત્ર `i32` મૂલ્યો ધરાવતી એક કન્સ યાદી અમલમાં મૂકી રહ્યા છીએ. આપણે પ્રકરણ ૧૦ માં ચર્ચા કરી હતી તેમ, સામાન્ય પ્રકારોનો ઉપયોગ કરીને પણ તેને અમલમાં મૂકી શક્યા હોત, જેથી કોઈપણ પ્રકારના મૂલ્યો સંગ્રહિત કરી શકે તેવી કન્સ યાદી પ્રકાર વ્યાખ્યાયિત કરી શક્યા હોત.
-<p><code>List</code> પ્રકારનો ઉપયોગ કરીને <code>1, 2, 3</code> યાદી સંગ્રહિત કરવાની રીત યાદી ૧૫-૩ માં દર્શાવેલ કોડ જેવી દેખાશે.</p>
-<listing number="15-3" file-name="src/main.rs" caption="Using the `List` enum to store the list `1, 2, 3`">
+
+`List` પ્રકારનો ઉપયોગ કરીને `1, 2, 3` યાદી સંગ્રહિત કરવાની રીત યાદી ૧૫-૩ માં દર્શાવેલ કોડ જેવી દેખાશે.
+
+&lt;Listing number="15-3" file-name="src/main.rs" caption="Using the `List` enum to store the list `1, 2, 3`"&gt;
+```rust
+```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-03/src/main.rs:here}}
-</listing>
+</code></pre>
+<pre><code>&lt;/Listing&gt;
 The first `Cons` મૂલ્ય ધારણ કરે છે `1` અને અન્ય એક `List` મૂલ્ય. આ `List` મૂલ્ય બીજું એક `Cons` મૂલ્ય છે જે `2` અને અન્ય એક `List` મૂલ્ય ધારણ કરે છે. આ `List` મૂલ્ય વધુ એક `Cons` મૂલ્ય છે જે `3` અને એક `List` મૂલ્ય ધારણ કરે છે, જે અંતે `Nil` છે - એવાં બિન-પુનરાવર્તિત સ્વરૂપ જે યાદીના અંતને સૂચવે છે.
-<p>જો આપણે Listing 15-3 માં આપેલ કોડને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ, તો આપણને Listing 15-4 માં દર્શાવેલ ભૂલ મળે છે.</p>
-<listing number="15-4" caption="The error we get when attempting to define a recursive enum">
+
+જો આપણે Listing 15-3 માં આપેલ કોડને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ, તો આપણને Listing 15-4 માં દર્શાવેલ ભૂલ મળે છે.
+
+&lt;Listing number="15-4" caption="The error we get when attempting to define a recursive enum"&gt;
+```console
+```console
 {{#include ../listings/ch15-smart-pointers/listing-15-03/output.txt}}
-</listing>
+</code></pre>
+<pre><code>&lt;/Listing&gt;
 ભૂલ દર્શાવે છે કે આ પ્રકાર "અનંત કદ ધરાવે છે". તેનું કારણ એ છે કે આપણે `List` ને એક એવી વિવિધતા (variant) સાથે વ્યાખ્યાયિત કર્યું છે જે પુનરાવર્તક (recursive) છે: તે પોતાની જાતનું બીજું મૂલ્ય સીધું જ સમાવે છે. પરિણામે, Rust એ નક્કી કરી શકતું નથી કે `List` મૂલ્ય સંગ્રહ કરવા માટે તેને કેટલી જગ્યાની જરૂર છે. ચાલો જોઈએ કે આ ભૂલ શા માટે આવે છે. સૌ પ્રથમ, આપણે જોઈશું કે Rust એક બિન-પુનરાવર્તક (non-recursive) પ્રકારના મૂલ્યને સંગ્રહ કરવા માટે કેટલી જગ્યાની જરૂર છે તે કેવી રીતે નક્કી કરે છે.
-<h4 id="computing-the-size-of-a-non-recursive-type"><a class="header" href="#computing-the-size-of-a-non-recursive-type">Computing the Size of a Non-Recursive Type</a></h4>
-<p>યાદ કરો કે આપણે યાદી ૬-૨ માં, જ્યારે આપણે પ્રકરણ ૬ માં એનુમ વ્યાખ્યાઓ વિશે વાત કરી હતી, ત્યારે <code>Message</code> એનુમ વ્યાખ્યાયિત કર્યો હતો:</p>
-<p>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-02/src/main.rs:here}}
-เพื่อ નિર્ધારિત કરવું કે <code>Message</code> મૂલ્ય માટે કેટલી જગ્યા ફાળવવી, Rust દરેક પ્રકારની ભિન્નતા (variants) તપાસે છે કે કઈ ભિન્નતાને સૌથી વધુ જગ્યાની જરૂર છે. Rust જુએ છે કે <code>Message::Quit</code> ને કોઈ જગ્યાની જરૂર નથી, <code>Message::Move</code> ને બે <code>i32</code> મૂલ્યો સંગ્રહિત કરવા માટે પૂરતી જગ્યાની જરૂર છે, અને એ જ રીતે. કારણ કે માત્ર એક જ ભિન્નતાનો ઉપયોગ થશે, તેથી <code>Message</code> મૂલ્યને જરૂરી સૌથી વધુ જગ્યા તેની સૌથી મોટી ભિન્નતાને સંગ્રહિત કરવા</p>
-<p>માટે લાગતી જગ્યા જેટલી જ હશે. આ બાબત સાથે સરખાવો કે જ્યારે Rust <code>List</code> enum જેવી પુનરાવર્તિત (recursive) પ્રકારની કેટલી જગ્યા નિર્ધારિત કરવાનો પ્રયાસ કરે છે, ત્યારે શું થાય છે, જે યાદી 15-2 માં દર્શાવેલ છે. કમ્પાઇલર <code>Cons</code> ભિન્નતાને જોઈને શરૂઆત કરે છે, જેમાં <code>i32</code> પ્રકારનું મૂલ્ય અને <code>List</code> પ્રકારનું મૂલ્ય હોય છે. તેથી, <code>Cons</code> ને <code>i32</code> ના કદ જેટલી જગ્યા અને <code>List</code> ના કદ જેટલી જગ્યાની જરૂર પડે છે. <code>List</code> પ્રકારને કેટલી મેમરીની જરૂર છે તે શોધવા માટે, કમ્પાઇલર ભિન્નતાઓને જુએ છે, જેમાં <code>Cons</code> ભિન્નતાનો સમાવેશ થાય છે. <code>Cons</code> ભિન્નતામાં <code>i32</code> પ્રકારનું મૂલ્ય અને <code>List</code> પ્રકારનું મૂલ્ય હોય છે, અને આ પ્રક્રિયા આકૃતિ 15-1 માં દર્શાવ્યા પ્રમાણે અનંત ચાલુ રહે છે.</p>
-<img alt="An infinite Cons list: a rectangle labeled &#39;Cons&#39; split into two smaller rectangles. The first smaller rectangle holds the label &#39;i32&#39;, and the second smaller rectangle holds the label &#39;Cons&#39; and a smaller version of the outer &#39;Cons&#39; rectangle. The &#39;Cons&#39; rectangles continue to hold smaller and smaller versions of themselves until the smallest comfortably sized rectangle holds an infinity symbol, indicating that this repetition goes on forever." src="img/trpl15-01.svg" class="center" style="width: 50%;" />
+
+#### Computing the Size of a Non-Recursive Type
+
+યાદ કરો કે આપણે યાદી ૬-૨ માં, જ્યારે આપણે પ્રકરણ ૬ માં એનુમ વ્યાખ્યાઓ વિશે વાત કરી હતી, ત્યારે `Message` એનુમ વ્યાખ્યાયિત કર્યો હતો:
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-02/src/main.rs:here}}
+</code></pre>
+<pre><code>เพื่อ નિર્ધારિત કરવું કે `Message` મૂલ્ય માટે કેટલી જગ્યા ફાળવવી, Rust દરેક પ્રકારની ભિન્નતા (variants) તપાસે છે કે કઈ ભિન્નતાને સૌથી વધુ જગ્યાની જરૂર છે. Rust જુએ છે કે `Message::Quit` ને કોઈ જગ્યાની જરૂર નથી, `Message::Move` ને બે `i32` મૂલ્યો સંગ્રહિત કરવા માટે પૂરતી જગ્યાની જરૂર છે, અને એ જ રીતે. કારણ કે માત્ર એક જ ભિન્નતાનો ઉપયોગ થશે, તેથી `Message` મૂલ્યને જરૂરી સૌથી વધુ જગ્યા તેની સૌથી મોટી ભિન્નતાને સંગ્રહિત કરવા
+
+માટે લાગતી જગ્યા જેટલી જ હશે. આ બાબત સાથે સરખાવો કે જ્યારે Rust `List` enum જેવી પુનરાવર્તિત (recursive) પ્રકારની કેટલી જગ્યા નિર્ધારિત કરવાનો પ્રયાસ કરે છે, ત્યારે શું થાય છે, જે યાદી 15-2 માં દર્શાવેલ છે. કમ્પાઇલર `Cons` ભિન્નતાને જોઈને શરૂઆત કરે છે, જેમાં `i32` પ્રકારનું મૂલ્ય અને `List` પ્રકારનું મૂલ્ય હોય છે. તેથી, `Cons` ને `i32` ના કદ જેટલી જગ્યા અને `List` ના કદ જેટલી જગ્યાની જરૂર પડે છે. `List` પ્રકારને કેટલી મેમરીની જરૂર છે તે શોધવા માટે, કમ્પાઇલર ભિન્નતાઓને જુએ છે, જેમાં `Cons` ભિન્નતાનો સમાવેશ થાય છે. `Cons` ભિન્નતામાં `i32` પ્રકારનું મૂલ્ય અને `List` પ્રકારનું મૂલ્ય હોય છે, અને આ પ્રક્રિયા આકૃતિ 15-1 માં દર્શાવ્યા પ્રમાણે અનંત ચાલુ રહે છે.
+
+&lt;img alt="An infinite Cons list: a rectangle labeled 'Cons' split into two smaller rectangles. The first smaller rectangle holds the label 'i32', and the second smaller rectangle holds the label 'Cons' and a smaller version of the outer 'Cons' rectangle. The 'Cons' rectangles continue to hold smaller and smaller versions of themselves until the smallest comfortably sized rectangle holds an infinity symbol, indicating that this repetition goes on forever." src="img/trpl15-01.svg" class="center" style="width: 50%;" /&gt;
 આકૃતિ ૧૫-૧: એક અનંત `List` જેમાં અનંત `Cons` પ્રકારો છે.
-<!-- Old headings. Do not remove or links may break. -->
-<h4 id="getting-a-recursive-type-with-a-known-size"><a class="header" href="#getting-a-recursive-type-with-a-known-size">Getting a Recursive Type with a Known Size</a></h4>
-<p>કારણ કે Rust એ કેવી રીતે પરસ્પર વ્યાખ્યાયિત પ્રકારો માટે જગ્યા ફાળવવી તે નક્કી કરી શકતું નથી, ત્યારે compiler એક ભૂલ આપે છે જેમાં આ મદદરૂપ સૂચન હોય છે:</p>
-<!-- manual-regeneration
+
+&lt;!-- Old headings. Do not remove or links may break. --&gt;
+#### Getting a Recursive Type with a Known Size
+
+કારણ કે Rust એ કેવી રીતે પરસ્પર વ્યાખ્યાયિત પ્રકારો માટે જગ્યા ફાળવવી તે નક્કી કરી શકતું નથી, ત્યારે compiler એક ભૂલ આપે છે જેમાં આ મદદરૂપ સૂચન હોય છે:
+
+&lt;!-- manual-regeneration
 after doing automatic regeneration, look at listings/ch15-smart-pointers/listing-15-03/output.txt and copy the relevant line
--->
-<p>help: insert some indirection (e.g., a <code>Box</code>, <code>Rc</code>, or <code>&amp;</code>) to break the cycle
-|
-2 |     Cons(i32, Box<list>),
-|               ++++    +
-અહીં સૂચવેલ બાબતમાં, પરોક્ષતાનો અર્થ એ થાય છે કે મૂલ્યને સીધું સંગ્રહિત કરવાને બદલે, આપણે ડેટા માળખામાં ફેરફાર કરવો જોઈએ જેથી મૂલ્યને પરોક્ષ રીતે સંગ્રહિત કરવામાં આવે, એટલે કે મૂલ્ય તરફ નિર્દેશ કરનાર પોઇન્ટરને સંગ્રહિત કરીને.</list></p>
-<p>કારણ કે <code>Box&lt;T&gt;</code> એક પોઇન્ટર છે, Rust ને હંમેશા ખબર હોય છે કે <code>Box&lt;T&gt;</code> ને કેટલી જગ્યાની જરૂર છે: પોઇન્ટરનું કદ તે જે ડેટા તરફ નિર્દેશ કરે છે તેની માત્રા પર આધારિત નથી રહેતું. આનો અર્થ એ થાય છે કે આપણે <code>Cons</code> પ્રકારમાં બીજા <code>List</code> મૂલ્યને બદલે <code>Box&lt;T&gt;</code> મૂકી શકીએ છીએ. <code>Box&lt;T&gt;</code> હીપ પરના આગામી <code>List</code> મૂલ્ય તરફ નિર્દેશ કરશે, જે <code>Cons</code> પ્રકારની અંદર નહીં હોય. ખ્યાલ તરીકે, આપણી પાસે હજી પણ એક યાદી છે, જે અન્ય યાદીઓ ધરાવતી યાદીઓથી બનેલી છે, પરંતુ આ અમલીકરણ હવે એકબીજાની અંદર મૂકવાને બદલે વસ્તુઓને એકબીજાની બાજુમાં મૂકવા જેવું લાગે છે.</p>
-<p>આપણે યાદી ૧૫-૨ માં <code>List</code>  એનમની વ્યાખ્યા અને યાદી ૧૫-૩ માં <code>List</code> નો ઉપયોગને યાદી ૧૫-૫ ના કોડમાં બદલી શકીએ છીએ, જે કમ્પાઇલ થશે.</p>
-<listing number="15-5" file-name="src/main.rs" caption="The definition of `List` that uses `Box&lt;T&gt;` in order to have a known size">
+--&gt;
+```text
+```text
+help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to break the cycle
+  |
+2 |     Cons(i32, Box&lt;List&gt;),
+  |               ++++    +
+</code></pre>
+<pre><code>અહીં સૂચવેલ બાબતમાં, પરોક્ષતાનો અર્થ એ થાય છે કે મૂલ્યને સીધું સંગ્રહિત કરવાને બદલે, આપણે ડેટા માળખામાં ફેરફાર કરવો જોઈએ જેથી મૂલ્યને પરોક્ષ રીતે સંગ્રહિત કરવામાં આવે, એટલે કે મૂલ્ય તરફ નિર્દેશ કરનાર પોઇન્ટરને સંગ્રહિત કરીને.
+
+કારણ કે `Box&lt;T&gt;` એક પોઇન્ટર છે, Rust ને હંમેશા ખબર હોય છે કે `Box&lt;T&gt;` ને કેટલી જગ્યાની જરૂર છે: પોઇન્ટરનું કદ તે જે ડેટા તરફ નિર્દેશ કરે છે તેની માત્રા પર આધારિત નથી રહેતું. આનો અર્થ એ થાય છે કે આપણે `Cons` પ્રકારમાં બીજા `List` મૂલ્યને બદલે `Box&lt;T&gt;` મૂકી શકીએ છીએ. `Box&lt;T&gt;` હીપ પરના આગામી `List` મૂલ્ય તરફ નિર્દેશ કરશે, જે `Cons` પ્રકારની અંદર નહીં હોય. ખ્યાલ તરીકે, આપણી પાસે હજી પણ એક યાદી છે, જે અન્ય યાદીઓ ધરાવતી યાદીઓથી બનેલી છે, પરંતુ આ અમલીકરણ હવે એકબીજાની અંદર મૂકવાને બદલે વસ્તુઓને એકબીજાની બાજુમાં મૂકવા જેવું લાગે છે.
+
+આપણે યાદી ૧૫-૨ માં `List`  એનમની વ્યાખ્યા અને યાદી ૧૫-૩ માં `List` નો ઉપયોગને યાદી ૧૫-૫ ના કોડમાં બદલી શકીએ છીએ, જે કમ્પાઇલ થશે.
+
+&lt;Listing number="15-5" file-name="src/main.rs" caption="The definition of `List` that uses `Box&lt;T&gt;` in order to have a known size"&gt;
+```rust
+```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-05/src/main.rs}}
-</listing>
+</code></pre>
+<pre><code>&lt;/Listing&gt;
 `Cons` પ્રકારને `i32` ના કદની જરૂર પડે છે, સાથે બોક્સના પોઇન્ટર ડેટા માટે જગ્યા પણ જોઈએ છે. `Nil` પ્રકાર કોઈ મૂલ્યો સંગ્રહિત કરતું નથી, તેથી તે `Cons` પ્રકાર કરતાં સ્ટેક પર ઓછી જગ્યા લે છે. હવે આપણે જાણીએ છીએ કે કોઈપણ `List` મૂલ્ય `i32` ના કદ જેટલું હશે, સાથે બોક્સના પોઇન્ટર ડેટાના કદ પ્રમાણે પણ જગ્યા લેશે. બોક્સનો ઉપયોગ કરીને, આપણે અનંત, પુનરાવર્તિત શૃંખલા તોડીએ છીએ, જેથી કમ્પાઇલરને ખબર પડે છે કે `List` મૂલ્ય સંગ્રહ કરવા માટે તેને કેટલી જગ્યાની જરૂર છે. આકૃતિ 15-2 દર્શાવે છે કે હવે `Cons` પ્રકાર કેવો દેખાય છે.
-<img alt="A rectangle labeled &#39;Cons&#39; split into two smaller rectangles. The first smaller rectangle holds the label &#39;i32&#39;, and the second smaller rectangle holds the label &#39;Box&#39; with one inner rectangle that contains the label &#39;usize&#39;, representing the finite size of the box&#39;s pointer." src="img/trpl15-02.svg" class="center" />
+
+&lt;img alt="A rectangle labeled 'Cons' split into two smaller rectangles. The first smaller rectangle holds the label 'i32', and the second smaller rectangle holds the label 'Box' with one inner rectangle that contains the label 'usize', representing the finite size of the box's pointer." src="img/trpl15-02.svg" class="center" /&gt;
 Figure 15-2: એક `List` જે અનંત કદનું નથી, કારણ કે `Cons` માં એક `Box` છે.
-<p>બોક્સ માત્ર પરોક્ષતા અને હીપ ફાળવણી પૂરી પાડે છે; તેમની પાસે અન્ય કોઈ વિશેષ ક્ષમતાઓ નથી, જે આપણે અન્ય સ્માર્ટ પોઇન્ટર પ્રકારો સાથે જોઈશું. તેમની પાસે આ વિશેષ ક્ષમતાઓને કારણે થતો પ્રદર્શન બોજ પણ નથી, તેથી તે એવા કિસ્સાઓમાં ઉપયોગી થઈ શકે છે જ્યાં માત્ર પરોક્ષતા જ એકમાત્ર લક્ષણ છે જેની આપણને જરૂર છે. આપણે પ્રકરણ 18 માં બોક્સ માટે વધુ ઉપયોગના કિસ્સાઓ જોઈશું.</p>
-<p><code>Box&lt;T&gt;</code> પ્રકાર એક સ્માર્ટ પોઇન્ટર છે કારણ કે તે <code>Deref</code> લક્ષણ (trait) અમલમાં મૂકે છે, જે <code>Box&lt;T&gt;</code> મૂલ્યોને સંદર્ભોની જેમ ગણવામાં આવે તે માટે પરવાનગી આપે છે. જ્યારે કોઈ <code>Box&lt;T&gt;</code> મૂલ્ય અવકાશમાંથી બહાર જાય છે, ત્યારે બોક્સ દ્વારા નિર્દેશિત ઢગલા (heap) નો ડેટા પણ સાફ થઈ જાય છે કારણ કે <code>Drop</code> લક્ષણનો અમલ થયેલો હોય છે. આ બે લક્ષણો અન્ય સ્માર્ટ પોઇન્ટર પ્રકારો દ્વારા પૂરી પાડવામાં આવતી કાર્યક્ષમતા માટે વધુ મહત્વપૂર્ણ રહેશે. ચાલો આ બે લક્ષણોને વધુ વિગતવાર જોઈએ.</p>
+
+બોક્સ માત્ર પરોક્ષતા અને હીપ ફાળવણી પૂરી પાડે છે; તેમની પાસે અન્ય કોઈ વિશેષ ક્ષમતાઓ નથી, જે આપણે અન્ય સ્માર્ટ પોઇન્ટર પ્રકારો સાથે જોઈશું. તેમની પાસે આ વિશેષ ક્ષમતાઓને કારણે થતો પ્રદર્શન બોજ પણ નથી, તેથી તે એવા કિસ્સાઓમાં ઉપયોગી થઈ શકે છે જ્યાં માત્ર પરોક્ષતા જ એકમાત્ર લક્ષણ છે જેની આપણને જરૂર છે. આપણે પ્રકરણ 18 માં બોક્સ માટે વધુ ઉપયોગના કિસ્સાઓ જોઈશું.
+
+`Box&lt;T&gt;` પ્રકાર એક સ્માર્ટ પોઇન્ટર છે કારણ કે તે `Deref` લક્ષણ (trait) અમલમાં મૂકે છે, જે `Box&lt;T&gt;` મૂલ્યોને સંદર્ભોની જેમ ગણવામાં આવે તે માટે પરવાનગી આપે છે. જ્યારે કોઈ `Box&lt;T&gt;` મૂલ્ય અવકાશમાંથી બહાર જાય છે, ત્યારે બોક્સ દ્વારા નિર્દેશિત ઢગલા (heap) નો ડેટા પણ સાફ થઈ જાય છે કારણ કે `Drop` લક્ષણનો અમલ થયેલો હોય છે. આ બે લક્ષણો અન્ય સ્માર્ટ પોઇન્ટર પ્રકારો દ્વારા પૂરી પાડવામાં આવતી કાર્યક્ષમતા માટે વધુ મહત્વપૂર્ણ રહેશે. ચાલો આ બે લક્ષણોને વધુ વિગતવાર જોઈએ.
+
+</code></pre>
 
                     </main>
 

@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-55c5f58b.js";
+            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -187,35 +187,45 @@
 <p>ઉદાહરણ તરીકે, ચાલો Listing 7-17 માં રહેલા અનેક રેસ્ટોરન્ટ મોડ્યુલો ધરાવતા કોડથી શરૂઆત કરીએ. આપણે આ મોડ્યુલોને ફાઈલોમાં બહાર કાઢીશું, જેથી બધા મોડ્યુલો ક્રેટ રૂટ ફાઈલમાં વ્યાખ્યાયિત ન હોય. આ સ્થિતિમાં, ક્રેટ રૂટ ફાઈલ src/lib.rs છે, પરંતુ આ પ્રક્રિયા બાઈનરી ક્રેટ્સ સાથે પણ કામ કરે છે જેની ક્રેટ રૂટ ફાઈલ src/main.rs છે.</p>
 <p>પ્રથમ, આપણે <code>front_of_house</code> મોડ્યુલને તેના પોતાના ફાઈલમાં સ્થાનાંતરિત કરીશું. <code>front_of_house</code> મોડ્યુલની અંદરનો કોડ દૂર કરો, માત્ર <code>mod front_of_house;</code> ઘોષણા જ રાખો, જેથી src/lib.rs માં Listing 7-21 માં દર્શાવેલ કોડ રહે. નોંધ કરો કે જ્યાં સુધી આપણે Listing 7-22 માં src/front_of_house.rs ફાઈલ બનાવતા નથી ત્યાં સુધી આ કમ્પાઇલ થશે નહીં.</p>
 <listing number="7-21" file-name="src/lib.rs" caption="Declaring the `front_of_house` module whose body will be in *src/front_of_house.rs*">
+```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/lib.rs}}
+```
 </listing>
 આગળ, કૌંસમાં રહેલો કોડ `src/front_of_house.rs` નામની નવી ફાઈલમાં મૂકો, જેવો કે સૂચિ 7-22 માં દર્શાવેલ છે. કમ્પાઇલરને આ ફાઈલ શોધવાની જાણ થાય છે કારણ કે તેને ક્રેટના મૂળમાં `front_of_house` નામના મોડ્યુલ ઘોષણા (declaration) સામે આવી હતી.
 <listing number="7-22" file-name="src/front_of_house.rs" caption="Definitions inside the `front_of_house` module in *src/front_of_house.rs*">
+```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/front_of_house.rs}}
+```
 </listing>
 નોંધ એક `mod` ઘોષણા તમારા મોડ્યુલ વૃક્ષમાં એકવાર જ લોડ કરવી જોઈએ. એકવાર કમ્પાઇલરને ખબર પડે કે ફાઈલ પ્રોજેક્ટનો ભાગ છે (અને તમે `mod` વિધાન ક્યાં મૂક્યું છે તેના કારણે મોડ્યુલ વૃક્ષમાં કોડ ક્યાં રહેલો છે તે પણ જાણે છે), તો તમારા પ્રોજેક્ટની અન્ય ફાઇલોએ લોડ કરેલી ફાઇલના કોડનો સંદર્ભ લેવા માટે, જ્યાં તે જાહેર કરવામાં આવી હતી ત્યાંનો પાથ વાપરવો જોઈએ, જે "મોડ્યુલ વૃક્ષમાં વસ્તુનો સંદર્ભ લેવા માટેના પાથ" વિભાગમાં સમજાવવામાં આવ્યું છે. બીજા શબ્દોમાં કહીએ તો, `mod` એ "સમાવેશ" ક્રિયા નથી કે જે તમે અન્ય પ્રોગ્રામિંગ ભાષાઓમાં જોઈ હશે.
 <p>પછી, આપણે <code>hosting</code> મોડ્યુલને તેના પોતાના ફાઈલમાં સ્થાનાંતરિત કરીશું. પ્રક્રિયા થોડી અલગ છે કારણ કે <code>hosting</code> એ <code>front_of_house</code> નું પેટા મોડ્યુલ છે, મૂળ મોડ્યુલનું નહીં. આપણે <code>hosting</code> માટેની ફાઈલ એક નવી ડિરેક્ટરીમાં મૂકીશું જે મોડ્યુલ વૃક્ષમાં તેના પૂર્વજોના નામ પરથી નામિત કરવામાં આવશે, આ કિસ્સામાં</p>
 <p>src/front_of_house. <code>hosting</code> ને ખસેડવાનું શરૂ કરવા માટે, આપણે src/front_of_house.rs ને માત્ર <code>hosting</code> મોડ્યુલની ઘોષણા ધરાવવા માટે બદલીશું:</p>
 <listing file-name="src/front_of_house.rs">
+```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house.rs}}
+```
 </listing>
 પછી, આપણે src/front_of_house ડિરેક્ટરી અને hosting.rs ફાઈલ બનાવીએ છીએ જેમાં `hosting` મોડ્યુલમાં કરેલાં વ્યાખ્યાઓ સમાવવામાં આવશે:
 <listing file-name="src/front_of_house/hosting.rs">
+```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house/hosting.rs}}
+```
 </listing>
 જો આપણે તેના બદલે hosting.rs ને src ડિરેક્ટરીમાં મૂકીએ, તો કમ્પાઇલર અપેક્ષા રાખશે કે hosting.rs કોડ `hosting` મોડ્યુલમાં જાહેર થયેલ હોય, જે crate મૂળમાં છે અને `front_of_house` મોડ્યુલના બાળ તરીકે નહીં જાહેર થયેલ હોય. ડિરેક્ટરીઓ અને ફાઇલો મોડ્યુલ વૃક્ષ સાથે વધુ સુસંગત હોય તે માટે કમ્પાઇલરના નિયમો નક્કી કરે છે કે કયા મોડ્યુલ્સના કોડ માટે કઈ ફાઇલો તપાસવી.
-<h3 id="વૈકલપિક-ફાઇલ-મારગો"><a class="header" href="#વૈકલપિક-ફાઇલ-મારગો">વૈકલ્પિક ફાઇલ માર્ગો</a></h3>
+<blockquote>
+<h3 id="alternate-file-paths"><a class="header" href="#alternate-file-paths">Alternate File Paths</a></h3>
 <p>આગળ સુધી આપણે Rust કમ્પાઈલર દ્વારા વપરાતા સૌથી વધુ સામાન્ય ફાઇલ માર્ગો જોયા છે, પરંતુ Rust જૂના શૈલીના ફાઇલ માર્ગને પણ સ્વીકારે છે. <code>front_of_house</code> નામની મોડ્યુલ જાહેર કરેલા crate રૂટમાં, કમ્પાઈલર મોડ્યુલનો કોડ આમાં શોધશે:</p>
 <p>src/front_of_house.rs (આપણે જોયું)</p>
 <p>src/front_of_house/mod.rs (જૂની શૈલી, હજી પણ સ્વીકૃત માર્ગ)</p>
 <p>મોડ્યુલ શોધવાની રીત <code>hosting</code> નામનું મોડ્યુલ, જે <code>front_of_house</code> નું પેટા-મોડ્યુલ છે, તેના કોડ માટે કમ્પાઇલર નીચેના સ્થાનો પર તપાસ કરશે: src/front_of_house/hosting.rs (જે આપણે આવરી</p>
 <p>લીધું છે) src/front_of_house/hosting/mod.rs (જૂની શૈલી,</p>
 <p>જે હજી પણ સપોર્ટેડ પાથ છે)</p>
+</blockquote>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
 <p>જો તમે બંને શૈલીઓનો ઉપયોગ કરો છો, તો તમને કમ્પાઇલર ભૂલ મળશે. એક જ પ્રોજેક્ટમાં વિવિધ મોડ્યુલો માટે બંને શૈલીઓનું મિશ્રણ વાપરવું એ સ્વીકાર્ય છે, પરંતુ તે તમારા પ્રોજેક્ટને નેવિગેટ કરતા લોકો માટે મૂંઝવણભર્યું હોઈ શકે છે.</p>
 <p>ફાઇલોના નામ <code>mod.rs</code> વાપરવાની શૈલીનો મુખ્ય ગેરલાભ એ છે કે તમારા પ્રોજેક્ટમાં ઘણી ફાઇલો <code>mod.rs</code> તરીકે આવી શકે છે, જે એકસાથે સંપાદકમાં ખુલ્લી હોય ત્યારે મૂંઝવણભરી બની શકે છે.</p>
 <p>અમે દરેક મોડ્યુલના કોડને અલગ ફાઇલમાં ખસેડી દીધો છે, અને મોડ્યુલ વૃક્ષ એ જ રહ્યું છે. <code>eat_at_restaurant</code> માં ફંક્શન કૉલ્સ કોઈપણ સુધારા વગર કામ કરશે, ભલે તેની વ્યાખ્યાઓ જુદી જુદી ફાઇલોમાં હોય. આ તકનીક તમને મોડ્યુલોને તેમની સાઈઝ વધે તેમ નવી ફાઇલોમાં ખસેડવાની મંજૂરી આપે છે.</p>
 <p>નોંધ src/lib.rs ફાઇલમાં <code>pub use crate::front_of_house::hosting</code> વિધાનમાં કોઈ પરિવર્તન આવ્યું નથી, અને <code>use</code> કીવર્ડ પણ કઈ ફાઇલોને ક્રેટના ભાગ રૂપે કમ્પાઇલ કરવામાં આવે છે તેના પર કોઈ અસર કરતું નથી. <code>mod</code> કીવર્ડ મોડ્યુલ્સ જાહેર કરે છે, અને Rust તે જ નામની ફાઇલમાં તે મોડ્યુલ માટે જરૂરી કોડ શોધે છે.</p>
-<h2 id="સારાંશ"><a class="header" href="#સારાંશ">સારાંશ</a></h2>
 <p>Rust તમને એક પેકેજને અનેક crates માં વિભાજીત કરવાની અને એક crate ને modules માં વિભાજીત કરવાની મંજૂરી આપે છે જેથી કરીને તમે એક module માં વ્યાખ્યાયિત વસ્તુઓને બીજા module માંથી સંદર્ભિત કરી શકો. તમે આ નિરપેક્ષ અથવા સાપેક્ષ માર્ગોનો ઉલ્લેખ કરીને કરી શકો છો. આ માર્ગોને <code>use</code> વિધાન સાથે અવકાશમાં લાવી શકાય છે જેથી કરીને તમે તે અવકાશમાં વસ્તુના બહુવિધ ઉપયોગો માટે ટૂંકા માર્ગનો ઉપયોગ કરી શકો. Module કોડ મૂળભૂત રીતે ખાનગી હોય છે, પરંતુ તમે <code>pub</code> કીવર્ડ ઉમેરીને વ્યાખ્યાઓને જાહેર કરી શકો છો.</p>
 <p>આગલા પ્રકરણમાં, આપણે સ્ટાન્ડર્ડ લાઈબ્રેરીમાં કેટલાક કલેક્શન ડેટા સ્ટ્રક્ચર્સ જોઈશું જેનો ઉપયોગ તમે તમારા સુવ્યવસ્થિત કોડમાં કરી શકો છો.</p>
 

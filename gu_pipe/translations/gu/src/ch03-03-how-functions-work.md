@@ -6,14 +6,22 @@ Rust કોડમાં વિધિ અને variable નામો માટ�
 
 ફાઈલનામ: src/main.rs
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-16-functions/src/main.rs}}
+```
+```
 આપણે Rust માં એક વિધેય વ્યાખ્યાયિત કરીએ છીએ `fn` વડે શરૂ કરીને, ત્યારબાદ વિધેયનું નામ અને કૌંસનો સમૂહ આવે છે. કુંડાકી મૂળાક્ષરો કમ્પાઇલરને વિધેય શરીરની શરૂઆત અને અંત ક્યાં છે તે જણાવે છે.
 
 આપણે કોઈપણ વિધેયને બોલાવી શકીએ છીએ જેને આપણે વ્યાખ્યાયિત કર્યું છે, તેનું નામ દાખલ કરીને ત્યારબાદ કૌંસનો સમૂહ આવે છે. કારણ કે `another_function` પ્રોગ્રામમાં વ્યાખ્યાયિત થયેલું છે, તે `main` વિધેયની અંદરથી બોલાવી શકાય છે. નોંધ કરો કે આપણે `another_function` ને  `main` વિધેય પછી સ્રોત કોડમાં વ્યાખ્યાયિત કર્યું હતું; આપણે તેને પહેલા પણ વ્યાખ્યાયિત કરી શકતા હતા. Rust ને તમારી વિધેયો ક્યાં વ્યાખ્યાયિત કરેલ છે તેની ચિંતા નથી, માત્ર એટલું જ કે તે કોલર દ્વારા જોઈ શકાય તેવા સ્કોપમાં ક્યાંક વ્યાખ્યાયિત થયેલું છે.
 
 ચાલો, `functions` નામની નવી બાઈનરી પ્રોજેક્ટ શરૂ કરીએ જેથી ફંક્શન્સને વધુ સારી રીતે સમજી શકાય. `another_function` ઉદાહરણને src/main.rs માં મૂકો અને તેને ચલાવો. તમારે નીચેનું પરિણામ જોવું જોઈએ:
 
+```console
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-16-functions/output.txt}}
+```
+```
 રેખાઓ એ ક્રમમાં ચલાવવામાં આવે છે જે તે `main` વિધેયમાં દેખાય છે. પ્રથમ "Hello, world!" સંદેશ છાપાય છે, અને ત્યારબાદ `another_function` બોલાવવામાં આવે છે અને તેનું સંદેશ છાપાય છે.
 
 ### Parameters
@@ -22,12 +30,24 @@ Rust કોડમાં વિધિ અને variable નામો માટ�
 
 આ `another_function` ના આ સંસ્કરણમાં, આપણે એક પરિમાણ ઉમેરીએ છીએ:
 
+```rust
+```rust
 ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે "Hello, world!" છાપે છે. ```rust fn main() { println!("Hello, world!"); } ``` આ કાર્યક્રમ `main` નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે `main` કાર્ય પ્રથમ ચલાવવામાં આવે છે. `println!` એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે "Hello, world!" છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે `cargo run` command વાપરી શકો છો.
 
+```
+```
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-17-functions-with-parameters/src/main.rs}}
+```
+```
 આ કાર્યક્રમ ચલાવવાનો પ્રયત્ન કરો; તમને નીચેનું પરિણામ મળવું જોઈએ:
 
+```console
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-17-functions-with-parameters/output.txt}}
+```
+```
 ના ઘોષણામાં એક પરિમાણ નામકું `x` છે. `x` નો પ્રકાર `i32` તરીકે દર્શાવવામાં આવ્યો છે. જ્યારે આપણે `5` ને `another_function` માં મોકલીએ છીએ, ત્યારે `println!` મેક્રો `x` ધરાવતા કૌંસિત નિશ્ચિત ફોર્મેટ સ્ટ્રિંગમાં `5` મૂકે છે. In function signatures, you must declare the type of each parameter. This is a deliberate decision in Rust’s design: Requiring type annotations in function definitions means
 
 ફંક્શન હસ્તાક્ષરોમાં, તમારે દરેક પરિમાણનો પ્રકાર જાહેર કરવો આવશ્યક છે. આ Rust ની ડિઝાઇનનો એક જાણીતો નિર્ણય છે: ફંક્શન વ્યાખ્યાઓમાં પ્રકારની નોંધણી ફરજિયાત હોવાથી, કમ્પાઇલરને ભાગ્યે જ અન્યત્ર કોડમાં તેનો અર્થ શું છે તે જાણવા માટે તમારે તેનો ઉપયોગ કરવાની જરૂર પડે છે. જો તેને ખબર હોય કે ફંક્શન કયા પ્રકારની અપેક્ષા રાખે છે, તો કમ્પાઇલર વધુ મદદરૂપ ભૂલ સંદેશ આપી શકે છે.
@@ -36,12 +56,20 @@ Rust કોડમાં વિધિ અને variable નામો માટ�
 
 ફાઈલનામ: src/main.rs
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-18-functions-with-multiple-parameters/src/main.rs}}
+```
+```
 આ ઉદાહરણ આ ઉદાહરણ બે પરિમાણો સાથે `print_labeled_measurement` નામનું વિધેય બનાવે છે. પ્રથમ પરિમાણનું નામ `value` છે અને તે `i32` પ્રકારનું છે. બીજું પરિમાણ `unit_label` નામનું છે અને તે `char` પ્રકારનું છે. ત્યારબાદ, વિધેય `value` અને `unit_label` બંને ધરાવતો લખાણ છાપે
 
 છે. ચાલો આ કોડ ચલાવીએ. તમારી `functions` પ્રોજેક્ટની src/main.rs ફાઈલમાં હાલમાં રહેલા પ્રોગ્રામને ઉપરના ઉદાહરણ સાથે બદલો અને `cargo run` નો ઉપયોગ કરીને તેને ચલાવો:
 
+```console
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-18-functions-with-multiple-parameters/output.txt}}
+```
+```
 કારણ કે આપણે `value` માટે `5` અને `unit_label` માટે `'h'` મૂલ્ય સાથે વિધેયને બોલાવ્યું, તેથી કાર્યક્રમનું પરિણામ તેમાં સમાવિષ્ટ મૂલ્યો દર્શાવે છે.
 
 ### Statements and Expressions
@@ -57,7 +85,11 @@ Expressions પ્રત્યયરૂપ અભિવ્યક્તિઓ એ
 આપણે હકીકતમાં વિધાન અને અભિવ્યક્તિઓનો ઉપયોગ કર્યો છે. `let` કીવર્ડ વડે variable બનાવવું અને તેને મૂલ્ય સોંપવું એ એક વિધાન છે. યાદી 3-1 માં, `let y = 6;` એ એક વિધાન છે.
 
 <Listing number="3-1" file-name="src/main.rs" caption="A `main` function declaration containing one statement">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-01/src/main.rs}}
+```
+```
 </Listing>
 Function નિરુપણો પણ વિધાન છે; સમગ્ર અગાઉનું ઉદાહરણ પોતે જ એક વિધાન છે. (જે ટૂંક સમયમાં જોશું તેમ, કાર્યને બોલાવવું એ વિધાન નથી, જોકે.)
 
@@ -65,17 +97,29 @@ Function નિરુપણો પણ વિધાન છે; સમગ્ર �
 
 ફાઈલનું નામ: src/main.rs
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-19-statements-vs-expressions/src/main.rs}}
+```
+```
 જ્યારે તમે આ કાર્યક્રમ ચલાવો છો, ત્યારે તમને મળતો ભૂલ આ પ્રમાણે દેખાશે:
 
+```console
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-19-statements-vs-expressions/output.txt}}
+```
+```
 આ `let y = 6` વિધાન કોઈ મૂલ્ય પરત કરતું નથી, તેથી `x` ને કંઈ બાંધવા માટે મળતું નથી. આ અન્ય ભાષાઓમાં થતી ઘટનાથી અલગ છે, જેમ કે C અને Ruby, જ્યાં સોંપણી મૂલ્ય પરત કરે છે. તે ભાષાઓમાં, તમે `x = y = 6` લખી શકો છો અને `x` અને `y` બંનેને `6` નું મૂલ્ય મળશે; Rust માં એવું શક્ય નથી. Expressions
 
 પ્રતિક્રિયાઓ (expressions) એક મૂલ્યનું મૂલ્યાંકન કરે છે અને તમે Rust માં લખશો તે મોટાભાગના કોડનો ભાગ બનાવે છે. ગણિતની ક્રિયાને ધ્યાનમાં લો, જેમ કે `5 + 6`, જે `11` ના મૂલ્ય પર પહોંચે છે. પ્રતિક્રિયાઓ વિધાનનો ભાગ હોઈ શકે છે: યાદી 3-1 માં, વિધાન `let y = 6;` માં રહેલું `6` એ એક પ્રતિક્રિયા છે જે `6` ના મૂલ્ય પર પહોંચે છે. ફંક્શનને બોલાવવું એ પ્રતિક્રિયા છે. મેક્રોને બોલાવવું એ પ્રતિક્રિયા છે. કુંજી કૌંસ (curly brackets) વડે બનાવેલો નવો અવકાશ બ્લોક (scope block) પણ એક પ્રતિક્રિયા છે, ઉદાહરણ તરીકે:
 
 ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે "Hello, world!" છાપે છે. ```rust fn main() { println!("Hello, world!"); } ``` આ કાર્યક્રમ `main` નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે `main` કાર્ય પ્રથમ ચલાવવામાં આવે છે. `println!` એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે "Hello, world!" છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે `cargo run` command વાપરી શકો છો.
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-20-blocks-are-expressions/src/main.rs}}
+```
+```
 આ અભિવ્યક્તિ:
 
 {
@@ -90,27 +134,51 @@ Function નિરુપણો પણ વિધાન છે; સમગ્ર �
 
 ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે "Hello, world!" છાપે છે. ```rust fn main() { println!("Hello, world!"); } ``` આ કાર્યક્રમ `main` નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે `main` કાર્ય પ્રથમ ચલાવવામાં આવે છે. `println!` એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે "Hello, world!" છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે `cargo run` command વાપરી શકો છો.
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-21-function-return-values/src/main.rs}}
+```
+```
 પાંચ ફંક્શન પાંચ ફંક્શનમાં કોઈ ફંક્શન કોલ્સ, મેક્રો કે `let` વિધાન નથી—માત્ર સંખ્યા `5` પોતે જ છે. તે Rust માં એક યોગ્ય ફંક્શન છે. નોંધ કરો કે ફંક્શનનો રિટર્ન પ્રકાર પણ ઉલ્લેખિત છે, જે `-> i32` છે. આ કોડ ચલાવવાનો પ્રયત્ન કરો; આઉટપુટ આના જેવું દેખાશે:
 
+```console
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-21-function-return-values/output.txt}}
+```
+```
 `five` માં `5` એ વિધેયનું પરિણામ છે, જેના કારણે વળતર પ્રકાર `i32` છે. ચાલો આને વધુ વિગતવાર જોઈએ. બે મહત્વના ભાગો છે: પ્રથમ, `let x = five();` લાઇન દર્શાવે છે કે અમે એક variable પ્રારંભ કરવા માટે વિધેયનું પરિણામ વાપરી રહ્યા છીએ. કારણકે વિધેય `five` એક `5` પરિણામ આપે છે, તે લાઇન નીચે મુજબ સમાન છે:
 
+```rust
+```rust
 let x = 5;
+```
+```
 બીજું, `five` વિધેય કોઈ પરિમાણો ધરાવતું નથી અને વળતર મૂલ્યનો પ્રકાર વ્યાખ્યાયિત કરે છે, પરંતુ વિધેયનું શરીર એકલું `5` છે જેમાં અર્ધવિરામચિહ્ન નથી, કારણ કે તે એક અભિવ્યક્તિ છે જેનું મૂલ્ય આપણે પાછું મેળવવા માંગીએ છીએ.
 
 ચાલો બીજા ઉદાહરણ જોઈએ:
 
 ફાઈલનામ: src/main.rs
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-22-function-parameter-and-return/src/main.rs}}
+```
+```
 ફાઇલનામ: src/main.rs આ કોડ ચલાવવાથી `The value of x is: 6` છપાવશે. પરંતુ જો આપણે `x + 1` ધરાવતી લીટીના અંતે અર્ધવિરામ મૂકીએ, અને તેને અભિવ્યક્તિથી નિવેદનમાં બદલીએ તો
 
 શું થશે?
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-23-statements-dont-return-values/src/main.rs}}
+```
+```
 આ કોડનું સંકલન એક ભૂલ ઉત્પન્ન કરશે, જે નીચે મુજબ છે:
 
+```console
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-23-statements-dont-return-values/output.txt}}
+```
+```
 મુખ્ય ભૂલ સંદેશ, `mismatched types` , આ કોડ સાથેની મુખ્ય સમસ્યા જાહેર કરે છે. `plus_one` ફંક્શનની વ્યાખ્યા જણાવે છે કે તે એક `i32` પરત કરશે, પરંતુ વિધાન કોઈ મૂલ્યનું પરિણામ આપતું નથી, જે `()` દ્વારા દર્શાવવામાં આવ્યું છે, જે યુનિટ પ્રકાર છે. તેથી, કંઈપણ પરત કરવામાં આવતું નથી, જે ફંક્શનની વ્યાખ્યાનો વિરોધાભાસ કરે છે અને ભૂલ તરફ દોરી જાય છે. આ આઉટપુટમાં, Rust સંભવિત રીતે આ સમસ્યાને સુધારવામાં મદદ કરવા માટે એક સંદેશ પ્રદાન કરે છે: તે સેમિકોલન દૂર કરવાનું સૂચવે છે, જે ભૂલને ઠીક કરશે.
 

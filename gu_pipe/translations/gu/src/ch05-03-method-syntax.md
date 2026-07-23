@@ -8,7 +8,11 @@
 ચાલો `area` વિધેયને બદલીએ જે `Rectangle` પ્રકારની ઉદાહરણ તરીકે પરિમાણ ધરાવે છે અને તેના બદલે `Rectangle` રચના પર વ્યાખ્યાયિત `area` પદ્ધતિ બનાવીએ, જે યાદી 5-13 માં દર્શાવેલ છે.
 
 <Listing number="5-13" file-name="src/main.rs" caption="Defining an `area` method on the `Rectangle` struct">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-13/src/main.rs}}
+```
+```
 </Listing>
 ના સંદર્ભમાં કાર્યને વ્યાખ્યાયિત કરવા માટે, અમે `Rectangle` માટે એક `impl` (અમલીકરણ) બ્લોક શરૂ કરીએ છીએ. આ `impl` બ્લોકમાંની દરેક વસ્તુ `Rectangle` પ્રકાર સાથે સંકળાયેલી હશે. ત્યારબાદ, અમે `area` કાર્યને `impl` કૌંસમાં ખસેડીએ છીએ અને હસ્તાક્ષરમાં (signature) પ્રથમ (અને આ કિસ્સામાં, એકમાત્ર) પરિમાણને `self` માં બદલીએ છીએ અને સમગ્ર શરીરમાં. `main` માં, જ્યાં આપણે `area` કાર્યને બોલાવ્યું હતું અને `rect1` ને Argument તરીકે પસાર કર્યું હતું, ત્યાં આપણે તેના બદલે પદ્ધતિ સિન્ટેક્સનો ઉપયોગ કરીને આપણા `Rectangle` ઉદાહરણ પર `area` પદ્ધતિને બોલાવી શકીએ છીએ. પદ્ધતિ સિન્ટેક્સ ઉદાહરણ પછી આવે છે: અમે એક ડોટ ઉમેરીએ છીએ ત્યારબાદ પદ્ધતિનું નામ, કૌંસ અને કોઈપણ Argumentો.
 
@@ -21,7 +25,11 @@
 ન પડે. નોંધ કરો કે અમે કોઈ વિધિને struct ના ક્ષેત્ર (field) માંથી એક જ નામ આપી શકીએ છીએ. ઉદાહરણ તરીકે, અમે `Rectangle` પર `width` નામની વિધિ પણ વ્યાખ્યાયિત કરી શકીએ છીએ:
 
 <Listing file-name="src/main.rs">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-06-method-field-interaction/src/main.rs:here}}
+```
+```
 </Listing>
 અહીં, અમે `width` પદ્ધતિને `true` પરત કરવા માટે પસંદ કરી રહ્યા છીએ જો ઉદાહરણમાં `width` ક્ષેત્રનું મૂલ્ય `0` કરતાં વધારે હોય અને `false` પરત કરવા માટે જો મૂલ્ય `0` હોય: આપણે સમાન નામના પદ્ધતિના ક્ષેત્રની અંદર કોઈપણ હેતુ માટે ક્ષેત્રનો ઉપયોગ કરી શકીએ છીએ. `main` માં, જ્યારે અમે `rect1.width` ને કૌંસ સાથે અનુસરીએ છીએ, ત્યારે Rust જાણે છે કે અમારો અર્થ `width` પદ્ધતિ છે. જ્યારે અમે કૌંસનો ઉપયોગ કરતા નથી, ત્યારે Rust જાણે છે કે અમારો અર્થ `width`
 
@@ -61,16 +69,28 @@ p1.distance(&p2);
 ચાલો પદ્ધતિઓનો ઉપયોગ કરવાની પ્રેક્ટિસ કરીએ એક બીજી પદ્ધતિ `Rectangle` સ્ટ્રક્ચરમાં ઉમેરીને. આ વખતે આપણે ઈચ્છીએ છીએ કે `Rectangle` નો એક ઇન્સ્ટન્સ બીજા `Rectangle` ના ઇન્સ્ટન્સને સ્વીકારે અને `true` પરત કરે જો બીજો `Rectangle` સંપૂર્ણપણે `self` (પહેલો `Rectangle`) ની અંદર બંધબેસે; નહિંતર, તેણે `false` પરત કરવું જોઈએ. એટલે કે, એકવાર આપણે `can_hold` પદ્ધતિ વ્યાખ્યાયિત કરી લઈએ, પછી આપણે Listing 5-14 માં દર્શાવેલ પ્રોગ્રામ લખી શકવા જોઈએ.
 
 <Listing number="5-14" file-name="src/main.rs" caption="Using the as-yet-unwritten `can_hold` method">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-14/src/main.rs}}
+```
+```
 </Listing>
 કારણ કે `rect2` ના બંને પરિમાણો `rect1` ના પરિમાણો કરતાં નાના છે, પરંતુ `rect3` ની પહોળાઈ `rect1` કરતાં વધારે છે:
 
+```text
+```text
 Can rect1 hold rect2? true
 Can rect1 hold rect3? false
+```
+```
 આપણે જાણીએ છીએ કે આપણે એક પદ્ધતિ (method) વ્યાખ્યાયિત કરવા માંગીએ છીએ, તેથી તે `impl Rectangle` બ્લોક ની અંદર હશે. પદ્ધતિનું નામ `can_hold` હશે, અને તે બીજા `Rectangle` નો અમૂર્ત ઉછીના લીધેલું પરિમાણ સ્વીકારશે. આપણે કોડ જોઇને પરિમાણનો પ્રકાર જાણી શકીએ છીએ જે પદ્ધતિને બોલાવે છે: `rect1.can_hold(&rect2)` માં `&rect2` પસાર થાય છે, જે `rect2` નો અમૂર્ત ઉછીના લીધેલું છે, જે `Rectangle` નું એક ઉદાહરણ છે. આ તાર્કિક છે કારણ કે આપણે માત્ર `rect2` વાંચવાની જરૂર છે (લેખન કરવાને બદલે, જેના માટે આપણને પરિવર્તનશીલ ઉછીનું જરૂરી હશે), અને આપણે `main` ને `can_hold` પદ્ધતિને બોલાવ્યા પછી ફરીથી તેનો ઉપયોગ કરી શકે તે માટે `rect2` નું માલિકી જાળવી રાખવાની જરૂર છે. `can_hold` નું વળતર મૂલ્ય એક બુલિયન (Boolean) હશે, અને અમલીકરણ તપાસશે કે `self` ની પહોળાઈ અને ઊંચાઈ અનુક્રમે બીજા `Rectangle` ની પહોળાઈ અને ઊંચાઈ કરતાં વધારે છે કે નહીં. ચાલો Listing 5-13 માંથી `impl` બ્લોકમાં નવું `can_hold` પદ્ધતિ ઉમેરીએ, જે Listing 5-15 માં દર્શાવેલ છે.
 
 <Listing number="5-15" file-name="src/main.rs" caption="Implementing the `can_hold` method on `Rectangle` that takes another `Rectangle` instance as a parameter">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-15/src/main.rs:here}}
+```
+```
 </Listing>
 જ્યારે આપણે લિસ્ટિંગ 5-14 માં `main` ફંક્શન સાથે આ કોડ ચલાવીશું, ત્યારે આપણને આપેલ પરિણામ મળશે. પદ્ધતિઓ (Methods) અનેક પરિમાણો લઈ શકે છે જે આપણે `self` પરિમાણ પછી ઉમેરી શકીએ છીએ, અને તે પરિમાણો ફંક્શન્સમાંના પરિમાણોની જેમ જ કાર્ય કરે છે.
 
@@ -82,7 +102,11 @@ Can rect1 hold rect3? false
 
 ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે "Hello, world!" છાપે છે. ```rust fn main() { println!("Hello, world!"); } ``` આ કાર્યક્રમ `main` નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે `main` કાર્ય પ્રથમ ચલાવવામાં આવે છે. `println!` એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે "Hello, world!" છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે `cargo run` command વાપરી શકો છો.
 
+```rust
+```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-03-associated-functions/src/main.rs:here}}
+```
+```
 Self કીવર્ડ્સ `Self` કીવર્ડ્સ રીટર્ન પ્રકારમાં અને ફંક્શનના શરીરમાં, `impl` કીવર્ડ પછી દેખાતા પ્રકારના ઉપનામ છે, જે આ કિસ્સામાં `Rectangle` છે. આ સંકળાયેલ ફંક્શનને બોલાવવા માટે, આપણે સ્ટ્રક્ટ
 
 નામના સાથે `::` સિન્ટેક્સનો ઉપયોગ કરીએ છીએ; `let sq = Rectangle::square(3);` એ ઉદાહરણ છે. આ ફંક્શન સ્ટ્રક્ટ દ્વારા નામિત થયેલું છે: `::` સિન્ટેક્સ સંકળાયેલ ફંક્શન્સ અને મોડ્યુલ્સ દ્વારા બનાવેલા નેમસ્પેસ બંને માટે વપરાય છે. આપણે પ્રકરણ 7 માં મોડ્યુલો વિશે ચર્ચા કરીશું.
@@ -92,7 +116,11 @@ Self કીવર્ડ્સ `Self` કીવર્ડ્સ રીટર્ન
 દરેક struct ને બહુવિધ `impl` બ્લોક્સ હોવાની અનુમતિ છે. ઉદાહરણ તરીકે, યાદી 5-15 એ યાદી 5-16 માં દર્શાવેલ કોડ સમાન છે, જેમાં દરેક પદ્ધતિ તેના પોતાના `impl` બ્લોકમાં છે.
 
 <Listing number="5-16" caption="Rewriting Listing 5-15 using multiple `impl` blocks">
+```rust
+```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-16/src/main.rs:here}}
+```
+```
 </Listing>
 અહીં આ પદ્ધતિઓને અનેક `impl` બ્લોક્સમાં વિભાજીત કરવાનો કોઈ હેતુ નથી, પરંતુ આ યોગ્ય વાક્યરચના છે. આપણે પ્રકરણ ૧૦ માં જોઈશું કે જ્યાં બહુવિધ `impl` બ્લોક્સ ક્યારે ઉપયોગી થઈ શકે છે, જ્યારે આપણે સામાન્ય પ્રકારો (types) અને traits વિશે ચર્ચા કરીશું.
 
