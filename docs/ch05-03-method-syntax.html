@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-54790a15.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -248,7 +248,9 @@ Can rect1 hold rect3? false
 <h3 id="સંલગન-વિધેયો"><a class="header" href="#સંલગન-વિધેયો">સંલગ્ન વિધેયો</a></h3>
 <p><code>impl</code> બ્લોકમાં વ્યાખ્યાયિત થયેલાં તમામ વિધેયોને સંલગ્ન વિધેયો કહેવામાં આવે છે, કારણ કે તે <code>impl</code> નામના પ્રકાર સાથે સંલગ્ન હોય છે. આપણે એવા સંલગ્ન વિધેયો વ્યાખ્યાયિત કરી શકીએ છીએ જેમાં પ્રથમ પરિમાણ તરીકે <code>self</code> ન હોય (અને તેથી તે પદ્ધતિઓ નથી), કારણ કે તેમને કાર્ય કરવા માટે પ્રકારની કોઈ ઘટનાની જરૂર હોતી નથી. આપણે પહેલેથી જ આ પ્રકારનું એક વિધેયો વાપર્યું છે: <code>String::from</code> વિધેયો જે <code>String</code> પ્રકાર પર વ્યાખ્યાયિત થયેલું છે.</p>
 <p>જે સંલગ્ન વિધેયો પદ્ધતિઓ નથી, તે ઘણીવાર સ્ટ્રક્ટની નવી ઘટના પાછી આપવા માટે વપરાતા નિર્માણકર્તાઓ માટે ઉપયોગી થાય છે. આને ઘણીવાર <code>new</code> કહેવામાં આવે છે, પરંતુ <code>new</code> કોઈ વિશેષ નામ નથી અને ભાષામાં બનેલું નથી. ઉદાહરણ તરીકે, આપણે <code>square</code> નામનું સંલગ્ન વિધેયો પ્રદાન કરવાનું પસંદ કરી શકીએ છીએ જેમાં એક પરિમાણ હશે અને તેનો ઉપયોગ પહોળાઈ અને ઊંચાઈ બંને માટે થઈ શકે છે, આમ ચોરસ <code>Rectangle</code> બનાવવાનું સરળ બને છે, તેના બદલે સમાન મૂલ્ય બે વાર સ્પષ્ટ કરવું પડે:</p>
-<p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે. <code>rust fn main() { println!("Hello, world!"); } </code> આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
+<p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે.</p>
+<pre class="playground"><code class="language-rust edition2024">fn main() { println!("Hello, world!"); }</code></pre>
+<p>આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-03-associated-functions/src/main.rs:here}}

@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-54790a15.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -285,10 +285,13 @@ Rust નું `char` પ્રકાર ભાષાનો સૌથી પ્�
 
 આપણે કમાસૂત્રથી અલગ કરેલી મૂલ્યોની યાદીને કૌંસમાં લખીને ટ્યૂપલ બનાવીએ છીએ. ટ્યૂપલમાં દરેક સ્થાનનો પ્રકાર હોય છે, અને ટ્યૂપલમાં રહેલા જુદા-જુદા મૂલ્યોના પ્રકારો સમાન હોવા જરૂરી નથી. આપણે આ ઉદાહરણમાં વૈકલ્પિક પ્રકારની નોંધણીઓ ઉમેરી છે:
 
-ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે "Hello, world!" છાપે છે. ```rust fn main() { println!("Hello, world!"); } ``` આ કાર્યક્રમ `main` નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે `main` કાર્ય પ્રથમ ચલાવવામાં આવે છે. `println!` એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે "Hello, world!" છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે `cargo run` command વાપરી શકો છો.
-
-```rust
+ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે "Hello, world!" છાપે છે.
 </code></pre>
+</blockquote>
+<pre class="playground"><code class="language-rust edition2024">fn main() { println!("Hello, world!"); }</code></pre>
+<p>આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
+<blockquote>
+<pre><code class="language-rust"></code></pre>
 </blockquote>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -308,7 +311,9 @@ Rust નું `char` પ્રકાર ભાષાનો સૌથી પ્�
 <span class="boring">}</span></code></pre>
 <p>આ કાર્યક્રમ સૌપ્રથમ એક ટ્યૂપલ બનાવે છે અને તેને variable <code>tup</code> સાથે જોડે છે. ત્યારબાદ તે <code>let</code> સાથે પેટર્નનો ઉપયોગ કરીને <code>tup</code> ને ત્રણ અલગ-અલગ variable, <code>x</code>, <code>y</code> અને <code>z</code> માં રૂપાંતરિત કરે છે. આને ડિસ્ટ્રક્ચરિંગ કહેવામાં આવે છે કારણ કે તે એક ટ્યૂપલને ત્રણ ભાગોમાં તોડે છે. અંતે, કાર્યક્રમ <code>y</code> નું મૂલ્ય છાપે છે, જે <code>6.4</code> છે.</p>
 <p>અમે ટ્યૂપલ ઘટકને સીધો જ અવધિ (period) (<code>.</code>) નો ઉપયોગ કરીને અને આપણે જે મૂલ્ય મેળવવા માંગીએ છીએ તેની અનુક્રમણિકા (index) દર્શાવીને પણ મેળવી શકીએ છીએ. ઉદાહરણ તરીકે:</p>
-<p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે. <code>rust fn main() { println!("Hello, world!"); } </code> આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
+<p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે.</p>
+<pre class="playground"><code class="language-rust edition2024">fn main() { println!("Hello, world!"); }</code></pre>
+<p>આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-12-tuple-indexing/src/main.rs}}

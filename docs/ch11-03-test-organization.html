@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-54790a15.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -189,9 +189,7 @@
 <p>એકમ પરીક્ષણોનો હેતુ કોડના દરેક એકમને અન્ય કોડથી અલગ કરીને ચકાસવાનો છે, જેથી ખામીયુક્ત કોડને ઝડપથી શોધી શકાય. તમે <code>src</code> ડિરેક્ટરીમાં દરેક ફાઈલમાં એકમ પરીક્ષણો મૂકશો જે કોડનું પરીક્ષણ કરે છે. સંમેલન મુજબ, દરેક ફાઈલમાં <code>tests</code> નામનું મોડ્યુલ બનાવવું અને તેને <code>cfg(test)</code> સાથે નોંધવું.</p>
 <h4 id="the-tests-module-and-cfgtest"><a class="header" href="#the-tests-module-and-cfgtest">The <code>tests</code> Module and <code>#[cfg(test)]</code></a></h4>
 <p><code>#[cfg(test)]</code> એનોટેશન <code>tests</code> મોડ્યુલ પર જણાવે છે કે Rust માત્ર ત્યારે જ પરીક્ષણ કોડને કમ્પાઇલ કરે અને ચલાવે જ્યારે તમે <code>cargo test</code> કરો છો, પરંતુ <code>cargo build</code> કરતી વખતે નહીં. આનાથી કમ્પાઈલ સમય બચે છે જ્યારે તમે માત્ર લાયબ્રેરી બનાવવા માંગતા હોવ અને પરિણામી કમ્પાઈલ્ડ આર્ટિફેક્ટમાં જગ્યા પણ બચે છે કારણ કે પરીક્ષણો સમાવિષ્ટ નથી. તમને ખ્યાલ આવશે કે એકીકરણ પરીક્ષણો અલગ ડિરેક્ટરીમાં જાય છે, તેથી તેમને <code>#[cfg(test)]</code> એનોટેશનની જરૂર નથી. જો કે, યુનિટ પરીક્ષણો કોડની સાથે જ ફાઇલોમાં હોવાથી, તમે <code>#[cfg(test)]</code> નો ઉપયોગ કરીને સ્પષ્ટ કરશો કે તેને કમ્પાઈલ્ડ પરિણામમાં સમાવિષ્ટ ન કરવું જોઈએ.</p>
-<pre><code class="language-text">યાદ રાખો કે જ્યારે આપણે આ પ્રકરણના પ્રથમ વિભાગમાં નવું `adder` પ્રોજેક્ટ બનાવ્યો હતો, ત્યારે કાર્ગોએ આપણી માટે આ કોડ ઉત્પન્ન કર્યો હતો:
-
-</code></pre>
+<p>યાદ રાખો કે જ્યારે આપણે આ પ્રકરણના પ્રથમ વિભાગમાં નવું <code>adder</code> પ્રોજેક્ટ બનાવ્યો હતો, ત્યારે કાર્ગોએ આપણી માટે આ કોડ ઉત્પન્ન કર્યો હતો:</p>
 <p>ફાઈલનું નામ: src/lib.rs</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

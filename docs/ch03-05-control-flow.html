@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-54790a15.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -244,7 +244,9 @@
 <pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/listing-03-02/output.txt}}
 </code></pre>
 <p>યાદ રાખવું કે કોડ બ્લોક્સ અંતિમ અભિવ્યક્તિનું મૂલ્યાંકન કરે છે, અને સંખ્યાઓ પણ અભિવ્યક્તિઓ જ હોય છે. આ કિસ્સામાં, સમગ્ર <code>if</code> અભિવ્યક્તિ કયા કોડ બ્લોક ચલાવવામાં આવે તેના પર આધારિત છે. આનો અર્થ એ થાય છે કે <code>if</code> ના દરેક ભાગમાંથી પરિણામો મળવાની સંભાવના ધરાવતા મૂલ્યો સમાન પ્રકારના હોવા જોઈએ; યાદી 3-2 માં, <code>if</code> ભાગ અને <code>else</code> ભાગ બંનેના પરિણામો <code>i32</code> પૂર્ણાંકો હતા. જો પ્રકારો મેળ ખાતા ન હોય, તો નીચે આપેલ ઉદાહરણમાં જેમ કે, આપણને ભૂલ મળશે:</p>
-<p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે. <code>rust fn main() { println!("Hello, world!"); } </code> આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
+<p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે.</p>
+<pre class="playground"><code class="language-rust edition2024">fn main() { println!("Hello, world!"); }</code></pre>
+<p>આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-31-arms-must-return-same-type/src/main.rs}}

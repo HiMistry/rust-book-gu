@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-54790a15.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -299,7 +299,7 @@
         F: Send + 'static,
         T: Send + 'static,
 <span class="boring">}</span></code></pre>
-<p><code>spawn</code> <code>JoinHandle&lt;T&gt;</code> ચાલો <code>JoinHandle</code> નો ઉપયોગ કરવાનો પ્રયત્ન કરીએ અને જોઈએ કે શું થાય છે. આપણી પરિસ્થિતિમાં, આપણે થ્રેડ પૂલને પાસ કરેલા ક્લોઝર્સ કનેક્શનનું સંચાલન કરશે અને કંઈપણ પરત કરશે નહીં, તેથી <code>T</code> એ યુનિટ પ્રકાર <code>()</code> હશે. The code in Listing 21-14</p>
+<p><a href="../std/thread/struct.Builder.html#method.spawn"><code>spawn</code></a> <code>JoinHandle&lt;T&gt;</code> ચાલો <code>JoinHandle</code> નો ઉપયોગ કરવાનો પ્રયત્ન કરીએ અને જોઈએ કે શું થાય છે. આપણી પરિસ્થિતિમાં, આપણે થ્રેડ પૂલને પાસ કરેલા ક્લોઝર્સ કનેક્શનનું સંચાલન કરશે અને કંઈપણ પરત કરશે નહીં, તેથી <code>T</code> એ યુનિટ પ્રકાર <code>()</code> હશે. The code in Listing 21-14</p>
 <p>લિસ્ટિંગ 21-14 માંનો કોડ કમ્પાઇલ થશે, પરંતુ તે હજી સુધી કોઈ થ્રેડ બનાવતો નથી. આપણે <code>ThreadPool</code> ની વ્યાખ્યાને <code>thread::JoinHandle&lt;()&gt;</code> ઇન્સ્ટન્સના વેક્ટર તરીકે રાખવાનો બદલાવ કર્યો છે, વેક્ટરને <code>size</code> ક્ષમતા સાથે શરૂ કર્યું છે, એક <code>for</code> લૂપ સેટઅપ કર્યો છે જે થ્રેડ બનાવવા માટે અમુક કોડ ચલાવશે અને તેમાં થ્રેડ ધરાવતું <code>ThreadPool</code> ઇન્સ્ટન્સ પરત કર્યું છે.</p>
 <p><strong>Listing 21-14: Creating a vector for <code>ThreadPool</code> to hold the threads</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]

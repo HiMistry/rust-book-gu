@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-54790a15.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -199,8 +199,9 @@
 <h3 id="parameters"><a class="header" href="#parameters">Parameters</a></h3>
 <p>આપણે વિધેયોને પરિમાણો ધરાવતા વ્યાખ્યાયિત કરી શકીએ છીએ, જે વિધેયની નિશાનીનો ભાગ હોય તેવા વિશેષ variable છે. જ્યારે કોઈ વિધેયમાં પરિમાણો હોય છે, ત્યારે તમે તે પરિમાણો માટે નક્કર મૂલ્યો પ્રદાન કરી શકો છો. તકનીકી રીતે, આ નક્કર મૂલ્યોને Argumentો (arguments) કહેવામાં આવે છે, પરંતુ સામાન્ય વાતચીતમાં, લોકો પરિમાણ (parameter) અને Argument (argument) શબ્દોનો ઉપયોગ કાં તો વિધેયની વ્યાખ્યામાં રહેલા variables માટે અથવા વિધેય બોલાવતી વખતે પાસ કરવામાં આવતા નક્કર મૂલ્યો માટે બદલે વપરાય છે.</p>
 <p>આ <code>another_function</code> ના આ સંસ્કરણમાં, આપણે એક પરિમાણ ઉમેરીએ છીએ:</p>
-<pre class="playground"><code class="language-rust edition2024">ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે "Hello, world!" છાપે છે. ```rust fn main() { println!("Hello, world!"); } ``` આ કાર્યક્રમ `main` નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે `main` કાર્ય પ્રથમ ચલાવવામાં આવે છે. `println!` એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે "Hello, world!" છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે `cargo run` command વાપરી શકો છો.
-</code></pre>
+<p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે.</p>
+<pre class="playground"><code class="language-rust edition2024">fn main() { println!("Hello, world!"); }</code></pre>
+<p>આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-17-functions-with-parameters/src/main.rs}}
@@ -248,7 +249,9 @@
 </code></pre>
 <p>આ <code>let y = 6</code> વિધાન કોઈ મૂલ્ય પરત કરતું નથી, તેથી <code>x</code> ને કંઈ બાંધવા માટે મળતું નથી. આ અન્ય ભાષાઓમાં થતી ઘટનાથી અલગ છે, જેમ કે C અને Ruby, જ્યાં સોંપણી મૂલ્ય પરત કરે છે. તે ભાષાઓમાં, તમે <code>x = y = 6</code> લખી શકો છો અને <code>x</code> અને <code>y</code> બંનેને <code>6</code> નું મૂલ્ય મળશે; Rust માં એવું શક્ય નથી. Expressions</p>
 <p>પ્રતિક્રિયાઓ (expressions) એક મૂલ્યનું મૂલ્યાંકન કરે છે અને તમે Rust માં લખશો તે મોટાભાગના કોડનો ભાગ બનાવે છે. ગણિતની ક્રિયાને ધ્યાનમાં લો, જેમ કે <code>5 + 6</code>, જે <code>11</code> ના મૂલ્ય પર પહોંચે છે. પ્રતિક્રિયાઓ વિધાનનો ભાગ હોઈ શકે છે: યાદી 3-1 માં, વિધાન <code>let y = 6;</code> માં રહેલું <code>6</code> એ એક પ્રતિક્રિયા છે જે <code>6</code> ના મૂલ્ય પર પહોંચે છે. ફંક્શનને બોલાવવું એ પ્રતિક્રિયા છે. મેક્રોને બોલાવવું એ પ્રતિક્રિયા છે. કુંજી કૌંસ (curly brackets) વડે બનાવેલો નવો અવકાશ બ્લોક (scope block) પણ એક પ્રતિક્રિયા છે, ઉદાહરણ તરીકે:</p>
-<p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે. <code>rust fn main() { println!("Hello, world!"); } </code> આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
+<p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે.</p>
+<pre class="playground"><code class="language-rust edition2024">fn main() { println!("Hello, world!"); }</code></pre>
+<p>આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-20-blocks-are-expressions/src/main.rs}}
@@ -261,7 +264,9 @@ x + 1
 એક બ્લોક જે આ કિસ્સામાં <code>4</code> મૂલ્યાંકન કરે છે. તે મૂલ્ય <code>y</code> સાથે <code>let</code> વિધાનના ભાગ રૂપે જોડાયેલું છે. નોંધ કરો કે <code>x + 1</code> લાઇન, અંતે અર્ધવિરામ વગરની છે, જે તમે અત્યાર સુધી જોયેલી મોટાભાગની લીટીઓથી અલગ છે. અભિવ્યક્તિઓમાં અંતિમ અર્ધવિરામ સમાવિષ્ટ હોતું નથી. જો તમે કોઈ અભિવ્યક્તિના અંતમાં અર્ધવિરામ ઉમેરો છો, તો તે વિધાન બની જાય છે, અને તે પછી મૂલ્ય પરત કરશે નહીં. આગળ ફંક્શન રીટર્ન વેલ્યુ અને અભિવ્યક્તિઓનું અન્વેષણ કરતી વખતે આ ધ્યાનમાં રાખો.</p>
 <h3 id="functions-with-return-values"><a class="header" href="#functions-with-return-values">Functions with Return Values</a></h3>
 <p>કાર્યો તે કોડને મૂલ્યો પાછા આપી શકે છે જે તેમને બોલાવે છે. અમે વળતર મૂલ્યોને નામ આપતા નથી, પરંતુ આપણે એરો ( <code>-&gt;</code> ) પછી તેમનો પ્રકાર જાહેર કરવો જ જોઈએ. Rust માં, કાર્યનું વળતર મૂલ્ય કાર્યના શરીરના બ્લોકમાં છેલ્લા અભિવ્યક્તિના મૂલ્ય સમાન હોય છે. તમે <code>return</code> કીવર્ડનો ઉપયોગ કરીને અને મૂલ્ય સ્પષ્ટ કરીને કાર્યમાંથી વહેલા પાછા ફરી શકો છો, પરંતુ મોટાભાગના કાર્યો અંતિમ અભિવ્યક્તિને ગર્ભિત રીતે પાછું આપે છે. અહીં એક કાર્યનું ઉદાહરણ છે જે મૂલ્ય પાછું આપે છે:</p>
-<p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે. <code>rust fn main() { println!("Hello, world!"); } </code> આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
+<p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે.</p>
+<pre class="playground"><code class="language-rust edition2024">fn main() { println!("Hello, world!"); }</code></pre>
+<p>આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-21-function-return-values/src/main.rs}}

@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-54790a15.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -224,7 +224,9 @@
 <p>ગતિ. તમારા કાર્યક્રમમાં સમગ્ર જગ્યાએ વપરાતા હાર્ડકોડેડ મૂલ્યોને variable અચળ તરીકે નામ આપવું એ કોડના ભવિષ્યના જાળવણી કરનારાઓને તે મૂલ્યનો અર્થ સમજાવવામાં મદદરૂપ છે. જો ભવિષ્યમાં હાર્ડકોડેડ મૂલ્યને અપડેટ કરવાની જરૂર પડે તો તમારે તમારા કોડમાં માત્ર એક જ જગ્યાએ ફેરફાર કરવાની જરૂર પડશે.</p>
 <h3 id="shadowing"><a class="header" href="#shadowing">Shadowing</a></h3>
 <p>જેમ તમે પ્રકરણ ૨ માં અનુમાન લગાવવાની ટ્યુટોરિયલમાં જોયું, તમે અગાઉના variable (variable) સાથે સમાન નામ ધરાવતું નવું variable જાહેર કરી શકો છો. Rust સમુદાયના લોકો કહે છે કે પ્રથમ variable બીજા દ્વારા છાયા પાડે છે, જેનો અર્થ એ થાય છે કે જ્યારે તમે ચલનું નામ વાપરો છો ત્યારે કમ્પાઇલર બીજું variable જોશે. અસરકારક રીતે, બીજું variable પ્રથમ variable ઢાંકી દે છે, જ્યાં સુધી તે પોતે છાયા ન પાડે અથવા અવકાશ સમાપ્ત ન થાય ત્યાં સુધી variable’s નામના કોઈપણ ઉપયોગો પોતાની તરફ ખેંચે છે. આપણે સમાન variable’s નામનો ઉપયોગ કરીને અને <code>let</code> કીવર્ડનો ફરીથી ઉપયોગ કરીને variable છાયા કરી શકીએ છીએ:</p>
-<p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે. <code>rust fn main() { println!("Hello, world!"); } </code> આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
+<p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે.</p>
+<pre class="playground"><code class="language-rust edition2024">fn main() { println!("Hello, world!"); }</code></pre>
+<p>આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-03-shadowing/src/main.rs}}
