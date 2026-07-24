@@ -1,0 +1,494 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Control Flow - ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-0e4ce700.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h2 id="control-flow"><a class="header" href="#control-flow">Control Flow</a></h2>
+<p>કોઈ શરત <code>true</code> હોય તો અમુક કોડ ચલાવવાની ક્ષમતા અને કોઈ શરત <code>true</code> રહે ત્યાં સુધી અમુક કોડ વારંવાર ચલાવવાની ક્ષમતા એ મોટાભાગની પ્રોગ્રામિંગ ભાષાઓના મૂળભૂત ઘટકો છે. Rust કોડના પ્રવાહને નિયંત્રિત કરવા માટે સૌથી સામાન્ય રચનાઓ <code>if</code> અભિવ્યક્તિઓ અને લૂપ્સ છે.</p>
+<h3 id="if-expressions"><a class="header" href="#if-expressions"><code>if</code> Expressions</a></h3>
+<p>એક <code>if</code> અભિવ્યક્તિ તમને શરતો પર આધારિત તમારા કોડને વિભાજિત કરવાની મંજૂરી આપે છે. તમે એક શરત પ્રદાન કરો છો અને પછી જણાવો છો, “જો આ શરત પૂરી થાય, તો આ કોડ બ્લોક ચલાવો. જો શરત પૂરી ન થાય, તો આ કોડ બ્લોક ચલાવશો નહીં.”</p>
+<p><code>if</code> અભિવ્યક્તિને અન્વેષણ કરવા માટે તમારા પ્રોજેક્ટ્સ ડિરેક્ટરીમાં branches નામનો એક નવો પ્રોજેક્ટ બનાવો. src/main.rs ફાઇલમાં નીચે મુજબ ઇનપુટ કરો:</p>
+<p>ફાઇલનામ: src/main.rs</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>```rust
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-26-if-true/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<pre><code>if અભિવ્યક્તિઓ બધી `if` અભિવ્યક્તિઓ `if` કીવર્ડથી શરૂ થાય છે, ત્યારબાદ એક શરત આવે છે. આ કિસ્સામાં, શરત તપાસે છે કે variable `number` નું મૂલ્ય 5 થી ઓછું છે કે નહીં. જો શરત `true` હોય તો અમલમાં મૂકવા માટે કોડનો બ્લોક તરત જ શરતના અંતે ચોકની નિશાની ({}) માં મૂકવામાં આવે છે. `if` અભિવ્યક્તિઓમાં શરતો સાથે સંકળાયેલા કોડના બ્લોક્સને કેટલીકવાર આર્મ્ઝ કહેવામાં આવે છે, જેમ કે આપણે પ્રકરણ 2 ના “અનુમાનને ગુપ્ત સંખ્યા સાથે સરખાવવું” વિભાગમાં ચર્ચા કરેલા `match` અભિવ્યક્તિઓમાં આર્મ્ઝ હોય છે.
+
+વૈકલ્પિક રીતે, અમે અહીં `else` અભિવ્યક્તિ પણ ઉમેરી શકીએ છીએ, જેથી જો શરત `false` હોય તો પ્રોગ્રામને ચલાવવા માટે વૈકલ્પિક કોડ બ્લોક મળે. જો તમે `else` અભિવ્યક્તિ ન આપો અને શરત `false` હોય, તો પ્રોગ્રામ માત્ર `if` બ્લોક છોડી દેશે અને આગલા કોડ ભાગ પર આગળ વધશે. આ કોડ
+
+ચલાવવાનો પ્રયાસ કરો; તમારે નીચેનું પરિણામ જોવું જોઈએ:
+
+```console
+```console
+{{#include ../listings/ch03-common-programming-concepts/no-listing-26-if-true/output.txt}}
+</code></pre>
+<pre><code>ચાલો `number` નું મૂલ્ય એવું બદલીએ કે જે શરતને `false` બનાવે, અને જોઈએ કે શું થાય છે:
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-27-if-false/src/main.rs:here}}
+</code></pre>
+<pre><code>ફરીથી કાર્યક્રમ ચલાવો અને પરિણામ જુઓ:
+
+```console
+```console
+{{#include ../listings/ch03-common-programming-concepts/no-listing-27-if-false/output.txt}}
+</code></pre>
+<pre><code>એ નોંધવું પણ મહત્વનું છે કે આ કોડમાં શરત `bool` પ્રકારની હોવી જોઈએ. જો શરત `bool` ન હોય, તો આપણને ભૂલ મળશે. ઉદાહરણ તરીકે, નીચેના કોડ ચલાવવાનો પ્રયાસ કરો:
+
+ફાઈલનું નામ: src/main.rs
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-28-if-condition-must-be-bool/src/main.rs}}
+</code></pre>
+<pre><code>જો શરતનું મૂલ્યાંકન આ સમયે `3` ના મૂલ્ય પર થાય છે, અને Rust એક ભૂલ ઉત્પન્ન કરે છે:
+
+```console
+```console
+{{#include ../listings/ch03-common-programming-concepts/no-listing-28-if-condition-must-be-bool/output.txt}}
+</code></pre>
+<pre><code>ભૂલ સૂચવે છે કે Rust ને `bool` અપેક્ષિત હતું પરંતુ એક પૂર્ણાંક મળ્યો. રૂબી અને JavaScript જેવા ભાષાઓથી વિપરીત, Rust આપોઆપ બિન-બુલિયન પ્રકારોને બુલિયનમાં રૂપાંતર કરવાનો પ્રયત્ન કરશે નહીં. તમારે સ્પષ્ટપણે જણાવવું જોઈએ અને હંમેશાં `if` સાથે બુલિયન શરત પ્રદાન કરવી જોઈએ. જો આપણે ઈચ્છીએ કે `if` કોડ બ્લોક માત્ર ત્યારે જ ચાલે જ્યારે કોઈ સંખ્યા `0` બરાબર ન હોય, ઉદાહરણ તરીકે, તો અમે `if` અભિવ્યક્તિને નીચે મુજબ બદલી શકીએ છીએ:
+
+ફાઈલનામ: src/main.rs
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-29-if-not-equal-0/src/main.rs}}
+</code></pre>
+<pre><code>આ કોડ ચલાવવાથી `number was something other than zero` પ્રિન્ટ થશે.
+
+#### Handling Multiple Conditions with `else if`
+
+તમે `if` અને `else` ને `else if` અભિવ્યક્તિમાં જોડીને બહુવિધ શરતોનો ઉપયોગ કરી શકો છો. ઉદાહરણ તરીકે:
+
+ફાઈલનામ: src/main.rs
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-30-else-if/src/main.rs}}
+</code></pre>
+<pre><code>આ કાર્યક્રમ ચાર સંભવિત માર્ગો લઈ શકે છે. તેને ચલાવ્યા પછી, તમારે નીચે મુજબનું પરિણામ જોવું જોઈએ:
+
+```console
+```console
+{{#include ../listings/ch03-common-programming-concepts/no-listing-30-else-if/output.txt}}
+</code></pre>
+<pre><code>જ્યારે આ કાર્યક્રમ ચલાય છે, ત્યારે તે દરેક `if` અભિવ્યક્તિને વારાફરતી તપાસે છે અને જે શરત `true` હોય તેવા પ્રથમ ભાગનું પાલન કરે છે. નોંધ કરો કે ભલે 6 એ 2 વડે વિભાજ્ય હોય, છતાં આપણે આઉટપુટ `number is divisible by 2` જોતા નથી, ન તો આપણે `else` બ્લોકમાંથી `number is not divisible by 4, 3, or 2` લખાણ જોઈએ છીએ. આ એટલા માટે છે કે Rust માત્ર પ્રથમ `true` શરત માટે બ્લોકનું પાલન કરે છે, અને એકવાર તેને તે મળી જાય પછી, તે બાકીની શરતોને પણ તપાસતું નથી.
+
+અતિશય `else if` અભિવ્યક્તિઓ વાપરવાથી કોડ અવ્યવસ્થિત થઈ શકે છે, તેથી જો તમારી પાસે એક કરતાં વધુ હોય, તો તમે તમારા કોડને સુધારી શકો છો. પ્રકરણ ૬ એક શક્તિશાળી Rust શાખા રચના `match` વિશે વર્ણવે છે જે આવા કિસ્સાઓ માટે ઉપયોગી છે.
+
+#### Using `if` in a `let` Statement
+
+કારણ કે `if` એક અભિવ્યક્તિ છે, આપણે તેનો ઉપયોગ `let` વિધાનની જમણી બાજુએ variable મૂલ્ય સોંપવા માટે કરી શકીએ છીએ, જે યાદી 3-2 માં દર્શાવેલ છે.
+
+&lt;Listing number="3-2" file-name="src/main.rs" caption="Assigning the result of an `if` expression to a variable"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-02/src/main.rs}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+`number` variable `if` અભિવ્યક્તિના પરિણામ પર આધારિત મૂલ્ય સાથે જોડી દેવામાં આવશે. જુઓ કે શું થાય છે તે જોવા માટે આ કોડ ચલાવો:
+
+```console
+```console
+{{#include ../listings/ch03-common-programming-concepts/listing-03-02/output.txt}}
+</code></pre>
+<pre><code>યાદ રાખવું કે કોડ બ્લોક્સ અંતિમ અભિવ્યક્તિનું મૂલ્યાંકન કરે છે, અને સંખ્યાઓ પણ અભિવ્યક્તિઓ જ હોય છે. આ કિસ્સામાં, સમગ્ર `if` અભિવ્યક્તિ કયા કોડ બ્લોક ચલાવવામાં આવે તેના પર આધારિત છે. આનો અર્થ એ થાય છે કે `if` ના દરેક ભાગમાંથી પરિણામો મળવાની સંભાવના ધરાવતા મૂલ્યો સમાન પ્રકારના હોવા જોઈએ; યાદી 3-2 માં, `if` ભાગ અને `else` ભાગ બંનેના પરિણામો `i32` પૂર્ણાંકો હતા. જો પ્રકારો મેળ ખાતા ન હોય, તો નીચે આપેલ ઉદાહરણમાં જેમ કે, આપણને ભૂલ મળશે:
+
+ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે "Hello, world!" છાપે છે. ```rust fn main() { println!("Hello, world!"); } ``` આ કાર્યક્રમ `main` નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે `main` કાર્ય પ્રથમ ચલાવવામાં આવે છે. `println!` એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે "Hello, world!" છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે `cargo run` command વાપરી શકો છો.
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-31-arms-must-return-same-type/src/main.rs}}
+</code></pre>
+<pre><code>જ્યારે આપણે આ કોડને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ છીએ, ત્યારે આપણને ભૂલ મળશે. `if` અને `else` વિભાગોમાં મૂલ્ય પ્રકારો સુસંગત નથી, અને Rust ચોક્કસપણે પ્રોગ્રામમાં સમસ્યા ક્યાં શોધવી તે દર્શાવે છે:
+
+```console
+```console
+{{#include ../listings/ch03-common-programming-concepts/no-listing-31-arms-must-return-same-type/output.txt}}
+</code></pre>
+<pre><code>`if` બ્લોકમાં રહેલું અભિવ્યક્તિ એક પૂર્ણાંકમાં મૂલ્યાંકન કરે છે, અને `else` બ્લોકમાં રહેલું અભિવ્યક્તિ એક શબ્દમાળામાં મૂલ્યાંકન કરે છે. આ કામ નહીં કરે, કારણ કે variable એક જ પ્રકાર હોવો જોઈએ, અને Rust ને કમ્પાઇલ સમયે ચોક્કસપણે ખબર હોવી જરૂરી છે કે `number` variable's પ્રકાર શું છે. `number` ના પ્રકારને જાણવાથી કમ્પાઈલરને ચકાસણી કરવાની મંજૂરી મળે છે કે `number` નો ઉપયોગ દરેક જગ્યાએ માન્ય પ્રકાર છે. જો `number` નો પ્રકાર માત્ર રનટાઇમ પર નક્કી થતો હોત, તો Rust તે કરી શકતું ન હતું; કમ્પાઈલર વધુ જટિલ બની જાત અને તેણે કોઈપણ variable માટે બહુવિધ સંભવિત પ્રકારોને ટ્રેક કરવા પડે તો કોડ વિશે ઓછા વચનો આપ્યા સિવાય.
+
+### Repetition with Loops
+
+કોડના બ્લોકને ઘણી વખત ચલાવવું ઘણીવાર ઉપયોગી બને છે. આ કાર્ય માટે, Rust વિવિધ લૂપ્સ પ્રદાન કરે છે, જે લૂપ બોડીની અંદરના કોડમાંથી અંત સુધી ચાલે અને પછી તરત જ શરૂઆતથી પાછા ફરે છે. લૂપ્સ સાથે પ્રયોગ કરવા માટે, ચાલો એક નવું પ્રોજેક્ટ બનાવીએ જેને loops કહેવાય.
+
+Rust પાસે ત્રણ પ્રકારના લૂપ્સ છે: `loop`, `while` અને `for`. ચાલો દરેકને અજમાવીએ.
+
+#### Repeating Code with `loop`
+
+`loop` કીવર્ડ Rust ને જણાવે છે કે કોડનો બ્લોક વારંવાર ચલાવો, કાના કારણ કે અનંત ગાળા માટે અથવા જ્યાં સુધી તમે તેને સ્પષ્ટપણે બંધ કરવાનું ન કહો.
+
+ઉદાહરણ તરીકે, તમારી `loops` ડિરેક્ટરીમાં આવેલી src/main.rs ફાઈલને આ પ્રમાણે બદલો:
+
+ફાઈલનું નામ: src/main.rs
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-loop/src/main.rs}}
+</code></pre>
+<pre><code>જ્યારે આપણે આ કાર્યક્રમ ચલાવીશું, ત્યારે આપણે `again!` છાપેલું વારંવાર અને સતત જોઈશું જ્યાં સુધી આપણે કાર્યક્રમને જાતે જ રોકીએ નહીં. મોટાભાગના ટર્મિનલ્સ ctrl - C કીબોર્ડ શૉર્ટકટને સપોર્ટ કરે છે જેથી કોઈ કાર્યક્રમ જે અનંત લૂપમાં ફસાયો હોય તેને અવરોધિત કરી શકાય. પ્રયત્ન કરો:
+
+&lt;!-- manual-regeneration
+cd listings/ch03-common-programming-concepts/no-listing-32-loop
+cargo run
+CTRL-C
+--&gt;
+```console
+```console
+$ cargo run
+   Compiling loops v0.1.0 (file:///projects/loops)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.08s
+     Running `target/debug/loops`
+again!
+again!
+again!
+again!
+^Cagain!
+</code></pre>
+<pre><code>`^C` આ પ્રતીક દર્શાવે છે કે જ્યાં તમે ctrl - C દબાવ્યું હતું.
+
+તમે `again!` શબ્દ છાપેલું જોઈ શકો છો અથવા ન પણ જોઈ શકો, જે `^C` પછી આવે છે, આ બાબત કોડ લૂપમાં ક્યાં હતો તેના પર આધાર રાખે છે જ્યારે તેને વિક્ષેપ સંકેત મળ્યો હતો.
+
+ખુણાઉં, Rust કોડનો ઉપયોગ કરીને લૂપમાંથી બહાર નીકળવાનો પણ એક માર્ગ પૂરો પાડે છે. તમે લૂપની અંદર `break` કીવર્ડ મૂકી શકો છો જેથી પ્રોગ્રામને ક્યારે લૂપનું અમલ બંધ કરવું તે જણાવો. યાદ કરો કે આપણે આ "Quitting After a Correct Guess” બીજા પ્રકરણના વિભાગમાં અનુમાન લગાવવાની રમતમાં કર્યું હતું, જ્યારે userએ સાચો નંબર અનુમાન લગાવીને રમત જીતી ત્યારે પ્રોગ્રામમાંથી બહાર નીકળવા માટે.
+
+અમે અનુમાન લગાવવાની રમતમાં `continue` નો પણ ઉપયોગ કર્યો હતો, જે લૂપમાં પ્રોગ્રામને આ લૂપના વર્તમાન પુનરાવર્તનમાં બાકી રહેલા કોડને અવગણવા અને આગામી પુનરાવર્તન પર જવાનો આદેશ આપે છે.
+
+#### Returning Values from Loops
+
+એક `loop` નો ઉપયોગ એવાં કાર્યને ફરીથી પ્રયત્ન કરવા માટે થાય છે જે નિષ્ફળ થઈ શકે, જેમ કે કોઈ થ્રેડનું કાર્ય પૂર્ણ થયું છે કે નહીં તે તપાસવું. તમારે તે કાર્યના પરિણામને પણ લૂપમાંથી બહારની કોડમાં મોકલવાની જરૂર પડી શકે છે. આવું કરવા માટે, તમે `break` અભિવ્યક્તિ પછી જે મૂલ્ય પરત કરવું હોય તે ઉમેરી શકો છો; તે મૂલ્ય લૂપમાંથી પરત કરવામાં આવશે જેથી કરીને તમે તેનો ઉપયોગ કરી શકો, જે અહીં દર્શાવેલ છે:
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-33-return-value-from-loop/src/main.rs}}
+</code></pre>
+<pre><code>લૂપ પહેલાં, અમે `counter` નામનું variable જાહેર કરીએ છીએ અને તેને `0` થી શરૂઆત કરીએ છીએ. ત્યારબાદ, અમે `result` નામનું variable જાહેર કરીએ છીએ જે લૂપમાંથી મળેલ મૂલ્ય રાખશે. લૂપના દરેક પુનરાવર્તનમાં, અમે `counter` variable `1` ઉમેરીએ છીએ, અને પછી તપાસીએ છીએ કે શું `counter`  `10` બરાબર છે. જ્યારે તે હોય છે, ત્યારે અમે `break` કીવર્ડનો ઉપયોગ `counter * 2` મૂલ્ય સાથે કરીએ છીએ. લૂપ પછી, અમે `result` માં મૂલ્ય સોંપવા માટે વપરાતા વિધાનને સમાપ્ત કરવા માટે અર્ધવિરામ ચિહ્નનો ઉપયોગ કરીએ છીએ. અંતે, અમે `result` માં રહેલું મૂલ્ય છાપીએ છીએ, જે આ કિસ્સામાં `20` છે.
+
+તમે લૂપની અંદરથી પણ `return` કરી શકો છો. જ્યારે `break` માત્ર વર્તમાન લૂપમાંથી બહાર નીકળે છે, ત્યારે `return` હંમેશાં વર્તમાન ફંક્શનમાંથી બહાર નીકળી જાય છે.
+
+&lt;!-- Old headings. Do not remove or links may break. --&gt;
+#### Disambiguating with Loop Labels
+
+જો તમારી પાસે ચક્રોની અંદર ચકરો હોય, તો `break` અને `continue` તે સમયે સૌથી અંદરના ચક્ર પર લાગુ પડે છે. તમે વૈકલ્પિક રીતે એક ચક્ર પર ચક્ર લેબલ સ્પષ્ટ કરી શકો છો, જેનો ઉપયોગ તમે `break` અથવા `continue` સાથે તે લેબલવાળા ચક્ર પર લાગુ કરવા માટે કરી શકો છો, તેના બદલે સૌથી અંદરના ચક્ર પર. ચક્ર લેબલ્સ એકલ અવધરેણીથી શરૂ થવા જોઈએ. અહીં બે નેસ્ટેડ ચક્રોનું ઉદાહરણ છે:
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-5-loop-labels/src/main.rs}}
+</code></pre>
+<pre><code>લૂપનું લેબલ બાહ્ય લૂપને `'counting_up`' નામનું લેબલ છે, અને તે 0 થી 2 સુધી ગણશે. લેબલ વગરનું આંતરિક લૂપ 10 થી 9 સુધી ઉતરશે. પહેલો `break` જે લેબલનો ઉલ્લેખ કરતો નથી, તે માત્ર આંતરિક લૂપમાંથી બહાર નીકળી જશે. `break 'counting_up;` વિધાન બાહ્ય લૂપમાંથી બહાર નીકળી જશે. આ કોડ છાપે છે:
+
+```console
+```console
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-5-loop-labels/output.txt}}
+</code></pre>
+<pre><code>&lt;!-- Old headings. Do not remove or links may break. --&gt;
+#### Streamlining Conditional Loops with while
+
+એક કાર્યક્રમને ઘણીવાર એક ચક્ર (loop) ની અંદર શરતનું મૂલ્યાંકન કરવાની જરૂર પડે છે. જ્યાં સુધી શરત `true` હોય ત્યાં સુધી ચક્ર ચાલે છે. જ્યારે શરત `true` રહેવાનું બંધ કરે છે, ત્યારે કાર્યક્રમ `break` ને બોલાવે છે, જે ચક્રને રોકે છે. `loop`, `if`, `else`, અને `break` ના સંયોજનનો ઉપયોગ કરીને આ પ્રકારનું વર્તન અમલમાં મૂકવું શક્ય છે; જો તમે ઈચ્છો તો તમે હવે એક કાર્યક્રમમાં તે પ્રયાસ કરી શકો છો. જો કે, આ પેટર્ન એટલી સામાન્ય છે કે Rust પાસે તેના માટે બનેલ ભાષાની રચના છે, જેને `while` ચક્ર કહેવામાં આવે છે. લિસ્ટિંગ 3-3 માં, અમે ત્રણ વખત કાર્યક્રમને ચક્ર કરવા માટે `while` નો ઉપયોગ કરીએ છીએ, દરેક વખતે ગણતરી ઘટાડીએ છીએ, અને પછી, ચક્ર પછી, એક સંદેશ છાપવા અને બહાર નીકળવા માટે.
+
+&lt;Listing number="3-3" file-name="src/main.rs" caption="Using a `while` loop to run code while a condition evaluates to `true`"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-03/src/main.rs}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+આ રચના `loop`, `if`, `else`, અને `break` ના ઉપયોગથી જરૂરી થતી ઘણી બધી અંદરની રચનાઓ (nesting) દૂર કરે છે, અને તે વધુ સ્પષ્ટ છે. જ્યાં સુધી કોઈ શરત `true` હોય ત્યાં સુધી કોડ ચાલે છે; અન્યથા, તે લૂપમાંથી બહાર નીકળી જાય છે.
+
+#### Looping Through a Collection with `for`
+
+તમે જ્યારે કોઈ સંગ્રહના ઘટકો પર ચક્રીય થવા માંગતા હોવ, ત્યારે `while` રચનાનો ઉપયોગ કરવાનું પસંદ કરી શકો છો, જેમ કે એરે. ઉદાહરણ તરીકે, યાદી 3-4 માં દર્શાવેલ લૂપ એરે `a` ના દરેક ઘટકને છાપે છે.
+
+&lt;Listing number="3-4" file-name="src/main.rs" caption="Looping through each element of a collection using a `while` loop"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-04/src/main.rs}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+અહીં, કોડ એરેના ઘટકોમાંથી ગણતરી કરે છે. તે ઇન્ડેક્સ `0` થી આરંભ થાય છે અને પછી લૂપ ચલાવે છે જ્યાં સુધી તે એરેના અંતિમ ઇન્ડેક્સ સુધી ન પહોંચે (એટલે કે, જ્યારે `index &lt; 5` હવે `true` ન હોય). આ કોડ ચલાવવાથી એરેના દરેક ઘટક છાપાશે:
+
+```console
+```console
+{{#include ../listings/ch03-common-programming-concepts/listing-03-04/output.txt}}
+</code></pre>
+<pre><code>પાંચેય એરે મૂલ્યો ટર્મિનલમાં દેખાય છે, જે અપેક્ષિત છે. ભલે `index` નું મૂલ્ય અમુક સમયે `5` સુધી પહોંચી જાય, તેમ છતાં લૂપ એરેમાંથી છઠ્ઠું મૂલ્ય મેળવવાનો પ્રયત્ન કરતા પહેલા જ બંધ થઈ જાય
+
+છે. However, this approach is error-prone; we could cause the program to panic if the index value or test condition is incorrect. For example, if you changed the definition of the `a` array to have four elements but forgot to update the condition to `while index &lt; 4`, the code would panic. It’s also slow, because the compiler adds runtime code to perform the conditional check of whether the index is within the bounds of the array on every iteration through the loop. જો કે, આ અભિગમ ભૂલયુક્ત છે; જો અનુક્રમણિકાનું મૂલ્ય અથવા પરીક્ષણ શરત ખોટી હોય તો આપણે પ્રોગ્રામને ગભરાવવાનું કારણ બની શકે છે. ઉદાહરણ તરીકે, જો તમે `a` એરેની વ્યાખ્યામાં ચાર ઘટકો ઉમેર્યા હોય પરંતુ શરતને `while index &lt; 4` માં અપડેટ કરવાનું ભૂલી જાઓ છો, તો કોડ ગભરાઈ જશે. તે ધીમું પણ છે, કારણ કે કમ્પાઇલર દરેક લૂપ પુનરાવર્તન દરમિયાન એરેની સીમામાં અનુક્રમણિકા છે કે નહીં તેની શરતી ચકાસણી કરવા માટે રનટાઇમ કોડ ઉમેરે છે.
+
+વૈકલ્પિક રીતે, તમે `for` લૂપનો ઉપયોગ કરી શકો છો અને સંગ્રહમાં દરેક વસ્તુ માટે અમુક કોડ ચલાવી શકો છો. `for` લૂપ એ યાદી 3-5 માં દર્શાવેલ કોડ જેવું દેખાય છે.
+
+&lt;Listing number="3-5" file-name="src/main.rs" caption="Looping through each element of a collection using a `for` loop"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-05/src/main.rs}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+જ્યારે આપણે આ કોડ ચલાવીશું, ત્યારે આપણને યાદી 3-4 માં જે પરિણામ દેખાય છે તેવું જ પરિણામ જોવા મળશે. વધુ મહત્વની વાત એ છે કે, હવે આપણે કોડની સુરક્ષામાં વધારો કર્યો છે અને એવા ભૂલો થવાની શક્યતાને દૂર કરી છે જે એરેના અંતથી આગળ વધી જવા અથવા પૂરતી દૂર ન જવાથી આવી શકે છે. `for` લૂપમાંથી ઉત્પન્ન થયેલ મશીન કોડ પણ વધુ કાર્યક્ષમ હોઈ શકે છે કારણ કે દરેક પુનરાવર્તનમાં એરેની લંબાઈ સાથે અનુક્રમણિકાની સરખામણી કરવાની જરૂર નથી.
+
+`for` લૂપનો ઉપયોગ કરીને, જો તમે એરેમાં રહેલા મૂલ્યોની સંખ્યા બદલો તો તમારે અન્ય કોડને બદલવાની જરૂર નહીં પડે, જે યાદી 3-4 માં વપરાયેલી પદ્ધતિ સાથે થવું જોઈએ.
+
+`while` માં `for` લૂપની સલામતી અને સંક્ષિપ્તતા તેને સૌથી વધુ વપરાયેલ લૂપ રચના બનાવે છે. ભલે તમે અમુક કોડને ચોક્કસ સંખ્યામાં વખત ચલાવવા માંગતા હો, જેમ કે Listing 3-3 માં ગણતરી ઉલટાવવાનું ઉદાહરણ હતું, મોટા ભાગના Rustaceans `for` લૂપનો ઉપયોગ કરશે. આવું કરવા માટે, સ્ટાન્ડર્ડ લાઇબ્રેરી દ્વારા પૂરા પાડવામાં આવેલ `Range` નો ઉપયોગ કરવો જોઈએ, જે એક સંખ્યાથી શરૂ કરીને બીજી સંખ્યા પહેલાં સમાપ્ત થતી તમામ સંખ્યાઓનું ક્રમશઃ ઉત્પાદન કરે છે.
+
+અહીં `for` લૂપ અને અન્ય એક પદ્ધતિ `rev` નો ઉપયોગ કરીને ગણતરી કેવી દેખાશે તે દર્શાવેલું છે, જે શ્રેણીને ઉલટાવે છે:
+
+ફાઈલનું નામ: src/main.rs
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-34-for-range/src/main.rs}}
+</code></pre>
+<pre><code>આ કોડ થોડો વધુ સુખદ છે, ખરું ને?
+
+## Summary
+
+તમે સફળ થયા! આ એક મોટું પ્રકરણ હતું: તમે variable (variable), સ્કેલર (scalar) અને સંયોજન ડેટા પ્રકારો, વિધેયો (function), ટિપ્પણીઓ (comments), `if` અભિવ્યક્તિઓ (expressions), અને લૂપ્સ (loops) વિશે શીખ્યા! આ પ્રકરણમાં ચર્ચા કરાયેલ ખ્યાલો સાથે પ્રેક્ટિસ કરવા માટે, નીચે મુજબના કાર્યો કરવા માટે પ્રોગ્રામ બનાવો:
+
+ફahrenheit અને Celsius વચ્ચે તાપમાન રૂપાંતરિત કરો.
+
+n વાન Fibonacci સંખ્યા જનરેટ કરો.
+
+"The Twelve Days of Christmas" ના રોમાંચક ગીત (Christmas carol) ના શબ્દો છાપો, ગીતમાં રહેલી પુનરાવર્તનનો લાભ લો.
+
+જ્યારે તમે આગળ વધવા માટે તૈયાર હશો, ત્યારે આપણે Rustમાં એક એવી વિભાવના વિશે વાત કરીશું જે અન્ય પ્રોગ્રામિંગ ભાષાઓમાં સામાન્ય રીતે જોવા મળતી નથી: માલિકી (ownership).
+
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch03-04-comments.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch04-00-understanding-ownership.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch03-04-comments.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch04-00-understanding-ownership.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>To panic! or Not to panic! - ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-0e4ce700.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h2 id="to-panic-or-not-to-panic"><a class="header" href="#to-panic-or-not-to-panic">To <code>panic!</code> or Not to <code>panic!</code></a></h2>
+<p>તો, તમે કેવી રીતે નક્કી કરો છો કે ક્યારે  <code>panic!</code>  આવકારવો અને ક્યારે  <code>Result</code>  પાછો આપવો? જ્યારે કોડ પેનિક થાય છે, ત્યારે પુનઃપ્રાપ્ત કરવાનો કોઈ માર્ગ નથી. તમે કોઈપણ ભૂલની સ્થિતિ માટે  <code>panic!</code>  આવકારી શકો છો, પછી ભલે પુનઃપ્રાપ્તિનો સંભવિત માર્ગ હોય કે ન હોય, પરંતુ આમ કરવાથી તમે કોલિંગ કોડ વતી અનિવાર્ય ગણાતી પરિસ્થિતિ અંગે નિર્ણય લઈ રહ્યા છો. જ્યારે તમે  <code>Result</code>  મૂલ્ય પાછું આપવાનું પસંદ કરો છો, ત્યારે તમે કોલિંગ કોડને વિકલ્પો આપો છો. કોલિંગ કોડ પુનઃપ્રાપ્તિ કરવાનો પ્રયાસ કરી શકે છે જે તેની પરિસ્થિતિ માટે યોગ્ય હોય, અથવા તે નક્કી કરી શકે છે કે આ કિસ્સામાં  <code>Err</code>  મૂલ્ય અનિવાર્ય છે, જેથી તે  <code>panic!</code>  આવી શકે અને તમારી પુનઃપ્રાપ્ત કરી શકાય તેવી ભૂલને અનિવાર્ય બનાવી શકે. તેથી, જ્યારે તમે એવા ફંક્શન વ્યાખ્યાયિત કરો છો જે નિષ્ફળ થઈ શકે છે, ત્યારે  <code>Result</code>  પાછું આપવાનું એક સારું ડિફોલ્ટ પસંદગી છે.</p>
+<p>ઉદાહરણો, પ્રયોગાત્મક કોડ અને પરીક્ષણો જેવા સંજોગોમાં, <code>Result</code> પરત કરવાને બદલે ગભરાટ (panic) થાય તેવો કોડ લખવો વધુ યોગ્ય છે. ચાલો તેનું કારણ જાણીએ, ત્યારબાદ એવા સંજોગોની ચર્ચા કરીએ જેમાં કમ્પાઇલર જણાવી શકતો નથી કે નિષ્ફળતા અશક્ય છે, પરંતુ તમે મનુષ્ય તરીકે જણાવી શકો છો. આ પ્રકરણ કેટલાક સામાન્ય માર્ગદર્શિકા સાથે સમાપ્ત થશે, જે પુસ્તકાલય કોડમાં ગભરાટ (panic) કરવો કે નહીં તે નક્કી કરવામાં મદદ કરશે.</p>
+<h3 id="examples-prototype-code-and-tests"><a class="header" href="#examples-prototype-code-and-tests">Examples, Prototype Code, and Tests</a></h3>
+<p>જ્યારે તમે કોઈ વિભાવના સમજાવવા માટે ઉદાહરણ લખી રહ્યા હોવ, ત્યારે મજબૂત ભૂલ વ્યવસ્થાપન કોડ ઉમેરવાથી ઉદાહરણ ઓછું સ્પષ્ટ થઈ શકે છે. ઉદાહરણોમાં, એવું માનવામાં આવે છે કે <code>unwrap</code> જેવી પદ્ધતિને કૉલ કરવો, જે ગભરાટ (panic) લાવી શકે છે, તે તમારા એપ્લિકેશન દ્વારા ભૂલોને કેવી રીતે હેન્ડલ કરવી જોઈએ તેનો એક અસ્થાયી સ્થાનો (placeholder) તરીકે જ છે, જે તમારા કોડના બાકીના ભાગ પર આધારિત હોઈ શકે છે.</p>
+<p>એ જ રીતે, <code>unwrap</code> અને <code>expect</code> પદ્ધતિઓ જ્યારે તમે પ્રયોગ કરી રહ્યા હોવ અને ભૂલોને કેવી રીતે હેન્ડલ કરવી તે નક્કી કરવા માટે તૈયાર ન હોવ ત્યારે ખૂબ જ ઉપયોગી છે. તેઓ તમારા કોડમાં સ્પષ્ટ નિશાનો છોડી દે છે જ્યારે તમે તમારા પ્રોગ્રામને વધુ મજબૂત બનાવવા માટે તૈયાર હોવ.</p>
+<p>જો કોઈ પદ્ધતિ કૉલ પરીક્ષણમાં નિષ્ફળ જાય, તો તમે ઇચ્છો છો કે આખું પરીક્ષણ નિષ્ફળ જાય, ભલે તે પદ્ધતિ પરીક્ષણ હેઠળની કાર્યક્ષમતા ન હોય. કારણ કે <code>panic!</code> એ પરીક્ષણને નિષ્ફળ તરીકે ચિહ્નિત કરવાની રીત છે, તેથી <code>unwrap</code> અથવા <code>expect</code>ને કૉલ કરવું એ બરાબર શું થવું જોઈએ.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="when-you-have-more-information-than-the-compiler"><a class="header" href="#when-you-have-more-information-than-the-compiler">When You Have More Information Than the Compiler</a></h3>
+<p>જો તમારી પાસે અન્ય કોઈ તર્ક હોય જે ખાતરી કરે છે કે <code>Result</code> માં <code>Ok</code> મૂલ્ય હશે, પરંતુ તે તર્ક કમ્પાઇલર સમજી શકતો નથી, તો <code>expect</code> ને બોલાવવું પણ યોગ્ય રહેશે. તમારી પાસે હજુ પણ એક <code>Result</code> મૂલ્ય હશે જેને તમારે સંભાળવાની જરૂર પડશે: તમે જે ઓપરેશનને બોલી રહ્યા છો તેમાં સામાન્ય રીતે નિષ્ફળ થવાની શક્યતા છે, ભલે તે તમારા ચોક્કસ પરિસ્થિતિમાં તાર્કિક રીતે અશક્ય હોય. જો તમે મેન્યુઅલી કોડનું નિરીક્ષણ કરીને ખાતરી કરી શકો છો કે તમારી પાસે ક્યારેય <code>Err</code> પ્રકાર નથી, તો <code>expect</code> ને બોલાવવું અને Argument ટેક્સ્ટમાં તમે શા માટે <code>Err</code> પ્રકાર નહીં આવે એનું કારણ દસ્તાવેજીકૃત કરવું સંપૂર્ણપણે સ્વીકાર્ય છે. અહીં એક ઉદાહરણ છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>```rust
+{{#rustdoc_include ../listings/ch09-error-handling/no-listing-08-unwrap-that-cant-fail/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<pre><code>આપણે એક `IpAddr` ઉદાહરણ બનાવી રહ્યા છીએ, જે એક નિશ્ચિત સ્ટ્રિંગને વિશ્લેષણ કરીને બનાવવામાં આવ્યું છે. આપણે જોઈ શકીએ છીએ કે `127.0.0.1` એ માન્ય IP સરનામું છે, તેથી અહીં `expect` વાપરવું સ્વીકાર્ય છે. જોકે, એક નિશ્ચિત, માન્ય સ્ટ્રિંગ `parse` પદ્ધતિનો વળતર પ્રકાર બદલતું નથી: આપણને હજી પણ એક `Result` મૂલ્ય મળે છે, અને કમ્પાઇલરને હજી પણ `Err` વિવિધતાની શક્યતા હોવાથી `Result` ને હેન્ડલ કરવા માટે મજબૂર કરે છે, કારણ કે કમ્પાઇલર એટલું બુદ્ધિશાળી નથી કે આ સ્ટ્રિંગ હંમેશા માન્ય IP સરનામું છે તે જોઈ શકે. જો IP સરનામાનું સ્ટ્રિંગ કોઈ user પાસેથી આવ્યું હોત અને પ્રોગ્રામમાં નિશ્ચિત ન હોત, તો નિષ્ફળ થવાની શક્યતા હોત, તો આપણે `Result` ને વધુ મજબૂત રીતે હેન્ડલ કરવા ચોક્કસપણે ઈચ્છા પામ્યા. એ ધારણાનો ઉલ્લેખ કરવો કે આ IP સરનામું નિશ્ચિત છે, તે આપણને ભવિષ્યમાં જો આપણે કોઈ અન્ય સ્ત્રોતમાંથી IP સરનામું મેળવવાની જરૂર હોય તો `expect` ને વધુ સારી ભૂલ-હેન્ડલિંગ કોડથી બદલવા માટે પ્રેરિત કરશે.
+
+### Guidelines for Error Handling
+
+તમારા કોડને ખરાબ સ્થિતિમાં આવી શકે છે ત્યારે ગભરાટ (panic) થવો યોગ્ય છે. આ સંદર્ભમાં, ખરાબ સ્થિતિ એટલે જ્યારે કોઈ ધારણા, ખાતરી, કરાર અથવા અચલ તૂટી જાય, જેમ કે જ્યારે અમાન્ય મૂલ્યો, વિરોધાભાસી મૂલ્યો અથવા ખૂટતા મૂલ્યો તમારા કોડને આપવામાં આવે છે—વધુમાં નીચેની બાબતોમાંથી એક અથવા વધુ:
+
+ખરાબ સ્થિતિ એ એવી ઘટના છે જે અણધારી હોય છે, જેવી કે user ખોટા ફોર્મેટમાં ડેટા દાખલ કરે છે.
+
+તમારા કોડને આ ખરાબ સ્થિતિમાં ન હોવું જોઈએ, દરેક પગલાં પર સમસ્યા ચકાસવાને બદલે. આ માહિતી તમારા વપરાયેલા પ્રકારોમાં
+
+એન્કોડ કરવાનો કોઈ સારો માર્ગ નથી. આપણે પ્રકરણ ૧૮ માં “પ્રકારો તરીકે અવસ્થાઓ અને વર્તણૂકનું એન્કોડિંગ” માં આપણને શું કહેવું છે તેનું ઉદાહરણ દ્વારા કાર્ય કરીશું.
+
+જો કોઈ વ્યક્તિ તમારા કોડને બોલાવે અને એવા મૂલ્યો આપે જે તર્કસંગત ન હોય, તો ભૂલ પાછી આપવી શ્રેષ્ઠ છે જેથી કરીને લાયબ્રેરીનો ઉપયોગ કરનાર તે પરિસ્થિતિમાં શું કરવું છે તે નક્કી કરી શકે. જો કે, એવી સ્થિતિઓમાં જ્યાં ચાલુ રાખવું અસુરક્ષિત અથવા હાનિકારક હોઈ શકે, તો `panic!` કરવું અને લાયબ્રેરીનો ઉપયોગ કરતા વ્યક્તિને તેમના કોડમાં રહેલી ભૂલ વિશે માહિતગાર કરવા એ શ્રેષ્ઠ પસંદગી હોઈ શકે છે જેથી તેઓ તેને વિકાસ દરમિયાન સુધારી શકે. એ જ રીતે, જ્યારે તમે બાહ્ય કોડને બોલાવી રહ્યા હોવ જે તમારા નિયંત્રણની બહાર હોય અને અમાન્ય સ્થિતિ પાછી આપે છે જેને તમે ઠીક કરી શકતા નથી, ત્યારે `panic!` ઘણીવાર યોગ્ય છે.
+
+જો નિષ્ફળતા અપેક્ષિત હોય, તો `panic!` કૉલ કરવાને બદલે `Result` પરત કરવું વધુ યોગ્ય છે. ઉદાહરણોમાં એક parser ને ખરાબ ડેટા આપવો અથવા HTTP વિનંતી એવો પ્રતિભાવ મેળવવો જે દર્શાવે છે કે તમે દર મર્યાદા સુધી પહોંચી ગયા છો, તે સમાવિષ્ટ છે. આ કિસ્સાઓમાં, `Result` પરત કરવું સૂચવે છે કે નિષ્ફળતા એક અપેક્ષિત શક્યતા છે જેને કોલિંગ કોડને કેવી રીતે હેન્ડલ કરવી તે નક્કી કરવાનું રહેશે.
+
+જ્યારે તમારો કોડ એવું ઓપરેશન કરે છે જે જો અમાન્ય મૂલ્યોનો ઉપયોગ કરીને તેને બોલાવવામાં આવે તો userને જોખમમાં મૂકી શકે છે, ત્યારે તમારા કોડએ પહેલાં મૂલ્યો માન્ય છે કે નહીં તે ચકાસવો જોઈએ અને જો મૂલ્યો અમાન્ય હોય તો `panic!` થવું જોઈએ. આ મોટા ભાગે સલામતીના કારણોસર છે: અમાન્ય ડેટા પર ઓપરેશન કરવાનો પ્રયાસ કરવાથી તમારા કોડમાં નબળાઈઓ આવી શકે છે. આ મુખ્ય કારણ છે કે શા માટે સ્ટાન્ડર્ડ લાયબ્રેરી જો તમે બોર્ડરની બહાર મેમરી એક્સેસ કરવાનો પ્રયાસ કરો તો `panic!` કરશે: જે મેમરી વર્તમાન ડેટા સ્ટ્રક્ચરનો ભાગ નથી તેને એક્સેસ કરવી એ એક સામાન્ય સુરક્ષા સમસ્યા છે. ફંક્શન્સમાં ઘણીવાર કરાર હોય છે: તેમનું વર્તન માત્ર ત્યારે જ સુનિશ્ચિત થાય છે જો ઇનપુટ્સ ચોક્કસ આવશ્યકતાઓને પૂર્ણ કરે. કરારનું ઉલ્લંઘન થવા પર `panic!` થવું એ સમજાવે છે કારણ કે કરારનું ઉલ્લંઘન હંમેશા કોલર-સાઇડ બગ સૂચવે છે, અને તે પ્રકારની ભૂલ નથી જેને કોલિંગ કોડને સ્પષ્ટપણે હેન્ડલ કરવું પડે. હકીકતમાં, કોલિંગ કોડ માટે પુનઃપ્રાપ્ત કરવાનો કોઈ વાજબી રસ્તો નથી; કોલિંગ પ્રોગ્રામર્સે કોડ સુધારવો પડશે. ફંક્શન માટેના કરાર, વિશેષ કરીને જ્યારે
+
+જો તમારા બધા વિધેયોમાં ઘણાં ભૂલ નિરીક્ષણો હોય, તો તે લાંબા અને હેરાન કરનારૂં બની શકે છે. જો કે, તમે Rustની પ્રકાર પ્રણાલી (અને આથી કમ્પાઇલર દ્વારા કરવામાં આવતું પ્રકાર ચકાસણી) નો ઉપયોગ કરીને ઘણાં નિરીક્ષણો તમારા માટે કરી શકો છો. જો તમારા વિધેયમાં કોઈ ચોક્કસ પ્રકારનું પરિમાણ હોય, તો તમે તમારા કોડના તર્ક સાથે આગળ વધી શકો છો એ જાણીને કે કમ્પાઇલરે ખાતરી કરી છે કે તમારી પાસે માન્ય મૂલ્ય છે. ઉદાહરણ તરીકે, જો તમારી પાસે `Option` ને બદલે કોઈ પ્રકાર હોય, તો તમારો કાર્યક્રમ કંઈક અસ્તિત્વમાં હોવાની અપેક્ષા રાખે છે, નહિંતર શૂન્યની. પછી તમારા કોડને `Some` અને `None` બંને વિકલ્પો માટે બે કેસોને હેન્ડલ કરવાની જરૂર નથી: તેની પાસે માત્ર એક જ કેસ હશે જે ચોક્કસપણે મૂલ્ય ધરાવે છે. તમારા વિધેયમાં કંઈપણ પસાર કરવાનો પ્રયાસ કરતા કોડ કમ્પાઇલ થશે જ નહીં, તેથી તમારા વિધેયને રનટાઇમ પર તે કેસ માટે તપાસ કરવાની જરૂર નથી. બીજું ઉદાહરણ એ અલિખિત પૂર્ણાંક પ્રકારનો ઉપયોગ કરવાનું છે, જેમ કે `u32`, જે સુનિશ્ચિત કરે છે કે પરિમાણ નકારાત્મક નથી.
+
+&lt;!-- Old headings. Do not remove or links may break. --&gt;
+### Custom Types for Validation
+
+ચાલો આપણે Rustની type systemનો ઉપયોગ કરીને માન્ય મૂલ્યની ખાતરી કરવાની વિચારને વધુ આગળ વધારીએ અને validation માટે એક કસ્ટમ પ્રકાર બનાવવાનો પ્રયાસ કરીએ. પ્રકરણ ૨ માં રહેલા અનુમાન લગાવવાના રમતના પરિણામને યાદ કરો, જેમાં આપણી કોડે userને ૧ થી ૧૦૦ ની વચ્ચેનો અંક પસંદ કરવાનું કહ્યું હતું. આપણે ગુપ્ત અંક સામે તપાસ કરતા પહેલાં userના અનુમાન તે સંખ્યાઓની વચ્ચે છે કે નહીં તેની ચકાસણી ક્યારેય કરી ન હતી; આપણે માત્ર એટલું જ ચકાસ્યું હતું કે અનુમાન હકારાત્મક છે. આ સ્થિતિમાં, પરિણામો ઘણા ગંભીર ન હતા: "ખૂબ ઊંચું" અથવા "ખૂબ નીચું" જેવો આપણો આઉટપુટ તો સાચો જ રહેત. પરંતુ userને માન્ય અનુમાન તરફ માર્ગદર્શન આપવા અને રેન્જની બહારના અંકનો અનુમાન લગાડવા અને ઉદાહરણ તરીકે, અક્ષરો ટાઈપ કરવા વચ્ચે અલગ વર્તન રાખવા માટે આ એક ઉપયોગી સુધારો હશે.
+
+એક રીત આ અનુમાનને `i32` તરીકે ઉતારવાની હોઈ શકે છે, માત્ર `u32` તરીકે નહીં, જેથી નકારાત્મક સંખ્યાઓ પણ સ્વીકારી શકાય, અને પછી સંખ્યાની રેન્જમાં છે કે નહીં તે ચકાસવું, આ પ્રમાણે:
+
+&lt;Listing file-name="src/main.rs"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch09-error-handling/no-listing-09-guess-out-of-range/src/main.rs:here}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+if અભિવ્યક્તિની ચકાસણી `if` અભિવ્યક્તિ તપાસ કરે છે કે આપણું મૂલ્ય રેન્જની બહાર છે કે નહીં, userને સમસ્યા વિશે જણાવે છે અને `continue` ને બોલાવીને લૂપના આગામી પુનરાવર્તન (iteration) શરૂ કરે છે અને બીજો પ્રયાસ કરવા માટે કહે છે. `if` અભિવ્યક્તિ પછી, આપણે સરખામણીઓ ચાલુ રાખી શકીએ છીએ `guess` અને ગુપ્ત સંખ્યા વચ્ચે એ જાણીને કે `guess` 1 થી 100 ની વચ્ચે છે. જો કે,
+
+આ એક આદર્શ ઉકેલ નથી: જો તે સંપૂર્ણપણે નિર્ણાયક હતું કે પ્રોગ્રામ માત્ર 1 થી 100 ની વચ્ચેના મૂલ્યો પર જ કાર્ય કરે, અને તેની પાસે ઘણાં કાર્યો (functions) આ જરૂરિયાત સાથે હોય, તો દરેક કાર્યમાં આવી ચકાસણી રાખવી કંટાળાજનક (tedious) હોઈ શકે છે (અને કામગીરી (performance) પર અસર કરી શકે છે).
+
+અને, આપણે એક સમર્પિત મોડ્યુલમાં નવું પ્રકાર બનાવી શકીએ છીએ અને પ્રકારની ઉદાહરણ બનાવવા માટે એક વિધેયમાં ચકાસણી મૂકી શકીએ છીએ, જેથી ચકાસણી દરેક જગ્યાએ પુનરાવર્તિત ન થાય. આમ કરવાથી, કાર્યો તેમના હસ્તાક્ષરોમાં નવા પ્રકારનો ઉપયોગ કરી શકે છે અને પ્રાપ્ત થયેલ મૂલ્યોનો આત્મવિશ્વાસથી ઉપયોગ કરી શકે છે. યાદી 9-13 `Guess` પ્રકારને વ્યાખ્યાયિત કરવાની એક રીત દર્શાવે છે જે માત્ર ત્યારે જ `Guess` નું ઉદાહરણ બનાવશે જો `new` વિધેય 1 અને 100 ની વચ્ચેનું મૂલ્ય મેળવે.
+
+&lt;Listing number="9-13" caption="A `Guess` type that will only continue with values between 1 and 100" file-name="src/guessing_game.rs"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-13/src/guessing_game.rs}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+નોંધ કરો કે src/guessing_game.rs માં આ કોડમાં એક મોડ્યુલ ઘોષણા `mod guessing_game;` ઉમેરવાની જરૂર છે, જે src/lib.rs માં આપણે અહીં દર્શાવ્યું નથી. આ નવા મોડ્યુલની ફાઈલમાં, અમે `Guess` નામનું struct વ્યાખ્યાયિત કરીએ છીએ જેમાં `value` નામનું ક્ષેત્ર છે જે `i32` ધરાવે છે. અહીં સંખ્યા સંગ્રહિત કરવામાં આવશે.
+
+પછી, અમે `Guess` પર `new` નામનું સંકળાયેલું કાર્ય અમલમાં મૂકીએ છીએ જે `Guess` ના instances બનાવે છે. `new` કાર્યને એક પરિમાણ `value` પ્રકાર `i32` સાથે વ્યાખ્યાયિત કરવામાં આવ્યું છે અને `Guess` પાછું આપવાનું છે. `new` કાર્યના body માં રહેલો કોડ `value` નું પરીક્ષણ કરે છે કે તે 1 અને 100 ની વચ્ચે છે કે નહીં. જો `value` આ પરીક્ષણને પાસ ન કરે, તો અમે એક `panic!` કૉલ કરીએ છીએ, જે કોલિંગ કોડ લખતા પ્રોગ્રામરને ચેતવણી આપશે કે તેમની પાસે એક bug છે જેને ઠીક કરવાની જરૂર છે, કારણ કે આ રેન્જની બહાર `Guess` સાથે `value` બનાવવું એ કરારનું ઉલ્લંઘન કરશે જેના પર `Guess::new` આધાર રાખે છે. `Guess::new` ક્યારે panic થઈ શકે તેની પરિસ્થિતિઓ તેની public-facing API દસ્તાવેજીકરણમાં ચર્चित કરવી જોઈએ; અમે પ્રકરણ 14 માં તમે બનાવશો તે API દસ્તાવેજીકરણમાં panic! ની શક્યતા દર્શાવતી દસ્તાવેજીકરણ સંમેલનોને આવરી લઈશું. જો `value` પરીક્ષણને પાસ કરે, તો અમે એક નવું `Guess` બનાવીએ છીએ જેમાં તેનું `value` ક્ષેત્ર `value` પરિમાણ પર સેટ કરવામાં આવ્યું છે અને `Guess` પાછું આપીએ છીએ.
+
+આગળ, અમે એક પદ્ધતિ અમલમાં મૂકીએ છીએ જેનું નામ `value` છે, જે `self` ને ઉછીના લે છે, અન્ય કોઈ પરિમાણો ધરાવતી નથી અને `i32` પરત કરે છે. આ પ્રકારની પદ્ધતિને કેટલીકવાર 'ગેટર' કહેવામાં આવે છે કારણ કે તેનો હેતુ તેના ક્ષેત્રોમાંથી અમુક ડેટા મેળવવાનો અને તેને પરત કરવાનો છે. આ જાહેર પદ્ધતિ જરૂરી છે કારણ કે `Guess` struct ના `value` ક્ષેત્ર ખાનગી છે. એ મહત્વનું છે કે `value` ક્ષેત્ર ખાનગી હોય જેથી કરીને `Guess` struct નો ઉપયોગ કરતા કોડને `value` ને સીધું સેટ કરવાની મંજૂરી ન મળે: `guessing_game` મોડ્યુલની બહારનો કોડ `Guess::new` ફંક્શનનો ઉપયોગ કરીને `Guess` નું ઉદાહરણ બનાવવા માટે বাধ্য છે, જેનાથી એ સુનિશ્ચિત થાય છે કે `Guess` પાસે `value` હોવાનો કોઈ રસ્તો નથી જે `Guess::new` ફંક્શનમાંની શરતો દ્વારા તપાસવામાં આવ્યો નથી.
+
+એક વિધેય જેનો પરિમાણ અથવા પરિણામ માત્ર ૧ થી ૧૦૦ વચ્ચેની સંખ્યાઓ હોય, તો તે તેના નિશાનામાં `Guess` લે છે કે પરત કરે છે એમ જાહેર કરી શકે છે, `i32` ને બદલે, અને તેને તેના શરીરમાં કોઈ વધારાની ચકાસણી કરવાની જરૂર નહીં પડે.
+
+## Summary
+
+Rustની ભૂલ વ્યવસ્થાપન સુવિધાઓ તમને વધુ મજબૂત કોડ લખવામાં મદદ કરવા માટે રચાયેલ છે. `panic!` મેક્રો સંકેત આપે છે કે તમારું પ્રોગ્રામ એવી સ્થિતિમાં છે જેને તે નિયંત્રિત કરી શકતું નથી અને અમાન્ય અથવા ખોટી કિંમતો સાથે આગળ વધવાનો પ્રયાસ કરવાને બદલે પ્રક્રિયાને બંધ કરવાનું શક્ય બનાવે છે. `Result` એનમ Rustની પ્રકાર સિસ્ટમનો ઉપયોગ કરે છે, જે દર્શાવે છે કે કામગીરી એવી રીતે નિષ્ફળ થઈ શકે છે કે જેથી તમારો કોડ તેને સુધારી શકે. તમે `Result` નો ઉપયોગ કરીને તમારા કોડને બોલાવતા કોડને સંભવિત સફળતા અથવા નિષ્ફળતાને નિયંત્રિત કરવાની જરૂર છે તે જણાવવા માટે કરી શકો છો. યોગ્ય પરિસ્થિતિઓમાં `panic!` અને `Result` નો ઉપયોગ કરવાથી તમારા કોડની વિશ્વસનીયતા અનિવાર્ય સમસ્યાઓ સામે વધશે.
+
+હવે તમે જોયું છે કે સ્ટાન્ડર્ડ લાઈબ્રેરી `Option` અને `Result` એનમ સાથે જનરિક્સનો ઉપયોગ કેવી રીતે કરે છે, તો આપણે વાત કરીશું કે જનરિક્સ કેવી રીતે કાર્ય કરે છે અને તમે તેનો તમારા કોડમાં કેવી રીતે ઉપયોગ કરી શકો છો.
+
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch09-02-recoverable-errors-with-result.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch10-00-generics.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch09-02-recoverable-errors-with-result.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch10-00-generics.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

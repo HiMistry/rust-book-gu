@@ -1,0 +1,380 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Test Organization - ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-0e4ce700.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h2 id="test-organization"><a class="header" href="#test-organization">Test Organization</a></h2>
+<p>જેમ કે પ્રકરણની શરૂઆતમાં ઉલ્લેખ કરવામાં આવ્યો છે, પરીક્ષણ એ એક જટિલ વિદ્યા છે, અને જુદા જુદા લોકો જુદી જુદી પરિભાષા અને વ્યવસ્થાપનનો ઉપયોગ કરે છે. Rust સમુદાય પરીક્ષણોને બે મુખ્ય શ્રેણીઓમાં વિચારે છે: એકમ પરીક્ષણો અને સંકલન પરીક્ષણો. એકમ પરીક્ષણો નાના અને વધુ કેન્દ્રિત હોય છે, જે એક સમયે એક મોડ્યુલને અલગતામાં ચકાસે છે, અને ખાનગી ઇન્ટરફેસનું પરીક્ષણ પણ કરી શકે છે. સંકલન પરીક્ષણો સંપૂર્ણપણે તમારી લાયબ્રેરીની બહારના હોય છે અને અન્ય કોઈપણ બાહ્ય કોડની જેમ જ તમારા કોડનો ઉપયોગ કરે છે, માત્ર જાહેર ઇન્ટરફેસનો ઉપયોગ કરીને અને સંભવિત રીતે એક પરીક્ષણ દીઠ બહુવિધ મોડ્યુલોનું ચકાસણી કરી શકે છે.</p>
+<p>બંને પ્રકારની ચકાસણીઓ લખવી મહત્વપૂર્ણ છે જેથી તમારી પુસ્તકાલયના ભાગો, અલગથી અને સાથે મળીને, ધાર્યા મુજબ કાર્ય કરે છે તેની ખાતરી થાય.</p>
+<h3 id="unit-tests"><a class="header" href="#unit-tests">Unit Tests</a></h3>
+<p>એકમ પરીક્ષણોનો હેતુ કોડના દરેક એકમને અન્ય કોડથી અલગ કરીને ચકાસવાનો છે, જેથી ખામીયુક્ત કોડને ઝડપથી શોધી શકાય. તમે <code>src</code> ડિરેક્ટરીમાં દરેક ફાઈલમાં એકમ પરીક્ષણો મૂકશો જે કોડનું પરીક્ષણ કરે છે. સંમેલન મુજબ, દરેક ફાઈલમાં <code>tests</code> નામનું મોડ્યુલ બનાવવું અને તેને <code>cfg(test)</code> સાથે નોંધવું.</p>
+<h4 id="the-tests-module-and-cfgtest"><a class="header" href="#the-tests-module-and-cfgtest">The <code>tests</code> Module and <code>#[cfg(test)]</code></a></h4>
+<p><code>#[cfg(test)]</code> એનોટેશન <code>tests</code> મોડ્યુલ પર જણાવે છે કે Rust માત્ર ત્યારે જ પરીક્ષણ કોડને કમ્પાઇલ કરે અને ચલાવે જ્યારે તમે <code>cargo test</code> કરો છો, પરંતુ <code>cargo build</code> કરતી વખતે નહીં. આનાથી કમ્પાઈલ સમય બચે છે જ્યારે તમે માત્ર લાયબ્રેરી બનાવવા માંગતા હોવ અને પરિણામી કમ્પાઈલ્ડ આર્ટિફેક્ટમાં જગ્યા પણ બચે છે કારણ કે પરીક્ષણો સમાવિષ્ટ નથી. તમને ખ્યાલ આવશે કે એકીકરણ પરીક્ષણો અલગ ડિરેક્ટરીમાં જાય છે, તેથી તેમને <code>#[cfg(test)]</code> એનોટેશનની જરૂર નથી. જો કે, યુનિટ પરીક્ષણો કોડની સાથે જ ફાઇલોમાં હોવાથી, તમે <code>#[cfg(test)]</code> નો ઉપયોગ કરીને સ્પષ્ટ કરશો કે તેને કમ્પાઈલ્ડ પરિણામમાં સમાવિષ્ટ ન કરવું જોઈએ.</p>
+<pre><code class="language-text">```text
+યાદ રાખો કે જ્યારે આપણે આ પ્રકરણના પ્રથમ વિભાગમાં નવું `adder` પ્રોજેક્ટ બનાવ્યો હતો, ત્યારે કાર્ગોએ આપણી માટે આ કોડ ઉત્પન્ન કર્યો હતો:
+
+</code></pre>
+<pre><code>ફાઈલનું નામ: src/lib.rs
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-01/src/lib.rs}}
+</code></pre>
+<pre><code>સ્વયંસંચાલિત રીતે જનરેટ થયેલ `tests` મોડ્યુલમાં, એટ્રીબ્યૂટ `cfg` એટલે રૂપરેખાંકન (configuration) અને તે Rustને જણાવે છે કે ત્યારબાદની વસ્તુ કોઈ ચોક્કસ રૂપરેખાંકન વિકલ્પના આધારે જ સામેલ કરવી જોઈએ. આ કિસ્સામાં, રૂપરેખાંકન વિકલ્પ `test` છે, જે Rust દ્વારા પરીક્ષણો (tests) કમ્પાઇલ કરવા અને ચલાવવા માટે આપવામાં આવે છે. `cfg` એટ્રીબ્યૂટનો ઉપયોગ કરીને, Cargo અમારા પરીક્ષણ કોડને માત્ર ત્યારે જ કમ્પાઇલ કરે છે જ્યારે અમે સક્રિયપણે `cargo test` સાથે પરીક્ષણો ચલાવીએ છીએ. આમાં આ મોડ્યુલમાં રહેલી સહાયક ક્રિયાઓ (helper functions) પણ સમાવિષ્ટ છે, તેમજ `#[test]` થી નોંધાયેલ ક્રિયાઓ પણ.
+
+&lt;!-- Old headings. Do not remove or links may break. --&gt;
+#### Private Function Tests
+
+પરીક્ષણ સમુદાયમાં એ અંગે ચર્ચા છે કે ખાનગી કાર્યોને સીધા જ પરીક્ષણ કરવું જોઈએ કે નહીં, અને અન્ય ભાષાઓમાં ખાનગી કાર્યોનું પરીક્ષણ કરવું મુશ્કેલ અથવા અશક્ય બનાવે છે. તમે જે પણ પરીક્ષણ વિચારધારા અનુસરો છો, Rustના ગુપ્તતા નિયમો તમને ખાનગી કાર્યોનું પરીક્ષણ કરવાની મંજૂરી આપે છે. યાદી 11-12 માં `internal_adder` ખાનગી કાર્ય સાથેના કોડને ધ્યાનમાં લો.
+
+&lt;Listing number="11-12" file-name="src/lib.rs" caption="Testing a private function"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-12/src/lib.rs}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+દર્શાવ્યું છે કે `internal_adder` કાર્યને `pub` તરીકે નિશ્ચિત કરવામાં આવ્યું નથી. પરીક્ષણો માત્ર Rust કોડ છે, અને `tests` મોડ્યુલ એ અન્ય મોડ્યુલ છે. આપણે “મોડ્યુલ વૃક્ષમાં વસ્તુનો ઉલ્લેખ કરવા માટેના માર્ગો” માં ચર્ચા કરી હતી તેમ, બાળ મોડ્યુલોની વસ્તુઓ તેમના પિતૃ મોડ્યુલોની વસ્તુઓનો ઉપયોગ કરી શકે છે. આ પરીક્ષણમાં, અમે `use super::*` સાથે `tests` મોડ્યુલના પિતાની તમામ વસ્તુઓને અવકાશમાં લાવીએ છીએ, અને પછી પરીક્ષણ `internal_adder` ને બોલાવી શકે છે. જો તમને ન લાગે કે ખાનગી કાર્યોનું પરીક્ષણ થવું જોઈએ, તો Rust તમને આવું કરવા માટે દબાણ કરશે નહીં.
+
+### Integration Tests
+
+Rustમાં, એકત્રીકરણ પરીક્ષણો તમારા પુસ્તકાલયથી સંપૂર્ણપણે બાહ્ય હોય છે. તેઓ તમારા પુસ્તકાલયનો ઉપયોગ અન્ય કોઈપણ કોડની જેમ જ કરે છે, જેનો અર્થ થાય છે કે તેઓ માત્ર તમારા પુસ્તકાલયના જાહેર API (API) નો ભાગ હોય તેવા વિધેયોને જ બોલાવી શકે છે. તેમનો હેતુ એ ચકાસવાનો છે કે તમારા પુસ્તકાલયના ઘણા ભાગો યોગ્ય રીતે સાથે કાર્ય કરે છે કે નહીં. કોડના એકમો જે સ્વતંત્ર રીતે યોગ્ય રીતે કાર્ય કરે છે, તેઓ સંકલિત થાય ત્યારે સમસ્યાઓ અનુભવી શકે છે, તેથી સંકલિત કોડની પરીક્ષણ આવરી લેવી પણ મહત્વપૂર્ણ છે. એકત્રીકરણ પરીક્ષણો બનાવવા માટે, તમારે પ્રથમ એક tests ડિરેક્ટરીની જરૂર છે.
+
+#### The _tests_ Directory
+
+આપણે આપણી પ્રોજેક્ટ ડિરેક્ટરીના ઉચ્ચ સ્તર પર tests નામની ડિરેક્ટરી બનાવીએ છીએ, src ની બાજુમાં. Cargo જાણે છે કે એકીકરણ પરીક્ષણ ફાઇલો આ ડિરેક્ટરીમાં શોધવી. પછી આપણે જેટલી જોઈએ તેટલી પરીક્ષણ ફાઇલો બનાવી શકીએ છીએ, અને Cargo દરેક ફાઇલને વ્યક્તિગત crate તરીકે કમ્પાઈલ કરશે.
+
+ચાલો એક એકીકરણ પરીક્ષણ બનાવીએ. Listing 11-12 માં આપેલ કોડ src/lib.rs ફાઇલમાં હજી પણ હોય ત્યારે, tests ડિરેક્ટરી બનાવો, અને tests/integration_test.rs નામની નવી ફાઇલ બનાવો. તમારી ડિરેક્ટરી માળખું આ પ્રમાણે દેખાશે:
+
+adder
+```text
+```text
+├── Cargo.lock
+├── Cargo.toml
+├── src
+│   └── lib.rs
+└── tests
+</code></pre>
+<pre><code>    └── integration_test.rs
+Listing 11-13 નો કોડ tests/integration_test.rs ફાઈલમાં દાખલ કરો.
+
+&lt;Listing number="11-13" file-name="tests/integration_test.rs" caption="An integration test of a function in the `adder` crate"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-13/tests/integration_test.rs}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+દરેક ફાઈલ tests ડિરેક્ટરીમાં એક અલગ crate છે, તેથી આપણે આપણી library ને દરેક પરીક્ષણ crate ના scope માં લાવવાની જરૂર છે. એ કારણસર, આપણે કોડની શરૂઆતમાં `use adder::add_two;` ઉમેરીએ છીએ, જે યુનિટ પરીક્ષણોમાં જરૂરી ન હતું.
+
+આપણે tests/integration_test.rs માં રહેલા કોઈપણ કોડને `#[cfg(test)]` સાથે નોંધવાની જરૂર નથી. Cargo tests ડિરેક્ટરીને વિશેષ રીતે ગણે છે અને આ ડિરેક્ટરીમાં રહેલી ફાઈલોને માત્ર ત્યારે જ compile કરે છે જ્યારે આપણે `cargo test` ચલાવીએ છીએ. હવે `cargo test` ચલાવો:
+
+```console
+```console
+{{#include ../listings/ch11-writing-automated-tests/listing-11-13/output.txt}}
+</code></pre>
+<pre><code>ત્રણ વિભાગોમાં પરિણામો સમાવિષ્ટ છે: એકમ પરીક્ષણો, સંકલન પરીક્ષણ અને દસ્તાવેજ પરીક્ષણો. નોંધ કરો કે જો કોઈ વિભાગમાંની કોઈપણ પરીક્ષણ નિષ્ફળ જાય, તો પછીના વિભાગો ચલાવવામાં આવશે નહીં. ઉદાહરણ તરીકે, જો એકમ પરીક્ષણ નિષ્ફળ જાય, તો સંકલન અને દસ્તાવેજ પરીક્ષણો માટે કોઈ પરિણામ નહીં હોય, કારણ કે તે પરીક્ષણો માત્ર ત્યારે જ ચલાવવામાં આવશે જ્યારે તમામ એકમ પરીક્ષણો સફળ થાય.
+
+એકમ પરીક્ષણો માટેનો પ્રથમ વિભાગ એ જ છે જે આપણે અત્યાર સુધી જોયું છે: દરેક એકમ પરીક્ષણ માટે એક લીટી અને પછી એકમ પરીક્ષણો માટે સારાંશ લીટી.
+
+ચકાસણી એકીકરણ પરીક્ષણો વિભાગ ચકાસણી એકીકરણ પરીક્ષણો વિભાગ `Running tests/integration_test.rs` લાઇનથી આરંભ થાય છે. ત્યારબાદ, તે એકીકરણ પરીક્ષણમાં દરેક પરીક્ષણ કાર્ય માટેની એક લાઇન અને એકીકરણ પરીક્ષણના પરિણામોનો સારાંશ હોય છે, જે `Doc-tests adder` વિભાગ શરૂ થાય તે
+
+પહેલાં આવે છે. દરેક એકીકરણ પરીક્ષણ ફાઇલનું પોતાનું વિભાગ હોય છે, તેથી જો આપણે `tests` ડિરેક્ટરીમાં વધુ ફાઇલો ઉમેરીએ, તો વધુ એકીકરણ પરીક્ષણ
+
+વિભાગો હશે. આપણે હજી પણ `cargo test` ને Argument તરીકે પરીક્ષણ કાર્યનું નામ સ્પષ્ટ કરીને કોઈ ચોક્કસ એકીકરણ પરીક્ષણ કાર્ય ચલાવી શકીએ છીએ. કોઈ ચોક્કસ એકીકરણ પરીક્ષણ ફાઇલમાંના બધા પરીક્ષણો ચલાવવા માટે, `cargo test` ના `--test` Argumentનો ઉપયોગ કરો ત્યારબાદ ફાઇલનું નામ:
+
+```console
+```console
+{{#include ../listings/ch11-writing-automated-tests/output-only-05-single-integration/output.txt}}
+</code></pre>
+<pre><code>આ આદેશ માત્ર tests/integration_test.rs ફાઈલમાં રહેલા પરીક્ષણો ચલાવે છે.
+
+#### Submodules in Integration Tests
+
+જેમ જેમ તમે વધુ એકીકરણ પરીક્ષણો ઉમેરતા જાઓ તેમ, તમે તેમને વ્યવસ્થિત કરવા માટે tests ડિરેક્ટરીમાં વધુ ફાઇલો બનાવવા માગી શકો છો; ઉદાહરણ તરીકે, તમે જે કાર્યક્ષમતાનું પરીક્ષણ કરી રહ્યા છો તેના આધારે પરીક્ષણ functions ને જૂથબદ્ધ કરી શકો છો. અગાઉ જણાવ્યા મુજબ, tests ડિરેક્ટરીలోని દરેક ફાઇલ એક અલગ crate તરીકે કમ્પાઈલ થાય છે, જે તમારા crate નો ઉપયોગ અંતિમ userઓ કેવી રીતે કરશે તેનું વધુ નજીકથી અનુકરણ કરવા માટે અલગ અવકાશ બનાવવા માટે ઉપયોગી છે. જો કે, આનો અર્થ એ થાય છે કે tests ડિરેક્ટરીમાંની ફાઇલો src માં રહેલી ફાઇલો જેવું વર્તન કરતી નથી, જે તમે પ્રકરણ 7 માં શીખ્યા હતા કે કેવી રીતે કોડને modules અને ફાઇલોમાં વિભાજીત કરવો.
+
+વિવિધ પરીક્ષણ ડિરેક્ટરી ફાઇલોનું વર્તન મદદરૂપ કાર્યોનો સમૂહ બહુવિધ એકત્રીકરણ પરીક્ષણ ફાઇલોમાં વાપરવા માટે હોય, અને તમે પ્રકરણ 7 ના "વિવિધ ફાઇલોમાં મોડ્યુલોને વિભાજીત કરવા" વિભાગનાં પગલાંઓ અનુસરવાનો પ્રયાસ કરો છો, ત્યારે આ વર્તનમાં સૌથી વધુ ધ્યાન આવે છે. ઉદાહરણ તરીકે, જો આપણે `tests/common.rs` બનાવીએ અને તેમાં `setup` નામનું કાર્ય મૂકીએ, તો આપણે `setup` માં થોડો કોડ ઉમેરી શકીએ છીએ જેનો ઉપયોગ બહુવિધ પરીક્ષણ ફાઇલોમાંના બહુવિધ પરીક્ષણ કાર્યોમાંથી કરવો હોય છે:
+
+સામાન્ય પરીક્ષણો આ ફાઈલ સામાન્ય ઉપયોગી પરીક્ષણો ધરાવે છે જે અન્યત્ર વપરાય છે. ચકાસણીઓ ચકાસણીઓ એ કાર્યો છે જે મૂલ્યની અપેક્ષિતતાને ચકાસે છે. જો ચકાસણી નિષ્ફળ જાય, તો પરીક્ષણ નિષ્ફળ ગણાય છે. ઉદાહરણો આ વિભાગમાં કેટલાક ઉદાહરણો આપ્યા છે જે દર્શાવે છે કે વિવિધ કાર્યોનો ઉપયોગ કેવી રીતે કરવો. મદદરૂપ કાર્યો કેટલાક કાર્યો અહીં આપ્યા છે જે પરીક્ષણો લખવામાં મદદરૂપ થઈ શકે છે: * `assert_eq!` - બે મૂલ્યો સમાન છે કે નહીં તે ચકાસે છે. * `assert_ne!` - બે મૂલ્યો અલગ છે કે નહીં તે ચકાસે છે. * `assert!` - એક શરત સાચી છે કે નહીં તે ચકાસે છે. પરીક્ષણ ડેટા પરીક્ષણો માટે જરૂરી ડેટા અહીં સંગ્રહિત છે. આ ડેટાનો ઉપયોગ વિવિધ પરીક્ષણોમાં થઈ શકે છે. ભૂલોનું સંચાલન આ વિભાગ ભૂલોને કેવી રીતે હેન્ડલ કરવી તે દર્શાવે છે. ભૂલોને યોગ્ય રીતે હેન્ડલ કરવી મહત્વપૂર્ણ છે જેથી કરીને પ્રોગ્રામ ક્રેશ ન થાય. આંતરિક વિગતો આ વિભાગમાં અમલીકરણની કેટલીક આંતરિક વિગતો સમાવિષ્ટ છે. આ માહિતી સામાન્ય રીતે userઓ માટે જરૂરી નથી હોતી.
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-12-shared-test-code-problem/tests/common.rs}}
+</code></pre>
+<pre><code>જ્યારે આપણે ફરીથી પરીક્ષણો ચલાવીશું, ત્યારે આપણને સામાન્ય.આયર્스 ફાઈલ માટે પરીક્ષણ આઉટપુટમાં એક નવું વિભાગ દેખાશે, ભલે આ ફાઈલમાં કોઈ પરીક્ષણ વિધેયો નથી અને આપણે ક્યાંયથી `setup` વિધેયને બોલાવ્યું નથી:
+
+```console
+```console
+{{#include ../listings/ch11-writing-automated-tests/no-listing-12-shared-test-code-problem/output.txt}}
+</code></pre>
+<pre><code>પરીક્ષણ પરિણામોમાં દેખાય એવું થવું અને તેના માટે `running 0 tests` પ્રદર્શિત થવું એ આપણે ધાર્યું નહોતું. આપણે માત્ર અન્ય એકીકરણ પરીક્ષણ ફાઇલો સાથે કોડ વહેંચવા માંગતા હતા. `common` પરીક્ષણ આઉટપુટમાં દેખાવાનું ટાળવા માટે, `tests/common.rs` બનાવવાની જગ્યાએ, આપણે `tests/common/mod.rs` બનાવીશું. પ્રોજેક્ટ ડિરેક્ટરી હવે આ પ્રમાણે દેખાય છે:
+
+├── Cargo.lock
+├── Cargo.toml
+├── src
+│   └── lib.rs
+└── tests
+    ├── common
+    │   └── mod.rs
+    └── integration_test.rs
+આ અગાઉની નામકરણ પદ્ધતિ છે જે Rust પણ સમજે છે, જેનો ઉલ્લેખ અમે પ્રકરણ 7 માં “વૈકલ્પિક ફાઇલ પાથ” માં કર્યો હતો. આ રીતે ફાઇલનું નામ આપવાથી Rust ને ખબર પડે છે કે `common` મોડ્યુલને એક સંકલન પરીક્ષણ ફાઇલ તરીકે ગણવું જોઈએ નહીં. જ્યારે અમે `setup` ફંક્શન કોડને tests/common/mod.rs માં ખસેડીએ છીએ અને tests/common.rs ફાઇલને દૂર કરીએ છીએ, ત્યારે પરીક્ષણ આઉટપુટમાં તે વિભાગ દેખાશે નહીં. tests ડિરેક્ટરીના સબડિરેક્ટરીઝમાં રહેલી ફાઇલોને અલગ crates તરીકે કમ્પાઈલ કરવામાં આવતી નથી અથવા પરીક્ષણ આઉટપુટમાં વિભાગો હોતા નથી.
+
+ફાઈલનામ: tests/integration_test.rs પરીક્ષણો/સામાન્ય/mod.rs બનાવ્યા પછી, આપણે તેને એક મોડ્યુલ તરીકે કોઈપણ સંકલન પરીક્ષણ ફાઇલોમાંથી વાપરી શકીએ છીએ. અહીં `it_adds_two` પરીક્ષણમાં `setup` ફંક્શનને બોલાવવાનું ઉદાહરણ
+
+છે:
+
+```rust
+```rust
+{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-13-fix-shared-test-code-problem/tests/integration_test.rs}}
+</code></pre>
+<pre><code>નોંધ કરો કે `mod common;` ઘોષણા એ મોડ્યુલ ઘોષણા સમાન છે જે આપણે યાદી 7-21 માં દર્શાવ્યું હતું. પછી, પરીક્ષણ કાર્યમાં, આપણે `common::setup()` વિધેયને બોલાવી શકીએ છીએ.
+
+#### Integration Tests for Binary Crates
+
+જો આપણી પ્રજેક્ટ એક બાઈનરી ક્રેટ હોય જે માત્ર src/main.rs ફાઈલ ધરાવે છે અને src/lib.rs ફાઈલ નથી, તો આપણે tests ડિરેક્ટરીમાં એકીકરણ પરીક્ષણો બનાવી શકતા નથી અને `use` વિધાન સાથે src/main.rs ફાઈલમાં વ્યાખ્યાયિત કરેલાં કાર્યોને સ્કોપમાં લાવી શકતા નથી. માત્ર લાઇબ્રેરી ક્રેટ અન્ય ક્રેટે ઉપયોગ કરી શકે તેવાં કાર્યોને બહાર લાવે છે; બાઈનરી ક્રેટે સ્વતંત્ર રીતે ચલાવવા માટેનાં હોય છે.
+
+આ કારણો પૈકીનું એક એ છે કે શા માટે Rust પ્રજેક્ટ્સ જે બાઈનરી પૂરા પાડે છે તેમાં એક સરળ src/main.rs ફાઈલ હોય છે જે src/lib.rs ફાઈલમાં રહેલાં તર્કને બોલાવે છે. આ રચનાનો ઉપયોગ કરીને, એકીકરણ પરીક્ષણો `use` દ્વારા લાઇબ્રેરી ક્રેટે પરીક્ષણ કરી શકે છે જેથી મહત્વપૂર્ણ કાર્યક્ષમતા ઉપલબ્ધ થાય. જો મહત્વપૂર્ણ કાર્યક્ષમતા કામ કરે છે, તો src/main.rs ફાઈલમાં રહેલી નાની કોડ પણ કામ કરશે, અને તે નાનો કોડ ચકાસવાની જરૂર નથી.
+
+## Summary
+
+Rustની પરીક્ષણ સુવિધાઓ કોડ કેવી રીતે કાર્ય કરવું જોઈએ તે નિર્ધારિત કરવાની રીત પ્રદાન કરે છે, જેથી તે તમે અપેક્ષા રાખતા મુજબ ચાલુ રહે, ભલે તમે ફેરફારો કરો. એકમ પરીક્ષણો પુસ્તકાલયના વિવિધ ભાગોનું અલગથી પરીક્ષણ કરે છે અને ખાનગી અમલીકરણ વિગતોનું પણ પરીક્ષણ કરી શકે છે. સંકલન પરીક્ષણો તપાસે છે કે પુસ્તકાલયના ઘણા ભાગો યોગ્ય રીતે સાથે મળીને કાર્ય કરે છે કે નહીં, અને તે પુસ્તકાલયની જાહેર APIનો ઉપયોગ કોડને એ જ રીતે ચકાસવા માટે કરે છે જે બાહ્ય કોડ તેનો ઉપયોગ કરશે. ભલે Rustનું પ્રકાર સિસ્ટમ અને માલિકીના નિયમો અમુક પ્રકારની ભૂલોને અટકાવવામાં મદદ કરે છે, તેમ છતાં પરીક્ષણો તમારા કોડની અપેક્ષિત વર્તણૂક સંબંધિત તર્ક ભૂલો ઘટાડવા માટે હજી પણ મહત્વપૂર્ણ છે.
+
+ચાલો આપણે આ પ્રકરણમાં અને અગાઉના પ્રકરણોમાં મેળવેલા જ્ઞાનનો ઉપયોગ કરીને એક કાર્ય પર કામ કરીએ!
+
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch11-02-running-tests.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch12-00-an-io-project.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch11-02-running-tests.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch12-00-an-io-project.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

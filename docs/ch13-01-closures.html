@@ -1,0 +1,436 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Closures - ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-0e4ce700.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <!-- Old headings. Do not remove or links may break. -->
+<h2 id="closures"><a class="header" href="#closures">Closures</a></h2>
+<p>Rustના ક્લોઝર્સ અનામી ફંક્શન્સ છે જેને તમે variable (variable) માં સાચવી શકો છો અથવા અન્ય ફંક્શન્સને Argumentો તરીકે આપી શકો છો. તમે એક જગ્યાએ ક્લોઝર બનાવી શકો છો અને પછી તેને બીજી જગ્યાએ કૉલ કરી શકો છો જેથી કરીને તે અલગ સંદર્ભમાં મૂલ્યાંકન થઈ શકે. ફંક્શન્સથી વિપરીત, ક્લોઝર્સ વ્યાખ્યાયિત થયેલ અવકાશમાંથી મૂલ્યોને ગ્રહણ કરી શકે છે. અમે દર્શાવીશું કે આ ક્લોઝર લક્ષણો કોડ પુનઃઉપયોગ અને વર્તન કસ્ટમાઇઝેશન કેવી રીતે શક્ય બનાવે છે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="capturing-the-environment"><a class="header" href="#capturing-the-environment">Capturing the Environment</a></h3>
+<p>અમે સૌપ્રથમ તપાસ કરીશું કે કેવી રીતે ક્લોઝર્સનો ઉપયોગ કરીને આપણે તેમના વ્યાખ્યાયિત વાતાવરણમાંથી મૂલ્યો મેળવી શકીએ છીએ જેથી તેનો પાછળથી ઉપયોગ થઈ શકે. આ પરિસ્થિતિ છે: અમારી ટી-શર્ટ કંપની સમયાંતરે તેના મેઇલિંગ લિસ્ટ પરના કોઈ વ્યક્તિને એક વિશિષ્ટ, મર્યાદિત આવૃત્તિની શર્ટ ભેટમાં આપે છે જે પ્રમોશનનો ભાગ છે. મેઇલિંગ લિસ્ટ પરના લોકો પોતાની પ્રોફાઇલમાં તેમના મનપસંદ રંગને વૈકલ્પિક રીતે ઉમેરી શકે છે. જો કોઈ વ્યક્તિ જેને મફત શર્ટ માટે પસંદ કરવામાં આવે છે તેણે પોતાનો મનપસંદ રંગ સેટ કર્યો હોય, તો તેને તે રંગની શર્ટ મળે છે. જો વ્યક્તિએ મનપસંદ રંગ સ્પષ્ટ કર્યો નથી, તો તેને કંપની પાસે હાલમાં સૌથી વધુ ઉપલબ્ધ રંગની શર્ટ મળે છે.</p>
+<p>અહીં અમુક રીતો છે જેનાથી આ કરી શકાય છે. આ ઉદાહરણ માટે, આપણે <code>ShirtColor</code> નામનું એક enum વાપરવા જઈ રહ્યા છીએ જેમાં <code>Red</code> અને <code>Blue</code> પ્રકારો છે (ઉપલબ્ધ રંગોની સંખ્યાને સરળતા માટે મર્યાદિત કરે છે). આપણે કંપનીના ઇન્વેન્ટરીને <code>Inventory</code> struct વડે દર્શાવીએ છીએ જેમાં <code>shirts</code> નામનું ક્ષેત્ર છે જે <code>Vec&lt;ShirtColor&gt;</code> ધરાવે છે, જે વર્તમાનમાં સ્ટોકમાં રહેલા શર્ટના રંગોનું પ્રતિનિધિત્વ કરે છે. <code>Inventory</code> પર વ્યાખ્યાયિત થયેલ <code>giveaway</code> પદ્ધતિ, મફત શર્ટ વિજેતાની વૈકલ્પિક શર્ટ રંગ પસંદગી મેળવે છે અને તે વ્યક્તિને કયો રંગ મળશે તે શર્ટ રંગ આપે છે. આ સેટઅપ લિસ્ટિંગ 13-1 માં દર્શાવવામાં આવ્યું છે.</p>
+<listing number="13-1" file-name="src/main.rs" caption="Shirt company giveaway situation">
+```rust
+```rust
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-01/src/main.rs}}
+```
+```
+</listing>
+`store` જે `main` માં વ્યાખ્યાયિત થયેલ છે, તેમાં બે વાદળી શર્ટ અને એક લાલ શર્ટ બાકી રહ્યા છે, જે આ મર્યાદિત આવૃત્તિના પ્રમોશન માટે વિતરિત કરવાના છે. અમે `giveaway` પદ્ધતિને એવા user માટે બોલાવીએ છીએ જેને લાલ શર્ટની પસંદગી હોય અને બીજા user માટે જેને કોઈ પસંદગી ન હોય.
+<p>ફરીથી, આ કોડને ઘણી રીતે અમલમાં મૂકી શકાય છે, અને અહીં, ક્લોઝર પર ધ્યાન કેન્દ્રિત કરવા માટે, અમે એવા ખ્યાલોને વળગી રહ્યા છીએ જે તમે પહેલાથી જ શીખ્યા છો, સિવાય કે <code>giveaway</code> પદ્ધતિના મુખ્ય ભાગમાં ક્લોઝરનો ઉપયોગ થાય છે. <code>giveaway</code> પદ્ધતિમાં, અમને userની પસંદગી <code>Option&lt;ShirtColor&gt;</code> પ્રકારની પેરામીટર તરીકે મળે છે અને <code>user_preference</code> પર <code>unwrap_or_else</code> પદ્ધતિને બોલાવીએ છીએ. <code>Option&lt;T&gt;</code> પર <code>unwrap_or_else</code> પદ્ધતિ પ્રમાણભૂત લાયબ્રેરી દ્વારા વ્યાખ્યાયિત થયેલ છે. તે એક Argument લે છે: કોઈ Argumentો વિનાનું ક્લોઝર જે મૂલ્ય <code>T</code> (જે પ્રકાર <code>Option&lt;T&gt;</code> ના <code>Some</code> ભિન્નતામાં સંગ્રહિત છે, આ કિસ્સામાં <code>ShirtColor</code>) પરત કરે છે. જો <code>Option&lt;T&gt;</code> એ <code>Some</code> ભિન્નતા હોય, તો <code>unwrap_or_else</code> <code>Some</code> ની અંદરથી મૂલ્ય પરત કરે છે. જો <code>Option&lt;T&gt;</code> એ <code>None</code> ભિન્નતા હોય, તો <code>unwrap_or_else</code> ક્લોઝરને બોલાવે છે અને ક્લોઝર દ્વારા પરત કરવામાં આવેલ મૂલ્ય પરત કરે છે.</p>
+<p>અમે <code>unwrap_or_else</code> નાં આર્ગ્યુમેન્ટ તરીકે ક્લોઝર અભિવ્યક્તિ <code>|| self.most_stocked()</code> નો ઉલ્લેખ કરીએ છીએ. આ એક એવું ક્લોઝર છે જે પોતે કોઈ પરિમાણો લેતું નથી (જો ક્લોઝરમાં પરિમાણો હોત, તો તે બે ઊભી રેખા વચ્ચે દેખાત). ક્લોઝરનું શરીર <code>self.most_stocked()</code> ને બોલાવે છે. અમે અહીં ક્લોઝરને વ્યાખ્યાયિત કરી રહ્યા છીએ, અને <code>unwrap_or_else</code> નું અમલીકરણ જરૂર પડે તો પછીથી ક્લોઝરનું મૂલ્યાંકન કરશે.</p>
+<p>આ કોડ ચલાવવાથી નીચે મુજબ છાપવામાં આવે છે:</p>
+<pre><code class="language-console">```console
+{{#include ../listings/ch13-functional-features/listing-13-01/output.txt}}
+</code></pre>
+<pre><code>એક રસપ્રદ પાસું એ છે કે આપણે એક ક્લોઝર પસાર કર્યું છે જે વર્તમાન `Inventory` ઇન્સ્ટન્સ પર `self.most_stocked()` ને બોલાવે છે. સ્ટાન્ડર્ડ લાઈબ્રેરીને `Inventory` અથવા `ShirtColor` પ્રકારો વિશે જાણવાની જરૂર નહોતી, જેને આપણે વ્યાખ્યાયિત કર્યા હતા, અથવા આ પરિસ્થિતિમાં ઉપયોગ કરવા માટેની તર્કશાસ્ત્ર. ક્લોઝર `self` ના અમૂર્ત સંદર્ભને કબજે કરે છે અને તેને `unwrap_or_else` પદ્ધતિ સાથે સ્પષ્ટ કરેલ કોડ દ્વારા પસાર કરે છે. ફંક્શન્સ, જો કે, આ રીતે તેમનું પર્યાવરણ કબજે કરી શકતા નથી.
+
+&lt;!-- Old headings. Do not remove or links may break. --&gt;
+### Inferring and Annotating Closure Types
+
+કાર્યો અને ક્લોઝર વચ્ચે વધુ તફાવતો છે. ક્લોઝરને સામાન્ય રીતે પરિમાણોના પ્રકારો અથવા વળતર મૂલ્યના પ્રકારોની નોંધ કરવાની જરૂર નથી, જેમ કે `fn` કાર્યોને હોય છે. કાર્યો પર પ્રકારની નોંધણી જરૂરી છે કારણ કે તે પ્રકારો userઓ માટે ખુલ્લી સ્પષ્ટ ઇન્ટરફેસનો ભાગ છે. આ ઇન્ટરફેસને કડક રીતે વ્યાખ્યાયિત કરવું મહત્વપૂર્ણ છે જેથી દરેક વ્યક્તિ સંમત થાય કે કાર્ય કયા પ્રકારના મૂલ્યોનો ઉપયોગ કરે છે અને શું પરત આપે છે. ક્લોઝર, બીજી બાજુ, આ પ્રકારના ખુલ્લા ઇન્ટરફેસમાં વપરાતા નથી: તેઓ variable (variable) માં સંગ્રહિત થાય છે, અને તેમને નામ આપ્યા વિના અને અમારી લાયબ્રેરીના userઓ માટે તેમને જાહેર કર્યા વિના તેનો ઉપયોગ કરવામાં આવે છે.
+
+ક્લોઝર્સ સામાન્ય રીતે ટૂંકા હોય છે અને કોઈ પણ મનસ્વી પરિસ્થિતિને બદલે સાંકડી સંદર્ભમાં જ સુસંગત હોય છે. આ મર્યાદિત સંદર્ભોમાં, કમ્પાઇલર પેરામીટર્સના પ્રકારો અને રીટર્ન પ્રકારનો અનુમાન લગાવી શકે છે, જે રીતે તે મોટાભાગના variable (variable) ના પ્રકારોનો અનુમાન લગાવે છે (એવા દુર્લભ કિસ્સાઓ પણ હોય છે જ્યાં કમ્પાઇલરને ક્લોઝર પ્રકારની નોંધણીઓની જરૂર પડે છે).
+
+variable's જેમ, આપણે પ્રકારની નોંધણીઓ ઉમેરી શકીએ છીએ જો આપણે વધુ સ્પષ્ટતા અને ચોક્સાઈ વધારવા માંગતા હોઈએ, પરંતુ તે જરૂરી કરતાં વધુ વર્ણનાત્મક બની શકે છે. ક્લોઝર માટે પ્રકારોની નોંધણી આ રીતે દેખાશે જે વ્યાખ્યા Listing 13-2 માં દર્શાવવામાં આવી છે. આ ઉદાહરણમાં, અમે એક ક્લોઝરને વ્યાખ્યાયિત કરી રહ્યા છીએ અને તેને એક variable સંગ્રહિત કરી રહ્યા છીએ, જેમ કે અમે Listing 13-1 માં કર્યું હતું તેમ, Argument તરીકે પાસ કરીએ તે જગ્યાએ.
+
+&lt;Listing number="13-2" file-name="src/main.rs" caption="Adding optional type annotations of the parameter and return value types in the closure"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-02/src/main.rs:here}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+ટાઈપ નોંધણીઓ ઉમેર્યા પછી, ક્લોઝર્સનું વાક્યરચના કાર્યોની વાક્યરચના જેવું જ લાગે છે. અહીં, અમે એક કાર્ય વ્યાખ્યાયિત કરીએ છીએ જે તેના પરિમાણમાં 1 ઉમેરે છે અને એક ક્લોઝર કે જેનું વર્તન એવું જ હોય, સરખામણી માટે. અમે સંબંધિત ભાગોને ગોઠવવા માટે થોડી જગ્યાઓ ઉમેરી છે. આ દર્શાવે છે કે ક્લોઝર વાક્યરચના કાર્ય વાક્યરચના જેવી જ છે, પાઇપ્સના ઉપયોગ અને વૈકલ્પિક વાક્યરચનાની માત્રા સિવાય.
+
+```rust
+```rust
+fn  add_one_v1   (x: u32) -&gt; u32 { x + 1 }
+let add_one_v2 = |x: u32| -&gt; u32 { x + 1 };
+let add_one_v3 = |x|             { x + 1 };
+let add_one_v4 = |x|               x + 1  ;
+</code></pre>
+<pre><code>પ્રથમ પંક્તિમાં વિધેય વ્યાખ્યા દર્શાવવામાં આવે છે અને બીજી પંક્તિમાં સંપૂર્ણ નોંધાયેલ ક્લોઝર વ્યાખ્યા દર્શાવવામાં આવે છે. ત્રીજી પંક્તિમાં, આપણે ક્લોઝર વ્યાખ્યામાંથી પ્રકારની નોંધો દૂર કરીએ છીએ. ચોથી પંક્તિમાં, આપણે કૌંસ દૂર કરીએ છીએ, જે વૈકલ્પિક છે કારણ કે ક્લોઝરના મુખ્ય ભાગમાં માત્ર એક જ અભિવ્યક્તિ છે. આ બધા માન્ય વ્યાખ્યાઓ છે જે બોલાવવામાં આવે ત્યારે સમાન વર્તન ઉત્પન્ન કરશે. `add_one_v3` અને `add_one_v4` લીટીઓને કમ્પાઈલ કરવા માટે ક્લોઝરનું મૂલ્યાંકન કરવાની જરૂર પડે છે કારણ કે પ્રકારો તેમના ઉપયોગથી અનુમાનિત થશે. આ `let v = Vec::new();` નેotype annotations અથવા કેટલાક પ્રકારના મૂલ્યોને `Vec` માં દાખલ કરવાની જરૂરિયાત જેવું જ છે જેથી Rust પ્રકારનો અનુમાન કરી શકે.
+
+ક્લોઝર વ્યાખ્યાઓ માટે, કમ્પાઇલર દરેક પરિમાણ અને તેમના પરત થતા મૂલ્ય માટે એક નક્કર પ્રકારનો અનુમાન કરશે. ઉદાહરણ તરીકે, યાદી 13-3 એક ટૂંકા ક્લોઝરની વ્યાખ્યા દર્શાવે છે જે માત્ર તે મૂલ્ય પરત કરે છે જે તેને પરિમાણ તરીકે મળે છે. આ ક્લોઝર આ ઉદાહરણના હેતુઓ સિવાય બહુ ઉપયોગી નથી. નોંધ કરો કે અમે વ્યાખ્યામાં કોઈ પ્રકારના અર્થઘટન ઉમેર્યા નથી. પ્રકારના અર્થઘટનની ગેરહાજરીને કારણે, અમે કોઈપણ પ્રકાર સાથે ક્લોઝરને બોલાવી શકીએ છીએ, જે આપણે અહીં `String` સાથે પ્રથમ વખત કર્યું છે. જો આપણે પછીથી પૂર્ણાંક સાથે `example_closure` બોલવાનો પ્રયાસ કરીએ, તો આપણને ભૂલ મળશે.
+
+&lt;Listing number="13-3" file-name="src/main.rs" caption="Attempting to call a closure whose types are inferred with two different types"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-03/src/main.rs:here}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+The compiler gives us this error: સમ્પાઈલર આપણને આ ભૂલ આપે છે:
+
+```console
+```console
+{{#include ../listings/ch13-functional-features/listing-13-03/output.txt}}
+</code></pre>
+<pre><code>પહેલી વાર જ્યારે આપણે `example_closure` ને `String` મૂલ્ય સાથે બોલાવીએ છીએ, ત્યારે કમ્પાઇલર `x` ના પ્રકાર અને ક્લોઝરના વળતર પ્રકારને `String` તરીકે અનુમાનિત કરે છે. તે પછી આ પ્રકારો ક્લોઝરમાં જામી જાય છે, અને જ્યારે આપણે સમાન ક્લોઝર સાથે અલગ પ્રકારનો ઉપયોગ કરવાનો પ્રયત્ન કરીએ છીએ ત્યારે આપણને પ્રકારની ભૂલ આવે છે.
+
+### Capturing References or Moving Ownership
+
+ક્લોઝર્સ તેમના પર્યાવરણમાંથી ત્રણ રીતે મૂલ્યો મેળવી શકે છે, જે ફંક્શન પરિમાણો લઈ શકે તેવા ત્રણ રીત સાથે સીધા સંબંધિત છે: અમુટબલી (immutably) ઉછીના લેવું, મ્યુટેબલી (mutably) ઉછીના લેવું અને માલિકી (ownership) સ્થાનાંતરિત કરવી. ક્લોઝર નક્કી કરશે કે આમાંથી કઈ પદ્ધતિનો ઉપયોગ કરવો તેcaptured મૂલ્યો સાથે ફંક્શનના મુખ્ય ભાગમાં શું થાય છે તેના આધારે.
+
+લિસ્ટિંગ 13-4 માં, અમે એક ક્લોઝર વ્યાખ્યાયિત કરીએ છીએ જે વેક્ટર `list` ના અમુટબલ રેફરન્સને મેળવે છે કારણ કે તેને મૂલ્ય છાપવા માટે માત્ર અમુટબલ રેફરન્સની જરૂર હોય છે.
+
+&lt;Listing number="13-4" file-name="src/main.rs" caption="Defining and calling a closure that captures an immutable reference"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-04/src/main.rs}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+આ ઉદાહરણ એ પણ દર્શાવે છે કે એક variable બંધારણ (closure) ની વ્યાખ્યા સાથે જોડાઈ શકે છે, અને પછીથી આપણે variable's નામનો ઉપયોગ કરીને કૌંસ મૂકીને બંધારણને બોલાવી શકીએ છીએ જેમ કે ચલનું નામ કાર્યનું નામ હોય.
+
+કારણ કે આપણી પાસે `list` ના બહુવિધ અપરિવર્તનશીલ સંદર્ભો (references) એકસાથે હોઈ શકે છે, `list` એ બંધારણની વ્યાખ્યા પહેલાંના કોડમાંથી પણ સુલભ (accessible) છે, બંધારણની વ્યાખ્યા પછી પરંતુ બંધારણ બોલાવવામાં આવે તે પહેલાં, અને બંધારણ બોલાવ્યા પછી. આ કોડ સંકલિત (compiles), ચલાવે છે, અને છાપે છે:
+
+```console
+```console
+{{#include ../listings/ch13-functional-features/listing-13-04/output.txt}}
+</code></pre>
+<pre><code>આગળ, સૂચિ ૧૩-૫ માં, અમે ક્લોઝરના મુખ્ય ભાગને બદલીએ છીએ જેથી તે `list` વેક્ટર માં એક ઘટક ઉમેરે. હવે ક્લોઝર એક પરિવર્તનશીલ સંદર્ભને ગ્રહણ કરે છે.
+
+&lt;Listing number="13-5" file-name="src/main.rs" caption="Defining and calling a closure that captures a mutable reference"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-05/src/main.rs}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+આ કોડ સંકલન પામે છે, ચલાય છે અને છાપે છે:
+
+```console
+```console
+{{#include ../listings/ch13-functional-features/listing-13-05/output.txt}}
+</code></pre>
+<pre><code>ધ્યાનમાં રાખો કે `borrows_mutably` વ્યાખ્યા અને તેને બોલાવવાની વચ્ચે હવે `println!` નથી: જ્યારે `borrows_mutably` વ્યાખ્યાયિત થાય છે, ત્યારે તે `list` નો પરિવર્તનશીલ સંદર્ભ મેળવે છે. આપણે વ્યાખ્યા પછી ફરીથી ક્લોઝરનો ઉપયોગ કરતા નથી, તેથી પરિવર્તનશીલ ઉછીના લીધેલું અંત આવે છે. ક્લોઝરની વ્યાખ્યા અને તેને બોલાવવાની વચ્ચે, છાપવા માટે અપરિવર્તનશીલ ઉછીનું લીધેલું મંજૂર નથી, કારણ કે પરિવર્તનશીલ ઉછીના લીધેલા હોય ત્યારે અન્ય કોઈ ઉછીના લીધાallowed નથી. તે ભૂલ સંદેશ શું મળે છે તે જોવા માટે ત્યાં `println!` ઉમેરવાનો પ્રયાસ કરો!
+
+જો તમે બંધ થવા (closure) ને તેની પર્યાવરણમાં વપરાતા મૂલ્યોની માલિકી લેવાની ફરજ પાડવા માંગતા હો, ભલે તેના શરીરને માલિકીની સખત જરૂર ન હોય, તો તમે પરિમાણ યાદી પહેલાં `move` કીવર્ડનો ઉપયોગ કરી શકો છો.
+
+આ પદ્ધતિ મોટાભાગે એક નવા થ્રેડમાં બંધ થવાને પસાર કરતી વખતે ઉપયોગી છે જેથી ડેટાને ખસેડી શકાય અને તે નવા થ્રેડની માલિકીમાં હોય. આપણે પ્રકરણ 16 માં, જ્યારે આપણે સમવર્ણન (concurrency) વિશે વાત કરીશું ત્યારે થ્રેડો અને શા માટે તમે તેનો ઉપયોગ કરવા માંગો છો તેના વિશે વિગતવાર ચર્ચા કરીશું, પરંતુ અત્યારે, ચાલો એક નવા થ્રેડને જન્મ આપવાનું સંક્ષિપ્તમાં અન્વેષણ કરીએ જે `move` કીવર્ડની જરૂર હોય તેવા બંધ થવા સાથે. યાદી 13-6 દર્શાવે છે કે યાદી 13-4 ને મુખ્ય થ્રેડને બદલે નવા થ્રેડમાં વેક્ટર છાપવા માટે સુધારેલ છે.
+
+&lt;Listing number="13-6" file-name="src/main.rs" caption="Using `move` to force the closure for the thread to take ownership of `list`"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-06/src/main.rs}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+અમે એક નવું થ્રેડ શરૂ કરીએ છીએ, અને થ્રેડને ચલાવવા માટે એક ક્લોઝર (closure) Argument તરીકે આપીએ છીએ. ક્લોઝર ભાગ યાદી છાપે છે. યાદીંગ ૧૩-૪ માં, ક્લોઝરે માત્ર `list` ને બદલાતી ન હોય તેવી સંદર્ભ (reference) દ્વારા જ મેળવ્યું હતું, કારણ કે તેને છાપવા માટે `list` ની જેટલી ઓછી ઍક્સેસ (access) જોઈતી હતી. આ ઉદાહરણમાં, ભલે ક્લોઝર ભાગને હજી પણ બદલાતી ન હોય તેવી સંદર્ભની જરૂર હોય, આપણે સ્પષ્ટ કરવું જોઈએ કે `list` ને ક્લોઝરમાં ખસેડવું જોઈએ, અને તે માટે ક્લોઝર વ્યાખ્યાની શરૂઆતમાં `move` કીવર્ડ મૂકવો જોઈએ. જો મુખ્ય થ્રેડે `join` ને નવા થ્રેડ પર બોલાવતા પહેલાં વધુ કામગીરી કરી હોત, તો નવો થ્રેડ બાકીના મુખ્ય થ્રેડ કરતાં પહેલાં પૂરો થઈ શકતો હતો, અથવા મુખ્ય થ્રેડ પ્રથમ પૂરો થઈ શકતો હતો. જો મુખ્ય થ્રેડે `list` નું માલિકી જાળવી રાખ્યું હોત અને તે નવા થ્રેડ પહેલાં સમાપ્ત થઈ ગયો હોત અને `list` ને છોડી દેતો, તો થ્રેડમાં રહેલો બદલાતી ન હોય તેવી સંદર્ભ અમાન્ય બની ગયો હોત. તેથી, કમ્પાઇલર (compiler) આવશ્યક કરે છે કે `list` ને નવા થ્રેડને આપેલા ક્લોઝરમાં ખસેડવામાં આવે જેથી સંદર્ભ માન્ય રહે. પ્રયત્ન કરો કે `move` કીવર્ડ દૂર કરો અથવા ક્લોઝર વ્યાખ્યા પછી મુખ્ય થ્રેડમાં `list` નો ઉપયોગ કરો અને જુઓ કે તમને કયા કમ્પાઇલર ભૂલો મળે છે!
+
+&lt;!-- Old headings. Do not remove or links may break. --&gt;
+### Moving Captured Values Out of Closures
+
+એકવાર ક્લોઝર કોઈ સંદર્ભને કબજે કરે અથવા વ્યાવરણમાંથી મૂલ્યની માલિકી મેળવે (આમ, શું ખસેડવામાં આવે છે તે અસર કરે છે), તો ક્લોઝરના મુખ્ય ભાગમાં રહેલો કોડ નિર્ધારિત કરે છે કે ક્લોઝરનું મૂલ્યાંકન પાછળથી કરવામાં આવે ત્યારે સંદર્ભો અથવા મૂલ્યો સાથે શું થાય છે (આમ, શું ખસેડવામાં આવે છે તે અસર કરે છે).
+
+ક્લોઝરનો મુખ્ય ભાગ નીચેનામાંથી કોઈપણ કરી શકે છે: કબજે કરેલા મૂલ્યને ક્લોઝરની બહાર ખસેડવું, કબજે કરેલા મૂલ્યનું પરિવર્તન કરવું, મૂલ્યને ન તો ખસેડવું અને ન તો પરિવર્તિત કરવું, અથવા વ્યાવરણમાંથી કંઈપણ કબજે કરવાનું ટાળવું.
+
+`Fn` બંધારણ કેવી રીતે પર્યાવરણમાંથી મૂલ્યોને ગ્રહણ કરે છે અને તેનું વ્યવસ્થાપન કરે છે તેનાથી બંધારણ કયા લક્ષણો (traits) અમલમાં મુકે છે તે નિર્ધારિત થાય છે, અને લક્ષણો એ કાર્યો અને સ્ટ્રક્ચર્સને જણાવે છે કે તેઓ કયા પ્રકારના બંધારણોનો ઉપયોગ કરી શકે છે. બંધારણો આપોઆપ એક,
+
+બે અથવા ત્રણેય `Fn` લક્ષણોને જોડીને અમલમાં મુકે છે, જે બંધારણના મુખ્ય ભાગમાં મૂલ્યો કેવી રીતે વ્યવસ્થિત કરવામાં આવે છે તેના પર આધાર રાખે છે: `FnOnce` એવા બંધારણો પર લાગુ થાય છે જેને માત્ર એક જ વાર બોલાવી શકાય. બધા બંધારણો ઓછામાં ઓછું આ લક્ષણ અમલમાં મુકે છે કારણ કે બધા બંધારણોને બોલાવી શકાય છે. જે બંધારણ ગ્રહિત મૂલ્યોને તેના મુખ્ય ભાગમાંથી બહાર ખસેડે છે તે માત્ર `FnOnce` લક્ષણને જ અમલમાં મુકશે અને અન્ય કોઈ `Fn` લક્ષણને નહીં, કારણ કે તેને માત્ર એક જ વાર બોલાવી શકાય છે.
+
+`FnMut` એવા ક્લોઝર પર લાગુ થાય છે જે કેપ્ચર કરેલા મૂલ્યોને તેમના ક્ષેત્રની બહાર ખસેડતા નથી પરંતુ તે કેપ્ચર કરેલા મૂલ્યોમાં ફેરફાર કરી શકે છે. આ ક્લોઝર એકથી વધુ વખત બોલાવી શકાય છે.
+
+`Fn` એવા ક્લોઝર પર લાગુ થાય છે જે કેપ્ચર કરેલા મૂલ્યોને તેમના ક્ષેત્રની બહાર ખસેડતા નથી અને કેપ્ચર કરેલા મૂલ્યોમાં ફેરફાર પણ કરતા નથી, તેમજ એવા ક્લોઝર જે તેમના પર્યાવરણમાંથી કંઈપણ કેપ્ચર કરતા નથી. આ ક્લોઝર એકથી વધુ વખત બોલાવી શકાય છે, જે તેમના પર્યાવરણમાં ફેરફાર કર્યા વિના, એકસાથે ક્લોઝરને વારંવાર બોલાવવા જેવા કિસ્સાઓમાં મહત્વપૂર્ણ છે.
+
+ચાલો આપણે `Option&lt;T&gt;` પરની `unwrap_or_else` પદ્ધતિ (method) ની વ્યાખ્યા જોઈએ, જેનો ઉપયોગ આપણે યાદી 13-1 માં કર્યો હતો:
+
+```rust
+```rust
+impl&lt;T&gt; Option&lt;T&gt; {
+    pub fn unwrap_or_else&lt;F&gt;(self, f: F) -&gt; T
+    where
+        F: FnOnce() -&gt; T
+    {
+        match self {
+            Some(x) =&gt; x,
+            None =&gt; f(),
+        }
+    }
+}
+</code></pre>
+<pre><code>યાદ રાખો કે `T` એ સામાન્ય પ્રકાર છે જે `Option` ના `Some` વિવિધતામાં રહેલા મૂલ્યના પ્રકારનું પ્રતિનિધિત્વ કરે છે. તે જ પ્રકાર `T` એ `unwrap_or_else` વિધેયનો વળતર પ્રકાર પણ છે: દાખલા તરીકે, `Option&lt;String&gt;` પર `unwrap_or_else` બોલાવતા કોડને `String` મળશે.
+
+આગળ, નોંધ કરો કે `unwrap_or_else` વિધેયમાં વધારાનો સામાન્ય પ્રકાર પરિમાણ `F` છે. `F` પ્રકાર એ પરિમાણનામક `f` ના પ્રકારનું છે, જે `unwrap_or_else` બોલાવતી વખતે આપેલા ક્લોઝર છે.
+
+જનરિક પ્રકાર `F` માટે નિર્ધારિત ટ્રેઇટ બાઉન્ડ `FnOnce() -&gt; T` છે, જેનો અર્થ થાય છે કે `F` એકવાર બોલાવી શકાય છે, કોઈ Argumentો લેતું નથી અને `T` પરત કરે છે. ટ્રેઇટ બાઉન્ડમાં `FnOnce` નો ઉપયોગ એ નિયંત્રણ વ્યક્ત કરે છે કે `unwrap_or_else` `f` ને એકથી વધુ વખત નહીં બોલાવે. `unwrap_or_else` ના શરીરમાં, આપણે જોઈ શકીએ છીએ કે જો `Option` `Some` હોય, તો `f` બોલાવવામાં આવશે નહીં. જો `Option` `None` હોય, તો `f` એકવાર બોલાવવામાં આવશે. કારણ કે તમામ ક્લોઝર `FnOnce` લાગુ કરે છે, `unwrap_or_else` તમામ ત્રણ પ્રકારના ક્લોઝરને સ્વીકારે છે અને તે શક્ય તેટલું લવચીક છે.
+
+નોંધ: જો આપણી કાર્ય કરવાની જરૂરિયાત પર્યાવરણમાંથી મૂલ્ય મેળવવાની ન હોય, તો આપણે `Fn` લક્ષણોમાંના એકનું પાલન કરતા ક્લોઝરને બદલે વિધેય (function) નું નામ વાપરી શકીએ. ઉદાહરણ તરીકે, `Option&lt;Vec&lt;T&gt;&gt;` મૂલ્ય પર, આપણે `unwrap_or_else(Vec::new)` કહી શકીએ છીએ જેથી જો મૂલ્ય `None` હોય તો નવું, ખાલી વેક્ટર મળી શકે. કમ્પાઇલર આપોઆપ જ તે `Fn` લક્ષણનો અમલ કરે છે જે વિધેય વ્યાખ્યા માટે લાગુ પડે છે.
+
+હવે ચાલો સ્ટાન્ડર્ડ લાઈબ્રેરી પદ્ધતિ `sort_by_key` જોઈએ, જે સ્લાઇસ પર વ્યાખ્યાયિત થયેલ છે, તે `unwrap_or_else` થી કેવી રીતે અલગ પડે છે અને શા માટે `sort_by_key` ટ્રેઇટ બાઉન્ડ માટે `FnOnce` ને બદલે `FnMut` વાપરે છે. ક્લોઝરને એક Argument મળે છે જે સ્લાઇસમાં હાલની વસ્તુનો સંદર્ભ (reference) સ્વરૂપે હોય છે, અને તે પ્રકાર `K` નું મૂલ્ય આપે છે જેને ક્રમબદ્ધ કરી શકાય છે. આ વિધેય ત્યારે ઉપયોગી છે જ્યારે તમે કોઈ ચોક્કસ લક્ષણ દ્વારા સ્લાઇસને ક્રમબદ્ધ કરવા માંગો છો. યાદી 13-7 માં, આપણી પાસે `Rectangle` ઉદાહરણોની યાદી છે, અને અમે તેમની `width` લક્ષણને નીચલાથી ઊંચા ક્રમમાં ગોઠવવા માટે `sort_by_key` નો ઉપયોગ કરીએ છીએ.
+
+&lt;Listing number="13-7" file-name="src/main.rs" caption="Using `sort_by_key` to order rectangles by width"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-07/src/main.rs}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+આ કોડ છાપે છે:
+
+```console
+```console
+{{#include ../listings/ch13-functional-features/listing-13-07/output.txt}}
+</code></pre>
+<pre><code>કારણ `sort_by_key` ને `FnMut` ક્લોઝર લેવા માટે વ્યાખ્યાયિત કરવામાં આવે છે તે એ છે કે તે સ્લાઇસમાં દરેક ઘટક માટે એકવાર, ક્લોઝરને અનેક વખત બોલાવે છે. ક્લોઝર `|r| r.width` તેના પર્યાવરણમાંથી કંઈપણ મેળદારી કરતું નથી, બદલતું નથી અથવા ખસેડતું નથી, તેથી તે ટ્રેઇટ બાઉન્ડ આવશ્યકતાઓને પૂર્ણ કરે છે.
+
+બીજી બાજુ, યાદી ૧૩-૮ એવા ક્લોઝરનું ઉદાહરણ દર્શાવે છે જે માત્ર `FnOnce` ટ્રેઇટનો અમલ કરે છે, કારણ કે તે પર્યાવરણમાંથી એક મૂલ્ય ખસેડે છે. કમ્પાઇલર આપણને આ ક્લોઝરને `sort_by_key` સાથે વાપરવા દેશે નહીં.
+
+&lt;Listing number="13-8" file-name="src/main.rs" caption="Attempting to use an `FnOnce` closure with `sort_by_key`"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-08/src/main.rs}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+આ એક કૃત્રિમ, જટિલ રીત (જે કામ કરતું નથી) છે, જે `sort_by_key` ક્લોઝરને કેટલી વાર બોલાવે છે તે ગણવાનો પ્રયાસ કરે છે જ્યારે `list` ને સૉર્ટ કરવામાં આવે છે. આ કોડ `sort_operations` વેક્ટર માંથી ક્લોઝરના પર્યાવરણમાંથી `value` —એક `String`—ને ધકેલીને આ ગણતરી કરવાનો પ્રયાસ કરે છે. ક્લોઝર `value` ને કેપ્ચર કરે છે અને પછી `value` નું માલિકી `sort_operations` વેક્ટરને ટ્રાન્સફર કરીને ક્લોઝરમાંથી `value` ને બહાર ખસેડે છે. આ ક્લોઝરને એકવાર જ બોલાવી શકાય છે; બીજી વાર બોલવાનો પ્રયાસ કરવાથી તે કામ નહીં કરે, કારણ કે `value` હવે `sort_operations` માં ધકેલવા માટે પર્યાવરણમાં રહેશે નહીં! તેથી, આ ક્લોઝર માત્ર `FnOnce` લાગુ કરે છે. જ્યારે આપણે આ કોડને કમ્પાઇલ કરવાનો પ્રયાસ કરીએ છીએ, ત્યારે આપણને આ ભૂલ મળે છે કે `value` ને ક્લોઝરમાંથી ખસેડી શકાતું નથી કારણ કે ક્લોઝરે `FnMut` લાગુ કરવું આવશ્યક છે:
+
+```console
+```console
+{{#include ../listings/ch13-functional-features/listing-13-08/output.txt}}
+</code></pre>
+<pre><code>ભૂલ બંધારણને બંધારણના શરીરમાં રહેલી રેખા તરફ નિર્દેશ કરે છે જે `value` ને પર્યાવરણમાંથી ખસેડે છે. આને સુધારવા માટે, આપણે બંધારણના શરીરને એવી રીતે બદલવું પડશે કે તે પર્યાવરણમાંથી મૂલ્યોને ખસેડતું ન હોય. પર્યાવરણમાં એક કાઉન્ટર રાખવું અને બંધારણના શરીરમાં તેની કિંમત વધારવી એ બંધારણને કેટલી વખત બોલાવવામાં આવે છે તેની ગણતરી કરવાની વધુ સરળ રીત છે. યાદી 13-9 માં બંધારણ `sort_by_key` સાથે કામ કરે છે કારણ કે તે માત્ર `num_sort_operations` કાઉન્ટરનો પરિવર્તનશીલ સંદર્ભ મેળવે છે અને તેથી તેને એક કરતાં વધુ વખત બોલાવી શકાય છે.
+
+&lt;Listing number="13-9" file-name="src/main.rs" caption="Using an `FnMut` closure with `sort_by_key` is allowed."&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-09/src/main.rs}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+The `Fn` Traits `Fn` લક્ષણો કાર્યો અથવા પ્રકારો વ્યાખ્યાયિત કરતી વખતે અથવા તેનો ઉપયોગ કરતી વખતે મહત્વપૂર્ણ છે જે ક્લોઝરનો ઉપયોગ કરે છે. આગલા વિભાગમાં, આપણે ઇટરેટરની ચર્ચા કરીશું. ઘણા ઇટરેટર પદ્ધતિઓ ક્લોઝર Argumentો લે છે, તેથી આગળ વધતા આ ક્લોઝર વિગતો ધ્યાનમાં રાખો!
+
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch13-00-functional-features.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch13-02-iterators.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch13-00-functional-features.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch13-02-iterators.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

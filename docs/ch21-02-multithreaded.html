@@ -1,0 +1,610 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>From Single-Threaded to Multithreaded Server - ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-0e4ce700.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <!-- Old headings. Do not remove or links may break. -->
+<h2 id="from-a-single-threaded-to-a-multithreaded-server"><a class="header" href="#from-a-single-threaded-to-a-multithreaded-server">From a Single-Threaded to a Multithreaded Server</a></h2>
+<p>હાલમાં, સર્વર દરેક વિનંતીને ક્રમશઃ ચલાવશે, એટલે કે પ્રથમ જોડાણનું પ્રક્રિયા પૂર્ણ થાય ત્યાં સુધી બીજું જોડાણ ચલાવવામાં આવશે નહીં. જો સર્વરમાં વધુ ને વધુ વિનંતીઓ આવે તો આ અનુક્રમિક (serial) પ્રક્રિયા ઓછી ને ઓછી કાર્યક્ષમ બનશે. જો સર્વર એવી વિનંતી મેળવે જેની પ્રક્રિયામાં ઘણો સમય લાગે, તો પછીની વિનંતીઓને લાંબી વિનંતી પૂર્ણ થાય ત્યાં સુધી રાહ જોવી પડશે, ભલે નવી વિનંતીઓ ઝડપથી ચલાવી શકાય. આપણે આ સમસ્યાને સુધારવાની જરૂર છે, પરંતુ સૌ પ્રથમ આપણે ક્રિયામાં સમસ્યાનું નિરીક્ષણ કરીશું.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="simulating-a-slow-request"><a class="header" href="#simulating-a-slow-request">Simulating a Slow Request</a></h3>
+<p>અમે જોશું કે કેવી રીતે ધીરે ધીરે પ્રક્રિયા થતી વિનંતી અન્ય વિનંતીઓને અસર કરી શકે છે જે અમારી વર્તમાન સર્વર અમલીકરણ પર કરવામાં આવી રહી છે. યાદી 21-10 /sleep માટેની વિનંતીને હેન્ડલ કરવાના અમલીકરણને દર્શાવે છે, જેમાં નકલી ધીમો પ્રતિભાવ સમાવિષ્ટ છે જે સર્વરને પાંચ સેકંડ સુધી સૂવા માટે મજબૂર કરશે તે પહેલાં પ્રતિસાદ આપશે.</p>
+<listing number="21-10" file-name="src/main.rs" caption="Simulating a slow request by sleeping for five seconds">
+```rust
+```rust
+{{#rustdoc_include ../listings/ch21-web-server/listing-21-10/src/main.rs:here}}
+```
+```
+</listing>
+અમે ત્રણ પરિસ્થિતિઓ હોવાથી, `if` થી `match` પર સ્વિચ કર્યું છે. આપણે `request_line` ના સ્લાઇસ સાથે પેટર્ન-મેચ કરવા માટે સ્પષ્ટપણે મેચ કરવાની જરૂર છે; `match` આપોઆપ રેફરન્સિંગ અને ડિરેફરન્સિંગ કરતું
+<p>નથી, જેમ કે ઇક્વાલિટી મેથડ કરે છે. પ્રથમ ભાગ Listing 21-9 માંથી <code>if</code> બ્લોક જેવો જ છે. બીજો ભાગ /sleep માટેની વિનંતી સાથે મેળ ખાય છે. જ્યારે તે વિનંતી પ્રાપ્ત થાય છે, ત્યારે સર્વર સફળ HTML પૃષ્ઠ રેન્ડર કરતા પહેલા પાંચ સેકન્ડ માટે સૂઈ જશે. ત્રીજો ભાગ Listing 21-9 માંથી <code>else</code> બ્લોક જેવો જ છે.</p>
+<p>તમે જોઈ શકો છો કે આપણો સર્વર કેટલો પ્રાથમિક છે: વાસ્તવિક લાયબ્રેરીઓ બહુવિધ વિનંતીઓને વધુ સંક્ષિપ્ત રીતે નિયંત્રિત કરશે! <code>cargo run</code> નો ઉપયોગ કરીને</p>
+<p>સર્વર શરૂ કરો. પછી, બે બ્રાઉઝર વિન્ડો ખોલો: એક http://127.0.0.1:7878 માટે અને બીજું http://127.0.0.1:7878/sleep માટે. જો તમે / URI ને થોડાં વાર દાખલ કરો, તો તમને તે ઝડપથી પ્રતિસાદ આપે છે. પરંતુ જો તમે /sleep દાખલ કરો અને પછી /, લોડ કરો, તો તમને ખબર પડશે કે / <code>sleep</code> ના પાંચ સેકન્ડ પૂરા થાય ત્યાં સુધી રાહ જુએ છે તે પહેલાં લોડ થાય છે.</p>
+<p>અહીં અનેકવિધ પદ્ધતિઓ ઉપલબ્ધ છે જેનો ઉપયોગ આપણે ધીમી વિનંતી પાછળ વિનંતીઓ જમા થતી અટકાવવા માટે કરી શકીએ છીએ, જેમાં Chapter 17 માં કર્યા મુજબ async નો ઉપયોગ પણ સામેલ છે; આપણે જે અમલમાં મૂકવાના છીએ તે થ્રેડ પૂલ છે.</p>
+<h3 id="improving-throughput-with-a-thread-pool"><a class="header" href="#improving-throughput-with-a-thread-pool">Improving Throughput with a Thread Pool</a></h3>
+<p>એક થ્રેડ પૂલ એ પ્રગટ થયેલા થ્રેડોનો સમૂહ છે જે કાર્યને સંભાળવા માટે તૈયાર અને રાહ જોઈ રહ્યા હોય છે. જ્યારે પ્રોગ્રામ નવું કાર્ય મેળવે છે, ત્યારે તે પૂલના એક થ્રેડને કાર્ય સોંપે છે, અને તે થ્રેડ કાર્યની પ્રક્રિયા કરે છે. પૂલમાં રહેલા અન્ય થ્રેડો ઉપલબ્ધ હોય છે જે પ્રથમ થ્રેડ કાર્યની પ્રક્રિયા કરી રહ્યો હોય ત્યારે આવતા કોઈપણ કાર્યોને સંભાળવા માટે. જ્યારે પ્રથમ થ્રેડ તેની પ્રક્રિયા પૂર્ણ કરે છે, ત્યારે તે નિષ્ક્રિય થ્રેડોના પૂલમાં પાછો આવે છે, જે નવા કાર્યને સંભાળવા માટે તૈયાર હોય છે. એક થ્રેડ પૂલ તમને જોડાણો એકસાથે (concurrently) પ્રક્રિયા કરવાની મંજૂરી આપે છે, જેનાથી તમારા સર્વરની ઉત્પાદકતા વધે છે.</p>
+<p>આપણે થ્રેડ્સની સંખ્યાને મર્યાદિત રાખશું જેથી આપણને DoS હુમલાઓથી રક્ષણ મળે; જો આપણો કાર્યક્રમ દરેક વિનંતી માટે નવો થ્રેડ બનાવે તો, કોઈ વ્યક્તિ આપણી સર્વર પર 10 લાખ વિનંતીઓ મોકલીને આપણી સર્વરની તમામ સંસાધનોનો ઉપયોગ કરી શકે છે અને વિનંતીઓની પ્રક્રિયાને સ્થિર કરી શકે છે. મર્યાદિત સંખ્યામાં થ્રેડ્સ ઉત્પન્ન કરવાને બદલે, આપણે</p>
+<p>નિશ્ચિત સંખ્યામાં થ્રેડ્સ પૂલ (pool) માં રાહ જોતા રાખશું. આવતી વિનંતીઓ પૂલમાં મોકલવામાં આવે છે પ્રક્રિયા માટે. પૂલ આવતી વિનંતીઓની એક કતાર જાળવશે. પૂલના દરેક થ્રેડ આ કતારમાંથી એક વિનંતી લેશે, વિનંતીને હેન્ડલ કરશે અને પછી બીજી વિનંતી માટે કતારને પૂછશે. આ ડિઝાઇન સાથે, અમે <code>N</code> સુધીની વિનંતીઓને એકસાથે પ્રક્રિયા કરી શકીએ છીએ, જ્યાં <code>N</code> એ થ્રેડ્સની સંખ્યા છે. જો દરેક થ્રેડ લાંબા સમયથી ચાલતી વિનંતીનો જવાબ આપી રહ્યો હોય, તો પછીની વિનંતીઓ હજી પણ કતારમાં જમા થઈ શકે છે, પરંતુ આપણે તે બિંદુ સુધી પહોંચતા પહેલાં વધુ લાંબા સમયથી ચાલતી વિનંતીઓને હેન્ડલ કરી શકીએ છીએ.</p>
+<p>આ પદ્ધતિ વેબ સર્વરની કાર્યક્ષમતા વધારવાની ઘણી રીતોમાંની એક છે. અન્ય વિકલ્પો જે તમે અજમાવી શકો છો તેમાં ફોર્ક/જોઈન મોડેલ, સિંગલ-થ્રેડેડ એસિંક આઇ/ઓ મોડેલ અને મલ્ટિથ્રેડેડ એસિંક આઇ/ઓ મોડેલનો સમાવેશ થાય છે. જો તમને આ વિષયમાં રસ હોય, તો તમે અન્ય ઉકેલો વિશે વધુ વાંચી શકો છો અને તેમને અમલમાં મૂકવાનો પ્રયાસ કરી શકો છો; <code>Rust</code> જેવી લો-લેવલ ભાષા સાથે, આ બધા</p>
+<p>વિકલ્પો શક્ય છે. હવે આપણે થ્રેડ પૂલનો અમલ કરવાનું શરૂ કરીએ તે પહેલાં, ચાલો વાત કરીએ કે પૂલનો ઉપયોગ કેવી રીતે દેખાશે. કોડ ડિઝાઇન કરતી વખતે, ક્લાયન્ટ ઇન્ટરફેસ પ્રથમ લખવાથી તમારી ડિઝાઇનને માર્ગદર્શન મળી શકે છે. કોડની API એવી રીતે લખો કે જે રીતે તમે તેને બોલાવવા માંગો છો તે રીતે ગોઠવાયેલી હોય; પછી, તે માળખામાં કાર્યક્ષમતાનો અમલ કરો, જાહેર API ડિઝાઇન કરવાને બદલે.</p>
+<p>Chapter 12 માં આપણે પ્રોજેક્ટમાં પરીક્ષણ-સંચાલિત વિકાસ (test-driven development) જે રીતે વાપર્યો હતો, તેમ અહીંયાં આપણે કમ્પાઇલર-સંચાલિત વિકાસ (compiler-driven development) વાપરીશું. આપણે એ કોડ લખીશું જે આપણે જોઈતા વિધેયોને બોલાવે છે, અને પછી આપણે કમ્પાઇલરમાંથી મળતી ભૂલોને જોઈશું જેથી નક્કી કરી શકાય કે આગળ શું બદલવું જોઈએ જેથી કોડ કાર્ય કરે. પરંતુ તે પહેલાં, આપણે એક એવી પદ્ધતિ અજમાવીશું જેનો આપણે ઉપયોગ નહીં કરીએ, તેને પ્રારંભિક બિંદુ તરીકે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h4 id="spawning-a-thread-for-each-request"><a class="header" href="#spawning-a-thread-for-each-request">Spawning a Thread for Each Request</a></h4>
+<p>સૌ પ્રથમ, ચાલો જોઈએ કે આપણો કોડ જો દરેક કનેક્શન માટે નવું થ્રેડ બનાવે તો કેવો દેખાશે. ઉપર જણાવ્યા મુજબ, આ અમારો અંતિમ યોજના નથી, કારણ કે અગણિત થ્રેડો ઉત્પન્ન કરવાની સંભાવના છે, પરંતુ તે પહેલાં કાર્યરત મલ્ટિથ્રેડેડ સર્વર મેળવવા માટેની શરૂઆત છે. ત્યારબાદ, અમે થ્રેડ પૂલને સુધારણા તરીકે ઉમેરીશું અને બે ઉકેલોની સરખામણી કરવી સરળ બનશે.</p>
+<p>Listing 21-11 દર્શાવે છે કે <code>main</code> માં દરેક સ્ટ્રીમને નિયંત્રિત કરવા માટે નવું થ્રેડ ઉત્પન્ન કરવા માટે શું ફેરફારો કરવાના રહેશે <code>for</code> લૂપમાં.</p>
+<listing number="21-11" file-name="src/main.rs" caption="Spawning a new thread for each stream">
+```rust
+```rust
+{{#rustdoc_include ../listings/ch21-web-server/listing-21-11/src/main.rs:here}}
+```
+```
+</listing>
+તમે પ્રકરણ ૧૬ માં શીખ્યું હશે તેમ, `thread::spawn` એક નવું થ્રેડ બનાવશે અને પછી નવા થ્રેડમાં ક્લોઝર (closure) માં રહેલા કોડને ચલાવશે. જો તમે આ કોડ ચલાવો અને તમારા બ્રાઉઝરમાં `/sleep` લોડ કરો, તો બીજા બે બ્રાઉઝર ટેબમાં `/` લોડ કરો, તો તમને ખરેખર દેખાશે કે `/` માટેની વિનંતીઓ `/sleep` પૂર્ણ થવાની રાહ જોવાની જરૂર નથી. જોકે, અમે ઉલ્લેખ કર્યો તેમ, આ અંતિમ પરિણામ સિસ્ટમને વધુ પડતી વ્યસ્ત કરી દેશે કારણ કે તમે કોઈ મર્યાદા વિના નવા થ્રેડ બનાવી રહ્યા
+<p>છો. You may also recall from Chapter 17 that this is exactly the kind of situation where async and await really shine! Keep that in mind as we build the thread pool and think about how things would look different or the same with async. તમે પ્રકરણ ૧૭ માં પણ યાદ કરી શકો છો કે આ પ્રકારની પરિસ્થિતિમાં async અને await ખરેખર કેવી રીતે ઉપયોગી છે! જ્યારે આપણે થ્રેડ પૂલ બનાવીએ અને async સાથે વસ્તુઓ કેવી રીતે અલગ અથવા સમાન દેખાશે તે વિશે વિચારીએ ત્યારે આ વાત ધ્યાનમાં રાખો.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h4 id="creating-a-finite-number-of-threads"><a class="header" href="#creating-a-finite-number-of-threads">Creating a Finite Number of Threads</a></h4>
+<p>અમે ઈચ્છીએ છીએ કે અમારું થ્રેડ પૂલ સમાન અને પરિચિત રીતે કાર્ય કરે, જેથી અમારા API નો ઉપયોગ કરતા કોડમાં થ્રેડથી થ્રેડ પૂલમાં બદલાવ કરવા માટે મોટા ફેરફારોની જરૂર ન પડે. યાદી 21-12 એ <code>ThreadPool</code> struct માટે કાલ્પનિક ઈન્ટરફેસ દર્શાવે છે જેનો અમે <code>thread::spawn</code> ને બદલે ઉપયોગ કરવા માંગીએ છીએ.</p>
+<listing number="21-12" file-name="src/main.rs" caption="Our ideal `ThreadPool` interface">
+```rust
+```rust
+{{#rustdoc_include ../listings/ch21-web-server/listing-21-12/src/main.rs:here}}
+```
+```
+</listing>
+અમે `ThreadPool::new` નો ઉપયોગ કરીને થ્રેડ્સની સંખ્યાને રૂપરેખાંકિત કરી શકીએ તેવા નવા થ્રેડ પૂલ બનાવીએ છીએ, આ કિસ્સામાં ચાર. પછી, `for` લૂપમાં, `pool.execute` નું ઇન્ટરફેસ `thread::spawn` જેવું જ છે જેમાં ક્લોઝર લેવામાં આવે છે જેને પૂલ દરેક સ્ટ્રીમ માટે ચલાવવો જોઈએ. આપણે `pool.execute` ને અમલમાં મૂકવાની જરૂર છે જેથી તે ક્લોઝર લઈ શકે અને તેને પૂલના થ્રેડને ચલાવવા માટે આપી શકે. આ કોડ હજી સુધી કમ્પાઇલ થશે નહીં, પરંતુ અમે પ્રયત્ન કરીશું જેથી કમ્પાઈલર અમને તેને કેવી રીતે સુધારવું તેની માર્ગદર્શન આપી શકે.
+<!-- Old headings. Do not remove or links may break. -->
+<h4 id="building-threadpool-using-compiler-driven-development"><a class="header" href="#building-threadpool-using-compiler-driven-development">Building <code>ThreadPool</code> Using Compiler-Driven Development</a></h4>
+<p>Listing 21-12 માં src/main.rs માં ફેરફારો કરો, અને પછી ચાલો <code>cargo check</code> ના કમ્પાઇલર ભૂલોનો ઉપયોગ આપણા વિકાસને આગળ ધપાવવા માટે કરીએ. અહીં પ્રથમ ભૂલ છે જે અમને મળે છે:</p>
+<pre><code class="language-console">```console
+{{#include ../listings/ch21-web-server/listing-21-12/output.txt}}
+</code></pre>
+<pre><code>ચોક્કસ! આ ભૂલ અમને જણાવે છે કે આપણને `ThreadPool` પ્રકાર અથવા મોડ્યુલની જરૂર છે, તેથી આપણે હવે એક બનાવીશું. અમારા `ThreadPool` અમલીકરણમાં અમારા વેબ સર્વર શું કાર્ય કરી રહ્યું છે તેના પ્રકાર પર આધારિત રહેશે નહીં. તો, ચાલો `hello` ક્રેમને એક બાઈનરી ક્રેટથી લાઈબ્રેરી ક્રેટમાં બદલીએ જેથી કરીને અમારા `ThreadPool` અમલીકરણને જાળવી શકાય. જ્યારે અમે લાઈબ્રેરી ક્રેટમાં ફેરવીશું, ત્યારે અમે થ્રેડ પૂલ લાઇબ્રેરીનો ઉપયોગ કોઈપણ કાર્ય માટે કરી શકીએ છીએ જેનો આપણે થ્રેડ પૂલનો ઉપયોગ કરીને કરવા માંગીએ છીએ, માત્ર વેબ વિનંતીઓ પહોંચાડવા માટે જ નહીં.
+
+src/lib.rs ફાઈલ બનાવો એક `src/lib.rs` ફાઈલ બનાવો જેમાં નીચે મુજબની બાબતો હોય, જે અત્યારે આપણે `ThreadPool` સ્ટ્રક્ચરની સૌથી સરળ વ્યાખ્યા ગણી શકીએ:
+
+&lt;Listing file-name="src/lib.rs"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch21-web-server/no-listing-01-define-threadpool-struct/src/lib.rs}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+પછી, main.rs ફાઈલને સંપાદિત કરો જેથી `ThreadPool` લાયબ્રેરી crate માંથી દૃશ્યમાન થાય, આ માટે નીચેના કોડને src/main.rs ની શરૂઆતમાં ઉમેરો:
+
+&lt;Listing file-name="src/main.rs"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch21-web-server/no-listing-01-define-threadpool-struct/src/main.rs:here}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+આ કોડ હજી કામ કરશે નહીં, પરંતુ ચાલો તેને ફરીથી તપાસીએ જેથી કરીને આગામી ભૂલ આવે જે આપણે ઉકેલવાની જરૂર છે:
+
+```console
+```console
+{{#include ../listings/ch21-web-server/no-listing-01-define-threadpool-struct/output.txt}}
+</code></pre>
+<pre><code>આ ભૂલ દર્શાવે છે કે આગળ આપણે `ThreadPool` માટે એક સંકળાયેલ વિધેય (associated function) નામનું `new` બનાવવાની જરૂર છે. આપણને એ પણ ખબર છે કે `new` ને એક પરિમાણ (parameter) હોવું જોઈએ જે `4` સ્વીકારી શકે અને `ThreadPool` નું ઉદાહરણ (instance) પાછું આપે. ચાલો આપણે સૌથી સરળ `new` વિધેયનો અમલ કરીએ જે તે લક્ષણો ધરાવતું હોય:
+
+&lt;Listing file-name="src/lib.rs"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch21-web-server/no-listing-02-impl-threadpool-new/src/lib.rs}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+આપણે `usize` ને `size` પરિમાણનો પ્રકાર તરીકે પસંદ કર્યો કારણ કે આપણને ખબર છે કે નકારાત્મક સંખ્યા થ્રેડ્સ માટે તર્કસંગત નથી. આપણને એ પણ ખબર છે કે અમે આ `4` નો ઉપયોગ થ્રેડ્સના સમૂહમાં ઘટકોની સંખ્યા તરીકે કરીશું, જે `usize` પ્રકાર માટે છે, જે પ્રકરણ 3 માં "પૂર્ણાંક પ્રકારો" વિભાગમાં ચર્ચા કરવામાં આવી છે.
+
+ચાલો ફરીથી કોડ જોઈએ:
+
+```console
+```console
+{{#include ../listings/ch21-web-server/no-listing-02-impl-threadpool-new/output.txt}}
+</code></pre>
+<pre><code>હવે ભૂલ એટલા માટે આવે છે કે આપણી પાસે `ThreadPool` પર `execute` નામની પદ્ધતિ નથી. "નિશ્ચિત સંખ્યામાં થ્રેડ બનાવવું" વિભાગને યાદ કરો કે આપણે નક્કી કર્યું હતું કે આપણું થ્રેડ પૂલ `thread::spawn` જેવું ઈન્ટરફેસ હોવું જોઈએ. વધુમાં, આપણે `execute` કાર્ય અમલમાં મૂકીશું જેથી તે ક્લોઝરને લે અને તેને પૂલમાં નિષ્ક્રિય થ્રેડને ચલાવવા માટે આપે.
+
+આપણે `ThreadPool` પર `execute` પદ્ધતિને એક ક્લોઝર પરિમાણ તરીકે લેવા માટે વ્યાખ્યાયિત કરીશું. "ક્લોઝરમાંથી કબજે કરેલા મૂલ્યોને બહાર કાઢવા" વિશે પ્રકરણ ૧૩ માં યાદ કરો કે આપણે ત્રણ અલગ-અલગ ટ્રેઇટ સાથે ક્લોઝરને પરિમાણ તરીકે લઈ શકીએ છીએ: `Fn`, `FnMut` અને `FnOnce`. આપણે નક્કી કરવું પડશે કે અહીં કયા પ્રકારના ક્લોઝરનો ઉપયોગ કરવો. આપણને ખબર છે કે આપણે આખરે સ્ટાન્ડર્ડ લાઈબ્રેરીના `thread::spawn` અમલીકરણ જેવું કંઈક કરીશું, તેથી આપણે `thread::spawn` ના પરિમાણ પરની મર્યાદાઓ જોઈ શકીએ છીએ. દસ્તાવેજીકરણ દર્શાવે છે કે નીચે મુજબ:
+
+```rust
+```rust
+pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt;
+    where
+        F: FnOnce() -&gt; T,
+        F: Send + 'static,
+        T: Send + 'static,
+</code></pre>
+<pre><code>The `F` પ્રકાર પરિમાણ એ અહીં આપણી ચિંતાનું કેન્દ્ર છે; `T` પ્રકાર પરિમાણ વળતર મૂલ્ય સાથે સંબંધિત છે, અને તેના વિશે આપણે ચિંતિત નથી. આપણે જોઈ શકીએ છીએ કે `spawn` `FnOnce` નો ઉપયોગ `F` પર trait bound તરીકે કરે છે. સંભવતઃ આપણને પણ એવું જ જોઈએ છે, કારણ કે આપણે આખરે `execute` માં મળેલાં Argumentને `spawn` ને પસાર કરીશું. આપણે વધુ ખાતરીપૂર્વક કહી શકીએ છીએ કે `FnOnce` એ trait છે જે આપણે ઉપયોગ કરવા માંગીએ છીએ, કારણ કે વિનંતી ચલાવવા માટે થ્રેડ માત્ર એક જ વાર તે વિનંતીના closure નું અમલ કરશે, જે `FnOnce` માં રહેલાં `Once` સાથે મેળ ખાય છે.
+
+`F` પ્રકારના પરિમાણની અન્ય વિગતો `F` પ્રકારનો પરિમાણ પણ `Send` અને `'static` ના જીવનકાળ સાથે જોડાયેલો છે, જે આપણી પરિસ્થિતિમાં ઉપયોગી છે: આપણે એક થ્રેડથી બીજા થ્રેડમાં ક્લોઝર મોકલવા માટે `Send` ની જરૂર છે અને થ્રેડને પૂર્ણ થવામાં કેટલો સમય લાગશે તેની આપણને જાણ નથી, તેથી `'static` જરૂરી છે. ચાલો `ThreadPool` પર એક `execute` પદ્ધતિ બનાવીએ જે `F` પ્રકારના સામાન્ય પરિમાણ સાથે આ બંધનો ધરાવે છે:
+
+&lt;Listing file-name="src/lib.rs"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch21-web-server/no-listing-03-define-execute/src/lib.rs:here}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+આપણે હજી `()`  `FnOnce` પછી વાપરીએ છીએ કારણ કે આ `FnOnce` એક ક્લોઝર છે જે કોઈ પરિમાણો લેતું નથી અને યુનિટ પ્રકાર `()` આપે છે. ફંક્શન વ્યાખ્યાઓની જેમ, પરતનો પ્રકાર સહી (signature) માંથી છોડી શકાય છે, પરંતુ ભલે આપણી પાસે કોઈ પરિમાણો ન હોય, આપણે હજી પણ કૌંસની જરૂર છે.
+
+ફરીથી, આ `execute` પદ્ધતિનું સરળ અમલીકરણ છે: તે કંઈ કરતું નથી, પરંતુ અમે માત્ર અમારા કોડને કમ્પાઇલ કરવાનો પ્રયાસ કરી રહ્યા છીએ. ચાલો ફરી એકવાર તપાસીએ:
+
+```console
+```console
+{{#include ../listings/ch21-web-server/no-listing-03-define-execute/output.txt}}
+</code></pre>
+<pre><code>તે કમ્પાઇલ થાય છે! પણ નોંધ કરો કે જો તમે `cargo run` ચલાવશો અને બ્રાઉઝરમાં વિનંતી કરશો, તો તમને એ જ ભૂલો દેખાશે જે આપણે પ્રકરણની શરૂઆતમાં જોઈ હતી. આપણું લાયબ્રેરી હજી સુધી `execute` ને પાસ કરેલા ક્લોઝરને બોલાવી રહ્યું નથી!
+
+નોંધ: તમે કડક કમ્પાઇલર્સ ધરાવતી ભાષાઓ, જેમ કે Haskell અને Rust વિશે સાંભળેલી એક કહેવત છે કે "જો કોડ કમ્પાઇલ થાય છે, તો તે કાર્ય કરે છે." પરંતુ આ કહેવત સાર્વત્રિક રીતે સાચી નથી. આપણી પ્રોજેક્ટ કમ્પાઇલ થાય છે, પરંતુ તે કંઈપણ કરતું નથી! જો આપણે કોઈ વાસ્તવિક, સંપૂર્ણ પ્રોજેક્ટ બનાવી રહ્યા હોત, તો આ એક સારો સમય હશે યુનિટ ટેસ્ટ લખવાનું શરૂ કરવા માટે જેથી તપાસ કરી શકાય કે કોડ કમ્પાઇલ થાય છે અને આપણને જે વર્તન જોઈએ છે તે જ હોય.
+
+વિચાર કરો: જો આપણે ક્લોઝરને બદલે ભવિષ્ય (future) ને ચલાવવાનું જઈ રહ્યા હોત તો અહીં શું અલગ હોત?
+
+#### Validating the Number of Threads in `new`
+
+આપણે `new` અને `execute` ના પરિમાણો સાથે કંઈ કર્યું નથી. ચાલો આ વિધેયોના મુખ્ય ભાગોને આપણે જોઈતી વર્તણૂક સાથે અમલમાં મૂકીએ. શરૂ કરવા માટે, ચાલો `new` વિશે વિચારીએ. અગાઉ અમે `size` પરિમાણ માટે એક અનSigned પ્રકાર પસંદ કર્યો હતો કારણ કે નકારાત્મક સંખ્યામાં થ્રેડો ધરાવતો પૂલ તર્કસંગત નથી. જો કે, શૂન્ય થ્રેડો ધરાવતો પૂલ પણ તર્કસંગત નથી, છતાં શૂન્ય એ સંપૂર્ણપણે માન્ય `usize` છે. અમે ખાતરી કરવા માટે કોડ ઉમેરીશું કે `size` શૂન્યથી મોટું છે તે પહેલાં અમે `ThreadPool` ઇન્સ્ટન્સ પરત કરીએ છીએ, અને જો તે શૂન્ય પ્રાપ્ત કરે તો પ્રોગ્રામ ગભરાઈ જશે, Listing 21-13 માં દર્શાવ્યા પ્રમાણે `assert!` મેક્રોનો ઉપયોગ કરીને.
+
+&lt;Listing number="21-13" file-name="src/lib.rs" caption="Implementing `ThreadPool::new` to panic if `size` is zero"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch21-web-server/listing-21-13/src/lib.rs:here}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+અમે કેટલાક દસ્તાવેજીકરણ પણ ઉમેર્યું છે અમે `ThreadPool` માટે ડોક્યુમેન્ટેશન પણ ઉમેર્યું છે, જેમાં ડોક્યુમેન્ટ કોમેન્ટ્સનો સમાવેશ થાય છે. નોંધ કરો કે અમે સારા દસ્તાવેજીકરણની પદ્ધતિઓનું પાલન કર્યું છે અને અમારી કાર્યપદ્ધતિ કયા પરિસ્થિતિઓમાં ગભરાટ (panic) લાવી શકે છે તે દર્શાવતો વિભાગ ઉમેર્યો છે, જે વિશે પ્રકરણ ૧૪ માં ચર્ચા કરવામાં આવી હતી. `cargo doc --open` ચલાવીને અને `ThreadPool` સ્ટ્રક્ચર પર ક્લિક કરીને જુઓ કે `new` માટે
+
+જનરેટ થયેલ દસ્તાવેજો કેવા દેખાય છે! અહીં આપણે જે રીતે `assert!` મેક્રો ઉમેર્યું છે, તેના બદલે અમે `new` ને `build` માં બદલી શકીએ અને `Result` પરત કરી શકીએ, જેમ કે અમે `Config::build` સાથે I/O પ્રોજેક્ટમાં લિસ્ટિંગ ૧૨-૯ માં કર્યું હતું. પરંતુ અમે આ કિસ્સામાં નક્કી કર્યું છે કે કોઈ થ્રેડ વગર થ્રેડ પૂલ બનાવવાનો પ્રયાસ એ પુનઃપ્રાપ્ય ન હોય તેવો ભૂલ ગણવો જોઈએ. જો તમે મહત્વાકાંક્ષી અનુભવતા હો, તો `new` કાર્યપદ્ધતિ સાથે સરખામણી કરવા માટે નીચેના હસ્તાક્ષર (signature) વાળી `build` નામની એક કાર્યપદ્ધતિ લખવાનો પ્રયાસ કરો:
+
+```rust
+```rust
+pub fn build(size: usize) -&gt; Result&lt;ThreadPool, PoolCreationError&gt; {
+</code></pre>
+<pre><code>#### Creating Space to Store the Threads
+
+હવે આપણી પાસે થ્રેડની માન્ય સંખ્યા જાણવાનો માર્ગ છે જે પૂલ માં સંગ્રહિત કરી શકાય, આપણે તે થ્રેડો બનાવી શકીએ છીએ અને `ThreadPool` સ્ટ્રક્ચરમાં સંગ્રહિત કરી શકીએ છીએ, struct પરત કરતાં પહેલાં. પરંતુ આપણે થ્રેડને કેવી રીતે "સંગ્રહિત" કરીએ? ચાલો ફરી એકવાર `thread::spawn` હસ્તાક્ષર જોઈએ:
+
+```rust
+```rust
+pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt;
+    where
+        F: FnOnce() -&gt; T,
+        F: Send + 'static,
+        T: Send + 'static,
+</code></pre>
+<pre><code>`spawn` `JoinHandle&lt;T&gt;` ચાલો `JoinHandle` નો ઉપયોગ કરવાનો પ્રયત્ન કરીએ અને જોઈએ કે શું થાય છે. આપણી પરિસ્થિતિમાં, આપણે થ્રેડ પૂલને પાસ કરેલા ક્લોઝર્સ કનેક્શનનું સંચાલન કરશે અને કંઈપણ પરત કરશે નહીં, તેથી `T` એ યુનિટ પ્રકાર `()` હશે. The code in Listing 21-14
+
+લિસ્ટિંગ 21-14 માંનો કોડ કમ્પાઇલ થશે, પરંતુ તે હજી સુધી કોઈ થ્રેડ બનાવતો નથી. આપણે `ThreadPool` ની વ્યાખ્યાને `thread::JoinHandle&lt;()&gt;` ઇન્સ્ટન્સના વેક્ટર તરીકે રાખવાનો બદલાવ કર્યો છે, વેક્ટરને `size` ક્ષમતા સાથે શરૂ કર્યું છે, એક `for` લૂપ સેટઅપ કર્યો છે જે થ્રેડ બનાવવા માટે અમુક કોડ ચલાવશે અને તેમાં થ્રેડ ધરાવતું `ThreadPool` ઇન્સ્ટન્સ પરત કર્યું છે.
+
+&lt;Listing number="21-14" file-name="src/lib.rs" caption="Creating a vector for `ThreadPool` to hold the threads"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch21-web-server/listing-21-14/src/lib.rs:here}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+આપણે લાયબ્રેરી ક્રેટમાં `std::thread` ને કાર્યક્ષેત્રમાં લાવ્યું છે કારણ કે આપણે `thread::JoinHandle` નો ઉપયોગ `ThreadPool` માં વેક્ટરની વસ્તુઓના પ્રકાર તરીકે કરીએ છીએ. એક માન્ય કદ
+
+મળ્યા પછી, આપણું `ThreadPool` એક નવું વેક્ટર બનાવે છે જે `size` વસ્તુઓ સમાવી શકે છે. `with_capacity` ફંક્શન એ જ કાર્ય કરે છે જે `Vec::new` કરે છે પરંતુ એક મહત્વપૂર્ણ તફાવત સાથે: તે વેક્ટરમાં જગ્યા અગાઉથી ફાળવે છે. આપણે જાણીએ છીએ કે આપણે વેક્ટરમાં `size` ઘટકો સંગ્રહિત કરવાના છે, તેથી આ ફાળવણી શરૂઆતમાં કરવી એ `Vec::new` નો ઉપયોગ કરતાં થોડી વધુ કાર્યક્ષમ છે, જે ઘટકો દાખલ થતાં તેનું કદ બદલે છે.
+
+જ્યારે તમે `cargo check` ફરીથી ચલાવો છો, ત્યારે તે સફળ થવું જોઈએ.
+
+&lt;!-- Old headings. Do not remove or links may break. --&gt;
+#### Sending Code from the `ThreadPool` to a Thread
+
+અમે લિસ્ટિંગ ૨૧-૧૪ માં `for` લૂપમાં એક ટીપ્પણી મૂકી હતી, જે થ્રેડ બનાવવાની બાબત સાથે સંબંધિત છે. અહીં, અમે જોઈશું કે અમે વાસ્તવમાં થ્રેડ કેવી રીતે બનાવીએ છીએ. પ્રમાણભૂત લાયબ્રેરી `thread::spawn` ને થ્રેડ બનાવવાના માર્ગ તરીકે પ્રદાન કરે છે, અને `thread::spawn` ને એવો કોડ અપેક્ષિત છે જે થ્રેડ બનાવ્યાની સાથે જ ચલાવવો જોઈએ. જો કે, અમારા કિસ્સામાં, અમે થ્રેડ બનાવવા માંગીએ છીએ અને પછીથી મોકલવામાં આવતા કોડની રાહ જોવાવી હોય છે. પ્રમાણભૂત લાયબ્રેરીના થ્રેડનો અમલ આ કરવાની કોઈ રીત પ્રદાન કરતો નથી; અમારે તેને જાતે જ અમલમાં મૂકવો પડશે.
+
+આ વર્તણૂક અમલમાં મૂકવા માટે, અમે `ThreadPool` અને થ્રેડો વચ્ચે એક નવો ડેટા સ્ટ્રક્ચર રજૂ કરીશું. અમે આ ડેટા સ્ટ્રક્ચર્સને Worker નામ આપીશું, જે પૂલિંગ અમલીકરણોમાં સામાન્ય શબ્દ છે. `Worker` એ કોડ મેળવે છે જેને ચલાવવાની જરૂર છે અને તેના થ્રેડમાં તે કોડ ચલાવે છે. એક રેસ્ટોરન્ટના રસોડામાં કામ કરતા
+
+લોકો વિશે વિચારો: Workers રાહ જુએ છે જ્યાં સુધી ગ્રાહકો પાસેથી ઓર્ડર આવે, અને પછી તેઓ તે ઓર્ડર લેવા અને તેને પૂરા કરવા માટે જવાબદાર હોય છે.
+
+વિકલ્પ તરીકે વર્કર સંચાલક થ્રેડ પૂલમાં `JoinHandle&lt;()&gt;` ના વેક્ટરને સંગ્રહિત કરવાને બદલે, અમે `Worker` ના ઉદાહરણો સંગ્રહિત કરીશું. દરેક `Worker` એક જ `JoinHandle&lt;()&gt;` ઉદાહરણ સંગ્રહિત કરશે. ત્યારબાદ, અમે `Worker` પર એક પદ્ધતિ અમલમાં મૂકીશું જે ચલાવવા માટેના કોડનો ક્લોઝર લેશે અને તેને પહેલાથી ચાલી રહેલા થ્રેડને અમલ માટે મોકલશે. અમે દરેક `Worker` ને એક `id` પણ આપીશું જેથી પૂલમાં `Worker` ના જુદા જુદા ઉદાહરણોને લોગિંગ અથવા ડીબગીંગ
+
+કરતી વખતે ઓળખી શકાય. અહીં નવી પ્રક્રિયા છે જે `ThreadPool` બનાવતી વખતે થશે. અમે `Worker` ને આ રીતે સેટ કર્યા પછી થ્રેડ પર ક્લોઝર મોકલવા માટેનો કોડ અમલમાં મૂકીશું:
+
+Worker રચના વ્યાખ્યાયિત કરો જે `id` અને `JoinHandle&lt;()&gt;` ધરાવે છે.
+
+`ThreadPool` ને `Worker` ઉદાહરણોના વેક્ટરને સમાવવા માટે બદલો.
+
+`Worker::new` વિધેય વ્યાખ્યાયિત કરો જે એક `id` સંખ્યા લે છે અને `Worker` ઉદાહરણ પરત કરે છે જે `id` અને ખાલી ક્લોઝર સાથે શરૂ થયેલ થ્રેડ ધરાવે છે.
+
+`ThreadPool::new` માં, `for` લૂપ કાઉન્ટરનો ઉપયોગ `id` જનરેટ કરવા માટે કરો, તે `id` સાથે એક નવું `Worker` બનાવો અને વેક્ટરમાં `Worker` સંગ્રહિત કરો.
+
+જો તમે પડકાર ઝાલવા તૈયાર છો, તો યાદી ૨૧-૧૫ માં આપેલ કોડ જોતાં પહેલાં આ ફેરફારો જાતે અમલમાં મૂકવાનો પ્રયત્ન કરો.
+
+તૈયાર છો? અહીં યાદી ૨૧-૧૫ છે જેમાં અગાઉના ફેરફારો કરવા માટેની એક રીત દર્શાવવામાં આવી છે.
+
+&lt;Listing number="21-15" file-name="src/lib.rs" caption="Modifying `ThreadPool` to hold `Worker` instances instead of holding threads directly"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch21-web-server/listing-21-15/src/lib.rs:here}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+આપણે `ThreadPool` પર ક્ષેત્રનું નામ `threads` થી બદલીને `workers` કર્યું છે, કારણ કે હવે તે `JoinHandle&lt;()&gt;` ઉદાહરણોને બદલે `Worker` ઉદાહરણો ધરાવે છે. આપણે `for` લૂપમાં કાઉન્ટરનો ઉપયોગ `Worker::new` માટે Argument તરીકે કરીએ છીએ, અને દરેક નવા `Worker`
+
+ને `workers` નામનાં વેક્ટર (vector) માં સંગ્રહિત કરીએ છીએ. External code (જેમ કે આપણો સર્વર src/main.rs માં) એ `ThreadPool` ની અંદર `Worker` struct નો ઉપયોગ કરવા સંબંધિત અમલીકરણ વિગતો જાણવાની જરૂર નથી, તેથી આપણે `Worker` struct અને તેનું `new` કાર્ય ખાનગી બનાવીએ છીએ. `Worker::new` કાર્ય આપણને મળેલ `id` નો ઉપયોગ કરે છે અને એક `JoinHandle&lt;()&gt;` ઉદાહરણ સંગ્રહિત કરે છે જે ખાલી ક્લોઝર (closure) નો ઉપયોગ કરીને નવો થ્રેડ શરૂ કરીને બનાવવામાં આવે છે.
+
+નોંધ: જો ઓપરેટિંગ સિસ્ટમ પૂરતા સિસ્ટમ સંસાધનો ન હોવાને કારણે થ્રેડ બનાવી શકતી નથી, તો `thread::spawn` ગભરાટ (panic) પાડે છે. તેનાથી આપણી આખી સર્વર ગભરાટ પાડી શકે છે, ભલે કેટલાક થ્રેડો બનાવવામાં સફળ થાય. સરળતા માટે આ વર્તન યોગ્ય છે, પરંતુ ઉત્પાદન થ્રેડ પૂલ અમલીકરણમાં, તમે સંભવતઃ `std::thread::Builder` અને તેની `spawn` પદ્ધતિનો ઉપયોગ કરવા માગો છો જે `Result` પરત કરે છે.
+
+આ કોડ કમ્પાઇલ થશે અને `ThreadPool::new` ને Argument તરીકે આપેલા `Worker` ઉદાહરણોની સંખ્યા સંગ્રહિત કરશે. પરંતુ અમે હજી પણ `execute` માં મળતા ક્લોઝરને પ્રક્રિયા કરી રહ્યા નથી. ચાલો જોઈએ કે તે કેવી રીતે કરવું આગળ.
+
+#### Sending Requests to Threads via Channels
+
+આગામી સમસ્યા એ છે કે `thread::spawn` ને આપેલા ક્લોઝર્સ કંઈ જ કાર્ય કરતા નથી. હાલમાં, આપણે `execute` પદ્ધતિમાં ચલાવવા માટે જે ક્લોઝર જોઈએ છીએ તે મેળવીએ છીએ. પરંતુ આપણે દરેક `Worker` ની રચના સમયે `ThreadPool` માં રાખવામાં આવેલા કતારમાંથી ચલાવવા માટેનું કોડ મેળવવો પડશે અને તેને તેના થ્રેડને ચલાવવા માટે મોકલવો પડશે.
+
+આપણે હમણાં જ બનાવેલા `Worker` સ્ટ્રક્ચર્સને `ThreadPool` માં રહેલી કતારમાંથી ચલાવવા માટેનો કોડ મેળવવો જોઈએ અને તે કોડને તેના થ્રેડને ચલાવવા માટે મોકલવો જોઈએ.
+
+`execute` `ThreadPool` `Worker` અપણે પ્રકરણ ૧૬માં જે ચેનલો વિશે શીખ્યા—બે થ્રેડો વચ્ચે વાતચીત કરવાનો એક સરળ માર્ગ—તે આ ઉપયોગ માટે યોગ્ય રહેશે. આપણે
+
+એક ચેનલનો ઉપયોગ કાર્યોની કતાર તરીકે કરીશું, અને `execute` `ThreadPool` માંથી કાર્યને `Worker` ઉદાહરણોમાં મોકલશે, જે
+
+તેને તેના થ્રેડ પર મોકલશે. આ યોજના છે: `ThreadPool` એક ચેનલ
+
+બનાવશે અને સેન્ડરને જાળવી રાખશે. દરેક `Worker` રીસીવરને જાળવી રાખશે. આપણે એક નવું `Job` struct બનાવીશું જે ચેનલમાં મોકલવા માટે જરૂરી ક્લોઝર્સને જાળવી રાખશે.
+
+The `execute` Method `execute` પદ્ધતિ મોકલનાર દ્વારા તે ચલાવવા માંગે છે તે કાર્યને
+
+પ્રગટ કરશે. તેના થ્રેડમાં, `Worker` તેના રીસીવર પર લૂપ કરશે અને તેને મળેલાં કાર્યોના ક્લોઝર્સનું અમલીકરણ કરશે.
+
+ચાલો આપણે `ThreadPool::new` માં એક ચેનલ બનાવીને શરૂઆત કરીએ અને સેન્ડરને `ThreadPool` ઇન્સ્ટન્સમાં જાળવી રાખીએ, જેની જેમ Listing 21-16 માં દર્શાવેલ છે. હાલ માટે `Job` સ્ટ્રક્ચરમાં કંઈ પણ નથી, પરંતુ તે એવાં વસ્તુઓના પ્રકારનો હશે જેને આપણે ચેનલ દ્વારા મોકલીશું.
+
+&lt;Listing number="21-16" file-name="src/lib.rs" caption="Modifying `ThreadPool` to store the sender of a channel that transmits `Job` instances"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch21-web-server/listing-21-16/src/lib.rs:here}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+`ThreadPool::new` માં, આપણું નવું ચેનલ બનાવીએ છીએ અને પૂલ પાસે સેન્ડર રાખીએ છીએ. આ સફળતાપૂર્વક કમ્પાઇલ થશે.
+
+ચાલો હવે ચેનલના રીસીવરને દરેક `Worker`માં મોકલવાનો પ્રયત્ન કરીએ જ્યારે થ્રેડ પૂલ ચેનલ બનાવે છે. આપણને ખબર છે કે આપણે થ્રેડ દ્વારા શરૂ કરાયેલ `Worker` ઇન્સ્ટન્સમાં રીસીવરનો ઉપયોગ કરવા માંગીએ છીએ, તેથી આપણે ક્લોઝરમાં `receiver` પેરામીટરનો સંદર્ભ લઈશું. લિસ્ટિંગ 21-17 નો કોડ હજી કમ્પાઇલ થશે નહીં.
+
+&lt;Listing number="21-17" file-name="src/lib.rs" caption="Passing the receiver to each `Worker`"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch21-web-server/listing-21-17/src/lib.rs:here}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+અમે કેટલાક નાના અને સરળ ફેરફારો કર્યા છે: અમે રીસીવરને `Worker::new` માં મોકલીએ છીએ, અને પછી ક્લોઝરમાં તેનો ઉપયોગ કરીએ છીએ.
+
+જ્યારે અમે આ કોડ ચકાસવાનો પ્રયત્ન કરીએ છીએ, ત્યારે અમને આ ભૂલ મળે છે:
+
+```console
+```console
+{{#include ../listings/ch21-web-server/listing-21-17/output.txt}}
+</code></pre>
+<pre><code>આ કોડ `receiver` ને અનેક `Worker` ઉદાહરણોમાં મોકલવાનો પ્રયત્ન કરી રહ્યો છે. આ કામ કરશે નહીં, કારણ કે તમને પ્રકરણ ૧૬ યાદ હશે: Rust દ્વારા પૂરા પાડવામાં આવેલ ચેનલ અમલીકરણ બહુવિધ ઉત્પાદક (multiple producer), એકગ્રહ ઉપભોક્તા (single consumer) પ્રકારનું છે. આનો અર્થ એ થાય છે કે આપણે આ કોડને સુધારવા માટે ચેનલના વપરાશ પાતળા ભાગને માત્ર ક્લોન કરી શકતા નથી. આપણને બહુવિધ `Worker` ઉદાહરણો સાથે સંદેશાઓની એક યાદી મોકલવી પણ નથી જોઈતી; જેથી દરેક સંદેશાની માત્ર એક જ વાર પ્રક્રિયા
+
+થાય. વધુમાં, ચેનલ કતારમાંથી કાર્ય લેવામાં `receiver` માં ફેરફાર કરવો જરૂરી છે, તેથી થ્રેડોને `receiver` ને સુરક્ષિત રીતે શેર કરવાની અને તેમાં ફેરફાર કરવાની રીત જોઈએ; નહિંતર આપણને રેસ પરિસ્થિતિઓ (race conditions) આવી શકે છે (જે પ્રકરણ ૧૬ માં આવરી લેવામાં આવ્યું હતું).
+
+પ્રકરણ ૧૬માં ચર્ચા કરાયેલ થ્રેડ-સુરક્ષિત સ્માર્ટ પોઇન્ટર્સને યાદ કરો: બહુવિધ થ્રેડોમાં માલિકી વહેંચવા અને થ્રેડોને મૂલ્ય બદલવાની મંજૂરી આપવા માટે, આપણે `Arc&lt;Mutex&lt;T&gt;&gt;` નો ઉપયોગ કરવો આવશ્યક છે. `Arc` પ્રકારથી બહુવિધ `Worker` ઉદાહરણો રીસીવરનું માલિકી મેળવી શકશે, અને `Mutex` ખાતરી કરશે કે એક સમયે માત્ર એક જ `Worker` રીસીવર પાસેથી કાર્ય મેળવે. સૂચિ ૨૧-૧૮ માં આપણે જે ફેરફારો કરવાના છે તે દર્શાવવામાં આવ્યા છે.
+
+&lt;Listing number="21-18" file-name="src/lib.rs" caption="Sharing the receiver among the `Worker` instances using `Arc` and `Mutex`"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch21-web-server/listing-21-18/src/lib.rs:here}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+`ThreadPool::નવું` માં, અમે રીસીવરને `Arc` અને `Mutex` માં મૂકીએ છીએ. દરેક નવા `Worker` માટે, અમે `Arc` ની નકલ કરીએ છીએ જેથી સંદર્ભ ગણતરી વધે અને `Worker` ઉદાહરણો રીસીવરની માલિકી વહેંચી શકે.
+
+આ ફેરફારો સાથે, કોડ કમ્પાઇલ થાય છે! આપણે ત્યાં પહોંચી રહ્યા છીએ!
+
+#### Implementing the `execute` Method
+
+ચાલો અંતે `execute` પદ્ધતિને `ThreadPool` પર અમલમાં મૂકીએ. આપણે `Job` ને પણ struct થી બદલીને એક trait object માટે પ્રકાર ઉપનામ બનાવીશું, જે `execute` દ્વારા મળતા closure ના પ્રકારને ધરાવે છે. પ્રકરણ ૨૦ માં "પ્રકાર ઉપનામો અને પ્રકાર અભિગમો" વિભાગમાં ચર્ચા કરવામાં આવી હતી તેમ, પ્રકાર ઉપનામો લાંબા પ્રકારોને સરળતાથી ઉપયોગ માટે ટૂંકા બનાવવાની મંજૂરી આપે છે. લિસ્ટિંગ 21-19 જુઓ.
+
+&lt;Listing number="21-19" file-name="src/lib.rs" caption="Creating a `Job` type alias for a `Box` that holds each closure and then sending the job down the channel"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch21-web-server/listing-21-19/src/lib.rs:here}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+`Job` `execute` `send` કારણ we use `unwrap` is that we know the failure case won’t happen, but the compiler doesn’t know that.
+
+પરંતુ આપણે હજી પૂર્ણ નથી કર્યા! `Worker` માં, `thread::spawn` ને આપેલ ક્લોઝર માત્ર જ réception અંતિમ બિંદુનો સંદર્ભ આપે છે. તેના બદલે, આપણે ક્લોઝરને અનંતકાળ સુધી લૂપ કરવું પડશે, réception અંતિમ બિંદુ પાસેથી કાર્ય માટે પૂછવું પડશે અને જ્યારે તે એક કાર્ય મેળવે ત્યારે ચલાવવું પડશે. ચાલો Listing 21-20 માં દર્શાવેલ ફેરફાર `Worker::new` માં કરીએ.
+
+&lt;Listing number="21-20" file-name="src/lib.rs" caption="Receiving and executing the jobs in the `Worker` instance’s thread"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch21-web-server/listing-21-20/src/lib.rs:here}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+અહીં, પ્રથમ આપણે `receiver` પર `lock` કૉલ કરીએ છીએ જેથી મ્યુટેક્સ મેળરી શકાય, અને પછી કોઈપણ ભૂલો માટે ગભરાવવા (panic) માટે `unwrap` કૉલ કરીએ છીએ. મ્યુટેક્સ મેળવવામાં નિષ્ફળતા આવી શકે છે જો મ્યુટેક્સ ઝેરી (poisoned) સ્થિતિમાં હોય, જેવું થઈ શકે છે જો કોઈ અન્ય થ્રેડ લોક છોડવાને બદલે ગભરાવાથી બંધ થઈ ગયો હોય. આ પરિસ્થિતિમાં, આ થ્રેડને ગભરાવવા માટે `unwrap` કૉલ કરવું એ યોગ્ય પગલું છે. તમે તમારી સમજ મુજબ માહિતીપ્રદ ભૂલ સંદેશ સાથે `expect` માં આ `unwrap` બદલી શકો છો.
+
+જો આપણે મ્યુટેક્સ પર લોક મેળવીએ, તો આપણે `recv` ને બોલાવીએ છીએ જેથી ચેનલમાંથી `Job` પ્રાપ્ત કરી શકાય. એક અંતિમ `unwrap` અહીં કોઈપણ ભૂલોને દૂર કરે છે, જે થઈ શકે છે જો સેન્ડર ધરાવતો થ્રેડ બંધ થઈ ગયો હોય, જેમ `send` પદ્ધતિ `Err` પરત કરે છે જો રીસીવર બંધ થઈ જાય.
+
+`recv` કૉલ બ્લોક થાય છે, તેથી જો હજી કોઈ કાર્ય ન હોય, તો વર્તમાન થ્રેડ એક કાર્ય ઉપલબ્ધ થાય ત્યાં સુધી રાહ જુએ છે. `Mutex&lt;T&gt;` ખાતરી કરે છે કે એક સમયે માત્ર એક જ `Worker` થ્રેડ કાર્યની વિનંતી કરવાનો પ્રયાસ કરી રહ્યો છે.
+
+આપણો થ્રેડ પૂલ હવે કાર્યરત સ્થિતિમાં છે! તેને `cargo run` ચલાવો અને કેટલીક વિનંતીઓ કરો:
+
+&lt;!-- manual-regeneration
+cd listings/ch21-web-server/listing-21-20
+cargo run
+make some requests to 127.0.0.1:7878
+Can't automate because the output depends on making requests
+--&gt;
+```console
+```console
+$ cargo run
+   Compiling hello v0.1.0 (file:///projects/hello)
+warning: field `workers` is never read
+ --&gt; src/lib.rs:7:5
+  |
+6 | pub struct ThreadPool {
+  |            ---------- field in this struct
+7 |     workers: Vec&lt;Worker&gt;,
+  |     ^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` on by default
+
+warning: fields `id` and `thread` are never read
+  --&gt; src/lib.rs:48:5
+   |
+47 | struct Worker {
+   |        ------ fields in this struct
+48 |     id: usize,
+   |     ^^
+49 |     thread: thread::JoinHandle&lt;()&gt;,
+   |     ^^^^^^
+
+warning: `hello` (lib) generated 2 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.91s
+     Running `target/debug/hello`
+Worker 0 got a job; executing.
+Worker 2 got a job; executing.
+Worker 1 got a job; executing.
+Worker 3 got a job; executing.
+Worker 0 got a job; executing.
+Worker 2 got a job; executing.
+Worker 1 got a job; executing.
+Worker 3 got a job; executing.
+Worker 0 got a job; executing.
+Worker 2 got a job; executing.
+</code></pre>
+<pre><code>Success! સફળતા! આપણી પાસે હવે થ્રેડ પૂલ છે જે જોડાણો અસિંક્રોનસ રીતે ચલાવે છે. હંમેશાં ચારથી વધુ થ્રેડ બનાવવામાં આવતા નથી, તેથી જો સર્વર મોટી સંખ્યામાં વિનંતીઓ મેળવે તો આપણી સિસ્ટમ પર ભારણ નહીં પડે. જો આપણે /sleep ને વિનંતી કરીએ, તો સર્વર અન્ય થ્રેડ દ્વારા બીજી વિનંતીઓ ચલાવીને અન્ય વિનંતીઓને સેવા આપી શકશે.
+
+નોંધ: જો તમે એકસાથે બહુવિધ બ્રાઉઝર વિન્ડોમાં /sleep ખોલો છો, તો તે પાંચ-સેકન્ડના અંતરાલમાં એક સમયે લોડ થઈ શકે છે. કેટલાક વેબ બ્રાઉઝર્સ કેશીંગ માટે સમાન વિનંતીઓના બહુવિધ ઉદાહરણો ક્રમિક રીતે ચલાવે છે. આ મર્યાદા આપણી વેબ સર્વર દ્વારા થતી નથી.
+
+આ એક યોગ્ય સમય છે થોભીને વિચારવાનું કે જો આપણે ક્લોઝરની જગ્યાએ ફ્યુચર્સનો ઉપયોગ કર્યો હોત તો લિસ્ટિંગ ૨૧-૧૮, ૨૧-૧૯ અને ૨૧-૨૦ માં રહેલો કોડ કેવી રીતે અલગ હોત. કયા પ્રકારો બદલાય? પદ્ધતિ હસ્તાક્ષરોમાં શું ફેરફાર થાય, જો કોઈ હોય તો? કોડના કયા ભાગો એ જ રહેશે?
+
+અધ્યાય ૧૭ અને અધ્યાય ૧૯ માં `while let` લૂપ વિશે શીખ્યા પછી, તમને આશ્ચર્ય થઈ શકે છે કે શા માટે આપણે લિસ્ટિંગ ૨૧-૨૧ માં દર્શાવેલ `Worker` થ્રેડ કોડ લખ્યો નથી.
+
+&lt;Listing number="21-21" file-name="src/lib.rs" caption="An alternative implementation of `Worker::new` using `while let`"&gt;
+```rust
+```rust
+{{#rustdoc_include ../listings/ch21-web-server/listing-21-21/src/lib.rs:here}}
+</code></pre>
+<pre><code>&lt;/Listing&gt;
+આ કોડ સંકલિત થાય છે અને ચાલે છે, પરંતુ તે ઇચ્છિત થ્રેડીંગ વર્તન પરિણામી નથી: એક ધીમો વિનંતી અન્ય વિનંતીઓને પ્રક્રિયા પામવા માટે રાહ જોવાનારી સ્થિતિમાં મૂકી દેશે. આનું કારણ થોડું સૂક્ષ્મ છે: `Mutex` સ્ટ્રક્ચરમાં કોઈ જાહેર `unlock` પદ્ધતિ નથી, કારણ કે લોકનું માલિકી `LockResult&lt;MutexGuard&lt;T&gt;&gt;` માં રહેલા `MutexGuard&lt;T&gt;` ના જીવનકાળ પર આધારિત છે જે `lock` પદ્ધતિ આપે છે. કમ્પાઇલ સમયે, બોરો ચેકર એ નિયમ લાગુ કરી શકે છે કે `Mutex` દ્વારા સુરક્ષિત સંસાધન ત્યારે જ ઍક્સેસ કરી શકાય છે જ્યારે આપણે લોક ધરાવતા હોઈએ. જો કે, આ અમલીકરણ પણ પરિણામી થઈ શકે છે કે જો આપણે `MutexGuard&lt;T&gt;` ના જીવનકાળ વિશે સભાન ન રહીએ તો લોક અણધારી રીતે લાંબો સમય જાળવી રાખવામાં આવે છે.
+
+Listing 21-20 માં વપરાયેલ `let job = receiver.lock().unwrap().recv().unwrap();` કોડ કાર્ય કરે છે, કારણ કે `let` સાથે, સમીકરણ નિશાનીના જમણી બાજુએ વપરાયેલ કોઈપણ કામચલાઉ મૂલ્યો `let` વિધાન સમાપ્ત થતાંવેંત જ દૂર થઈ જાય છે. જોકે, `while let` (અને `if let` અને `match`) સંકળાયેલ બ્લોકના અંત સુધી કામચલાઉ મૂલ્યોને દૂર કરતું નથી. Listing 21-21 માં, લોક `job()` ની કૉલના સમગ્ર સમયગાળા દરમિયાન જાળવી રાખવામાં આવે છે, જેથી અન્ય `Worker` ઉદાહરણો નોકરીઓ મેળવી શકતા નથી.
+
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch21-01-single-threaded.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch21-03-graceful-shutdown-and-cleanup.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch21-01-single-threaded.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch21-03-graceful-shutdown-and-cleanup.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
