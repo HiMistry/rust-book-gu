@@ -55,7 +55,7 @@ def find_gu_text_line(gu_lines, text, start=0):
         line = gu_lines[i].rstrip()
         if re.search(r'\]\[', line):
             continue
-        if line.startswith('```') or line.startswith('#') or line.startswith('>'):
+        if line.startswith('```') or line.startswith('#') or line.startswith('>') or line.startswith('{{#'):
             continue
         if text in line:
             return i
@@ -67,7 +67,7 @@ def find_gu_text_line(gu_lines, text, start=0):
         line = gu_lines[i].rstrip()
         if re.search(r'\]\[', line):
             continue
-        if line.startswith('```') or line.startswith('#') or line.startswith('>'):
+        if line.startswith('```') or line.startswith('#') or line.startswith('>') or line.startswith('{{#'):
             continue
         for w in words:
             if len(w) > 2 and w in line and not re.search(r'\]\[' + re.escape(w), line):
@@ -92,13 +92,24 @@ def fix_file(fname):
     gu_lines = gu_content.split('\n')
     
     changed = False
+
+    for i, line in enumerate(gu_lines):
+        stripped = line.rstrip()
+        if '[Cargo][doccargo]' in stripped:
+            new_stripped = re.sub(r'\[Cargo\]\[doccargo\]\.(toml|lock)', r'Cargo.\1', stripped)
+            if new_stripped != stripped:
+                gu_lines[i] = new_stripped
+                changed = True
     
     for text, ref_id in en_usages:
         line_idx = find_gu_text_line(gu_lines, text)
         if line_idx >= 0:
             old_line = gu_lines[line_idx]
-            # Replace the first occurrence of the text with linked version
-            new_line = old_line.replace(text, f'[{text}][{ref_id}]', 1)
+            # Use word-boundary replacement to avoid partial matches (e.g., "Cargo" in "Cargo.toml")
+            if '`' in text:
+                new_line = old_line.replace(text, f'[{text}][{ref_id}]', 1)
+            else:
+                new_line = re.sub(r'(?<!\w)' + re.escape(text) + r'(?!(?:\w|\.(?:toml|lock|rs)))', f'[{text}][{ref_id}]', old_line, count=1)
             if new_line != old_line:
                 gu_lines[line_idx] = new_line
                 changed = True
