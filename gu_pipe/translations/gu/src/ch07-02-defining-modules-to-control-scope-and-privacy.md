@@ -8,10 +8,8 @@
 અગાઉ આપણે મોડ્યુલ્સ અને પાથની વિગતોમાં જઈએ તે પહેલાં, અહીં એક સંક્ષિપ્ત સંદર્ભ આપવામાં આવ્યો છે કે કેવી રીતે મોડ્યુલ્સ, પાથ, `use` કીવર્ડ અને `pub` કીવર્ડ કમ્પાઇલર (compiler) માં કાર્ય કરે છે, અને મોટાભાગના વિકાસકર્તાઓ (developers) તેમનો કોડ કેવી રીતે ગોઠવે છે. આ પ્રકરણમાં આપણે આ નિયમોના ઉદાહરણો જોઈશું, પરંતુ મોડ્યુલ્સ કેવી રીતે કાર્ય કરે છે તેની યાદ અપાવવા માટે આ એક ઉત્તમ સ્થળ છે.
 
 ```text
-```text
 ક્રેટ રૂટથી આરંભ કરો: જ્યારે ક્રેકેટ (crate) ને કમ્પાઇલ કરવામાં આવે છે, ત્યારે કમ્પાઇલર પ્રથમ ક્રેકેટ રૂટ ફાઈલ (સામાન્ય રીતે `src/lib.rs` લાયબ્રેરી ક્રેકેટ માટે અને `src/main.rs` બાઈનરી ક્રેકેટ માટે) માં કમ્પાઇલ કરવા માટે કોડ શોધે છે.
 
-```
 ```
 મોડ્યુલો જાહેર કરવા : ક્રેટ રૂટ ફાઈલમાં, તમે નવા મોડ્યુલો જાહેર કરી શકો છો; ઉદાહરણ તરીકે, જો તમે “ગાર્ડન” મોડ્યુલો જાહેર કરો `mod garden;` તો, કમ્પાઇલર આ સ્થળોએ મોડ્યુલનો કોડ શોધશે: ઇનલાઇન, કુંજી કૌંસની અંદર જે સેમિકોલન પછી આવે છે `mod garden`.
 
@@ -32,10 +30,8 @@ src/garden/vegetables.rs ફાઈલમાં src/garden/vegetables/mod.rs
 `use` કીવર્ડ : કોઈ અવકાશમાં, `use` કીવર્ડ વસ્તુઓ માટે શોર્ટકટ બનાવે છે જેથી કરીને લાંબા માર્ગોનું પુનરાવર્તન ટાળી શકાય. કોઈપણ અવકાશમાં જે `crate::garden::vegetables::Asparagus` ને સંદર્ભિત કરી શકે છે, તમે `use crate::garden::vegetables::Asparagus;` સાથે શોર્ટકટ બનાવી શકો છો, અને ત્યારબાદ તમારે માત્ર `Asparagus` લખવાની જરૂર પડશે તે પ્રકારનો ઉપયોગ અવકાશમાં કરવા માટે.
 
 ```text
-```text
 અહીં, આપણે `backyard` નામની એક બાઈનરી ક્રેટ બનાવીએ છીએ જે આ નિયમો દર્શાવે છે. ક્રેટનું ડિરેક્ટરી, જે backyard નામનું પણ છે, તેમાં આ ફાઇલો અને ડિરેક્ટરીઓ સમાવિષ્ટ છે:
 
-```
 ```
 backyard
 ├── Cargo.lock
@@ -49,26 +45,20 @@ backyard
 
 <Listing file-name="src/main.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/main.rs}}
-```
 ```
 </Listing>
 `pub mod garden;` લાઇન કમ્પાઇલરને જણાવે છે કે તે src/garden.rs માં મળેલ કોડનો સમાવેશ કરે, જે આ પ્રમાણે છે:
 
 <Listing file-name="src/garden.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/garden.rs}}
-```
 ```
 </Listing>
 અહીં, `pub mod vegetables;` એનો અર્થ થાય છે કે src/garden/vegetables.rs માં રહેલો કોડ પણ સામેલ કરવામાં આવ્યો છે. તે કોડ આ પ્રમાણે છે:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/garden/vegetables.rs}}
-```
 ```
 હવે ચાલો આ નિયમોની વિગતોમાં જઈએ અને તેમને ક્રિયામાં દર્શાવીએ!
 
@@ -84,9 +74,7 @@ backyard
 
 <Listing number="7-1" file-name="src/lib.rs" caption="A `front_of_house` module containing other modules that then contain functions">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-01/src/lib.rs}}
-```
 ```
 </Listing>
 આપણે એક મોડ્યુલ વ્યાખ્યાયિત કરીએ છીએ જેમાં `mod` કીવર્ડ ત્યારબાદ મોડ્યુલનું નામ આવે છે (આ કિસ્સામાં, `front_of_house`). મોડ્યુલનો ભાગ પછી કુંડાકી અક્ષરો (`curly brackets`) ની અંદર જાય છે. મોડ્યુલોની અંદર, આપણે અન્ય મોડ્યુલો પણ મૂકી શકીએ છીએ, જેમ કે આ કિસ્સામાં `hosting` અને `serving` મોડ્યુલો છે. મોડ્યુલો અન્ય વસ્તુઓ માટે વ્યાખ્યાઓ પણ રાખી શકે છે, જેમ કે structs, enums, constants, traits અને Listing 7-1 માં દર્શાવેલ functions.

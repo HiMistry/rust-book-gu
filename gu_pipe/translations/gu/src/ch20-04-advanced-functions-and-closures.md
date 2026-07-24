@@ -10,9 +10,7 @@
 
 <Listing number="20-28" file-name="src/main.rs" caption="Using the `fn` type to accept a function pointer as an argument">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-28/src/main.rs}}
-```
 ```
 </Listing>
 આ કોડ `The answer is: 12` છાપે છે. અમે ઉલ્લેખ કરીએ છીએ કે `do_twice` માં પરિમાણ `f` એ એક `fn` છે જે એક `i32` પ્રકારનું પરિમાણ લે છે અને `i32` પરત કરે છે. અમે પછી `do_twice` ના શરીરમાં `f` ને બોલાવી શકીએ છીએ. `main` માં, અમે `add_one` નામનું કાર્ય પ્રથમ Argument તરીકે `do_twice` ને આપી શકીએ છીએ.
@@ -27,18 +25,14 @@
 
 <Listing number="20-29" caption="Using a closure with the `map` method to convert numbers to strings">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-29/src/main.rs:here}}
-```
 ```
 </Listing>
 અથવા, આપણે `map` ના આર્ગ્યુમેન્ટ તરીકે ક્લોઝરને બદલે કોઈ ફંક્શનનું નામ આપી શકીએ છીએ. સૂચિ ૨૦-૩૦ દર્શાવે છે કે તે કેવું દેખાશે.
 
 <Listing number="20-30" caption="Using the `String::to_string` function with the `map` method to convert numbers to strings">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-30/src/main.rs:here}}
-```
 ```
 </Listing>
 નોંધ અહીં આપણે “ઉન્નત લક્ષણો” વિભાગમાં ઉલ્લેખિત સંપૂર્ણ લાયકાતવાળા સિન્ટેક્સનો ઉપયોગ કરવો જોઈએ કારણ કે `to_string` નામનું બહુવિધ વિધેય ઉપલબ્ધ છે. અહીં, આપણે `ToString` લક્ષણમાં વ્યાખ્યાયિત કરેલા `to_string`
@@ -49,9 +43,7 @@
 
 <Listing number="20-31" caption="Using an enum initializer with the `map` method to create a `Status` instance from numbers">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-31/src/main.rs:here}}
-```
 ```
 </Listing>
 અહીં, આપણે `Status::Value` ઉદાહરણો દરેક `u32` મૂલ્યની શ્રેણીમાં બનાવીએ છીએ જેના પર `map` કાર્ય બોલાવવામાં આવે છે, `Status::Value` ના પ્રારંભિકા વિધેયનો ઉપયોગ કરીને. કેટલાક લોકોને આ શૈલી પસંદ હોય છે અને કેટલાક લોકોને ક્લોઝરનો ઉપયોગ કરવાનું પસંદ હોય છે. તે સમાન કોડમાં કમ્પાઇલ થાય છે, તેથી જે શૈલી તમને વધુ સ્પષ્ટ લાગે તેનો ઉપયોગ કરો.
@@ -64,37 +56,36 @@
 
 <Listing number="20-32" caption="Returning a closure from a function using the `impl Trait` syntax">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-32/src/lib.rs}}
-```
 ```
 </Listing>
 જો કે, જેમ આપણે પ્રકરણ ૧૩ માં “ક્લોઝર પ્રકારો અનુમાનિત અને નોંધણી” વિભાગમાં નોંધ્યું હતું તેમ, દરેક ક્લોઝર પોતાનો એક અલગ પ્રકાર પણ છે. જો તમારે બહુવિધ ફંક્શન્સ સાથે કામ કરવાની જરૂર હોય જે સમાન હસ્તાક્ષર પરંતુ જુદા જુદા અમલીકરણો ધરાવે છે, તો તમારે તેમના માટે ટ્રેઇટ ઑબ્જેક્ટનો ઉપયોગ કરવો પડશે. ધ્યાનમાં લો કે જો તમે Listing 20-33 માં દર્શાવેલ જેવું કોડ લખો છો તો શું થાય છે.
 
 <Listing file-name="src/main.rs" number="20-33" caption="Creating a `Vec<T>` of closures defined by functions that return `impl Fn` types">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-33/src/main.rs}}
-```
 ```
 </Listing>
 અહીં બે વિધેયો છે, `returns_closure` અને `returns_initialized_closure`, જે બંને `impl Fn(i32) -> i32` પરત કરે છે. નોંધ કરો કે તેઓ જે ક્લોઝર પરત કરે છે તે અલગ છે, ભલે તેઓ સમાન પ્રકારનું અમલીકરણ કરે. જો આપણે આને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ, તો Rust આપણને જણાવે છે કે તે કામ કરશે નહીં:
 
 ```text
-```text
 {{#include ../listings/ch20-advanced-features/listing-20-33/output.txt}}
 ```
-```
-ભૂલ સંદેશ જણાવે છે કે જ્યારે પણ આપણે `impl Trait` પરત કરીએ છીએ, ત્યારે Rust એક અનોખી અસ્પષ્ટ પ્રકાર (opaque type) બનાવે છે; એવો પ્રકાર જેમાં આપણે Rust આપણી માટે જે બનાવે છે તેની વિગતો જોઈ શકતા નથી, અને ન તો આપણે અનુમાન લગાવી શકીએ કે Rust કયો પ્રકાર ઉત્પન્ન કરશે. તેથી, ભલે આ કાર્યો સમાન ટ્રેઇટ લાગુ કરતા ક્લોઝર (closure) પરત કરે છે, `Fn(i32) -> i32` , પણ Rust દરેક માટે બનાવેલા અસ્પષ્ટ પ્રકારો અલગ હોય છે. (આ એ જ રીતે મળતું આવે છે કે જે રીતે Rust જુદા જુદા async બ્લોક્સ માટે અલગ-અલગ કોંક્રિટ પ્રકારો ઉત્પન્ન કરે છે, ભલે તેમનો આઉટપુટ પ્રકાર સમાન હોય, જે આપણે પ્રકરણ 17 માં “The `Pin` Type and the `Unpin` Trait” માં જોયું હતું.) આપણને હવે આ સમસ્યાનો ઉકેલ ઘણી વાર જોવા મળ્યો છે: આપણે ટ્રેઇટ ઓબ્જેક્ટ (trait object) નો ઉપયોગ કરી શકીએ છીએ, જેમ કે Listing 20-34 માં દર્શાવેલ છે.
+ભૂલ સંદેશ જણાવે છે કે જ્યારે પણ આપણે `impl Trait` પરત કરીએ છીએ, ત્યારે Rust એક અનોખી અસ્પષ્ટ પ્રકાર (opaque type) બનાવે છે; એવો પ્રકાર જેમાં આપણે Rust આપણી માટે જે બનાવે છે તેની વિગતો જોઈ શકતા નથી, અને ન તો આપણે અનુમાન લગાવી શકીએ કે Rust કયો પ્રકાર ઉત્પન્ન કરશે. તેથી, ભલે આ કાર્યો સમાન ટ્રેઇટ લાગુ કરતા ક્લોઝર (closure) પરત કરે છે, `Fn(i32) -> i32` , પણ Rust દરેક માટે બનાવેલા અસ્પષ્ટ પ્રકારો અલગ હોય છે. (આ એ જ રીતે મળતું આવે છે કે જે રીતે Rust જુદા જુદા async બ્લોક્સ માટે અલગ-અલગ કોંક્રિટ પ્રકારો ઉત્પન્ન કરે છે, ભલે તેમનો આઉટપુટ પ્રકાર સમાન હોય, જે આપણે પ્રકરણ 17 માં [“The `Pin` Type and the `Unpin` Trait”][future-types] માં જોયું હતું.) આપણને હવે આ સમસ્યાનો ઉકેલ ઘણી વાર જોવા મળ્યો છે: આપણે ટ્રેઇટ ઓબ્જેક્ટ (trait object) નો ઉપયોગ કરી શકીએ છીએ, જેમ કે Listing 20-34 માં દર્શાવેલ છે.
 
 <Listing number="20-34" caption="Creating a `Vec<T>` of closures defined by functions that return `Box<dyn Fn>` so that they have the same type">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-34/src/main.rs:here}}
-```
 ```
 </Listing>
 આ કોડ યોગ્ય રીતે સંપાદિત થશે. ટ્રેઇટ ઓબ્જેક્ટ વિશે વધુ માહિતી માટે, પ્રકરણ ૧૮ માં “વહેંચાયેલ વર્તન પર અમૂર્ત કરવા માટે ટ્રેઇટ ઓબ્જેક્ટનો ઉપયોગ” વિભાગ
 
 જુઓ. હવે, આપણે મેક્રો જોઈએ!
 
+
+
+[advanced-traits]: ch20-02-advanced-traits.html#advanced-traits
+[enum-values]: ch06-01-defining-an-enum.html#enum-values
+[closure-types]: ch13-01-closures.html#closure-type-inference-and-annotation
+[future-types]: ch17-03-more-futures.html
+[trait-objects]: ch18-02-trait-objects.html

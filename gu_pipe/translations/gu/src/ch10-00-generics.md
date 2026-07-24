@@ -18,9 +18,7 @@
 
 <Listing number="10-1" file-name="src/main.rs" caption="Finding the largest number in a list of numbers">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-01/src/main.rs:here}}
-```
 ```
 </Listing>
 અમે `number_list` ચલણમાં પૂર્ણાંકોની યાદી સંગ્રહિત કરીએ છીએ અને યાદીમાંના પ્રથમ અંકનો સંદર્ભ `largest` નામના variable મૂકીએ છીએ. ત્યારબાદ અમે યાદીમાંના તમામ અંકો પર ચાલીએ છીએ, અને જો વર્તમાન અંક `largest` માં સંગ્રહિત અંક કરતાં મોટો હોય, તો અમે તે ચરમાં રહેલા સંદર્ભને બદલીએ છીએ. જો કે, જો વર્તમાન અંક અત્યાર સુધી જોવા મળેલા સૌથી મોટા અંક જેટલો અથવા તેનાથી ઓછો હોય, તો ચલણમાં કોઈ ફેરફાર થતો નથી અને કોડ યાદીમાંના આગામી અંક પર આગળ વધે છે. યાદીમાંના તમામ અંકોને ધ્યાનમાં લીધા પછી, `largest` એ સૌથી મોટા અંકનો સંદર્ભ આપવો જોઈએ, જે આ કિસ્સામાં 100 છે.
@@ -29,9 +27,7 @@
 
 <Listing number="10-2" file-name="src/main.rs" caption="Code to find the largest number in *two* lists of numbers">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-02/src/main.rs}}
-```
 ```
 </Listing>
 જોકે આ કોડ કાર્ય કરે છે, કોડનું પુનરાવર્તન કંટાળાજનક અને ભૂલ ઉત્પન્ન કરનારું હોઈ શકે છે. આપણે એ પણ યાદ રાખવું જોઈએ કે જ્યારે આપણે ફેરફાર કરવા માંગીએ છીએ ત્યારે બહુવિધ સ્થળોએ કોડને અપડેટ કરવો પડે છે.
@@ -42,9 +38,7 @@ Listing 10-3 માં, આપણે સૌથી મોટી સંખ્ય�
 
 <Listing number="10-3" file-name="src/main.rs" caption="Abstracted code to find the largest number in two lists">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-03/src/main.rs:here}}
-```
 ```
 </Listing>
 The `largest` Function સૌથી `મોટું` વિધેય (function) એક પરિમાણ (parameter) ધરાવે છે જેને `list` કહેવાય છે, જે `i32` મૂલ્યોનો કોઈ ચોક્કસ ભાગ દર્શાવે છે જે આપણે વિધેયમાં મોકલી શકીએ છીએ. આથી, જ્યારે આપણે વિધેયને બોલાવીએ છીએ, ત્યારે કોડ આપેલ મૂલ્યો પર

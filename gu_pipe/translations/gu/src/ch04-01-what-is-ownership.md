@@ -156,16 +156,12 @@
 યાદી ક્ષતિ સુરક્ષા સુનિશ્ચિત કરવા માટે, `let s2 = s1;` લાઇન પછી, Rust `s1` ને હવે માન્ય ગણે છે. આથી, જ્યારે `s1` અવકાશમાંથી બહાર જાય ત્યારે Rustને કંઈપણ મુક્ત કરવાની જરૂર નથી. જુઓ કે તમે `s2` બનાવ્યા પછી `s1` નો ઉપયોગ કરવાનો પ્રયત્ન કરો છો; તે કામ કરશે નહીં:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-04-cant-use-after-move/src/main.rs:here}}
-```
 ```
 તમે આવી ભૂલ મેળવશો કારણ કે Rust અમાન્ય સંદર્ભનો ઉપયોગ કરવાથી રોકે છે:
 
 ```console
-```console
 {{#include ../listings/ch04-understanding-ownership/no-listing-04-cant-use-after-move/output.txt}}
-```
 ```
 જો તમે અન્ય ભાષાઓમાં `shallow copy` અને `deep copy` જેવા શબ્દો સાંભળ્યા હશે, તો માત્ર pointer, length અને capacity ની નકલ કરવાની પ્રક્રિયાને `shallow copy` કહી શકાય એવું લાગે છે. પરંતુ Rust માં પ્રથમ variable પણ અમાન્ય (invalidate) કરવામાં આવે છે, તેથી તેને `shallow copy` કહેવાને બદલે `move` તરીકે ઓળખવામાં આવે છે. આ ઉદાહરણમાં, આપણે કહીશું કે `s1` ને `s2` માં `move` કરવામાં આવ્યું હતું. આથી, ખરેખર શું થાય છે તે આકૃતિ 4-4 માં દર્શાવેલ છે.
 
@@ -178,9 +174,7 @@
 આ સંબંધનું વિરુદ્ધ પણ સાચું છે, જે સ્કોપિંગ (scoping), માલિકી (ownership) અને `drop` ફંક્શન દ્વારા મેમરી મુક્ત થવા વચ્ચેના સંબંધને લાગુ પડે છે. જ્યારે તમે કોઈ અસ્તિત્વમાં રહેલા variable (variable) ને સંપૂર્ણપણે નવી કિંમત આપો છો, ત્યારે Rust `drop` ને બોલાવશે અને મૂળ કિંમતની મેમરી તરત જ મુક્ત કરશે. ઉદાહરણ તરીકે આ કોડને ધ્યાનમાં લો:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-04b-replacement-drop/src/main.rs:here}}
-```
 ```
 અમે સૌપ્રથમ એક variable `s` જાહેર કરીએ છીએ અને તેને `"hello"` મૂલ્ય સાથેના `String` સાથે જોડીએ છીએ. ત્યારબાદ, અમે તરત જ `"ahoy"` મૂલ્ય સાથે નવું `String` બનાવીએ છીએ અને તેને `s` ને સોંપીએ છીએ. આ સમયે, મૂળ મૂલ્યને હીપ પર કોઈ પણ દર્શાવતું નથી. આકૃતિ 4-5 વર્તમાન સ્ટેક અને હીપ ડેટા દર્શાવે છે:
 
@@ -193,9 +187,7 @@
 અહીં `clone` પદ્ધતિ કાર્યમાં છે તેનું ઉદાહરણ છે:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-05-clone/src/main.rs:here}}
-```
 ```
 આ બરાબર કાર્ય કરે છે અને આકૃતિ 4-3 માં દર્શાવેલ વર્તણૂક સ્પષ્ટપણે ઉત્પન્ન કરે છે, જ્યાં હીપ ડેટા નકલ થાય છે. જ્યારે
 
@@ -204,9 +196,7 @@
 હજુ એક વિશિષ્ટતા છે જેની ચર્ચા થઈ નથી. આ કોડ, જે પૂર્ણાંકોનો ઉપયોગ કરે છે—જેનો ભાગ લિસ્ટિંગ 4-2 માં દર્શાવવામાં આવ્યો હતો—કામે આવે છે અને માન્ય છે:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-06-copy/src/main.rs:here}}
-```
 ```
 પણ આ કોડ એ શીખવ્યું કે જે આપણે હમણાં જ મેળવ્યું છે તેની વિરુદ્ધ જણાય છે: આપણી પાસે `clone` માટે કોઈ આહ્વાન નથી, છતાં `x` માન્ય છે અને તે `y` માં ખસેડવામાં આવ્યું નથી.
 
@@ -233,9 +223,7 @@
 
 <Listing number="4-3" file-name="src/main.rs" caption="Functions with ownership and scope annotated">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-03/src/main.rs}}
-```
 ```
 </Listing>
 જો આપણે `takes_ownership` કૉલ પછી `s` વાપરવાનો પ્રયત્ન કરીએ, તો Rust એક કમ્પાઇલ-ટાઇમ ભૂલ આપશે. આ સ્થિર તપાસો આપણને ભૂલોથી સુરક્ષિત કરે છે. જુઓ કે તમે `main` માં કોડ ઉમેરી શકો છો જે `s` અને `x` નો ઉપયોગ કરે છે જેથી તમે જોઈ શકો કે તમે તેનો ઉપયોગ ક્યાં કરી શકો છો અને માલિકીના નિયમો તમને ક્યાં કરવા દેતા નથી.
@@ -245,9 +233,7 @@
 
 <Listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-```
 ```
 </Listing>
 ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય `drop` દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While
@@ -258,9 +244,7 @@ Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને �
 
 <Listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-```
 ```
 </Listing>
 પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).
@@ -269,9 +253,7 @@ Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને �
 વળતર મૂલ્યો માલિકીનું સ્થાનાંતરણ પણ કરી શકે છે. સૂચિ 4-4 એક ફંક્શનનું ઉદાહરણ દર્શાવે છે જે અમુક મૂલ્ય પાછું આપે છે, જેમાં સૂચિ 4-3 માં દર્શાવેલ એનોટેશન્સ જેવા જ હોય છે.
 
 <Listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-```
 </Listing>
 ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય `drop` દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While
 
@@ -280,9 +262,7 @@ Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને �
 Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને બહુવિધ મૂલ્યો પરત કરવાની છૂટ આપે છે, જે યાદી 4-5 માં દર્શાવેલ છે.
 
 <Listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-```
 </Listing>
 પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).
 
@@ -290,9 +270,7 @@ Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને �
 વળતર મૂલ્યો માલિકીનું સ્થાનાંતરણ પણ કરી શકે છે. સૂચિ 4-4 એક ફંક્શનનું ઉદાહરણ દર્શાવે છે જે અમુક મૂલ્ય પાછું આપે છે, જેમાં સૂચિ 4-3 માં દર્શાવેલ એનોટેશન્સ જેવા જ હોય છે.
 
 <Listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-```
 </Listing>
 ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય `drop` દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While
 
@@ -301,9 +279,7 @@ Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને �
 Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને બહુવિધ મૂલ્યો પરત કરવાની છૂટ આપે છે, જે યાદી 4-5 માં દર્શાવેલ છે.
 
 <Listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-```
 </Listing>
 પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).
 
@@ -311,9 +287,7 @@ Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને �
 વળતર મૂલ્યો માલિકીનું સ્થાનાંતરણ પણ કરી શકે છે. સૂચિ 4-4 એક ફંક્શનનું ઉદાહરણ દર્શાવે છે જે અમુક મૂલ્ય પાછું આપે છે, જેમાં સૂચિ 4-3 માં દર્શાવેલ એનોટેશન્સ જેવા જ હોય છે.
 
 <Listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-```
 </Listing>
 ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય `drop` દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While
 
@@ -322,9 +296,7 @@ Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને �
 Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને બહુવિધ મૂલ્યો પરત કરવાની છૂટ આપે છે, જે યાદી 4-5 માં દર્શાવેલ છે.
 
 <Listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-```
 </Listing>
 પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).
 
@@ -332,9 +304,7 @@ Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને �
 વળતર મૂલ્યો માલિકીનું સ્થાનાંતરણ પણ કરી શકે છે. સૂચિ 4-4 એક ફંક્શનનું ઉદાહરણ દર્શાવે છે જે અમુક મૂલ્ય પાછું આપે છે, જેમાં સૂચિ 4-3 માં દર્શાવેલ એનોટેશન્સ જેવા જ હોય છે.
 
 <Listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-```
 </Listing>
 ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય `drop` દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While
 
@@ -343,9 +313,7 @@ Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને �
 Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને બહુવિધ મૂલ્યો પરત કરવાની છૂટ આપે છે, જે યાદી 4-5 માં દર્શાવેલ છે.
 
 <Listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-```
 </Listing>
 પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).
 
@@ -353,9 +321,7 @@ Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને �
 વળતર મૂલ્યો માલિકીનું સ્થાનાંતરણ પણ કરી શકે છે. સૂચિ 4-4 એક ફંક્શનનું ઉદાહરણ દર્શાવે છે જે અમુક મૂલ્ય પાછું આપે છે, જેમાં સૂચિ 4-3 માં દર્શાવેલ એનોટેશન્સ જેવા જ હોય છે.
 
 <Listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-```
 </Listing>
 ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય `drop` દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While
 
@@ -364,9 +330,7 @@ Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને �
 Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને બહુવિધ મૂલ્યો પરત કરવાની છૂટ આપે છે, જે યાદી 4-5 માં દર્શાવેલ છે.
 
 <Listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-```
 </Listing>
 પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).
 
@@ -374,9 +338,7 @@ Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને �
 વળતર મૂલ્યો માલિકીનું સ્થાનાંતરણ પણ કરી શકે છે. સૂચિ 4-4 એક ફંક્શનનું ઉદાહરણ દર્શાવે છે જે અમુક મૂલ્ય પાછું આપે છે, જેમાં સૂચિ 4-3 માં દર્શાવેલ એનોટેશન્સ જેવા જ હોય છે.
 
 <Listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-```
 </Listing>
 ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય `drop` દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While
 
@@ -385,9 +347,7 @@ Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને �
 Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને બહુવિધ મૂલ્યો પરત કરવાની છૂટ આપે છે, જે યાદી 4-5 માં દર્શાવેલ છે.
 
 <Listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-```
 </Listing>
 પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).
 
@@ -395,9 +355,7 @@ Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને �
 વળતર મૂલ્યો માલિકીનું સ્થાનાંતરણ પણ કરી શકે છે. સૂચિ 4-4 એક ફંક્શનનું ઉદાહરણ દર્શાવે છે જે અમુક મૂલ્ય પાછું આપે છે, જેમાં સૂચિ 4-3 માં દર્શાવેલ એનોટેશન્સ જેવા જ હોય છે.
 
 <Listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-```
 </Listing>
 ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય `drop` દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While
 
@@ -406,9 +364,15 @@ Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને �
 Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને બહુવિધ મૂલ્યો પરત કરવાની છૂટ આપે છે, જે યાદી 4-5 માં દર્શાવેલ છે.
 
 <Listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-```
 </Listing>
 પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).
 
+
+
+[data-types]: ch03-02-data-types.html#data-types
+[ch8]: ch08-02-strings.html
+[methods]: ch05-03-method-syntax.html#methods
+[paths-module-tree]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
+[traits]: ch10-02-traits.html
+[derivable-traits]: appendix-03-derivable-traits.html

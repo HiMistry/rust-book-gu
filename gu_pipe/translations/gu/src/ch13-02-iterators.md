@@ -6,9 +6,7 @@ Rust માં, પુનરાવર્તકો આળસુ (lazy) હોય 
 
 <Listing number="13-10" file-name="src/main.rs" caption="Creating an iterator">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-10/src/main.rs:here}}
-```
 ```
 </Listing>
 ઇટરેટર `v1_iter` ચલણમાં સંગ્રહિત છે. એકવાર આપણે ઇટરેટર બનાવ્યા પછી, અમે તેનો ઉપયોગ વિવિધ રીતે કરી શકીએ છીએ. લિસ્ટિંગ 3-5 માં, અમે કોડના દરેક ઘટક પર અમલ કરવા માટે `for` લૂપનો ઉપયોગ કરીને એરે પર ઇટરેટ કર્યું હતું. આંતરિક રીતે, આ આપોઆપ એક ઇટરેટર બનાવ્યું અને પછી તેનો ઉપયોગ કર્યો, પરંતુ અત્યાર સુધી અમે તે કેવી રીતે
@@ -17,9 +15,7 @@ Rust માં, પુનરાવર્તકો આળસુ (lazy) હોય 
 
 <Listing number="13-11" file-name="src/main.rs" caption="Using an iterator in a `for` loop">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-11/src/main.rs:here}}
-```
 ```
 </Listing>
 ભાષાઓમાં જે તેમના પ્રમાણિત પુસ્તકાલયો દ્વારા ઇટરેટર (iterator) પ્રદાન કરતા નથી, તમે સંભવતઃ આ જ કાર્યક્ષમતા લખશો એ માટે એક variable અનુક્રમણિકા 0 થી શરૂ કરીને, તે variable's ઉપયોગ વેક્ટર (vector) માં અનુક્રમિત કરવા માટે મૂલ્ય મેળવવા અને variable's મૂલ્યમાં વધારો કરવો જ્યાં સુધી તે વેક્ટર (vector) માં વસ્તુઓની કુલ સંખ્યા સુધી ન પહોંચે ત્યાં સુધી લૂપ (loop) માં. ઇટરેટર (iterator) તમારા માટે આ તમામ તર્કનું
@@ -31,7 +27,6 @@ Rust માં, પુનરાવર્તકો આળસુ (lazy) હોય 
 બધી પુનરાવર્તકો એક લક્ષણ (trait) અમલમાં મૂકે છે, જેનું નામ `Iterator` છે અને તે પ્રમાણિત લાયબ્રેરીમાં વ્યાખ્યાયિત થયેલું છે. લક્ષણની વ્યાખ્યા આ પ્રમાણે દેખાય છે:
 
 ```rust
-```rust
 pub trait Iterator {
     type Item;
 
@@ -39,7 +34,6 @@ pub trait Iterator {
 
     // methods with default implementations elided
 }
-```
 ```
 જુઓ કે આ વ્યાખ્યામાં નવું વાક્યરચના વપરાય છે: `type Item` અને `Self::Item`, જે આ ટ્રેઇટ સાથે સંકળાયેલ પ્રકાર (associated type) ને વ્યાખ્યાયિત કરે છે. આપણે પ્રકરણ ૨૦ માં સંકળાયેલા પ્રકારો વિશે વિગતવાર વાત કરીશું. અત્યારે, તમારે માત્ર એટલું જ જાણવાની જરૂર છે કે આ કોડ કહે છે કે `Iterator` ટ્રેઇટનો અમલ કરવા માટે તમારે એક `Item` પ્રકાર પણ વ્યાખ્યાયિત કરવો પડશે, અને આ `Item` પ્રકાર `next` પદ્ધતિના રીટર્ન પ્રકારમાં વપરાય છે. બીજા શબ્દોમાં કહીએ તો, `Item` પ્રકાર એ ઇટરેટર પાસેથી પરત કરવામાં આવતો પ્રકાર હશે.
 
@@ -49,9 +43,7 @@ Iterator લક્ષણ `Iterator` લક્ષણ માત્ર એક જ �
 
 <Listing number="13-12" file-name="src/lib.rs" caption="Calling the `next` method on an iterator">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-12/src/lib.rs:here}}
-```
 ```
 </Listing>
 એ નોંધ લેવી જરૂરી છે કે આપણે `v1_iter` ને પરિવર્તનશીલ બનાવવું પડ્યું હતું: પુનરાવર્તક (iterator) પર `next` પદ્ધતિને બોલાવવાથી આંતરિક સ્થિતિ બદલાય છે, જેનો પુનરાવર્તક ક્રમમાં પોતાની સ્થિતિ જાળવવા માટે ઉપયોગ કરે છે. બીજા શબ્દોમાં કહીએ તો, આ કોડ પુનરાવર્તકની વપરાશિતા કરે છે, અથવા તેનો ઉપયોગ પૂરો કરે છે. `next` ના દરેક બોલાવવાથી પુનરાવર્તકમાંથી એક ઘટક ખતમ થઈ જાય છે. જ્યારે આપણે `for` લૂપનો ઉપયોગ કર્યો ત્યારે આપણે `v1_iter` ને પરિવર્તનશીલ બનાવવાની જરૂર ન હતી, કારણ કે લૂપે `v1_iter` નું માલિકી સ્વીકાર્યું અને દૃશ્યમાન રીતે તેને પરિવર્તનશીલ બનાવી દીધું.
@@ -66,9 +58,7 @@ Iterator લક્ષણ `Iterator` લક્ષણ માત્ર એક જ �
 
 <Listing number="13-13" file-name="src/lib.rs" caption="Calling the `sum` method to get the total of all items in the iterator">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-13/src/lib.rs:here}}
-```
 ```
 </Listing>
 આપણે `sum` ફંક્શનને બોલાવ્યા પછી `v1_iter` વાપરવાની અનુમતિ નથી, કારણ કે `sum` તેના પર બોલાવવામાં આવેલ ઇટરેટરનું માલિકી લે છે.
@@ -81,17 +71,13 @@ Iterator લક્ષણ `Iterator` લક્ષણ માત્ર એક જ �
 
 <Listing number="13-14" file-name="src/main.rs" caption="Calling the iterator adapter `map` to create a new iterator">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-14/src/main.rs:here}}
-```
 ```
 </Listing>
 જો કે, આ કોડ એક ચેતવણી ઉત્પન્ન કરે છે:
 
 ```console
-```console
 {{#include ../listings/ch13-functional-features/listing-13-14/output.txt}}
-```
 ```
 Listing 13-14 નો કોડ કંઈ કરતો નથી; આપણો નિર્દિષ્ટ ક્લોઝર ક્યારેય બોલાતો નથી. ચેતવણી આપણને યાદ અપાવે છે કે શા માટે: Iterator adapters આળસુ હોય છે, અને આપણે અહીં iterator વાપરવાની જરૂર છે.
 
@@ -101,9 +87,7 @@ Listing 13-15 માં, આપણે `map` કૉલથી પરત થતા 
 
 <Listing number="13-15" file-name="src/main.rs" caption="Calling the `map` method to create a new iterator, and then calling the `collect` method to consume the new iterator and create a vector">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-15/src/main.rs:here}}
-```
 ```
 </Listing>
 કારણ કે `map` એક ક્લોઝર લે છે, આપણી પાસે દરેક વસ્તુ પર કરવા માટે ઇચ્છિત કોઈપણ ક્રિયા સ્પષ્ટ કરવાની ક્ષમતા છે. આ એક ઉત્તમ ઉદાહરણ છે કે કેવી રીતે ક્લોઝર તમને વર્તણૂકને કસ્ટમાઇઝ કરવાની મંજૂરી આપે છે જ્યારે `Iterator` ટ્રેઇટ દ્વારા પૂરી પાડવામાં આવતી પુનરાવર્તન વર્તણૂકનો ફરી ઉપયોગ કરે છે.
@@ -121,9 +105,7 @@ Listing 13-16 માં, અમે `filter` નો ઉપયોગ કરીએ 
 
 <Listing number="13-16" file-name="src/lib.rs" caption="Using the `filter` method with a closure that captures `shoe_size`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-16/src/lib.rs}}
-```
 ```
 </Listing>
 કાર્ય વેક્ટર (vector) ની જૂતાની અને એક જૂતાના કદને પરિમાણો તરીકે સ્વીકારે છે. તે માત્ર નિર્ધારિત કદના જૂતાઓ ધરાવતું વેક્ટર પરત કરે છે. `shoes_in_size`

@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-78fa1409.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -195,9 +195,7 @@
 <p>અને જો તમારે સમાંતરતા (parallelism) અને એકરૂપતા (concurrency) બંનેની જરૂર હોય, તો તમારે થ્રેડ્સ અને async વચ્ચે પસંદગી કરવાની જરૂર નથી. તમે તેનો સાથે મળીને ઉપયોગ કરી શકો છો, દરેકને તેની યોગ્ય ભૂમિકા ભજવવા દે છે. ઉદાહરણ તરીકે, યાદી 17-25 એવા મિશ્રણનું પ્રમાણમાં સામાન્ય ઉદાહરણ દર્શાવે છે જે વાસ્તવિક દુનિયાના Rust કોડમાં જોવા મળે છે.</p>
 <listing number="17-25" caption="Sending messages with blocking code in a thread and awaiting the messages in an async block" file-name="src/main.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-25/src/main.rs:all}}
-```
 ```
 </listing>
 આપણે આરંભ કરીએ છીએ સૌપ્રથમ, આપણે એક async ચેનલ બનાવીએ છીએ, ત્યારબાદ એક થ્રેડને શરૂ કરીએ છીએ જે ચેનલની સેન્ડર બાજુનું માલિકી સ્થાપિત કરે છે `move` કીવર્ડનો ઉપયોગ કરીને. થ્રેડમાં, આપણે ૧ થી ૧૦ સુધીના અંકો મોકલીએ છીએ, દરેક વચ્ચે એક સેકન્ડ માટે સૂઈ જઈએ છીએ. અંતે, આપણે `trpl::block_on` માં પાસ થયેલ async બ્લોક સાથે બનાવેલ ફ્યુચર ચલાવીએ છીએ, જે રીતે આપણે આ પ્રકરણમાં સમગ્રપણે કર્યું છે. તે ફ્યુચરમાં, આપણે તે સંદેશાઓની રાહ જોઈએ છીએ, જેમ કે આપણે અન્ય મેસેજ-પાસિંગ ઉદાહરણોમાં જોયું છે. પરિસ્થિતિ પર પાછા ફરતા આપણે પ્રકરણની

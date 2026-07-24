@@ -22,3 +22,12 @@ traits અને આયુષ્યકાળનો યોગ્ય ઉપયો�
 
 આપણે ક્લોઝર, ઇટરેટર અને ટ્રેઇટ ઓબ્જેક્ટ્સનો સંક્ષિપ્ત પરિચય પણ આપીશું, જે પ્રકરણ ૧૩ અને પ્રકરણ ૧૮માં વિગતવાર આવરી લેવામાં આવશે.
 
+
+
+[ch7]: ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
+[ch8]: ch08-00-common-collections.html
+[ch9]: ch09-00-error-handling.html
+[ch10]: ch10-00-generics.html
+[ch11]: ch11-00-testing.html
+[ch13]: ch13-00-functional-features.html
+[ch18]: ch18-00-oop.html

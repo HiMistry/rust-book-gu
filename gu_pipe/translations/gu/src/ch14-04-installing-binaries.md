@@ -11,7 +11,6 @@
 cargo install something you don't have, copy relevant output below
 -->
 ```console
-```console
 $ cargo install ripgrep
     Updating crates.io index
   Downloaded ripgrep v14.1.1
@@ -22,7 +21,6 @@ $ cargo install ripgrep
     Finished `release` profile [optimized + debuginfo] target(s) in 6.73s
   Installing ~/.cargo/bin/rg
    Installed package `ripgrep v14.1.1` (executable `rg`)
-```
 ```
 અંતિમ પરંતુ પૂર્વેના છેલ્લા લીટી આઉટપુટમાં સ્થાપિત બાઈનરીનું સ્થાન અને નામ દર્શાવે છે, જે `ripgrep` ના કિસ્સામાં `rg` છે. જ્યાં સુધી સ્થાપન ડિરેક્ટરી તમારા `$PATH` માં હોય, અગાઉ જણાવ્યા મુજબ, તમે પછી `rg --help` ચલાવી શકો છો અને ફાઇલો શોધવા માટે એક ઝડપી, Rustier સાધનનો ઉપયોગ કરવાનું શરૂ કરી શકો છો!
 

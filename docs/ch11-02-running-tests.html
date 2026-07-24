@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-78fa1409.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -189,109 +189,64 @@
 <p>જ્યારે તમે અનેક પરીક્ષણો ચલાવો છો, ત્યારે મૂળભૂત રીતે તે થ્રેડોનો ઉપયોગ કરીને સમાંતર ચાલે છે, જેનો અર્થ થાય છે કે તેઓ ઝડપથી પૂર્ણ થાય છે અને તમને વહેલી તકે પ્રતિસાદ મળે છે. કારણ કે પરીક્ષણો એક જ સમયે ચાલે છે, તમારે ખાતરી કરવી જોઈએ કે તમારા પરીક્ષણો એકબીજા પર અથવા કોઈપણ સંયુક્ત સ્થિતિ પર આધારિત નથી, જેમાં વર્તમાન કાર્યકારી ડિરેક્ટરી અથવા પર્યાવરણ variables જેવી કોઈ સંયુક્ત વાતાવરણનો સમાવેશ થાય છે.</p>
 <p>ઉદાહરણ તરીકે, ધારો કે તમારા દરેક પરીક્ષણમાં કેટલીક કોડ ચાલે છે જે ડિસ્ક પર test-output.txt નામની ફાઈલ બનાવે છે અને તેમાં થોડો ડેટા લખે છે. પછી, દરેક પરીક્ષણ તે ફાઈલમાં રહેલા ડેટાને વાંચે છે અને દાવો કરે છે કે ફાઈલમાં એક ચોક્કસ મૂલ્ય છે, જે દરેક પરીક્ષણમાં અલગ હોય છે. કારણ કે પરીક્ષણો એક જ સમયે ચાલે છે, એક પરીક્ષણ બીજા પરીક્ષણ દ્વારા ફાઈલ લખવામાં અને વાંચવામાં વચ્ચેના સમયગાળામાં ફાઈલને ઓવરરાઇટ કરી શકે છે. બીજું પરીક્ષણ નિષ્ફળ થશે, કોડ ખોટો ન હોવા છતાં, કારણ કે પરીક્ષણો સમાંતર ચાલતી વખતે એકબીજા સાથે દખલ કરે છે. એક ઉકેલ એ છે કે દરેક પરીક્ષણને અલગ ફાઈલમાં લખવાની ખાતરી કરવી; બીજો ઉકેલ એ છે કે પરીક્ષણોને એક સમયે ચલાવવા.</p>
 <p>જો તમે પરીક્ષણો સમાંતર ચલાવવા નથી માંગતા અથવા વપરાયેલ થ્રેડોની સંખ્યા પર વધુ વિગતવાર નિયંત્રણ મેળવવા માંગો છો, તો તમે <code>--test-threads</code> ધ્વજ અને તમે ઉપયોગ કરવા માંગો છો તે થ્રેડોની સંખ્યાને પરીક્ષણ બાઈનરીમાં મોકલી શકો છો. નીચેના ઉદાહરણ જુઓ:</p>
-<pre><code class="language-console">```console
-$ cargo test -- --test-threads=1
+<pre><code class="language-console">$ cargo test -- --test-threads=1
 </code></pre>
-<pre><code>અમે પરીક્ષણ થ્રેડોની સંખ્યા `1` પર સેટ કરીએ છીએ, જેથી પ્રોગ્રામ કોઈ પણ સમાંતરતાનો ઉપયોગ ન કરે. એક થ્રેડનો ઉપયોગ કરીને પરીક્ષણો ચલાવવામાં વધુ સમય લાગશે, પરંતુ જો તેઓ સ્થિતિ (state) વહેંચે તો પરીક્ષણો એકબીજા સાથે દખલ કરશે નહીં.
-
-### Showing Function Output
-
-અભાવમાં, જો કોઈ પરીક્ષણ સફળ થાય, તો Rust નું પરીક્ષણ પુસ્તકાલય પ્રમાણિત આઉટપુટમાં છપાયેલ કોઈપણ વસ્તુને ગ્રહણ કરે છે. ઉદાહરણ તરીકે, જો આપણે કોઈ પરીક્ષણમાં `println!` ને બોલાવીએ અને પરીક્ષણ સફળ થાય, તો આપણે ટર્મિનલમાં `println!` નું આઉટપુટ જોશું નહીં; આપણે માત્ર તે લીટી જોઈશું જે દર્શાવે છે કે પરીક્ષણ પાસ થયું. જો કોઈ પરીક્ષણ નિષ્ફળ જાય, તો આપણે પ્રમાણિત આઉટપુટમાં છપાયેલું જે કંઈપણ નિષ્ફળતા સંદેશ સાથે જોઈ શકીશું.
-
-એક ઉદાહરણ તરીકે, યાદી 11-10 માં એક મૂર્ખ કાર્ય છે જે તેના પરિમાણનું મૂલ્ય છાપે છે અને 10 પરત કરે છે, તેમજ એક પરીક્ષણ જે પાસ થાય છે અને એક પરીક્ષણ જે નિષ્ફળ જાય છે.
-
-&lt;Listing number="11-10" file-name="src/lib.rs" caption="Tests for a function that calls `println!`"&gt;
-```rust
+<p>અમે પરીક્ષણ થ્રેડોની સંખ્યા <code>1</code> પર સેટ કરીએ છીએ, જેથી પ્રોગ્રામ કોઈ પણ સમાંતરતાનો ઉપયોગ ન કરે. એક થ્રેડનો ઉપયોગ કરીને પરીક્ષણો ચલાવવામાં વધુ સમય લાગશે, પરંતુ જો તેઓ સ્થિતિ (state) વહેંચે તો પરીક્ષણો એકબીજા સાથે દખલ કરશે નહીં.</p>
+<h3 id="showing-function-output"><a class="header" href="#showing-function-output">Showing Function Output</a></h3>
+<p>અભાવમાં, જો કોઈ પરીક્ષણ સફળ થાય, તો Rust નું પરીક્ષણ પુસ્તકાલય પ્રમાણિત આઉટપુટમાં છપાયેલ કોઈપણ વસ્તુને ગ્રહણ કરે છે. ઉદાહરણ તરીકે, જો આપણે કોઈ પરીક્ષણમાં <code>println!</code> ને બોલાવીએ અને પરીક્ષણ સફળ થાય, તો આપણે ટર્મિનલમાં <code>println!</code> નું આઉટપુટ જોશું નહીં; આપણે માત્ર તે લીટી જોઈશું જે દર્શાવે છે કે પરીક્ષણ પાસ થયું. જો કોઈ પરીક્ષણ નિષ્ફળ જાય, તો આપણે પ્રમાણિત આઉટપુટમાં છપાયેલું જે કંઈપણ નિષ્ફળતા સંદેશ સાથે જોઈ શકીશું.</p>
+<p>એક ઉદાહરણ તરીકે, યાદી 11-10 માં એક મૂર્ખ કાર્ય છે જે તેના પરિમાણનું મૂલ્ય છાપે છે અને 10 પરત કરે છે, તેમજ એક પરીક્ષણ જે પાસ થાય છે અને એક પરીક્ષણ જે નિષ્ફળ જાય છે.</p>
+<listing number="11-10" file-name="src/lib.rs" caption="Tests for a function that calls `println!`">
 ```rust
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-10/src/lib.rs}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 જ્યારે આપણે આ પરીક્ષણો `cargo test` સાથે ચલાવીએ છીએ, ત્યારે આપણને નીચેનું પરિણામ જોવા મળશે:
-
-```console
-```console
-{{#include ../listings/ch11-writing-automated-tests/listing-11-10/output.txt}}
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/listing-11-10/output.txt}}
 </code></pre>
-<pre><code>નોંધ નિષ્ફળ થયેલ પરીક્ષણના સારાંશ આઉટપુટ વિભાગમાં `મને 8 મૂલ્ય મળ્યું` એવું દર્શાવવામાં આવે છે, જે પરીક્ષણ નિષ્ફળ થવાનું કારણ પણ બતાવે છે. જો આપણે સફળ પરીક્ષણો માટે છપાયેલા મૂલ્યો જોવા માંગતા હોઈએ,
-
-તો આપણે Rust ને `--show-output` વિકલ્પ સાથે સફળ પરીક્ષણોનું આઉટપુટ પણ દર્શાવવા કહી શકીએ છીએ:
-
-```console
-```console
-$ cargo test -- --show-output
+<p>નોંધ નિષ્ફળ થયેલ પરીક્ષણના સારાંશ આઉટપુટ વિભાગમાં <code>મને 8 મૂલ્ય મળ્યું</code> એવું દર્શાવવામાં આવે છે, જે પરીક્ષણ નિષ્ફળ થવાનું કારણ પણ બતાવે છે. જો આપણે સફળ પરીક્ષણો માટે છપાયેલા મૂલ્યો જોવા માંગતા હોઈએ,</p>
+<p>તો આપણે Rust ને <code>--show-output</code> વિકલ્પ સાથે સફળ પરીક્ષણોનું આઉટપુટ પણ દર્શાવવા કહી શકીએ છીએ:</p>
+<pre><code class="language-console">$ cargo test -- --show-output
 </code></pre>
-<pre><code>જ્યારે આપણે યાદી ૧૧-૧૦ માં પરીક્ષણો ફરીથી `--show-output` ધ્વજ સાથે ચલાવીએ છીએ, ત્યારે આપણને નીચેનું પરિણામ જોવા મળે છે:
-
-```console
-```console
-{{#include ../listings/ch11-writing-automated-tests/output-only-01-show-output/output.txt}}
+<p>જ્યારે આપણે યાદી ૧૧-૧૦ માં પરીક્ષણો ફરીથી <code>--show-output</code> ધ્વજ સાથે ચલાવીએ છીએ, ત્યારે આપણને નીચેનું પરિણામ જોવા મળે છે:</p>
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/output-only-01-show-output/output.txt}}
 </code></pre>
-<pre><code>### Running a Subset of Tests by Name
-
-સંપૂર્ણ પરીક્ષણ સમૂહ ચલાવવામાં કેટલીકવાર ઘણો સમય લાગી શકે છે. જો તમે કોઈ ચોક્કસ ક્ષેત્રના કોડ પર કામ કરી રહ્યા હો, તો તમે માત્ર તે પરીક્ષણો જ ચલાવવા માગી શકો છો જે તે કોડને સંબંધિત હોય. તમે `cargo test` ને એક Argument તરીકે ચલાવવા માટે ઇચ્છિત પરીક્ષણ(ઓ) ના નામ(ઓ) પસાર કરીને કયા પરીક્ષણો ચલાવવા તે પસંદ કરી શકો છો.
-
-પ્રદર્શન કરવા માટે કે પરીક્ષણોનો ઉપગણ કેવી રીતે ચલાવવો, અમે પ્રથમ આપણી `add_two` કાર્ય માટે ત્રણ પરીક્ષણો બનાવીશું, જે યાદી 11-11 માં દર્શાવેલ છે, અને કયા ચલાવવા તે પસંદ કરીશું.
-
-&lt;Listing number="11-11" file-name="src/lib.rs" caption="Three tests with three different names"&gt;
-```rust
+<h3 id="running-a-subset-of-tests-by-name"><a class="header" href="#running-a-subset-of-tests-by-name">Running a Subset of Tests by Name</a></h3>
+<p>સંપૂર્ણ પરીક્ષણ સમૂહ ચલાવવામાં કેટલીકવાર ઘણો સમય લાગી શકે છે. જો તમે કોઈ ચોક્કસ ક્ષેત્રના કોડ પર કામ કરી રહ્યા હો, તો તમે માત્ર તે પરીક્ષણો જ ચલાવવા માગી શકો છો જે તે કોડને સંબંધિત હોય. તમે <code>cargo test</code> ને એક Argument તરીકે ચલાવવા માટે ઇચ્છિત પરીક્ષણ(ઓ) ના નામ(ઓ) પસાર કરીને કયા પરીક્ષણો ચલાવવા તે પસંદ કરી શકો છો.</p>
+<p>પ્રદર્શન કરવા માટે કે પરીક્ષણોનો ઉપગણ કેવી રીતે ચલાવવો, અમે પ્રથમ આપણી <code>add_two</code> કાર્ય માટે ત્રણ પરીક્ષણો બનાવીશું, જે યાદી 11-11 માં દર્શાવેલ છે, અને કયા ચલાવવા તે પસંદ કરીશું.</p>
+<listing number="11-11" file-name="src/lib.rs" caption="Three tests with three different names">
 ```rust
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-11/src/lib.rs}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 જો આપણે કોઈ Argumentો આપ્યા વિના પરીક્ષણો ચલાવીએ, જેવું કે આપણે અગાઉ જોયું હતું, તો બધાં જ પરીક્ષણો સમાંતર રીતે ચાલશે:
-
-```console
-```console
-{{#include ../listings/ch11-writing-automated-tests/listing-11-11/output.txt}}
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/listing-11-11/output.txt}}
 </code></pre>
-<pre><code>#### Running Single Tests
-
-આપણે `cargo test` ને કોઈપણ પરીક્ષણ કાર્યનું નામ આપીને માત્ર તે જ પરીક્ષણ ચલાવી શકીએ છીએ:
-
-```console
-```console
-{{#include ../listings/ch11-writing-automated-tests/output-only-02-single-test/output.txt}}
+<h4 id="running-single-tests"><a class="header" href="#running-single-tests">Running Single Tests</a></h4>
+<p>આપણે <code>cargo test</code> ને કોઈપણ પરીક્ષણ કાર્યનું નામ આપીને માત્ર તે જ પરીક્ષણ ચલાવી શકીએ છીએ:</p>
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/output-only-02-single-test/output.txt}}
 </code></pre>
-<pre><code>one_hundred માત્ર `one_hundred` નામ ધરાવતું પરીક્ષણ ચાલ્યું હતું; અન્ય બે પરીક્ષણો તે નામ સાથે મળ્યાં ન હતાં. પરીક્ષણ આઉટપુટ આપણને જણાવે છે કે કેટલા વધુ પરીક્ષણો ચાલી ન હતાં, જે અંતમાં `2 filtered out`
-
-દર્શાવે છે. આ રીતે બહુવિધ પરીક્ષણોના નામોનો ઉલ્લેખ કરી શકાતો નથી; માત્ર `cargo test` ને આપવામાં આવેલ પહેલો મૂલ્ય વપરાય છે. પરંતુ બહુવિધ પરીક્ષણો ચલાવવાનો એક માર્ગ છે.
-
-#### Filtering to Run Multiple Tests
-
-આપણે પરીક્ષણ નામના ભાગને સ્પષ્ટ કરી શકીએ છીએ, અને જે પરીક્ષણનું નામ તે મૂલ્ય સાથે મેળ ખાય છે તે ચલાવવામાં આવશે. ઉદાહરણ તરીકે, આપણા બે પરીક્ષણોના નામમાં `add` આવેલું હોવાથી, આપણે `cargo test add` લખીને તે બંને ચલાવી શકીએ છીએ:
-
-```console
-```console
-{{#include ../listings/ch11-writing-automated-tests/output-only-03-multiple-tests/output.txt}}
+<p>one_hundred માત્ર <code>one_hundred</code> નામ ધરાવતું પરીક્ષણ ચાલ્યું હતું; અન્ય બે પરીક્ષણો તે નામ સાથે મળ્યાં ન હતાં. પરીક્ષણ આઉટપુટ આપણને જણાવે છે કે કેટલા વધુ પરીક્ષણો ચાલી ન હતાં, જે અંતમાં <code>2 filtered out</code></p>
+<p>દર્શાવે છે. આ રીતે બહુવિધ પરીક્ષણોના નામોનો ઉલ્લેખ કરી શકાતો નથી; માત્ર <code>cargo test</code> ને આપવામાં આવેલ પહેલો મૂલ્ય વપરાય છે. પરંતુ બહુવિધ પરીક્ષણો ચલાવવાનો એક માર્ગ છે.</p>
+<h4 id="filtering-to-run-multiple-tests"><a class="header" href="#filtering-to-run-multiple-tests">Filtering to Run Multiple Tests</a></h4>
+<p>આપણે પરીક્ષણ નામના ભાગને સ્પષ્ટ કરી શકીએ છીએ, અને જે પરીક્ષણનું નામ તે મૂલ્ય સાથે મેળ ખાય છે તે ચલાવવામાં આવશે. ઉદાહરણ તરીકે, આપણા બે પરીક્ષણોના નામમાં <code>add</code> આવેલું હોવાથી, આપણે <code>cargo test add</code> લખીને તે બંને ચલાવી શકીએ છીએ:</p>
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/output-only-03-multiple-tests/output.txt}}
 </code></pre>
-<pre><code>આ આદેશ `add` નામના બધા પરીક્ષણો ચલાવ્યા અને `one_hundred` નામનો પરીક્ષણ દૂર કર્યો. નોંધ કરો કે જે મોડ્યુલમાં પરીક્ષણ આવે છે તે પરીક્ષણના નામનો ભાગ બને છે, તેથી આપણે મોડ્યુલના નામ પર ફિલ્ટર કરીને એક મોડ્યુલમાંના બધા પરીક્ષણો ચલાવી શકીએ છીએ.
-
-&lt;!-- Old headings. Do not remove or links may break. --&gt;
-### Ignoring Tests Unless Specifically Requested
-
-કેટલીકવાર અમુક ચોક્કસ પરીક્ષણો ચલાવવા માટે ખૂબ જ સમય માંગી લેતા હોઈ શકે છે, તેથી તમે મોટાભાગના `cargo test` ના સમયે તેમને બાકાત રાખવા માગી શકો છો. તમે જે પરીક્ષણો ચલાવવા માંગો છો તેની તમામ યાદીને Argumentો તરીકે આપવાને બદલે, તમે અહીં દર્શાવ્યા પ્રમાણે સમય માંગી લેતા પરીક્ષણોને `ignore` લક્ષણનો ઉપયોગ કરીને બાકાત કરી શકો છો:
-
-ફાઈલનું નામ: src/lib.rs
-
-```rust
-```rust
-{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-11-ignore-a-test/src/lib.rs:here}}
+<p>આ આદેશ <code>add</code> નામના બધા પરીક્ષણો ચલાવ્યા અને <code>one_hundred</code> નામનો પરીક્ષણ દૂર કર્યો. નોંધ કરો કે જે મોડ્યુલમાં પરીક્ષણ આવે છે તે પરીક્ષણના નામનો ભાગ બને છે, તેથી આપણે મોડ્યુલના નામ પર ફિલ્ટર કરીને એક મોડ્યુલમાંના બધા પરીક્ષણો ચલાવી શકીએ છીએ.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="ignoring-tests-unless-specifically-requested"><a class="header" href="#ignoring-tests-unless-specifically-requested">Ignoring Tests Unless Specifically Requested</a></h3>
+<p>કેટલીકવાર અમુક ચોક્કસ પરીક્ષણો ચલાવવા માટે ખૂબ જ સમય માંગી લેતા હોઈ શકે છે, તેથી તમે મોટાભાગના <code>cargo test</code> ના સમયે તેમને બાકાત રાખવા માગી શકો છો. તમે જે પરીક્ષણો ચલાવવા માંગો છો તેની તમામ યાદીને Argumentો તરીકે આપવાને બદલે, તમે અહીં દર્શાવ્યા પ્રમાણે સમય માંગી લેતા પરીક્ષણોને <code>ignore</code> લક્ષણનો ઉપયોગ કરીને બાકાત કરી શકો છો:</p>
+<p>ફાઈલનું નામ: src/lib.rs</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-11-ignore-a-test/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>[test] પછી, અમે <code>#[ignore]</code> લીટીને જે પરીક્ષણ આપણે બાકાત રાખવા માંગીએ છીએ તેની સાથે ઉમેરીએ. હવે જ્યારે આપણે આપણાં પરીક્ષણો ચલાવીએ, ત્યારે <code>it_works</code> ચાલે છે, પરંતુ <code>expensive_test</code> નથી ચાલતું:</p>
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/no-listing-11-ignore-a-test/output.txt}}
 </code></pre>
-<pre><code>[test] પછી, અમે `#[ignore]` લીટીને જે પરીક્ષણ આપણે બાકાત રાખવા માંગીએ છીએ તેની સાથે ઉમેરીએ. હવે જ્યારે આપણે આપણાં પરીક્ષણો ચલાવીએ, ત્યારે `it_works` ચાલે છે, પરંતુ `expensive_test` નથી ચાલતું:
-
-```console
-```console
-{{#include ../listings/ch11-writing-automated-tests/no-listing-11-ignore-a-test/output.txt}}
+<p><code>expensive_test</code> કાર્ય અ Listed as <code>ignored</code>. જો આપણે માત્ર અવગણિત પરીક્ષણો ચલાવવા માંગતા હોઈએ, તો આપણે <code>cargo test -- --ignored</code> નો ઉપયોગ કરી શકીએ:</p>
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/output-only-04-running-ignored/output.txt}}
 </code></pre>
-<pre><code>`expensive_test` કાર્ય અ Listed as `ignored`. જો આપણે માત્ર અવગણિત પરીક્ષણો ચલાવવા માંગતા હોઈએ, તો આપણે `cargo test -- --ignored` નો ઉપયોગ કરી શકીએ:
-
-```console
-```console
-{{#include ../listings/ch11-writing-automated-tests/output-only-04-running-ignored/output.txt}}
-</code></pre>
-<pre><code>તમે કયા પરીક્ષણો ચલાવવા માટે નિયંત્રણ રાખીને ખાતરી કરી શકો છો કે તમારા `cargo test` પરિણામો ઝડપથી પાછા મળશે. જ્યારે તમે એવા તબક્કે પહોંચો છો જ્યાં `ignored` પરીક્ષણોના પરિણામો તપાસવું યોગ્ય લાગે છે અને પરિણામોની રાહ જોવા માટે તમારી પાસે સમય હોય, ત્યારે તમે `cargo test -- --ignored` ને બદલે ચલાવી શકો છો. જો તમે તમામ પરીક્ષણો ચલાવવા માંગતા હો, પછી તે અવગણવામાં આવ્યા હોય કે ન હોય, તો તમે `cargo test -- --include-ignored` ચલાવી શકો છો.
-
-</code></pre>
+<p>તમે કયા પરીક્ષણો ચલાવવા માટે નિયંત્રણ રાખીને ખાતરી કરી શકો છો કે તમારા <code>cargo test</code> પરિણામો ઝડપથી પાછા મળશે. જ્યારે તમે એવા તબક્કે પહોંચો છો જ્યાં <code>ignored</code> પરીક્ષણોના પરિણામો તપાસવું યોગ્ય લાગે છે અને પરિણામોની રાહ જોવા માટે તમારી પાસે સમય હોય, ત્યારે તમે <code>cargo test -- --ignored</code> ને બદલે ચલાવી શકો છો. જો તમે તમામ પરીક્ષણો ચલાવવા માંગતા હો, પછી તે અવગણવામાં આવ્યા હોય કે ન હોય, તો તમે <code>cargo test -- --include-ignored</code> ચલાવી શકો છો.</p>
 
                     </main>
 

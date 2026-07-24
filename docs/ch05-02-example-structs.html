@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-78fa1409.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -187,138 +187,86 @@
 <p>ચાલો <code>rectangles</code> નામની નવી બાઈનરી પ્રોજેક્ટ Cargo સાથે બનાવીએ, જે પિક્સેલ્સમાં દર્શાવેલ લંબચોરસની પહોળાઈ અને ઊંચાઈ લેશે અને લંબચોરસનું ક્ષેત્રફળ ગણશે. યાદી 5-8 આપણી પ્રોજેક્ટની <code>src/main.rs</code> માં તે જ રીતે કરવાના એક રીત સાથેનો ટૂંકો કાર્યક્રમ દર્શાવે છે.</p>
 <listing number="5-8" file-name="src/main.rs" caption="Calculating the area of a rectangle specified by separate width and height variables">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/src/main.rs:all}}
-```
 ```
 </listing>
 હવે, આ કાર્યક્રમ `cargo run` વડે ચલાવો:
-<pre><code class="language-console">```console
-{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/output.txt}}
+<pre><code class="language-console">{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/output.txt}}
 </code></pre>
-<pre><code>આ કોડ લંબચોરસનું ક્ષેત્રફળ શોધવામાં સફળ થાય છે, દરેક પરિમાણ સાથે `area` ફંક્શનને બોલાવીને, પરંતુ આ કોડને વધુ સ્પષ્ટ અને વાંચી શકાય તેવો બનાવવા માટે આપણે વધુ
-
-કરી શકીએ છીએ. આ કોડની સમસ્યા `area` ના હસ્તાક્ષરમાં સ્પષ્ટપણે દેખાય છે:
-
-```rust
-```rust
-{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/src/main.rs:here}}
-</code></pre>
-<pre><code>area ફંક્શન `area` ફંક્શન એક લંબચોરસનું ક્ષેત્રફળ ગણવાનું છે, પરંતુ આપણે જે ફંક્શન લખ્યું છે તેમાં બે પરિમાણો (parameters) છે, અને આપણા પ્રોગ્રામમાં ક્યાંય સ્પષ્ટ નથી કે આ પરિમાણો સંબંધિત છે. પહોળાઈ અને ઊંચાઈને એકસાથે જૂથબદ્ધ કરવું વધુ સુવાચ્ય અને વ્યવસ્થિત રહેશે. આપણે પહેલાથી જ ચર્પ્ટર 3 ના "ટ્યૂપલ પ્રકાર" (The Tuple Type) વિભાગમાં એક રીતની ચર્ચા કરી છે: ટ્યૂપલનો ઉપયોગ કરીને.
-
-### Refactoring with Tuples
-
-ચિત્રલિપિ ૫-૯ આપણી કાર્યક્રમનું અન્ય એક સ્વરૂપ દર્શાવે છે જે ટ્યૂપલ્સનો ઉપયોગ કરે છે.
-
-&lt;Listing number="5-9" file-name="src/main.rs" caption="Specifying the width and height of the rectangle with a tuple"&gt;
-```rust
+<p>આ કોડ લંબચોરસનું ક્ષેત્રફળ શોધવામાં સફળ થાય છે, દરેક પરિમાણ સાથે <code>area</code> ફંક્શનને બોલાવીને, પરંતુ આ કોડને વધુ સ્પષ્ટ અને વાંચી શકાય તેવો બનાવવા માટે આપણે વધુ</p>
+<p>કરી શકીએ છીએ. આ કોડની સમસ્યા <code>area</code> ના હસ્તાક્ષરમાં સ્પષ્ટપણે દેખાય છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>area ફંક્શન <code>area</code> ફંક્શન એક લંબચોરસનું ક્ષેત્રફળ ગણવાનું છે, પરંતુ આપણે જે ફંક્શન લખ્યું છે તેમાં બે પરિમાણો (parameters) છે, અને આપણા પ્રોગ્રામમાં ક્યાંય સ્પષ્ટ નથી કે આ પરિમાણો સંબંધિત છે. પહોળાઈ અને ઊંચાઈને એકસાથે જૂથબદ્ધ કરવું વધુ સુવાચ્ય અને વ્યવસ્થિત રહેશે. આપણે પહેલાથી જ ચર્પ્ટર 3 ના “ટ્યૂપલ પ્રકાર” (The Tuple Type) વિભાગમાં એક રીતની ચર્ચા કરી છે: ટ્યૂપલનો ઉપયોગ કરીને.</p>
+<h3 id="refactoring-with-tuples"><a class="header" href="#refactoring-with-tuples">Refactoring with Tuples</a></h3>
+<p>ચિત્રલિપિ ૫-૯ આપણી કાર્યક્રમનું અન્ય એક સ્વરૂપ દર્શાવે છે જે ટ્યૂપલ્સનો ઉપયોગ કરે છે.</p>
+<listing number="5-9" file-name="src/main.rs" caption="Specifying the width and height of the rectangle with a tuple">
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-09/src/main.rs}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 એક રીતે, આ કાર્યક્રમ વધુ સારો છે. ટ્યૂપલ્સ આપણને થોડી રચના ઉમેરવા દે છે, અને હવે આપણે માત્ર એક જ Argument પસાર કરી રહ્યા છીએ. પરંતુ બીજા રીતે, આ સંસ્કરણ ઓછું સ્પષ્ટ છે: ટ્યૂપલ્સ તેમના ઘટકોને નામ આપતા નથી, તેથી આપણે ટ્યૂપલના ભાગોમાં અનુક્રમણિકા કરવી પડે છે, જે
-
-અમારી ગણતરીને ઓછી દેખી ન કરે છે. પહોળાઈ અને ઊંચાઈ ભેગી કરવી ગણતરી માટે મહત્વનું ન હતું, પરંતુ જો આપણે લંબચોરસને સ્ક્રીન પર દોરવા માંગતા હોઈએ, તો તે મહત્વનું હતું! આપણે એ યાદ રાખવું પડ્યું કે `width` ટ્યૂપલ અનુક્રમણિકા `0` છે અને `height` ટ્યૂપલ અનુક્રમણિકા `1` છે. જો કોઈ અન્ય વ્યક્તિ અમારી કોડનો ઉપયોગ કરે તો તેને સમજવું અને યાદ રાખવું વધુ મુશ્કેલ બની જશે. આપણે આપેલા ડેટાના અર્થને અમારા કોડમાં વ્યક્ત કર્યો નથી, તેથી ભૂલો દાખલ કરવી સરળ બની ગઈ છે.
-
-&lt;!-- Old headings. Do not remove or links may break. --&gt;
-### Refactoring with Structs
-
-આપણે ડેટાને લેબલ કરીને અર્થ ઉમેરવા માટે બંધારણોનો ઉપયોગ કરીએ છીએ. આપણે આપનું ટ્યૂપલને એક નામિત બંધારણમાં રૂપાંતરિત કરી શકીએ છીએ, જે સમગ્ર ભાગ તેમજ ભાગો માટે નામો ધરાવે છે, જે યાદી 5-10 માં દર્શાવેલ છે.
-
-&lt;Listing number="5-10" file-name="src/main.rs" caption="Defining a `Rectangle` struct"&gt;
-```rust
+<p>અમારી ગણતરીને ઓછી દેખી ન કરે છે. પહોળાઈ અને ઊંચાઈ ભેગી કરવી ગણતરી માટે મહત્વનું ન હતું, પરંતુ જો આપણે લંબચોરસને સ્ક્રીન પર દોરવા માંગતા હોઈએ, તો તે મહત્વનું હતું! આપણે એ યાદ રાખવું પડ્યું કે <code>width</code> ટ્યૂપલ અનુક્રમણિકા <code>0</code> છે અને <code>height</code> ટ્યૂપલ અનુક્રમણિકા <code>1</code> છે. જો કોઈ અન્ય વ્યક્તિ અમારી કોડનો ઉપયોગ કરે તો તેને સમજવું અને યાદ રાખવું વધુ મુશ્કેલ બની જશે. આપણે આપેલા ડેટાના અર્થને અમારા કોડમાં વ્યક્ત કર્યો નથી, તેથી ભૂલો દાખલ કરવી સરળ બની ગઈ છે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="refactoring-with-structs"><a class="header" href="#refactoring-with-structs">Refactoring with Structs</a></h3>
+<p>આપણે ડેટાને લેબલ કરીને અર્થ ઉમેરવા માટે બંધારણોનો ઉપયોગ કરીએ છીએ. આપણે આપનું ટ્યૂપલને એક નામિત બંધારણમાં રૂપાંતરિત કરી શકીએ છીએ, જે સમગ્ર ભાગ તેમજ ભાગો માટે નામો ધરાવે છે, જે યાદી 5-10 માં દર્શાવેલ છે.</p>
+<listing number="5-10" file-name="src/main.rs" caption="Defining a `Rectangle` struct">
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-10/src/main.rs}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 અહીં, આપણે એક struct વ્યાખ્યાયિત કર્યો છે અને તેનું નામ `Rectangle` આપ્યું છે. કદાળી કૌંસની અંદર, આપણે ક્ષેત્રો `width` અને `height` તરીકે વ્યાખ્યાયિત કર્યા છે, જે બંનેનો પ્રકાર `u32` છે. પછી, `main` માં, આપણે `Rectangle` ના એક ચોક્કસ ઉદાહરણ બનાવ્યું છે જેની પહોળાઈ `30` અને ઊંચાઈ `50` છે.
-
-આપણો `area` ફંક્શન હવે એક પરિમાણ સાથે વ્યાખ્યાયિત કરવામાં આવ્યો છે, જેને આપણે `rectangle` નામ આપ્યું છે, જેનો પ્રકાર struct `Rectangle` ઉદાહરણની અપરિવર્તનશીલ ઉછીના લીધેલી નકલ (borrow) છે. પ્રકરણ 4 માં જણાવ્યા મુજબ, આપણે struct ની માલિકી લેવાને બદલે તેની નકલ મેળવવી જોઈએ. આ રીતે, `main` તેની માલિકી જાળવી રાખે છે અને `rect1` નો ઉપયોગ કરવાનું ચાલુ રાખી શકે છે, જેનું કારણ છે કે આપણે ફંક્શન હસ્તાક્ષરમાં (signature) અને જ્યાં આપણે ફંક્શનને બોલાવીએ છીએ ત્યાં `&amp;` નો ઉપયોગ કરીએ છીએ.
-
-area કાર્ય `area` કાર્ય `Rectangle` ઉદાહરણના `width` અને `height` ક્ષેત્રોને પ્રાપ્ય કરે છે (એ નોંધવું અગત્યનું છે કે ઉછીના લીધેલા struct ઉદાહરણના ક્ષેત્રોને પ્રાપ્ય કરવાથી ક્ષેત્ર મૂલ્યો ખસેડવામાં આવતા નથી, જેના કારણે તમે ઘણીવાર struct ના ઉછીના લીધેલાં ઉદાહરણો જુઓ છો). આપણું `area` માટેનું કાર્ય હસ્તાક્ષર હવે બરાબર જણાવે છે કે આપણને શું જોઈએ છે: `Rectangle` નું ક્ષેત્રફળ ગણો, તેના `width` અને `height` ક્ષેત્રોનો ઉપયોગ કરીને. આ દર્શાવે છે કે પહોળાઈ અને ઊંચાઈ એકબીજા સાથે સંબંધિત છે, અને તે મૂલ્યોને વર્ણનાત્મક નામો આપે છે, tuple અનુક્રમણિકા મૂલ્યો `0` અને `1` નો ઉપયોગ કરવાને બદલે. આ સ્પષ્ટતા માટે એક લાભ છે.
-
-&lt;!-- Old headings. Do not remove or links may break. --&gt;
-### Adding Functionality with Derived Traits
-
-જ્યારે આપણે આપણી કાર્યક્રમની ભૂલનિવારણ (debugging) કરી રહ્યા હોઈએ, ત્યારે `Rectangle` નો એક દાખલો છાપવો ઉપયોગી થઈ શકે છે અને તેના તમામ ક્ષેત્રોના મૂલ્યો જોઈ શકાય. યાદી 5-11 પ્રયત્ન કરે છે કે `println!` મેક્રોનો ઉપયોગ અગાઉના પ્રકરણોમાં આપણે જે રીતે કર્યો હતો, તે જ રીતે કરવો. જોકે, આ કામ નહીં કરે.
-
-&lt;Listing number="5-11" file-name="src/main.rs" caption="Attempting to print a `Rectangle` instance"&gt;
-```rust
+<p>આપણો <code>area</code> ફંક્શન હવે એક પરિમાણ સાથે વ્યાખ્યાયિત કરવામાં આવ્યો છે, જેને આપણે <code>rectangle</code> નામ આપ્યું છે, જેનો પ્રકાર struct <code>Rectangle</code> ઉદાહરણની અપરિવર્તનશીલ ઉછીના લીધેલી નકલ (borrow) છે. પ્રકરણ 4 માં જણાવ્યા મુજબ, આપણે struct ની માલિકી લેવાને બદલે તેની નકલ મેળવવી જોઈએ. આ રીતે, <code>main</code> તેની માલિકી જાળવી રાખે છે અને <code>rect1</code> નો ઉપયોગ કરવાનું ચાલુ રાખી શકે છે, જેનું કારણ છે કે આપણે ફંક્શન હસ્તાક્ષરમાં (signature) અને જ્યાં આપણે ફંક્શનને બોલાવીએ છીએ ત્યાં <code>&amp;</code> નો ઉપયોગ કરીએ છીએ.</p>
+<p>area કાર્ય <code>area</code> કાર્ય <code>Rectangle</code> ઉદાહરણના <code>width</code> અને <code>height</code> ક્ષેત્રોને પ્રાપ્ય કરે છે (એ નોંધવું અગત્યનું છે કે ઉછીના લીધેલા struct ઉદાહરણના ક્ષેત્રોને પ્રાપ્ય કરવાથી ક્ષેત્ર મૂલ્યો ખસેડવામાં આવતા નથી, જેના કારણે તમે ઘણીવાર struct ના ઉછીના લીધેલાં ઉદાહરણો જુઓ છો). આપણું <code>area</code> માટેનું કાર્ય હસ્તાક્ષર હવે બરાબર જણાવે છે કે આપણને શું જોઈએ છે: <code>Rectangle</code> નું ક્ષેત્રફળ ગણો, તેના <code>width</code> અને <code>height</code> ક્ષેત્રોનો ઉપયોગ કરીને. આ દર્શાવે છે કે પહોળાઈ અને ઊંચાઈ એકબીજા સાથે સંબંધિત છે, અને તે મૂલ્યોને વર્ણનાત્મક નામો આપે છે, tuple અનુક્રમણિકા મૂલ્યો <code>0</code> અને <code>1</code> નો ઉપયોગ કરવાને બદલે. આ સ્પષ્ટતા માટે એક લાભ છે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="adding-functionality-with-derived-traits"><a class="header" href="#adding-functionality-with-derived-traits">Adding Functionality with Derived Traits</a></h3>
+<p>જ્યારે આપણે આપણી કાર્યક્રમની ભૂલનિવારણ (debugging) કરી રહ્યા હોઈએ, ત્યારે <code>Rectangle</code> નો એક દાખલો છાપવો ઉપયોગી થઈ શકે છે અને તેના તમામ ક્ષેત્રોના મૂલ્યો જોઈ શકાય. યાદી 5-11 પ્રયત્ન કરે છે કે <code>println!</code> મેક્રોનો ઉપયોગ અગાઉના પ્રકરણોમાં આપણે જે રીતે કર્યો હતો, તે જ રીતે કરવો. જોકે, આ કામ નહીં કરે.</p>
+<listing number="5-11" file-name="src/main.rs" caption="Attempting to print a `Rectangle` instance">
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/src/main.rs}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 જ્યારે આપણે આ કોડને કમ્પાઇલ કરીએ છીએ, ત્યારે આપણને આ મુખ્ય સંદેશ સાથેની ભૂલ આવે છે:
-
-```text
-```text
-{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/output.txt:3}}
+<pre><code class="language-text">{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/output.txt:3}}
 </code></pre>
-<pre><code>The `println!` Macro `println!` મેક્રો ઘણા પ્રકારના ફોર્મેટિંગ કરી શકે છે, અને મૂળભૂત રીતે, કુંદળિત કૌંસ `println!` ને `Display` તરીકે ઓળખાતા ફોર્મેટિંગનો ઉપયોગ કરવા માટે કહે છે: અંતિમ user માટે સીધા જ આઉટપુટ. અત્યાર સુધી આપણે જોયેલા પ્રાથમિક પ્રકારો `Display` ને મૂળભૂત રીતે અમલમાં મૂકે છે કારણ કે `1` અથવા અન્ય કોઈપણ પ્રાથમિક પ્રકારને userને બતાવવાનો માત્ર એક જ રસ્તો હોય છે. પરંતુ સ્ટ્રક્ચર્સ સાથે, `println!` એ આઉટપુટને કેવી રીતે ફોર્મેટ કરવું જોઈએ તે ઓછું સ્પષ્ટ છે કારણ કે વધુ ડિસ્પ્લે શક્યતાઓ છે: શું તમે અલ્પવિરામ ઇચ્છો છો કે નહીં? શું તમે કૌંસ છાપવા માંગો છો? શું બધા ક્ષેત્રો દર્શાવવા જોઈએ? આ અસ્પષ્ટતાને કારણે, Rust એ અનુમાન કરવાનો પ્રયાસ કરતો નથી કે આપણે શું ઈચ્છીએ છીએ, અને સ્ટ્રક્ચર્સમાં `println!` સાથે ઉપયોગ કરવા માટે `Display` નું પ્રદાન કરેલું અમલીકરણ હોતું નથી અને `{}` પ્લેસહોલ્ડર.
-
-જો આપણે ભૂલો વાંચવાનું ચાલુ રાખીએ, તો આપણને આ ઉપયોગી નોંધ મળશે:
-
-```text
-```text
-{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/output.txt:9:10}}
+<p>The <code>println!</code> Macro <code>println!</code> મેક્રો ઘણા પ્રકારના ફોર્મેટિંગ કરી શકે છે, અને મૂળભૂત રીતે, કુંદળિત કૌંસ <code>println!</code> ને <code>Display</code> તરીકે ઓળખાતા ફોર્મેટિંગનો ઉપયોગ કરવા માટે કહે છે: અંતિમ user માટે સીધા જ આઉટપુટ. અત્યાર સુધી આપણે જોયેલા પ્રાથમિક પ્રકારો <code>Display</code> ને મૂળભૂત રીતે અમલમાં મૂકે છે કારણ કે <code>1</code> અથવા અન્ય કોઈપણ પ્રાથમિક પ્રકારને userને બતાવવાનો માત્ર એક જ રસ્તો હોય છે. પરંતુ સ્ટ્રક્ચર્સ સાથે, <code>println!</code> એ આઉટપુટને કેવી રીતે ફોર્મેટ કરવું જોઈએ તે ઓછું સ્પષ્ટ છે કારણ કે વધુ ડિસ્પ્લે શક્યતાઓ છે: શું તમે અલ્પવિરામ ઇચ્છો છો કે નહીં? શું તમે કૌંસ છાપવા માંગો છો? શું બધા ક્ષેત્રો દર્શાવવા જોઈએ? આ અસ્પષ્ટતાને કારણે, Rust એ અનુમાન કરવાનો પ્રયાસ કરતો નથી કે આપણે શું ઈચ્છીએ છીએ, અને સ્ટ્રક્ચર્સમાં <code>println!</code> સાથે ઉપયોગ કરવા માટે <code>Display</code> નું પ્રદાન કરેલું અમલીકરણ હોતું નથી અને <code>{}</code> પ્લેસહોલ્ડર.</p>
+<p>જો આપણે ભૂલો વાંચવાનું ચાલુ રાખીએ, તો આપણને આ ઉપયોગી નોંધ મળશે:</p>
+<pre><code class="language-text">{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/output.txt:9:10}}
 </code></pre>
-<pre><code>ચાલો પ્રયત્ન કરીએ! `println!` મેક્રો કૉલ હવે `println!("rect1 is {rect1:?}");` જેવો દેખાશે. કુંદળી મૂંઝારમાં `:?` મૂકવાથી `println!` ને જણાવવામાં આવે છે કે આપણે `Debug` નામનું આઉટપુટ ફોર્મેટ વાપરવા માંગીએ છીએ. `Debug` ટ્રેઇટ આપણને આપણા સ્ટ્રક્ચરમાં એક એવો રસ્તો પૂરો પાડે છે જે વિકાસકર્તાઓ માટે ઉપયોગી હોય, જેથી તેઓ કોડ ડીબગ કરતી વખતે તેની કિંમત જોઈ શકે. આ
-
-ફેરફાર સાથે કોડને કમ્પાઇલ કરો. અરે! હજી પણ ભૂલ આવે છે:
-
-```text
-```text
-{{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-01-debug/output.txt:3}}
+<p>ચાલો પ્રયત્ન કરીએ! <code>println!</code> મેક્રો કૉલ હવે <code>println!("rect1 is {rect1:?}");</code> જેવો દેખાશે. કુંદળી મૂંઝારમાં <code>:?</code> મૂકવાથી <code>println!</code> ને જણાવવામાં આવે છે કે આપણે <code>Debug</code> નામનું આઉટપુટ ફોર્મેટ વાપરવા માંગીએ છીએ. <code>Debug</code> ટ્રેઇટ આપણને આપણા સ્ટ્રક્ચરમાં એક એવો રસ્તો પૂરો પાડે છે જે વિકાસકર્તાઓ માટે ઉપયોગી હોય, જેથી તેઓ કોડ ડીબગ કરતી વખતે તેની કિંમત જોઈ શકે. આ</p>
+<p>ફેરફાર સાથે કોડને કમ્પાઇલ કરો. અરે! હજી પણ ભૂલ આવે છે:</p>
+<pre><code class="language-text">{{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-01-debug/output.txt:3}}
 </code></pre>
-<pre><code>પરંતુ ફરીથી, કમ્પાઇલર આપણને એક મદદરૂપ સૂચન આપે છે:
-
-```text
-```text
-{{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-01-debug/output.txt:9:10}}
+<p>પરંતુ ફરીથી, કમ્પાઇલર આપણને એક મદદરૂપ સૂચન આપે છે:</p>
+<pre><code class="language-text">{{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-01-debug/output.txt:9:10}}
 </code></pre>
-<pre><code>Rust માં ડીબગીંગ માહિતી છાપવાની કાર્યક્ષમતા પણ સામેલ છે, પરંતુ તે કાર્યક્ષમતા આપણી struct માટે ઉપલબ્ધ કરાવવા માટે આપણે સ્પષ્ટપણે પસંદગી કરવી પડશે. આ કરવા માટે, આપણે `#[derive(Debug)]` એવું બાહ્ય લક્ષણ struct વ્યાખ્યા પહેલાં ઉમેરીએ છીએ, જે Listing 5-12 માં દર્શાવેલ છે.
-
-&lt;Listing number="5-12" file-name="src/main.rs" caption="Adding the attribute to derive the `Debug` trait and printing the `Rectangle` instance using debug formatting"&gt;
-```rust
+<p>Rust માં ડીબગીંગ માહિતી છાપવાની કાર્યક્ષમતા પણ સામેલ છે, પરંતુ તે કાર્યક્ષમતા આપણી struct માટે ઉપલબ્ધ કરાવવા માટે આપણે સ્પષ્ટપણે પસંદગી કરવી પડશે. આ કરવા માટે, આપણે <code>#[derive(Debug)]</code> એવું બાહ્ય લક્ષણ struct વ્યાખ્યા પહેલાં ઉમેરીએ છીએ, જે Listing 5-12 માં દર્શાવેલ છે.</p>
+<listing number="5-12" file-name="src/main.rs" caption="Adding the attribute to derive the `Debug` trait and printing the `Rectangle` instance using debug formatting">
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-12/src/main.rs}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 હવે જ્યારે આપણે આ કાર્યક્રમ ચલાવીશું, ત્યારે આપણને કોઈ ભૂલો નહીં દેખાય અને નીચે મુજબનું પરિણામ મળશે:
-
-```console
-```console
-{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-12/output.txt}}
+<pre><code class="language-console">{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-12/output.txt}}
 </code></pre>
-<pre><code>ચોક્કસ! આ દેખાવમાં સૌથી સુંદર પરિણામ નથી, પરંતુ તે આ ઉદાહરણ માટે તમામ ક્ષેત્રોના મૂલ્યો દર્શાવે છે, જે ડિબગીંગ દરમિયાન ચોક્કસપણે મદદરૂપ થશે. જ્યારે આપણી પાસે મોટા struct હોય, ત્યારે વાંચવામાં સરળ પરિણામ મેળવવું ઉપયોગી થઈ શકે છે; આવી સ્થિતિમાં, આપણે `println!` સ્ટ્રિંગમાં `{:#?}` ને બદલે `{:?}` નો ઉપયોગ કરી શકીએ છીએ. આ ઉદાહરણમાં, `{:#?}` શૈલીનો ઉપયોગ કરવાથી નીચે મુજબનું પરિણામ આવશે:
-
-```console
-```console
-{{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-02-pretty-debug/output.txt}}
+<p>ચોક્કસ! આ દેખાવમાં સૌથી સુંદર પરિણામ નથી, પરંતુ તે આ ઉદાહરણ માટે તમામ ક્ષેત્રોના મૂલ્યો દર્શાવે છે, જે ડિબગીંગ દરમિયાન ચોક્કસપણે મદદરૂપ થશે. જ્યારે આપણી પાસે મોટા struct હોય, ત્યારે વાંચવામાં સરળ પરિણામ મેળવવું ઉપયોગી થઈ શકે છે; આવી સ્થિતિમાં, આપણે <code>println!</code> સ્ટ્રિંગમાં <code>{:#?}</code> ને બદલે <code>{:?}</code> નો ઉપયોગ કરી શકીએ છીએ. આ ઉદાહરણમાં, <code>{:#?}</code> શૈલીનો ઉપયોગ કરવાથી નીચે મુજબનું પરિણામ આવશે:</p>
+<pre><code class="language-console">{{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-02-pretty-debug/output.txt}}
 </code></pre>
-<pre><code>બીજો વિકલ્પ એ છે કે `Debug` ફોર્મેટનો ઉપયોગ કરીને મૂલ્ય છાપવું, જે માટે `dbg!` મેક્રો વાપરી શકાય છે. આ મેક્રો અભિવ્યક્તિનું માલિકી સ્થાનાંતરણ કરે છે (જેમ કે `println!` સંદર્ભ લે છે), કોડમાં જ્યાં `dbg!` મેક્રો બોલાવવામાં આવ્યો હોય તે ફાઇલ અને લાઇન નંબર, અને તે અભિવ્યક્તિના પરિણામી મૂલ્યને છાપે છે, અને પછી મૂલ્યનું માલિકી સ્થાનાંતરણ કરે છે.
-
-નોંધ: `dbg!` મેક્રોને બોલાવવાથી પ્રમાણભૂત ભૂલ કન્સોલ પ્રવાહમાં (`stderr`) છાપવામાં આવે છે, વિરુદ્ધમાં `println!` પ્રમાણભૂત આઉટપુટ કન્સોલ પ્રવાહમાં (`stdout`) છાપે છે. આપણે પ્રકરણ ૧૨ માં “ભૂલોને પ્રમાણભૂત ભૂલમાં રીડાયરેક્ટ કરવી” વિભાગમાં `stderr` અને `stdout` વિશે વધુ વાત કરીશું.
-
-અહીં એક ઉદાહરણ છે જેમાં આપણે `width` ક્ષેત્રને સોંપવામાં આવેલ મૂલ્ય અને `rect1` માં સમગ્ર struct નું મૂલ્ય બંનેમાં રસ ધરાવીએ છીએ:
-
-```rust
-```rust
-{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-05-dbg-macro/src/main.rs}}
+<p>બીજો વિકલ્પ એ છે કે <code>Debug</code> ફોર્મેટનો ઉપયોગ કરીને મૂલ્ય છાપવું, જે માટે <code>dbg!</code> મેક્રો વાપરી શકાય છે. આ મેક્રો અભિવ્યક્તિનું માલિકી સ્થાનાંતરણ કરે છે (જેમ કે <code>println!</code> સંદર્ભ લે છે), કોડમાં જ્યાં <code>dbg!</code> મેક્રો બોલાવવામાં આવ્યો હોય તે ફાઇલ અને લાઇન નંબર, અને તે અભિવ્યક્તિના પરિણામી મૂલ્યને છાપે છે, અને પછી મૂલ્યનું માલિકી સ્થાનાંતરણ કરે છે.</p>
+<p>નોંધ: <code>dbg!</code> મેક્રોને બોલાવવાથી પ્રમાણભૂત ભૂલ કન્સોલ પ્રવાહમાં (<code>stderr</code>) છાપવામાં આવે છે, વિરુદ્ધમાં <code>println!</code> પ્રમાણભૂત આઉટપુટ કન્સોલ પ્રવાહમાં (<code>stdout</code>) છાપે છે. આપણે પ્રકરણ ૧૨ માં “ભૂલોને પ્રમાણભૂત ભૂલમાં રીડાયરેક્ટ કરવી” વિભાગમાં <code>stderr</code> અને <code>stdout</code> વિશે વધુ વાત કરીશું.</p>
+<p>અહીં એક ઉદાહરણ છે જેમાં આપણે <code>width</code> ક્ષેત્રને સોંપવામાં આવેલ મૂલ્ય અને <code>rect1</code> માં સમગ્ર struct નું મૂલ્ય બંનેમાં રસ ધરાવીએ છીએ:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-05-dbg-macro/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>અમે <code>dbg!</code> ને અભિવ્યક્તિ <code>30 * scale</code> ની આસપાસ મૂકી શકીએ છીએ અને, કારણ કે <code>dbg!</code> અભિવ્યક્તિના મૂલ્યની માલિકી લે છે, <code>width</code> ક્ષેત્રને એ જ મૂલ્ય મળશે જેવું જો આપણે <code>dbg!</code> કૉલ ત્યાં ન કર્યો હોત. અમારે નથી જોઈતું કે <code>dbg!</code> <code>rect1</code> ની માલિકી લે, તેથી અમે આગળના કૉલમાં <code>rect1</code> નો સંદર્ભ વાપરીએ છીએ. આ ઉદાહરણનું પરિણામ આ પ્રમાણે દેખાય છે:</p>
+<pre><code class="language-console">{{#include ../listings/ch05-using-structs-to-structure-related-data/no-listing-05-dbg-macro/output.txt}}
 </code></pre>
-<pre><code>અમે `dbg!` ને અભિવ્યક્તિ `30 * scale` ની આસપાસ મૂકી શકીએ છીએ અને, કારણ કે `dbg!` અભિવ્યક્તિના મૂલ્યની માલિકી લે છે, `width` ક્ષેત્રને એ જ મૂલ્ય મળશે જેવું જો આપણે `dbg!` કૉલ ત્યાં ન કર્યો હોત. અમારે નથી જોઈતું કે `dbg!` `rect1` ની માલિકી લે, તેથી અમે આગળના કૉલમાં `rect1` નો સંદર્ભ વાપરીએ છીએ. આ ઉદાહરણનું પરિણામ આ પ્રમાણે દેખાય છે:
-
-```console
-```console
-{{#include ../listings/ch05-using-structs-to-structure-related-data/no-listing-05-dbg-macro/output.txt}}
-</code></pre>
-<pre><code>અમે જોઈ શકીએ છીએ કે પ્રથમ પરિણામ src/main.rs લાઇન ૧૦ માંથી આવ્યું હતું જ્યાં અમે અભિવ્યક્તિ `30 * scale` ને ડિબગ કરી રહ્યા છીએ, અને તેનું પરિણામી મૂલ્ય `60` છે (સંખ્યાઓ માટે લાગુ કરાયેલ `Debug` ફોર્મેટિંગ માત્ર તેમનું મૂલ્ય છાપે છે). src/main.rs લાઇન ૧૪ પર `dbg!` કૉલ `&amp;rect1` નું મૂલ્ય આઉટપુટ કરે છે, જે `Rectangle` સ્ટ્રક્ચર છે. આ આઉટપુટ `Rectangle` પ્રકારના સુંદર `Debug` ફોર્મેટિંગનો ઉપયોગ કરે છે. `dbg!` મેક્રો તમારા કોડ શું કરી રહ્યું છે તે જાણવા માટે ખરેખર મદદરૂપ થઈ શકે છે!
-
-માં `Debug` લક્ષણ ઉપરાંત, આપણને `derive` લક્ષણ સાથે ઉપયોગ કરવા માટે ઘણાં લક્ષણો ઉપલબ્ધ કરાવ્યાં છે, જે આપણાં નિશ્ચિત પ્રકારોમાં ઉપયોગી વર્તન ઉમેરી શકે છે. તે લક્ષણો અને તેમનાં વર્તનો અનુappendix C માં દર્શાવેલ છે. આપણે પ્રકરણ ૧૦ માં આ લક્ષણોને કસ્ટમ વર્તન સાથે કેવી રીતે અમલમાં મૂકવા તેમજ પોતાના લક્ષણો કેવી રીતે બનાવવા તે વિશે પણ જોઈશું. `derive` સિવાય ઘણાં અન્ય લક્ષણો પણ છે; વધુ માહિતી માટે, Rust Reference ના “Attributes” વિભાગ જુઓ.
-
-આપણો `area` વિધેય ખૂબ જ વિશેષ છે: તે માત્ર લંબચોરસનું ક્ષેત્રફળ ગણે છે. અન્ય પ્રકાર સાથે કામ ન કરવાને કારણે, આ વર્તણૂકને આપણા `Rectangle` રચના સાથે વધુ નજીકથી જોડવું ઉપયોગી થશે. ચાલો જોઈએ કે આપણે કોડને ફરીથી ગોઠવીને `area` વિધેયને `Rectangle` પ્રકાર પર વ્યાખ્યાયિત થયેલ `area` પદ્ધતિમાં કેવી રીતે ફેરવી શકીએ છીએ.
-
-</code></pre>
+<p>અમે જોઈ શકીએ છીએ કે પ્રથમ પરિણામ src/main.rs લાઇન ૧૦ માંથી આવ્યું હતું જ્યાં અમે અભિવ્યક્તિ <code>30 * scale</code> ને ડિબગ કરી રહ્યા છીએ, અને તેનું પરિણામી મૂલ્ય <code>60</code> છે (સંખ્યાઓ માટે લાગુ કરાયેલ <code>Debug</code> ફોર્મેટિંગ માત્ર તેમનું મૂલ્ય છાપે છે). src/main.rs લાઇન ૧૪ પર <code>dbg!</code> કૉલ <code>&amp;rect1</code> નું મૂલ્ય આઉટપુટ કરે છે, જે <code>Rectangle</code> સ્ટ્રક્ચર છે. આ આઉટપુટ <code>Rectangle</code> પ્રકારના સુંદર <code>Debug</code> ફોર્મેટિંગનો ઉપયોગ કરે છે. <code>dbg!</code> મેક્રો તમારા કોડ શું કરી રહ્યું છે તે જાણવા માટે ખરેખર મદદરૂપ થઈ શકે છે!</p>
+<p>માં <code>Debug</code> લક્ષણ ઉપરાંત, આપણને <code>derive</code> લક્ષણ સાથે ઉપયોગ કરવા માટે ઘણાં લક્ષણો ઉપલબ્ધ કરાવ્યાં છે, જે આપણાં નિશ્ચિત પ્રકારોમાં ઉપયોગી વર્તન ઉમેરી શકે છે. તે લક્ષણો અને તેમનાં વર્તનો અનુappendix C માં દર્શાવેલ છે. આપણે પ્રકરણ ૧૦ માં આ લક્ષણોને કસ્ટમ વર્તન સાથે કેવી રીતે અમલમાં મૂકવા તેમજ પોતાના લક્ષણો કેવી રીતે બનાવવા તે વિશે પણ જોઈશું. <code>derive</code> સિવાય ઘણાં અન્ય લક્ષણો પણ છે; વધુ માહિતી માટે, Rust Reference ના “Attributes” વિભાગ જુઓ.</p>
+<p>આપણો <code>area</code> વિધેય ખૂબ જ વિશેષ છે: તે માત્ર લંબચોરસનું ક્ષેત્રફળ ગણે છે. અન્ય પ્રકાર સાથે કામ ન કરવાને કારણે, આ વર્તણૂકને આપણા <code>Rectangle</code> રચના સાથે વધુ નજીકથી જોડવું ઉપયોગી થશે. ચાલો જોઈએ કે આપણે કોડને ફરીથી ગોઠવીને <code>area</code> વિધેયને <code>Rectangle</code> પ્રકાર પર વ્યાખ્યાયિત થયેલ <code>area</code> પદ્ધતિમાં કેવી રીતે ફેરવી શકીએ છીએ.</p>
 
                     </main>
 

@@ -18,9 +18,7 @@
 
 <Listing number="7-3" file-name="src/lib.rs" caption="Calling the `add_to_waitlist` function using absolute and relative paths">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-03/src/lib.rs}}
-```
 ```
 </Listing>
 પ્રથમ વખત જ્યારે આપણે `eat_at_restaurant` માં `add_to_waitlist` કાર્યને બોલાવીએ છીએ, ત્યારે આપણે એક નિરપેક્ષ માર્ગ (absolute path) વાપરીએ છીએ. `add_to_waitlist` કાર્ય એ જ `crate` માં વ્યાખ્યાયિત થયેલું છે જે `eat_at_restaurant` સાથે છે, તેથી આપણે `crate` કીવર્ડનો ઉપયોગ કરીને નિરપેક્ષ માર્ગ શરૂ કરી શકીએ છીએ. પછી આપણે ક્રમિક મોડ્યુલોને સમાવિષ્ટ કરીએ છીએ જ્યાં સુધી આપણે `add_to_waitlist` સુધી પહોંચીએ નહીં. તમે સમાન બંધારણ (structure) ધરાવતી ફાઇલ સિસ્ટમની કલ્પના કરી શકો છો: `add_to_waitlist` કાર્ય ચલાવવા માટે આપણે માર્ગ `/front_of_house/hosting/add_to_waitlist` નો ઉલ્લેખ કરીશું; `crate` નામને શરૂ કરવા માટે વાપરવું એ તમારા શેલમાં ફાઇલ સિસ્ટમનાં મૂળથી શરૂ કરવા માટે `/` વાપરવા જેવું જ છે.
@@ -33,9 +31,7 @@
 
 <Listing number="7-4" caption="Compiler errors from building the code in Listing 7-3">
 ```console
-```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-03/output.txt}}
-```
 ```
 </Listing>
 ભૂલ સંદેશાઓ જણાવે છે કે મોડ્યુલ `hosting` ખાનગી છે. બીજા શબ્દોમાં કહીએ તો, અમારી પાસે `hosting` મોડ્યુલ અને `add_to_waitlist` ફંક્શન માટે યોગ્ય માર્ગો છે, પરંતુ Rust આપણને તેનો ઉપયોગ કરવાની મંજૂરી આપતું નથી કારણ કે તેની પાસે ખાનગી વિભાગોની પહોંચ નથી. Rust માં, તમામ વસ્તુઓ (ફંક્શન્સ, મેથડ્સ, structs, enums, મોડ્યુલ્સ અને કોન્સ્ટન્ટ્સ) મૂળભૂત રીતે પેરેન્ટ મોડ્યુલ્સ માટે ખાનગી હોય છે. જો તમે ફંક્શન અથવા struct જેવી કોઈ વસ્તુને ખાનગી બનાવવા માંગતા હો, તો તમે
@@ -50,18 +46,14 @@ Rust એ મોડ્યુલ સિસ્ટમ આ રીતે કાર્�
 
 <Listing number="7-5" file-name="src/lib.rs" caption="Declaring the `hosting` module as `pub` to use it from `eat_at_restaurant`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-05/src/lib.rs:here}}
-```
 ```
 </Listing>
 કમનસીબે, યાદી 7-5 માં રહેલો કોડ હજી પણ કમ્પાઇલર ભૂલો ઉત્પન્ન કરે છે, જે યાદી 7-6 માં દર્શાવેલ છે.
 
 <Listing number="7-6" caption="Compiler errors from building the code in Listing 7-5">
 ```console
-```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-05/output.txt}}
-```
 ```
 </Listing>
 શું થયું? `pub` કીવર્ડને `mod hosting` ની આગળ ઉમેરવાથી મોડ્યુલ જાહેર થાય છે. આ પરિવર્તન સાથે, જો આપણે `front_of_house` ને એક્સેસ કરી શકીએ, તો આપણે `hosting` ને પણ એક્સેસ કરી શકીશું. પરંતુ `hosting` ના વિષમત્ત હજી પણ ખાનગી જ છે; મોડ્યુલને જાહેર કરવાથી તેના વિષમત્ત જાહેર થતા નથી. મોડ્યુલ પરનું `pub` કીવર્ડ માત્ર તેના પૂર્વજ મોડ્યુલોમાં રહેલા કોડને તેમાં સંદર્ભિત કરવાની મંજૂરી આપે છે, પરંતુ તેના આંતરિક કોડને એક્સેસ કરવાની નહીં. કારણ કે મોડ્યુલો કન્ટેનર હોય છે, તેથી માત્ર મોડ્યુલને જાહેર કરીને આપણે ઘણું બધું કરી શકતા નથી; આપણે આગળ વધવું પડશે અને મોડ્યુલમાં રહેલા એક અથવા વધુ વસ્તુઓને પણ જાહેર કરવાનું પસંદ કરવું પડશે.
@@ -72,9 +64,7 @@ Listing 7-6 માં દર્શાવેલ ભૂલો જણાવે છ�
 
 <Listing number="7-7" file-name="src/lib.rs" caption="Adding the `pub` keyword to `mod hosting` and `fn add_to_waitlist` lets us call the function from `eat_at_restaurant`.">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-07/src/lib.rs:here}}
-```
 ```
 </Listing>
 હવે કોડ કમ્પાઇલ થશે! એ સમજવા માટે કે `pub` કીવર્ડ ઉમેરવાથી આપણે આ પાથનો ઉપયોગ `eat_at_restaurant` માં ગોપનીયતાના નિયમો અનુસાર કરી શકીએ છીએ, ચાલો નિરપેક્ષ અને સાપેક્ષ પાથ જોઈએ.
@@ -101,9 +91,7 @@ Listing 7-8 નું ઉદાહરણ ઉપસ્થિત પરિસ્�
 
 <Listing number="7-8" file-name="src/lib.rs" caption="Calling a function using a relative path starting with `super`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-08/src/lib.rs}}
-```
 ```
 </Listing>
 `fix_incorrect_order` કાર્ય `back_of_house` મોડ્યુલમાં છે, તેથી આપણે `super` વાપરીને `back_of_house` ના પિતૃ મોડ્યુલમાં જઈ શકીએ છીએ, જે આ કિસ્સામાં `crate` છે, મૂળ. ત્યાંથી, આપણે `deliver_order` શોધીએ અને તેને મેળવીએ છીએ. સફળતા! અમારું માનવું છે કે `back_of_house` મોડ્યુલ અને `deliver_order` કાર્ય એકબીજા સાથેના સંબંધમાં રહેવાની શક્યતા છે અને જો આપણે `crate` ના મોડ્યુલ વૃક્ષને ફરીથી ગોઠવવાનું નક્કી કરીએ તો તે બંને એકસાથે ખસેડી શકાય છે. તેથી, અમે `super` વાપર્યું જેથી કરીને ભવિષ્યમાં આ કોડને અન્ય મોડ્યુલમાં ખસેડવામાં આવે તો અપડેટ કરવા માટે ઓછા સ્થળો રહે.
@@ -114,9 +102,7 @@ Listing 7-8 નું ઉદાહરણ ઉપસ્થિત પરિસ્�
 
 <Listing number="7-9" file-name="src/lib.rs" caption="A struct with some public fields and some private fields">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-09/src/lib.rs}}
-```
 ```
 </Listing>
 કારણ કે `back_of_house::Breakfast` struct માં `toast` ક્ષેત્ર જાહેર છે, તેથી `eat_at_restaurant` માં આપણે ડોટ સંકેતનો ઉપયોગ કરીને `toast` ક્ષેત્રમાં લખી અને વાંચી શકીએ છીએ. નોંધ કરો કે આપણે `seasonal_fruit` ક્ષેત્રનો ઉપયોગ `eat_at_restaurant` માં કરી શકતા નથી, કારણ કે `seasonal_fruit` ખાનગી છે. `seasonal_fruit` ક્ષેત્રના મૂલ્યને બદલતો પંક્તિ દૂર કરવાનો પ્રયાસ કરો અને જુઓ કે તમને શું ભૂલ મળે છે!
@@ -127,9 +113,7 @@ Listing 7-8 નું ઉદાહરણ ઉપસ્થિત પરિસ્�
 
 <Listing number="7-10" file-name="src/lib.rs" caption="Designating an enum as public makes all its variants public.">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-10/src/lib.rs}}
-```
 ```
 </Listing>
 કારણ કે અમે `Appetizer` ઇનમ જાહેર કર્યું છે, તેથી અમે `Soup` અને `Salad` પ્રકારોને `eat_at_restaurant` માં વાપરી શકીએ
@@ -138,3 +122,8 @@ Listing 7-8 નું ઉદાહરણ ઉપસ્થિત પરિસ્�
 
 અહીં એક વધુ પરિસ્થિતિ છે જેમાં `pub` સામેલ છે જેનો આપણે ઉલ્લેખ કર્યો નથી, અને તે આપણી અંતિમ મોડ્યુલ સિસ્ટમ લક્ષણ છે: `use` કીવર્ડ. આપણે સૌપ્રથમ `use` ને જાતે જ જોઈશું, અને પછી આપણે `pub` અને `use` ને કેવી રીતે જોડવા તે બતાવીશું.
 
+
+
+[pub]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#exposing-paths-with-the-pub-keyword
+[api-guidelines]: https://rust-lang.github.io/api-guidelines/
+[ch12]: ch12-00-an-io-project.html

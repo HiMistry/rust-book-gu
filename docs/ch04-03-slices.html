@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-78fa1409.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -189,204 +189,152 @@
 <p>ચાલો જોઈએ કે સ્લાઇસનો ઉપયોગ કર્યા વિના આ ફંક્શનની હસ્તાક્ષર કેવી રીતે લખી શકાય, જેથી આપણે તે સમસ્યાને સમજી શકીએ કે સ્લાઇસ કઈ રીતે ઉકેલ લાવશે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>```rust
-fn first_word(s: &amp;String) -&gt; ?
+</span>fn first_word(s: &amp;String) -&gt; ?
 <span class="boring">}</span></code></pre>
-<pre><code>`first_word` કાર્યમાં `&amp;String` પ્રકારનો પરિમાણ છે. આપણને માલિકીની જરૂર નથી, તેથી આ યોગ્ય છે. (વડેસર Rust કોડમાં, કાર્યો તેમના Argumentોની માલિકી લેતા નથી સિવાય કે તેમને જરૂર હોય, અને તેના કારણો આગળ વધતાં સ્પષ્ટ થશે.) પરંતુ આપણે શું પરત કરવું જોઈએ? વાસ્તવમાં આપણી પાસે શબ્દનો ભાગ વિશે વાત કરવાનો કોઈ રસ્તો નથી. જોકે, આપણે જગ્યા દ્વારા દર્શાવવામાં આવે છે તે શબ્દના અંતની અનુક્રમણિકા (index) પરત કરી શકીએ છીએ. ચાલો પ્રયત્ન કરીએ, જેમ કે સૂચિ 4-7 માં દર્શાવેલ છે.
-
-&lt;Listing number="4-7" file-name="src/main.rs" caption="The `first_word` function that returns a byte index value into the `String` parameter"&gt;
-```rust
+<p><code>first_word</code> કાર્યમાં <code>&amp;String</code> પ્રકારનો પરિમાણ છે. આપણને માલિકીની જરૂર નથી, તેથી આ યોગ્ય છે. (વડેસર Rust કોડમાં, કાર્યો તેમના Argumentોની માલિકી લેતા નથી સિવાય કે તેમને જરૂર હોય, અને તેના કારણો આગળ વધતાં સ્પષ્ટ થશે.) પરંતુ આપણે શું પરત કરવું જોઈએ? વાસ્તવમાં આપણી પાસે શબ્દનો ભાગ વિશે વાત કરવાનો કોઈ રસ્તો નથી. જોકે, આપણે જગ્યા દ્વારા દર્શાવવામાં આવે છે તે શબ્દના અંતની અનુક્રમણિકા (index) પરત કરી શકીએ છીએ. ચાલો પ્રયત્ન કરીએ, જેમ કે સૂચિ 4-7 માં દર્શાવેલ છે.</p>
+<listing number="4-7" file-name="src/main.rs" caption="The `first_word` function that returns a byte index value into the `String` parameter">
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 કારણ કે આપણે `String` ઘટક દ્વારા ઘટક તપાસવું પડે છે કે કોઈ મૂલ્ય ખાલી જગ્યા છે કે નહીં, તેથી આપણે `as_bytes` પદ્ધતિનો ઉપયોગ કરીને આપણી `String` ને બાઇટ્સની શ્રેણીમાં રૂપાંતરિત કરીશું.
-
-```rust
-```rust
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:as_bytes}}
-</code></pre>
-<pre><code>આગળ, આપણે બાઇટ્સની શ્રેણી પર એક પુનરાવર્તક (iterator) `iter` પદ્ધતિનો ઉપયોગ કરીને બનાવીએ છીએ:
-
-```rust
-```rust
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:iter}}
-</code></pre>
-<pre><code>અમે પ્રકરણ ૧૩ માં વધુ વિગતવાર પુનરાવર્તકો (iterators) વિશે ચર્ચા કરીશું. હાલ માટે, જાણો કે `iter` એ એક પદ્ધતિ છે જે સંગ્રહમાં દરેક તત્વ આપે છે અને `enumerate` એ `iter` ના પરિણામને આવરી લે છે અને દરેક તત્વને ટ્યૂપલના ભાગ રૂપે આપે છે. `enumerate` દ્વારા પરત કરવામાં આવેલ ટ્યૂપલનું પ્રથમ તત્વ અનુક્રમણિકા (index) છે, અને બીજું તત્વ તત્વનો સંદર્ભ (reference) છે. આ પોતાથી અનુક્રમણિકાની ગણતરી કરવા કરતાં થોડું વધુ અનુકૂળ છે.
-
-કારણ કે `enumerate` પદ્ધતિ ટ્યૂપલ આપે છે, અમે દાખલાઓ (patterns) નો ઉપયોગ કરીને તે ટ્યૂપલને વિઘટિત કરી શકીએ છીએ. અમે પ્રકરણ ૬ માં વધુ દાખલાઓ વિશે ચર્ચા કરીશું. `for` લૂપમાં, અમે એક દાખલો ઉલ્લેખિત કરીએ છીએ જેમાં ટ્યૂપલમાં અનુક્રમણિકા માટે `i` અને ટ્યૂપલમાંના એકલ બાઇટ માટે `&amp;item` છે. કારણ કે અમે `.iter().enumerate()` માંથી તત્વનો સંદર્ભ મેળવીએ છીએ, તેથી અમે દાખલામાં `&amp;` નો ઉપયોગ કરીએ છીએ.
-
-`for` લૂપની અંદર, અમે જગ્યા દર્શાવતા બાઇટને શોધવા માટે બાઇટ સાહિત્ય વાક્યરચનાનો ઉપયોગ કરીએ છીએ. જો અમને જગ્યા મળે, તો અમે સ્થાન પરત કરીએ છીએ. અન્યથા, અમે `s.len()` નો ઉપયોગ કરીને સ્ટ્રિંગની લંબાઈ પરત કરીએ છીએ.
-
-```rust
-```rust
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:inside_for}}
-</code></pre>
-<pre><code>હવે આપણી પાસે સ્ટ્રિંગમાં પ્રથમ શબ્દના અંતિમ અનુક્રમણિકા (index) શોધવાનો એક માર્ગ છે, પરંતુ એક સમસ્યા છે. આપણે `usize` સ્વરૂપે પરિણામ આપી રહ્યા છીએ, પરંતુ તે માત્ર `&amp;String` ના સંદર્ભમાં જ અર્થપૂર્ણ સંખ્યા છે. બીજા શબ્દોમાં કહીએ તો, તે `String` થી અલગ મૂલ્ય હોવાથી, ભવિષ્યમાં તે માન્ય રહેશે તેની કોઈ ખાતરી નથી. યાદી 4-8 માં આપેલા પ્રોગ્રામને ધ્યાનમાં લો જે યાદી 4-7 માંથી `first_word` ફંક્શનનો ઉપયોગ કરે છે.
-
-&lt;Listing number="4-8" file-name="src/main.rs" caption="Storing the result from calling the `first_word` function and then changing the `String` contents"&gt;
-```rust
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:as_bytes}}
+<span class="boring">}</span></code></pre>
+<p>આગળ, આપણે બાઇટ્સની શ્રેણી પર એક પુનરાવર્તક (iterator) <code>iter</code> પદ્ધતિનો ઉપયોગ કરીને બનાવીએ છીએ:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:iter}}
+<span class="boring">}</span></code></pre>
+<p>અમે પ્રકરણ ૧૩ માં વધુ વિગતવાર પુનરાવર્તકો (iterators) વિશે ચર્ચા કરીશું. હાલ માટે, જાણો કે <code>iter</code> એ એક પદ્ધતિ છે જે સંગ્રહમાં દરેક તત્વ આપે છે અને <code>enumerate</code> એ <code>iter</code> ના પરિણામને આવરી લે છે અને દરેક તત્વને ટ્યૂપલના ભાગ રૂપે આપે છે. <code>enumerate</code> દ્વારા પરત કરવામાં આવેલ ટ્યૂપલનું પ્રથમ તત્વ અનુક્રમણિકા (index) છે, અને બીજું તત્વ તત્વનો સંદર્ભ (reference) છે. આ પોતાથી અનુક્રમણિકાની ગણતરી કરવા કરતાં થોડું વધુ અનુકૂળ છે.</p>
+<p>કારણ કે <code>enumerate</code> પદ્ધતિ ટ્યૂપલ આપે છે, અમે દાખલાઓ (patterns) નો ઉપયોગ કરીને તે ટ્યૂપલને વિઘટિત કરી શકીએ છીએ. અમે પ્રકરણ ૬ માં વધુ દાખલાઓ વિશે ચર્ચા કરીશું. <code>for</code> લૂપમાં, અમે એક દાખલો ઉલ્લેખિત કરીએ છીએ જેમાં ટ્યૂપલમાં અનુક્રમણિકા માટે <code>i</code> અને ટ્યૂપલમાંના એકલ બાઇટ માટે <code>&amp;item</code> છે. કારણ કે અમે <code>.iter().enumerate()</code> માંથી તત્વનો સંદર્ભ મેળવીએ છીએ, તેથી અમે દાખલામાં <code>&amp;</code> નો ઉપયોગ કરીએ છીએ.</p>
+<p><code>for</code> લૂપની અંદર, અમે જગ્યા દર્શાવતા બાઇટને શોધવા માટે બાઇટ સાહિત્ય વાક્યરચનાનો ઉપયોગ કરીએ છીએ. જો અમને જગ્યા મળે, તો અમે સ્થાન પરત કરીએ છીએ. અન્યથા, અમે <code>s.len()</code> નો ઉપયોગ કરીને સ્ટ્રિંગની લંબાઈ પરત કરીએ છીએ.</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:inside_for}}
+<span class="boring">}</span></code></pre>
+<p>હવે આપણી પાસે સ્ટ્રિંગમાં પ્રથમ શબ્દના અંતિમ અનુક્રમણિકા (index) શોધવાનો એક માર્ગ છે, પરંતુ એક સમસ્યા છે. આપણે <code>usize</code> સ્વરૂપે પરિણામ આપી રહ્યા છીએ, પરંતુ તે માત્ર <code>&amp;String</code> ના સંદર્ભમાં જ અર્થપૂર્ણ સંખ્યા છે. બીજા શબ્દોમાં કહીએ તો, તે <code>String</code> થી અલગ મૂલ્ય હોવાથી, ભવિષ્યમાં તે માન્ય રહેશે તેની કોઈ ખાતરી નથી. યાદી 4-8 માં આપેલા પ્રોગ્રામને ધ્યાનમાં લો જે યાદી 4-7 માંથી <code>first_word</code> ફંક્શનનો ઉપયોગ કરે છે.</p>
+<listing number="4-8" file-name="src/main.rs" caption="Storing the result from calling the `first_word` function and then changing the `String` contents">
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-08/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 આ કાર્યક્રમ કોઈપણ ભૂલો વગર સંપાઈ જાય છે અને જો આપણે `s.clear()` બોલાવ્યા પછી `word` વાપર્યું હોત તો પણ તેવું જ થાય. કારણ કે `word` એ `s` ની સ્થિતિ સાથે જોડાયેલું નથી, `word` માં હજી પણ મૂલ્ય `5` રહેલું છે. આપણે `s` variable સાથે આ મૂલ્ય `5` નો ઉપયોગ કરીને પ્રથમ શબ્દ બહાર કાઢવાનો પ્રયત્ન કરી શકીએ છીએ, પરંતુ તે એક ભૂલ હશે કારણ કે `s` ની સામગ્રીમાં ફેરફાર થયો છે ત્યારથી આપણે
-
-`word` માં `5` સાચવ્યું હતું. `word` માં અનુક્રમણિકા (index) ડેટા સાથે સુસંગત ન થવાની ચિંતા કરવી એ કંટાળાજનક અને ભૂલભરેલું છે! આ અનુક્રમણિકાઓનું સંચાલન વધુ નાજુક બની જાય છે જો આપણે `second_word` નામનું કાર્ય લખીએ. તેનું સ્વરૂપ આ પ્રમાણે હોવું જોઈએ:
-
-```rust
-```rust
-fn second_word(s: &amp;String) -&gt; (usize, usize) {
-</code></pre>
-<pre><code>હવે આપણે આરંભ અને અંતિમ અનુક્રમણિકાને ટ્રેક કરી રહ્યા છીએ, અને આપણી પાસે વધુ મૂલ્યો પણ છે જે કોઈ ચોક્કસ સ્થિતિમાં રહેલા ડેટામાંથી ગણતરી કરીને મેળવવામાં આવ્યા હતા પરંતુ તે સ્થિતિ સાથે જોડાયેલા નથી. આપણી પાસે ત્રણ અસંબંધિત variable (variable) ફરે છે જેને સુમેળમાં રાખવાની જરૂર છે.
-
-ખુદાના આશીર્વાદથી, Rust પાસે આ સમસ્યાનો ઉકેલ છે: સ્ટ્રિંગ સ્લાઇસ (string slices).
-
-### String Slices
-
-એક સ્ટ્રિંગ સ્લાઇસ એ `String` ના તત્વોની એક સતત ક્રમનો સંદર્ભ છે, અને તે આ પ્રમાણે દેખાય છે:
-
-```rust
-```rust
-{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-17-slice/src/main.rs:here}}
-</code></pre>
-<pre><code>બંને `String` નો સંદર્ભ કરવાને બદલે, `hello` એ `String` ના ભાગનો સંદર્ભ છે, જે વધારાના `[0..5]` ભાગમાં દર્શાવેલ છે. આપણે ચોક્કસ કૌંસમાં શ્રેણીનો ઉપયોગ કરીને સ્લાઇસ બનાવીએ છીએ `[starting_index..ending_index]`, જ્યાં `starting_index` એ સ્લાઇસમાં પ્રથમ સ્થાન છે અને `ending_index` એ સ્લાઇસમાં છેલ્લા સ્થાન કરતાં એક વધારે છે. આંતરિક રીતે, સ્લાઇસ ડેટા સ્ટ્રક્ચર શરૂઆતનું સ્થાન અને સ્લાઇસની લંબાઈ સંગ્રહિત કરે છે, જે `ending_index` માંથી `starting_index` ને બાદ કરીને મેળવે છે. તેથી, `let world = &amp;s[6..11];` ના કિસ્સામાં, `world` એ એક સ્લાઇસ હશે જેમાં `s` ના ઇન્ડેક્સ 6 પરના બાઇટનો પોઇન્ટર અને `5` ની લંબાઈ મૂલ્ય હશે.
-
-ચિત્ર 4-7 આને આકૃતિમાં દર્શાવે છે.
-
-ચિત્ર 4-7: એક સ્ટ્રિંગ સ્લાઇસ જે `String` ના ભાગનો સંદર્ભ આપે છે.
-
-Rust ના `..` રેન્જ સિન્ટેક્સ સાથે, જો તમે ઇન્ડેક્સ 0 થી શરૂ કરવા માંગતા હો, તો તમે બે પૂર્ણવિરામ પહેલાં આવેલું મૂલ્ય છોડી શકો છો. બીજા શબ્દોમાં કહીએ તો, આ સમાન છે:
-
-```rust
-```rust
-let s = String::from("hello");
+<p><code>word</code> માં <code>5</code> સાચવ્યું હતું. <code>word</code> માં અનુક્રમણિકા (index) ડેટા સાથે સુસંગત ન થવાની ચિંતા કરવી એ કંટાળાજનક અને ભૂલભરેલું છે! આ અનુક્રમણિકાઓનું સંચાલન વધુ નાજુક બની જાય છે જો આપણે <code>second_word</code> નામનું કાર્ય લખીએ. તેનું સ્વરૂપ આ પ્રમાણે હોવું જોઈએ:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn second_word(s: &amp;String) -&gt; (usize, usize) {
+<span class="boring">}</span></code></pre>
+<p>હવે આપણે આરંભ અને અંતિમ અનુક્રમણિકાને ટ્રેક કરી રહ્યા છીએ, અને આપણી પાસે વધુ મૂલ્યો પણ છે જે કોઈ ચોક્કસ સ્થિતિમાં રહેલા ડેટામાંથી ગણતરી કરીને મેળવવામાં આવ્યા હતા પરંતુ તે સ્થિતિ સાથે જોડાયેલા નથી. આપણી પાસે ત્રણ અસંબંધિત variable (variable) ફરે છે જેને સુમેળમાં રાખવાની જરૂર છે.</p>
+<p>ખુદાના આશીર્વાદથી, Rust પાસે આ સમસ્યાનો ઉકેલ છે: સ્ટ્રિંગ સ્લાઇસ (string slices).</p>
+<h3 id="string-slices"><a class="header" href="#string-slices">String Slices</a></h3>
+<p>એક સ્ટ્રિંગ સ્લાઇસ એ <code>String</code> ના તત્વોની એક સતત ક્રમનો સંદર્ભ છે, અને તે આ પ્રમાણે દેખાય છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-17-slice/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>બંને <code>String</code> નો સંદર્ભ કરવાને બદલે, <code>hello</code> એ <code>String</code> ના ભાગનો સંદર્ભ છે, જે વધારાના <code>[0..5]</code> ભાગમાં દર્શાવેલ છે. આપણે ચોક્કસ કૌંસમાં શ્રેણીનો ઉપયોગ કરીને સ્લાઇસ બનાવીએ છીએ <code>[starting_index..ending_index]</code>, જ્યાં <code>starting_index</code> એ સ્લાઇસમાં પ્રથમ સ્થાન છે અને <code>ending_index</code> એ સ્લાઇસમાં છેલ્લા સ્થાન કરતાં એક વધારે છે. આંતરિક રીતે, સ્લાઇસ ડેટા સ્ટ્રક્ચર શરૂઆતનું સ્થાન અને સ્લાઇસની લંબાઈ સંગ્રહિત કરે છે, જે <code>ending_index</code> માંથી <code>starting_index</code> ને બાદ કરીને મેળવે છે. તેથી, <code>let world = &amp;s[6..11];</code> ના કિસ્સામાં, <code>world</code> એ એક સ્લાઇસ હશે જેમાં <code>s</code> ના ઇન્ડેક્સ 6 પરના બાઇટનો પોઇન્ટર અને <code>5</code> ની લંબાઈ મૂલ્ય હશે.</p>
+<p>ચિત્ર 4-7 આને આકૃતિમાં દર્શાવે છે.</p>
+<p>ચિત્ર 4-7: એક સ્ટ્રિંગ સ્લાઇસ જે <code>String</code> ના ભાગનો સંદર્ભ આપે છે.</p>
+<p>Rust ના <code>..</code> રેન્જ સિન્ટેક્સ સાથે, જો તમે ઇન્ડેક્સ 0 થી શરૂ કરવા માંગતા હો, તો તમે બે પૂર્ણવિરામ પહેલાં આવેલું મૂલ્ય છોડી શકો છો. બીજા શબ્દોમાં કહીએ તો, આ સમાન છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s = String::from("hello");
 
 let slice = &amp;s[0..2];
 let slice = &amp;s[..2];
-</code></pre>
-<pre><code>એ જ રીતે, જો તમારી સ્લાઇસ `String` ના છેલ્લા બાઇટને સમાવે છે, તો તમે અંતિમ સંખ્યા છોડી શકો છો. એનો અર્થ એ થાય કે આ સમાન છે:
-
-```rust
-```rust
-let s = String::from("hello");
+<span class="boring">}</span></code></pre>
+<p>એ જ રીતે, જો તમારી સ્લાઇસ <code>String</code> ના છેલ્લા બાઇટને સમાવે છે, તો તમે અંતિમ સંખ્યા છોડી શકો છો. એનો અર્થ એ થાય કે આ સમાન છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s = String::from("hello");
 
 let len = s.len();
 
 let slice = &amp;s[3..len];
 let slice = &amp;s[3..];
-</code></pre>
-<pre><code>તમે બંને મૂલ્યોને છોડી પણ શકો છો જેથી કરીને સમગ્ર શબ્દમાળાનો ભાગ લઈ શકાય. આથી, આ સમાન છે:
-
-```rust
-```rust
-let s = String::from("hello");
+<span class="boring">}</span></code></pre>
+<p>તમે બંને મૂલ્યોને છોડી પણ શકો છો જેથી કરીને સમગ્ર શબ્દમાળાનો ભાગ લઈ શકાય. આથી, આ સમાન છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s = String::from("hello");
 
 let len = s.len();
 
 let slice = &amp;s[0..len];
 let slice = &amp;s[..];
-</code></pre>
-<pre><code>નોંધ: સ્ટ્રિંગ સ્લાઇસ રેન્જ ઇન્ડેક્સિસ માન્ય UTF-8 અક્ષર સીમાઓ પર આવવી જોઈએ. જો તમે મલ્ટિબાઇટ અક્ષરની વચ્ચે સ્ટ્રિંગ સ્લાઇસ બનાવવાનો પ્રયાસ કરો છો, તો તમારો પ્રોગ્રામ ભૂલ સાથે સમાપ્ત થશે. આ
-
-બધી માહિતી ધ્યાનમાં રાખીને, ચાલો `first_word` ને સ્લાઇસ પરત કરવા માટે ફરીથી લખીએ. "સ્ટ્રિંગ સ્લાઇસ" દર્શાવતો પ્રકાર `&amp;str` તરીકે લખવામાં આવે છે:
-
-&lt;Listing file-name="src/main.rs"&gt;
-```rust
+<span class="boring">}</span></code></pre>
+<p>નોંધ: સ્ટ્રિંગ સ્લાઇસ રેન્જ ઇન્ડેક્સિસ માન્ય UTF-8 અક્ષર સીમાઓ પર આવવી જોઈએ. જો તમે મલ્ટિબાઇટ અક્ષરની વચ્ચે સ્ટ્રિંગ સ્લાઇસ બનાવવાનો પ્રયાસ કરો છો, તો તમારો પ્રોગ્રામ ભૂલ સાથે સમાપ્ત થશે. આ</p>
+<p>બધી માહિતી ધ્યાનમાં રાખીને, ચાલો <code>first_word</code> ને સ્લાઇસ પરત કરવા માટે ફરીથી લખીએ. “સ્ટ્રિંગ સ્લાઇસ” દર્શાવતો પ્રકાર <code>&amp;str</code> તરીકે લખવામાં આવે છે:</p>
+<listing file-name="src/main.rs">
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-18-first-word-slice/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 આપણે Listing 4-7 માં કર્યા હતો તે જ રીતે, શબ્દના અંત માટે અનુક્રમણિકા મેળવીએ છીએ, એક ખાલી જગ્યાના પ્રથમ ઉદ્ભવને શોધીને. જ્યારે આપણે ખાલી જગ્યા શોધીએ છીએ, ત્યારે આપણે શરૂઆતની સ્થિતિ અને ખાલી જગ્યાના અનુક્રમણિકાને પ્રારંભિક અને અંતિમ અનુક્રમણિકા તરીકે ઉપયોગ કરીને સ્ટ્રિંગ સ્લાઇસ પરત કરીએ છીએ.
-
-હવે જ્યારે આપણે `first_word` ને બોલાવીએ છીએ, ત્યારે આપણને એક જ મૂલ્ય પાછું મળે છે જે મૂળ ડેટા સાથે જોડાયેલું છે. આ મૂલ્ય સ્લાઇસના પ્રારંભિક બિંદુનો સંદર્ભ અને સ્લાઇસમાં રહેલા ઘટકોની સંખ્યાથી બનેલું હોય છે.
-
-ચોક્કસ ભાગ પાછો આપવો એ પણ `second_word` કાર્ય માટે યોગ્ય રહેશે:
-
-```rust
-```rust
-fn second_word(s: &amp;String) -&gt; &amp;str {
-</code></pre>
-<pre><code>હવે આપણી પાસે એક સરળ API છે જે ભૂલ કરવી ઘણી મુશ્કેલ છે, કારણ કે કમ્પાઇલર ખાતરી કરશે કે `String` માંના રેફરન્સો માન્ય રહે. યાદ કરો, લિસ્ટિંગ 4-8 માં પ્રોગ્રામમાં શું ભૂલ હતી, જ્યારે આપણે પ્રથમ શબ્દના અંત સુધી ઇન્ડેક્સ મેળવ્યો હતો પરંતુ પછી સ્ટ્રિંગ સાફ કરી દીધી, જેથી આપણો ઇન્ડેક્સ અમાન્ય થઈ ગયો? તે કોડ તાર્કિક રીતે ખોટો હતો પણ તેમાં કોઈ તાત્કાલિક ભૂલો દેખાતી ન હતી. સમસ્યાઓ પાછળથી ઊભી થાત જો આપણે ખાલી સ્ટ્રિંગ સાથે પ્રથમ શબ્દના ઇન્ડેક્સનો ઉપયોગ કરવાનું ચાલુ રાખ્યું હોત. સ્લાઇસ આ ભૂલને અશક્ય બનાવે છે અને આપણને ઘણો જલ્દી જણાવે છે કે અમારી કોડમાં સમસ્યા છે. `first_word` ના સ્લાઇસ વર્ઝનનો ઉપયોગ કરવાથી કમ્પાઇલ-ટાઇમ એરર આવશે:
-
-&lt;Listing file-name="src/main.rs"&gt;
-```rust
+<p>હવે જ્યારે આપણે <code>first_word</code> ને બોલાવીએ છીએ, ત્યારે આપણને એક જ મૂલ્ય પાછું મળે છે જે મૂળ ડેટા સાથે જોડાયેલું છે. આ મૂલ્ય સ્લાઇસના પ્રારંભિક બિંદુનો સંદર્ભ અને સ્લાઇસમાં રહેલા ઘટકોની સંખ્યાથી બનેલું હોય છે.</p>
+<p>ચોક્કસ ભાગ પાછો આપવો એ પણ <code>second_word</code> કાર્ય માટે યોગ્ય રહેશે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn second_word(s: &amp;String) -&gt; &amp;str {
+<span class="boring">}</span></code></pre>
+<p>હવે આપણી પાસે એક સરળ API છે જે ભૂલ કરવી ઘણી મુશ્કેલ છે, કારણ કે કમ્પાઇલર ખાતરી કરશે કે <code>String</code> માંના રેફરન્સો માન્ય રહે. યાદ કરો, લિસ્ટિંગ 4-8 માં પ્રોગ્રામમાં શું ભૂલ હતી, જ્યારે આપણે પ્રથમ શબ્દના અંત સુધી ઇન્ડેક્સ મેળવ્યો હતો પરંતુ પછી સ્ટ્રિંગ સાફ કરી દીધી, જેથી આપણો ઇન્ડેક્સ અમાન્ય થઈ ગયો? તે કોડ તાર્કિક રીતે ખોટો હતો પણ તેમાં કોઈ તાત્કાલિક ભૂલો દેખાતી ન હતી. સમસ્યાઓ પાછળથી ઊભી થાત જો આપણે ખાલી સ્ટ્રિંગ સાથે પ્રથમ શબ્દના ઇન્ડેક્સનો ઉપયોગ કરવાનું ચાલુ રાખ્યું હોત. સ્લાઇસ આ ભૂલને અશક્ય બનાવે છે અને આપણને ઘણો જલ્દી જણાવે છે કે અમારી કોડમાં સમસ્યા છે. <code>first_word</code> ના સ્લાઇસ વર્ઝનનો ઉપયોગ કરવાથી કમ્પાઇલ-ટાઇમ એરર આવશે:</p>
+<listing file-name="src/main.rs">
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-19-slice-error/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 અહીંયા કમ્પાઇલરની ભૂલ છે:
-
-```console
-```console
-{{#include ../listings/ch04-understanding-ownership/no-listing-19-slice-error/output.txt}}
+<pre><code class="language-console">{{#include ../listings/ch04-understanding-ownership/no-listing-19-slice-error/output.txt}}
 </code></pre>
-<pre><code>ઉધાર લેવાના નિયમો યાદ કરો કે જો આપણી કોઈ વસ્તુની અમૂટ સંદર્ભ (reference) હોય, તો આપણે પરિવર્તનશીલ સંદર્ભ (mutable reference) પણ લઈ શકતા નથી. કારણ કે `clear` ને `String` ને ટૂંકાવવાની જરૂર છે, તેથી તેને પરિવર્તનશીલ સંદર્ભ મેળવવો પડે છે. `clear` બોલાવ્યા પછી `println!` માં `word` માં રહેલો સંદર્ભ વપરાય છે, તેથી તે સમયે અમૂટ સંદર્ભ હજી પણ કાર્યરત હોવો જોઈએ. Rust `clear` માં પરિવર્તનશીલ સંદર્ભ અને `word` માં અમૂટ સંદર્ભ એકસાથે અસ્તિત્વમાં ન હોય એવું નિયંત્રણ કરે છે, અને પરિણામે કમ્પાઇલેશન નિષ્ફળ જાય છે. માત્ર Rust એ આપણું API વાપરવામાં સરળ બનાવ્યું નથી, પરંતુ તે સમયના સંકલન (compile time) દરમિયાન ભૂલોની એક સંપૂર્ણ શ્રેણીને પણ દૂર કરી દીધી છે!
-
-&lt;!-- Old headings. Do not remove or links may break. --&gt;
-#### String Literals as Slices
-
-યાદ કરો કે આપણે વાત કરી હતી કે સ્ટ્રિંગ સાક્ષરતા બાઈનરીની અંદર સંગ્રહિત છે. હવે જ્યારે આપણને સ્લાઇસ વિશે ખબર છે, ત્યારે આપણે સ્ટ્રિંગ સાક્ષરતાને યોગ્ય રીતે સમજી શકીએ છીએ:
-
-```rust
-```rust
-let s = "Hello, world!";
-</code></pre>
-<pre><code>અહીં `s` નું પ્રકાર `&amp;str` છે: તે દ્વિસંગી (binary) ના ચોક્કસ બિંદુ તરફ નિર્દેશ કરતું સ્લાઇસ છે. આ જ કારણ છે કે સ્ટ્રિંગ લિટરલ્સ બદલી ન શકાય તેવા હોય છે; `&amp;str` એ અક્ષમય સંદર્ભ (immutable reference) છે.
-
-#### String Slices as Parameters
-
-જાણવું કે તમે શાબ્દિક અને `String` મૂલ્યોના ટુકડાઓ લઈ શકો છો, તે આપણને `first_word` માં એક વધુ સુધારણા તરફ દોરી જાય છે, અને તે તેનું નિશ્ચિત રૂપરેખા (signature) છે:
-
-```rust
-```rust
-fn first_word(s: &amp;String) -&gt; &amp;str {
-</code></pre>
-<pre><code>એક વધુ અનુભવી Rustacean લિસ્ટિંગ 4-9 માં દર્શાવેલ હસ્તાક્ષરનો ઉપયોગ કરશે, કારણ કે તે આપણને `&amp;String` અને `&amp;str` બંને મૂલ્યો પર સમાન કાર્યનો ઉપયોગ કરવાની મંજૂરી આપે છે.
-
-&lt;Listing number="4-9" caption="Improving the `first_word` function by using a string slice for the type of the `s` parameter"&gt;
-```rust
+<p>ઉધાર લેવાના નિયમો યાદ કરો કે જો આપણી કોઈ વસ્તુની અમૂટ સંદર્ભ (reference) હોય, તો આપણે પરિવર્તનશીલ સંદર્ભ (mutable reference) પણ લઈ શકતા નથી. કારણ કે <code>clear</code> ને <code>String</code> ને ટૂંકાવવાની જરૂર છે, તેથી તેને પરિવર્તનશીલ સંદર્ભ મેળવવો પડે છે. <code>clear</code> બોલાવ્યા પછી <code>println!</code> માં <code>word</code> માં રહેલો સંદર્ભ વપરાય છે, તેથી તે સમયે અમૂટ સંદર્ભ હજી પણ કાર્યરત હોવો જોઈએ. Rust <code>clear</code> માં પરિવર્તનશીલ સંદર્ભ અને <code>word</code> માં અમૂટ સંદર્ભ એકસાથે અસ્તિત્વમાં ન હોય એવું નિયંત્રણ કરે છે, અને પરિણામે કમ્પાઇલેશન નિષ્ફળ જાય છે. માત્ર Rust એ આપણું API વાપરવામાં સરળ બનાવ્યું નથી, પરંતુ તે સમયના સંકલન (compile time) દરમિયાન ભૂલોની એક સંપૂર્ણ શ્રેણીને પણ દૂર કરી દીધી છે!</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h4 id="string-literals-as-slices"><a class="header" href="#string-literals-as-slices">String Literals as Slices</a></h4>
+<p>યાદ કરો કે આપણે વાત કરી હતી કે સ્ટ્રિંગ સાક્ષરતા બાઈનરીની અંદર સંગ્રહિત છે. હવે જ્યારે આપણને સ્લાઇસ વિશે ખબર છે, ત્યારે આપણે સ્ટ્રિંગ સાક્ષરતાને યોગ્ય રીતે સમજી શકીએ છીએ:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s = "Hello, world!";
+<span class="boring">}</span></code></pre>
+<p>અહીં <code>s</code> નું પ્રકાર <code>&amp;str</code> છે: તે દ્વિસંગી (binary) ના ચોક્કસ બિંદુ તરફ નિર્દેશ કરતું સ્લાઇસ છે. આ જ કારણ છે કે સ્ટ્રિંગ લિટરલ્સ બદલી ન શકાય તેવા હોય છે; <code>&amp;str</code> એ અક્ષમય સંદર્ભ (immutable reference) છે.</p>
+<h4 id="string-slices-as-parameters"><a class="header" href="#string-slices-as-parameters">String Slices as Parameters</a></h4>
+<p>જાણવું કે તમે શાબ્દિક અને <code>String</code> મૂલ્યોના ટુકડાઓ લઈ શકો છો, તે આપણને <code>first_word</code> માં એક વધુ સુધારણા તરફ દોરી જાય છે, અને તે તેનું નિશ્ચિત રૂપરેખા (signature) છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn first_word(s: &amp;String) -&gt; &amp;str {
+<span class="boring">}</span></code></pre>
+<p>એક વધુ અનુભવી Rustacean લિસ્ટિંગ 4-9 માં દર્શાવેલ હસ્તાક્ષરનો ઉપયોગ કરશે, કારણ કે તે આપણને <code>&amp;String</code> અને <code>&amp;str</code> બંને મૂલ્યો પર સમાન કાર્યનો ઉપયોગ કરવાની મંજૂરી આપે છે.</p>
+<listing number="4-9" caption="Improving the `first_word` function by using a string slice for the type of the `s` parameter">
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-09/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 જો આપણી પાસે સ્ટ્રિંગ સ્લાઇસ હોય, તો આપણે તેને સીધો જ આપી શકીએ છીએ. જો આપણી પાસે `String` હોય, તો આપણે `String` નો સ્લાઇસ અથવા `String` નો સંદર્ભ આપી શકીએ છીએ. આ લવચીકતા ડિરેફ કોર્શન્સનો લાભ લે છે, જે વિશેષતાને આપણે પ્રકરણ ૧૫ ના “કાર્યો અને પદ્ધતિઓમાં ડિરેફ કોર્શન્સનો ઉપયોગ” વિભાગમાં આવરી
-
-લઈશું. `String` ના સંદર્ભને બદલે સ્ટ્રિંગ સ્લાઇસ લઈને કાર્ય વ્યાખ્યાયિત કરવાથી આપણી API વધુ સામાન્ય અને ઉપયોગી બને છે, કોઈપણ કાર્યક્ષમતા ગુમાવ્યા વિના:
-
-&lt;Listing file-name="src/main.rs"&gt;
-```rust
+<p>લઈશું. <code>String</code> ના સંદર્ભને બદલે સ્ટ્રિંગ સ્લાઇસ લઈને કાર્ય વ્યાખ્યાયિત કરવાથી આપણી API વધુ સામાન્ય અને ઉપયોગી બને છે, કોઈપણ કાર્યક્ષમતા ગુમાવ્યા વિના:</p>
+<listing file-name="src/main.rs">
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-09/src/main.rs:usage}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 ### Other Slices
-
-સ્ટ્રિંગ ભાગો, તમે કદાચ ધારી શકો તેમ, સ્ટ્રિંગ્સ માટે વિશિષ્ટ છે. પરંતુ એક વધુ સામાન્ય ભાગ પ્રકાર પણ છે. આ શૃંખલાને ધ્યાનમાં લો:
-
-```rust
-```rust
-let a = [1, 2, 3, 4, 5];
-</code></pre>
-<pre><code>જે રીતે આપણે સ્ટ્રિંગના ભાગનો ઉલ્લેખ કરવો માંગી શકે છે, તેવી જ રીતે આપણે એરેના ભાગનો ઉલ્લેખ કરવો માંગી શકે છે. આપણે આ રીતે કરીશું:
-
-```rust
-```rust
-let a = [1, 2, 3, 4, 5];
+<p>સ્ટ્રિંગ ભાગો, તમે કદાચ ધારી શકો તેમ, સ્ટ્રિંગ્સ માટે વિશિષ્ટ છે. પરંતુ એક વધુ સામાન્ય ભાગ પ્રકાર પણ છે. આ શૃંખલાને ધ્યાનમાં લો:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let a = [1, 2, 3, 4, 5];
+<span class="boring">}</span></code></pre>
+<p>જે રીતે આપણે સ્ટ્રિંગના ભાગનો ઉલ્લેખ કરવો માંગી શકે છે, તેવી જ રીતે આપણે એરેના ભાગનો ઉલ્લેખ કરવો માંગી શકે છે. આપણે આ રીતે કરીશું:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let a = [1, 2, 3, 4, 5];
 
 let slice = &amp;a[1..3];
 
 assert_eq!(slice, &amp;[2, 3]);
-</code></pre>
-<pre><code>આ ભાગ `&amp;[i32]` પ્રકારનો છે. તે સ્ટ્રિંગ ભાગોની જેમ જ કાર્ય કરે છે, પ્રથમ તત્વનો સંદર્ભ અને લંબાઈ સંગ્રહિત કરીને. તમે આ પ્રકારના ભાગોનો ઉપયોગ અન્ય ઘણાં સંગ્રહો માટે કરશો. આપણે પ્રકરણ 8 માં વેક્ટર્સ વિશે વાત કરતી વખતે આ સંગ્રહોને વિગતવાર ચરચવીશું.
-
-## Summary
-
-માલિકી (ownership), ઉછીના લેવાની (borrowing) અને સ્લાઇસની વિભાવનાઓ Rust કાર્યક્રમોમાં કમ્પાઇલ સમયે જ્ઞાત-મેમરી સુરક્ષા સુનિશ્ચિત કરે છે. Rust ભાષા તમને અન્ય સિસ્ટમ પ્રોગ્રામિંગ ભાષાઓની જેમ જ તમારી મેમરી વપરાશ પર નિયંત્રણ આપે છે. પરંતુ ડેટાના માલિક દ્વારા આપોઆપ તે ડેટાને દૂર કરવાની પ્રક્રિયાનો અર્થ એ થાય છે કે તમારે આ નિયંત્રણ મેળવવા માટે વધારાનો કોડ લખવાની અને ડીબગ કરવાની જરૂર નથી.
-
-માલિકી Rust ના અન્ય ઘણા ભાગો પર કેવી અસર કરે છે, તેથી અમે પુસ્તકના બાકીના ભાગમાં આ વિભાવનાઓ વિશે વધુ ચર્ચા કરીશું. ચાલો પ્રકરણ 5 પર આગળ વધીએ અને ડેટાના ટુકડાઓને એક `struct` માં જૂથ બનાવવાની રીત જોઈએ.
-
-</code></pre>
+<span class="boring">}</span></code></pre>
+<p>આ ભાગ <code>&amp;[i32]</code> પ્રકારનો છે. તે સ્ટ્રિંગ ભાગોની જેમ જ કાર્ય કરે છે, પ્રથમ તત્વનો સંદર્ભ અને લંબાઈ સંગ્રહિત કરીને. તમે આ પ્રકારના ભાગોનો ઉપયોગ અન્ય ઘણાં સંગ્રહો માટે કરશો. આપણે પ્રકરણ 8 માં વેક્ટર્સ વિશે વાત કરતી વખતે આ સંગ્રહોને વિગતવાર ચરચવીશું.</p>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>માલિકી (ownership), ઉછીના લેવાની (borrowing) અને સ્લાઇસની વિભાવનાઓ Rust કાર્યક્રમોમાં કમ્પાઇલ સમયે જ્ઞાત-મેમરી સુરક્ષા સુનિશ્ચિત કરે છે. Rust ભાષા તમને અન્ય સિસ્ટમ પ્રોગ્રામિંગ ભાષાઓની જેમ જ તમારી મેમરી વપરાશ પર નિયંત્રણ આપે છે. પરંતુ ડેટાના માલિક દ્વારા આપોઆપ તે ડેટાને દૂર કરવાની પ્રક્રિયાનો અર્થ એ થાય છે કે તમારે આ નિયંત્રણ મેળવવા માટે વધારાનો કોડ લખવાની અને ડીબગ કરવાની જરૂર નથી.</p>
+<p>માલિકી Rust ના અન્ય ઘણા ભાગો પર કેવી અસર કરે છે, તેથી અમે પુસ્તકના બાકીના ભાગમાં આ વિભાવનાઓ વિશે વધુ ચર્ચા કરીશું. ચાલો પ્રકરણ 5 પર આગળ વધીએ અને ડેટાના ટુકડાઓને એક <code>struct</code> માં જૂથ બનાવવાની રીત જોઈએ.</p>
 
                     </main>
 

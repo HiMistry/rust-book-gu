@@ -8,9 +8,7 @@ Rustની સ્મૃતિ સુરક્ષા ખાતરીઓ તેન
 
 <Listing number="15-25" file-name="src/main.rs" caption="A cons list definition that holds a `RefCell<T>` so that we can modify what a `Cons` variant is referring to">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-25/src/main.rs:here}}
-```
 ```
 </Listing>
 આપણે યાદી (List) ની વ્યાખ્યાનો બીજો પ્રકાર વાપરી રહ્યા છીએ, જે યાદી 15-5 માં દર્શાવેલ છે. `Cons` પ્રકારના બીજા ઘટક હવે `RefCell<Rc<List>>` છે, જેનો અર્થ થાય છે કે આપણે યાદી 15-24 માં કર્યા મુજબ `i32` મૂલ્યમાં ફેરફાર કરવાની ક્ષમતાને બદલે, `Cons` પ્રકાર નિર્દેશિત કરેલા `List` મૂલ્યમાં ફેરફાર કરવા માંગીએ છીએ. આપણે બીજા ઘટકને મેળવવા માટે અનુકૂળતા ખાતર `tail` પદ્ધતિ પણ ઉમેરી રહ્યા છીએ જો આપણી પાસે `Cons` પ્રકાર હોય તો.
@@ -19,9 +17,7 @@ Rustની સ્મૃતિ સુરક્ષા ખાતરીઓ તેન
 
 <Listing number="15-26" file-name="src/main.rs" caption="Creating a reference cycle of two `List` values pointing to each other">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-26/src/main.rs:here}}
-```
 ```
 </Listing>
 આપણે variable `a` માં `5, Nil` ની પ્રારંભિક યાદી ધરાવતું `Rc<List>` ઉદાહરણ બનાવીએ છીએ. ત્યારબાદ આપણે variable `b` માં બીજું `Rc<List>` ઉદાહરણ બનાવીએ છીએ જે `10` નું મૂલ્ય ધરાવે છે અને `a` માં રહેલી યાદી તરફ નિર્દેશ કરે છે.
@@ -31,9 +27,7 @@ Rustની સ્મૃતિ સુરક્ષા ખાતરીઓ તેન
 જ્યારે આપણે આ કોડ ચલાવીએ છીએ, છેલ્લી `println!` ટિપ્પણીને થોડા સમય માટે અવગણીને, તો આપણને આ પરિણામ મળશે:
 
 ```console
-```console
 {{#include ../listings/ch15-smart-pointers/listing-15-26/output.txt}}
-```
 ```
 `Rc<List>` ના ઉદાહરણો `a` અને `b` બંનેમાં રહેલા સંદર્ભ ગણતરી 2 છે, જ્યારે આપણે `a` માં યાદીને `b` તરફ નિર્દેશ કરવા બદલીએ છીએ. `main` ના અંતે, Rust variable `b` ને છોડી દે છે, જે `b` `Rc<List>` ઉદાહરણની સંદર્ભ ગણતરીને 2 થી ઘટાડીને 1 કરે છે. આ સમયે `Rc<List>` દ્વારા હીપ પર ફાળવેલી મેમરી છોડવામાં આવશે નહીં, કારણ કે તેની સંદર્ભ ગણતરી 0 ને બદલે 1 છે. પછી, Rust `a` ને છોડી દે છે, જે `a` `Rc<List>` ઉદાહરણની સંદર્ભ ગણતરીને પણ 2 થી ઘટાડીને 1 કરે છે. આ ઉદાહરણની મેમરી પણ છોડી શકાતી નથી, કારણ કે અન્ય `Rc<List>` ઉદાહરણ હજુ પણ તેનો સંદર્ભ ધરાવે છે. યાદી માટે ફાળવેલી મેમરી કાયમ માટે એકત્રિત થશે નહીં. આ સંદર્ભ ચક્રને દૃષ્ટિનીકરણ કરવા માટે, અમે આકૃતિ 15-4 માં రేఖాచిత્ર બનાવ્યું છે.
 
@@ -67,9 +61,7 @@ Figure 15-4: યાદીઓ `a` અને `b` નો સંદર્ભ ચક�
 ફાઈલનું નામ: src/main.rs
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-27/src/main.rs:here}}
-```
 ```
 અમે ઇચ્છિએ છીએ કે એક `Node` તેના બાળકોને નિયંત્રિત કરે, અને અમે તે નિયંત્રણ દરેક variable સાથે વહેંચી શકીએ જેથી કરીને વૃક્ષમાં રહેલા દરેક `Node` ને સીધો જ મેળવી શકાય. આ કરવા માટે, અમે `Vec<T>` વસ્તુઓને `Rc<Node>` પ્રકારના મૂલ્યો તરીકે વ્યાખ્યાયિત કરીએ છીએ. અમારે એ પણ બદલવું છે કે કયા નોડ બીજા નોડના બાળકો છે, તેથી અમે `RefCell<T>` ને
 
@@ -77,9 +69,7 @@ Figure 15-4: યાદીઓ `a` અને `b` નો સંદર્ભ ચક�
 
 <Listing number="15-27" file-name="src/main.rs" caption="Creating a `leaf` node with no children and a `branch` node with `leaf` as one of its children">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-27/src/main.rs:there}}
-```
 ```
 </Listing>
 આપણે `Rc<Node>` ને `leaf` માં નકલ કરીએ છીએ અને તેને `branch` માં સંગ્રહિત કરીએ છીએ, જેનો અર્થ થાય છે કે `leaf` માં રહેલો `Node` હવે બે માલિકો ધરાવે છે: `leaf` અને `branch`. આપણે `branch.children` દ્વારા `branch` થી `leaf` સુધી પહોંચી શકીએ છીએ, પરંતુ `leaf` થી `branch` સુધી જવાનો કોઈ રસ્તો નથી. તેનું કારણ એ છે કે `leaf` પાસે `branch` નો સંદર્ભ નથી અને તેઓ સંબંધિત છે તે ખબર નથી. આપણે ઈચ્છીએ છીએ કે `leaf` જાણે કે `branch` તેનો પિતા છે. આપણે આવતા પગલામાં આ કરીશું.
@@ -95,17 +85,13 @@ Figure 15-4: યાદીઓ `a` અને `b` નો સંદર્ભ ચક�
 ફાઈલનામ: src/main.rs
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-28/src/main.rs:here}}
-```
 ```
 એક નોડ તેના પિતૃ નોડનો સંદર્ભ લઈ શકશે પરંતુ તે તેના પિતૃ નોડનો માલિક નહીં હોય. સૂચિ ૧૫-૨૮ માં, અમે `main` ને આ નવી વ્યાખ્યાનો ઉપયોગ કરવા માટે અપડેટ કરીએ છીએ જેથી `leaf` નોડને તેના પિતૃ, `branch` નો સંદર્ભ લેવાનો માર્ગ મળે.
 
 <Listing number="15-28" file-name="src/main.rs" caption="A `leaf` node with a weak reference to its parent node, `branch`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-28/src/main.rs:there}}
-```
 ```
 </Listing>
 Creating the `leaf` node `leaf` નોડ બનાવવાની પ્રક્રિયા યાદગાર 15-27 જેવી જ છે, સિવાય કે `parent` ક્ષેત્ર : `leaf` શરૂઆતમાં કોઈ પેરેન્ટ વગરની હોય છે, તેથી આપણે એક નવું, ખાલી `Weak<Node>`
@@ -113,20 +99,16 @@ Creating the `leaf` node `leaf` નોડ બનાવવાની પ્રક�
 સંદર્ભ ઉદાહરણ બનાવીએ છીએ. આ સમયે, જ્યારે આપણે `upgrade` પદ્ધતિનો ઉપયોગ કરીને `leaf` ના પેરેન્ટનો સંદર્ભ મેળવવાનો પ્રયત્ન કરીએ છીએ, ત્યારે આપણને `None` મૂલ્ય મળે છે. આ આપણે પ્રથમ `println!` વિધાનના પરિણામમાં જોઈ શકીએ છીએ:
 
 ```text
-```text
 leaf parent = None
-```
 ```
 જ્યારે આપણે `branch` નોડ બનાવતા હોઈએ, ત્યારે તેમાં નવું `Weak<Node>` સંદર્ભ `parent` ક્ષેત્રમાં હશે કારણ કે `branch` પાસે પેરેન્ટ નોડ નથી. આપણી પાસે હજી પણ `leaf` એ `branch` નાં બાળકોમાંથી એક છે. એકવાર આપણને `Node` ઇન્સ્ટન્સ `branch` માં મળી જાય, પછી આપણે `leaf` ને તેના પેરેન્ટનો `Weak<Node>` સંદર્ભ આપવા માટે બદલી શકીએ છીએ. આપણે `RefCell<Weak<Node>>` પર `borrow_mut` પદ્ધતિનો ઉપયોગ કરીએ છીએ જે `leaf` નાં `parent` ક્ષેત્રમાં છે, અને પછી આપણે `Rc::downgrade` વિધેયનો ઉપયોગ કરીને `branch` માંથી `Rc<Node>` નો `Weak<Node>` સંદર્ભ બનાવીએ છીએ.
 
 જ્યારે આપણે `leaf` ના પિતાને ફરીથી છાપીએ છીએ, ત્યારે આ વખતે આપણને `Some` પ્રકારનું પરિણામ મળશે જેમાં `branch` સમાવિષ્ટ હશે: હવે `leaf` તેના પિતાને સુલભ કરી શકે છે! જ્યારે આપણે `leaf` છાપીએ છીએ, ત્યારે આપણે ચક્રને પણ ટાળીએ છીએ જે આખરે Listing 15-26 માં જોડાણના કારણે સ્ટેક ઓવરફ્લોમાં પરિણમ્યું હતું; `Weak<Node>` સંદર્ભોને `(Weak)` તરીકે છાપવામાં આવે છે:
 
 ```text
-```text
 leaf parent = Some(Node { value: 5, parent: RefCell { value: (Weak) },
 children: RefCell { value: [Node { value: 3, parent: RefCell { value: (Weak) },
 children: RefCell { value: [] } }] } })
-```
 ```
 અનંત આઉટપુટનો અભાવ સૂચવે છે કે આ કોડ સંદર્ભ ચક્ર (reference cycle) બનાવ્યું નથી. આપણે `Rc::strong_count` અને `Rc::weak_count` બોલાવીને મળતા મૂલ્યો જોઇને પણ આ વાત જાણી શકીએ છીએ.
 
@@ -136,9 +118,7 @@ children: RefCell { value: [] } }] } })
 
 <Listing number="15-29" file-name="src/main.rs" caption="Creating `branch` in an inner scope and examining strong and weak reference counts">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-29/src/main.rs:here}}
-```
 ```
 </Listing>
 `leaf` બનાવ્યા પછી, તેનું `Rc<Node>` એક મજબૂત ગણતરી અને શૂન્ય નબળી ગણતરી ધરાવે છે. આંતરિક અવકાશમાં, અમે `branch` બનાવીએ છીએ અને તેને `leaf` સાથે સાંકળીએ છીએ, જેના પરિણામે જ્યારે આપણે ગણતરીઓ છાપીએ છીએ, ત્યારે `branch` માંનું `Rc<Node>` એક મજબૂત ગણતરી 1 અને નબળી ગણતરી 1 (કારણ કે `leaf.parent` `Weak<Node>` સાથે `branch` તરફ નિર્દેશ કરે છે) ધરાવશે. જ્યારે આપણે `leaf` માં ગણતરીઓ છાપીએ છીએ, ત્યારે આપણે જોઈશું કે તેની મજબૂત ગણતરી 2 હશે કારણ કે `branch` હવે `branch.children` માં `leaf` ના `Rc<Node>` ની નકલ સંગ્રહિત કરે છે, પરંતુ તેની નબળી ગણતરી હજી પણ શૂન્ય રહેશે.
@@ -155,7 +135,10 @@ children: RefCell { value: [] } }] } })
 
 વળી, `Deref` અને `Drop` ના ગુણો પણ ચર્ચામાં હતા, જે સ્માર્ટ પોઇન્ટર્સની ઘણી કાર્યક્ષમતાને સક્ષમ કરે છે. અમે સંદર્ભ ચક્ર (reference cycles) ની શોધ કરી કે જે મેમરી લીકનું કારણ બની શકે છે અને તેને `Weak<T>` નો ઉપયોગ કરીને કેવી રીતે અટકાવવું તે પણ જોયું.
 
-જો આ પ્રકરણ તમારી રુચિ જગાડે છે અને તમે તમારા પોતાના સ્માર્ટ પોઇન્ટર્સ અમલમાં મૂકવા માંગતા હો, તો વધુ ઉપયોગી માહિતી માટે “The Rustonomicon” તપાસો.
+જો આ પ્રકરણ તમારી રુચિ જગાડે છે અને તમે તમારા પોતાના સ્માર્ટ પોઇન્ટર્સ અમલમાં મૂકવા માંગતા હો, તો વધુ ઉપયોગી માહિતી માટે [“The Rustonomicon”][nomicon] તપાસો.
 
 આગળ, અમે Rust માં એકસાથે કામ કરવાની પદ્ધતિ (concurrency) વિશે વાત કરીશું. તમને થોડા નવા સ્માર્ટ પોઇન્ટર્સ વિશે પણ જાણ થશે.
 
+
+
+[nomicon]: ../nomicon/index.html

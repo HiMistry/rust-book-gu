@@ -9,9 +9,7 @@
 Rust સ્થાપનોમાં `rustfmt` મૂળભૂત રીતે સમાવિષ્ટ હોય છે, તેથી તમારી પાસે પહેલાથી જ પ્રોગ્રામ્સ `rustfmt` અને `cargo-fmt` તમારા સિસ્ટમ પર હોવા જોઈએ. આ બે આદેશો `rustc` અને `cargo` સાથે સમાન છે જેમાં `rustfmt` વધુ સૂક્ષ્મ નિયંત્રણ આપે છે અને `cargo-fmt` એ Cargo નો ઉપયોગ કરતા પ્રોજેક્ટની સંમેલનોને સમજે છે. કોઈપણ Cargo પ્રોજેક્ટને ફોર્મેટ કરવા માટે, નીચે મુજબ દાખલ કરો:
 
 ```console
-```console
 $ cargo fmt
-```
 ```
 આ આદેશ ચલાવવાથી વર્તમાન `crate` માં રહેલું બધું જ Rust કોડ ફરીથી ફોર્મેટ થશે. આ માત્ર કોડની શૈલીમાં ફેરફાર લાવવું જોઈએ, કોડના અર્થમાં નહીં. `rustfmt` વિશે વધુ માહિતી માટે, તેના દસ્તાવેજો જુઓ.
 
@@ -22,16 +20,13 @@ $ cargo fmt
 ફાઈલનું નામ: src/main.rs
 
 ```rust
-```rust
 fn main() {
     let mut x = 42;
     println!("{x}");
 }
 ```
-```
 અહીં, અમે variable `x` ને પરિવર્તનશીલ (mutable) તરીકે વ્યાખ્યાયિત કરી રહ્યા છીએ, પરંતુ અમે હકીકતમાં તેમાં કોઈ ફેરફાર કરતા નથી. Rust આપણને તેના વિશે ચેતવણી આપે છે:
 
-```console
 ```console
 $ cargo build
    Compiling myprogram v0.1.0 (file:///projects/myprogram)
@@ -45,32 +40,27 @@ warning: variable does not need to be mutable
   |
   = note: `#[warn(unused_mut)]` on by default
 ```
-```
 ચેતવણી સૂચવે છે કે આપણે `mut` કીવર્ડ દૂર કરવો જોઈએ. આપણે `rustfix` સાધનનો ઉપયોગ કરીને આપોઆપ તે સૂચન લાગુ કરી શકીએ છીએ, આદેશ `cargo fix` ચલાવીને:
 
-```console
 ```console
 $ cargo fix
     Checking myprogram v0.1.0 (file:///projects/myprogram)
       Fixing src/main.rs (1 fix)
     Finished dev [unoptimized + debuginfo] target(s) in 0.59s
 ```
-```
 જ્યારે આપણે ફરીથી src/main.rs જોઈએ, ત્યારે આપણે જોઈશું કે `cargo fix` એ કોડમાં પરિવર્તન કર્યું છે:
 
 ફાઈલનું નામ: src/main.rs
 
-```rust
 ```rust
 fn main() {
     let x = 42;
     println!("{x}");
 }
 ```
-```
 variable `x` હવે અપરિવર્તનશીલ છે, અને ચેતવણી હવે દેખાતી નથી. તમે તમારા
 
-કોડને વિવિધ Rust આવૃત્તિઓ વચ્ચે બદલવા માટે `cargo fix` આદેશનો પણ ઉપયોગ કરી શકો છો. આવૃત્તિઓ વિશે Appendix E માં માહિતી આપવામાં આવી છે.
+કોડને વિવિધ Rust આવૃત્તિઓ વચ્ચે બદલવા માટે `cargo fix` આદેશનો પણ ઉપયોગ કરી શકો છો. આવૃત્તિઓ વિશે [Appendix E][editions] માં માહિતી આપવામાં આવી છે.
 
 ### More Lints with Clippy
 
@@ -79,14 +69,11 @@ variable `x` હવે અપરિવર્તનશીલ છે, અને �
 કોઈપણ Cargo પ્રોજેક્ટ પર ક્લિપીના લિન્ટ્સ ચલાવવા માટે, નીચે મુજબ દાખલ કરો:
 
 ```console
-```console
 $ cargo clippy
-```
 ```
 ઉદાહરણ તરીકે, જો તમે એક એવી કાર્યક્રમ લખો છો જે ગાણિતિક અચળાંકનું આશરે મૂલ્ય વાપરે છે, જેમ કે પાઇ, તો આ કાર્યક્રમ કરે છે:
 
 <Listing file-name="src/main.rs">
-```rust
 ```rust
 fn main() {
     let x = 3.1415;
@@ -94,11 +81,9 @@ fn main() {
     println!("the area of the circle is {}", x * r * r);
 }
 ```
-```
 </Listing>
 આ પ્રોજેક્ટ પર `cargo clippy` ચલાવવાથી આ ભૂલ આવે છે:
 
-```text
 ```text
 error: approximate value of `f{32, 64}::consts::PI` found
  --> src/main.rs:2:13
@@ -110,13 +95,11 @@ error: approximate value of `f{32, 64}::consts::PI` found
   = help: consider using the constant directly
   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
 ```
-```
 આ ભૂલ તમને જણાવે છે કે Rust પાસે પહેલેથી જ વધુ ચોક્કસ `PI` અચળાંક વ્યાખ્યાયિત થયેલ છે, અને જો તમે અચળાંકનો ઉપયોગ કરો તો તમારું કાર્યક્રમ વધુ સચોટ બનશે. પછી તમારે તમારા કોડને `PI` અચળાંકનો ઉપયોગ કરવા માટે બદલવો જોઈએ.
 
 નીચે આપેલ કોડ Clippy તરફથી કોઈ ભૂલો કે ચેતવણીઓ ઉત્પન્ન કરતો નથી:
 
 <Listing file-name="src/main.rs">
-```rust
 ```rust
 fn main() {
     let x = std::f64::consts::PI;
@@ -124,13 +107,20 @@ fn main() {
     println!("the area of the circle is {}", x * r * r);
 }
 ```
-```
 </Listing>
 વધુ માહિતી માટે, ક્લિપીનું દસ્તાવેજીકરણ જુઓ.
 
 ### IDE Integration Using `rust-analyzer`
 
-IDE એકત્રીકરણમાં મદદરૂપ થવા માટે, Rust સમુદાય `rust-analyzer` વાપરવાની ભલામણ કરે છે. આ સાધન કમ્પાઇલર કેન્દ્રિત ઉપયોગિતાઓનો સમૂહ છે જે ભાષા સર્વર પ્રોટોકોલ સાથે વાતચીત કરે છે, જે IDE અને પ્રોગ્રામિંગ ભાષાઓ વચ્ચે સંચાર માટેનું વિશિષ્ટતા છે. વિવિધ ક્લાયન્ટો `rust-analyzer` નો ઉપયોગ કરી શકે છે, જેમ કે Visual Studio Code માટે Rust એનાલાઇઝર પ્લગ-ઇન.
+IDE એકત્રીકરણમાં મદદરૂપ થવા માટે, Rust સમુદાય [`rust-analyzer`][rust-analyzer] વાપરવાની ભલામણ કરે છે. આ સાધન કમ્પાઇલર કેન્દ્રિત ઉપયોગિતાઓનો સમૂહ છે જે ભાષા સર્વર પ્રોટોકોલ સાથે વાતચીત કરે છે, જે IDE અને પ્રોગ્રામિંગ ભાષાઓ વચ્ચે સંચાર માટેનું વિશિષ્ટતા છે. વિવિધ ક્લાયન્ટો `rust-analyzer` નો ઉપયોગ કરી શકે છે, જેમ કે Visual Studio Code માટે Rust એનાલાઇઝર પ્લગ-ઇન.
 
-`rust-analyzer` પ્રોજેક્ટની મુખ્ય પાનાંની મુલાકાત ઇન્સ્ટોલેશન સૂચનાઓ માટે લો, પછી તમારા વિશિષ્ટ IDE માં ભાષા સર્વર આધાર સ્થાપિત કરો. તમારા IDE ને ઓટોકમ્પ્લીશન, વ્યાખ્યા પર જાઓ અને ઇનલાઇન ભૂલો જેવી ક્ષમતાઓ પ્રાપ્ત થશે.
+[`rust-analyzer`][rust-analyzer] પ્રોજેક્ટની મુખ્ય પાનાંની મુલાકાત ઇન્સ્ટોલેશન સૂચનાઓ માટે લો, પછી તમારા વિશિષ્ટ IDE માં ભાષા સર્વર આધાર સ્થાપિત કરો. તમારા IDE ને ઓટોકમ્પ્લીશન, વ્યાખ્યા પર જાઓ અને ઇનલાઇન ભૂલો જેવી ક્ષમતાઓ પ્રાપ્ત થશે.
 
+
+
+[rustfmt]: https://github.com/rust-lang/rustfmt
+[editions]: appendix-05-editions.md
+[clippy]: https://github.com/rust-lang/rust-clippy
+[lsp]: http://langserver.org/
+[vscode]: https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer
+[rust-analyzer]: https://rust-analyzer.github.io

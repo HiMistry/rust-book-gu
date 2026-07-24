@@ -8,9 +8,7 @@
 
 <Listing number="8-1" caption="Creating a new, empty vector to hold values of type `i32`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-01/src/main.rs:here}}
-```
 ```
 </Listing>
 અહીં આપણે એક પ્રકારનું નિદર્શન ઉમેર્યું છે. કારણ કે આપણે આ વેક્ટર માં કોઈ મૂલ્યો દાખલ કરી રહ્યા નથી, Rust ને ખબર નથી કે આપણે કયા પ્રકારના ઘટકો સંગ્રહિત કરવાનો ઇરાદો રાખીએ છીએ. આ એક મહત્વપૂર્ણ મુદ્દો છે. વેક્ટર્સ સામાન્ય રીતે જનરિક્સનો ઉપયોગ કરીને અમલમાં મુકાય છે; આપણે પ્રકરણ ૧૦ માં તમારા પોતાના પ્રકારો સાથે જનરિક્સનો ઉપયોગ કેવી રીતે કરવો તે જોઈશું. હાલ માટે, જાણો કે સ્ટાન્ડર્ડ લાઈબ્રેરી દ્વારા પૂરા પાડવામાં આવેલ `Vec<T>` કોઈપણ પ્રકારને પકડી શકે છે. જ્યારે આપણે કોઈ ચોક્કસ પ્રકારને રાખવા માટે વેક્ટર બનાવીએ છીએ, ત્યારે આપણે ખૂણાના કૌંસમાં પ્રકારનો ઉલ્લેખ કરી શકીએ છીએ. લિસ્ટિંગ 8-1 માં, આપણે Rust ને કહ્યું છે કે `v` માં `Vec<T>`  `i32` પ્રકારના ઘટકો ધરાવશે.
@@ -19,9 +17,7 @@
 
 <Listing number="8-2" caption="Creating a new vector containing values">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-02/src/main.rs:here}}
-```
 ```
 </Listing>
 કારણ કે આપણે પ્રારંભિક `i32` મૂલ્યો આપ્યા છે, Rust એ અનુમાન કરી શકે છે કે `v` નો પ્રકાર `Vec<i32>` છે, અને પ્રકારની નોંધણી જરૂરી નથી. હવે પછી, આપણે જોઈશું કે વેક્ટરને કેવી રીતે બદલી શકાય છે.
@@ -32,9 +28,7 @@
 
 <Listing number="8-3" caption="Using the `push` method to add values to a vector">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-03/src/main.rs:here}}
-```
 ```
 </Listing>
 જેમ કે કોઈપણ variable (variable) સાથે, જો આપણે તેના મૂલ્યમાં ફેરફાર કરવા માંગતા હોઈએ, તો આપણે તેને `mut` કીવર્ડનો ઉપયોગ કરીને પરિવર્તનશીલ (mutable) બનાવવાની જરૂર છે, જે પ્રકરણ ૩ માં ચર્ચા કરવામાં આવી હતી. આપણે અંદર મૂકેલા આંકડાઓ બધા `i32` પ્રકારના છે, અને Rust ડેટા પરથી આ અનુમાન કરે છે, તેથી આપણને `Vec<i32>` નોંધની જરૂર નથી.
@@ -47,9 +41,7 @@
 
 <Listing number="8-4" caption="Using indexing syntax and using the `get` method to access an item in a vector">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-04/src/main.rs:here}}
-```
 ```
 </Listing>
 કેટલીક વિગતો અહીં નોંધવી જોઈએ. આપણે `2` અનુક્રમણિકા મૂલ્યનો ઉપયોગ કરીને ત્રીજો ઘટક મેળવીએ છીએ કારણ કે વેક્ટર સંખ્યાથી શરૂ કરીને અનુક્રમિત કરવામાં આવે છે. `&` અને `[]` નો ઉપયોગ કરવાથી આપણને અનુક્રમણિકા મૂલ્ય પરના ઘટકનો સંદર્ભ મળે છે. જ્યારે આપણે Argument તરીકે અનુક્રમણિકા સાથે `get` પદ્ધતિનો ઉપયોગ કરીએ છીએ, ત્યારે આપણને એક `Option<&T>` મળે છે જેનો ઉપયોગ આપણે `match` સાથે કરી શકીએ છીએ.
@@ -58,9 +50,7 @@ Rust આ બે રીત પ્રદાન કરે છે જેથી ત�
 
 <Listing number="8-5" caption="Attempting to access the element at index 100 in a vector containing five elements">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-05/src/main.rs:here}}
-```
 ```
 </Listing>
 જ્યારે આપણે આ કોડ ચલાવીએ છીએ, ત્યારે પહેલો `[]` પદ્ધતિ કાર્યક્રમને ગભરાટ (panic) કરાવશે કારણ કે તે અસ્તિત્વમાં ન હોય તેવા ઘટકનો સંદર્ભ આપે છે. આ પદ્ધતિનો શ્રેષ્ઠ ઉપયોગ ત્યારે થાય છે જ્યારે તમે ઇચ્છતા હોવ કે તમારો કાર્યક્રમ વેક્ટરના અંતની બહારના ઘટકને ઍક્સેસ કરવાનો પ્રયાસ કરવામાં આવે તો ક્રેશ થઈ જાય.
@@ -71,17 +61,13 @@ Rust આ બે રીત પ્રદાન કરે છે જેથી ત�
 
 <Listing number="8-6" caption="Attempting to add an element to a vector while holding a reference to an item">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-06/src/main.rs:here}}
-```
 ```
 </Listing>
 આ કોડનું સંકલન કરવાથી આ ભૂલ ઉત્પન્ન થશે:
 
 ```console
-```console
 {{#include ../listings/ch08-common-collections/listing-08-06/output.txt}}
-```
 ```
 Listing 8-6 નો કોડ જોડે તેમ લાગે છે: શા માટે પ્રથમ તત્વનું સંદર્ભ વેક્ટરના અંતમાં થતા ફેરફારોની ચિંતા કરે છે? આ ભૂલ વેક્ટર કેવી રીતે કાર્ય કરે છે તેના કારણે છે: વેક્ટર મૂલ્યોને એકબીજાની બાજુમાં મેમરીમાં મૂકે છે, તેથી વેક્ટરના અંતમાં નવું તત્વ ઉમેરવું એ નવા મેમરી સ્થાને જૂના તત્વોને કૉપિ કરવાની જરૂર પડી શકે છે, જો ત્યાં બધા તત્વોને મૂકવા માટે પૂરતી જગ્યા ન હોય જ્યાં વેક્ટર હાલમાં સંગ્રહિત છે. આવી સ્થિતિમાં, પ્રથમ તત્વનું સંદર્ભ ડિએલોકેટેડ મેમરી તરફ નિર્દેશ કરશે. ઉધાર લેવાના નિયમો અટકાવે છે કે પ્રોગ્રામ આવી પરિસ્થિતિમાં આવે.
 
@@ -93,18 +79,14 @@ Listing 8-6 નો કોડ જોડે તેમ લાગે છે: શા 
 
 <Listing number="8-7" caption="Printing each element in a vector by iterating over the elements using a `for` loop">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-07/src/main.rs:here}}
-```
 ```
 </Listing>
 આપણે પરિવર્તનશીલ વેક્ટરના દરેક ઘટક માટે પરિવર્તનશીલ સંદર્ભો પર પણ ચાલવું (iterate) શક્ય છે, જેથી કરીને તમામ ઘટકોમાં ફેરફાર કરી શકાય. યાદી 8-8 માં `for` લૂપ દરેક ઘટકમાં `50` ઉમેરશે.
 
 <Listing number="8-8" caption="Iterating over mutable references to elements in a vector">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-08/src/main.rs:here}}
-```
 ```
 </Listing>
 เพื่อเปลี่ยนแปลง મૂલ્ય કે જે પરિવર્તનશીલ સંદર્ભ દ્વારા નિર્દેશિત થાય છે, આપણે `*` ઉતારણ ઓપરેટરનો ઉપયોગ કરીને `i` માં રહેલા મૂલ્ય સુધી પહોંચવું પડે છે, જેથી આપણે `+=` ઓપરેટરનો ઉપયોગ કરી શકીએ. આપણે પ્રકરણ 15 ના "સંદર્ભને મૂલ્ય તરફ અનુસરવો" વિભાગમાં ઉતારણ ઓપરેટર વિશે વધુ વાત
@@ -119,9 +101,7 @@ Listing 8-6 નો કોડ જોડે તેમ લાગે છે: શા 
 
 <Listing number="8-9" caption="Defining an enum to store values of different types in one vector">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-09/src/main.rs:here}}
-```
 ```
 </Listing>
 Rust ને જાણવું જરૂરી છે કે વેક્ટર (vector) માં કયા પ્રકારો (types) હશે, જેથી કરીને તેને હીપ (heap) પર દરેક ઘટક (element) સંગ્રહિત કરવા માટે કેટલી મેમરી (memory) ની જરૂર પડશે તે ખબર પડે. આપણે એ પણ સ્પષ્ટપણે જણાવવું જોઈએ કે આ વેક્ટરમાં કયા પ્રકારો સ્વીકાર્ય છે. જો Rust કોઈ પણ પ્રકારના વેક્ટરને સમાવવા દે, તો એવી શક્યતા રહે કે એક અથવા વધુ પ્રકારો વેક્ટરના ઘટકો પર કરવામાં આવતી ક્રિયાઓ સાથે ભૂલો (errors) સર્જી શકે. `match` અભિવ્યક્તિ (expression) સાથે enum નો ઉપયોગ કરવાથી Rust ખાતરી કરશે કે દરેક સંભવિત સ્થિતિ (case) ચૅપ્ટર 6 માં ચર્ચા કર્યા મુજબ, કમ્પાઇલ સમયે નિયંત્રિત થાય છે.
@@ -136,12 +116,16 @@ Rust ને જાણવું જરૂરી છે કે વેક્ટર 
 
 <Listing number="8-10" caption="Showing where the vector and its elements are dropped">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-10/src/main.rs:here}}
-```
 ```
 </Listing>
 જ્યારે વેક્ટર છોડી દેવામાં આવે છે, ત્યારે તેના તમામ ઘટકો પણ છોડી દેવામાં આવે છે, જેનો અર્થ થાય છે કે તે જેમાં પૂર્ણાંકો હોય તેને સાફ કરવામાં આવશે. બોરો ચેકર ખાતરી કરે છે કે વેક્ટરની સામગ્રીના કોઈપણ સંદર્ભો માત્ર ત્યારે જ વપરાય છે જ્યારે વેક્ટર પોતે માન્ય હોય.
 
 હવે આપણે આગામી કલેક્શન પ્રકાર પર આગળ વધીએ: `String` !
 
+
+
+[data-types]: ch03-02-data-types.html#data-types
+[nomicon]: ../nomicon/vec/vec.html
+[deref]: ch15-02-deref.html#following-the-pointer-to-the-value-with-the-dereference-operator
+[vec-api]: ../std/vec/struct.Vec.html

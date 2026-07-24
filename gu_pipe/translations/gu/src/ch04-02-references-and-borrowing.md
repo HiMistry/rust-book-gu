@@ -6,9 +6,7 @@
 
 <Listing file-name="src/main.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-07-reference/src/main.rs:all}}
-```
 ```
 </Listing>
 સૌ પ્રથમ, નોંધ કરો કે variable ઘોષણા (variable declaration) અને વિધેય વળતર મૂલ્ય (function return value) માંની તમામ ટ્યૂપલ કોડ ગાયબ થઈ ગયો છે. બીજું, ધ્યાન આપો કે અમે `&s1` ને `calculate_length` માં પસાર કરીએ છીએ અને તેની વ્યાખ્યામાં અમે `&String` લેવાємо, `String` ને બદલે. આ એમ્પરસેન્ડ સંદર્ભો (references) દર્શાવે છે, અને તે તમને માલિકી લીધા વિના કોઈ મૂલ્યનો ઉલ્લેખ કરવાની મંજૂરી આપે છે. આકૃતિ 4-6 આ ખ્યાલને દર્શાવે છે.
@@ -20,18 +18,14 @@
 ચાલો અહીં ફંક્શન કૉલને વધુ નજીકથી જોઈએ:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-07-reference/src/main.rs:here}}
-```
 ```
 `&s1` વાક્યરચના `&s1` વાક્યરચના આપણને એક સંદર્ભ (reference) બનાવવાની તક આપે છે જે `s1` ના મૂલ્યનો ઉલ્લેખ કરે છે પરંતુ તેના માલિકી નથી. કારણ કે સંદર્ભ માલિકી ધરાવતો નથી, તે જે મૂલ્ય તરફ નિર્દેશ કરે છે તે સંદર્ભ બંધ થાય ત્યારે ન છોડવામાં
 
 આવશે (dropped). એ જ રીતે, ફંક્શનની હસ્તાક્ષર (signature) `&` નો ઉપયોગ દર્શાવે છે કે પરિમાણ `s` નો પ્રકાર એક સંદર્ભ છે. ચાલો થોડા સમજૂતીત્મક નોંધો ઉમેરીએ:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-08-reference-with-annotations/src/main.rs:here}}
-```
 ```
 જે અવકાશમાં માન્ય છે તે કોઈપણ કાર્ય પરિમાણના અવકાશ સમાન છે, પરંતુ સંદર્ભ દ્વારા નિર્દેશિત મૂલ્ય `s` વપરાશ પામવાનું બંધ કરે ત્યારે છોડવામાં આવતું નથી, કારણ કે `s` પાસે માલિકી નથી. જ્યારે કાર્યોમાં વાસ્તવિક મૂલ્યોને બદલે સંદર્ભો પરિમાણો તરીકે હોય છે, ત્યારે આપણે માલિકી પાછી આપવા માટે મૂલ્યો પરત કરવાની જરૂર રહેશે નહીં, કારણ કે આપણી પાસે ક્યારેય માલિકી નહોતી. આ
 
@@ -41,17 +35,13 @@
 
 <Listing number="4-6" file-name="src/main.rs" caption="Attempting to modify a borrowed value">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-06/src/main.rs}}
-```
 ```
 </Listing>
 અહીં ભૂલ છે:
 
 ```console
-```console
 {{#include ../listings/ch04-understanding-ownership/listing-04-06/output.txt}}
-```
 ```
 જે રીતે variable અચળ હોય છે, તેવી જ રીતે સંદર્ભો પણ અચળ હોય છે. આપણને જે સંદર્ભ મળ્યો છે, તેને આપણે બદલી શકતા નથી.
 
@@ -61,9 +51,7 @@
 
 <Listing file-name="src/main.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-09-fixes-listing-04-06/src/main.rs}}
-```
 ```
 </Listing>
 પ્રથમ, અમે `s` ને `mut` માં પરિવર્તિત કરીએ છીએ. પછી, અમે `&mut s` વડે એક પરિવર્તનશીલ સંદર્ભ બનાવીએ છીએ જ્યાં અમે `change` વિધેયને બોલાવીએ છીએ અને વિધેય હસ્તાક્ષરને `some_string: &mut String` સાથે સ્વીકારવા માટે અપડેટ કરીએ છીએ. આ સ્પષ્ટ કરે છે કે `change` વિધેય જે મૂલ્ય ઉછીના લેશે તેને પરિવર્તિત કરશે. પરિવર્તનશીલ
@@ -72,17 +60,13 @@
 
 <Listing file-name="src/main.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-10-multiple-mut-not-allowed/src/main.rs:here}}
-```
 ```
 </Listing>
 અહીં ભૂલ છે:
 
 ```console
-```console
 {{#include ../listings/ch04-understanding-ownership/no-listing-10-multiple-mut-not-allowed/output.txt}}
-```
 ```
 આ ભૂલ દર્શાવે છે કે આ કોડ અમાન્ય છે કારણ કે અમે `s` ને એક સમયે એક જ વાર પરિવર્તનશીલ રીતે ઉછીના લઈ શકતા નથી. પહેલું પરિવર્તનશીલ ઉછીનું `r1` માં છે અને તે `println!` માં વપરાય ત્યાં સુધી ટકી રહેવું જોઈએ, પરંતુ તે પરિવર્તનશીલ સંદર્ભની રચના અને તેના ઉપયોગ વચ્ચે, અમે બીજો પરિવર્તનશીલ સંદર્ભ `r2` માં બનાવવાનો પ્રયાસ કર્યો જે `r1` જેટલા જ ડેટાને ઉછીના લે છે.
 
@@ -99,23 +83,17 @@
 જેમ, આપણે કર્લી બ્રેકેટનો ઉપયોગ કરીને નવો અવકાશ બનાવી શકીએ છીએ, જે અનેક મ્યુટેબલ રેફરન્સને મંજૂરી આપે છે, પરંતુ એકસાથે નહીં:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-11-muts-in-separate-scopes/src/main.rs:here}}
-```
 ```
 Rust એક સમાન નિયમ લાગુ કરે છે, જે બદલી શકાય તેવા અને અપરિવર્તનશીલ સંદર્ભોને જોડવાની બાબતમાં. આ કોડ ભૂલ ઉત્પન્ન કરે છે:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-12-immutable-and-mutable-not-allowed/src/main.rs:here}}
-```
 ```
 અહીં ભૂલ છે:
 
 ```console
-```console
 {{#include ../listings/ch04-understanding-ownership/no-listing-12-immutable-and-mutable-not-allowed/output.txt}}
-```
 ```
 રાહત! આપણી પાસે પરિવર્તનશીલ સંદર્ભ હોય ત્યાં અપરિવર્તનશીલ સંદર્ભ પણ ન હોઈ શકે, જે તે જ મૂલ્યનો હોય.
 
@@ -124,9 +102,7 @@ Rust એક સમાન નિયમ લાગુ કરે છે, જે બ�
 જ્યાં તે રજૂ થાય છે ત્યાંથી શરૂ થાય છે અને જ્યાં સુધી તે સંદર્ભનો અંતિમ ઉપયોગ ન થાય ત્યાં સુધી ચાલુ રહે છે. દાખલા તરીકે, આ કોડ કમ્પાઇલ થશે કારણ કે અપરિવર્તનશીલ સંદર્ભોનો અંતિમ ઉપયોગ `println!` માં થયો છે, પરિવર્તનશીલ સંદર્ભ રજૂ થાય તે પહેલાં:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-13-reference-scope-ends/src/main.rs:here}}
-```
 ```
 અનિશ્ચિત સંદર્ભો `r1` અને `r2` ના ક્ષેત્રો `println!` પછી સમાપ્ત થાય છે જ્યાં તેઓ છેલ્લે વપરાય છે, જે પરિવર્તનશીલ સંદર્ભ `r3` બનાવવામાં આવે તે પહેલાં હોય છે. આ ક્ષેત્રો એકબીજા સાથે ઓવરલેપ થતા નથી, તેથી આ કોડ સ્વીકાર્ય છે: કમ્પાઇલર જણાવી શકે છે કે સંદર્ભ હવે ક્ષેત્રના અંત પહેલાં કોઈ ચોક્કસ સમયે વપરાતો નથી.
 
@@ -140,33 +116,25 @@ Rust એક સમાન નિયમ લાગુ કરે છે, જે બ�
 
 <Listing file-name="src/main.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-14-dangling-reference/src/main.rs}}
-```
 ```
 </Listing>
 અહીં ભૂલ છે:
 
 ```console
-```console
 {{#include ../listings/ch04-understanding-ownership/no-listing-14-dangling-reference/output.txt}}
-```
 ```
 આ ભૂલ સંદેશ એક એવી વિશેષતાનો ઉલ્લેખ કરે છે જે આપણે હજી સુધી આવરી નથી લીધી: lifetime. આપણે પ્રકરણ ૧૦ માં lifetime વિશે વિગતવાર ચર્ચા કરીશું. પરંતુ, જો તમે lifetime સંબંધિત ભાગોને અવગણો, તો સંદેશમાં આ કોડ સમસ્યાનું કારણ હોવાનું કી (key) રહેલું છે:
 
 ```text
-```text
 this function's return type contains a borrowed value, but there is no value
 for it to be borrowed from
-```
 ```
 ચાલો આપણી `dangle` કોડના દરેક તબક્કામાં શું થઈ રહ્યું છે તે વિશે વધુ વિગતવાર જોઈએ.
 
 <Listing file-name="src/main.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-15-dangling-reference-annotated/src/main.rs:here}}
-```
 ```
 </Listing>
 કારણ કે `s` `dangle` ની અંદર બનાવવામાં આવે છે, જ્યારે `dangle` નો કોડ પૂર્ણ થાય છે, ત્યારે `s` ને મુક્ત કરવામાં આવશે. પરંતુ આપણે તેના સંદર્ભ પાછો આપવાનો પ્રયત્ન કર્યો. એનો અર્થ એ થયો કે આ સંદર્ભ એક અમાન્ય `String` તરફ નિર્દેશ કરશે. તે યોગ્ય નથી! Rust આ કરવાની મંજૂરી આપશે નહીં.
@@ -174,9 +142,7 @@ for it to be borrowed from
 અહીં ઉકેલ `String` ને સીધો જ પાછો આપવાનો છે:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-16-no-dangle/src/main.rs:here}}
-```
 ```
 આ કાર્ય કોઈપણ સમસ્યા વગર થાય છે. માલિકી બહાર ખસેડવામાં આવે છે, અને કંઈપણ મુક્ત કરવામાં આવતું નથી.
 

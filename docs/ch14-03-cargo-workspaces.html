@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-78fa1409.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -186,44 +186,30 @@
 <p>પ્રકરણ ૧૨ માં, આપણે એક પેકેજ બનાવ્યું હતું જેમાં બાઈનરી <code>crate</code> અને લાઈબ્રેરી <code>crate</code> બંનેનો સમાવેશ થતો હતો. જેમ જેમ તમારી યોજના આગળ વધે છે, તેમ તેમ તમને લાગી શકે છે કે લાઈબ્રેરી <code>crate</code> વધુ મોટી થતી જાય છે અને તમે તમારા પેકેજને વધુ ભાગોમાં વિભાજીત કરવા માંગો છો. Cargo એક એવી સુવિધા આપે છે જેને વર્કસ્પેસ કહેવાય છે, જે એકસાથે વિકસાવવામાં આવતા બહુવિધ સંબંધિત પેકેજોનું સંચાલન કરવામાં મદદ કરી શકે છે.</p>
 <h3 id="creating-a-workspace"><a class="header" href="#creating-a-workspace">Creating a Workspace</a></h3>
 <p>કાર્યસ્થળ એ પેકેજોનો સમૂહ છે જે સમાન <code>Cargo.lock</code> અને આઉટપુટ ડિરેક્ટરી વહેંચે છે. ચાલો આપણે કાર્યસ્થળનો ઉપયોગ કરીને એક પ્રોજેક્ટ બનાવીએ—આપણે સરળ કોડનો ઉપયોગ કરીશું જેથી આપણે કાર્યસ્થળની રચના પર ધ્યાન કેન્દ્રિત કરી શકીએ. કાર્યસ્થળને રચવાના ઘણાં વિવિધ માર્ગો છે, તેથી આપણે માત્ર એક સામાન્ય રીત બતાવીશું. આપણી પાસે એક બાઈનરી અને બે લાયબ્રેરીઓ ધરાવતું કાર્યસ્થળ હશે. બાઈનરી, જે મુખ્ય કાર્યક્ષમતા પ્રદાન કરશે, તે બે લાયબ્રેરીઓ પર આધારિત રહેશે. એક લાયબ્રેરી <code>add_one</code> ફંક્શન પ્રદાન કરશે અને બીજી લાયબ્રેરી <code>add_two</code> ફંક્શન પ્રદાન કરશે. આ ત્રણ <code>crate</code> સમાન કાર્યસ્થળનો ભાગ હશે. આપણે નવા ડિરેક્ટરી બનાવીને શરૂઆત કરીશું:</p>
-<pre><code class="language-console">```console
-$ mkdir add
+<pre><code class="language-console">$ mkdir add
 $ cd add
 </code></pre>
-<pre><code>આગળ, `add` ડિરેક્ટરીમાં, આપણે `Cargo.toml` ફાઈલ બનાવીશું જે સમગ્ર વર્કસ્પેસને રૂપરેખાંકિત કરશે. આ ફાઈલમાં `[package]` વિભાગ નહીં હોય. તેના બદલે, તેમાં `[workspace]` વિભાગ હશે જે આપણને વર્કસ્પેસમાં સભ્યો ઉમેરવાની મંજૂરી આપશે. આપણે એ પણ ધ્યાન રાખીએ છીએ કે વર્કસ્પેસમાં Cargoના નવીનતમ રિઝોલ્વર અલ્ગોરિધમનો ઉપયોગ કરીએ, `resolver` મૂલ્યને `"3"` પર સેટ કરીને:
-
-ફાઈલનું નામ: Cargo.toml
-
-```toml
-```toml
-{{#include ../listings/ch14-more-about-cargo/no-listing-01-workspace/add/Cargo.toml}}
+<p>આગળ, <code>add</code> ડિરેક્ટરીમાં, આપણે <code>Cargo.toml</code> ફાઈલ બનાવીશું જે સમગ્ર વર્કસ્પેસને રૂપરેખાંકિત કરશે. આ ફાઈલમાં <code>[package]</code> વિભાગ નહીં હોય. તેના બદલે, તેમાં <code>[workspace]</code> વિભાગ હશે જે આપણને વર્કસ્પેસમાં સભ્યો ઉમેરવાની મંજૂરી આપશે. આપણે એ પણ ધ્યાન રાખીએ છીએ કે વર્કસ્પેસમાં Cargoના નવીનતમ રિઝોલ્વર અલ્ગોરિધમનો ઉપયોગ કરીએ, <code>resolver</code> મૂલ્યને <code>"3"</code> પર સેટ કરીને:</p>
+<p>ફાઈલનું નામ: Cargo.toml</p>
+<pre><code class="language-toml">{{#include ../listings/ch14-more-about-cargo/no-listing-01-workspace/add/Cargo.toml}}
 </code></pre>
-<pre><code>આગળ, આપણે `adder` બાઈનરી ક્રેટ બનાવશું, જે `cargo new` આદેશ ચલાવીને `add` ડિરેક્ટરીમાં કરશે:
-
-&lt;!-- manual-regeneration
+<p>આગળ, આપણે <code>adder</code> બાઈનરી ક્રેટ બનાવશું, જે <code>cargo new</code> આદેશ ચલાવીને <code>add</code> ડિરેક્ટરીમાં કરશે:</p>
+<!-- manual-regeneration
 cd listings/ch14-more-about-cargo/output-only-01-adder-crate/add
 remove `members = ["adder"]` from Cargo.toml
 rm -rf adder
 cargo new adder
 copy output below
---&gt;
-```console
-```console
-$ cargo new adder
+-->
+<pre><code class="language-console">$ cargo new adder
      Created binary (application) `adder` package
       Adding `adder` as member of workspace at `file:///projects/add`
 </code></pre>
-<pre><code>કાર્યકારી `cargo new` વર્કિંગ એરિયામાં પણ આપોઆપ નવું પેકેજ `members` કીમાં ઉમેરાય છે, જે `[workspace]` વ્યાખ્યામાં વર્કિંગ એરિયા Cargo.toml માં જોવા મળે છે, આ પ્રમાણે:
-
-```toml
-```toml
-{{#include ../listings/ch14-more-about-cargo/output-only-01-adder-crate/add/Cargo.toml}}
+<p>કાર્યકારી <code>cargo new</code> વર્કિંગ એરિયામાં પણ આપોઆપ નવું પેકેજ <code>members</code> કીમાં ઉમેરાય છે, જે <code>[workspace]</code> વ્યાખ્યામાં વર્કિંગ એરિયા Cargo.toml માં જોવા મળે છે, આ પ્રમાણે:</p>
+<pre><code class="language-toml">{{#include ../listings/ch14-more-about-cargo/output-only-01-adder-crate/add/Cargo.toml}}
 </code></pre>
-<pre><code>હવે, આપણી કાર્યક્ષેત્ર બનાવી શકીએ છીએ `cargo build` ચલાવીને. તમારા ‘add’ ડિરેક્ટરીમાં રહેલી ફાઈલો આ પ્રમાણે દેખાવા જોઈએ:
-
-```text
-```text
-├── Cargo.lock
+<p>હવે, આપણી કાર્યક્ષેત્ર બનાવી શકીએ છીએ <code>cargo build</code> ચલાવીને. તમારા ‘add’ ડિરેક્ટરીમાં રહેલી ફાઈલો આ પ્રમાણે દેખાવા જોઈએ:</p>
+<pre><code class="language-text">├── Cargo.lock
 ├── Cargo.toml
 ├── adder
 │   ├── Cargo.toml
@@ -231,38 +217,26 @@ $ cargo new adder
 │       └── main.rs
 └── target
 </code></pre>
-<pre><code>કાર્યસ્થળમાં એક લક્ષ્ય ડિરેક્ટરી ટોચના સ્તર પર હોય છે જેમાં કમ્પાઈલ કરેલા આર્ટિફેક્ટ્સ મૂકવામાં આવે છે; `adder` પેકેજની પોતાની લક્ષ્ય ડિરેક્ટરી નથી. ભલે આપણે `adder` ડિરેક્ટરીની અંદરથી `cargo build` ચલાવીએ, તો પણ કમ્પાઈલ કરેલા આર્ટિફેક્ટ્સ add/target માં જ આવશે, add/adder/target માં નહીં. કાર્ગો કાર્યસ્થળમાં લક્ષ્ય ડિરેક્ટરીને આ રીતે ગોઠવે છે કારણ કે વર્કસ્પેસમાં રહેલા ક્રેટ્સ એકબીજા પર આધાર રાખવા માટે બનાવાયેલા હોય છે. જો દરેક ક્રેટની પોતાની લક્ષ્ય ડિરેક્ટરી હોત, તો દરેક ક્રેટને વર્કસ્પેસમાંના અન્ય તમામ ક્રેટ્સને ફરીથી કમ્પાઈલ કરવા પડ્યા હોત જેથી આર્ટિફેક્ટ્સ તેની પોતાની લક્ષ્ય ડિરેક્ટરીમાં મૂકી શકાય. એક જ લક્ષ્ય ડિરેક્ટરી વહેંચીને, ક્રેટ્સ બિનજરૂરી પુનઃનિર્માણ ટાળી શકે છે.
-
-### Creating the Second Package in the Workspace
-
-હવે, કાર્યસ્થળમાં બીજા સભ્ય પેકેજનું નિર્માણ કરીએ અને તેને `add_one` નામ આપીએ. `add_one` નામની નવી લાયબ્રેરી ક્રેટ બનાવો:
-
-&lt;!-- manual-regeneration
+<p>કાર્યસ્થળમાં એક લક્ષ્ય ડિરેક્ટરી ટોચના સ્તર પર હોય છે જેમાં કમ્પાઈલ કરેલા આર્ટિફેક્ટ્સ મૂકવામાં આવે છે; <code>adder</code> પેકેજની પોતાની લક્ષ્ય ડિરેક્ટરી નથી. ભલે આપણે <code>adder</code> ડિરેક્ટરીની અંદરથી <code>cargo build</code> ચલાવીએ, તો પણ કમ્પાઈલ કરેલા આર્ટિફેક્ટ્સ add/target માં જ આવશે, add/adder/target માં નહીં. કાર્ગો કાર્યસ્થળમાં લક્ષ્ય ડિરેક્ટરીને આ રીતે ગોઠવે છે કારણ કે વર્કસ્પેસમાં રહેલા ક્રેટ્સ એકબીજા પર આધાર રાખવા માટે બનાવાયેલા હોય છે. જો દરેક ક્રેટની પોતાની લક્ષ્ય ડિરેક્ટરી હોત, તો દરેક ક્રેટને વર્કસ્પેસમાંના અન્ય તમામ ક્રેટ્સને ફરીથી કમ્પાઈલ કરવા પડ્યા હોત જેથી આર્ટિફેક્ટ્સ તેની પોતાની લક્ષ્ય ડિરેક્ટરીમાં મૂકી શકાય. એક જ લક્ષ્ય ડિરેક્ટરી વહેંચીને, ક્રેટ્સ બિનજરૂરી પુનઃનિર્માણ ટાળી શકે છે.</p>
+<h3 id="creating-the-second-package-in-the-workspace"><a class="header" href="#creating-the-second-package-in-the-workspace">Creating the Second Package in the Workspace</a></h3>
+<p>હવે, કાર્યસ્થળમાં બીજા સભ્ય પેકેજનું નિર્માણ કરીએ અને તેને <code>add_one</code> નામ આપીએ. <code>add_one</code> નામની નવી લાયબ્રેરી ક્રેટ બનાવો:</p>
+<!-- manual-regeneration
 cd listings/ch14-more-about-cargo/output-only-02-add-one/add
 remove `"add_one"` from `members` list in Cargo.toml
 rm -rf add_one
 cargo new add_one --lib
 copy output below
---&gt;
-```console
-```console
-$ cargo new add_one --lib
+-->
+<pre><code class="language-console">$ cargo new add_one --lib
      Created library `add_one` package
       Adding `add_one` as member of workspace at `file:///projects/add`
 </code></pre>
-<pre><code>ફાઈલનામ: Cargo.toml ઉચ્ચ સ્તરનું Cargo.toml હવે `members` યાદીમાં add_one માર્ગનો
-
-સમાવેશ કરશે:
-
-```toml
-```toml
-{{#include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/Cargo.toml}}
+<p>ફાઈલનામ: Cargo.toml ઉચ્ચ સ્તરનું Cargo.toml હવે <code>members</code> યાદીમાં add_one માર્ગનો</p>
+<p>સમાવેશ કરશે:</p>
+<pre><code class="language-toml">{{#include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/Cargo.toml}}
 </code></pre>
-<pre><code>તમારું ઉમેરાયેલું ડિરેક્ટરીમાં હવે આ ડિરેક્ટરીઓ અને ફાઈલો હોવી જોઈએ:
-
-```text
-```text
-├── Cargo.lock
+<p>તમારું ઉમેરાયેલું ડિરેક્ટરીમાં હવે આ ડિરેક્ટરીઓ અને ફાઈલો હોવી જોઈએ:</p>
+<pre><code class="language-text">├── Cargo.lock
 ├── Cargo.toml
 ├── add_one
 │   ├── Cargo.toml
@@ -274,88 +248,64 @@ $ cargo new add_one --lib
 │       └── main.rs
 └── target
 </code></pre>
-<pre><code>ફાઈલ `add_one/src/lib.rs` માં, ચાલો એક `add_one` વિધેય
-
-ઉમેરીએ: Filename: add_one/src/lib.rs
-
-```rust
-```rust
-{{#rustdoc_include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/add_one/src/lib.rs}}
+<p>ફાઈલ <code>add_one/src/lib.rs</code> માં, ચાલો એક <code>add_one</code> વિધેય</p>
+<p>ઉમેરીએ: Filename: add_one/src/lib.rs</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/add_one/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>હવે આપણે <code>adder</code> પેકેજને આપણી બાઈનરી પર આધાર રાખે તેવું કરી શકીએ છીએ, જે <code>add_one</code> પેકેજ પર આધારિત છે જેમાં આપણો લાયબ્રેરી છે. પ્રથમ, આપણે <code>adder/Cargo.toml</code> માં <code>add_one</code> પર એક પાથ ડિપેન્ડન્સી ઉમેરવાની જરૂર પડશે.</p>
+<p>ફાઈલનામ: adder/Cargo.toml</p>
+<pre><code class="language-toml">{{#include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/adder/Cargo.toml:6:7}}
 </code></pre>
-<pre><code>હવે આપણે `adder` પેકેજને આપણી બાઈનરી પર આધાર રાખે તેવું કરી શકીએ છીએ, જે `add_one` પેકેજ પર આધારિત છે જેમાં આપણો લાયબ્રેરી છે. પ્રથમ, આપણે `adder/Cargo.toml` માં `add_one` પર એક પાથ ડિપેન્ડન્સી ઉમેરવાની જરૂર પડશે.
-
-ફાઈલનામ: adder/Cargo.toml
-
-```toml
-```toml
-{{#include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/adder/Cargo.toml:6:7}}
-</code></pre>
-<pre><code>Cargo કોઈ ધારી લેતું નથી કે વર્કસ્પેસમાં રહેલા crates એકબીજા પર આધારિત છે, તેથી આપણે અવલંબન સંબંધો વિશે સ્પષ્ટપણે જણાવવાની જરૂર છે.
-
-આગળ, ચાલો `add_one` ફંક્શન ( `add_one` crate માંથી) ને `adder` crate માં વાપરીએ. `adder/src/main.rs` ફાઈલ ખોલો અને `main` ફંક્શનને Listing 14-7 ની જેમ `add_one` ફંક્શનને બોલાવવા માટે બદલો.
-
-&lt;Listing number="14-7" file-name="adder/src/main.rs" caption="Using the `add_one` library crate from the `adder` crate"&gt;
-```rust
+<p>Cargo કોઈ ધારી લેતું નથી કે વર્કસ્પેસમાં રહેલા crates એકબીજા પર આધારિત છે, તેથી આપણે અવલંબન સંબંધો વિશે સ્પષ્ટપણે જણાવવાની જરૂર છે.</p>
+<p>આગળ, ચાલો <code>add_one</code> ફંક્શન ( <code>add_one</code> crate માંથી) ને <code>adder</code> crate માં વાપરીએ. <code>adder/src/main.rs</code> ફાઈલ ખોલો અને <code>main</code> ફંક્શનને Listing 14-7 ની જેમ <code>add_one</code> ફંક્શનને બોલાવવા માટે બદલો.</p>
+<listing number="14-7" file-name="adder/src/main.rs" caption="Using the `add_one` library crate from the `adder` crate">
 ```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-07/add/adder/src/main.rs}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 ચાલો વર્કસ્પેસ બનાવીએ `cargo build` આદેશ ચલાવીને ટોપ-લેવલ ઉમેરવાની ડિરેક્ટરીમાં!
-
-&lt;!-- manual-regeneration
+<!-- manual-regeneration
 cd listings/ch14-more-about-cargo/listing-14-07/add
 cargo build
 copy output below; the output updating script doesn't handle subdirectories in paths properly
---&gt;
-```console
-```console
-$ cargo build
+-->
+<pre><code class="language-console">$ cargo build
    Compiling add_one v0.1.0 (file:///projects/add/add_one)
    Compiling adder v0.1.0 (file:///projects/add/adder)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.22s
 </code></pre>
-<pre><code>આ બાઈનરી `crate` ને `add` ડિરેક્ટરીમાંથી ચલાવવા માટે, આપણે `-p` આર્ગ્યુમેન્ટ અને પેકેજ નામના ઉપયોગથી વર્કસ્પેસમાં કયું પેકેજ ચલાવવું છે તે સ્પષ્ટ કરી શકીએ છીએ: `cargo run`.
-
-&lt;!-- manual-regeneration
+<p>આ બાઈનરી <code>crate</code> ને <code>add</code> ડિરેક્ટરીમાંથી ચલાવવા માટે, આપણે <code>-p</code> આર્ગ્યુમેન્ટ અને પેકેજ નામના ઉપયોગથી વર્કસ્પેસમાં કયું પેકેજ ચલાવવું છે તે સ્પષ્ટ કરી શકીએ છીએ: <code>cargo run</code>.</p>
+<!-- manual-regeneration
 cd listings/ch14-more-about-cargo/listing-14-07/add
 cargo run -p adder
 copy output below; the output updating script doesn't handle subdirectories in paths properly
---&gt;
-```console
-```console
-$ cargo run -p adder
+-->
+<pre><code class="language-console">$ cargo run -p adder
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.00s
      Running `target/debug/adder`
 Hello, world! 10 plus one is 11!
 </code></pre>
-<pre><code>આ કોડ adder/src/main.rs માં ચલાવવામાં આવે છે, જે `add_one` ક્રેટ પર આધારિત છે.
-
-&lt;!-- Old headings. Do not remove or links may break. --&gt;
-### Depending on an External Package
-
-ધ્યાન કરો કે વર્કસ્પેસમાં માત્ર એક જ Cargo.lock ફાઈલ ટોપ લેવલ પર છે, દરેક ક્રેટની ડિરેક્ટરીમાં નહીં. આ સુનિશ્ચિત કરે છે કે બધા ક્રેટ્સ તમામ નિર્ભરતાઓના સમાન સંસ્કરણનો ઉપયોગ કરી રહ્યા છે. જો આપણે `rand` પેકેજને adder/Cargo.toml અને add_one/Cargo.toml ફાઇલોમાં ઉમેરીએ, તો Cargo તે બંનેને `rand` ના એક સંસ્કરણમાં ઉકેલશે અને તેને એક જ Cargo.lock માં નોંધશે. વર્કસ્પેસના બધા ક્રેટ્સ સમાન નિર્ભરતાનો ઉપયોગ કરે છે એનો અર્થ થાય છે કે ક્રેટ્સ હંમેશા એકબીજા સાથે સુસંગત રહેશે. ચાલો `rand` ક્રેટને add_one/Cargo.toml ફાઇલના `[dependencies]` વિભાગમાં ઉમેરીએ જેથી આપણે `add_one` ક્રેટમાં `rand` ક્રેટનો ઉપયોગ કરી શકીએ:
-
-&lt;!-- When updating the version of `rand` used, also update the version of
+<p>આ કોડ adder/src/main.rs માં ચલાવવામાં આવે છે, જે <code>add_one</code> ક્રેટ પર આધારિત છે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="depending-on-an-external-package"><a class="header" href="#depending-on-an-external-package">Depending on an External Package</a></h3>
+<p>ધ્યાન કરો કે વર્કસ્પેસમાં માત્ર એક જ Cargo.lock ફાઈલ ટોપ લેવલ પર છે, દરેક ક્રેટની ડિરેક્ટરીમાં નહીં. આ સુનિશ્ચિત કરે છે કે બધા ક્રેટ્સ તમામ નિર્ભરતાઓના સમાન સંસ્કરણનો ઉપયોગ કરી રહ્યા છે. જો આપણે <code>rand</code> પેકેજને adder/Cargo.toml અને add_one/Cargo.toml ફાઇલોમાં ઉમેરીએ, તો Cargo તે બંનેને <code>rand</code> ના એક સંસ્કરણમાં ઉકેલશે અને તેને એક જ Cargo.lock માં નોંધશે. વર્કસ્પેસના બધા ક્રેટ્સ સમાન નિર્ભરતાનો ઉપયોગ કરે છે એનો અર્થ થાય છે કે ક્રેટ્સ હંમેશા એકબીજા સાથે સુસંગત રહેશે. ચાલો <code>rand</code> ક્રેટને add_one/Cargo.toml ફાઇલના <code>[dependencies]</code> વિભાગમાં ઉમેરીએ જેથી આપણે <code>add_one</code> ક્રેટમાં <code>rand</code> ક્રેટનો ઉપયોગ કરી શકીએ:</p>
+<!-- When updating the version of `rand` used, also update the version of
 `rand` used in these files so they all match:
 * ch02-00-guessing-game-tutorial.md
 * ch07-04-bringing-paths-into-scope-with-the-use-keyword.md
---&gt;
-add_one/Cargo.toml આ `Cargo.toml` ફાઈલ એક `crate` માટે રૂપરેખાંકન માહિતી ધરાવે છે. આ રૂપરેખાંકનમાં `crate`નું નામ, સંસ્કરણ, લેખક અને અન્ય સંબંધિત વિગતો સમાવિષ્ટ છે જે `rustup` અને `cargo` જેવા સાધનો દ્વારા ઉપયોગમાં લેવાય છે. આ ફાઈલ `project`ના મૂળ ડિરેક્ટરીમાં સ્થિત હોવી જોઈએ. [package] name = "add_one" version = "0.1.0" authors = ["Your Name &lt;your_email@example.com&gt;"] edition = "2021" [dependencies]
-
-```toml
-```toml
-{{#include ../listings/ch14-more-about-cargo/no-listing-03-workspace-with-external-dependency/add/add_one/Cargo.toml:6:7}}
+-->
+<p>add_one/Cargo.toml આ <code>Cargo.toml</code> ફાઈલ એક <code>crate</code> માટે રૂપરેખાંકન માહિતી ધરાવે છે. આ રૂપરેખાંકનમાં <code>crate</code>નું નામ, સંસ્કરણ, લેખક અને અન્ય સંબંધિત વિગતો સમાવિષ્ટ છે જે <code>rustup</code> અને <code>cargo</code> જેવા સાધનો દ્વારા ઉપયોગમાં લેવાય છે. આ ફાઈલ <code>project</code>ના મૂળ ડિરેક્ટરીમાં સ્થિત હોવી જોઈએ. [package] name = “add_one” version = “0.1.0” authors = [“Your Name <a href="mailto:your_email@example.com">your_email@example.com</a>”] edition = “2021” [dependencies]</p>
+<pre><code class="language-toml">{{#include ../listings/ch14-more-about-cargo/no-listing-03-workspace-with-external-dependency/add/add_one/Cargo.toml:6:7}}
 </code></pre>
-<pre><code>હવે આપણે `use rand;` ને add_one/src/lib.rs ફાઈલમાં ઉમેરી શકીએ છીએ, અને `cargo build` આદેશ ચલાવીને સમગ્ર વર્કસ્પેસ બનાવવાથી `rand` ક્રેટે આયાત થશે અને સંકલિત થશે. આપણને એક ચેતવણી મળશે કારણ કે આપણે જે `rand` ને અવકાશમાં લાવ્યા છીએ તેનો ઉલ્લેખ નથી કરી રહ્યા:
-
-&lt;!-- manual-regeneration
+<p>હવે આપણે <code>use rand;</code> ને add_one/src/lib.rs ફાઈલમાં ઉમેરી શકીએ છીએ, અને <code>cargo build</code> આદેશ ચલાવીને સમગ્ર વર્કસ્પેસ બનાવવાથી <code>rand</code> ક્રેટે આયાત થશે અને સંકલિત થશે. આપણને એક ચેતવણી મળશે કારણ કે આપણે જે <code>rand</code> ને અવકાશમાં લાવ્યા છીએ તેનો ઉલ્લેખ નથી કરી રહ્યા:</p>
+<!-- manual-regeneration
 cd listings/ch14-more-about-cargo/no-listing-03-workspace-with-external-dependency/add
 cargo build
 copy output below; the output updating script doesn't handle subdirectories in paths properly
---&gt;
-```console
-```console
-$ cargo build
+-->
+<pre><code class="language-console">$ cargo build
     Updating crates.io index
   Downloaded rand v0.8.5
    --snip--
@@ -373,16 +323,13 @@ warning: `add_one` (lib) generated 1 warning (run `cargo fix --lib -p add_one` t
    Compiling adder v0.1.0 (file:///projects/add/adder)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.95s
 </code></pre>
-<pre><code>ટોચનું Cargo.lock હવે `add_one` નું `rand` પર નિર્ભરતા વિશે માહિતી ધરાવે છે. જોકે, ભલે `rand` વર્કસ્પેસમાં ક્યાંક વપરાયેલું હોય, તે વર્કસ્પેસમાં અન્ય ક્રેટ્સમાં ઉપયોગ કરી શકાતું નથી સિવાય કે આપણે તેમના Cargo.toml ફાઇલોમાં પણ `rand` ઉમેર્યું હોય. ઉદાહરણ તરીકે, જો આપણે `use rand;` ને adder/src/main.rs ફાઈલમાં `adder` પેકેજ માટે ઉમેરીએ, તો આપણને ભૂલ મળશે:
-
-&lt;!-- manual-regeneration
+<p>ટોચનું Cargo.lock હવે <code>add_one</code> નું <code>rand</code> પર નિર્ભરતા વિશે માહિતી ધરાવે છે. જોકે, ભલે <code>rand</code> વર્કસ્પેસમાં ક્યાંક વપરાયેલું હોય, તે વર્કસ્પેસમાં અન્ય ક્રેટ્સમાં ઉપયોગ કરી શકાતું નથી સિવાય કે આપણે તેમના Cargo.toml ફાઇલોમાં પણ <code>rand</code> ઉમેર્યું હોય. ઉદાહરણ તરીકે, જો આપણે <code>use rand;</code> ને adder/src/main.rs ફાઈલમાં <code>adder</code> પેકેજ માટે ઉમેરીએ, તો આપણને ભૂલ મળશે:</p>
+<!-- manual-regeneration
 cd listings/ch14-more-about-cargo/output-only-03-use-rand/add
 cargo build
 copy output below; the output updating script doesn't handle subdirectories in paths properly
---&gt;
-```console
-```console
-$ cargo build
+-->
+<pre><code class="language-console">$ cargo build
   --snip--
    Compiling adder v0.1.0 (file:///projects/add/adder)
 error[E0432]: unresolved import `rand`
@@ -391,31 +338,23 @@ error[E0432]: unresolved import `rand`
 2 | use rand;
   |     ^^^^ no external crate `rand`
 </code></pre>
-<pre><code>આ સુધારવા માટે, `adder` પેકેજ માટેની Cargo.toml ફાઈલ સંપાદિત કરો અને દર્શાવો કે `rand` તેની નિર્ભરતા (dependency) છે. `adder` પેકેજ બનાવવાથી `rand` ને `adder` માં નિર્ભરતાઓની યાદીમાં ઉમેરાશે Cargo.lock માં, પરંતુ `rand` ની કોઈ વધારાની નકલો ડાઉનલોડ થશે નહીં. Rust ખાતરી કરશે કે વર્કિંગ સ્પેસ (workspace) માં દરેક પેકેજમાં દરેક crate `rand` પેકેજનો સમાન સંસ્કરણ વાપરે છે જ્યાં સુધી તેઓ `rand` ના સુસંગત સંસ્કરણોનો ઉલ્લેખ કરે, જેનાથી આપણી જગ્યા બચે અને વર્કિંગ સ્પેસમાંના crates એકબીજા સાથે સુસંગત રહે.
-
-જો વર્કસ્પેસમાં રહેલા ક્રેટે એક જ આધારિત પેકેજ (dependency) ના અસંગત સંસ્કરણોનો ઉલ્લેખ કરે છે, તો Cargo દરેકને ઉકેલવાનો પ્રયત્ન કરશે પરંતુ શક્ય હોય ત્યાં સુધી ઓછા સંસ્કરણોનો ઉપયોગ કરવાનો પ્રયાસ કરશે.
-
-### Adding a Test to a Workspace
-
-વધુ એક સુધારણા માટે, ચાલો `add_one::add_one` વિધેયનું પરીક્ષણ `add_one` ક્રેટમાં ઉમેરીએ:
-
-ફાઈલનામ: add_one/src/lib.rs
-
-```rust
-```rust
-{{#rustdoc_include ../listings/ch14-more-about-cargo/no-listing-04-workspace-with-tests/add/add_one/src/lib.rs}}
-</code></pre>
-<pre><code>હવે ટોચના સ્તરના ઉમેરણ ડિરેક્ટરીમાં `cargo test` ચલાવો. આ પ્રકારની રચના ધરાવતા વર્કસ્પેસમાં `cargo test` ચલાવવાથી વર્કસ્પેસમાં રહેલા તમામ ક્રેટે માટે પરીક્ષણો થશે:
-
-&lt;!-- manual-regeneration
+<p>આ સુધારવા માટે, <code>adder</code> પેકેજ માટેની Cargo.toml ફાઈલ સંપાદિત કરો અને દર્શાવો કે <code>rand</code> તેની નિર્ભરતા (dependency) છે. <code>adder</code> પેકેજ બનાવવાથી <code>rand</code> ને <code>adder</code> માં નિર્ભરતાઓની યાદીમાં ઉમેરાશે Cargo.lock માં, પરંતુ <code>rand</code> ની કોઈ વધારાની નકલો ડાઉનલોડ થશે નહીં. Rust ખાતરી કરશે કે વર્કિંગ સ્પેસ (workspace) માં દરેક પેકેજમાં દરેક crate <code>rand</code> પેકેજનો સમાન સંસ્કરણ વાપરે છે જ્યાં સુધી તેઓ <code>rand</code> ના સુસંગત સંસ્કરણોનો ઉલ્લેખ કરે, જેનાથી આપણી જગ્યા બચે અને વર્કિંગ સ્પેસમાંના crates એકબીજા સાથે સુસંગત રહે.</p>
+<p>જો વર્કસ્પેસમાં રહેલા ક્રેટે એક જ આધારિત પેકેજ (dependency) ના અસંગત સંસ્કરણોનો ઉલ્લેખ કરે છે, તો Cargo દરેકને ઉકેલવાનો પ્રયત્ન કરશે પરંતુ શક્ય હોય ત્યાં સુધી ઓછા સંસ્કરણોનો ઉપયોગ કરવાનો પ્રયાસ કરશે.</p>
+<h3 id="adding-a-test-to-a-workspace"><a class="header" href="#adding-a-test-to-a-workspace">Adding a Test to a Workspace</a></h3>
+<p>વધુ એક સુધારણા માટે, ચાલો <code>add_one::add_one</code> વિધેયનું પરીક્ષણ <code>add_one</code> ક્રેટમાં ઉમેરીએ:</p>
+<p>ફાઈલનામ: add_one/src/lib.rs</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/no-listing-04-workspace-with-tests/add/add_one/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>હવે ટોચના સ્તરના ઉમેરણ ડિરેક્ટરીમાં <code>cargo test</code> ચલાવો. આ પ્રકારની રચના ધરાવતા વર્કસ્પેસમાં <code>cargo test</code> ચલાવવાથી વર્કસ્પેસમાં રહેલા તમામ ક્રેટે માટે પરીક્ષણો થશે:</p>
+<!-- manual-regeneration
 cd listings/ch14-more-about-cargo/no-listing-04-workspace-with-tests/add
 cargo test
 copy output below; the output updating script doesn't handle subdirectories in
 paths properly
---&gt;
-```console
-```console
-$ cargo test
+-->
+<pre><code class="language-console">$ cargo test
    Compiling add_one v0.1.0 (file:///projects/add/add_one)
    Compiling adder v0.1.0 (file:///projects/add/adder)
     Finished `test` profile [unoptimized + debuginfo] target(s) in 0.20s
@@ -438,18 +377,14 @@ running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
-<pre><code>પહેલો ભાગ પ્રથમ વિભાગ દર્શાવે છે કે `it_works` પરીક્ષણ `add_one` ક્રેટમાં સફળ થયું. આગળનો વિભાગ દર્શાવે છે કે `adder` ક્રેટમાં શૂન્ય પરીક્ષણો મળ્યા, અને અંતિમ વિભાગ દર્શાવે છે કે `add_one` ક્રેટમાં શૂન્ય દસ્તાવેજીકરણ પરીક્ષણો મળ્યા. અમે વર્કસ્પેસમાં
-
-એક ચોક્કસ ક્રેટ માટે પણ `-p` ધ્વજ વાપરીને અને જે ક્રેટનું પરીક્ષણ આપણે કરવા માંગીએ છીએ તેનું નામ સ્પષ્ટ કરીને ટોચના સ્તરની ડિરેક્ટરીમાંથી પરીક્ષણો ચલાવી શકીએ છીએ:
-
-&lt;!-- manual-regeneration
+<p>પહેલો ભાગ પ્રથમ વિભાગ દર્શાવે છે કે <code>it_works</code> પરીક્ષણ <code>add_one</code> ક્રેટમાં સફળ થયું. આગળનો વિભાગ દર્શાવે છે કે <code>adder</code> ક્રેટમાં શૂન્ય પરીક્ષણો મળ્યા, અને અંતિમ વિભાગ દર્શાવે છે કે <code>add_one</code> ક્રેટમાં શૂન્ય દસ્તાવેજીકરણ પરીક્ષણો મળ્યા. અમે વર્કસ્પેસમાં</p>
+<p>એક ચોક્કસ ક્રેટ માટે પણ <code>-p</code> ધ્વજ વાપરીને અને જે ક્રેટનું પરીક્ષણ આપણે કરવા માંગીએ છીએ તેનું નામ સ્પષ્ટ કરીને ટોચના સ્તરની ડિરેક્ટરીમાંથી પરીક્ષણો ચલાવી શકીએ છીએ:</p>
+<!-- manual-regeneration
 cd listings/ch14-more-about-cargo/no-listing-04-workspace-with-tests/add
 cargo test -p add_one
 copy output below; the output updating script doesn't handle subdirectories in paths properly
---&gt;
-```console
-```console
-$ cargo test -p add_one
+-->
+<pre><code class="language-console">$ cargo test -p add_one
     Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
      Running unittests src/lib.rs (target/debug/deps/add_one-93c49ee75dc46543)
 
@@ -464,15 +399,10 @@ running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
-<pre><code>આ પરિણામ દર્શાવે છે કે `cargo test` આદેશ માત્ર `add_one` ક્રેઇટ માટે પરીક્ષણો ચલાવ્યા અને `adder` ક્રેઇટના પરીક્ષણો ચલાવ્યા ન હતા.
-
-જો તમે વર્કસ્પેસમાં રહેલા ક્રેઇટ્સને crates.io પર પ્રકાશિત કરો છો, તો વર્કસ્પેસમાં દરેક ક્રેઇટને અલગથી પ્રકાશિત કરવાની જરૂર પડશે. `cargo test` ની જેમ, અમે `-p` ધ્વજ વાપરીને અને જે ક્રેઇટ પ્રકાશિત કરવા માંગીએ છીએ તેનું નામ સ્પષ્ટ કરીને અમારા વર્કસ્પેસમાં કોઈ ચોક્કસ ક્રેઇટ પ્રકાશિત કરી શકીએ છીએ.
-
-વધારાના અભ્યાસ માટે, `add_two` ક્રેઇટને `add_one` ક્રેઇટની જેમ જ આ વર્કસ્પેસમાં ઉમેરો!
-
-જેમ જેમ તમારી યોજના વિસ્તરે છે, તેમ તેમ વર્કસ્પેસનો ઉપયોગ કરવાનું વિચારો: તે તમને એક મોટા કોડ સમૂહને બદલે નાના, સમજવામાં સરળ ઘટકો સાથે કામ કરવાની મંજૂરી આપે છે. વધુમાં, વર્કસ્પેસમાં ક્રેટેસ રાખવાથી જો તેઓ એકસાથે વારંવાર બદલાતા હોય તો તેમની વચ્ચે સંકલન સરળ બની શકે છે.
-
-</code></pre>
+<p>આ પરિણામ દર્શાવે છે કે <code>cargo test</code> આદેશ માત્ર <code>add_one</code> ક્રેઇટ માટે પરીક્ષણો ચલાવ્યા અને <code>adder</code> ક્રેઇટના પરીક્ષણો ચલાવ્યા ન હતા.</p>
+<p>જો તમે વર્કસ્પેસમાં રહેલા ક્રેઇટ્સને crates.io પર પ્રકાશિત કરો છો, તો વર્કસ્પેસમાં દરેક ક્રેઇટને અલગથી પ્રકાશિત કરવાની જરૂર પડશે. <code>cargo test</code> ની જેમ, અમે <code>-p</code> ધ્વજ વાપરીને અને જે ક્રેઇટ પ્રકાશિત કરવા માંગીએ છીએ તેનું નામ સ્પષ્ટ કરીને અમારા વર્કસ્પેસમાં કોઈ ચોક્કસ ક્રેઇટ પ્રકાશિત કરી શકીએ છીએ.</p>
+<p>વધારાના અભ્યાસ માટે, <code>add_two</code> ક્રેઇટને <code>add_one</code> ક્રેઇટની જેમ જ આ વર્કસ્પેસમાં ઉમેરો!</p>
+<p>જેમ જેમ તમારી યોજના વિસ્તરે છે, તેમ તેમ વર્કસ્પેસનો ઉપયોગ કરવાનું વિચારો: તે તમને એક મોટા કોડ સમૂહને બદલે નાના, સમજવામાં સરળ ઘટકો સાથે કામ કરવાની મંજૂરી આપે છે. વધુમાં, વર્કસ્પેસમાં ક્રેટેસ રાખવાથી જો તેઓ એકસાથે વારંવાર બદલાતા હોય તો તેમની વચ્ચે સંકલન સરળ બની શકે છે.</p>
 
                     </main>
 

@@ -12,9 +12,7 @@ Hash maps ના ઉપયોગો હેશ મેપ્સ એવા ઉપ�
 
 <Listing number="8-20" caption="Creating a new hash map and inserting some keys and values">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-20/src/main.rs:here}}
-```
 ```
 </Listing>
 સૌપ્રથમ, આપણે સ્ટાન્ડર્ડ લાઈબ્રેરીના કલેક્શન્સ ભાગમાંથી `HashMap` ને `use` કરવાની જરૂર છે. આપણી ત્રણ સામાન્ય કલેક્શન્સમાં, આ સૌથી ઓછી વાર વપરાય છે, તેથી તે પ્રીલ્યુડમાં આપોઆપ અવકાશમાં લાવવામાં આવતા લક્ષણોમાં સમાવિષ્ટ નથી. હેશ મેપ્સને સ્ટાન્ડર્ડ લાઈબ્રેરી તરફથી ઓછું સમર્થન પણ છે; ઉદાહરણ તરીકે, તેમને બનાવવા માટે કોઈ બિલ્ટ-ઇન મેક્રો નથી.
@@ -27,9 +25,7 @@ Hash maps ના ઉપયોગો હેશ મેપ્સ એવા ઉપ�
 
 <Listing number="8-21" caption="Accessing the score for the Blue team stored in the hash map">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-21/src/main.rs:here}}
-```
 ```
 </Listing>
 અહીં, `score` ને બ્લુ ટીમ સાથે સંકળાયેલું મૂલ્ય મળશે અને પરિણામ `10` થશે. `get` પદ્ધતિ `Option<&V>` પરત કરે છે; જો હેશ મેપમાં તે કી માટે કોઈ મૂલ્ય ન હોય, તો `get` `None` પરત કરશે. આ કાર્યક્રમ `Option` ને `copied` કૉલ કરીને `Option<i32>` મેળવવા માટે હેન્ડલ કરે છે, તેના બદલે `Option<&i32>`, અને પછી `unwrap_or` નો ઉપયોગ `score` ને શૂન્ય પર સેટ કરવા માટે કરે છે જો `scores` માં કી માટે કોઈ એન્ટ્રી ન હોય.
@@ -37,17 +33,13 @@ Hash maps ના ઉપયોગો હેશ મેપ્સ એવા ઉપ�
 આપણે વેક્ટરની જેમ જ હેશ મેપમાં દરેક કી-મૂલ્ય જોડી પર પુનરાવર્તન કરી શકીએ છીએ, `for` લૂપનો ઉપયોગ કરીને:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/no-listing-03-iterate-over-hashmap/src/main.rs:here}}
-```
 ```
 આ કોડ દરેક જોડીને અનિશ્ચિત ક્રમમાં છાપશે:
 
 ```text
-```text
 Yellow: 50
 Blue: 10
-```
 ```
 <!-- Old headings. Do not remove or links may break. -->
 ### Managing Ownership in Hash Maps
@@ -56,9 +48,7 @@ Blue: 10
 
 <Listing number="8-22" caption="Showing that keys and values are owned by the hash map once they’re inserted">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-22/src/main.rs:here}}
-```
 ```
 </Listing>
 અમે variable `field_name` અને `field_value` નો ઉપયોગ કરી શકતા નથી, તે દાખલ કર્યા પછી `insert` કૉલ દ્વારા હૅશ નકશામાં ખસેડવામાં આવે છે. જો
@@ -77,9 +67,7 @@ Blue: 10
 
 <Listing number="8-23" caption="Replacing a value stored with a particular key">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-23/src/main.rs:here}}
-```
 ```
 </Listing>
 આ કોડ `{"Blue": 25}` છાપશે. `10` નું મૂળ મૂલ્ય બદલાઈ ગયું છે.
@@ -93,9 +81,7 @@ Blue: 10
 
 <Listing number="8-24" caption="Using the `entry` method to only insert if the key does not already have a value">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-24/src/main.rs:here}}
-```
 ```
 </Listing>
 or_insert પદ્ધતિ `Entry` પરની `or_insert` પદ્ધતિ વ્યાખ્યાયિત કરવામાં આવી છે કે તે અનુરૂપ `Entry` કી માટે મૂલ્યનો બદલી શકાય તેવો સંદર્ભ (mutable reference) આપે, જો તે કી અસ્તિત્વમાં હોય તો, અને ન હોય તો, તે પરિમાણને આ કી માટે નવું મૂલ્ય તરીકે દાખલ કરે અને નવા મૂલ્યના બદલી શકાય તેવા સંદર્ભને પાછું આપે. આ તકનીક આપણી જાતે તર્ક લખવા કરતાં ઘણી સ્વચ્છ છે અને વધુમાં,
@@ -108,9 +94,7 @@ or_insert પદ્ધતિ `Entry` પરની `or_insert` પદ્ધતિ
 
 <Listing number="8-25" caption="Counting occurrences of words using a hash map that stores words and counts">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-25/src/main.rs:here}}
-```
 ```
 </Listing>
 આ કોડ `{"world": 2, "hello": 1, "wonderful": 1}` પ્રિન્ટ કરશે. તમે સમાન કી-વેલ્યુ જોડીઓ અલગ ક્રમમાં છપાયેલી જોઈ શકો છો: યાદ રાખો કે “હેશ મેપમાં વેલ્યુની પ્રાપ્તિ” માં ઉલ્લેખ કર્યો છે તેમ, હેશ મેપ પર પુનરાવર્તન એક અનિશ્ચિત ક્રમમાં થાય છે.
@@ -135,3 +119,8 @@ or_insert પદ્ધતિ `Entry` પરની `or_insert` પદ્ધતિ
 
 હવે આપણે વધુ જટિલ પ્રોગ્રામમાં પ્રવેશ કરી રહ્યા છીએ જેમાં ક્રિયાઓ નિષ્ફળ થઈ શકે છે, તેથી ભૂલ વ્યવસ્થાપન વિશે ચર્ચા કરવાનો આ યોગ્ય સમય છે. આપણે તે પછી કરીશું!
 
+
+
+[validating-references-with-lifetimes]: ch10-03-lifetime-syntax.html#validating-references-with-lifetimes
+[access]: #accessing-values-in-a-hash-map
+[traits]: ch10-02-traits.html

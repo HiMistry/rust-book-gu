@@ -9,7 +9,6 @@
 ચાલો, સૌપ્રથમ જોઈએ કે `Future` લક્ષણ કેવી રીતે કાર્ય કરે છે. અહીં Rust દ્વારા તે વ્યાખ્યાયિત થયેલું છે:
 
 ```rust
-```rust
 use std::pin::Pin;
 use std::task::{Context, Poll};
 
@@ -19,26 +18,22 @@ pub trait Future {
     fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output>;
 }
 ```
-```
 તે ટ્રેઇટ વ્યાખ્યામાં ઘણા નવા પ્રકારો
 
 અને આપણે પહેલાં ન જોયેલા સિન્ટેક્સનો પણ સમાવેશ થાય છે, તેથી ચાલો વ્યાખ્યાને ભાગ-ભાગ કરીને સમજીએ. પ્રથમ, `Future` નું સંકળાયેલ પ્રકાર `Output` જણાવે છે કે ભવિષ્ય શું પરિણામ આપે છે. આ `Iterator` ટ્રેઇટ માટેના `Item` સંકળાયેલ પ્રકાર સાથે સમાન છે. બીજું, `Future` માં `poll` નામની પદ્ધતિ છે, જે તેના `self` પેરામીટર માટે એક વિશેષ `Pin` સંદર્ભ અને એક પરિવર્તનશીલ સંદર્ભ `Context` પ્રકાર માટે લે છે, અને `Poll<Self::Output>` આપે છે. આપણે થોડી વારમાં `Pin` અને `Context` વિશે વધુ વાત કરીશું. અત્યારે, ચાલો જોઈએ કે પદ્ધતિ શું પરિણામ આપે છે, જે `Poll` પ્રકાર છે:
 
-```rust
 ```rust
 pub enum Poll<T> {
     Ready(T),
     Pending,
 }
 ```
-```
 આ `Poll` પ્રકાર `Option` જેવો જ છે. તેની એક વિવિધતામાં મૂલ્ય હોય છે, `Ready(T)`, અને બીજીમાં ન હોય છે, `Pending`. `Poll` નો અર્થ `Option` કરતા ઘણો અલગ છે! `Pending` વિવિધતા દર્શાવે છે કે ભવિષ્યને (future) હજી કાર્ય કરવાનું બાકી છે, તેથી કૉલરને પાછળથી ફરીથી તપાસવાની જરૂર પડશે. `Ready` વિવિધતા દર્શાવે છે કે `Future` એ તેનું કાર્ય પૂર્ણ કરી લીધું છે અને `T`
 
 મૂલ્ય ઉપલબ્ધ છે. નોંધ: સીધા `poll` ને બોલાવવું કદાચિત જરૂરી નથી, પરંતુ જો તમારે તે કરવાની જરૂર હોય, તો યાદ રાખો કે મોટા ભાગના ભવિષ્ય માટે, કૉલરને `Ready` પરત થયા પછી `poll` ફરીથી બોલાવો જોઈએ નહીં. ઘણા ભવિષ્ય તૈયાર થયા પછી ગભરાટ (panic) કરી શકે છે. જે ભવિષ્યને ફરીથી પોલિંગ કરવું સલામત હોય તે તેમના દસ્તાવેજોમાં સ્પષ્ટપણે જણાવશે. આ વર્તન `Iterator::next` જેવું જ છે.
 
-જ્યારે તમે `await` વાપરતા કોડ જુઓ છો, ત્યારે Rust તેને `poll` કૉલ કરતો કોડમાં રૂપાંતરિત કરે છે. જો તમે યાદ કરો Listing 17-4, જ્યાં આપણે એક URL માટે પૃષ્ઠનું શીર્ષક છપાવ્યું હતું જ્યારે તે ઉકેલાઈ ગયું, તો Rust તેને કંઈક એવું (જો કે બરાબર નહીં) માં ફેરવે છે:
+જ્યારે તમે `await` વાપરતા કોડ જુઓ છો, ત્યારે Rust તેને `poll` કૉલ કરતો કોડમાં રૂપાંતરિત કરે છે. જો તમે યાદ કરો Listing 17-[4][pinning], જ્યાં આપણે એક URL માટે પૃષ્ઠનું શીર્ષક છપાવ્યું હતું જ્યારે તે ઉકેલાઈ ગયું, તો Rust તેને કંઈક એવું (જો કે બરાબર નહીં) માં ફેરવે છે:
 
-```rust
 ```rust
 match page_title(url).poll() {
     Ready(page_title) => match page_title {
@@ -50,10 +45,8 @@ match page_title(url).poll() {
     }
 }
 ```
-```
 ભવિષ્ય હજી `Pending` હોય તો શું કરવું જોઈએ? આપણને ફરીથી પ્રયત્ન કરવાની કોઈ રીત જોઈએ છે, અને ફરીથી, અને ફરીથી, જ્યાં સુધી ભવિષ્ય અંતિમ રીતે તૈયાર ન થઈ જાય. બીજા શબ્દોમાં કહીએ તો, આપણને એક લૂપ (loop) જોઈએ:
 
-```rust
 ```rust
 let mut page_title_fut = page_title(url);
 loop {
@@ -68,7 +61,6 @@ loop {
     }
 }
 ```
-```
 જો Rust એ બરાબર તે જ કોડમાં કમ્પાઇલ કરેલું હોત, તો દરેક `await` બ્લોકિંગ બની જાત—જે આપણે મેળવવા માંગતા હતા તેનાથી તદ્દન વિરુદ્ધ! તેના બદલે, Rust ખાતરી કરે છે કે લૂપ નિયંત્રણ કોઈ એવી વસ્તુને સોંપી શકે છે જે આ ફ્યુચર પરનું કાર્ય થોભાવે અને અન્ય ફ્યુચર્સ પર કામ કરી શકે અને પછી આને ફરીથી તપાસી શકે. આપણે જોયું છે તેમ, તે કંઈક એસિંક રનટાઇમ છે, અને આ શેડ્યૂલિંગ અને સંકલન કાર્ય તેની મુખ્ય જવાબદારીઓમાંનું એક છે.
 
 “બે કાર્યો વચ્ચે સંદેશા દ્વારા ડેટા મોકલવો” વિભાગમાં, આપણે `rx.recv` ની રાહ જોવાની વાત કરી હતી. `recv` કૉલ એક ફ્યુચર આપે છે, અને તેના માટે `await` કરવાથી તેને પોલ કરવામાં આવે છે. અમે નોંધ્યું હતું કે રનટાઇમ ફ્યુચરને ત્યાં સુધી થોભાવશે જ્યાં સુધી તે `Some(message)` અથવા ચેનલ બંધ થાય ત્યારે `None` સાથે તૈયાર ન થઈ જાય. `Future` ટ્રેઇટની આપણી ઊંડી સમજણ સાથે, અને વિશેષ કરીને `Future::poll` સાથે, આપણે જોઈ શકીએ છીએ કે તે કેવી રીતે કાર્ય કરે છે. રનટાઇમ જાણે છે કે ફ્યુચર તૈયાર નથી જ્યારે તે `Poll::Pending` આપે છે. તેનાથી વિપરીત, રનટાઇમ જાણે છે કે ફ્યુચર તૈયાર છે અને `poll`  `Poll::Ready(Some(message))` અથવા `Poll::Ready(None)` આપતું હોય ત્યારે તેને આગળ વધારે છે.
@@ -80,11 +72,9 @@ loop {
 
 પાછલા યાદી ૧૭-૧૩ માં, અમે ત્રણ futures ની રાહ જોવા માટે `trpl::join!` macro નો ઉપયોગ કર્યો હતો. જો કે, ઘણીવાર એવી કલેક્શન (collection) હોય છે, જેમ કે વેક્ટર (vector), જેમાં અમુક સંખ્યાના futures હોય છે જે રનટાઇમ (runtime) સુધી જાણીતા હોતા નથી. ચાલો યાદી ૧૭-૧૩ ને યાદી ૧૭-૨૩ માં બદલીએ, જે ત્રણ futures ને વેક્ટરમાં મૂકે છે અને `trpl::join_all` ફંક્શનને બોલાવે છે, જે હજી કમ્પાઇલ (compile) થશે નહીં.
 
-<Listing number="17-23" caption="Awaiting futures in a collection"  file-name="src/main.rs">
+<Listing number="17-[2][under-the-hood]3" caption="Awaiting futures in a collection"  file-name="src/main.rs">
 ```rust
-```rust
-{{#rustdoc_include ../listings/ch17-async-await/listing-17-23/src/main.rs:here}}
-```
+{{#rustdoc_include ../listings/ch17-async-await/listing-17-[2][under-the-hood]3/src/main.rs:here}}
 ```
 </Listing>
 આપણે દરેક ભવિષ્યને `Box` માં મૂકીએ છીએ જેથી તે trait object બને, જેમ કે આપણે પ્રકરણ ૧૨ ના “Returning Errors from `run`” વિભાગમાં કર્યું હતું. (આપણે પ્રકરણ ૧૮ માં trait objects વિશે વિગતવાર વાત કરીશું.) trait objects નો ઉપયોગ કરવાથી, આપણે આ પ્રકારો દ્વારા ઉત્પાદિત અનામી ભવિષ્યને સમાન પ્રકાર તરીકે ગણી શકીએ છીએ, કારણ કે તે બધા `Future` trait ને અમલમાં મૂકે છે. This might be surprising.
@@ -94,30 +84,28 @@ loop {
 પછી આપણે ભવિષ્યનો સમૂહ `trpl::join_all` વિધેયને આપીએ છીએ અને પરિણામની રાહ જોઈએ છીએ. જો કે, આ કમ્પાઇલ થતું નથી; અહીં ભૂલ સંદેશાઓનો સંબંધિત ભાગ છે.
 
 <!-- manual-regeneration
-cd listings/ch17-async-await/listing-17-23
+cd listings/ch17-async-await/listing-17-[2][under-the-hood]3
 cargo build
 copy *only* the final `error` block from the errors
 -->
 ```text
-```text
-error[E0277]: `dyn Future<Output = ()>` cannot be unpinned
-  --> src/main.rs:48:33
+error[E0[2][under-the-hood]77]: `dyn Future<Output = ()>` cannot be unpinned
+  --> src/main.rs:[4][pinning]8:33
    |
-48 |         trpl::join_all(futures).await;
+[4][pinning]8 |         trpl::join_all(futures).await;
    |                                 ^^^^^ the trait `Unpin` is not implemented for `dyn Future<Output = ()>`
    |
    = note: consider using the `pin!` macro
            consider using `Box::pin` if you need to access the pinned value outside of the current scope
    = note: required for `Box<dyn Future<Output = ()>>` to implement `Future`
 note: required by a bound in `futures_util::future::join_all::JoinAll`
-  --> file:///home/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/futures-util-0.3.30/src/future/join_all.rs:29:8
+  --> file:///home/.cargo/registry/src/index.crates.io-19[4][pinning]9cf8c6b5b557f/futures-util-0.3.30/src/future/join_all.rs:29:8
    |
-27 | pub struct JoinAll<F>
+[2][under-the-hood]7 | pub struct JoinAll<F>
    |            ------- required by a bound in this struct
-28 | where
+[2][under-the-hood]8 | where
 29 |     F: Future,
    |        ^^^^^^ required by this bound in `JoinAll`
-```
 ```
 આ ભૂલ સંદેશમાં આપેલ નોંધ જણાવે છે કે આપણે `pin!` મેક્રોનો ઉપયોગ કરીને મૂલ્યોને પિન કરવા જોઈએ, જેનો અર્થ થાય છે તેમને `Pin` પ્રકારની અંદર મૂકવા, જે ખાતરી આપે છે કે મૂલ્યો સ્મૃતિમાં ખસેડવામાં આવશે નહીં. ભૂલ સંદેશ જણાવે છે કે પિનિંગ જરૂરી છે કારણ કે `dyn Future<Output = ()>` ને `Unpin` લક્ષણ લાગુ કરવાની જરૂર છે અને હાલમાં તે નથી.
 
@@ -128,7 +116,6 @@ note: required by a bound in `futures_util::future::join_all::JoinAll`
 ઘણું સમજવું પડશે! ખરેખર સમજવા માટે, ચાલો થોડું ઊંડાણપૂર્વક જોઈએ કે `Future` લક્ષણ ખરેખર કેવી રીતે કાર્ય કરે છે, વિશેષ કરીને પિનિંગની આસપાસ. ફરીથી `Future` લક્ષણની વ્યાખ્યા જુઓ:
 
 ```rust
-```rust
 use std::pin::Pin;
 use std::task::{Context, Poll};
 
@@ -138,7 +125,6 @@ pub trait Future {
     // Required method
     fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output>;
 }
-```
 ```
 `cx` પરિમાણ અને તેનું `Context` પ્રકાર એ ચાવીરૂપ છે કે કેવી રીતે રનટાઇમ જાણે છે ક્યારે કોઈ ચોક્કસ ભવિષ્ય તપાસવું, તેમ છતાં તે આળસુ રહે છે. ફરીથી, તે કેવી રીતે કાર્ય કરે છે તેની વિગતો આ પ્રકરણના અવકાશની બહાર છે, અને તમારે સામાન્ય રીતે માત્ર ત્યારે જ આ વિશે વિચારવાની જરૂર છે જ્યારે તમે કસ્ટમ `Future` અમલીકરણ લખી રહ્યા હોવ. આપણે તેના બદલે `self` માટેના પ્રકાર પર ધ્યાન કેન્દ્રિત કરીશું, કારણ કે આ પ્રથમ વખત છે જ્યારે આપણે એક એવી પદ્ધતિ જોઈ રહ્યા છીએ જ્યાં `self` પાસે પ્રકારની નોંધણી છે. `self` માટેની પ્રકારની નોંધણી અન્ય ફંક્શન પરિમાણો માટેની પ્રકારની નોંધણીઓ જેવી જ કાર્ય કરે છે પરંતુ બે મુખ્ય તફાવતો સાથે:
 
@@ -156,10 +142,10 @@ pub trait Future {
 
 આપણે ત્યાં સુધી બધું સારું છે: જો આપણે કોઈ પણ `ownership` અથવા `reference` વિશે ભૂલ કરીએ છીએ, તો `borrow checker` આપણને જણાવશે. જ્યારે આપણે તે બ્લોકને અનુરૂપ ભવિષ્યને ખસેડવા માંગીએ છીએ—જેમ કે તેને
 
-`Vec` માં ખસેડીને `join_all` ને પસાર કરવા—તો બાબતો વધુ જટિલ બની જાય છે. જ્યારે આપણે કોઈ ભવિષ્યને ખસેડીએ છીએ—ભલે તે ડેટા સ્ટ્રક્ચરમાં ધકેલીને `join_all` સાથે ઇટરેટર તરીકે ઉપયોગ કરવા માટે હોય અથવા ફંક્શનમાંથી તેને પરત કરીને—તો તેનો અર્થ એ થાય છે કે આપણે `Rust` આપણી માટે બનાવેલ સ્ટેટ મશીનને ખસેડીએ છીએ. અને `Rust` માં મોટાભાગના અન્ય પ્રકારોથી વિપરીત, `async` બ્લોક્સ માટે `Rust` બનાવેલા ભવિષ્યમાં કોઈપણ આપેલ વિવિધતાના ક્ષેત્રોમાં પોતાની જાતનાં સંદર્ભો હોઈ શકે છે, જે આકૃતિ 17-4 માં દર્શાવેલ સરળ ચિત્રમાં બતાવ્યા પ્રમાણે છે.
+`Vec` માં ખસેડીને `join_all` ને પસાર કરવા—તો બાબતો વધુ જટિલ બની જાય છે. જ્યારે આપણે કોઈ ભવિષ્યને ખસેડીએ છીએ—ભલે તે ડેટા સ્ટ્રક્ચરમાં ધકેલીને `join_all` સાથે ઇટરેટર તરીકે ઉપયોગ કરવા માટે હોય અથવા ફંક્શનમાંથી તેને પરત કરીને—તો તેનો અર્થ એ થાય છે કે આપણે `Rust` આપણી માટે બનાવેલ સ્ટેટ મશીનને ખસેડીએ છીએ. અને `Rust` માં મોટાભાગના અન્ય પ્રકારોથી વિપરીત, `async` બ્લોક્સ માટે `Rust` બનાવેલા ભવિષ્યમાં કોઈપણ આપેલ વિવિધતાના ક્ષેત્રોમાં પોતાની જાતનાં સંદર્ભો હોઈ શકે છે, જે આકૃતિ 17-[4][pinning] માં દર્શાવેલ સરળ ચિત્રમાં બતાવ્યા પ્રમાણે છે.
 
 <figure>
-<img alt="A single-column, three-row table representing a future, fut1, which has data values 0 and 1 in the first two rows and an arrow pointing from the third row back to the second row, representing an internal reference within the future." src="img/trpl17-04.svg" class="center" />
+<img alt="A single-column, three-row table representing a future, fut1, which has data values 0 and 1 in the first two rows and an arrow pointing from the third row back to the second row, representing an internal reference within the future." src="img/trpl17-0[4][pinning].svg" class="center" />
 <figcaption>Figure 17-4: A self-referential data type</figcaption>
 </figure>
 સામાન્ય રીતે, જો કે, પોતાની જાતને નિર્દેશ કરતા કોઈપણ વસ્તુને ખસેડવી અસુરક્ષિત છે, કારણ કે સંદર્ભ હંમેશાં જેની તરફ તે નિર્દેશ કરે છે તે સ્મૃતિ સરનામા (memory address) પર નિર્દેશ કરે છે (આકૃતિ ૧૭-૫ જુઓ). જો તમે ડેટા સ્ટ્રક્ચરને ખસેડો છો, તો તે આંતરિક સંદર્ભો જૂના સ્થાન તરફ નિર્દેશ કરતા રહેશે. જો કે, તે સ્મૃતિ સ્થાન હવે અમાન્ય છે. એક વાત એ છે કે, જ્યારે તમે ડેટા સ્ટ્રક્ચરમાં ફેરફાર કરો છો, ત્યારે તેની કિંમત અપડેટ થશે નહીં. બીજી—વધુ મહત્વની—વાત એ છે કે, કમ્પ્યુટર હવે તે સ્મૃતિને અન્ય હેતુઓ માટે વાપરવા માટે મુક્ત છે! તમે પાછળથી સંપૂર્ણપણે અસંબંધિત ડેટા વાંચી શકો છો.
@@ -211,9 +197,7 @@ pub trait Future {
 
 <Listing number="17-24" caption="Pinning the futures to enable moving them into the vector">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-24/src/main.rs:here}}
-```
 ```
 </Listing>
 આ ઉદાહરણ હવે સંપાઈ જાય છે અને ચાલે છે, અને અમે ચલિતકાળમાં વેક્ટર માંથી ભવિષ્ય ઉમેરી અથવા દૂર કરી શકીએ છીએ અને બધાને જોડી શકીએ છીએ.
@@ -233,7 +217,6 @@ pub trait Future {
 ચાલો આપણે `Iterator` અને `Future` લક્ષણોની વ્યાખ્યાઓ પર નજર કરીએ, તે પહેલાં જોઈએ કે `Stream` લક્ષણ કેવી રીતે તેમને જોડી શકે છે. `Iterator` માંથી, આપણને ક્રમનો ખ્યાલ મળે છે: તેની `next` પદ્ધતિ `Option<Self::Item>` પ્રદાન કરે છે. `Future` માંથી, આપણને સમય જતાં તૈયારીનો ખ્યાલ મળે છે: તેની `poll` પદ્ધતિ `Poll<Self::Output>` પ્રદાન કરે છે. સમય જતાં તૈયાર થતી વસ્તુઓની શ્રેણીનું પ્રતિનિધિત્વ કરવા માટે, અમે એક `Stream` લક્ષણ વ્યાખ્યાયિત કરીએ છીએ જે આ બંને લક્ષણોને જોડે છે:
 
 ```rust
-```rust
 use std::pin::Pin;
 use std::task::{Context, Poll};
 
@@ -246,7 +229,6 @@ trait Stream {
     ) -> Poll<Option<Self::Item>>;
 }
 ```
-```
 Stream લક્ષણ વ્યાખ્યાયિત કરે છે એક સંકળાયેલ પ્રકાર જેવું કે `Item`, જે પ્રવાહ દ્વારા ઉત્પન્ન થતા ઘટકોનો પ્રકાર દર્શાવે છે. આ `Iterator` જેવું જ છે, જેમાં શૂન્યથી ઘણાં ઘટકો હોઈ શકે છે, અને `Future` થી અલગ છે, જ્યાં હંમેશા એક જ `Output` હોય છે, ભલે તે એકમ પ્રકાર `()` હોય.
 
 `Stream` એ પણ એક પદ્ધતિ વ્યાખ્યાયિત કરે છે જે તે ઘટકો મેળવે છે. અમે તેને `poll_next` કહીએ છીએ, જેથી સ્પષ્ટ થાય કે તે `Future::poll` ની જેમ જ પોલ કરે છે અને `Iterator::next` ની જેમ જ ઘટકોની શ્રેણી ઉત્પન્ન કરે છે. તેનું વળતર પ્રકાર `Poll` સાથે `Option` નું મિશ્રણ છે. બાહ્ય પ્રકાર `Poll` છે, કારણ કે તેની તૈયારી તપાસવી જરૂરી છે, જેવું કે ભવિષ્યમાં હોય છે. આંતરિક પ્રકાર `Option` છે, કારણ કે તેને વધુ સંદેશાઓ છે કે નહીં તે દર્શાવવાની જરૂર છે, જેવું કે ઇટરેટર કરે છે.
@@ -256,9 +238,7 @@ Stream લક્ષણ વ્યાખ્યાયિત કરે છે એક
 જો કે, આપણે “સ્ટ્રીમ્સ: ફ્યુચર્સ ઇન સિક્વન્સ” વિભાગમાં જોયેલી ઉદાહરણોમાં, આપણે `poll_next` અથવા `Stream` નો ઉપયોગ કર્યો ન હતો, પરંતુ તેના બદલે `next` અને `StreamExt` નો ઉપયોગ કર્યો હતો. અલબત્ત, આપણે જાતે `Stream` સ્ટેટ મશીનો લખીને `poll_next` API સાથે સીધા જ કામ કરી શકીએ છીએ, જેમ કે આપણે તેમના `poll` પદ્ધતિ દ્વારા ફ્યુચર્સ સાથે સીધા જ કામ કરી શકીએ છીએ. જો કે, `await` નો ઉપયોગ કરવો ઘણો સારો છે, અને `StreamExt` ટ્રેઇટ `next` પદ્ધતિ પૂરી પાડે છે જેથી આપણે તેવું કરી શકીએ:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch17-async-await/no-listing-stream-ext/src/lib.rs:here}}
-```
 ```
 <!--
 TODO: update this if/when tokio/etc. update their MSRV and switch to using async functions
@@ -275,3 +255,11 @@ fn next(&mut self) -> Next<'_, Self> where Self: Unpin;
 
 આ ટ્રેઇટ્સની નીચલા સ્તરની વિગતો માટે આટલું જ પૂરતું છે. સમાપક તરીકે, ચાલો જોઈએ કે ફ્યુચર્સ (સ્ટ્રીમ્સ સહિત), કાર્યો અને થ્રેડ્સ કેવી રીતે એકસાથે બંધાયેલા છે!
 
+
+
+[message-passing]: ch17-02-concurrency-with-async.md#sending-data-between-two-tasks-using-message-passing
+[ch-18]: ch18-00-oop.html
+[under-the-hood]: https://rust-lang.github.io/async-book/02_execution/01_chapter.html
+[pinning]: https://rust-lang.github.io/async-book/04_pinning/01_chapter.html
+[async-book]: https://rust-lang.github.io/async-book/
+[streams]: ch17-04-streams.html

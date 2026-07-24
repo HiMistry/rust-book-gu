@@ -11,19 +11,15 @@ TCP એ નીચલા સ્તરનું પ્રોટોકોલ છે
 આપણી વેબ સર્વરને ટીસીપી જોડાણ સાંભળવાની જરૂર છે, તેથી આપણે આ ભાગથી શરૂઆત કરીશું. પ્રમાણિત લાયબ્રેરી `std::net` નામનું એક મોડ્યુલ આપે છે જે આપણને આવું કરવાની મંજૂરી આપે છે. ચાલો સામાન્ય રીતે જ એક નવું પ્રોજેક્ટ બનાવીએ:
 
 ```console
-```console
 $ cargo new hello
      Created binary (application) `hello` project
 $ cd hello
-```
 ```
 હવે src/main.rs માં લિસ્ટિંગ 21-1 નો કોડ દાખલ કરો આરંભ કરવા માટે. આ કોડ સ્થાનિક સરનામું `127.0.0.1:7878` પર આવતા TCP પ્રવાહોની રાહ જોશે. જ્યારે તેને આવતો પ્રવાહ મળશે, ત્યારે તે `Connection established!` છાપશે.
 
 <Listing number="21-1" file-name="src/main.rs" caption="Listening for incoming streams and printing a message when we receive a stream">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-01/src/main.rs}}
-```
 ```
 </Listing>
 `TcpListener`નો ઉપયોગ કરીને, આપણે `127.0.0.1:7878` સરનામાં પર TCP જોડાણો સાંભળી શકીએ છીએ. સરનામાંમાં, કોલન પહેલાંનો ભાગ એક IP સરનામું છે જે તમારા કમ્પ્યુટરનું પ્રતિનિધિત્વ કરે છે (આ દરેક કમ્પ્યુટર પર સમાન હોય છે અને લેખકોના કમ્પ્યુટરને વિશેષ કરીને દર્શાવતું નથી), અને `7878` એ પોર્ટ છે. આપણે આ પોર્ટ બે કારણોસર પસંદ કર્યો છે: સામાન્ય રીતે HTTP આ પોર્ટ પર સ્વીકારવામાં આવતું નથી, તેથી આપણો સર્વર તમારા મશીન પર ચાલી રહેલા અન્ય વેબ સર્વર સાથે સંઘર્ષ કરી શકે તેવી શક્યતા ઓછી છે, અને `7878` એ ટેલિફોન પર rust ટાઈપ કરેલું છે.
@@ -39,12 +35,10 @@ The `incoming` Method `TcpListener` પરની `incoming` પદ્ધતિ �
 ચાલો આ કોડ ચલાવીએ! ટર્મિનલમાં `cargo run` આદેશ ચલાવો અને પછી વેબ બ્રાઉઝરમાં 127.0.0.1:7878 ખોલો. બ્રાઉઝરને "જોડાણ પુનઃપ્રારંભ" જેવો ભૂલ સંદેશ દેખાશે, કારણ કે સર્વર હાલમાં કોઈ માહિતી પાછી મોકલી રહ્યું નથી. પરંતુ જ્યારે તમે તમારા ટર્મિનલ પર નજર કરો છો, ત્યારે તમારે ઘણા સંદેશાઓ જોવા જોઈએ જે બ્રાઉઝરે સર્વર સાથે જોડાણ કર્યું ત્યારે છપાયા હતા!
 
 ```text
-```text
      Running `target/debug/hello`
 Connection established!
 Connection established!
 Connection established!
-```
 ```
 ક્યારેક તમે એક જ બ્રાઉઝર વિનંતી માટે અનેક સંદેશાઓ છપાયેલા જોઈ શકો છો; તેનું કારણ એ
 
@@ -62,9 +56,7 @@ Connection established!
 
 <Listing number="21-2" file-name="src/main.rs" caption="Reading from the `TcpStream` and printing the data">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-02/src/main.rs}}
-```
 ```
 </Listing>
 અમે `std::io::BufReader` અને `std::io::prelude` ને કાર્યક્ષેત્રમાં લાવીએ છીએ જેથી કરીને આપણને એવા લક્ષણો (traits) અને પ્રકારો (types) મેળવવામાં મદદ મળે, જે પ્રવાહમાંથી વાંચવા અને લખવા માટે પરવાનગી આપે છે. `main` ફંક્શનમાં `for` લૂપમાં, અમે સંદેશ છાપવાને બદલે કે આપણે જોડાણ કર્યું છે, હવે નવા `handle_connection` ફંક્શનને બોલાવીએ છીએ અને તેને `stream` પસાર કરીએ છીએ.
@@ -85,7 +77,6 @@ cargo run
 make a request to 127.0.0.1:7878
 Can't automate because the output depends on making requests
 -->
-```console
 ```console
 $ cargo run
    Compiling hello v0.1.0 (file:///projects/hello)
@@ -108,7 +99,6 @@ Request: [
     "Cache-Control: max-age=0",
 ]
 ```
-```
 તમારા બ્રાઉઝર પર આધાર રાખે છે તેમ, તમને થોડો અલગ પરિણામ મળી શકે છે. હવે કે આપણે વિનંતી માહિતી છાપી રહ્યા છીએ, તેથી આપણે જોઈ શકીએ છીએ કે શા માટે એક બ્રાઉઝર વિનંતીથી અનેક જોડાણો આવે છે, પ્રથમ લીટીમાં `GET` પછીના પાથને જોઈને. જો પુનરાવર્તિત જોડાણો બધા / માં વિનંતી કરતા હોય, તો આપણે જાણી શકીએ છીએ કે બ્રાઉઝર / ને વારંવાર મેળવવાનો પ્રયાસ કરી રહ્યું છે કારણ કે તેને આપણા કાર્યક્રમ પાસેથી પ્રતિસાદ મળી
 
 રહ્યો નથી. ચાલો આ વિનંતી માહિતીને સમજીએ જેથી જાણી શકાય કે બ્રાઉઝર આપણા કાર્યક્રમ પાસેથી શું માંગી રહ્યું છે.
@@ -119,11 +109,9 @@ Request: [
 HTTP એ એક લખાણ આધારિત પ્રોટોકોલ છે, અને એક વિનંતી આ ફોર્મેટમાં હોય છે:
 
 ```text
-```text
 Method Request-URI HTTP-Version CRLF
 headers CRLF
 message-body
-```
 ```
 પ્રથમ રેખા એ વિનંતી રેખા છે જે ક્લાયન્ટ શું વિનંતી કરી રહ્યો છે તેની માહિતી ધરાવે છે. વિનંતી રેખાનો પ્રથમ ભાગ પદ્ધતિ દર્શાવે છે, જેમ કે `GET` અથવા `POST`, જે વર્ણવે છે કે ક્લાયન્ટ આ વિનંતી કેવી રીતે કરી રહ્યો છે. આપમારા ક્લાયન્ટે `GET` વિનંતીનો ઉપયોગ કર્યો હતો, જેનો અર્થ થાય છે કે તે માહિતી માટે પૂછી રહી છે. The next part of the request line is / , which indicates the uniform resource identifier (URI)
 
@@ -144,28 +132,22 @@ message-body
 આપણે ક્લાયન્ટ વિનંતીના પ્રતિભાવમાં માહિતી મોકલવાની અમલવારી કરીશું. પ્રતિભાવો નીચેના ફોર્મેટ ધરાવે છે:
 
 ```text
-```text
 HTTP-Version Status-Code Reason-Phrase CRLF
 headers CRLF
 message-body
-```
 ```
 પ્રથમ પંક્તિ પ્રથમ પંક્તિ એ સ્થિતિ રેખા છે જેમાં પ્રતિભાવમાં વપરાયેલ HTTP સંસ્કરણ, વિનંતીના પરિણામનો સારાંશ આપતો આંકડાકીય સ્થિતિ કોડ અને સ્થિતિ કોડનું વર્ણન કરતો લખાણનો વાક્ય સમાવિષ્ટ હોય છે. CRLF ક્રમ પછી હેડર્સ, બીજો CRLF ક્રમ અને પ્રતિભાવનું મુખ્ય ભાગ આવે છે. અહીં એક ઉદાહરણ પ્રતિભાવ છે
 
 જે HTTP સંસ્કરણ 1.1 નો ઉપયોગ કરે છે અને જેમાં 200 નો સ્થિતિ કોડ, OK વાક્ય, કોઈ હેડર્સ અને કોઈ મુખ્ય ભાગ નથી:
 
 ```text
-```text
 HTTP/1.1 200 OK\r\n\r\n
-```
 ```
 સ્થિતિ કોડ ૨૦૦ પ્રમાણિત સફળ પ્રતિભાવ છે. આ લખાણ એક નાનકડો સફળ HTTP પ્રતિભાવ છે. ચાલો આને પ્રવાહમાં લખીએ જેવો આપણો સફળ વિનંતીનો પ્રતિભાવ! `handle_connection` કાર્યમાંથી, `println!` દૂર કરો જે વિનંતી માહિતી છાપી રહ્યું હતું અને તેને Listing 21-3 માં રહેલા કોડ સાથે બદલો.
 
 <Listing number="21-3" file-name="src/main.rs" caption="Writing a tiny successful HTTP response to the stream">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-03/src/main.rs:here}}
-```
 ```
 </Listing>
 પ્રથમ નવી રેખા `response` variable વ્યાખ્યાયિત કરે છે જે સફળ સંદેશના ડેટાને ધરાવે છે. પછી, અમે અમારા `response` પર `as_bytes` ને બોલાવીએ છીએ જેથી સ્ટ્રિંગ ડેટાને બાઇટ્સમાં રૂપાંતરિત કરી શકાય. `stream` પરની `write_all` પદ્ધતિ `&[u8]` લે છે અને તે બાઇટ્સને સીધા જ જોડાણમાં મોકલે છે. કારણ કે `write_all` ઓપરેશન નિષ્ફળ થઈ શકે છે, અમે અગાઉની જેમ કોઈપણ ભૂલ પરિણામ પર `unwrap` નો ઉપયોગ કરીએ છીએ. ફરીથી, વાસ્તવિક એપ્લિકેશનમાં, તમે અહીં
@@ -178,18 +160,14 @@ HTTP/1.1 200 OK\r\n\r\n
 
 <Listing number="21-4" file-name="hello.html" caption="A sample HTML file to return in a response">
 ```html
-```html
 {{#include ../listings/ch21-web-server/listing-21-05/hello.html}}
-```
 ```
 </Listing>
 આ એક લઘુત્તમ HTML5 દસ્તાવેજ છે જેમાં એક શીર્ષક અને થોડો લખાણ છે. જ્યારે વિનંતી પ્રાપ્ત થાય ત્યારે આ સર્વર પરથી પાછું મોકલવા માટે, આપણે `handle_connection` ને સૂચિ 21-5 માં દર્શાવ્યા પ્રમાણે સુધારીશું જેથી HTML ફાઈલ વાંચી શકાય, તેને પ્રતિભાવના ભાગ રૂપે ઉમેરી શકાય અને તે મોકલી શકાય.
 
 <Listing number="21-5" file-name="src/main.rs" caption="Sending the contents of *hello.html* as the body of the response">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-05/src/main.rs:here}}
-```
 ```
 </Listing>
 અમે પ્રમાણભૂત લાયબ્રેરીના ફાઇલસિસ્ટમ મોડ્યુલને કાર્યક્ષેત્રમાં લાવવા માટે `use` વિધાનમાં `fs` ઉમેર્યું છે. ફાઈલની સામગ્રીને સ્ટ્રિંગમાં વાંચવા માટેનો કોડ પરિચિત લાગશે; અમે તેનો ઉપયોગ Listing 12-4 માં ફાઇલની સામગ્રી વાંચવા
@@ -206,9 +184,7 @@ HTTP/1.1 200 OK\r\n\r\n
 
 <Listing number="21-6" file-name="src/main.rs" caption="Handling requests to */* differently from other requests">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-06/src/main.rs:here}}
-```
 ```
 </Listing>
 આપણે માત્ર HTTP વિનંતીની પ્રથમ રેખાને જ તપાસવાના છીએ, તેથી સમગ્ર વિનંતીને વેક્ટર (vector) માં વાંચવાને બદલે, આપણે પુનરાવર્તક (iterator) માંથી પ્રથમ ઘટક મેળવવા માટે `next` ને બોલાવીએ છીએ. પહેલું `unwrap` `Option` ની સંભાળ લે છે અને જો પુનરાવર્તકમાં કોઈ ઘટકો ન હોય તો કાર્યક્રમ બંધ કરે છે. બીજું `unwrap` `Result` ને હેન્ડલ કરે છે અને Listing 21-2 માં ઉમેરવામાં આવેલ `map` માં રહેલા `unwrap` જેવો જ પ્રભાવ ધરાવે છે.
@@ -223,18 +199,14 @@ HTTP/1.1 200 OK\r\n\r\n
 
 <Listing number="21-7" file-name="src/main.rs" caption="Responding with status code 404 and an error page if anything other than */* was requested">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-07/src/main.rs:here}}
-```
 ```
 </Listing>
 અહીં, આપણી પ્રતિભાવમાં સ્થિતિ કોડ 404 અને કારણ પદ `NOT FOUND` સાથે એક સ્થિતિ રેખા છે. પ્રતિભાવનું શરીર ફાઈલ 404.html માં HTML હશે. તમારે ભૂલ પાના માટે 404.html ફાઈલ hello.html ની બાજુમાં બનાવવાની જરૂર પડશે; ફરીથી, તમે કોઈપણ HTML નો ઉપયોગ કરી શકો છો, અથવા Listing 21-8 માં આપેલ ઉદાહરણ HTML નો ઉપયોગ કરી શકો છો.
 
 <Listing number="21-8" file-name="404.html" caption="Sample content for the page to send back with any 404 response">
 ```html
-```html
 {{#include ../listings/ch21-web-server/listing-21-07/404.html}}
-```
 ```
 </Listing>
 આ ફેરફારો સાથે, તમારું સર્વર ફરીથી ચલાવો. 127.0.0.1:7878 પર વિનંતી કરવાથી hello.html ની સામગ્રી પાછી મળવી જોઈએ, અને અન્ય કોઈપણ વિનંતી, જેમ કે 127.0.0.1:7878/foo , એ 404.html માંથી ભૂલ HTML પાછું આપવું જોઈએ.
@@ -246,9 +218,7 @@ HTTP/1.1 200 OK\r\n\r\n
 
 <Listing number="21-9" file-name="src/main.rs" caption="Refactoring the `if` and `else` blocks to contain only the code that differs between the two cases">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-09/src/main.rs:here}}
-```
 ```
 </Listing>
 હવે `if` અને `else` બ્લોક્સ માત્ર યોગ્ય મૂલ્યો સ્ટેટસ લાઇન અને ફાઇલનામ માટે ટ્યૂપલમાં આપે છે; ત્યારબાદ આપણે ડિસ્ટ્રક્ચરિંગનો ઉપયોગ કરીને `let` વિધાનમાં પેટર્ન દ્વારા `status_line` અને `filename` નાં બે variable સોંપીએ છીએ, જેની ચર્ચા પ્રકરણ 19 માં થયેલી છે.

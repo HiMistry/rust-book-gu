@@ -9,9 +9,7 @@
 
 <Listing number="12-20" file-name="src/lib.rs" caption="Adding a new failing test for the case-insensitive function we’re about to add">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-20/src/lib.rs:here}}
-```
 ```
 </Listing>
 અમે જૂના પરીક્ષણના `contents` માં ફેરફાર કર્યો છે. અમે એક નવી રેખા ઉમેરી છે જેમાં લખાણ `"Duct tape."` છે, જે મોટા અક્ષર D નો ઉપયોગ કરે છે જે કેસ-સંવેદનશીલ રીતે શોધ કરતી વખતે ક્વેરી `"duct"` સાથે મેળ ખાવું જોઈએ નહીં. આ રીતે જૂના પરીક્ષણને બદલવાથી એ સુનિશ્ચિત કરવામાં મદદ મળે છે કે અમે આકસ્મિક રીતે કેસ-સંવેદનશીલ શોધ કાર્યક્ષમતાને તોડી નાખીએ નહીં જે અમે પહેલાથી જ અમલમાં મૂકી છે. આ પરીક્ષણ હવે પાસ થવું જોઈએ અને જેમ જેમ
@@ -24,9 +22,7 @@
 
 <Listing number="12-21" file-name="src/lib.rs" caption="Defining the `search_case_insensitive` function to lowercase the query and the line before comparing them">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-21/src/lib.rs:here}}
-```
 ```
 </Listing>
 સૌ પ્રથમ, અમે `query` સ્ટ્રિંગને નાના અક્ષરોમાં ફેરવીએ છીએ અને તેને એક નવા variable (variable) માં સંગ્રહિત કરીએ છીએ, જેનું નામ પહેલાંના `query` ને છાયા પાડે છે. ક્વેરી પર `to_lowercase` બોલાવવું જરૂરી છે જેથી userની ક્વેરી `"rust"` , `"RUST"` , `"Rust"` અથવા `"rUsT"` હોય તો પણ, અમે ક્વેરીને જાણે તે `"rust"` હોય તેમ ગણીશું અને કેસ પ્રત્યે સંવેદનશીલ નહીં રહીએ. જ્યારે `to_lowercase` મૂળભૂત યુનિકોડ (Unicode) ને હેન્ડલ કરશે, ત્યારે તે 100 ટકા સચોટ રહેશે નહીં. જો અમે વાસ્તવિક એપ્લિકેશન લખતા હોત, તો અહીં થોડું વધારે કામ કરવું જોઈતું હતું, પરંતુ આ વિભાગ પર્યાવરણ variables (environment variables) વિશે છે, યુનિકોડ વિશે નહીં, તેથી અમે તેને ત્યાં જ છોડી દઈએ છીએ.
@@ -38,35 +34,27 @@
 ચાલો જોઈએ કે આ અમલીકરણ પરીક્ષણો પાસ કરે છે કે નહીં:
 
 ```console
-```console
 {{#include ../listings/ch12-an-io-project/listing-12-21/output.txt}}
-```
 ```
 ખૂબ સારું! તેઓ સફળ થયા. હવે આપણે નવા `search_case_insensitive` વિધેયને `run` વિધેયમાંથી બોલાવીશું. પ્રથમ, આપણે કેસ-સંવેદનશીલ અને કેસ-અસંવેદનશીલ શોધ વચ્ચે સ્વિચ કરવા માટે `Config` રચનામાં એક રૂપરેખાંકન વિકલ્પ ઉમેરીશું. આ ક્ષેત્ર ઉમેરવાથી કમ્પાઇલરની ભૂલો થશે કારણ કે આપણે હજી સુધી આ ક્ષેત્રને શરૂ કરી
 
 રહ્યા નથી: Filename: src/main.rs
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-22/src/main.rs:here}}
-```
 ```
 અમે `ignore_case` ક્ષેત્ર ઉમેર્યું છે જે એક બુલિયન મૂલ્ય ધરાવે છે. હવે, આપણે `run` વિધેયને `ignore_case` ક્ષેત્રના મૂલ્યની ચકાસણી કરવા અને તેના આધારે નક્કી કરવા માટે જરૂરી છે કે `search` વિધેય અથવા `search_case_insensitive` વિધેયને બોલાવવું, જે યાદી 12-22 માં દર્શાવેલ છે. આ હજી સુધી કમ્પાઇલ થશે નહીં.
 
 <Listing number="12-22" file-name="src/main.rs" caption="Calling either `search` or `search_case_insensitive` based on the value in `config.ignore_case`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-22/src/main.rs:there}}
-```
 ```
 </Listing>
 અંતે, આપણે પર્યાવરણ variable (environment variable) માટે તપાસ કરવી જરૂરી છે. પર્યાવરણ variables સાથે કાર્ય કરવાના વિધેયો પ્રમાણિત પુસ્તકાલય (standard library) માં `env` મોડ્યુલમાં છે, જે src/main.rs ના પ્રારંભિક ભાગમાં પહેલાથી જ ઉપલબ્ધ છે. આપણે `var` વિધેયનો ઉપયોગ `env` મોડ્યુલમાંથી કરીશું, જેથી ચકાસી શકાય કે `IGNORE_CASE` નામનાં પર્યાવરણ variable માટે કોઈ મૂલ્ય સેટ થયું છે કે નહીં, જે યાદી 12-23 માં દર્શાવેલ છે.
 
 <Listing number="12-23" file-name="src/main.rs" caption="Checking for any value in an environment variable named `IGNORE_CASE`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-23/src/main.rs:here}}
-```
 ```
 </Listing>
 અહીં, આપણે એક નવું variable, `ignore_case`, બનાવીએ છીએ. તેની કિંમત સેટ કરવા માટે, આપણે `env::var` વિધેયને બોલાવીએ છીએ અને તેને `IGNORE_CASE` પર્યાવરણ ચલનું નામ પસાર કરીએ છીએ. `env::var` વિધેય એક `Result` આપે છે જે સફળ `Ok` પ્રકાર હશે જેમાં પર્યાવરણ variable's કિંમત હોય જો પર્યાવરણ variable કોઈ પણ મૂલ્ય પર સેટ કરેલો હોય. જો પર્યાવરણ variable સેટ ન હોય તો તે `Err` પ્રકાર આપશે.
@@ -78,30 +66,22 @@
 ચાલો પ્રયત્ન કરીએ! પ્રથમ, આપણે પર્યાવરણ variable સેટ કર્યા વિના અને `to` ક્વેરી સાથે આપણું કાર્યક્રમ ચલાવીશું, જે કોઈપણ લાઇન સાથે મેળ ખાવું જોઈએ જેમાં બધા નાના અક્ષરોમાં શબ્દ to હોય.
 
 ```console
-```console
 {{#include ../listings/ch12-an-io-project/listing-12-23/output.txt}}
-```
 ```
 દેખાય છે કે તે હજી કાર્યરત છે! હવે ચાલો પ્રોગ્રામને `IGNORE_CASE` ને `1` પર સેટ કરીને ચલાવીએ, પરંતુ એ જ પ્રશ્ન `to` સાથે:
 
 ```console
-```console
 $ IGNORE_CASE=1 cargo run -- to poem.txt
-```
 ```
 જો તમે PowerShell વાપરી રહ્યા છો, તો તમારે પર્યાવરણ variable સેટ કરવું પડશે અને કાર્યક્રમને અલગ આદેશો તરીકે ચલાવવો પડશે:
 
 ```console
-```console
 PS> $Env:IGNORE_CASE=1; cargo run -- to poem.txt
-```
 ```
 આથી `IGNORE_CASE` તમારા શેલ સત્રના બાકીના સમય માટે જળવાઈ રહેશે. તેને `Remove-Item` કમાન્ડલેટ વડે દૂર કરી શકાય છે:
 
 ```console
-```console
 PS> Remove-Item Env:IGNORE_CASE
-```
 ```
 આપણે એવાં લીટીઓ મેળવવી જોઈએ જેમાં કે જે મોટા અક્ષરો ધરાવતાં હોઈ શકે.
 
@@ -111,12 +91,10 @@ IGNORE_CASE=1 cargo run -- to poem.txt
 can't extract because of the environment variable
 -->
 ```console
-```console
 Are you nobody, too?
 How dreary to be somebody!
 To tell your name the livelong day
 To an admiring bog!
-```
 ```
 ઉત્તમ, આપણને લાઈનો પણ મળી છે ! આપણો `minigrep` પ્રોગ્રામ હવે પર્યાવરણ variable દ્વારા નિયંત્રિત કેસ-સેન્સિટિવ શોધ કરી શકે છે. હવે તમે જાણો છો કે આદેશ વાક્ય Argumentો અથવા પર્યાવરણ variables બંનેનો ઉપયોગ કરીને સેટ કરેલા વિકલ્પોનું સંચાલન કેવી રીતે કરવું.
 

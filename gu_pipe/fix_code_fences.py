@@ -36,28 +36,16 @@ def get_en_code_blocks(filepath):
     return blocks
 
 
-def is_code_line(line):
-    """Check if a line is likely a code/command line."""
-    s = line.strip()
-    if not s:
-        return False
-    # Shell commands
-    if s.startswith('$ '):
-        return True
-    # PowerShell/CMD prompt
-    if s.startswith('> echo '):
-        return True
-    # Cargo commands
-    if s.startswith('cargo ') or s.startswith('$cargo'):
-        return True
-    # Rust commands
-    if s.startswith('rustc '):
-        return True
-    # Known output lines
-    if s == 'Rust is installed now. Great!':
-        return True
-    if re.match(r'^rustc \d+\.\d+\.\d+', s):
-        return True
+def strip_fences(lines):
+    """Remove all existing code fence lines (```) from a markdown file."""
+    return [l for l in lines if not l.rstrip().startswith('```')]
+
+
+def is_in_ranges(gi, ranges):
+    """Check if index gi falls within any (start, end) range."""
+    for fs, fe in ranges:
+        if fs <= gi < fe:
+            return True
     return False
 
 
@@ -75,10 +63,11 @@ def fix_file(fname):
     with open(gu_path, 'r', encoding='utf-8') as f:
         gu_lines = f.readlines()
     
-    # Build a flat list of "content items" from EN for paragraph-by-paragraph alignment
-    # Then match code blocks by content signature
+    # Strip ALL existing fences first to prevent double-wrapping
+    gu_lines = strip_fences(gu_lines)
     
-    already_fenced = set()
+    # Track fenced ranges as (start_index, end_index) in current gu_lines
+    fence_ranges = []
     
     for fence_type, en_content in en_blocks:
         # Get first non-empty EN content line as signature
@@ -88,42 +77,38 @@ def fix_file(fname):
         
         sig = sig_lines[0]
         
-        # Find this signature in GU lines (searching forward from last position)
+        # Search for signature, skipping already-fenced ranges
         found = -1
-        for gi, gl in enumerate(gu_lines):
-            if gi in already_fenced:
+        gi = 0
+        while gi < len(gu_lines):
+            if is_in_ranges(gi, fence_ranges):
+                # Skip past the end of this range
+                for fs, fe in fence_ranges:
+                    if fs <= gi < fe:
+                        gi = fe
+                        break
                 continue
-            if gl.rstrip().startswith('```'):
-                continue
-            if sig in gl.rstrip():
+            if sig in gu_lines[gi].rstrip():
                 found = gi
                 break
+            gi += 1
         
         if found < 0:
             print(f"    WARN: signature not found: {sig[:50]}")
             continue
         
-        # Determine how many GU lines to wrap
-        # English code block has N content lines (including blank lines)
-        # Gujarati may have fewer or more lines due to joining/splitting
-        # Strategy: match each EN line to GU lines forward
-        
-        code_start = found
+        # Match content lines forward from found
         code_end = found
-        
         en_idx = 0
         while en_idx < len(en_content) and code_end < len(gu_lines):
             en_line = en_content[en_idx].strip()
             gu_line = gu_lines[code_end].rstrip()
             
-            if gu_line.startswith('```') or gu_line.startswith('#'):
+            if gu_line.startswith('#'):
                 break
             
             if not en_line:
-                # Blank line in EN - skip blank lines in GU too
                 while code_end < len(gu_lines) and not gu_lines[code_end].rstrip():
-                    if gu_lines[code_end].rstrip().startswith('```'):
-                        break
                     code_end += 1
                 en_idx += 1
             elif en_line in gu_line or gu_line in en_line:
@@ -134,22 +119,18 @@ def fix_file(fname):
             else:
                 break
         
-        # Ensure we captured at least the matching line
         if code_end <= found:
             code_end = found + 1
         
-        # Wrap
-        # Skip blank lines at start
+        code_start = found
         while code_start < code_end and not gu_lines[code_start].strip():
             code_start += 1
         
-        if code_start < code_end and code_start not in already_fenced:
+        if code_start < code_end:
             gu_lines.insert(code_start, f'```{fence_type}\n')
             code_end += 1
             gu_lines.insert(code_end, '```\n')
-            # Mark these lines as already fenced
-            for fi in range(code_start, code_end + 1):
-                already_fenced.add(fi)
+            fence_ranges.append((code_start, code_end + 1))
     
     with open(gu_path, 'w', encoding='utf-8') as f:
         f.writelines(gu_lines)

@@ -51,9 +51,7 @@ Rust આ નિયમોનું પાલન કરાવવાનું બ�
 
 <Listing number="20-1" caption="Creating raw pointers with the raw borrow operators">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-01/src/main.rs:here}}
-```
 ```
 </Listing>
 દેખો કે આ કોડમાં અમે `unsafe` કીવર્ડનો સમાવેશ કરતા નથી. અમે સુરક્ષિત કોડમાં કા રો પોઇન્ટર્સ બનાવી શકીએ છીએ; પરંતુ, થોડા સમય પછી તમે જોશો તેમ, કા રો પોઇન્ટર્સને અનસુરક્ષિત બ્લોક બહાર ડિરેફરન્સ
@@ -64,18 +62,14 @@ Listing 20-2 આ દર્શાવવા માટે, હવે પછી આ�
 
 <Listing number="20-2" caption="Creating a raw pointer to an arbitrary memory address">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-02/src/main.rs:here}}
-```
 ```
 </Listing>
 યાદ રાખો કે આપણે સુરક્ષિત કોડમાં કાચી પોઇન્ટર બનાવી શકીએ છીએ, પરંતુ આપણે કાચી પોઇન્ટરને ડિરેફરન્સ કરી શકતા નથી અને જે ડેટા તરફ નિર્દેશ કરે છે તે વાંચી શકતા નથી. લિસ્ટિંગ 20-3 માં, આપણે એક કાચી પોઇન્ટર પર ડિરેફરન્સ ઓપરેટર `*` નો ઉપયોગ કરીએ છીએ જેને `unsafe` બ્લોકની જરૂર હોય છે.
 
 <Listing number="20-3" caption="Dereferencing raw pointers within an `unsafe` block">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-03/src/main.rs:here}}
-```
 ```
 </Listing>
 પોઇન્ટર બનાવવાથી કોઈ નુકસાન થતું નથી; સમસ્યા ત્યારે ઊભી થાય છે જ્યારે આપણે તે જે મૂલ્ય તરફ નિર્દેશ કરે છે તેને એક્સેસ કરવાનો પ્રયત્ન કરીએ છીએ, ત્યારે આપણે અમાન્ય મૂલ્ય સાથે કામ
@@ -91,16 +85,12 @@ Listing 20-2 આ દર્શાવવા માટે, હવે પછી આ�
 અહીં એક અસુરક્ષિત વિધેય છે જેનું નામ `dangerous` છે, જે તેના અંગમાં કંઈ કરતું નથી:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/no-listing-01-unsafe-fn/src/main.rs:here}}
-```
 ```
 આપણે `dangerous` વિધેય એક અલગ `unsafe` બ્લોક ની અંદર જ બોલાવવું જોઈએ. જો આપણે `unsafe` બ્લોક વગર `dangerous` બોલવાનો પ્રયત્ન કરીએ, તો આપણને ભૂલ મળશે:
 
 ```console
-```console
 {{#include ../listings/ch20-advanced-features/output-only-01-missing-unsafe/output.txt}}
-```
 ```
 `unsafe` બ્લોક સાથે, અમે Rust ને ખાતરી આપીએ છીએ કે અમે ફંક્શનની દસ્તાવેજીકરણ વાંચ્યું છે, તેનો યોગ્ય રીતે ઉપયોગ કેવી રીતે કરવો તે સમજીએ છીએ અને અમે ફંક્શનના કરારનું પાલન
 
@@ -112,18 +102,14 @@ Listing 20-2 આ દર્શાવવા માટે, હવે પછી આ�
 
 <Listing number="20-4" caption="Using the safe `split_at_mut` function">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-04/src/main.rs:here}}
-```
 ```
 </Listing>
 આ કાર્ય માત્ર સુરક્ષિત Rust નો ઉપયોગ કરીને અમલમાં લાવી શકાય તેમ નથી. એક પ્રયત્ન સૂચિ 20-5 જેવો દેખાઈ શકે છે, જે કમ્પાઇલ થશે નહીં. સરળતા માટે, અમે `split_at_mut` ને પદ્ધતિને બદલે વિધેય તરીકે અને `T` પ્રકારના સામાન્ય પ્રકારને બદલે `i32` મૂલ્યોની સ્લાઇસ માટે જ અમલમાં મૂકીશું.
 
 <Listing number="20-5" caption="An attempted implementation of `split_at_mut` using only safe Rust">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-05/src/main.rs:here}}
-```
 ```
 </Listing>
 આ વિધેય સૌપ્રથમ સ્લાઇસની કુલ લંબાઈ મેળવે છે. ત્યારબાદ, તે ચકાસે છે કે આપેલ પરિમાણ તરીકેનો અનુક્રમણિકા (index) સ્લાઇસની અંદર છે કે નહીં, એ તપાસ કરીને કે તે લંબાઈ કરતાં ઓછો અથવા તેના જેટલો છે. આ ચકાસણીનો અર્થ એ થાય છે કે જો આપણે અનુક્રમણિકા (index) જે સ્લાઇસને વિભાજીત કરવા માટે મોટી હોય, તો તે ફંક્શન તેનો ઉપયોગ કરવાનો પ્રયત્ન કરે તે પહેલાં ગભરાટ (panic) અનુભવે છે.
@@ -133,9 +119,7 @@ Listing 20-2 આ દર્શાવવા માટે, હવે પછી આ�
 જ્યારે આપણે લિસ્ટિંગ ૨૦-૫ માં કોડ કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ, ત્યારે આપણને ભૂલ મળશે:
 
 ```console
-```console
 {{#include ../listings/ch20-advanced-features/listing-20-05/output.txt}}
-```
 ```
 Rust નું borrowing checker એ સમજી શકતું નથી કે આપણે slice ના જુદાં જુદા ભાગો ઉછીના લઈ રહ્યા છીએ; તે માત્ર એટલું જ જાણે છે કે આપણે એક જ slice માંથી બે વાર ઉછીના લઈ રહ્યા છીએ. Slice ના જુદાં જુદા ભાગો ઉછીના લેવા મૂળભૂત રીતે યોગ્ય છે, કારણ કે બંને slices એકબીજા સાથે ઓવરલેપ થતા નથી, પરંતુ Rust આ જાણવા માટે એટલું બુદ્ધિશાળી નથી. જ્યારે આપણે જાણીએ છીએ કે કોડ યોગ્ય છે, પરંતુ Rust ને ખબર નથી, ત્યારે
 
@@ -143,9 +127,7 @@ Rust નું borrowing checker એ સમજી શકતું નથી ક�
 
 <Listing number="20-6" caption="Using unsafe code in the implementation of the `split_at_mut` function">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-06/src/main.rs:here}}
-```
 ```
 </Listing>
 સ્લાઇસ પ્રકારની યાદ આવૃત્તિ અગાઉ પ્રકરણ ૪ ના “ધ સ્લાઇસ ટાઇપ” વિભાગમાં ઉલ્લેખ કર્યો છે તેમ, સ્લાઇસ એ અમુક ડેટા તરફનો પોઇન્ટર અને સ્લાઇસની લંબાઈ હોય છે. સ્લાઇસની લંબાઈ મેળવવા માટે અમે `len` પદ્ધતિનો ઉપયોગ કરીએ છીએ અને સ્લાઇસના કાચા પોઇન્ટરને ઍક્સેસ કરવા માટે `as_mut_ptr` પદ્ધતિનો ઉપયોગ કરીએ છીએ. આ કિસ્સામાં, આપણી પાસે `i32` મૂલ્યોની બદલી શકાય તેવી સ્લાઇસ હોવાથી, `as_mut_ptr` પ્રકાર `*mut i32` નો કાચો પોઇન્ટર આપે છે, જે અમે variable `ptr` માં સંગ્રહિત કર્યો છે.
@@ -160,9 +142,7 @@ Rust નું borrowing checker એ સમજી શકતું નથી ક�
 
 <Listing number="20-7" caption="Creating a slice from an arbitrary memory location">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-07/src/main.rs:here}}
-```
 ```
 </Listing>
 આપણે આ અનિશ્ચિત સ્થાન પર સ્મૃતિનો હક્ક ધરાવતા નથી, અને એ વાતની કોઈ ખાતરી નથી કે આ કોડ બનાવે છે તે સ્લાઇસમાં માન્ય `i32` મૂલ્યો સમાવિષ્ટ છે. `values` ને માન્ય સ્લાઇસ તરીકે વાપરવાનો પ્રયત્ન કરવાથી અનિશ્ચિત વર્તન થઈ શકે છે.
@@ -175,9 +155,7 @@ Rust નું borrowing checker એ સમજી શકતું નથી ક�
 
 <Listing number="20-8" file-name="src/main.rs" caption="Declaring and calling an `extern` function defined in another language">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-08/src/main.rs}}
-```
 ```
 </Listing>
 `unsafe extern "C"` બ્લોક ની અંદર અહીં અમે અન્ય ભાષામાંથી બોલાવવા માંગતા હોઈએ તેવા બાહ્ય વિધેયોના નામ અને હસ્તાક્ષરોની યાદી આપીએ છીએ. `"C"` ભાગ એ વ્યાખ્યાયિત કરે છે કે બાહ્ય વિધેય કયું એપ્લિકેશન બાઈનરી ઇન્ટરફેસ (ABI) વાપરે છે: ABI એ કેવી રીતે એસેમ્બલી સ્તર પર વિધેયને બોલાવવો તે વ્યાખ્યાયિત કરે છે. `"C"` ABI સૌથી સામાન્ય છે અને C પ્રોગ્રામિંગ ભાષાના ABI ને અનુસરે છે. Rust દ્વારા સમર્થિત તમામ ABIs વિશેની માહિતી Rust Reference માં
@@ -186,9 +164,7 @@ Rust નું borrowing checker એ સમજી શકતું નથી ક�
 
 <Listing number="20-9" file-name="src/main.rs" caption="Explicitly marking a function as `safe` within an `unsafe extern` block and calling it safely">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-09/src/main.rs}}
-```
 ```
 </Listing>
 વિધેયને `safe` તરીકે નિરૂપણ કરવાથી તે આપોઆપ સુરક્ષિત નથી! તેના બદલે, તમે Rust ને આપી રહ્યા છો કે તે સુરક્ષિત છે એવો સંકલ્પ. તમારી જવાબદારી હજી પણ એ સંકલ્પ જાળવવાની રહે છે!
@@ -196,10 +172,8 @@ Rust નું borrowing checker એ સમજી શકતું નથી ક�
 #### Calling Rust Functions from Other Languages
 
 ```
-```
 અમે `extern` નો ઉપયોગ કરીને એક ઈન્ટરફેસ પણ બનાવી શકીએ છીએ જે અન્ય ભાષાઓને Rust વિધેયોને બોલાવવાની મંજૂરી આપે છે. સંપૂર્ણ `extern` બ્લોક બનાવ્યા વગર, અમે `fn` કીવર્ડ પહેલાં `extern` કીવર્ડ ઉમેરી અને ઉપયોગ કરવા માટેનું ABI સ્પષ્ટ કરીએ છીએ તે સંબંધિત વિધેય માટે જરૂરી છે. અમારે Rust કમ્પાઈલરને આ વિધેયના નામમાં ફેરફાર ન કરવા માટે `#[unsafe(no_mangle)]` એનોટેશન પણ ઉમેરવું પડશે. મેંગલિંગ એટલે જ્યારે કમ્પાઈલર આપણને આપેલા વિધેયનું નામ બદલીને બીજા નામે કરે છે જેમાં વધુ માહિતી હોય છે, જેથી અન્ય ભાગોની કમ્પાઈલેશન પ્રક્રિયા તેનો ઉપયોગ કરી શકે, પરંતુ તે ઓછું માનવ-વાંચી શકાય તેવું હોય. દરેક પ્રોગ્રામિંગ ભાષાના કમ્પાઈલર વિધેયોના નામ થોડા અલગ રીતે મેંગલ કરે છે, તેથી કોઈ Rust વિધેયને અન્ય ભાષાઓ દ્વારા ઓળખી શકાય તે માટે, આપણે Rust કમ્પાઈલરનું નામ મેંગલિંગ બંધ કરવું જોઈએ. આ જોખમી છે કારણ કે બિલ્ટ-ઇન મેંગલિંગ વગર, લાયબ્રેરીઓમાં નામ અથડામણ થઈ શકે છે, તેથી અમારી જવાબદારી છે કે અમે જે નામ પસંદ કરીએ તે મેંગલિંગ કર્યા વિના નિકાસ કરવા માટે સુરક્ષિત છે.
 
-```
 ```
 નીચેના ઉદાહરણમાં, અમે `call_from_c` વિધેયને C કોડમાંથી સુલભ કરાવવાનું કરીએ છીએ, તે શેર કરેલી લાયબ્રેરી તરીકે કમ્પાઇલ કર્યા પછી અને C માંથી જોડી દેવામાં આવે છે:
 
@@ -217,9 +191,7 @@ Rustમાં, વૈશ્વિક variable  static  variable કહેવા�
 
 <Listing number="20-10" file-name="src/main.rs" caption="Defining and using an immutable static variable">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-10/src/main.rs}}
-```
 ```
 </Listing>
 Static variable સ્થિર variable અચલ (constants) જેવા જ હોય છે, જે આપણે પ્રકરણ ૩ માં “અચલ જાહેર કરવા” વિભાગમાં ચર્ચા કરી હતી. સ્થિર variable's નામો `SCREAMING_SNAKE_CASE` સંમેત મુજબ હોય છે. સ્થિર variable માત્ર `'static` આયુષ્યકાળ (lifetime) ધરાવતા સંદર્ભો (references) સંગ્રહિત કરી શકે છે, જેનો અર્થ થાય છે કે Rust કમ્પાઇલર આયુષ્યકાળ નક્કી કરી શકે છે અને આપણને સ્પષ્ટપણે નોંધ કરવાની આવશ્યકતા નથી. અમુટ (immutable) સ્થિર variable ઍક્સેસ કરવું સુરક્ષિત છે.
@@ -228,9 +200,7 @@ Static variable સ્થિર variable અચલ (constants) જેવા જ 
 
 <Listing number="20-11" file-name="src/main.rs" caption="Reading from or writing to a mutable static variable is unsafe.">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-11/src/main.rs}}
-```
 ```
 </Listing>
 જેમ કે સામાન્ય variable (variable) સાથે, આપણે `mut` કીવર્ડનો ઉપયોગ કરીને પરિવર્તનશીલતા (Mutability) દર્શાવે છે. `COUNTER` માંથી વાંચન અથવા લેખન કરતી કોઈપણ કોડ `unsafe` બ્લોક ની અંદર હોવો જોઈએ. લિસ્ટિંગ 20-11 નો કોડ સંકલિત થાય છે અને `COUNTER: 3` પ્રિન્ટ કરે છે, જે આપણે ધારતા હતા તે પ્રમાણે જ થાય છે કારણ કે તે એકલ થ્રેડેડ (single threaded) છે. જો `COUNTER` ને બહુવિધ થ્રેડ્સ (threads) દ્વારા એક્સેસ (access) કરવામાં આવે તો ડેટા રેસ (data races) ની શક્યતા રહે છે, જેના પરિણામે અનિશ્ચિત વર્તન (undefined behavior) થઈ શકે છે. તેથી, આપણે સમગ્ર ફંક્શનને `unsafe` તરીકે ચિહ્નિત કરવું જોઈએ અને સલામતીની મર્યાદાનું દસ્તાવેજીકરણ કરવું જોઈએ જેથી કરીને ફંક્શનને બોલાવનાર કોઈપણ વ્યક્તિ શું કરીallowed છે અને શું કરવાની அனுமதிக்க નથી તેની જાણકારી મેળવે.
@@ -247,9 +217,7 @@ SAFETY જ્યારે આપણે કોઈ અનિશ્ચિત કા
 
 <Listing number="20-12" caption="Defining and implementing an unsafe trait">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-12/src/main.rs:here}}
-```
 ```
 </Listing>
 `unsafe impl` નો ઉપયોગ કરીને, અમે એવું વચન આપી રહ્યા છીએ કે અમે એવા અવિભાજ્ય નિયમોનું પાલન કરીશું જે
@@ -269,9 +237,7 @@ SAFETY જ્યારે આપણે કોઈ અનિશ્ચિત કા
 એક ઉદાહરણ જોઈએ કે આ કેટલું ઉપયોગી થઈ શકે છે, જ્યારે આપણે તેને સૂચિ ૨૦-૭ સામે ચલાવીએ છીએ.
 
 ```console
-```console
 {{#include ../listings/ch20-advanced-features/listing-20-07/output.txt}}
-```
 ```
 Miri યોગ્ય રીતે ચેતવણી આપે છે કે આપણે એક પૂર્ણાંકને પોઇન્ટર માં રૂપાંતરિત કરી રહ્યા છીએ, જે સમસ્યા હોઈ શકે છે, પરંતુ Miri એ નક્કી કરી શકતું નથી કે કોઈ સમસ્યા અસ્તિત્વમાં છે કે નહીં કારણ કે તે જાણે છે કે પોઇન્ટર કેવી રીતે ઉદ્ભવ્યો. પછી, Miri એક ભૂલ આપે છે જ્યાં લિસ્ટિંગ 20-7 માં અવ્યાખ્યાયિત વર્તન છે કારણ કે આપણી પાસે એક લટકતો પોઇન્ટર છે. Miri ના આભાર, હવે આપણે જાણીએ છીએ કે અવ્યાખ્યાયિત વર્તનની સંભાવના છે, અને આપણે કોડને સુરક્ષિત કેવી રીતે બનાવવો તે વિશે વિચારી શકીએ છીએ. અમુક કિસ્સાઓમાં, Miri ભૂલોને સુધારવા માટે ભલામણો પણ કરી શકે છે.
 
@@ -286,5 +252,16 @@ Miri કોઈ સમસ્યા પકડે છે, તો તમને ખ�
 
 `unsafe` નો ઉપયોગ કરીને ઉપર ચર્ચા કરાયેલ પાંચ શક્તિઓમાંથી એકનો ઉપયોગ કરવો ખોટું નથી, કે તેથી પણ ગણવામાં આવતું નથી, પરંતુ `unsafe` કોડને યોગ્ય બનાવવો વધુ મુશ્કેલ છે કારણ કે કમ્પાઇલર મેમરી સુરક્ષા જાળવવામાં મદદ કરી શકતો નથી. જ્યારે તમારી પાસે `unsafe` કોડ વાપરવાનું કારણ હોય, ત્યારે તમે તેનો ઉપયોગ કરી શકો છો, અને સ્પષ્ટ `unsafe` નોંધ તેને સમસ્યાઓના સ્ત્રોતને શોધવાનું સરળ બનાવે છે જ્યારે તે થાય છે. જ્યારે પણ તમે અસુરક્ષિત કોડ લખો છો, ત્યારે તમે વધુ આત્મવિશ્વાસ અનુભવવા માટે મિરીનો ઉપયોગ કરી શકો છો કે તમે જે કોડ લખ્યો છે તે Rust ના નિયમોનું પાલન કરે છે.
 
-વધુ ઊંડાણપૂર્વક અસુરક્ષિત Rust સાથે કાર્ય કરવાની રીત જાણવા માટે, Rust ના સત્તાવાર માર્ગદર્શિકા `unsafe` , The Rustonomicon વાંચો.
+વધુ ઊંડાણપૂર્વક અસુરક્ષિત Rust સાથે કાર્ય કરવાની રીત જાણવા માટે, Rust ના સત્તાવાર માર્ગદર્શિકા `unsafe` , [The Rustonomicon][nomicon] વાંચો.
 
+
+
+[dangling-references]: ch04-02-references-and-borrowing.html#dangling-references
+[the-slice-type]: ch04-03-slices.html#the-slice-type
+[ABI]: ../reference/items/external-blocks.html#abi
+[constants]: ch03-01-variables-and-mutability.html#declaring-constants
+[send-and-sync]: ch16-04-extensible-concurrency-sync-and-send.html
+[unions]: ../reference/items/unions.html
+[nightly]: appendix-07-nightly-rust.html
+[miri]: https://github.com/rust-lang/miri
+[nomicon]: https://doc.rust-lang.org/nomicon/

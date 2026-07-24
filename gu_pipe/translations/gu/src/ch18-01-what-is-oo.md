@@ -15,18 +15,14 @@
 
 <Listing number="18-1" file-name="src/lib.rs" caption="An `AveragedCollection` struct that maintains a list of integers and the average of the items in the collection">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch18-oop/listing-18-01/src/lib.rs}}
-```
 ```
 </Listing>
 સ્ટ્રક્ચરને `pub` તરીકે નિશ્ચિત કરવામાં આવ્યું છે જેથી અન્ય કોડ તેનો ઉપયોગ કરી શકે, પરંતુ સ્ટ્રક્ચરની અંદરના ક્ષેત્રો ખાનગી રહે. આ બાબત અહીં મહત્વપૂર્ણ છે કારણ કે આપણે એ સુનિશ્ચિત કરવા માંગીએ છીએ કે જ્યારે પણ મૂલ્ય ઉમેરવામાં આવે અથવા દૂર કરવામાં આવે ત્યારે સરેરાશ પણ અપડેટ થાય. અમે આ `add`, `remove`, અને `average` પદ્ધતિઓને સ્ટ્રક્ચર પર અમલમાં મૂકીને કરીએ છીએ, જે લિસ્ટિંગ 18-2 માં દર્શાવેલ છે.
 
 <Listing number="18-2" file-name="src/lib.rs" caption="Implementations of the public methods `add`, `remove`, and `average` on `AveragedCollection`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch18-oop/listing-18-02/src/lib.rs:here}}
-```
 ```
 </Listing>
 જાહેર પદ્ધતિઓ `add`, `remove`, અને `average` એ `AveragedCollection` ના ઉદાહરણમાં ડેટાને મેળવવા અથવા બદલવાની એકમાત્ર રીતો છે. જ્યારે કોઈ વસ્તુ `list` માં `add` પદ્ધતિનો ઉપયોગ કરીને ઉમેરવામાં આવે છે અથવા `remove` પદ્ધતિનો ઉપયોગ કરીને દૂર કરવામાં આવે છે, ત્યારે દરેક અમલીકરણ ખાનગી `update_average` પદ્ધતિને બોલાવે છે જે `average` ક્ષેત્રને અપડેટ કરવાનું સંભાળે છે. We

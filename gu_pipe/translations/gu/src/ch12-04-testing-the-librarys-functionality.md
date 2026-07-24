@@ -23,9 +23,7 @@ src/lib.rs માં, આપણે એક `tests` મોડ્યુલ ઉમ�
 
 <Listing number="12-15" file-name="src/lib.rs" caption="Creating a failing test for the `search` function for the functionality we wish we had">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-15/src/lib.rs:here}}
-```
 ```
 </Listing>
 આ પરીક્ષણ `"duct"` શબ્દ શોધે છે. જે લખાણોમાં આપણે શોધી રહ્યા છીએ તે ત્રણ લીટીઓનાં છે, જેમાંની માત્ર એક લીટીમાં `"duct"` આવેલું છે (નોંધ કરો કે ઉઘાડતી બેવડી અવતરણ ચિહ્નની પછી બેકસ્લેશ Rust ને આ શબ્દપ્રયોગની શરૂઆતમાં નવી લાઇન મૂકવાનું કહેતું નથી). આપણે ખાતરી કરીએ છીએ કે `search` કાર્ય દ્વારા મળેલું પરિણામ માત્ર એ જ લીટી
@@ -34,9 +32,7 @@ src/lib.rs માં, આપણે એક `tests` મોડ્યુલ ઉમ�
 
 <Listing number="12-16" file-name="src/lib.rs" caption="Defining just enough of the `search` function so that calling it won’t panic">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-16/src/lib.rs:here}}
-```
 ```
 </Listing>
 હવે ચાલો ચર્ચા કરીએ કે શા માટે આપણે સ્પષ્ટ આયુષ્ય `'a` ને `search` ના નિશ્ચિત રૂપરેખામાં વ્યાખ્યાયિત કરવાની અને તે આયુષ્યનો ઉપયોગ `contents` Argument અને વળતર મૂલ્ય સાથે કરવાની જરૂર છે. યાદ કરો પ્રકરણ ૧૦ માં કે આયુષ્ય પરિમાણો કઈ Argument આયુષ્યને વળતર આયુષ્ય સાથે જોડે છે. આ કિસ્સામાં, અમે દર્શાવે છે કે પરત કરેલ વેક્ટર સ્ટ્રિંગ સ્લાઇસ ધરાવવું જોઈએ જે `contents` Argumentના સ્લાઇસનો સંદર્ભ આપે છે (બળિયા `query` Argumentને બદલે).
@@ -46,9 +42,7 @@ src/lib.rs માં, આપણે એક `tests` મોડ્યુલ ઉમ�
 જો આપણે લાઈફટાઈમની નોંધણીઓ ભૂલી જઈએ અને આ ફંક્શનને કમ્પાઈલ કરવાનો પ્રયત્ન કરીએ, તો આપણને આ ભૂલ મળશે:
 
 ```console
-```console
 {{#include ../listings/ch12-an-io-project/output-only-02-missing-lifetimes/output.txt}}
-```
 ```
 Rust ને ખબર નહિ કે આપણને આઉટપુટ માટે કયો પરિમાણ (parameter) જોઈએ છે, તેથી આપણે તેને સ્પષ્ટપણે જણાવવું પડશે. નોંધ કરો કે સહાયક લખાણ (help text) સૂચવે છે કે બધા પરિમાણો અને આઉટપુટ પ્રકાર માટે સમાન લાઈફટાઈમ પરિમાણ (lifetime parameter) નિર્દિષ્ટ કરવું, જે અયોગ્ય છે! કારણ કે `contents` એ પરિમાણ છે જેમાં આપણો તમામ લખાણ સમાવિષ્ટ છે અને આપણે તે લખાણના ભાગો પાછા મેળવવા માંગીએ છીએ, તેથી આપણે જાણીએ છીએ કે `contents` એ એકમાત્ર પરિમાણ છે જેને રિટર્ન વેલ્યુ (return value) સાથે લાઈફટાઈમ સિન્ટેક્સ (lifetime syntax) નો ઉપયોગ કરીને જોડવું જોઈએ.
 
@@ -76,9 +70,7 @@ Rust has a helpful method to handle line-by-line iteration of strings, convenien
 
 <Listing number="12-17" file-name="src/lib.rs" caption="Iterating through each line in `contents`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-17/src/lib.rs:here}}
-```
 ```
 </Listing>
 `lines` પદ્ધતિ એક પુનરાવર્તક (iterator) આપે છે. આપણે પુનરાવર્તકો વિશે પ્રકરણ ૧૩ માં વિગતવાર ચર્ચા કરીશું. પરંતુ યાદ રાખો કે તમે આ પુનરાવર્તકનો ઉપયોગ કરવાની રીત સૂચિ ૩-૫ માં જોઈ હતી, જ્યાં અમે એક સંગ્રહના દરેક ઘટક પર કોડ ચલાવવા માટે પુનરાવર્તક સાથે `for` લૂપનો ઉપયોગ કર્યો હતો.
@@ -89,9 +81,7 @@ Rust has a helpful method to handle line-by-line iteration of strings, convenien
 
 <Listing number="12-18" file-name="src/lib.rs" caption="Adding functionality to see whether the line contains the string in `query`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-18/src/lib.rs:here}}
-```
 ```
 </Listing>
 હાલમાં, અમે કાર્યક્ષમતા વિકસાવી રહ્યા છીએ. કોડને કમ્પાઇલ કરવા માટે, આપણે ફંક્શન હસ્તાક્ષરમાં દર્શાવ્યા મુજબ બોડીમાંથી મૂલ્ય પરત કરવું પડશે.
@@ -102,17 +92,13 @@ Rust has a helpful method to handle line-by-line iteration of strings, convenien
 
 <Listing number="12-19" file-name="src/lib.rs" caption="Storing the lines that match so that we can return them">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-19/src/lib.rs:here}}
-```
 ```
 </Listing>
 હવે `search` વિધેય માત્ર એ જ લીટીઓ પાછી આપવી જોઈએ જેમાં `query` હોય, અને આપણી ચકાસણી સફળ થવી જોઈએ. ચાલો ચકાસણી ચલાવીએ:
 
 ```console
-```console
 {{#include ../listings/ch12-an-io-project/listing-12-19/output.txt}}
-```
 ```
 આપણી ચકાસણી સફળ થઈ, તેથી આપણે જાણીએ છીએ કે તે કાર્ય કરે છે!
 
@@ -121,25 +107,26 @@ Rust has a helpful method to handle line-by-line iteration of strings, convenien
 હવે સમગ્ર કાર્યક્રમ કાર્યરત હોવો જોઈએ! ચાલો તેનો પ્રયત્ન કરીએ, પ્રથમ એવા શબ્દ સાથે જે એલિસ ડિકિન્સનની કવિતામાંથી બરાબર એક લીટી પરત કરે છે: frog .
 
 ```console
-```console
 {{#include ../listings/ch12-an-io-project/no-listing-02-using-search-in-run/output.txt}}
-```
 ```
 શાનદાર! હવે આપણે એક એવું શબ્દ જોઈએ જે અનેક લીટીઓ સાથે મેળ ખાય છે, જેમ કે `body :`
 
 ```console
-```console
 {{#include ../listings/ch12-an-io-project/output-only-03-multiple-matches/output.txt}}
-```
 ```
 અને અંતે, ચાલો ખાતરી કરીએ કે જ્યારે આપણે કોઈ શબ્દની શોધ કરીએ છીએ જે કાવ્યમાં નથી, જેમ કે monomorphization : ત્યારે આપણને કોઈ લીટીઓ ન મળે.
 
 ```console
-```console
 {{#include ../listings/ch12-an-io-project/output-only-04-no-matches/output.txt}}
-```
 ```
 ખૂબ સારું! આપણે એક પ્રચલિત સાધનનું પોતાનું નાનકડું સંસ્કરણ બનાવ્યું છે અને એપ્લિકેશનોને કેવી રીતે ગોઠવવી તે વિશે ઘણું શીખ્યા છીએ. આપણે ફાઈલ ઇનપુટ અને આઉટપુટ, લાઈફટાઇમ, પરીક્ષણ અને કમાન્ડ લાઇન પાર્સિંગ વિશે પણ થોડું શીખ્યું છે.
 
 આ પ્રોજેક્ટને પૂર્ણ કરવા માટે, આપણે સંવર્ધિત variables સાથે કેવી રીતે કામ કરવું અને સ્ટાન્ડર્ડ એરર પર કેવી રીતે છાપવું તે ટૂંકમાં દર્શાવીશું, જે બંને કમાન્ડ લાઇન પ્રોગ્રામ લખતી વખતે ઉપયોગી છે.
 
+
+
+[ch11-anatomy]: ch11-01-writing-tests.html#the-anatomy-of-a-test-function
+[ch10-lifetimes]: ch10-03-lifetime-syntax.html
+[validating-references-with-lifetimes]: ch10-03-lifetime-syntax.html#validating-references-with-lifetimes
+[ch3-iter]: ch03-05-control-flow.html#looping-through-a-collection-with-for
+[ch13-iterators]: ch13-02-iterators.html

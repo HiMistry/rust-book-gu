@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-78fa1409.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -191,26 +191,20 @@
 <p>એક સંકળાયેલ પ્રકાર સાથેના લક્ષણનું ઉદાહરણ એક સંકળાયેલ પ્રકાર નામિત <code>Item</code> છે, જેનાં મૂલ્યોના પ્રકારને રજૂ કરે છે, જે પ્રકાર <code>Iterator</code> લક્ષણને અમલમાં મુકે છે. <code>Iterator</code> લક્ષણની વ્યાખ્યા યાદી 20-13 માં દર્શાવેલ છે.</p>
 <listing number="20-13" caption="The definition of the `Iterator` trait that has an associated type `Item`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-13/src/lib.rs}}
-```
 ```
 </listing>
 The `Item` Type `Item` પ્રકાર એક અસ્થાયી સ્થાનાંતર છે, અને `next` પદ્ધતિની વ્યાખ્યા દર્શાવે છે કે તે `Option<self::item>` પ્રકારનાં મૂલ્યો પરત કરશે. `Iterator` લક્ષણના અમલીકરણકર્તાઓ `Item` માટે નક્કર પ્રકારનો ઉલ્લેખ કરશે, અને `next` પદ્ધતિ તે નક્કર પ્રકારના મૂલ્ય ધરાવતું `Option` પરત કરશે. સંબંધિત
 <p>પ્રકારો સામાન્ય રીતે જનરિક્સ જેવી જ લાગી શકે છે, જેમાં આપણે ફંક્શનને કયા પ્રકારનાં ડેટાને સંભાળી શકે છે તે નિર્દિષ્ટ કર્યા વિના વ્યાખ્યાયિત કરવાની મંજૂરી આપે છે. આ બે ખ્યાલો વચ્ચેનો તફાવત તપાસવા માટે, અમે <code>Counter</code> નામના પ્રકાર પર <code>Iterator</code> લક્ષણનું અમલીકરણ જોઈશું જે <code>Item</code> પ્રકારને <code>u32</code> તરીકે નિર્દિષ્ટ કરે છે:</p>
 <listing file-name="src/lib.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/no-listing-22-iterator-on-counter/src/lib.rs:ch19}}
-```
 ```
 </listing>
 આ સિન્ટેક્સ સામાન્ય રીતે જનરિક્સ (generics) જેવું લાગે છે. તો, શા માટે લિસ્ટિંગ ૨૦-૧૪ માં દર્શાવ્યા પ્રમાણે જનરિક્સ સાથે  `Iterator` ટ્રેઇટને વ્યાખ્યાયિત ન કરીએ?
 <listing number="20-14" caption="A hypothetical definition of the `Iterator` trait using generics">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-14/src/lib.rs}}
-```
 ```
 </listing>
 The difference is that when using generics, as in Listing 20-14, we must annotate the types in each implementation; because we can also implement `Iterator<string>` for `Counter` or any other type, we could have multiple implementations of `Iterator` for `Counter`. In other words, when a trait has a generic parameter, it can be implemented for a type multiple times, changing the concrete types of the generic type parameters each time. When we use the `next` method on `Counter`, we would have to provide type annotations to indicate which implementation of `Iterator` we want to use.
@@ -223,209 +217,140 @@ The difference is that when using generics, as in Listing 20-14, we must annotat
 <p>Rust તમને પોતાના ઓપરેટર બનાવવાની કે કોઈપણ અનિશ્ચિત ઓપરેટરને વધારે પડતા ભાર આપવાની અનુમતિ આપતું નથી. પરંતુ તમે <code>std::ops</code> માં દર્શાવેલ ક્રિયાઓ અને અનુરૂપ traits ને અમલમાં મૂકીને વધારે ભાર આપી શકો છો. ઉદાહરણ તરીકે, યાદી 20-15 માં, અમે બે <code>Point</code> ઇન્સ્ટન્સને એકસાથે ઉમેરવા માટે <code>+</code> ઓપરેટરને વધારે ભાર આપીએ છીએ. અમે આ <code>Point</code> struct પર <code>Add</code> trait ને અમલમાં મૂકીને કરીએ છીએ.</p>
 <listing number="20-15" file-name="src/main.rs" caption="Implementing the `Add` trait to overload the `+` operator for `Point` instances">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-15/src/main.rs}}
-```
 ```
 </listing>
 The `add` Method `add` પદ્ધતિ બે `Point` સંસ્થાઓના `x` મૂલ્યો અને બે `Point` સંસ્થાઓના `y` મૂલ્યો ઉમેરીને એક નવી `Point` બનાવે છે. `Add` લક્ષણનો એક સાંકળિત પ્રકાર નામ `Output` છે, જે `add` પદ્ધતિમાંથી પાછો મળતો પ્રકાર નક્કી કરે
 <p>છે. આ કોડમાં ડિફૉલ્ટ સામાન્ય પ્રકાર <code>Add</code> લક્ષણમાં રહેલો છે. અહીં તેની વ્યાખ્યા છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>```rust
-trait Add&lt;Rhs=Self&gt; {
+</span>trait Add&lt;Rhs=Self&gt; {
     type Output;
 
     fn add(self, rhs: Rhs) -&gt; Self::Output;
 }
 <span class="boring">}</span></code></pre>
-<pre><code>આ કોડ સામાન્ય રીતે પરિચિત દેખાશે: એક trait જેમાં એક method અને સંકળાયેલ type છે. નવું ભાગ `Rhs=Self` છે: આ syntax ને default type parameters કહેવામાં આવે છે. `Rhs` generic type parameter (જે “right-hand side” માટે ટૂંકું નામ છે) એ `add` method માં `rhs` પરિમાણનો type વ્યાખ્યાયિત કરે છે. જો આપણે `Add` trait ના અમલીકરણ વખતે `Rhs` માટે કોઈ ચોક્કસ type નો ઉલ્લેખ ન કરીએ, તો `Rhs` નો type `Self` પર default થશે, જે એ type હશે જેના પર આપણે `Add` નો અમલ કરી રહ્યા છીએ.
-
-જ્યારે આપણે `Point` માટે `Add` અમલમાં મૂક્યું, ત્યારે આપણે `Rhs` માટે ડિફોલ્ટનો ઉપયોગ કર્યો કારણ કે આપણે બે `Point` ઇન્સ્ટન્સ ઉમેરવા માંગતા હતા. ચાલો એક એવું ઉદાહરણ જોઈએ જ્યાં આપણે `Add` ટ્રેઇટને અમલમાં મૂકીએ છીએ જ્યાં આપણે ડિફોલ્ટનો ઉપયોગ કરવાને બદલે `Rhs` પ્રકારને કસ્ટમાઇઝ કરવા માંગીએ છીએ.
-
-આપણી પાસે બે સ્ટ્રક્ચર્સ છે, `Millimeters` અને `Meters`, જે જુદા જુદા એકમોમાં મૂલ્યો ધરાવે છે. આ હાલના પ્રકારને બીજા સ્ટ્રક્ચરમાં પાતળું આવરણ આપવું એ ન્યૂટાઇપ પેટર્ન તરીકે ઓળખાય છે, જેને આપણે “Implementing External Traits with the Newtype Pattern” વિભાગમાં વધુ વિગતવાર વર્ણવવામાં આવ્યું છે. આપણે મિલીમીટરમાં મૂલ્યોને મીટરમાં મૂલ્યો સાથે ઉમેરવા માંગીએ છીએ અને `Add` નું અમલીકરણ યોગ્ય રીતે રૂપાંતરણ કરે તેવું ઇચ્છવું છે. આપણે `Millimeters` માટે `Meters` ને `Rhs` તરીકે `Add` નો અમલ કરી શકીએ છીએ, જે લિસ્ટિંગ 20-16 માં દર્શાવેલ છે.
-
-&lt;Listing number="20-16" file-name="src/lib.rs" caption="Implementing the `Add` trait on `Millimeters` to add `Millimeters` and `Meters`"&gt;
-```rust
+<p>આ કોડ સામાન્ય રીતે પરિચિત દેખાશે: એક trait જેમાં એક method અને સંકળાયેલ type છે. નવું ભાગ <code>Rhs=Self</code> છે: આ syntax ને default type parameters કહેવામાં આવે છે. <code>Rhs</code> generic type parameter (જે “right-hand side” માટે ટૂંકું નામ છે) એ <code>add</code> method માં <code>rhs</code> પરિમાણનો type વ્યાખ્યાયિત કરે છે. જો આપણે <code>Add</code> trait ના અમલીકરણ વખતે <code>Rhs</code> માટે કોઈ ચોક્કસ type નો ઉલ્લેખ ન કરીએ, તો <code>Rhs</code> નો type <code>Self</code> પર default થશે, જે એ type હશે જેના પર આપણે <code>Add</code> નો અમલ કરી રહ્યા છીએ.</p>
+<p>જ્યારે આપણે <code>Point</code> માટે <code>Add</code> અમલમાં મૂક્યું, ત્યારે આપણે <code>Rhs</code> માટે ડિફોલ્ટનો ઉપયોગ કર્યો કારણ કે આપણે બે <code>Point</code> ઇન્સ્ટન્સ ઉમેરવા માંગતા હતા. ચાલો એક એવું ઉદાહરણ જોઈએ જ્યાં આપણે <code>Add</code> ટ્રેઇટને અમલમાં મૂકીએ છીએ જ્યાં આપણે ડિફોલ્ટનો ઉપયોગ કરવાને બદલે <code>Rhs</code> પ્રકારને કસ્ટમાઇઝ કરવા માંગીએ છીએ.</p>
+<p>આપણી પાસે બે સ્ટ્રક્ચર્સ છે, <code>Millimeters</code> અને <code>Meters</code>, જે જુદા જુદા એકમોમાં મૂલ્યો ધરાવે છે. આ હાલના પ્રકારને બીજા સ્ટ્રક્ચરમાં પાતળું આવરણ આપવું એ ન્યૂટાઇપ પેટર્ન તરીકે ઓળખાય છે, જેને આપણે “Implementing External Traits with the Newtype Pattern” વિભાગમાં વધુ વિગતવાર વર્ણવવામાં આવ્યું છે. આપણે મિલીમીટરમાં મૂલ્યોને મીટરમાં મૂલ્યો સાથે ઉમેરવા માંગીએ છીએ અને <code>Add</code> નું અમલીકરણ યોગ્ય રીતે રૂપાંતરણ કરે તેવું ઇચ્છવું છે. આપણે <code>Millimeters</code> માટે <code>Meters</code> ને <code>Rhs</code> તરીકે <code>Add</code> નો અમલ કરી શકીએ છીએ, જે લિસ્ટિંગ 20-16 માં દર્શાવેલ છે.</p>
+<listing number="20-16" file-name="src/lib.rs" caption="Implementing the `Add` trait on `Millimeters` to add `Millimeters` and `Meters`">
 ```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-16/src/lib.rs}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-એકમોમાં `મિલીમીટર` અને `મીટર` ઉમેરવા માટે, આપણે `impl Add&lt;Meters&gt;` સ્પષ્ટ કરીએ છીએ જેથી `Rhs` પ્રકારના પરિમાણનું મૂલ્ય `Self` ની બદલે સેટ થાય.
-
-તમે બે મુખ્ય રીતે ડિફોલ્ટ પ્રકારના પરિમાણોનો ઉપયોગ કરશો:
-
-હાલના કોડને તોડ્યા વિના એક પ્રકારને વિસ્તારવા માટે,
-
-અને ચોક્કસ કિસ્સાઓમાં કસ્ટમાઇઝેશન કરવાની મંજૂરી આપવા માટે જેમાં મોટાભાગના userઓને જરૂર નહીં હોય.
-
-સ્ટાન્ડર્ડ લાયબ્રેરીનું `Add` ટ્રેઇટ બીજા હેતુનું ઉદાહરણ છે: સામાન્ય રીતે, તમે બે સમાન પ્રકારો ઉમેરશો, પરંતુ `Add` ટ્રેઇટ તમને તેની બહાર પણ કસ્ટમાઇઝ કરવાની ક્ષમતા પૂરી પાડે છે. `Add` ટ્રેઇટની વ્યાખ્યામાં ડિફોલ્ટ પ્રકાર પરિમાણનો ઉપયોગ કરવાથી તમારે મોટાભાગના સમય વધારાના પરિમાણને સ્પષ્ટ કરવાની જરૂર નથી રહેતી. બીજા શબ્દોમાં કહીએ તો, અમલીકરણનું થોડું બોઇલરપ્લેટ જરૂરી નથી, જેનાથી ટ્રેઇટનો ઉપયોગ કરવો સરળ
-
-બને છે. The first purpose is similar to the second but in reverse: If you want to add a type parameter to an existing trait, you can give it a default to allow extension of the functionality of the trait without breaking the existing implementation code. પહેલો હેતુ બીજા જેવો જ છે પરંતુ વિરુદ્ધ છે: જો તમે કોઈ હાલના ટ્રેઇટમાં પ્રકાર પરિમાણ ઉમેરવા માંગતા હો, તો તમે તેને ડિફોલ્ટ આપી શકો છો જેથી ટ્રેઇટની કાર્યક્ષમતાને હાલના અમલીકરણ કોડને તોડ્યા વિના વધારી શકાય.
-
-&lt;!-- Old headings. Do not remove or links may break. --&gt;
-### Disambiguating Between Identically Named Methods
-
-Rust માં એવું કશું નથી જે કોઈ trait માં બીજા trait ના વિધિ જેટલું જ નામ ધરાવતું વિધિ હોવા અટકાવે, ન તો Rust તમને એક જ type પર બંને traits ને અમલમાં મૂકતા અટકાવે છે. એ જ રીતે, type પર સીધું જ વિધિ અમલમાં મૂકવું પણ શક્ય છે જે traits ના વિધિઓ જેટલું નામ ધરાવે છે.
-
-સમાન નામનાં વિધિઓને બોલાવતી વખતે, તમારે Rust ને કયું વાપરવું છે તે જણાવવું પડશે. Listing 20-17 માં આપેલા કોડને ધ્યાનમાં લો જ્યાં આપણે બે traits, `Pilot` અને `Wizard`, વ્યાખ્યાયિત કર્યા છે, જેમાં બંને પાસે `fly` નામનું વિધિ છે. પછી આપણે `Human` type પર બંને traits ને અમલમાં મૂકીએ છીએ, જે પહેલાથી જ `fly` નામનું વિધિ ધરાવે છે. દરેક `fly` વિધિ કંઈક અલગ કરે છે.
-
-&lt;Listing number="20-17" file-name="src/main.rs" caption="Two traits are defined to have a `fly` method and are implemented on the `Human` type, and a `fly` method is implemented on `Human` directly."&gt;
-```rust
+```
+</listing>
+એકમોમાં `મિલીમીટર` અને `મીટર` ઉમેરવા માટે, આપણે `impl Add<meters>` સ્પષ્ટ કરીએ છીએ જેથી `Rhs` પ્રકારના પરિમાણનું મૂલ્ય `Self` ની બદલે સેટ થાય.
+<p>તમે બે મુખ્ય રીતે ડિફોલ્ટ પ્રકારના પરિમાણોનો ઉપયોગ કરશો:</p>
+<p>હાલના કોડને તોડ્યા વિના એક પ્રકારને વિસ્તારવા માટે,</p>
+<p>અને ચોક્કસ કિસ્સાઓમાં કસ્ટમાઇઝેશન કરવાની મંજૂરી આપવા માટે જેમાં મોટાભાગના userઓને જરૂર નહીં હોય.</p>
+<p>સ્ટાન્ડર્ડ લાયબ્રેરીનું <code>Add</code> ટ્રેઇટ બીજા હેતુનું ઉદાહરણ છે: સામાન્ય રીતે, તમે બે સમાન પ્રકારો ઉમેરશો, પરંતુ <code>Add</code> ટ્રેઇટ તમને તેની બહાર પણ કસ્ટમાઇઝ કરવાની ક્ષમતા પૂરી પાડે છે. <code>Add</code> ટ્રેઇટની વ્યાખ્યામાં ડિફોલ્ટ પ્રકાર પરિમાણનો ઉપયોગ કરવાથી તમારે મોટાભાગના સમય વધારાના પરિમાણને સ્પષ્ટ કરવાની જરૂર નથી રહેતી. બીજા શબ્દોમાં કહીએ તો, અમલીકરણનું થોડું બોઇલરપ્લેટ જરૂરી નથી, જેનાથી ટ્રેઇટનો ઉપયોગ કરવો સરળ</p>
+<p>બને છે. The first purpose is similar to the second but in reverse: If you want to add a type parameter to an existing trait, you can give it a default to allow extension of the functionality of the trait without breaking the existing implementation code. પહેલો હેતુ બીજા જેવો જ છે પરંતુ વિરુદ્ધ છે: જો તમે કોઈ હાલના ટ્રેઇટમાં પ્રકાર પરિમાણ ઉમેરવા માંગતા હો, તો તમે તેને ડિફોલ્ટ આપી શકો છો જેથી ટ્રેઇટની કાર્યક્ષમતાને હાલના અમલીકરણ કોડને તોડ્યા વિના વધારી શકાય.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="disambiguating-between-identically-named-methods"><a class="header" href="#disambiguating-between-identically-named-methods">Disambiguating Between Identically Named Methods</a></h3>
+<p>Rust માં એવું કશું નથી જે કોઈ trait માં બીજા trait ના વિધિ જેટલું જ નામ ધરાવતું વિધિ હોવા અટકાવે, ન તો Rust તમને એક જ type પર બંને traits ને અમલમાં મૂકતા અટકાવે છે. એ જ રીતે, type પર સીધું જ વિધિ અમલમાં મૂકવું પણ શક્ય છે જે traits ના વિધિઓ જેટલું નામ ધરાવે છે.</p>
+<p>સમાન નામનાં વિધિઓને બોલાવતી વખતે, તમારે Rust ને કયું વાપરવું છે તે જણાવવું પડશે. Listing 20-17 માં આપેલા કોડને ધ્યાનમાં લો જ્યાં આપણે બે traits, <code>Pilot</code> અને <code>Wizard</code>, વ્યાખ્યાયિત કર્યા છે, જેમાં બંને પાસે <code>fly</code> નામનું વિધિ છે. પછી આપણે <code>Human</code> type પર બંને traits ને અમલમાં મૂકીએ છીએ, જે પહેલાથી જ <code>fly</code> નામનું વિધિ ધરાવે છે. દરેક <code>fly</code> વિધિ કંઈક અલગ કરે છે.</p>
+<listing number="20-17" file-name="src/main.rs" caption="Two traits are defined to have a `fly` method and are implemented on the `Human` type, and a `fly` method is implemented on `Human` directly.">
 ```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-17/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 જ્યારે આપણે `Human` ના ઉદાહરણ પર `fly` ને બોલાવીએ છીએ, ત્યારે કમ્પાઇલર આપોઆપ જ તે પદ્ધતિને બોલાવે છે જે પ્રકાર પર સીધી રીતે અમલમાં મુકાયેલી છે, જે યાદી ૨૦-૧૮ માં દર્શાવેલ છે.
-
-&lt;Listing number="20-18" file-name="src/main.rs" caption="Calling `fly` on an instance of `Human`"&gt;
-```rust
+<listing number="20-18" file-name="src/main.rs" caption="Calling `fly` on an instance of `Human`">
 ```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-18/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 આ કોડ ચલાવવાથી `*હાથ જોરથી હલાવતા*` પ્રિન્ટ થશે, જે દર્શાવે છે કે Rust એ `Human` પર અમલમાં મૂકેલી `fly` પદ્ધતિને સીધી
-
-રીતે બોલાવી. `Pilot` અથવા `Wizard` લક્ષણોમાંથી `fly` પદ્ધતિઓને બોલાવવા માટે, આપણે વધુ સ્પષ્ટ વાક્યરચનાનો ઉપયોગ કરવો પડશે જે દર્શાવે છે કે આપણે કઈ `fly` પદ્ધતિનો ઉલ્લેખ કરીએ છીએ. સૂચિ 20-19 આ વાક્યરચનાનું નિદર્શન કરે છે.
-
-&lt;Listing number="20-19" file-name="src/main.rs" caption="Specifying which trait’s `fly` method we want to call"&gt;
-```rust
+<p>રીતે બોલાવી. <code>Pilot</code> અથવા <code>Wizard</code> લક્ષણોમાંથી <code>fly</code> પદ્ધતિઓને બોલાવવા માટે, આપણે વધુ સ્પષ્ટ વાક્યરચનાનો ઉપયોગ કરવો પડશે જે દર્શાવે છે કે આપણે કઈ <code>fly</code> પદ્ધતિનો ઉલ્લેખ કરીએ છીએ. સૂચિ 20-19 આ વાક્યરચનાનું નિદર્શન કરે છે.</p>
+<listing number="20-19" file-name="src/main.rs" caption="Specifying which trait’s `fly` method we want to call">
 ```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-19/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 વર્ગનામના ઉલ્લેખને પદ્ધતિના નામ પહેલાં સ્પષ્ટ કરવાથી Rust ને ખબર પડે છે કે કયું `fly` અમલીકરણ બોલાવું છે. આપણે `Human::fly(&amp;person)` પણ લખી શકીએ, જે Listing 20-19 માં વપરાયેલ `person.fly()` સમાન છે, પરંતુ જો આપણને ભેદ પાડવાની જરૂર ન હોય તો તે થોડું
-
-લાંબુ લાગે છે. આ કોડ ચલાવવાથી નીચે મુજબ છાપવામાં આવે છે:
-
-```console
-```console
-{{#include ../listings/ch20-advanced-features/listing-20-19/output.txt}}
+<p>લાંબુ લાગે છે. આ કોડ ચલાવવાથી નીચે મુજબ છાપવામાં આવે છે:</p>
+<pre><code class="language-console">{{#include ../listings/ch20-advanced-features/listing-20-19/output.txt}}
 </code></pre>
-<pre><code>કારણ કે `fly` પદ્ધતિ `self` પરિમાણ લે છે, જો આપણી પાસે બે પ્રકારો હોત જે એક trait અમલમાં મૂકે છે, તો Rust એ trait નું કયું અમલીકરણ વાપરવું તે `self` ના પ્રકારના આધારે નક્કી કરી શકતું હતું.
-
-જો કે, સંલગ્ન કાર્યો (functions) જે પદ્ધતિઓ નથી, તેઓ `self` પરિમાણ લેતા નથી. જ્યારે બહુવિધ પ્રકારો અથવા traits હોય છે જે સમાન કાર્ય નામ સાથે non-method કાર્યો વ્યાખ્યાયિત કરે છે, ત્યારે Rust ને હંમેશા ખબર હોતી નથી કે તમે કયા પ્રકારનો ઉલ્લેખ કરી રહ્યા છો સિવાય કે તમે સંપૂર્ણ રીતે લાયક વાક્યરચના (syntax) નો ઉપયોગ કરો. દાખલા તરીકે, યાદી 20-20 માં, અમે એક પ્રાણી આશ્રય માટે trait બનાવીએ છીએ જે તમામ બચ્ચાં કૂતરાંને Spot નામ આપવા માંગે છે. અમે `Animal` trait સાથે એક સંલગ્ન non-method કાર્ય `baby_name` બનાવીએ છીએ. `Animal` trait ને struct `Dog` માટે અમલમાં મૂકવામાં આવે છે, જેના પર અમે સીધું જ એક સંલગ્ન non-method કાર્ય `baby_name` પણ પ્રદાન કરીએ છીએ.
-
-&lt;Listing number="20-20" file-name="src/main.rs" caption="A trait with an associated function and a type with an associated function of the same name that also implements the trait"&gt;
-```rust
+<p>કારણ કે <code>fly</code> પદ્ધતિ <code>self</code> પરિમાણ લે છે, જો આપણી પાસે બે પ્રકારો હોત જે એક trait અમલમાં મૂકે છે, તો Rust એ trait નું કયું અમલીકરણ વાપરવું તે <code>self</code> ના પ્રકારના આધારે નક્કી કરી શકતું હતું.</p>
+<p>જો કે, સંલગ્ન કાર્યો (functions) જે પદ્ધતિઓ નથી, તેઓ <code>self</code> પરિમાણ લેતા નથી. જ્યારે બહુવિધ પ્રકારો અથવા traits હોય છે જે સમાન કાર્ય નામ સાથે non-method કાર્યો વ્યાખ્યાયિત કરે છે, ત્યારે Rust ને હંમેશા ખબર હોતી નથી કે તમે કયા પ્રકારનો ઉલ્લેખ કરી રહ્યા છો સિવાય કે તમે સંપૂર્ણ રીતે લાયક વાક્યરચના (syntax) નો ઉપયોગ કરો. દાખલા તરીકે, યાદી 20-20 માં, અમે એક પ્રાણી આશ્રય માટે trait બનાવીએ છીએ જે તમામ બચ્ચાં કૂતરાંને Spot નામ આપવા માંગે છે. અમે <code>Animal</code> trait સાથે એક સંલગ્ન non-method કાર્ય <code>baby_name</code> બનાવીએ છીએ. <code>Animal</code> trait ને struct <code>Dog</code> માટે અમલમાં મૂકવામાં આવે છે, જેના પર અમે સીધું જ એક સંલગ્ન non-method કાર્ય <code>baby_name</code> પણ પ્રદાન કરીએ છીએ.</p>
+<listing number="20-20" file-name="src/main.rs" caption="A trait with an associated function and a type with an associated function of the same name that also implements the trait">
 ```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-20/src/main.rs}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 અમે `Dog` પ્રકાર પર વ્યાખ્યાયિત થયેલ `baby_name` સાંકળ કાર્યમાં બધા કૂતરાઓને સ્પૉટ નામ આપવા માટે કોડનો અમલ કરીએ છીએ. `Dog` પ્રકાર પણ `Animal` લક્ષણનો અમલ કરે છે, જે તમામ પ્રાણીઓમાં રહેલા લક્ષણોનું વર્ણન કરે છે. નાના કૂતરાઓને બચ્ચા કહેવામાં આવે છે, અને તે `Animal` લક્ષણના `Dog` પરના અમલીકરણમાં વ્યક્ત થાય છે `baby_name` કાર્ય સાથે સંકળાયેલ છે.
-
-`main` માં, અમે `Dog::baby_name` કાર્યને બોલાવીએ છીએ, જે સીધું જ `Dog` પર વ્યાખ્યાયિત થયેલ સાંકળ કાર્યને બોલાવે છે. આ કોડ નીચે મુજબ છાપે છે:
-
-```console
-```console
-{{#include ../listings/ch20-advanced-features/listing-20-20/output.txt}}
+<p><code>main</code> માં, અમે <code>Dog::baby_name</code> કાર્યને બોલાવીએ છીએ, જે સીધું જ <code>Dog</code> પર વ્યાખ્યાયિત થયેલ સાંકળ કાર્યને બોલાવે છે. આ કોડ નીચે મુજબ છાપે છે:</p>
+<pre><code class="language-console">{{#include ../listings/ch20-advanced-features/listing-20-20/output.txt}}
 </code></pre>
-<pre><code>આ પરિણામ આપણને જોઈતું નથી. આપણે `Animal` ટ્રેઇટ પર અમલમાં મુકાયેલ `Dog` સાથે `baby_name` ફંક્શનને બોલાવવા માંગીએ છીએ, જેથી કોડ `A baby dog is called a puppy` પ્રિન્ટ કરે. લિસ્ટિંગ 20-19 માં આપણે જે ટ્રેઇટ નામ સ્પષ્ટ કરવાની પદ્ધતિનો ઉપયોગ કર્યો તે અહીં મદદરૂપ થતો નથી; જો આપણે `main` ને લિસ્ટિંગ 20-21 ના કોડમાં બદલીએ, તો આપણને કમ્પાઇલેશન એરર મળશે.
-
-&lt;Listing number="20-21" file-name="src/main.rs" caption="Attempting to call the `baby_name` function from the `Animal` trait, but Rust doesn’t know which implementation to use"&gt;
-```rust
+<p>આ પરિણામ આપણને જોઈતું નથી. આપણે <code>Animal</code> ટ્રેઇટ પર અમલમાં મુકાયેલ <code>Dog</code> સાથે <code>baby_name</code> ફંક્શનને બોલાવવા માંગીએ છીએ, જેથી કોડ <code>A baby dog is called a puppy</code> પ્રિન્ટ કરે. લિસ્ટિંગ 20-19 માં આપણે જે ટ્રેઇટ નામ સ્પષ્ટ કરવાની પદ્ધતિનો ઉપયોગ કર્યો તે અહીં મદદરૂપ થતો નથી; જો આપણે <code>main</code> ને લિસ્ટિંગ 20-21 ના કોડમાં બદલીએ, તો આપણને કમ્પાઇલેશન એરર મળશે.</p>
+<listing number="20-21" file-name="src/main.rs" caption="Attempting to call the `baby_name` function from the `Animal` trait, but Rust doesn’t know which implementation to use">
 ```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-21/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 કારણ કે `Animal::baby_name` માં `self` પરિમાણ નથી, અને અન્ય પ્રકારો પણ હોઈ શકે છે જે `Animal` લક્ષણને અમલમાં મૂકે છે, Rust નક્કી કરી શકતું નથી કે આપણે કયા `Animal::baby_name` અમલીકરણ જોઈએ છીએ. આપણને આ compiler ભૂલ મળશે:
-
-```console
-```console
-{{#include ../listings/ch20-advanced-features/listing-20-21/output.txt}}
+<pre><code class="language-console">{{#include ../listings/ch20-advanced-features/listing-20-21/output.txt}}
 </code></pre>
-<pre><code>અસ્પષ્ટતા દૂર કરવા અને Rustને જણાવવા માટે કે આપણે `Dog` માટે `Animal` નું અમલીકરણ વાપરવા માંગીએ છીએ, અન્ય કોઈ type માટે નહીં, તો આપણે સંપૂર્ણ રીતે લખાણનો ઉપયોગ કરવો જરૂરી છે. સૂચિ 20-22 દર્શાવે છે કે સંપૂર્ણ રીતે લખાણનો કેવી રીતે ઉપયોગ કરવો.
-
-&lt;Listing number="20-22" file-name="src/main.rs" caption="Using fully qualified syntax to specify that we want to call the `baby_name` function from the `Animal` trait as implemented on `Dog`"&gt;
-```rust
+<p>અસ્પષ્ટતા દૂર કરવા અને Rustને જણાવવા માટે કે આપણે <code>Dog</code> માટે <code>Animal</code> નું અમલીકરણ વાપરવા માંગીએ છીએ, અન્ય કોઈ type માટે નહીં, તો આપણે સંપૂર્ણ રીતે લખાણનો ઉપયોગ કરવો જરૂરી છે. સૂચિ 20-22 દર્શાવે છે કે સંપૂર્ણ રીતે લખાણનો કેવી રીતે ઉપયોગ કરવો.</p>
+<listing number="20-22" file-name="src/main.rs" caption="Using fully qualified syntax to specify that we want to call the `baby_name` function from the `Animal` trait as implemented on `Dog`">
 ```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-22/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 અમે Rust ને ખૂણાના કૌંસમાં એક પ્રકારનું નિદર્શન આપી રહ્યા છીએ, જે દર્શાવે છે કે અમે `Animal` ટ્રેઇટ પરથી `baby_name` પદ્ધતિને `Dog` દ્વારા અમલમાં મૂકવા માંગીએ છીએ, એવું કહીને કે અમે આ કાર્ય માટે `Dog` પ્રકારને `Animal` તરીકે ગણવા માંગીએ છીએ. આ કોડ હવે આપણને જે જોઈએ છે તે છાપશે:
-
-```console
-```console
-{{#include ../listings/ch20-advanced-features/listing-20-22/output.txt}}
+<pre><code class="language-console">{{#include ../listings/ch20-advanced-features/listing-20-22/output.txt}}
 </code></pre>
-<pre><code>સામાન્ય રીતે, સંપૂર્ણ નિશ્ચિત સિન્ટેક્સ આ પ્રમાણે વ્યાખ્યાયિત કરવામાં આવે છે:
-
-```rust
-```rust
-&lt;Type as Trait&gt;::function(receiver_if_method, next_arg, ...);
-</code></pre>
-<pre><code>સંબંધિત કાર્યો માટે જે પદ્ધતિઓ નથી, ત્યાં કોઈ `receiver` હોતું નથી: ત્યાં માત્ર અન્ય Argumentોની યાદી જ હોય છે. તમે સંપૂર્ણ રીતે લંબિત વાક્યરચનાનો ઉપયોગ દરેક જગ્યાએ કરી શકો છો જ્યાં તમે કાર્યો અથવા પદ્ધતિઓને બોલાવો છો. જો કે, તમને આ વાક્યરચનાના કોઈપણ ભાગને બાકાત રાખવાની મંજૂરી છે જે Rust પ્રોગ્રામમાં અન્ય માહિતીમાંથી જાણી શકે છે. તમારે માત્ર આ વધુ વિસ્તૃત વાક્યરચનાનો ઉપયોગ એવા કિસ્સાઓમાં કરવાની જરૂર છે જ્યાં બહુવિધ અમલીકરણો હોય છે જે સમાન નામનો ઉપયોગ કરે છે અને Rust ને ઓળખવામાં મદદની જરૂર પડે છે કે તમે કયું અમલીકરણ બોલાવવા માંગો છો.
-
-&lt;!-- Old headings. Do not remove or links may break. --&gt;
-### Using Supertraits
-
-ક્યારેક તમે એવા ટ્રેઇટ વ્યાખ્યા (trait definition) લખી શકો છો જે બીજા ટ્રેઇટ પર આધારિત હોય: પ્રથમ ટ્રેઇટને અમલમાં મૂકવા માટે, તમારે ઇચ્છવું જોઈએ કે તે પ્રકાર બીજો ટ્રેઇટ પણ અમલમાં મૂકે. તમે આ એટલા માટે કરશો જેથી તમારી ટ્રેઇટ વ્યાખ્યા બીજા ટ્રેઇટના સંલગ્ન વસ્તુઓનો ઉપયોગ કરી શકે. જે ટ્રેઇટ પર તમારી ટ્રેઇટ વ્યાખ્યા આધારિત છે તેને તમારા ટ્રેઇટનું સુપરટ્રેઇટ કહેવામાં આવે છે.
-
-ઉદાહરણ તરીકે, ચાલો કહીએ કે આપણે એક `OutlinePrint` ટ્રેઇટ બનાવવા માંગીએ છીએ જેમાં `outline_print` નામની પદ્ધતિ (method) હશે જે આપેલ મૂલ્યને ફોર્મેટ કરીને છાપશે જેથી તે તારાઓથી ઘેરાયેલું હોય. એટલે કે, જો આપણી પાસે `Point` સ્ટ્રક્ચુર હોય જે `Display` પ્રમાણભૂત લાઈબ્રેરી ટ્રેઇટને અમલમાં મૂકે છે અને પરિણામ `(x, y)` આવે છે, તો જ્યારે આપણે `outline_print` ને `Point` ઇન્સ્ટન્સ પર કૉલ કરીએ છીએ જેમાં `x` માટે `1` અને `y` માટે `3` હોય, તો તેણે નીચે મુજબ છાપવું જોઈએ:
-
-```text
-```text
-**********
+<p>સામાન્ય રીતે, સંપૂર્ણ નિશ્ચિત સિન્ટેક્સ આ પ્રમાણે વ્યાખ્યાયિત કરવામાં આવે છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>&lt;Type as Trait&gt;::function(receiver_if_method, next_arg, ...);
+<span class="boring">}</span></code></pre>
+<p>સંબંધિત કાર્યો માટે જે પદ્ધતિઓ નથી, ત્યાં કોઈ <code>receiver</code> હોતું નથી: ત્યાં માત્ર અન્ય Argumentોની યાદી જ હોય છે. તમે સંપૂર્ણ રીતે લંબિત વાક્યરચનાનો ઉપયોગ દરેક જગ્યાએ કરી શકો છો જ્યાં તમે કાર્યો અથવા પદ્ધતિઓને બોલાવો છો. જો કે, તમને આ વાક્યરચનાના કોઈપણ ભાગને બાકાત રાખવાની મંજૂરી છે જે Rust પ્રોગ્રામમાં અન્ય માહિતીમાંથી જાણી શકે છે. તમારે માત્ર આ વધુ વિસ્તૃત વાક્યરચનાનો ઉપયોગ એવા કિસ્સાઓમાં કરવાની જરૂર છે જ્યાં બહુવિધ અમલીકરણો હોય છે જે સમાન નામનો ઉપયોગ કરે છે અને Rust ને ઓળખવામાં મદદની જરૂર પડે છે કે તમે કયું અમલીકરણ બોલાવવા માંગો છો.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="using-supertraits"><a class="header" href="#using-supertraits">Using Supertraits</a></h3>
+<p>ક્યારેક તમે એવા ટ્રેઇટ વ્યાખ્યા (trait definition) લખી શકો છો જે બીજા ટ્રેઇટ પર આધારિત હોય: પ્રથમ ટ્રેઇટને અમલમાં મૂકવા માટે, તમારે ઇચ્છવું જોઈએ કે તે પ્રકાર બીજો ટ્રેઇટ પણ અમલમાં મૂકે. તમે આ એટલા માટે કરશો જેથી તમારી ટ્રેઇટ વ્યાખ્યા બીજા ટ્રેઇટના સંલગ્ન વસ્તુઓનો ઉપયોગ કરી શકે. જે ટ્રેઇટ પર તમારી ટ્રેઇટ વ્યાખ્યા આધારિત છે તેને તમારા ટ્રેઇટનું સુપરટ્રેઇટ કહેવામાં આવે છે.</p>
+<p>ઉદાહરણ તરીકે, ચાલો કહીએ કે આપણે એક <code>OutlinePrint</code> ટ્રેઇટ બનાવવા માંગીએ છીએ જેમાં <code>outline_print</code> નામની પદ્ધતિ (method) હશે જે આપેલ મૂલ્યને ફોર્મેટ કરીને છાપશે જેથી તે તારાઓથી ઘેરાયેલું હોય. એટલે કે, જો આપણી પાસે <code>Point</code> સ્ટ્રક્ચુર હોય જે <code>Display</code> પ્રમાણભૂત લાઈબ્રેરી ટ્રેઇટને અમલમાં મૂકે છે અને પરિણામ <code>(x, y)</code> આવે છે, તો જ્યારે આપણે <code>outline_print</code> ને <code>Point</code> ઇન્સ્ટન્સ પર કૉલ કરીએ છીએ જેમાં <code>x</code> માટે <code>1</code> અને <code>y</code> માટે <code>3</code> હોય, તો તેણે નીચે મુજબ છાપવું જોઈએ:</p>
+<pre><code class="language-text">**********
 *        *
 * (1, 3) *
 *        *
 **********
 </code></pre>
-<pre><code>`outline_print` પદ્ધતિના અમલીકરણમાં, આપણે `Display` લક્ષણની કાર્યક્ષમતાનો ઉપયોગ કરવા માંગીએ છીએ. તેથી, આપણે સ્પષ્ટ કરવું પડશે કે `OutlinePrint` લક્ષણ માત્ર એવા પ્રકારો માટે જ કામ કરશે જે `Display` પણ લાગુ કરે છે અને `OutlinePrint` ને જરૂરી કાર્યક્ષમતા પૂરી પાડે છે. આપણે લક્ષણ વ્યાખ્યામાં `OutlinePrint: Display` સ્પષ્ટ કરીને આ કરી શકીએ છીએ. આ તકનીક લક્ષણમાં લક્ષણ બંધ ઉમેરવા જેવું જ છે. સૂચિ 20-23 માં `OutlinePrint` લક્ષણનું એક અમલીકરણ દર્શાવવામાં આવ્યું છે.
-
-&lt;Listing number="20-23" file-name="src/main.rs" caption="Implementing the `OutlinePrint` trait that requires the functionality from `Display`"&gt;
-```rust
+<p><code>outline_print</code> પદ્ધતિના અમલીકરણમાં, આપણે <code>Display</code> લક્ષણની કાર્યક્ષમતાનો ઉપયોગ કરવા માંગીએ છીએ. તેથી, આપણે સ્પષ્ટ કરવું પડશે કે <code>OutlinePrint</code> લક્ષણ માત્ર એવા પ્રકારો માટે જ કામ કરશે જે <code>Display</code> પણ લાગુ કરે છે અને <code>OutlinePrint</code> ને જરૂરી કાર્યક્ષમતા પૂરી પાડે છે. આપણે લક્ષણ વ્યાખ્યામાં <code>OutlinePrint: Display</code> સ્પષ્ટ કરીને આ કરી શકીએ છીએ. આ તકનીક લક્ષણમાં લક્ષણ બંધ ઉમેરવા જેવું જ છે. સૂચિ 20-23 માં <code>OutlinePrint</code> લક્ષણનું એક અમલીકરણ દર્શાવવામાં આવ્યું છે.</p>
+<listing number="20-23" file-name="src/main.rs" caption="Implementing the `OutlinePrint` trait that requires the functionality from `Display`">
 ```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-23/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 `&amp;Self` આપણે ઉલ્લેખ કર્યો છે કે `OutlinePrint` ને `Display` લક્ષણની આવશ્યકતા છે, તેથી આપણે `to_string` કાર્યનો ઉપયોગ કરી શકીએ છીએ જે કોઈપણ પ્રકાર માટે આપમેળે અમલમાં મુકાય છે જે `Display` લાગુ કરે છે. જો આપણે કોલન ઉમેર્યા વિના અને લક્ષણના નામ પછી `Display` લક્ષણને સ્પષ્ટ કર્યા વિના `to_string` નો ઉપયોગ કરવાનો પ્રયાસ કરીએ, તો
-
-આપણને એક ભૂલ મળશે જેમાં જણાવવામાં આવ્યું હશે કે વર્તમાન અવકાશમાં `&amp;Self` પ્રકાર માટે `to_string` નામનું કોઈ કાર્ય મળ્યું નથી. Let’s see what happens when we try to implement `OutlinePrint` on a type that doesn’t implement `Display`, such as the `Point` struct:
-
-&lt;Listing file-name="src/main.rs"&gt;
-```rust
+<p>આપણને એક ભૂલ મળશે જેમાં જણાવવામાં આવ્યું હશે કે વર્તમાન અવકાશમાં <code>&amp;Self</code> પ્રકાર માટે <code>to_string</code> નામનું કોઈ કાર્ય મળ્યું નથી. Let’s see what happens when we try to implement <code>OutlinePrint</code> on a type that doesn’t implement <code>Display</code>, such as the <code>Point</code> struct:</p>
+<listing file-name="src/main.rs">
 ```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/no-listing-02-impl-outlineprint-for-point/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 આપણે એક ભૂલ સંદેશાપામે છીએ કે `Display` જરૂરી છે પણ અમલમાં નથી મૂકાયું:
-
-```console
-```console
-{{#include ../listings/ch20-advanced-features/no-listing-02-impl-outlineprint-for-point/output.txt}}
+<pre><code class="language-console">{{#include ../listings/ch20-advanced-features/no-listing-02-impl-outlineprint-for-point/output.txt}}
 </code></pre>
-<pre><code>આ સમસ્યા નિવારવા માટે, અમે `Point` પર `Display` અમલમાં મૂકીશું અને `OutlinePrint` ને જરૂરી શરત સંતોષીશું, આ પ્રમાણે:
-
-&lt;Listing file-name="src/main.rs"&gt;
-```rust
+<p>આ સમસ્યા નિવારવા માટે, અમે <code>Point</code> પર <code>Display</code> અમલમાં મૂકીશું અને <code>OutlinePrint</code> ને જરૂરી શરત સંતોષીશું, આ પ્રમાણે:</p>
+<listing file-name="src/main.rs">
 ```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/no-listing-03-impl-display-for-point/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
+```
+</listing>
 પછી, `OutlinePrint` ટ્રેઇટને `Point` પર અમલમાં મૂકવાથી તે સફળતાપૂર્વક કમ્પાઇલ થશે, અને અમે `outline_print` ને `Point` ઇન્સ્ટન્સ પર બોલાવી શકીશું જેથી તેને તારાની રૂપરેખામાં દર્શાવી શકાય.
-
-&lt;!-- Old headings. Do not remove or links may break. --&gt;
-### Implementing External Traits with the Newtype Pattern
-
-અગાઉના પ્રકરણ ૧૦ માં “એક પ્રકાર પર લક્ષણ અમલમાં મૂકવું” વિભાગમાં, અમે અনাথ નિયમનો ઉલ્લેખ કર્યો હતો કે જેમાં જણાવવામાં આવ્યું છે કે આપણને માત્ર ત્યારે જ કોઈ લક્ષણને એક પ્રકાર પર અમલમાં મૂકવાની મંજૂરી છે જો લક્ષણ અથવા પ્રકાર, અથવા બંને, અમારી ક્રેટ સ્થાનિક હોય. ન્યૂટાઇપ પેટર્નનો ઉપયોગ કરીને આ નિયંત્રણને ટાળવું શક્ય છે, જેમાં એક ટ્યુપલ સ્ટ્રક્ચર બનાવવાનો સમાવેશ થાય છે. (અમે પ્રકરણ ૫ માં “ટ્યુપલ સ્ટ્રક્ચર્સ સાથે વિવિધ પ્રકારો બનાવવું” વિભાગમાં ટ્યુપલ સ્ટ્રક્ચર્સ વિશે વાત કરી હતી.) ટ્યુપલ સ્ટ્રક્ચરમાં એક ક્ષેત્ર હશે અને જે પ્રકાર માટે અમે લક્ષણ અમલમાં મૂકવા માંગીએ છીએ તેના માટે પાતળું આવરણ તરીકે કામ કરશે. પછી, આવરણ પ્રકાર અમારી ક્રેટ સ્થાનિક હોય છે, અને અમે આવરણ પર લક્ષણ અમલમાં મૂકી શકીએ છીએ. ન્યૂટાઇપ એ એક શબ્દ છે જે હેસ્કેલ પ્રોગ્રામિંગ ભાષામાંથી ઉદ્ભવ્યો છે. આ પેટર્નનો ઉપયોગ કરવાથી કોઈ રનટાઈમ પ્રદર્શન દંડ નથી, અને કમ્પાઇલ સમયે આવરણ પ્રકાર દૂર થઈ જાય છે.
-
-એક ઉદાહરણ તરીકે, ચાલો આપણે `Vec&lt;T&gt;` પર `Display` અમલમાં મૂકવા માંગીએ છીએ, જે અનાથ નિયમ (orphan rule) આપણને સીધું કરવાની મંજૂરી આપતો નથી, કારણ કે `Display` ટ્રેઇટ અને `Vec&lt;T&gt;` પ્રકાર અમારી ક્રેટની બહાર વ્યાખ્યાયિત થયેલ છે. આપણે એક `Wrapper` સ્ટ્રક્ચર બનાવી શકીએ છીએ જે `Vec&lt;T&gt;` ની ઇન્સ્ટન્સ ધરાવે છે; પછી, આપણે `Wrapper` પર `Display` અમલમાં મૂકી શકીએ છીએ અને `Vec&lt;T&gt;` મૂલ્યનો ઉપયોગ કરી શકીએ છીએ, જેમ કે લિસ્ટિંગ 20-24 માં દર્શાવેલ છે.
-
-&lt;Listing number="20-24" file-name="src/main.rs" caption="Creating a `Wrapper` type around `Vec&lt;String&gt;` to implement `Display`"&gt;
-```rust
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="implementing-external-traits-with-the-newtype-pattern"><a class="header" href="#implementing-external-traits-with-the-newtype-pattern">Implementing External Traits with the Newtype Pattern</a></h3>
+<p>અગાઉના પ્રકરણ ૧૦ માં “એક પ્રકાર પર લક્ષણ અમલમાં મૂકવું” વિભાગમાં, અમે અনাথ નિયમનો ઉલ્લેખ કર્યો હતો કે જેમાં જણાવવામાં આવ્યું છે કે આપણને માત્ર ત્યારે જ કોઈ લક્ષણને એક પ્રકાર પર અમલમાં મૂકવાની મંજૂરી છે જો લક્ષણ અથવા પ્રકાર, અથવા બંને, અમારી ક્રેટ સ્થાનિક હોય. ન્યૂટાઇપ પેટર્નનો ઉપયોગ કરીને આ નિયંત્રણને ટાળવું શક્ય છે, જેમાં એક ટ્યુપલ સ્ટ્રક્ચર બનાવવાનો સમાવેશ થાય છે. (અમે પ્રકરણ ૫ માં “ટ્યુપલ સ્ટ્રક્ચર્સ સાથે વિવિધ પ્રકારો બનાવવું” વિભાગમાં ટ્યુપલ સ્ટ્રક્ચર્સ વિશે વાત કરી હતી.) ટ્યુપલ સ્ટ્રક્ચરમાં એક ક્ષેત્ર હશે અને જે પ્રકાર માટે અમે લક્ષણ અમલમાં મૂકવા માંગીએ છીએ તેના માટે પાતળું આવરણ તરીકે કામ કરશે. પછી, આવરણ પ્રકાર અમારી ક્રેટ સ્થાનિક હોય છે, અને અમે આવરણ પર લક્ષણ અમલમાં મૂકી શકીએ છીએ. ન્યૂટાઇપ એ એક શબ્દ છે જે હેસ્કેલ પ્રોગ્રામિંગ ભાષામાંથી ઉદ્ભવ્યો છે. આ પેટર્નનો ઉપયોગ કરવાથી કોઈ રનટાઈમ પ્રદર્શન દંડ નથી, અને કમ્પાઇલ સમયે આવરણ પ્રકાર દૂર થઈ જાય છે.</p>
+<p>એક ઉદાહરણ તરીકે, ચાલો આપણે <code>Vec&lt;T&gt;</code> પર <code>Display</code> અમલમાં મૂકવા માંગીએ છીએ, જે અનાથ નિયમ (orphan rule) આપણને સીધું કરવાની મંજૂરી આપતો નથી, કારણ કે <code>Display</code> ટ્રેઇટ અને <code>Vec&lt;T&gt;</code> પ્રકાર અમારી ક્રેટની બહાર વ્યાખ્યાયિત થયેલ છે. આપણે એક <code>Wrapper</code> સ્ટ્રક્ચર બનાવી શકીએ છીએ જે <code>Vec&lt;T&gt;</code> ની ઇન્સ્ટન્સ ધરાવે છે; પછી, આપણે <code>Wrapper</code> પર <code>Display</code> અમલમાં મૂકી શકીએ છીએ અને <code>Vec&lt;T&gt;</code> મૂલ્યનો ઉપયોગ કરી શકીએ છીએ, જેમ કે લિસ્ટિંગ 20-24 માં દર્શાવેલ છે.</p>
+<listing number="20-24" file-name="src/main.rs" caption="Creating a `Wrapper` type around `Vec&lt;String&gt;` to implement `Display`">
 ```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-24/src/main.rs}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-`Display` ની અમલીકરણ પદ્ધતિ `self.0` નો ઉપયોગ કરે છે જેથી અંદરના `Vec&lt;T&gt;` ને સુલભ બનાવી શકાય, કારણ કે `Wrapper` એક ટ્યૂપ struct છે અને `Vec&lt;T&gt;` એ ટ્યૂપમાં ઇન્ડેક્સ 0 પર રહેલો ઘટક છે. ત્યારબાદ, આપણે `Wrapper` પર `Display`
-
-trait ની કાર્યક્ષમતાનો ઉપયોગ કરી શકીએ છીએ. આ પદ્ધતિનો ગેરલાભ એ છે કે `Wrapper` એક નવો પ્રકાર છે, તેથી તે જે મૂલ્ય ધરાવે છે તેની પદ્ધતિઓ ધરાવતો નથી. આપણે `Wrapper` પર `Vec&lt;T&gt;` ની બધી પદ્ધતિઓ સીધી રીતે અમલમાં મૂકવી પડે, જેથી તે પદ્ધતિઓ `self.0` ને સોંપે, જેનાથી આપણને `Wrapper` ને બરાબર `Vec&lt;T&gt;` જેવું જ ગણી શકાય. જો આપણે ઈચ્છીએ કે નવા પ્રકારમાં અંદરના પ્રકારની દરેક પદ્ધતિ હોય, તો `Wrapper` પર `Deref` trait નો અમલ કરવો એ એક ઉકેલ હોઈ શકે (આપણે પ્રકરણ 15 માં “સ્માર્ટ પોઇન્ટર્સને નિયમિત રેફરન્સ જેમ ગણવા” વિભાગમાં `Deref` trait નો અમલ વિશે ચર્ચા કરી હતી). જો આપણે `Wrapper` પ્રકારને અંદરના પ્રકારની બધી પદ્ધતિઓ ધરાવતો ન હોય એવું ઈચ્છીએ—ઉદાહરણ તરીકે, `Wrapper` પ્રકારનું વર્તન મર્યાદિત કરવા માટે—તો આપણે માત્ર જોઈતી પદ્ધતિઓને જાતે જ અમલમાં મૂકવી પડે.
-
-આ નવું પ્રકારની પેટર્ન અન્ય સ્થિતિઓમાં પણ ઉપયોગી છે, જ્યાં લક્ષણો (traits) સામેલ ન હોય. ચાલો ધ્યાન બદલીએ અને Rust ના પ્રકાર સિસ્ટમ સાથે ક્રિયાપ્રતિક્રિયા કરવાની કેટલીક અદ્યતન રીતો જોઈએ.
-
-</code></pre>
-</string></self::item>
+```
+</listing>
+`Display` ની અમલીકરણ પદ્ધતિ `self.0` નો ઉપયોગ કરે છે જેથી અંદરના `Vec<t>` ને સુલભ બનાવી શકાય, કારણ કે `Wrapper` એક ટ્યૂપ struct છે અને `Vec<t>` એ ટ્યૂપમાં ઇન્ડેક્સ 0 પર રહેલો ઘટક છે. ત્યારબાદ, આપણે `Wrapper` પર `Display`
+<p>trait ની કાર્યક્ષમતાનો ઉપયોગ કરી શકીએ છીએ. આ પદ્ધતિનો ગેરલાભ એ છે કે <code>Wrapper</code> એક નવો પ્રકાર છે, તેથી તે જે મૂલ્ય ધરાવે છે તેની પદ્ધતિઓ ધરાવતો નથી. આપણે <code>Wrapper</code> પર <code>Vec&lt;T&gt;</code> ની બધી પદ્ધતિઓ સીધી રીતે અમલમાં મૂકવી પડે, જેથી તે પદ્ધતિઓ <code>self.0</code> ને સોંપે, જેનાથી આપણને <code>Wrapper</code> ને બરાબર <code>Vec&lt;T&gt;</code> જેવું જ ગણી શકાય. જો આપણે ઈચ્છીએ કે નવા પ્રકારમાં અંદરના પ્રકારની દરેક પદ્ધતિ હોય, તો <code>Wrapper</code> પર <code>Deref</code> trait નો અમલ કરવો એ એક ઉકેલ હોઈ શકે (આપણે પ્રકરણ 15 માં “સ્માર્ટ પોઇન્ટર્સને નિયમિત રેફરન્સ જેમ ગણવા” વિભાગમાં <code>Deref</code> trait નો અમલ વિશે ચર્ચા કરી હતી). જો આપણે <code>Wrapper</code> પ્રકારને અંદરના પ્રકારની બધી પદ્ધતિઓ ધરાવતો ન હોય એવું ઈચ્છીએ—ઉદાહરણ તરીકે, <code>Wrapper</code> પ્રકારનું વર્તન મર્યાદિત કરવા માટે—તો આપણે માત્ર જોઈતી પદ્ધતિઓને જાતે જ અમલમાં મૂકવી પડે.</p>
+<p>આ નવું પ્રકારની પેટર્ન અન્ય સ્થિતિઓમાં પણ ઉપયોગી છે, જ્યાં લક્ષણો (traits) સામેલ ન હોય. ચાલો ધ્યાન બદલીએ અને Rust ના પ્રકાર સિસ્ટમ સાથે ક્રિયાપ્રતિક્રિયા કરવાની કેટલીક અદ્યતન રીતો જોઈએ.</p>
+</t></t></meters></string></self::item>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

@@ -30,7 +30,7 @@ $ xcode-select --install
 Linux userઓ સામાન્ય રીતે તેમના વિતરણની દસ્તાવેજીકરણ અનુસાર GCC અથવા Clang સ્થાપિત કરે છે. ઉદાહરણ તરીકે, જો તમે Ubuntu વાપરતા હોવ, તો તમે `build-essential` પેકેજ સ્થાપિત કરી શકો છો.
 
 ### Installing `rustup` on Windows
-Windows પર, https://www.rust-lang.org/tools/install ની મુલાકાત લો અને Rust સ્થાપિત કરવા માટેની સૂચનાઓ અનુસરો. સ્થાપન પ્રક્રિયા દરમિયાન, તમને Visual Studio સ્થાપિત કરવાનું કહેવામાં આવશે. આ એક લિંકર અને પ્રોગ્રામ્સ કમ્પાઇલ કરવા માટે જરૂરી મૂળ લાઇબ્રેરીઓ પૂરી પાડે છે. જો તમને આ પગલામાં વધુ મદદની જરૂર હોય, તો https://rust-lang.github.io/rustup/installation/windows-msvc.html જુઓ.
+Windows પર, [https://www.rust-lang.org/tools/install][install] ની મુલાકાત લો અને Rust સ્થાપિત કરવા માટેની સૂચનાઓ અનુસરો. સ્થાપન પ્રક્રિયા દરમિયાન, તમને Visual Studio સ્થાપિત કરવાનું કહેવામાં આવશે. આ એક લિંકર અને પ્રોગ્રામ્સ કમ્પાઇલ કરવા માટે જરૂરી મૂળ લાઇબ્રેરીઓ પૂરી પાડે છે. જો તમને આ પગલામાં વધુ મદદની જરૂર હોય, તો https://rust-lang.github.io/rustup/installation/windows-msvc.html જુઓ.
 
 આ પુસ્તકના બાકીના ભાગમાં એવા આદેશોનો ઉપયોગ કરવામાં આવશે જે cmd.exe અને PowerShell બંનેમાં કાર્ય કરે છે. જો કોઈ ચોક્કસ તફાવત હોય, તો અમે કયો ઉપયોગ કરવો તે સમજાવીશું.
 
@@ -93,3 +93,10 @@ $ cargo add rand@0.8.5 trpl@0.2.0
 ```
 આ પેકેજો માટે ડાઉનલોડ્સ કેશ થશે, જેથી તમારે ભવિષ્યમાં તેમને ફરીથી ડાઉનલોડ કરવાની જરૂર રહેશે નહીં. એકવાર તમે આ આદેશ ચલાવી લો, પછી તમારે `get-dependencies` ફોલ્ડર રાખવાની જરૂર નથી. જો તમે આ આદેશ ચલાવ્યો હોય, તો પુસ્તકના બાકીના ભાગમાં બધા `cargo` આદેશો સાથે `--offline` ધ્વજ વાપરી શકો છો, જેથી નેટવર્કનો ઉપયોગ કરવાને બદલે આ કેશ્ડ વર્ઝનનો ઉપયોગ કરી શકાય.
 
+
+
+[otherinstall]: https://forge.rust-lang.org/infra/other-installation-methods.html
+[install]: [https://www.rust-lang.org/tools/install][install]
+[msvc]: [https://rust-lang.github.io/rustup/installation/windows-msvc.html][msvc]
+[community]: https://www.rust-lang.org/community
+[tools]: https://www.rust-lang.org/tools

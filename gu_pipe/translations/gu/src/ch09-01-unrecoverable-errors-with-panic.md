@@ -81,3 +81,6 @@ note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose bac
 
 આપણે `panic!` અને ક્યારે તેનો ઉપયોગ કરવો જોઈએ અને ન કરવો જોઈએ તે અંગેની ચર્ચા “શું `panic!` કરવું કે નહીં?” વિભાગમાં પાછળથી કરીશું. ત્યારબાદ, આપણે `Result` નો ઉપયોગ કરીને ભૂલમાંથી કેવી રીતે પુનઃપ્રાપ્ત કરવું તે જોઈશું.
 
+
+
+[to-panic-or-not-to-panic]: ch09-03-to-panic-or-not-to-panic.html#to-panic-or-not-to-panic

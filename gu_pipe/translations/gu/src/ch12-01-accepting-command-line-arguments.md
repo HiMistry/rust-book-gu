@@ -59,3 +59,7 @@ $ cargo run -- searchstring example-filename.txt
 ```
 મહાન, કાર્યક્રમ ચાલી રહ્યો છે! આપણને જરૂરી Argumentોના મૂલ્યો યોગ્ય ચલણમાં સાચવવામાં આવી રહ્યા છે. પછીથી અમે અમુક સંભવિત ભૂલવાળી પરિસ્થિતિઓને પહોંચી વળવા માટે ભૂલ વ્યવસ્થાપન ઉમેરીશું, જેમ કે જ્યારે user કોઈ Argumentો પ્રદાન ન કરે; હાલમાં, અમે તે પરિસ્થિતિને અવગણીશું અને ફાઈલ-વાંચન ક્ષમતાઓ ઉમેરવાનું કાર્ય કરીશું.
 
+
+
+[ch13]: ch13-00-functional-features.html
+[ch7-idiomatic-use]: ch07-04-bringing-paths-into-scope-with-the-use-keyword.html#creating-idiomatic-use-paths

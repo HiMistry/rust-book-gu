@@ -14,18 +14,16 @@ Rustમાં અસિંક્રોનસ પ્રોગ્રામિં�
 
 ## Our First Async Program
 
-આ પ્રકરણનો મુખ્ય હેતુ async શીખવા પર કેન્દ્રિત રાખવાનો છે, ઇકોસિસ્ટમના ભાગો સાથે સંઘર્ષ કરવાને બદલે, અમે `trpl` crate બનાવ્યું છે ( `trpl`  એ “The Rust Programming Language” નું ટૂંકું રૂપ છે). તે જરૂરી તમામ પ્રકારો, traits અને functions ને ફરીથી નિકાસ કરે છે, મુખ્યત્વે `futures` અને `tokio` crates માંથી. `futures` crate એ async કોડ માટે Rust પ્રયોગનું સત્તાવાર કેન્દ્ર છે, અને તેમાં જ `Future` trait મૂળરૂપે ડિઝાઇન કરવામાં આવ્યું હતું. Tokio આજે Rust માં સૌથી વધુ વપરાતું async runtime છે, વિશેષ કરીને વેબ એપ્લિકેશન્સ માટે. અન્ય ઘણા સારા runtimes પણ ઉપલબ્ધ છે, જે તમારા હેતુઓ માટે વધુ યોગ્ય હોઈ શકે છે. અમે `trpl` માટે `tokio` crate નો ઉપયોગ કરીએ છીએ કારણ કે તે સારી રીતે ચકાસાયેલ છે અને વ્યાપકપણે વપરાય છે.
+આ પ્રકરણનો મુખ્ય હેતુ async શીખવા પર કેન્દ્રિત રાખવાનો છે, ઇકોસિસ્ટમના ભાગો સાથે સંઘર્ષ કરવાને બદલે, અમે `trpl` crate બનાવ્યું છે ( `trpl`  એ “The Rust Programming Language” નું ટૂંકું રૂપ છે). તે જરૂરી તમામ પ્રકારો, traits અને functions ને ફરીથી નિકાસ કરે છે, મુખ્યત્વે [`futures`][futures-crate] અને `tokio` crates માંથી. `futures` crate એ async કોડ માટે Rust પ્રયોગનું સત્તાવાર કેન્દ્ર છે, અને તેમાં જ `Future` trait મૂળરૂપે ડિઝાઇન કરવામાં આવ્યું હતું. Tokio આજે Rust માં સૌથી વધુ વપરાતું async runtime છે, વિશેષ કરીને વેબ એપ્લિકેશન્સ માટે. અન્ય ઘણા સારા runtimes પણ ઉપલબ્ધ છે, જે તમારા હેતુઓ માટે વધુ યોગ્ય હોઈ શકે છે. અમે `trpl` માટે `tokio` crate નો ઉપયોગ કરીએ છીએ કારણ કે તે સારી રીતે ચકાસાયેલ છે અને વ્યાપકપણે વપરાય છે.
 
 કેટલીકવાર, `trpl` મૂળ API ને પણ નામ આપે છે અથવા તેને આવરણ આપે છે જેથી તમે આ પ્રકરણ સાથે સંબંધિત વિગતો પર ધ્યાન કેન્દ્રિત કરી શકો. જો તમારે જાણવું હોય કે ક્રેટ શું કરે છે, તો અમે તેના સ્રોત કોડ તપાસવાની ભલામણ કરીએ છીએ. તમે જોઈ શકશો કે દરેક પુનઃ-નિકાસ કયા ક્રેટમાંથી આવે છે, અને અમે વિસ્તૃત ટિપ્પણીઓ છોડી દીધી છે જે સમજાવે છે કે ક્રેટ
 
 શું કરે છે. Create a new binary project named `hello-async` and add the `trpl` crate as a dependency: `hello-async` નામની નવી બાઈનરી પ્રોજેક્ટ બનાવો અને `trpl` ક્રેટને એક નિર્ભરતા તરીકે ઉમેરો:
 
 ```console
-```console
 $ cargo new hello-async
 $ cd hello-async
 $ cargo add trpl
-```
 ```
 હવે આપણે `trpl` દ્વારા પૂરા પાડવામાં આવેલ વિવિધ ભાગોનો ઉપયોગ કરીને આપણી પ્રથમ async કાર્યક્રમ લખી શકીએ છીએ. આપણે એક નાનું કમાન્ડ લાઇન સાધન બનાવીશું જે બે વેબ પૃષ્ઠો મેળવશે, દરેકમાંથી `<title>` તત્વ ખેંચશે અને જે પૃષ્ઠ તે સમગ્ર પ્રક્રિયાને પહેલા પૂર્ણ કરે છે તેના શીર્ષકને છાપશે.
 
@@ -35,9 +33,7 @@ $ cargo add trpl
 
 <Listing number="17-1" file-name="src/main.rs" caption="Defining an async function to get the title element from an HTML page">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-01/src/main.rs:all}}
-```
 ```
 </Listing>
 સૌ પ્રથમ, આપણે `page_title` નામનું વિધેય વ્યાખ્યાયિત કરીએ છીએ અને તેને `async` કીવર્ડથી નિશાનીત કરીએ છીએ. ત્યારબાદ, આપણે `trpl::get` વિધેયનો ઉપયોગ કરીએ છીએ જે પાસ થયેલ URL પરથી માહિતી મેળવે છે અને પ્રતિભાવ (response) માટે અપેક્ષા રાખવા માટે `await` કીવર્ડનો ઉપયોગ કરીએ છીએ. `response` નો લખાણ મેળવવા માટે, આપણે તેના `text` પદ્ધતિને બોલાવીએ છીએ અને ફરીથી `await` કીવર્ડ સાથે તેની રાહ જોઈએ છીએ. આ બંને પગલાં અસિંક્રોનસ (asynchronous) છે. `get` વિધેય માટે, આપણે સર્વર દ્વારા પ્રથમ પ્રતિભાવ ભાગ મોકલવાની રાહ જોવી પડે છે, જેમાં HTTP હેડર્સ, કૂકીઝ વગેરે સમાવિષ્ટ હોઈ શકે છે અને તે પ્રતિભાવ શરીરથી અલગથી પહોંચાડવામાં આવી શકે છે. વિશેષ કરીને જો શરીર ખૂબ મોટું હોય, તો તેના સંપૂર્ણ ભાગને મળવામાં થોડો સમય લાગી શકે છે. આપણે સમગ્ર પ્રતિભાવ આવવાની રાહ જોવી પડે છે, તેથી `text` પદ્ધતિ પણ async છે.
@@ -52,9 +48,7 @@ $ cargo add trpl
 
 <Listing number="17-2" file-name="src/main.rs" caption="Chaining with the `await` keyword">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-02/src/main.rs:chaining}}
-```
 ```
 </Listing>
 એથી, આપણે આપણું પ્રથમ async ફંક્શન સફળતાપૂર્વક લખ્યું છે! `main` માં તેને બોલાવવા માટે થોડો કોડ ઉમેરતા પહેલાં, ચાલો આપણે જે લખ્યું છે અને તેનો અર્થ શું છે
@@ -64,9 +58,7 @@ $ cargo add trpl
 આમ, `async fn` લખવું એ વળતર પ્રકારનું future પાછું આપતા ફંક્શન લખવા સમાન છે. કમ્પાઇલર માટે, લિસ્ટિંગ 17-1 માં `async fn page_title` જેવી ફંક્શન વ્યાખ્યા એ બિન-async ફંક્શનને વ્યાખ્યાયિત કરવા સમાન છે:
 
 ```rust
-```rust
 # extern crate trpl; // required for mdbook test
-```
 ```
 use std::future::Future;
 use trpl::Html;
@@ -100,9 +92,7 @@ fn page_title(url: &str) -> impl Future<Output = Option<String>> {
 
 <Listing number="17-3" file-name="src/main.rs" caption="Calling the `page_title` function from `main` with a user-supplied argument">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-03/src/main.rs:main}}
-```
 ```
 </Listing>
 આપણે “આદેશ વાક્ય Argumentો સ્વીકારવા” વિભાગમાં પ્રકરણ ૧૨ માં વપરાયેલી જ રીત અનુસરીશું. પછી આપણે URL Argumentને `page_title` ને પસાર કરીશું અને પરિણામની રાહ જોઈશું. ભવિષ્ય દ્વારા ઉત્પાદિત મૂલ્ય `Option<String>` હોવાથી, આપણે એક `match` અભિવ્યક્તિનો ઉપયોગ કરીને અલગ-અલગ સંદેશાઓ છાપીએ છીએ કે જેથી પૃષ્ઠમાં `<title>` હતું કે નહીં તે ધ્યાનમાં લેવામાં આવે.
@@ -115,28 +105,24 @@ cargo build
 copy just the compiler error
 -->
 ```text
-```text
 error[E0752]: `main` function is not allowed to be `async`
  --> src/main.rs:6:1
   |
 6 | async fn main() {
   | ^^^^^^^^^^^^^^^ `main` function is not allowed to be `async`
 ```
-```
 કારણ કે `main` ને `async` તરીકે નિશ્ચિત કરી શકાતું નથી કારણ કે `main` ને `async` તરીકે નિશ્ચિત કરી શકાતું નથી એનું કારણ એ છે કે asynchronous કોડને runtime ની જરૂર પડે છે: એક Rust crate જે asynchronous કોડ ચલાવવાની વિગતોનું સંચાલન કરે છે. એક કાર્યક્રમનો `main` ફંક્શન runtime ને પ્રારંભ કરી શકે છે, પરંતુ તે પોતે runtime નથી. (આ બાબત શા માટે એવી છે એ વિશે થોડીવારમાં આપણે વધુ જોઈશું.) દરેક Rust કાર્યક્રમ જે asynchronous કોડ ચલાવે છે તેમાં ઓછામાં ઓછી એક જગ્યાએ runtime સેટઅપ
 
 હોય છે જે futures ને ચલાવે છે. મોટાભાગની ભાષાઓ જે async ને સમર્થન આપે છે, તે runtime સાથે bundle કરે છે, પરંતુ Rust નથી કરતું. તેના બદલે, ઘણાં વિવિધ asynchronous runtimes ઉપલબ્ધ છે, જેમાં દરેક અલગ-અલગ trade-offs કરે છે જે તે લક્ષ્ય બનાવે છે તે ઉપયોગ કેસ માટે યોગ્ય હોય છે. ઉદાહરણ તરીકે, ઘણા CPU કોરો અને મોટી માત્રામાં RAM ધરાવતા હાઇ-થ્રુપુટ વેબ સર્વરની જરૂરિયાતો એક જ કોર, નાની માત્રામાં RAM અને કોઈ heap allocation ક્ષમતા વગરના microcontroller કરતાં ઘણી અલગ હોય છે. તે runtimes પ્રદાન કરતા crates ઘણીવાર સામાન્ય કાર્યક્ષમતાના async વર્ઝન પણ પૂરા પાડે છે જેમ કે file અથવા network I/O.
 
-અહીં, અને આ પ્રકરણના બાકીના ભાગમાં, આપણે `trpl` ક્રેટમાંથી `block_on` ફંક્શનનો ઉપયોગ કરીશું, જે એક ભવિષ્ય (future) ને Argument તરીકે લે છે અને વર્તમાન થ્રેડને જ્યાં સુધી આ ભવિષ્ય પૂર્ણ ન થાય ત્યાં સુધી અવરોધિત કરે છે. પડછાયામાં, `block_on` ને બોલાવવાથી `tokio` ક્રેટનો ઉપયોગ કરીને રનટાઇમ સેટઅપ થાય છે, જે ભવિષ્ય ચલાવવા માટે વપરાય છે ( `trpl` ક્રેટનું `block_on` વર્તન અન્ય રનટાઇમ ક્રેટ્સના `block_on` ફંક્શન્સ જેવા જ હોય છે). એકવાર ભવિષ્ય પૂર્ણ થઈ જાય પછી, `block_on` ભવિષ્ય દ્વારા ઉત્પાદિત થયેલ મૂલ્ય પરત કરે છે.
+અહીં, અને આ પ્રકરણના બાકીના ભાગમાં, આપણે `trpl` ક્રેટમાંથી `block_on` ફંક્શનનો ઉપયોગ કરીશું, જે એક ભવિષ્ય (future) ને Argument તરીકે લે છે અને વર્તમાન થ્રેડને જ્યાં સુધી આ ભવિષ્ય પૂર્ણ ન થાય ત્યાં સુધી અવરોધિત કરે છે. પડછાયામાં, `block_on` ને બોલાવવાથી [`tokio`][tokio] ક્રેટનો ઉપયોગ કરીને રનટાઇમ સેટઅપ થાય છે, જે ભવિષ્ય ચલાવવા માટે વપરાય છે ( `trpl` ક્રેટનું `block_on` વર્તન અન્ય રનટાઇમ ક્રેટ્સના `block_on` ફંક્શન્સ જેવા જ હોય છે). એકવાર ભવિષ્ય પૂર્ણ થઈ જાય પછી, `block_on` ભવિષ્ય દ્વારા ઉત્પાદિત થયેલ મૂલ્ય પરત કરે છે.
 
 અમે `page_title` દ્વારા પરત કરવામાં આવેલું ભવિષ્ય સીધું જ `block_on` ને આપી શકીએ છીએ અને, એકવાર તે પૂર્ણ થાય પછી, અમે પરિણામી `Option<String>` સાથે મેળવી શકીએ છીએ જે રીતે અમે સૂચિ 17-3 માં કરવાનો પ્રયાસ કર્યો હતો. જો કે, પ્રકરણના મોટાભાગનાં ઉદાહરણોમાં (અને વાસ્તવિક દુનિયામાં મોટાભાગનો asynchronous કોડ), અમે માત્ર એક જ asynchronous ફંક્શન કૉલ કરતાં વધુ કરીશું, તેથી તેના બદલે અમે એક `async` બ્લોક પસાર કરીશું અને `page_title` કૉલનું પરિણામ સ્પષ્ટપણે અપેક્ષિત કરીશું, જે સૂચિ 17-4 માં દર્શાવેલ છે.
 
 <Listing number="17-4" caption="Awaiting an async block with `trpl::block_on`" file-name="src/main.rs">
 <!-- should_panic,noplayground because mdbook test does not pass args -->
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-04/src/main.rs:run}}
-```
 ```
 </Listing>
 જ્યારે આપણે આ કોડ ચલાવીએ છીએ, ત્યારે આપણને અપેક્ષિત વર્તન મળે છે:
@@ -148,22 +134,18 @@ cargo run -- "https://www.rust-lang.org"
 # copy the output here
 -->
 ```console
-```console
 $ cargo run -- "https://www.rust-lang.org"
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.05s
      Running `target/debug/async_await 'https://www.rust-lang.org'`
 The title for https://www.rust-lang.org was
             Rust Programming Language
 ```
-```
 સારું થયું—આપણે આખરે કાર્યરત asynchronous કોડ
 
 મેળવ્યો છે! પરંતુ આપણે બે સ્થળોને એકબીજા સાથે સ્પર્ધા કરાવવા માટે કોડ ઉમેરતા પહેલાં, ચાલો થોડીવાર પાછા જોઈએ કે futures કેવી રીતે કાર્ય કરે છે. દરેક `await` બિંદુ —એટલે કે, જ્યાં કોડ `await` કીવર્ડનો ઉપયોગ કરે છે તે દરેક સ્થળ—એવું સ્થાન દર્શાવે છે જ્યાં નિયંત્રણ runtime ને સોંપવામાં આવે છે. આ કાર્યરત કરવા માટે, Rust એ asynchronous બ્લોકમાં સામેલ સ્થિતિને જાળવી રાખવાની જરૂર છે જેથી runtime અન્ય કોઈ કાર્ય શરૂ કરી શકે અને પછી જ્યારે પ્રથમ કાર્ય આગળ વધવા માટે તૈયાર થાય ત્યારે પાછા આવી શકે. આ એક અદ્રશ્ય સ્થિતિ મશીન છે, જાણે કે તમે દરેક `await` બિંદુએ વર્તમાન સ્થિતિને સાચવવા માટે આ પ્રકારનું enum લખ્યું હોય:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch17-async-await/no-listing-state-machine/src/lib.rs:enum}}
-```
 ```
 દરેક સ્થિતિ વચ્ચે પરિવર્તન કરવા માટે કોડ લખવાનું જાતે કરવું કંટાળાજનક અને ભૂલ ઉત્પન્ન કરનારું હોઈ શકે છે, વિશેષ કરીને જ્યારે તમારે પાછળથી વધુ કાર્યક્ષમતા અને વધુ સ્થિતિઓ ઉમેરવાની જરૂર હોય. સારી વાત એ છે કે Rust compiler અસમકાલીન કોડ માટે સ્ટેટ મશીન ડેટા સ્ટ્રક્ચર્સને આપોઆપ બનાવે છે અને તેનું સંચાલન કરે છે. ડેટા સ્ટ્રક્ચર્સની આસપાસ સામાન્ય borrowing અને ownershipના નિયમો યથાવત રહે છે, અને આનંદદાયક રીતે, compiler તે માટે ચકાસણી કરવાનું પણ સંભાળે છે અને ઉપયોગી ભૂલ સંદેશાઓ પ્રદાન કરે છે. આપણે પાછળના પ્રકરણમાં તેના થોડા ઉદાહરણો જોઈશું.
 
@@ -183,24 +165,20 @@ The title for https://www.rust-lang.org was
 <Listing number="17-5" caption="Calling `page_title` for two URLs to see which returns first" file-name="src/main.rs">
 <!-- should_panic,noplayground because mdbook does not pass args -->
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-05/src/main.rs:all}}
-```
 ```
 </Listing>
 અમે સૌપ્રથમ user દ્વારા આપવામાં આવેલ દરેક URL માટે `page_title` ને બોલાવીએ છીએ. અમે પરિણામી ફ્યુચર્સને `title_fut_1` અને `title_fut_2` તરીકે સાચવ્યા છે. યાદ રાખો, આ હજી સુધી કંઈ કરતા નથી, કારણ કે ફ્યુચર્સ આળસુ હોય છે અને અમે હજી સુધી તેમની રાહ જોઈ નથી. પછી અમે ફ્યુચર્સને `trpl::select` માં પસાર કરીએ છીએ, જે કયું ફ્યુચર પ્રથમ પૂર્ણ
 
-થાય છે તે દર્શાવતું મૂલ્ય આપે છે. Note: Under the hood, `trpl::select` is built on a more general `select` function defined in the `futures` crate. The `futures` crate’s `select` function can do a lot of things that the `trpl::select` function can’t, but it also has some additional complexity that we can skip over for now.
+થાય છે તે દર્શાવતું મૂલ્ય આપે છે. Note: Under the hood, `trpl::select` is built on a more general `select` function defined in the [`futures`][futures-crate] crate. The `futures` crate’s `select` function can do a lot of things that the `trpl::select` function can’t, but it also has some additional complexity that we can skip over for now.
 
 Either પ્રકાર ભવિષ્યમાં કોઈપણ પરિણામ સાચું હોઈ શકે છે, તેથી `Result` પરત કરવું તાર્કિક નથી. તેના બદલે, `trpl::select` એક એવા પ્રકારને પરત કરે છે જે આપણે અગાઉ જોયો નથી, `trpl::Either`. `Either` પ્રકાર `Result` જેવો જ છે જેમાં બે શક્યતાઓ હોય છે. પરંતુ, `Result`થી વિપરીત, તેમાં સફળતા કે નિષ્ફળતાનો કોઈ ખ્યાલ નથી. તેના બદલે, તે `Left` અને `Right` નો ઉપયોગ કરે છે જે "એક અથવા બીજી" દર્શાવે છે:
 
-```rust
 ```rust
 enum Either<A, B> {
     Left(A),
     Right(B),
 }
-```
 ```
 The `select` Function `select` વિધેય પ્રથમ Argument જીતે તો તે `Left` આપે છે અને બીજી Argument જીતે તો `Right` આપે છે. આ કાર્યને બોલાવતી વખતે Argumentો જે ક્રમમાં આવે છે તેને અનુરૂપ છે: પહેલી Argument બીજી Argumentની ડાબી બાજુએ હોય છે. અમે `page_title` ને પણ અપડેટ કરીએ છીએ જેથી
 
@@ -209,3 +187,12 @@ The `select` Function `select` વિધેય પ્રથમ Argument જી�
 તમે હવે એક નાનું કાર્યરત વેબ સ્ક્રેપર બનાવ્યું છે! થોડા URL પસંદ કરો અને આદેશ વાધું સાધન ચલાવો. તમને ખબર પડી શકે છે કે કેટલીક વેબસાઇટ્સ અન્ય કરતા વધુ ઝડપી હોય છે, જ્યારે અન્ય કિસ્સાઓમાં ઝડપી વેબસાઇટ દરેક વખતે બદલાઈ શકે છે. વધુ મહત્ત્વની વાત એ છે કે, તમે ભવિષ્ય સાથે કામ કરવાના મૂળભૂત બાબતો શીખ્યા છો, તેથી હવે આપણે async સાથે શું કરી શકીએ છીએ તેમાં ઊંડાણપૂર્વક જાણી શકીશું.
 
 <!-- TODO: map source link version to version of Rust? -->
+
+
+[futures-crate]: https://crates.io/crates/futures
+[tokio]: https://tokio.rs
+[crate-source]: https://github.com/rust-lang/book/tree/main/packages/trpl
+[iterators-lazy]: ch13-02-iterators.html
+[thread-spawn]: ch16-01-threads.html#creating-a-new-thread-with-spawn
+[impl-trait]: ch10-02-traits.html#traits-as-parameters
+[cli-args]: ch12-01-accepting-command-line-arguments.html

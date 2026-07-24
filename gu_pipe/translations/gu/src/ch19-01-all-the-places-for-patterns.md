@@ -18,12 +18,10 @@
 અહીંયાથી ઉદાહરણ તરીકે, લિસ્ટિંગ ૬-૫ માંથી `match` અભિવ્યક્તિ દર્શાવેલ છે, જે variable `x` માં રહેલા `Option<i32>` મૂલ્ય સાથે મેળ ખાય છે:
 
 ```rust
-```rust
 match x {
     None => None,
     Some(i) => Some(i + 1),
 }
-```
 ```
 `None` `Some(i)` આ `match` અભિવ્યક્તિમાં
 
@@ -36,9 +34,7 @@ match x {
 અગાઉના પ્રકરણમાં, આપણે માત્ર `match` અને `if let` સાથે પેટર્નનો ઉપયોગ વિશે જ ચર્ચા કરી હતી, પરંતુ હકીકતમાં, આપણે `let` વિધાનો સહિત અન્ય સ્થળોએ પણ પેટર્નનો ઉપયોગ કર્યો છે. ઉદાહરણ તરીકે, આ સરળ `let` સાથે variable નિસ્યંદન (variable assignment) ધ્યાનમાં લો:
 
 ```rust
-```rust
 let x = 5;
-```
 ```
 દરેક વખતે તમે `let` વિધાનનો ઉપયોગ કર્યો હોય, ત્યારે તમે પેટર્નનો ઉપયોગ કર્યો હોય, ભલે તમને ખબર ન હોય! વધુ સત્તાવાર રીતે, એક `let` વિધાન આના જેવું દેખાય છે:
 
@@ -55,9 +51,7 @@ let x = 5;
 
 <Listing number="19-1" caption="Using a pattern to destructure a tuple and create three variables at once">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-01/src/main.rs:here}}
-```
 ```
 </Listing>
 અહીં, આપણે એક ટ્યૂપલને પેટર્ન સામે સરખાવે છે. Rust મૂલ્ય `(1, 2, 3)` ને પેટર્ન `(x, y, z)` સાથે સરખાવે છે અને જુએ છે કે મૂલ્ય પેટર્નને બંધબેસે છે—એટલે કે, તે જુએ છે કે બંનેમાં સમાન સંખ્યામાં ઘટકો છે—તેથી Rust `1` ને `x`, `2` ને `y`, અને `3` ને `z` સાથે જોડે છે. તમે આ ટ્યૂપલ પેટર્નને ત્રણ વ્યક્તિગત variable પેટર્નનું નેસ્ટિંગ તરીકે વિચારી શકો છો.
@@ -66,17 +60,13 @@ let x = 5;
 
 <Listing number="19-2" caption="Incorrectly constructing a pattern whose variables don’t match the number of elements in the tuple">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-02/src/main.rs:here}}
-```
 ```
 </Listing>
 આ કોડને કમ્પાઇલ કરવાના પ્રયત્નોથી આ પ્રકારની ભૂલ આવે છે:
 
 ```console
-```console
 {{#include ../listings/ch19-patterns-and-matching/listing-19-02/output.txt}}
-```
 ```
 આ ભૂલ નિવારવા માટે, આપણે ટ્યૂપલમાં રહેલા એક અથવા વધુ મૂલ્યોને અવગણી શકીએ છીએ `_` અથવા `..` નો ઉપયોગ કરીને, જે તમે “પેટર્નમાં મૂલ્યોને અવગણવું” વિભાગમાં જોશો. જો સમસ્યા એ હોય કે પેટર્નમાં ઘણાં બધાં variable છે, તો ઉકેલ એ છે કે પ્રકારોને મેળ ખાતા બનાવવા માટે variable દૂર કરવા જેથી variable's સંખ્યા ટ્યૂપલના ઘટકોની સંખ્યા જેટલી થાય.
 
@@ -90,9 +80,7 @@ Listing 19-3 નો કોડ Listing 19-3 માં રહેલો કોડ �
 
 <Listing number="19-3" file-name="src/main.rs" caption="Mixing `if let`, `else if`, `else if let`, and `else`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-03/src/main.rs}}
-```
 ```
 </Listing>
 જો user પોતાની મનપસંદ રંગ પસંદ કરે છે, તો તે રંગ પૃષ્ઠભૂમિ તરીકે વપરાય છે. જો કોઈ મનપસંદ રંગ પસંદ ન કર્યો હોય અને આજ મંગળવાર હોય, તો પૃષ્ઠભૂમિનો રંગ લીલો હોય છે. અન્યથા, જો user પોતાની ઉંમરને String સ્વરૂપે આપે અને અમે તેને સંખ્યા તરીકે સફળતાપૂર્વક parse કરી શકીએ, તો રંગ જાંબલી અથવા નારંગી હોઈ શકે છે, જે સંખ્યાના મૂલ્ય પર આધાર રાખે છે. જો આ શરતોમાંથી કોઈ પણ લાગુ ન થાય, તો પૃષ્ઠભૂમિનો રંગ વાદળી હોય છે.
@@ -109,9 +97,7 @@ Listing 19-3 નો કોડ Listing 19-3 માં રહેલો કોડ �
 
 <Listing number="19-4" caption="Using a `while let` loop to print values for as long as `rx.recv()` returns `Ok`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-04/src/main.rs:here}}
-```
 ```
 </Listing>
 આ ઉદાહરણ `1`, `2`, અને પછી `3` છાપે છે. `recv` પદ્ધતિ ચેનલની રીસીવર બાજુથી પ્રથમ સંદેશ લે છે અને `Ok(value)` પરત કરે છે. જ્યારે આપણે પ્રકરણ ૧૬ માં પહેલીવાર `recv` જોયો હતો, ત્યારે આપણે સીધો જ ભૂલને અનરેપ કરી હતી, અથવા આપણે એક `for` લૂપનો ઉપયોગ કરીને પુનરાવર્તક તરીકે તેની સાથે ક્રિયાપ્રતિક્રિયા કરી હતી. જો કે, સૂચિ ૧૯-૪ બતાવે છે તેમ, આપણે `while let` નો પણ ઉપયોગ કરી શકીએ છીએ, કારણ કે `recv` પદ્ધતિ દરેક વખતે સંદેશો આવે ત્યાં સુધી `Ok` પરત કરે છે, જ્યાં સુધી મોકલનાર અસ્તિત્વમાં હોય, અને પછી મોકલનાર બાજુ ડિસ્કનેક્ટ થાય ત્યારે `Err` ઉત્પન્ન કરે છે.
@@ -122,17 +108,13 @@ Listing 19-3 નો કોડ Listing 19-3 માં રહેલો કોડ �
 
 <Listing number="19-5" caption="Using a pattern in a `for` loop to destructure a tuple">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-05/src/main.rs:here}}
-```
 ```
 </Listing>
 માહિતી ૧૯-૫ માં આપેલ કોડ નીચે મુજબ છાપશે:
 
 ```console
-```console
 {{#include ../listings/ch19-patterns-and-matching/listing-19-05/output.txt}}
-```
 ```
 અમે `enumerate` પદ્ધતિનો ઉપયોગ કરીને એક iterator ને અનુકૂલિત કરીએ છીએ જેથી તે એક મૂલ્ય અને તે મૂલ્ય માટે અનુક્રમણિકા (index) ઉત્પન્ન કરે, જે ટ્યૂપલમાં મૂકવામાં આવે. પ્રથમ ઉત્પન્ન થયેલું મૂલ્ય `(0, 'a')` ટ્યૂપલ છે. જ્યારે આ મૂલ્યને `(index, value)` પેટર્ન સાથે મેળવવામાં આવે છે, ત્યારે index `0` હશે અને value `'a'` હશે, જે આઉટપુટની પ્રથમ રેખા છાપશે.
 
@@ -142,18 +124,14 @@ Listing 19-3 નો કોડ Listing 19-3 માં રહેલો કોડ �
 
 <Listing number="19-6" caption="A function signature using patterns in the parameters">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-06/src/main.rs:here}}
-```
 ```
 </Listing>
 `x` ભાગ એક પ્રકાર છે! જેમ આપણે `let` સાથે કર્યું હતું, તેમ આપણે કાર્યના પરિમાણોમાં એક ટ્યૂપલને પણ પ્રકાર સાથે સરખાવી શકીએ છીએ. સૂચિ ૧૯-૭ ટ્યૂપલમાં રહેલા મૂલ્યોને વિભાજિત કરે છે જ્યારે આપણે તેને કાર્યમાં મોકલીએ છીએ.
 
 <Listing number="19-7" file-name="src/main.rs" caption="A function with parameters that destructure a tuple">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-07/src/main.rs}}
-```
 ```
 </Listing>
 આ કોડ `Current location: (3, 5)` છાપે છે. મૂલ્યો `&(3, 5)` પેટર્ન `&(x, y)` સાથે મેળ ખાય છે, તેથી `x` એ મૂલ્ય `3` છે અને `y` એ મૂલ્ય `5` છે.
@@ -162,3 +140,6 @@ Listing 19-3 નો કોડ Listing 19-3 માં રહેલો કોડ �
 
 આ સમયે, તમે પેટર્નનો ઉપયોગ કરવાની ઘણી રીતો જોઈ હશે, પરંતુ પેટર્ન દરેક જગ્યાએ સમાન રીતે કામ કરતા નથી જ્યાં આપણે તેનો ઉપયોગ કરી શકીએ છીએ. કેટલીક જગ્યાએ, પેટર્ન અચકાઉ (irrefutable) હોવા જોઈએ; અન્ય સંજોગોમાં, તે ખંડિત (refutable) થઈ શકે છે. હવે આપણે આ બે વિભાવનાઓની ચર્ચા કરીશું.
 
+
+
+[ignoring-values-in-a-pattern]: ch19-03-pattern-syntax.html#ignoring-values-in-a-pattern

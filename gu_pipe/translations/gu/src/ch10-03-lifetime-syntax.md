@@ -13,9 +13,7 @@ Annotating lifetimes જીવનકાળની નોંધણી કરવી
 
 <Listing number="10-16" caption="An attempt to use a reference whose value has gone out of scope">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-16/src/main.rs}}
-```
 ```
 </Listing>
 નોંધ: યાદી ૧૦-૧૬, ૧૦-૧૭ અને ૧૦-૨૩ માં આપેલા ઉદાહરણોમાં variable પ્રારંભિક મૂલ્ય વગર જાહેર કરવામાં આવ્યા છે, તેથી ચલનું નામ બાહ્ય અવકાશમાં અસ્તિત્વ ધરાવે છે. પ્રથમ નજરે, આ Rust માં શૂન્ય મૂલ્યો ન હોવા સાથે સંઘર્ષમાં હોવાનું જણાવી શકે છે. જો કે, જો આપણે variable મૂલ્ય આપ્યા પહેલાં તેનો ઉપયોગ કરવાનો પ્રયાસ કરીએ, તો આપણને કમ્પાઇલ-ટાઇમ ભૂલ મળશે, જે દર્શાવે છે કે Rust ખરેખર શૂન્ય મૂલ્યોને મંજૂરી આપતું નથી.
@@ -23,9 +21,7 @@ Annotating lifetimes જીવનકાળની નોંધણી કરવી
 બાહ્ય અવકાશ એક variable `r` જાહેર કરે છે જેમાં કોઈ પ્રારંભિક મૂલ્ય નથી, અને આંતરિક અવકાશ એક variable `x` જાહેર કરે છે જેનું પ્રારંભિક મૂલ્ય `5` છે. આંતરિક અવકાશની અંદર, આપણે `x` ના સંદર્ભ તરીકે `r` નું મૂલ્ય સેટ કરવાનો પ્રયાસ કરીએ છીએ. પછી, આંતરિક અવકાશ સમાપ્ત થાય છે, અને આપણે `r` માં મૂલ્ય છાપવાનો પ્રયાસ કરીએ છીએ. આ કોડ કમ્પાઇલ થશે નહીં, કારણ કે `r` જે મૂલ્યનો સંદર્ભ લઈ રહ્યું છે તે તેનો ઉપયોગ કરવાનો પ્રયાસ કરતા પહેલા અવકાશમાંથી બહાર નીકળી ગયું છે. અહીં ભૂલ સંદેશ છે:
 
 ```console
-```console
 {{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-16/output.txt}}
-```
 ```
 ભૂલ સંદેશ ભૂલ સંદેશ જણાવે છે કે variable `x` "પર્યાપ્ત સમય સુધી ટકતું નથી." તેનું કારણ એ છે કે `x` અંદરના અવકાશના અંતિમ ભાગમાં ૭મી લાઈનમાં સમાપ્ત થતાં જ અવકાશની બહાર થઈ જશે. પરંતુ `r` બાહ્ય અવકાશ માટે માન્ય રહે છે; તેના અવકાશનું કદ મોટું હોવાથી, આપણે કહીએ છીએ કે તે "લાંબો સમય જીવે છે." જો Rust આ કોડને કાર્યરત કરવાની મંજૂરી આપે, તો `r` એવા મેમરીનો સંદર્ભ લેશે જે `x` અવકાશમાંથી બહાર નીકળ્યા પછી ફાળવી દેવામાં આવ્યો હતો, અને `r` સાથે આપણે જે કંઈપણ કરવાનો પ્રયાસ કરીશું તે યોગ્ય રીતે કામ કરશે નહીં. તો, Rust આ કોડ અમાન્ય છે તે કેવી રીતે નક્કી કરે છે? તે એક બોરો ચેકરનો ઉપયોગ કરે છે.
 
@@ -35,9 +31,7 @@ Rust કમ્પાઇલર પાસે એક ધન પ્રાપ્ત�
 
 <Listing number="10-17" caption="Annotations of the lifetimes of `r` and `x`, named `'a` and `'b`, respectively">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-17/src/main.rs}}
-```
 ```
 </Listing>
 અહીં, અમે `r` ના આયુષ્યકાળને `'a` અને `x` ના આયુષ્યકાળને `'b` સાથે નોંધ્યા છે. તમે જોઈ શકો છો તેમ, આંતરિક `'b` બ્લોક બાહ્ય `'a` આયુષ્યકાળ બ્લોકની તુલનામાં ઘણો નાનો છે. કમ્પાઇલ સમય દરમિયાન, Rust બંને આયુષ્યકાળોના કદની સરખામણી કરે છે અને જુએ છે કે `r` નું આયુષ્યકાળ `'a` છે પરંતુ તે મેમરી સાથે સંબંધિત છે જેનું આયુષ્યકાળ `'b` છે. પ્રોગ્રામ નકારવામાં આવે છે કારણ કે `'b` `'a` કરતાં ટૂંકો છે: સંદર્ભનો વિષય સંદર્ભ જેટલો લાંબો જીવતો નથી.
@@ -46,9 +40,7 @@ Rust કમ્પાઇલર પાસે એક ધન પ્રાપ્ત�
 
 <Listing number="10-18" caption="A valid reference because the data has a longer lifetime than the reference">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-18/src/main.rs}}
-```
 ```
 </Listing>
 અહીં, `x` ને જીવનકાળ `'b'` છે, જે આ કિસ્સામાં `'a'` કરતાં મોટો છે. આનો અર્થ એ થાય છે કે `r` , `x` ને સંદર્ભિત કરી શકે છે કારણ કે Rust જાણે છે કે `r` માં રહેલો સંદર્ભ `x` માન્ય હોય ત્યાં સુધી હંમેશાં
@@ -61,9 +53,7 @@ Rust કમ્પાઇલર પાસે એક ધન પ્રાપ્ત�
 
 <Listing number="10-19" file-name="src/main.rs" caption="A `main` function that calls the `longest` function to find the longer of two string slices">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-19/src/main.rs}}
-```
 ```
 </Listing>
 નોંધ આપણે ફંક્શનને String સ્લાઇસ, જે રેફરન્સ છે, લેવા માંગીએ છીએ, સ્ટ્રિંગને બદલે, કારણ કે આપણે નથી ઈચ્છતા કે `longest` ફંક્શન તેના પરિમાણોનું માલિકીત્વ (ownership) મેળવે. પ્રકરણ 4 માં "સ્ટ્રિંગ સ્લાઇસ તરીકે પરિમાણ" જુઓ વધુ ચર્ચા માટે કે શા માટે લિસ્ટિંગ 10-19 માં વપરાયેલ પરિમાણો એવા છે જે આપણે જોઈએ છીએ. જો આપણે
@@ -72,17 +62,13 @@ Rust કમ્પાઇલર પાસે એક ધન પ્રાપ્ત�
 
 <Listing number="10-20" file-name="src/main.rs" caption="An implementation of the `longest` function that returns the longer of two string slices but does not yet compile">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-20/src/main.rs:here}}
-```
 ```
 </Listing>
 અને તેના બદલે, આપણને નીચે મુજબની ભૂલ મળે છે જે લાઈફટાઇમ વિશે વાત કરે છે:
 
 ```console
-```console
 {{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-20/output.txt}}
-```
 ```
 મદદનો લખાણ દર્શાવે છે કે વળતર પ્રકારને સામાન્ય આયુષ્ય પરિમાણ (generic lifetime parameter) ની જરૂર છે કારણ કે Rust એ જણું શકતું નથી કે કયા સંદર્ભ (`reference`) પાછો આપવામાં આવી રહ્યો છે તે `x` ને નિર્દેશ કરે છે કે `y` ને. હકીકતમાં, અમને પણ ખબર નથી, કારણ કે આ કાર્યમાં શરીરના `if` બ્લોક `x` નો સંદર્ભ પાછો આપે છે અને `else` બ્લોક `y` નો સંદર્ભ પાછો આપે છે!
 
@@ -97,11 +83,9 @@ Rust કમ્પાઇલર પાસે એક ધન પ્રાપ્ત�
 અહીં કેટલાક ઉદાહરણો છે—એક `i32` નો સંદર્ભ જેlifetime પરિમાણ વગરનો છે, એક `i32` નો સંદર્ભ જે lifetime પરિમાણ ધરાવે છે જેને `'a` નામ આપવામાં આવ્યું છે, અને એક mutable સંદર્ભ પણ `i32` નો જે lifetime `'a` ધરાવે છે:
 
 ```rust
-```rust
 &i32        // a reference
 &'a i32     // a reference with an explicit lifetime
 &'a mut i32 // a mutable reference with an explicit lifetime
-```
 ```
 એક જીવનકાળ સંકેત (lifetime annotation) એકલું હોય તો તેનો વિશેષ અર્થ ન થતો, કારણ કે આ સંકેતો Rustને જણાવવા માટે હોય છે કે બહુવિધ સંદર્ભો (references) ના સામાન્ય જીવનકાળ પરિમાણો (generic lifetime parameters) એકબીજા સાથે કેવી રીતે સંબંધિત છે. ચાલો જોઈએ કે `longest` કાર્યમાં જીવનકાળ સંકેતો એકબીજા સાથે કેવી રીતે સંબંધિત થાય છે.
 
@@ -114,9 +98,7 @@ Rust કમ્પાઇલર પાસે એક ધન પ્રાપ્ત�
 
 <Listing number="10-21" file-name="src/main.rs" caption="The `longest` function definition specifying that all the references in the signature must have the same lifetime `'a`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-21/src/main.rs:here}}
-```
 ```
 </Listing>
 આ કોડ સંકલિત થવો જોઈએ અને જ્યારે આપણે તેને યાદી 10-19 માં `main` વિધેય સાથે વાપરીએ ત્યારે આપણને જોઈતો પરિણામ ઉત્પન્ન કરવું જોઈએ.
@@ -133,9 +115,7 @@ Rust કમ્પાઇલર પાસે એક ધન પ્રાપ્ત�
 
 <Listing number="10-22" file-name="src/main.rs" caption="Using the `longest` function with references to `String` values that have different concrete lifetimes">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-22/src/main.rs:here}}
-```
 ```
 </Listing>
 In this example, `string1` એ બાહ્ય અવકાશ (outer scope) ના અંત સુધી માન્ય રહે છે, `string2` એ આંતરિક અવકાશ (inner scope) ના અંત સુધી માન્ય રહે છે, અને `result` એક એવી વસ્તુનો સંદર્ભ (reference) આપે છે જે આંતરિક અવકાશના અંત સુધી માન્ય રહે છે. આ કોડ ચલાવો અને તમે જોશો કે બોરો ચેકર મંજૂરી આપે છે; તે કમ્પાઇલ થશે અને `The longest string is long string is long` છાપશે.
@@ -144,17 +124,13 @@ In this example, `string1` એ બાહ્ય અવકાશ (outer scope) ન
 
 <Listing number="10-23" file-name="src/main.rs" caption="Attempting to use `result` after `string2` has gone out of scope">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-23/src/main.rs:here}}
-```
 ```
 </Listing>
 જ્યારે આપણે આ કોડને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ છીએ, ત્યારે આપણને આ ભૂલ પ્રાપ્ત થાય છે:
 
 ```console
-```console
 {{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-23/output.txt}}
-```
 ```
 ભૂલ દર્શાવે છે કે `result` ને `println!` વિધાન માટે યોગ્ય બનાવવા માટે, `string2` બાહ્ય અવકાશના અંત સુધી અમાન્ય ન હોવું જોઈએ. Rust જાણે છે કારણ કે આપણે કાર્ય પરિમાણો અને વળતર મૂલ્યોના આયુષ્યને સમાન આયુષ્ય પરિમાણ `'a` નો ઉપયોગ કરીને નોંધ્યું હતું.
 
@@ -169,9 +145,7 @@ In this example, `string1` એ બાહ્ય અવકાશ (outer scope) ન
 
 <Listing file-name="src/main.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-08-only-one-reference-with-lifetime/src/main.rs:here}}
-```
 ```
 </Listing>
 અમે પરિમાણ `x` અને વળતર પ્રકાર માટે લાઈફટાઈમ પેરામીટર `'a` નિર્ધારિત કર્યું છે, પરંતુ `y` માટે નહીં, કારણ કે `y` નું લાઈફટાઈમ `x` અથવા વળતર મૂલ્યના લાઈફટાઈમ સાથે સંબંધિત નથી.
@@ -180,17 +154,13 @@ In this example, `string1` એ બાહ્ય અવકાશ (outer scope) ન
 
 <Listing file-name="src/main.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-09-unrelated-lifetime/src/main.rs:here}}
-```
 ```
 </Listing>
 અહીં, ભલે આપણે વળતર પ્રકાર માટે જીવનકાળ પરિમાણ `'a` નિર્દિષ્ટ કર્યું છે, આ અમલીકરણ કમ્પાઇલ કરવામાં નિષ્ફળ જશે કારણ કે વળતરનું જીવનકાળ બિલકુલ પરિમાણોના જીવનકાળ સાથે સંબંધિત નથી. આપણને મળતો ભૂલ સંદેશ આ મુજબ છે:
 
 ```console
-```console
 {{#include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-09-unrelated-lifetime/output.txt}}
-```
 ```
 નિર્ણાયક એ છે કે `result` અવકાશ બહાર જાય છે અને `longest` વિધેયના અંતે શુદ્ધ થાય છે. અમે વિધેયમાંથી `result` નો સંદર્ભ પાછો આપવાનો પણ પ્રયત્ન કરી રહ્યા છીએ. એવી કોઈ રીતે આપણે આયુષ્ય પરિમાણો (lifetime parameters) સ્પષ્ટ કરી શકતા નથી કે જે લટકતો સંદર્ભ (dangling reference) બદલી શકે, અને Rust આપણને લટકતો સંદર્ભ બનાવવાની મંજૂરી આપશે નહીં. આ સ્થિતિમાં, શ્રેષ્ઠ ઉપાય એ છે કે સંદર્ભને બદલે માલિકીનો ડેટા પ્રકાર પાછો આપવો જેથી કરીને કૉલિંગ વિધેય મૂલ્યને શુદ્ધ કરવા માટે જવાબદાર બને.
 
@@ -203,9 +173,7 @@ In this example, `string1` એ બાહ્ય અવકાશ (outer scope) ન
 
 <Listing number="10-24" file-name="src/main.rs" caption="A struct that holds a reference, requiring a lifetime annotation">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-24/src/main.rs}}
-```
 ```
 </Listing>
 આ struct માં એક જ ક્ષેત્ર `part` છે જે string slice ધરાવે છે, જે એક reference છે. સામાન્ય data types ની જેમ, આપણે generic lifetime parameter નું નામ struct ના નામ પછી angle brackets અંદર જાહેર કરીએ છીએ જેથી કરીને આપણે struct વ્યાખ્યાના ભાગમાં lifetime parameter નો ઉપયોગ કરી શકીએ. આ annotation સૂચવે છે કે `ImportantExcerpt` નું instance તેના `part` ક્ષેત્રમાં રહેલા reference કરતાં વધુ સમય સુધી ટકી શકે નહીં.
@@ -218,17 +186,13 @@ In this example, `string1` એ બાહ્ય અવકાશ (outer scope) ન
 
 <Listing number="10-25" file-name="src/lib.rs" caption="A function we defined in Listing 4-9 that compiled without lifetime annotations, even though the parameter and return type are references">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-25/src/main.rs:here}}
-```
 ```
 </Listing>
 આ કાર્ય સંકલન પામે છે કારણ કે આ એક ઐતિહાસિક બાબત છે: Rust ના પ્રારંભિક આવૃત્તિઓમાં (1.0 પહેલાં), આ કોડ સંકલન ન પામતો, કારણ કે દરેક સંદર્ભ માટે સ્પષ્ટ સમયગાળો જરૂરી હતો. તે સમયે, કાર્ય હસ્તાક્ષર `like this` જેવું લખાયું હોત:
 
 ```rust
-```rust
 fn first_word<'a>(s: &'a str) -> &'a str {
-```
 ```
 ઘણી Rust કોડ લખ્યા પછી, Rust ટીમ એ શોધ્યું કે Rust કાર્યકર્તાઓ ચોક્કસ પરિસ્થિતિઓમાં વારંવાર લાઈફટાઈમ નોંધણીઓ દાખલ કરી રહ્યા હતા. આ પરિસ્થિતિઓ અનુમાનિત હતી અને થોડા નિશ્ચિત પ્રકારના નિયમોનું પાલન કરતી હતી. વિકાસકર્તાઓએ આ નિયમોને કમ્પાઇલરના કોડમાં પ્રોગ્રામ કર્યા જેથી કરીને ઉધાર તપાસનાર (borrow checker) આ પરિસ્થિતિઓમાં લાઈફટાઈમનો અંદાજ લગાવી શકે અને તેને સ્પષ્ટ નોંધણીઓની જરૂર ન પડે.
 
@@ -251,39 +215,29 @@ Rust ના આ ઇતિહાસનો એક ભાગ મહત્વપૂ�
 આપણે કલ્પના કરીએ કે આપણે કમ્પાઈલર છીએ. અમે આ નિયમો લાગુ કરીને `first_word` ફંક્શનની હસ્તાક્ષરમાં (signature) રહેલા સંદર્ભો (references) ના લાઈફટાઈમ નક્કી કરીશું, જે Listing 10-25 માં દર્શાવેલ છે. હસ્તાક્ષર કોઈપણ લાઈફટાઈમ વગર શરૂ થાય છે જે સંદર્ભો સાથે સંકળાયેલા છે:
 
 ```rust
-```rust
 fn first_word(s: &str) -> &str {
-```
 ```
 પછી, કમ્પાઇલર પ્રથમ નિયમ લાગુ કરે છે, જે જણાવે છે કે દરેક પરિમાણ (parameter) પોતાનું આયુષ્ય (lifetime) ધરાવે છે. આપણે તેને સામાન્ય રીતે `'a' નામ આપીશું, તેથી હવે હસ્તાક્ષર (signature) આ પ્રમાણે છે:
 
 ```rust
-```rust
 fn first_word<'a>(s: &'a str) -> &str {
-```
 ```
 બીજો નિયમ લાગુ થાય છે કારણ કે માત્ર એક જ ઇનપુટ લાઈફટાઈમ છે. બીજો નિયમ જણાવે છે કે એક ઇનપુટ પેરામીટરનું લાઈફટાઈમ આઉટપુટ લાઈફટાઈમને સોંપવામાં આવે છે, તેથી હસ્તાક્ષર હવે આ પ્રમાણે છે:
 
 ```rust
-```rust
 fn first_word<'a>(s: &'a str) -> &'a str {
-```
 ```
 હવે આ કાર્ય હસ્તાક્ષર (function signature) માં રહેલાં તમામ સંદર્ભોમાં આયુષ્યકાળ (lifetimes) છે, અને કમ્પાઇલર તેના વિશ્લેષણ ચાલુ રાખી શકે છે પ્રોગ્રામરે આ કાર્ય હસ્તાક્ષરમાં આયુષ્યકાળ દર્શાવવાની જરૂર વગર.
 
 ચાલો બીજા ઉદાહરણ જોઈએ, આ વખતે `longest` કાર્યનો ઉપયોગ કરીને જેનાં શરૂઆતમાં કોઈ આયુષ્યકાળ પરિમાણો (lifetime parameters) ન હતાં, જ્યારે આપણે તેને સૂચિ 10-20 માં કામ કરવાનું શરૂ કર્યું હતું:
 
 ```rust
-```rust
 fn longest(x: &str, y: &str) -> &str {
-```
 ```
 ચાલો પ્રથમ નિયમ લાગુ કરીએ: દરેક પરિમાણનું પોતાનું આયુષ્ય છે. આ વખતે આપણી પાસે એકને બદલે બે પરિમાણો છે, તેથી આપણી પાસે બે આયુષ્ય છે:
 
 ```rust
-```rust
 fn longest<'a, 'b>(x: &'a str, y: &'b str) -> &str {
-```
 ```
 તમે જોઈ શકો છો કે બીજું નિયમ લાગુ પડતો નથી, કારણ કે એક કરતાં વધારે ઇનપુટ લાઈફટાઈમ છે. ત્રીજો નિયમ પણ લાગુ પડતો નથી, કારણ કે `longest` એ મેથડને બદલે ફંક્શન છે, તેથી કોઈ પણ પેરામીટર `self` નથી. ત્રણેય નિયમોમાંથી પસાર થયા પછી પણ, અમને હજી ખબર પડી નથી કે રીટર્ન પ્રકારનું લાઈફટાઈમ શું છે. આ જ કારણ છે કે અમે લિસ્ટિંગ 10-20 માં કોડને કમ્પાઇલ કરવાનો પ્રયાસ કરતી વખતે ભૂલ મેળવી હતી: કમ્પાઈલર લાઈફટાઈમ ઇલિશન નિયમોમાંથી પસાર થયો, પરંતુ હજી પણ સિગ્નેચરના તમામ લાઈફટાઈમને નક્કી કરી શક્યો ન હતો.
 
@@ -301,18 +255,14 @@ fn longest<'a, 'b>(x: &'a str, y: &'b str) -> &str {
 સૌ પ્રથમ, આપણે `level` નામની પદ્ધતિનો ઉપયોગ કરીશું જેનું માત્ર એક જ પરિમાણ છે - તે `self` નો સંદર્ભ છે અને જેનું વળતર મૂલ્ય `i32` છે, જે કોઈપણ વસ્તુનો સંદર્ભ નથી:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-10-lifetimes-on-methods/src/main.rs:1st}}
-```
 ```
 આયુષ્ય પરિમાણ ઘોષણા `impl` પછી અને પ્રકાર નામના ઉપયોગ પછી જરૂરી છે, પરંતુ પ્રથમ નિષ્કર્ષ નિયમનાં કારણે, આપણે `self` ના સંદર્ભની આયુષ્ય નોંધવાની આવશ્યકતા નથી.
 
 અહીં એક ઉદાહરણ છે જ્યાં ત્રીજો આયુષ્ય નિષ્કર્ષ નિયમ લાગુ પડે છે:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-10-lifetimes-on-methods/src/main.rs:3rd}}
-```
 ```
 બે ઇનપુટ લાઈફટાઈમ હોવાથી, Rust પ્રથમ લાઈફટાઈમ ઈલિશન નિયમ લાગુ કરે છે અને `&self` અને `announcement` બંનેને પોતાના લાઈફટાઈમ આપે છે. ત્યારબાદ, કારણ કે પરિમાણોમાંનું એક `&self` છે, વળતર પ્રકારને `&self` ના લાઈફટાઈમ મળે છે, અને બધા જ લાઈફટાઈમ ધ્યાનમાં લેવામાં આવ્યા છે.
 
@@ -321,9 +271,7 @@ fn longest<'a, 'b>(x: &'a str, y: &'b str) -> &str {
 એક વિશેષ આયુષ્ય જેના વિશે આપણે ચર્ચા કરવી જોઈએ તે `'static` છે, જે દર્શાવે છે કે અસરગ્રસ્ત સંદર્ભ પ્રોગ્રામના સમગ્ર કાળ સુધી જીવંત રહી શકે છે. તમામ શબ્દ સાહિત્યોમાં `'static` આયુષ્ય હોય છે, જેને આપણે નીચે મુજબ નોંધાવી શકીએ છીએ:
 
 ```rust
-```rust
 let s: &'static str = "I have a static lifetime.";
-```
 ```
 આ પંક્તિનો લખાણ કાર્યક્રમની બાઈનરીમાં સીધો સંગ્રહિત થયેલો હોય છે, જે હંમેશા ઉપલબ્ધ રહે છે. આથી, તમામ પંક્તિ સાક્ષરતા (string literals) નું આયુષ્ય `'static` હોય
 
@@ -335,9 +283,7 @@ let s: &'static str = "I have a static lifetime.";
 ચાલો આપણે સંક્ષિપ્તમાં એક જunction માં સામાન્ય પ્રકારના પરિમાણો, લક્ષણ સીમાઓ અને આયુષ્યકાળનો ઉલ્લેખ કરવાની સિન્ટેક્સ જોઈએ!
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-11-generics-traits-and-lifetimes/src/main.rs:here}}
-```
 ```
 આ ફંક્શન સૌથી લાંબુ છે Listing 10-21 માંથી જે બે સ્ટ્રિંગ સ્લાઇસમાંથી લાંબી સ્લાઇસ આપે છે. પરંતુ હવે તેમાં `ann` નામનો એક વધારાનો પરિમાણ છે, જેનો પ્રકાર `T` છે, જેને `where` કલમમાં દર્શાવ્યા પ્રમાણે કોઈપણ પ્રકારથી ભરી શકાય છે જે `Display` ટ્રેઇટનું પાલન કરે છે. આ વધારાના પરિમાણને `{}` નો ઉપયોગ કરીને છાપવામાં આવશે, જેના કારણે `Display` ટ્રેઇટ બાઉન્ડ જરૂરી છે. કારણ કે લાઇફટાઇમ એક સામાન્ય પ્રકારનો હોય છે, તેથી લાઇફટાઇમ પરિમાણ `'a` અને સામાન્ય પ્રકારના પરિમાણ `T` બંનેને ફંક્શનના નામ પછી એંગલ કૌંસમાં (angle brackets) જ યાદીમાં મૂકવામાં આવે છે.
 
@@ -345,5 +291,10 @@ let s: &'static str = "I have a static lifetime.";
 
 આ પ્રકરણમાં આપણે ઘણું શીખ્યા! હવે તમે સામાન્ય પ્રકારના પરિમાણો (generic type parameters), લક્ષણો (traits) અને લક્ષણ સીમાઓ (trait bounds), અને સામાન્ય જીવનકાળના પરિમાણો (generic lifetime parameters) વિશે જાણો છો, તેથી તમે ઘણાં વિવિધ સંજોગોમાં કામ કરતા પુનરાવર્તન વગરનો કોડ લખવા માટે તૈયાર છો. સામાન્ય પ્રકારના પરિમાણો તમને અલગ-અલગ પ્રકારો પર કોડ લાગુ કરવા દે છે. લક્ષણો અને લક્ષણ સીમાઓ સુનિશ્ચિત કરે છે કે પ્રકારો સામાન્ય હોવા છતાં, તેમની પાસે કોડને જરૂરી વર્તન હશે. તમે શીખ્યા કે કેવી રીતે જીવનકાળની નોંધ (lifetime annotations) નો ઉપયોગ કરવો જેથી આ લવચીક કોડમાં કોઈ લટકતા સંદર્ભો (dangling references) ન હોય. અને આ બધો વિશ્લેષણ કમ્પાઇલ સમયે થાય છે, જે રનટાઇમ પ્રદર્શનને અસર કરતો નથી!
 
-વફાતભરી વાત છે કે, આપણે આ પ્રકરણમાં ચર્ચા કરેલા વિષયો પર શીખવા માટે ઘણું વધારે છે: પ્રકરણ ૧૮ ટ્રેઇટ ઓબ્જેક્ટ્સની ચર્ચા કરે છે, જે ટ્રેઇટ્સનો ઉપયોગ કરવાની બીજી રીત છે. જીવનકાળ નોંધણીઓ (lifetime annotations) સાથે સંકળાયેલી વધુ જટિલ પરિસ્થિતિઓ પણ છે, જે તમારે અત્યંત અદ્યતન પરિસ્થિતિઓમાં જ જોઈશે; તેના માટે, તમારે Rust Reference વાંચવું જોઈએ. પરંતુ હવે પછી, તમે Rust માં પરીક્ષણો કેવી રીતે લખવા તે શીખી શકશો જેથી તમારો કોડ ધાર્યા પ્રમાણે કાર્ય કરે છે કે નહીં તેની ખાતરી કરી શકાય.
+વફાતભરી વાત છે કે, આપણે આ પ્રકરણમાં ચર્ચા કરેલા વિષયો પર શીખવા માટે ઘણું વધારે છે: પ્રકરણ ૧૮ ટ્રેઇટ ઓબ્જેક્ટ્સની ચર્ચા કરે છે, જે ટ્રેઇટ્સનો ઉપયોગ કરવાની બીજી રીત છે. જીવનકાળ નોંધણીઓ (lifetime annotations) સાથે સંકળાયેલી વધુ જટિલ પરિસ્થિતિઓ પણ છે, જે તમારે અત્યંત અદ્યતન પરિસ્થિતિઓમાં જ જોઈશે; તેના માટે, તમારે [Rust Reference][reference] વાંચવું જોઈએ. પરંતુ હવે પછી, તમે Rust માં પરીક્ષણો કેવી રીતે લખવા તે શીખી શકશો જેથી તમારો કોડ ધાર્યા પ્રમાણે કાર્ય કરે છે કે નહીં તેની ખાતરી કરી શકાય.
 
+
+
+[references-and-borrowing]: ch04-02-references-and-borrowing.html#references-and-borrowing
+[string-slices-as-parameters]: ch04-03-slices.html#string-slices-as-parameters
+[reference]: ../reference/trait-bounds.html

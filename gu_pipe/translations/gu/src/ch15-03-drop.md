@@ -12,9 +12,7 @@
 
 <Listing number="15-14" file-name="src/main.rs" caption="A `CustomSmartPointer` struct that implements the `Drop` trait where we would put our cleanup code">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-14/src/main.rs}}
-```
 ```
 </Listing>
 The `Drop` ટ્રેઇટ `Drop` ટ્રેઇટ પ્રીલ્યુડમાં સમાવિષ્ટ છે, તેથી આપણે તેને સ્કોપમાં લાવવાની જરૂર નથી. અમે `CustomSmartPointer` પર `Drop` ટ્રેઇટનો અમલ કરીએ છીએ અને `drop` પદ્ધતિ માટે એક અમલીકરણ આપીએ છીએ જે `println!` ને બોલાવે છે. `drop` પદ્ધતિનું શરીર એવું સ્થાન છે જ્યાં તમે કોઈપણ તર્ક મૂકી શકો છો જે તમે ઇચ્છો કે જ્યારે તમારા પ્રકારની ઇન્સ્ટન્સ સ્કોપમાંથી બહાર જાય ત્યારે ચલે. અમે અહીં થોડો ટેક્સ્ટ છાપી રહ્યા છીએ જેથી દૃષ્ટિની રીતે દર્શાવી શકાય કે
@@ -24,9 +22,7 @@ The `Drop` ટ્રેઇટ `Drop` ટ્રેઇટ પ્રીલ્યુ
 જ્યારે આપણે આ કાર્યક્રમ ચલાવીશું, ત્યારે આપણને નીચે મુજબનું પરિણામ જોવા મળશે:
 
 ```console
-```console
 {{#include ../listings/ch15-smart-pointers/listing-15-14/output.txt}}
-```
 ```
 Rust આપોઆપ જ `drop` ને બોલાવે છે જ્યારે આપણાં ઉદાહરણો અવકાશ બહાર જાય છે, આપણને જણાવેલ કોડને બોલાવીને. variable (variable) ઊલટ ક્રમમાં છોડી દેવામાં આવે છે જેમાં તેઓ બનાવવામાં આવ્યા હતા, તેથી `d`  `c` પહેલાં છોડી દેવાયું હતું. આ ઉદાહરણનો હેતુ તમને એક દૃશ્ય માર્ગદર્શિકા આપવાનો છે કે `drop` પદ્ધતિ કેવી રીતે કાર્ય કરે છે; સામાન્ય રીતે તમે તમારા પ્રકારને ચલાવવાની જરૂર હોય તેવા સફાઈ કોડને જણાવશો, પ્રિન્ટ સંદેશને નહીં.
 
@@ -37,17 +33,13 @@ Rust આપોઆપ જ `drop` ને બોલાવે છે જ્યાર
 
 <Listing number="15-15" file-name="src/main.rs" caption="Attempting to call the `drop` method from the `Drop` trait manually to clean up early">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-15/src/main.rs:here}}
-```
 ```
 </Listing>
 જ્યારે આપણે આ કોડને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ છીએ, ત્યારે આપણને આ ભૂલ મળશે:
 
 ```console
-```console
 {{#include ../listings/ch15-smart-pointers/listing-15-15/output.txt}}
-```
 ```
 આ ભૂલ સંદેશ જણાવે છે કે આપણને સ્પષ્ટ રીતે `drop` બોલાવાની અનુમતિ નથી. આ ભૂલ સંદેશમાં ‘નિવારક’ શબ્દનો ઉપયોગ થયો છે, જે એક સામાન્ય પ્રોગ્રામિંગ શબ્દ છે અને તેનો અર્થ થાય છે એવું વિધેય (function) જે ઇન્સ્ટન્સને સાફ કરે છે. નિવારક એ નિર્માણકાર (constructor) જેવો જ છે, જે ઇન્સ્ટન્સ બનાવે છે. Rustમાં `drop` વિધેય એક ચોક્કસ નિવારક છે.
 
@@ -59,17 +51,13 @@ Rust આપણને `drop` સ્પષ્ટ રીતે બોલાવા�
 
 <Listing number="15-16" file-name="src/main.rs" caption="Calling `std::mem::drop` to explicitly drop a value before it goes out of scope">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-16/src/main.rs:here}}
-```
 ```
 </Listing>
 આ કોડ ચલાવવાથી નીચે મુજબ છાપવામાં આવશે:
 
 ```console
-```console
 {{#include ../listings/ch15-smart-pointers/listing-15-16/output.txt}}
-```
 ```
 `CustomSmartPointer created` અને `CustomSmartPointer dropped before the end of main` લખાણો વચ્ચે `Dropping CustomSmartPointer with data \`some data\`!` છાપવામાં આવે છે, જે દર્શાવે છે કે `drop` પદ્ધતિનો કોડ `c` ને તે સમયે છોડવા
 

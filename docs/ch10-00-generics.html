@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-78fa1409.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -193,18 +193,14 @@
 <p>આપણે ટૂંકા કાર્યક્રમથી આરંભ કરીશું જે યાદીમાં સૌથી મોટો અંક શોધે છે, જે સૂચિ ૧૦-૧ માં દર્શાવેલ છે.</p>
 <listing number="10-1" file-name="src/main.rs" caption="Finding the largest number in a list of numbers">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-01/src/main.rs:here}}
-```
 ```
 </listing>
 અમે `number_list` ચલણમાં પૂર્ણાંકોની યાદી સંગ્રહિત કરીએ છીએ અને યાદીમાંના પ્રથમ અંકનો સંદર્ભ `largest` નામના variable મૂકીએ છીએ. ત્યારબાદ અમે યાદીમાંના તમામ અંકો પર ચાલીએ છીએ, અને જો વર્તમાન અંક `largest` માં સંગ્રહિત અંક કરતાં મોટો હોય, તો અમે તે ચરમાં રહેલા સંદર્ભને બદલીએ છીએ. જો કે, જો વર્તમાન અંક અત્યાર સુધી જોવા મળેલા સૌથી મોટા અંક જેટલો અથવા તેનાથી ઓછો હોય, તો ચલણમાં કોઈ ફેરફાર થતો નથી અને કોડ યાદીમાંના આગામી અંક પર આગળ વધે છે. યાદીમાંના તમામ અંકોને ધ્યાનમાં લીધા પછી, `largest` એ સૌથી મોટા અંકનો સંદર્ભ આપવો જોઈએ, જે આ કિસ્સામાં 100 છે.
 <p>હવે આપણને બે અલગ-અલગ સંખ્યાઓની યાદીમાં સૌથી મોટી સંખ્યા શોધવાનું કાર્ય સોંપવામાં આવ્યું છે. આવું કરવા માટે, આપણે લિસ્ટિંગ ૧૦-૧ નો કોડ નકલ કરીને બે જુદા જુદા સ્થળોએ વાપરી શકીએ છીએ, જે લિસ્ટિંગ ૧૦-૨ માં દર્શાવેલ છે.</p>
 <listing number="10-2" file-name="src/main.rs" caption="Code to find the largest number in *two* lists of numbers">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-02/src/main.rs}}
-```
 ```
 </listing>
 જોકે આ કોડ કાર્ય કરે છે, કોડનું પુનરાવર્તન કંટાળાજનક અને ભૂલ ઉત્પન્ન કરનારું હોઈ શકે છે. આપણે એ પણ યાદ રાખવું જોઈએ કે જ્યારે આપણે ફેરફાર કરવા માંગીએ છીએ ત્યારે બહુવિધ સ્થળોએ કોડને અપડેટ કરવો પડે છે.
@@ -212,9 +208,7 @@
 <p>Listing 10-3 માં, આપણે સૌથી મોટી સંખ્યા શોધતો કોડ <code>largest</code> નામની <code>function</code> માં બહાર કાઢીએ છીએ. પછી, આપણે Listing 10-2 માંથી બે યાદીઓમાં સૌથી મોટી સંખ્યા શોધવા માટે આ <code>function</code> ને બોલાવીએ છીએ. ભવિષ્યમાં આપણી પાસે રહેલી કોઈપણ અન્ય <code>i32</code> મૂલ્યોની યાદી પર પણ આપણે આ <code>function</code> નો ઉપયોગ કરી શકીએ છીએ.</p>
 <listing number="10-3" file-name="src/main.rs" caption="Abstracted code to find the largest number in two lists">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-03/src/main.rs:here}}
-```
 ```
 </listing>
 The `largest` Function સૌથી `મોટું` વિધેય (function) એક પરિમાણ (parameter) ધરાવે છે જેને `list` કહેવાય છે, જે `i32` મૂલ્યોનો કોઈ ચોક્કસ ભાગ દર્શાવે છે જે આપણે વિધેયમાં મોકલી શકીએ છીએ. આથી, જ્યારે આપણે વિધેયને બોલાવીએ છીએ, ત્યારે કોડ આપેલ મૂલ્યો પર

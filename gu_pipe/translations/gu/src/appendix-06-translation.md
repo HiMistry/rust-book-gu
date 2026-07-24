@@ -52,3 +52,6 @@
 
 બંગાળી
 
+
+
+[label]: https://github.com/rust-lang/book/issues?q=is%3Aopen+is%3Aissue+label%3ATranslations

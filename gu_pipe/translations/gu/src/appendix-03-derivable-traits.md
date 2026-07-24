@@ -88,3 +88,9 @@ The `Copy` Trait `Copy` લક્ષણ ભાગ્યે જ જરૂરી �
 
 The `Default` ટ્રેઇટ `Default` ટ્રેઇટની જરૂરિયાત હોય છે જ્યારે તમે `unwrap_or_default` પદ્ધતિનો ઉપયોગ `Option<T>` ઇન્સ્ટન્સ પર કરો છો, ઉદાહરણ તરીકે. જો `Option<T>` `None` હોય, તો `unwrap_or_default` પદ્ધતિ પ્રકાર `T` માટે `Default::default` નું પરિણામ આપશે જે `Option<T>` માં સંગ્રહિત છે.
 
+
+
+[custom-derive-macros]: ch20-05-macros.html#custom-derive-macros
+[variables-and-data-interacting-with-clone]: ch04-01-what-is-ownership.html#variables-and-data-interacting-with-clone
+[stack-only-data-copy]: ch04-01-what-is-ownership.html#stack-only-data-copy
+[creating-instances-from-other-instances-with-struct-update-syntax]: ch05-01-defining-structs.html#creating-instances-from-other-instances-with-struct-update-syntax

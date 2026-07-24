@@ -6,26 +6,20 @@
 
 <Listing number="5-8" file-name="src/main.rs" caption="Calculating the area of a rectangle specified by separate width and height variables">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/src/main.rs:all}}
-```
 ```
 </Listing>
 હવે, આ કાર્યક્રમ `cargo run` વડે ચલાવો:
 
 ```console
-```console
 {{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/output.txt}}
-```
 ```
 આ કોડ લંબચોરસનું ક્ષેત્રફળ શોધવામાં સફળ થાય છે, દરેક પરિમાણ સાથે `area` ફંક્શનને બોલાવીને, પરંતુ આ કોડને વધુ સ્પષ્ટ અને વાંચી શકાય તેવો બનાવવા માટે આપણે વધુ
 
 કરી શકીએ છીએ. આ કોડની સમસ્યા `area` ના હસ્તાક્ષરમાં સ્પષ્ટપણે દેખાય છે:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/src/main.rs:here}}
-```
 ```
 area ફંક્શન `area` ફંક્શન એક લંબચોરસનું ક્ષેત્રફળ ગણવાનું છે, પરંતુ આપણે જે ફંક્શન લખ્યું છે તેમાં બે પરિમાણો (parameters) છે, અને આપણા પ્રોગ્રામમાં ક્યાંય સ્પષ્ટ નથી કે આ પરિમાણો સંબંધિત છે. પહોળાઈ અને ઊંચાઈને એકસાથે જૂથબદ્ધ કરવું વધુ સુવાચ્ય અને વ્યવસ્થિત રહેશે. આપણે પહેલાથી જ ચર્પ્ટર 3 ના "ટ્યૂપલ પ્રકાર" (The Tuple Type) વિભાગમાં એક રીતની ચર્ચા કરી છે: ટ્યૂપલનો ઉપયોગ કરીને.
 
@@ -35,9 +29,7 @@ area ફંક્શન `area` ફંક્શન એક લંબચોરસ�
 
 <Listing number="5-9" file-name="src/main.rs" caption="Specifying the width and height of the rectangle with a tuple">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-09/src/main.rs}}
-```
 ```
 </Listing>
 એક રીતે, આ કાર્યક્રમ વધુ સારો છે. ટ્યૂપલ્સ આપણને થોડી રચના ઉમેરવા દે છે, અને હવે આપણે માત્ર એક જ Argument પસાર કરી રહ્યા છીએ. પરંતુ બીજા રીતે, આ સંસ્કરણ ઓછું સ્પષ્ટ છે: ટ્યૂપલ્સ તેમના ઘટકોને નામ આપતા નથી, તેથી આપણે ટ્યૂપલના ભાગોમાં અનુક્રમણિકા કરવી પડે છે, જે
@@ -51,9 +43,7 @@ area ફંક્શન `area` ફંક્શન એક લંબચોરસ�
 
 <Listing number="5-10" file-name="src/main.rs" caption="Defining a `Rectangle` struct">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-10/src/main.rs}}
-```
 ```
 </Listing>
 અહીં, આપણે એક struct વ્યાખ્યાયિત કર્યો છે અને તેનું નામ `Rectangle` આપ્યું છે. કદાળી કૌંસની અંદર, આપણે ક્ષેત્રો `width` અને `height` તરીકે વ્યાખ્યાયિત કર્યા છે, જે બંનેનો પ્રકાર `u32` છે. પછી, `main` માં, આપણે `Rectangle` ના એક ચોક્કસ ઉદાહરણ બનાવ્યું છે જેની પહોળાઈ `30` અને ઊંચાઈ `50` છે.
@@ -69,65 +59,49 @@ area કાર્ય `area` કાર્ય `Rectangle` ઉદાહરણના
 
 <Listing number="5-11" file-name="src/main.rs" caption="Attempting to print a `Rectangle` instance">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/src/main.rs}}
-```
 ```
 </Listing>
 જ્યારે આપણે આ કોડને કમ્પાઇલ કરીએ છીએ, ત્યારે આપણને આ મુખ્ય સંદેશ સાથેની ભૂલ આવે છે:
 
 ```text
-```text
 {{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/output.txt:3}}
-```
 ```
 The `println!` Macro `println!` મેક્રો ઘણા પ્રકારના ફોર્મેટિંગ કરી શકે છે, અને મૂળભૂત રીતે, કુંદળિત કૌંસ `println!` ને `Display` તરીકે ઓળખાતા ફોર્મેટિંગનો ઉપયોગ કરવા માટે કહે છે: અંતિમ user માટે સીધા જ આઉટપુટ. અત્યાર સુધી આપણે જોયેલા પ્રાથમિક પ્રકારો `Display` ને મૂળભૂત રીતે અમલમાં મૂકે છે કારણ કે `1` અથવા અન્ય કોઈપણ પ્રાથમિક પ્રકારને userને બતાવવાનો માત્ર એક જ રસ્તો હોય છે. પરંતુ સ્ટ્રક્ચર્સ સાથે, `println!` એ આઉટપુટને કેવી રીતે ફોર્મેટ કરવું જોઈએ તે ઓછું સ્પષ્ટ છે કારણ કે વધુ ડિસ્પ્લે શક્યતાઓ છે: શું તમે અલ્પવિરામ ઇચ્છો છો કે નહીં? શું તમે કૌંસ છાપવા માંગો છો? શું બધા ક્ષેત્રો દર્શાવવા જોઈએ? આ અસ્પષ્ટતાને કારણે, Rust એ અનુમાન કરવાનો પ્રયાસ કરતો નથી કે આપણે શું ઈચ્છીએ છીએ, અને સ્ટ્રક્ચર્સમાં `println!` સાથે ઉપયોગ કરવા માટે `Display` નું પ્રદાન કરેલું અમલીકરણ હોતું નથી અને `{}` પ્લેસહોલ્ડર.
 
 જો આપણે ભૂલો વાંચવાનું ચાલુ રાખીએ, તો આપણને આ ઉપયોગી નોંધ મળશે:
 
 ```text
-```text
 {{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/output.txt:9:10}}
-```
 ```
 ચાલો પ્રયત્ન કરીએ! `println!` મેક્રો કૉલ હવે `println!("rect1 is {rect1:?}");` જેવો દેખાશે. કુંદળી મૂંઝારમાં `:?` મૂકવાથી `println!` ને જણાવવામાં આવે છે કે આપણે `Debug` નામનું આઉટપુટ ફોર્મેટ વાપરવા માંગીએ છીએ. `Debug` ટ્રેઇટ આપણને આપણા સ્ટ્રક્ચરમાં એક એવો રસ્તો પૂરો પાડે છે જે વિકાસકર્તાઓ માટે ઉપયોગી હોય, જેથી તેઓ કોડ ડીબગ કરતી વખતે તેની કિંમત જોઈ શકે. આ
 
 ફેરફાર સાથે કોડને કમ્પાઇલ કરો. અરે! હજી પણ ભૂલ આવે છે:
 
 ```text
-```text
 {{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-01-debug/output.txt:3}}
-```
 ```
 પરંતુ ફરીથી, કમ્પાઇલર આપણને એક મદદરૂપ સૂચન આપે છે:
 
 ```text
-```text
 {{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-01-debug/output.txt:9:10}}
-```
 ```
 Rust માં ડીબગીંગ માહિતી છાપવાની કાર્યક્ષમતા પણ સામેલ છે, પરંતુ તે કાર્યક્ષમતા આપણી struct માટે ઉપલબ્ધ કરાવવા માટે આપણે સ્પષ્ટપણે પસંદગી કરવી પડશે. આ કરવા માટે, આપણે `#[derive(Debug)]` એવું બાહ્ય લક્ષણ struct વ્યાખ્યા પહેલાં ઉમેરીએ છીએ, જે Listing 5-12 માં દર્શાવેલ છે.
 
 <Listing number="5-12" file-name="src/main.rs" caption="Adding the attribute to derive the `Debug` trait and printing the `Rectangle` instance using debug formatting">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-12/src/main.rs}}
-```
 ```
 </Listing>
 હવે જ્યારે આપણે આ કાર્યક્રમ ચલાવીશું, ત્યારે આપણને કોઈ ભૂલો નહીં દેખાય અને નીચે મુજબનું પરિણામ મળશે:
 
 ```console
-```console
 {{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-12/output.txt}}
-```
 ```
 ચોક્કસ! આ દેખાવમાં સૌથી સુંદર પરિણામ નથી, પરંતુ તે આ ઉદાહરણ માટે તમામ ક્ષેત્રોના મૂલ્યો દર્શાવે છે, જે ડિબગીંગ દરમિયાન ચોક્કસપણે મદદરૂપ થશે. જ્યારે આપણી પાસે મોટા struct હોય, ત્યારે વાંચવામાં સરળ પરિણામ મેળવવું ઉપયોગી થઈ શકે છે; આવી સ્થિતિમાં, આપણે `println!` સ્ટ્રિંગમાં `{:#?}` ને બદલે `{:?}` નો ઉપયોગ કરી શકીએ છીએ. આ ઉદાહરણમાં, `{:#?}` શૈલીનો ઉપયોગ કરવાથી નીચે મુજબનું પરિણામ આવશે:
 
 ```console
-```console
 {{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-02-pretty-debug/output.txt}}
-```
 ```
 બીજો વિકલ્પ એ છે કે `Debug` ફોર્મેટનો ઉપયોગ કરીને મૂલ્ય છાપવું, જે માટે `dbg!` મેક્રો વાપરી શકાય છે. આ મેક્રો અભિવ્યક્તિનું માલિકી સ્થાનાંતરણ કરે છે (જેમ કે `println!` સંદર્ભ લે છે), કોડમાં જ્યાં `dbg!` મેક્રો બોલાવવામાં આવ્યો હોય તે ફાઇલ અને લાઇન નંબર, અને તે અભિવ્યક્તિના પરિણામી મૂલ્યને છાપે છે, અને પછી મૂલ્યનું માલિકી સ્થાનાંતરણ કરે છે.
 
@@ -136,16 +110,12 @@ Rust માં ડીબગીંગ માહિતી છાપવાની �
 અહીં એક ઉદાહરણ છે જેમાં આપણે `width` ક્ષેત્રને સોંપવામાં આવેલ મૂલ્ય અને `rect1` માં સમગ્ર struct નું મૂલ્ય બંનેમાં રસ ધરાવીએ છીએ:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-05-dbg-macro/src/main.rs}}
-```
 ```
 અમે `dbg!` ને અભિવ્યક્તિ `30 * scale` ની આસપાસ મૂકી શકીએ છીએ અને, કારણ કે `dbg!` અભિવ્યક્તિના મૂલ્યની માલિકી લે છે, `width` ક્ષેત્રને એ જ મૂલ્ય મળશે જેવું જો આપણે `dbg!` કૉલ ત્યાં ન કર્યો હોત. અમારે નથી જોઈતું કે `dbg!` `rect1` ની માલિકી લે, તેથી અમે આગળના કૉલમાં `rect1` નો સંદર્ભ વાપરીએ છીએ. આ ઉદાહરણનું પરિણામ આ પ્રમાણે દેખાય છે:
 
 ```console
-```console
 {{#include ../listings/ch05-using-structs-to-structure-related-data/no-listing-05-dbg-macro/output.txt}}
-```
 ```
 અમે જોઈ શકીએ છીએ કે પ્રથમ પરિણામ src/main.rs લાઇન ૧૦ માંથી આવ્યું હતું જ્યાં અમે અભિવ્યક્તિ `30 * scale` ને ડિબગ કરી રહ્યા છીએ, અને તેનું પરિણામી મૂલ્ય `60` છે (સંખ્યાઓ માટે લાગુ કરાયેલ `Debug` ફોર્મેટિંગ માત્ર તેમનું મૂલ્ય છાપે છે). src/main.rs લાઇન ૧૪ પર `dbg!` કૉલ `&rect1` નું મૂલ્ય આઉટપુટ કરે છે, જે `Rectangle` સ્ટ્રક્ચર છે. આ આઉટપુટ `Rectangle` પ્રકારના સુંદર `Debug` ફોર્મેટિંગનો ઉપયોગ કરે છે. `dbg!` મેક્રો તમારા કોડ શું કરી રહ્યું છે તે જાણવા માટે ખરેખર મદદરૂપ થઈ શકે છે!
 
@@ -153,3 +123,11 @@ Rust માં ડીબગીંગ માહિતી છાપવાની �
 
 આપણો `area` વિધેય ખૂબ જ વિશેષ છે: તે માત્ર લંબચોરસનું ક્ષેત્રફળ ગણે છે. અન્ય પ્રકાર સાથે કામ ન કરવાને કારણે, આ વર્તણૂકને આપણા `Rectangle` રચના સાથે વધુ નજીકથી જોડવું ઉપયોગી થશે. ચાલો જોઈએ કે આપણે કોડને ફરીથી ગોઠવીને `area` વિધેયને `Rectangle` પ્રકાર પર વ્યાખ્યાયિત થયેલ `area` પદ્ધતિમાં કેવી રીતે ફેરવી શકીએ છીએ.
 
+
+
+[the-tuple-type]: ch03-02-data-types.html#the-tuple-type
+[println]: ../std/macro.println.html
+[dbg]: ../std/macro.dbg.html
+[err]: ch12-06-writing-to-stderr-instead-of-stdout.html
+[app-c]: appendix-03-derivable-traits.md
+[attributes]: ../reference/attributes.html

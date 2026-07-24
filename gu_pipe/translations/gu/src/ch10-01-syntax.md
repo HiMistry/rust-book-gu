@@ -10,9 +10,7 @@
 
 <Listing number="10-4" file-name="src/main.rs" caption="Two functions that differ only in their names and in the types in their signatures">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-04/src/main.rs:here}}
-```
 ```
 </Listing>
 `largest_i32` વિધેય એListing 10-3 માં આપણે જે કાઢ્યું તે છે, જે સ્લાઇસમાં સૌથી મોટું `i32` શોધે છે. `largest_char` વિધેય સ્લાઇસમાં સૌથી મોટું `char` શોધે છે. બંને વિધેયોના મુખ્ય ભાગ સમાન કોડ ધરાવે છે, તેથી ચાલો આપણે એક જ વિધેયમાં સામાન્ય પ્રકાર પરિમાણ (generic type parameter) દાખલ કરીને આ બિનજરૂરીયાત દૂર કરીએ. એક
@@ -22,9 +20,7 @@
 જ્યારે આપણે ફંક્શનના મુખ્ય ભાગમાં કોઈ પરિમાણનો ઉપયોગ કરીએ છીએ, ત્યારે કમ્પાઇલરને ખબર પડે તે માટે આપણે પરિમાણનું નામ હસ્તાક્ષરમાં જાહેર કરવું જોઈએ કે તેનો અર્થ શું છે. એ જ રીતે, જ્યારે આપણે ફંક્શન હસ્તાક્ષરમાં પ્રકાર પરિમાણના નામને વાપરીએ છીએ, ત્યારે આપણે તેનો ઉપયોગ કરતા પહેલા પ્રકાર પરિમાણનું નામ જાહેર કરવું જોઈએ. સામાન્ય `largest` ફંક્શનને વ્યાખ્યાયિત કરવા માટે, આપણે ખૂણાંની અંદર, `<>`, ફંક્શનના નામ અને પરિમાણ યાદી વચ્ચે પ્રકાર નામના ઘોષણાઓ મૂકીએ છીએ, જેમ કે:
 
 ```rust
-```rust
 fn largest<T>(list: &[T]) -> &T {
-```
 ```
 આ વ્યાખ્યાને આપણે આ રીતે સમજીએ છીએ: "કાર્ય `largest` અમુક પ્રકાર `T` પર સામાન્ય છે." આ કાર્યમાં એક પરિમાણ નામ `list` છે, જે પ્રકાર `T` ના મૂલ્યોની સ્લાઇસ છે. `largest` કાર્ય સમાન પ્રકાર `T` ના મૂલ્યનો સંદર્ભ આપશે. Listing
 
@@ -32,17 +28,13 @@ fn largest<T>(list: &[T]) -> &T {
 
 <Listing number="10-5" file-name="src/main.rs" caption="The `largest` function using generic type parameters; this doesn’t compile yet">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/src/main.rs}}
-```
 ```
 </Listing>
 જો આપણે આ કોડ અત્યારે જ કંપાઇલ કરીએ, તો આપણને આ ભૂલ મળશે:
 
 ```console
-```console
 {{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/output.txt}}
-```
 ```
 std::cmp::PartialOrd મદદરૂપ લખાણમાં `std::cmp::PartialOrd` નો ઉલ્લેખ છે, જે એક trait છે, અને આપણે આગલા વિભાગમાં traits વિશે વાત કરીશું. હાલ માટે, જાણો કે આ ભૂલ જણાવે છે કે `largest` નું શરીર બધા સંભવિત પ્રકારો માટે કામ કરશે નહીં કે જે `T` હોઈ શકે છે. કારણ કે આપણે શરીર માં type `T` ના મૂલ્યોની સરખામણી કરવા માંગીએ છીએ, આપણે માત્ર એવા પ્રકારોનો જ ઉપયોગ કરી શકીએ છીએ જેના મૂલ્યોને ક્રમબદ્ધ કરી શકાય. સરખામણીઓ સક્ષમ કરવા માટે, પ્રમાણિત library પાસે `std::cmp::PartialOrd` trait છે જે તમે types પર અમલમાં મૂકી શકો છો (આ trait વિશે વધુ માહિતી માટે Appendix C જુઓ). Listing 10-5 ને સુધારવા માટે, આપણે મદદરૂપ લખાણની સૂચનાને અનુસરીને `T` માટે માન્ય પ્રકારોને માત્ર એવા પ્રકારો સુધી મર્યાદિત કરી શકીએ છીએ જે `PartialOrd` અમલમાં મૂકે છે. આથી listing compile થશે, કારણ કે પ્રમાણિત library `i32` અને `char` બંને પર `PartialOrd` અમલમાં મૂકે છે.
 
@@ -52,9 +44,7 @@ std::cmp::PartialOrd મદદરૂપ લખાણમાં `std::cmp::Partial
 
 <Listing number="10-6" file-name="src/main.rs" caption="A `Point<T>` struct that holds `x` and `y` values of type `T`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-06/src/main.rs}}
-```
 ```
 </Listing>
 struct વ્યાખ્યાઓમાં સામાન્યતાઓ (generics) નો ઉપયોગ કરવાની રીત struct વ્યાખ્યાઓમાં સામાન્યતાઓનો ઉપયોગ કરવાની રીત કાર્ય વ્યાખ્યાઓ માટે વપરાતી રીત જેવી જ છે. પ્રથમ, આપણે સ્ટ્રક્ચરના નામ પછી તરત જ ખૂણાંની અંદર પ્રકાર પરિમાણનું નામ જાહેર કરીએ છીએ. ત્યારબાદ, આપણે સ્ટ્રક્ચરમાં સામાન્ય પ્રકારનો ઉપયોગ કરીએ છીએ જ્યાં આપણે અન્યથા નક્કર ડેટા પ્રકારો સ્પષ્ટ કરતા હોત. ધ્યાનમાં
@@ -63,25 +53,19 @@ struct વ્યાખ્યાઓમાં સામાન્યતાઓ (gene
 
 <Listing number="10-7" file-name="src/main.rs" caption="The fields `x` and `y` must be the same type because both have the same generic data type `T`.">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-07/src/main.rs}}
-```
 ```
 </Listing>
 આ ઉદાહરણમાં, જ્યારે આપણે પૂર્ણાંક મૂલ્ય `5` ને `x` માં સોંપીએ છીએ, ત્યારે આપણે કમ્પાઇલરને જણાવીએ છીએ કે આ `Point<T>` ના ઉદાહરણ માટે સામાન્ય પ્રકાર `T` એ પૂર્ણાંક હશે. પછી, જ્યારે આપણે `y` માટે `4.0` નો ઉલ્લેખ કરીએ છીએ, જેનો પ્રકાર `x` જેટલો જ વ્યાખ્યાયિત કરવામાં આવ્યો છે, ત્યારે આપણને આ પ્રકારની અસંગતતાની ભૂલ મળશે:
 
 ```console
-```console
 {{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-07/output.txt}}
-```
 ```
 `Point` રચનાને વ્યાખ્યાયિત કરવા માટે જેમાં `x` અને `y` બંને સામાન્યિક (generics) છે પરંતુ અલગ-અલગ પ્રકારો હોઈ શકે છે, આપણે બહુવિધ સામાન્યિક પ્રકાર પરિમાણોનો ઉપયોગ કરી શકીએ છીએ. ઉદાહરણ તરીકે, યાદી 10-8 માં, આપણે `Point` ની વ્યાખ્યાને પ્રકાર `T` અને `U` પર સામાન્ય બનાવવા માટે બદલીએ છીએ જ્યાં `x` પ્રકાર `T` નું હોય છે અને `y` પ્રકાર `U` નું હોય છે.
 
 <Listing number="10-8" file-name="src/main.rs" caption="A `Point<T, U>` generic over two types so that `x` and `y` can be values of different types">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-08/src/main.rs}}
-```
 ```
 </Listing>
 હવે `Point` નાં તમામ ઉદાહરણો સ્વીકાર્ય છે! તમે વ્યાખ્યામાં જેટલા જનરિક પ્રકાર પરિમાણો (generic type parameters) ઇચ્છો તેટલા વાપરી શકો છો, પરંતુ વધારે પડતાં વાપરવાથી તમારો કોડ વાંચવામાં મુશ્કેલ બની શકે છે. જો તમને તમારા કોડમાં ઘણાં જનરિક પ્રકારોની જરૂર જણાય, તો એનો અર્થ એ થઈ શકે કે તમારા કોડને નાના ભાગોમાં પુનર્ગઠન કરવાની જરૂર છે.
@@ -91,24 +75,20 @@ struct વ્યાખ્યાઓમાં સામાન્યતાઓ (gene
 જે રીતે આપણે struct સાથે કર્યું હતું, તેમ આપણે સામાન્ય ડેટા પ્રકારોને તેમનાં વિવિધ સ્વરૂપોમાં સમાવવા માટે સમૂહો (enums) પણ વ્યાખ્યાયિત કરી શકીએ છીએ. ચાલો ફરી એકવાર `Option<T>` સમૂહ પર નજર કરીએ જે પ્રમાણભૂત પુસ્તકાલય પ્રદાન કરે છે, જેનો આપણે પ્રકરણ ૬ માં ઉપયોગ કર્યો હતો.
 
 ```rust
-```rust
 enum Option<T> {
     Some(T),
     None,
 }
-```
 ```
 આ વ્યાખ્યા હવે તમને વધુ સ્પષ્ટ થશે. તમે જોઈ શકો છો કે `Option<T>` એનિમે પ્રકાર `T` પર સામાન્ય છે અને તેના બે પ્રકારો છે: `Some`, જે પ્રકાર `T` નું એક મૂલ્ય ધરાવે છે, અને `None` પ્રકાર જે કોઈ મૂલ્ય ધરાવતો નથી. `Option<T>` એનિમને વાપરવાથી, અમે વૈકલ્પિક મૂલ્યની અમૂર્ત વિભાવના વ્યક્ત કરી શકીએ છીએ, અને કારણ કે `Option<T>` સામાન્ય છે, અમે આ અમૂર્તતાનો ઉપયોગ કોઈપણ પ્રકારના વૈકલ્પિક મૂલ્ય માટે કરી શકીએ છીએ.
 
 એનિમો બહુવિધ સામાન્ય પ્રકારોનો ઉપયોગ કરી શકે છે. પ્રકરણ 9 માં આપણે જે `Result` એનિમને વ્યાખ્યાયિત કર્યો હતો તે તેનું એક ઉદાહરણ છે:
 
 ```rust
-```rust
 enum Result<T, E> {
     Ok(T),
     Err(E),
 }
-```
 ```
 એનુમ બે પ્રકારો, `T` અને `E` માટે સામાન્ય છે, અને તેના બે સ્વરૂપો છે: `Ok`, જે પ્રકાર `T` નું મૂલ્ય ધરાવે છે, અને `Err`, જે પ્રકાર `E` નું મૂલ્ય ધરાવે છે. આ વ્યાખ્યા એ વાતને અનુકૂળ બનાવે છે કે `Result` એનુમનો ઉપયોગ ગમે ત્યાં કરી શકાય જ્યાં આપણી પાસે કોઈ ક્રિયા હોય જે સફળ થઈ શકે (અમુક પ્રકારના `T` મૂલ્યનું પરિણામ આપે) અથવા નિષ્ફળ જાય (અમુક પ્રકારના `E` ભૂલનું પરિણામ આપે). હકીકતમાં, આ જ આપણે યાદી 9-3 માં એક `file` ખોલવા માટે વાપર્યું હતું, જ્યાં `T` ને સફળતાપૂર્વક `file` ખોલતી વખતે `std::fs::File` પ્રકારથી ભરવામાં આવ્યું હતું અને `E` ને `std::io::Error` પ્રકારથી ભરવામાં આવ્યું હતું જ્યારે `file` ખોલવામાં સમસ્યા હતી.
 
@@ -120,9 +100,7 @@ enum Result<T, E> {
 
 <Listing number="10-9" file-name="src/main.rs" caption="Implementing a method named `x` on the `Point<T>` struct that will return a reference to the `x` field of type `T`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-09/src/main.rs}}
-```
 ```
 </Listing>
 અહીં, આપણે `x` નામની એક પદ્ધતિ વ્યાખ્યાયિત કરી છે જે `Point<T>` પર અમલમાં મૂકાયેલ છે અને તે ક્ષેત્ર `x` માં રહેલા
@@ -133,9 +111,7 @@ enum Result<T, E> {
 
 <Listing number="10-10" file-name="src/main.rs" caption="An `impl` block that only applies to a struct with a particular concrete type for the generic type parameter `T`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-10/src/main.rs:here}}
-```
 ```
 </Listing>
 આ કોડનો અર્થ એ થાય છે કે `Point<f32>` પ્રકારમાં `distance_from_origin` નામની પદ્ધતિ હશે; `Point<T>` ના અન્ય ઉદાહરણો, જ્યાં `T` પ્રકાર `f32` ન હોય, તેમની પાસે આ પદ્ધતિ વ્યાખ્યાયિત થયેલી રહેશે નહીં. આ પદ્ધતિ આપણા બિંદુનું (0.0, 0.0) 좌표ઓવાળા બિંદુથી અંતર માપે છે અને માત્ર ફ્લોટિંગ-પોઇન્ટ પ્રકારો માટે ઉપલબ્ધ ગાણિતિક ક્રિયાઓનો ઉપયોગ
@@ -144,9 +120,7 @@ enum Result<T, E> {
 
 <Listing number="10-11" file-name="src/main.rs" caption="A method that uses generic types that are different from its struct’s definition">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-11/src/main.rs}}
-```
 ```
 </Listing>
 `main` માં, આપણે એક `Point` વ્યાખ્યાયિત કર્યો છે જેમાં `x` માટે `i32` (મૂલ્ય `5` સાથે) અને `y` માટે `f64` (મૂલ્ય `10.4` સાથે) છે. `p2` variable એ `Point` struct છે જેમાં `x` માટે સ્ટ્રિંગ સ્લાઇસ (મૂલ્ય `"Hello"` સાથે) અને `y` માટે `char` (મૂલ્ય `c` સાથે) છે. `p1` પર `mixup` ને `p2` Argument સાથે બોલાવવાથી આપણને `p3` મળે છે, જેમાં `x` માટે `i32` હશે કારણ કે `x`, `p1` માંથી આવ્યું છે. `p3` variable `y` માટે `char` હશે કારણ કે `y`, `p2` માંથી આવ્યું છે. `println!` મેક્રો કૉલ `p3.x = 5, p3.y = c` પ્રિન્ટ કરશે.
@@ -162,17 +136,14 @@ Rust આને કમ્પાઇલ સમયે જનરિક કોડન�
 ચાલો જોઈએ કે આ કેવી રીતે કાર્ય કરે છે, પ્રમાણિત લાયબ્રેરીના સામાન્ય `Option<T>`  એનમનો ઉપયોગ કરીને:
 
 ```rust
-```rust
 let integer = Some(5);
 let float = Some(5.0);
-```
 ```
 જ્યારે Rust આ કોડને કમ્પાઇલ કરે છે, ત્યારે તે મોનોમોર્ફાઇઝેશન કરે છે. તે પ્રક્રિયા દરમિયાન, કમ્પાઇલર `Option<T>` ઇન્સ્ટન્સમાં વપરાયેલ મૂલ્યો વાંચે છે અને બે પ્રકારના `Option<T>` ઓળખે છે: એક `i32` છે અને બીજો `f64` છે. આથી, તે `Option<T>` ની સામાન્ય વ્યાખ્યાને `i32` અને `f64` માટે વિશિષ્ટ વ્યાખ્યાઓમાં વિસ્તૃત કરે છે, જેના દ્વારા સામાન્ય વ્યાખ્યાને વિશિષ્ટ વ્યાખ્યાઓ સાથે બદલે છે.
 
 મોનોમોર્ફાઇઝ થયેલ કોડનું સંસ્કરણ નીચેના જેવું દેખાય છે (કમ્પાઇલર અહીં દર્શાવવા માટે ઉપયોગમાં લેવાતા નામો કરતાં અલગ નામોનો ઉપયોગ કરે છે):
 
 <Listing file-name="src/main.rs">
-```rust
 ```rust
 enum Option_i32 {
     Some(i32),
@@ -188,7 +159,6 @@ fn main() {
     let integer = Option_i32::Some(5);
     let float = Option_f64::Some(5.0);
 }
-```
 ```
 </Listing>
 વિકલ્પ (Option) નું સામાન્ય સ્વરૂપ સામાન્ય `Option<T>` ને કમ્પાઇલર દ્વારા નિર્માણ પામેલા વિશિષ્ટ વ્યાખ્યાઓ વડે બદલવામાં આવે છે. કારણ કે Rust સામાન્ય કોડને એવા કોડમાં કમ્પાઇલ કરે છે જે દરેક ઉદાહરણમાં પ્રકાર (type) નો ઉલ્લેખ કરે છે, તેથી સામાન્ય ઉપયોગ માટે કોઈ રનટાઇમ ખર્ચ લાગતો નથી. જ્યારે કોડ ચાલે છે, ત્યારે તે એ જ રીતે કાર્ય કરે છે જે રીતે આપણે દરેક વ્યાખ્યાને જાતે જ વારંવાર લખી હોત. મોનોમોર્ફિઝેશન (monomorphization) ની પ્રક્રિયા Rust ના સામાન્ય સ્વરૂપોને રનટાઇમ પર અત્યંત કાર્યક્ષમ બનાવે છે.

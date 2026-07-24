@@ -78,5 +78,10 @@ Ferris ફેરિસ | Ferris | Meaning | | ----------------------------------
 
 ## Source Code
 
-આ પુસ્તક જેમાંથી ઉત્પન્ન થયેલ છે તે સ્ત્રોત ફાઈલો GitHub પર મળી શકે છે.
+આ પુસ્તક જેમાંથી ઉત્પન્ન થયેલ છે તે સ્ત્રોત ફાઈલો [GitHub][book] પર મળી શકે છે.
 
+
+
+[nsprust]: https://nostarch.com/rust-programming-language-3rd-edition
+[nsp]: https://nostarch.com/
+[book]: https://github.com/rust-lang/book/tree/main/src

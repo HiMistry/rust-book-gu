@@ -35,9 +35,7 @@
 
 <Listing number="12-5" file-name="src/main.rs" caption="Extracting a `parse_config` function from `main`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-05/src/main.rs:here}}
-```
 ```
 </Listing>
 અમે હજી કમાન્ડ લાઇન આર્ગ્યુમેન્ટ્સને વેક્ટર (vector) માં એકત્રિત કરી રહ્યા છીએ, પરંતુ ઇન્ડેક્સ ૧ પરના આર્ગ્યુમેન્ટ મૂલ્યને `query` variable અને ઇન્ડેક્સ ૨ પરના આર્ગ્યુમેન્ટ મૂલ્યને `file_path` variable સોંપવાને બદલે, અમે સમગ્ર વેક્ટરને `parse_config` ફંક્શનમાં પસાર કરીએ છીએ. `parse_config` ફંક્શન પછી તર્ક ધરાવે છે કે કયું આર્ગ્યુમેન્ટ કયા variable જાય છે અને મૂલ્યોને પાછા `main` માં મોકલે છે. અમે હજી પણ `query` અને `file_path` variables `main` માં બનાવીએ છીએ, પરંતુ `main` હવે કમાન્ડ લાઇન આર્ગ્યુમેન્ટ્સ અને variables વચ્ચેનો સંબંધ નક્કી કરવાની જવાબદારી ધરાવતું નથી.
@@ -53,9 +51,7 @@ Listing 12-6 દર્શાવે છે `parse_config` વિધિમાં �
 
 <Listing number="12-6" file-name="src/main.rs" caption="Refactoring `parse_config` to return an instance of a `Config` struct">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-06/src/main.rs:here}}
-```
 ```
 </Listing>
 અમે `Config` નામનું struct ઉમેર્યું છે જે `query` અને `file_path` નામના ક્ષેત્રો ધરાવે છે. `parse_config` નું નિદર્શક હવે દર્શાવે છે કે તે એક `Config` મૂલ્ય આપે છે. `parse_config` ની અંદર, જ્યાં અમે પહેલાં string slices આપતા હતા જે `args` માં રહેલા  `String` મૂલ્યોનો સંદર્ભ લેતા હતા, ત્યાં હવે અમે `Config` ને ધરાવે છે એવા owned `String` મૂલ્યો. `main` માં `args` variable આર્ગ્યુમેન્ટ મૂલ્યોનો માલિક છે અને તે માત્ર `parse_config` કાર્યને તેમ લોન આપવા દે છે, જેનો અર્થ થાય છે કે જો `Config` `args` માં રહેલા મૂલ્યોનું સ્વામિત્વ લેવાનો પ્રયત્ન કરે તો અમે Rust ના લોન નિયમોનું ઉલ્લંઘન કરીશું.
@@ -133,9 +129,7 @@ Listing 12-9 દર્શાવે છે કે આપણે `Config::build` �
 
 <Listing number="12-9" file-name="src/main.rs" caption="Returning a `Result` from `Config::build`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-09/src/main.rs:here}}
-```
 ```
 </Listing>
 અમારું `build` વિધેય એક `Result` પરત કરે છે જેમાં સફળતાના કિસ્સામાં `Config` ઇન્સ્ટન્સ અને ભૂલના કિસ્સામાં સ્ટ્રિંગ લિટરલ હોય છે. અમારી ભૂલની કિંમતો હંમેશાં સ્ટ્રિંગ લિટરલ હશે જે `'static` આયુષ્ય ધરાવે છે. We’ve
@@ -148,9 +142,7 @@ Listing 12-9 દર્શાવે છે કે આપણે `Config::build` �
 
 <Listing number="12-10" file-name="src/main.rs" caption="Exiting with an error code if building a `Config` fails">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-10/src/main.rs:here}}
-```
 ```
 </Listing>
 આ યાદીમાં, અમે એક એવી પદ્ધતિનો ઉપયોગ કર્યો છે જેનું આપણે હજી વિગતવાર વર્ણન કર્યું નથી: `unwrap_or_else`, જે સ્ટાન્ડર્ડ લાઈબ્રેરી દ્વારા `Result<T, E>` પર વ્યાખ્યાયિત થયેલ છે. `unwrap_or_else` નો ઉપયોગ કરીને, આપણી પાસે કસ્ટમ, નોન-`panic!` ભૂલ નિયંત્રણ કરવાની ક્ષમતા છે. જો `Result` એ `Ok` મૂલ્ય હોય, તો આ પદ્ધતિનું વર્તન `unwrap` જેવું જ હોય છે: તે અંદરના મૂલ્યને પરત કરે છે જે `Ok` ઘેરી લે છે. જો કે, જો મૂલ્ય `Err` મૂલ્ય હોય, તો આ પદ્ધતિ ક્લોઝરમાં રહેલા કોડને બોલાવે છે, જે એક અનામી ફંક્શન છે જેને આપણે `unwrap_or_else` ને Argument તરીકે વ્યાખ્યાયિત કરીએ છીએ અને પસાર કરીએ છીએ. આપણે પ્રકરણ 13 માં ક્લોઝર વિશે વધુ વિગતવાર વાત કરીશું. અત્યારે, તમારે માત્ર એટલું જ જાણવાની જરૂર છે કે `unwrap_or_else` એ `Err` ના અંદરના મૂલ્યને પાસ કરશે, જે આ કિસ્સામાં સ્થિર સ્ટ્રિંગ `"not enough arguments"` છે જેને આપણે યાદી 12-9 માં ઉમેર્યું હતું, તે આપણા ક્લોઝરમાં Argument `err` તરીકે દેખાય છે. ક્લોઝરમાં રહેલો કોડ જ્યારે ચાલે છે ત્યારે `err` મૂલ્યનો ઉપયોગ કરી શકે છે.
@@ -158,9 +150,7 @@ Listing 12-9 દર્શાવે છે કે આપણે `Config::build` �
 અમે `use` લીટી ઉમેરી છે જેથી કરીને `process` ને પ્રમાણિત લાયબ્રેરીમાંથી અવકાશમાં લાવવામાં આવે. ભૂલની સ્થિતિમાં ચલાવવામાં આવનાર ક્લોઝર (closure) નો કોડ માત્ર બે લીટીનો છે: અમે `err` મૂલ્ય છાપીએ છીએ અને પછી `process::exit` ને બોલાવીએ છીએ. `process::exit` ફંક્શન તરત જ પ્રોગ્રામને બંધ કરી દેશે અને બહાર નીકળવાની સ્થિતિ કોડ તરીકે આપવામાં આવેલી સંખ્યા પરત કરશે. આ Listing 12-8 માં અમે ઉપયોગ કરેલ `panic!` આધારિત હેન્ડલિંગ જેવું જ છે, પરંતુ હવે અમને વધારાનું આઉટપુટ મળતું નથી. ચાલો પ્રયત્ન કરીએ:
 
 ```console
-```console
 {{#include ../listings/ch12-an-io-project/listing-12-10/output.txt}}
-```
 ```
 મહાન! આ પરિણામ અમારા userઓ માટે વધુ મૈત્રીપૂર્ણ છે.
 
@@ -170,9 +160,7 @@ Listing 12-11 દર્શાવે છે `run` કાર્યને બહા
 
 <Listing number="12-11" file-name="src/main.rs" caption="Extracting a `run` function containing the rest of the program logic">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-11/src/main.rs:here}}
-```
 ```
 </Listing>
 run કાર્ય હવે `main` માંથી બાકી રહેલા તમામ તર્ક ધરાવે છે, ફાઈલ વાંચવાથી આરંભીને. `run` કાર્ય `Config` ઉદાહરણને Argument તરીકે સ્વીકારે છે.
@@ -181,9 +169,7 @@ run કાર્ય હવે `main` માંથી બાકી રહેલ�
 
 <Listing number="12-12" file-name="src/main.rs" caption="Changing the `run` function to return `Result`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-12/src/main.rs:here}}
-```
 ```
 </Listing>
 અહીં ત્રણ મહત્ત્વના પરિવર્તનો કર્યા છે. પ્રથમ, અમે `run` ફંક્શનનો વળતર પ્રકાર `Result<(), Box<dyn Error>>` માં બદલ્યો છે. આ ફંક્શન અગાઉ એકમ પ્રકાર, `()` , પરત કરતું હતું, અને અમે તેને `Ok` કેસમાં પરત થતા મૂલ્ય
@@ -197,9 +183,7 @@ run કાર્ય હવે `main` માંથી બાકી રહેલ�
 જ્યારે તમે આ કોડ ચલાવો છો, ત્યારે તે કમ્પાઇલ થશે પરંતુ એક ચેતવણી પ્રદર્શિત કરશે:
 
 ```console
-```console
 {{#include ../listings/ch12-an-io-project/listing-12-12/output.txt}}
-```
 ```
 Rust જણાવે છે કે આપણી કોડ `Result` મૂલ્યને અવગણ્યું અને આ `Result` કોઈ ભૂલ સૂચવી શકે છે. પરંતુ આપણે ચકાસતા નથી કે ભૂલ આવી છે કે નહીં, અને કમ્પાઇલર આપણને યાદ અપાવે છે કે આપણે સંભવતઃ અહીં ભૂલ-નિવારણ કોડ રાખવાનો હતો! ચાલો હવે તે સમસ્યાને સુધારીએ.
 
@@ -208,9 +192,7 @@ Rust જણાવે છે કે આપણી કોડ `Result` મૂલ્�
 ફાઈલનું નામ: src/main.rs
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/no-listing-01-handling-errors-in-main/src/main.rs:here}}
-```
 ```
 આપણે `unwrap_or_else` ને બદલે `if let` વાપરીએ છીએ, જેથી ચકાસી શકાય કે `run` કોઈ `Err` મૂલ્ય આપે છે કે નહીં અને જો તેવું હોય તો `process::exit(1)` ને બોલાવી શકાય. `run` કાર્યક્રમ એવું કોઈ મૂલ્ય આપતો નથી જેને આપણે `unwrap` કરવા માંગીએ છીએ, જે રીતે `Config::build` `Config` ઉદાહરણ આપે છે. કારણ કે `run` સફળતાના કિસ્સામાં `()` આપે છે, તેથી આપણને માત્ર ભૂલ શોધવામાં રસ છે, માટે આપણને `unwrap_or_else` દ્વારા મેળવેલા મૂલ્યની જરૂર નથી, જે માત્ર `()` જ હશે. The bodies of the `if let` and the `unwrap_or_else`
 
@@ -225,9 +207,7 @@ Rust જણાવે છે કે આપણી કોડ `Result` મૂલ્�
 
 <Listing number="12-13" file-name="src/lib.rs" caption="Defining the `search` function in *src/lib.rs*">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}
-```
 ```
 </Listing>
 આપણે `pub` કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી `search` ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!
@@ -236,9 +216,7 @@ Rust જણાવે છે કે આપણી કોડ `Result` મૂલ્�
 
 <Listing number="12-14" file-name="src/main.rs" caption="Using the `minigrep` library crate’s `search` function in *src/main.rs*">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}
-```
 ```
 </Listing>
 આપણે `use minigrep::search` લાઇન ઉમેરીએ છીએ જેથી કરીને `search` કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, `run` કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે `search` કાર્યને બોલાવીએ છીએ અને `config.query` મૂલ્ય અને `contents` ને Argumentો તરીકે પસાર કરીએ છીએ. પછી, `run` એક `for` લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે `search` દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે `main` કાર્યમાં રહેલા `println!` કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).
@@ -257,18 +235,14 @@ Rust જણાવે છે કે આપણી કોડ `Result` મૂલ્�
 સૌ પ્રથમ, આપણે `search` વિધેયની નિશાની (signature) src/lib.rs માં Listing 12-13 માં દર્શાવ્યા પ્રમાણે વ્યાખ્યાયિત કરીએ, જેમાં `unimplemented!` મેક્રોને બોલાવતું શરીર (body) હશે. જ્યારે આપણે અમલીકરણ ભરીશું ત્યારે આપણે નિશાની વિશે વધુ વિગતવાર સમજાવીશું.
 
 <Listing number="12-13" file-name="src/lib.rs" caption="Defining the `search` function in *src/lib.rs*">
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}
-```
 </Listing>
 આપણે `pub` કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી `search` ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!
 
 હવે આપણે `src/lib.rs` માં વ્યાખ્યાયિત કરેલા કોડને `src/main.rs` માં બાઈનરી ક્રેટના અવકાશમાં લાવવાની અને તેને બોલાવવાની જરૂર છે, જે યાદી 12-14 માં દર્શાવેલ છે.
 
 <Listing number="12-14" file-name="src/main.rs" caption="Using the `minigrep` library crate’s `search` function in *src/main.rs*">
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}
-```
 </Listing>
 આપણે `use minigrep::search` લાઇન ઉમેરીએ છીએ જેથી કરીને `search` કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, `run` કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે `search` કાર્યને બોલાવીએ છીએ અને `config.query` મૂલ્ય અને `contents` ને Argumentો તરીકે પસાર કરીએ છીએ. પછી, `run` એક `for` લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે `search` દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે `main` કાર્યમાં રહેલા `println!` કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).
 
@@ -286,18 +260,14 @@ Rust જણાવે છે કે આપણી કોડ `Result` મૂલ્�
 સૌ પ્રથમ, આપણે `search` વિધેયની નિશાની (signature) src/lib.rs માં Listing 12-13 માં દર્શાવ્યા પ્રમાણે વ્યાખ્યાયિત કરીએ, જેમાં `unimplemented!` મેક્રોને બોલાવતું શરીર (body) હશે. જ્યારે આપણે અમલીકરણ ભરીશું ત્યારે આપણે નિશાની વિશે વધુ વિગતવાર સમજાવીશું.
 
 <Listing number="12-13" file-name="src/lib.rs" caption="Defining the `search` function in *src/lib.rs*">
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}
-```
 </Listing>
 આપણે `pub` કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી `search` ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!
 
 હવે આપણે `src/lib.rs` માં વ્યાખ્યાયિત કરેલા કોડને `src/main.rs` માં બાઈનરી ક્રેટના અવકાશમાં લાવવાની અને તેને બોલાવવાની જરૂર છે, જે યાદી 12-14 માં દર્શાવેલ છે.
 
 <Listing number="12-14" file-name="src/main.rs" caption="Using the `minigrep` library crate’s `search` function in *src/main.rs*">
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}
-```
 </Listing>
 આપણે `use minigrep::search` લાઇન ઉમેરીએ છીએ જેથી કરીને `search` કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, `run` કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે `search` કાર્યને બોલાવીએ છીએ અને `config.query` મૂલ્ય અને `contents` ને Argumentો તરીકે પસાર કરીએ છીએ. પછી, `run` એક `for` લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે `search` દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે `main` કાર્યમાં રહેલા `println!` કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).
 
@@ -315,18 +285,14 @@ Rust જણાવે છે કે આપણી કોડ `Result` મૂલ્�
 સૌ પ્રથમ, આપણે `search` વિધેયની નિશાની (signature) src/lib.rs માં Listing 12-13 માં દર્શાવ્યા પ્રમાણે વ્યાખ્યાયિત કરીએ, જેમાં `unimplemented!` મેક્રોને બોલાવતું શરીર (body) હશે. જ્યારે આપણે અમલીકરણ ભરીશું ત્યારે આપણે નિશાની વિશે વધુ વિગતવાર સમજાવીશું.
 
 <Listing number="12-13" file-name="src/lib.rs" caption="Defining the `search` function in *src/lib.rs*">
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}
-```
 </Listing>
 આપણે `pub` કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી `search` ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!
 
 હવે આપણે `src/lib.rs` માં વ્યાખ્યાયિત કરેલા કોડને `src/main.rs` માં બાઈનરી ક્રેટના અવકાશમાં લાવવાની અને તેને બોલાવવાની જરૂર છે, જે યાદી 12-14 માં દર્શાવેલ છે.
 
 <Listing number="12-14" file-name="src/main.rs" caption="Using the `minigrep` library crate’s `search` function in *src/main.rs*">
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}
-```
 </Listing>
 આપણે `use minigrep::search` લાઇન ઉમેરીએ છીએ જેથી કરીને `search` કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, `run` કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે `search` કાર્યને બોલાવીએ છીએ અને `config.query` મૂલ્ય અને `contents` ને Argumentો તરીકે પસાર કરીએ છીએ. પછી, `run` એક `for` લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે `search` દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે `main` કાર્યમાં રહેલા `println!` કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).
 
@@ -344,18 +310,14 @@ Rust જણાવે છે કે આપણી કોડ `Result` મૂલ્�
 સૌ પ્રથમ, આપણે `search` વિધેયની નિશાની (signature) src/lib.rs માં Listing 12-13 માં દર્શાવ્યા પ્રમાણે વ્યાખ્યાયિત કરીએ, જેમાં `unimplemented!` મેક્રોને બોલાવતું શરીર (body) હશે. જ્યારે આપણે અમલીકરણ ભરીશું ત્યારે આપણે નિશાની વિશે વધુ વિગતવાર સમજાવીશું.
 
 <Listing number="12-13" file-name="src/lib.rs" caption="Defining the `search` function in *src/lib.rs*">
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}
-```
 </Listing>
 આપણે `pub` કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી `search` ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!
 
 હવે આપણે `src/lib.rs` માં વ્યાખ્યાયિત કરેલા કોડને `src/main.rs` માં બાઈનરી ક્રેટના અવકાશમાં લાવવાની અને તેને બોલાવવાની જરૂર છે, જે યાદી 12-14 માં દર્શાવેલ છે.
 
 <Listing number="12-14" file-name="src/main.rs" caption="Using the `minigrep` library crate’s `search` function in *src/main.rs*">
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}
-```
 </Listing>
 આપણે `use minigrep::search` લાઇન ઉમેરીએ છીએ જેથી કરીને `search` કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, `run` કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે `search` કાર્યને બોલાવીએ છીએ અને `config.query` મૂલ્ય અને `contents` ને Argumentો તરીકે પસાર કરીએ છીએ. પછી, `run` એક `for` લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે `search` દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે `main` કાર્યમાં રહેલા `println!` કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).
 
@@ -373,18 +335,14 @@ Rust જણાવે છે કે આપણી કોડ `Result` મૂલ્�
 સૌ પ્રથમ, આપણે `search` વિધેયની નિશાની (signature) src/lib.rs માં Listing 12-13 માં દર્શાવ્યા પ્રમાણે વ્યાખ્યાયિત કરીએ, જેમાં `unimplemented!` મેક્રોને બોલાવતું શરીર (body) હશે. જ્યારે આપણે અમલીકરણ ભરીશું ત્યારે આપણે નિશાની વિશે વધુ વિગતવાર સમજાવીશું.
 
 <Listing number="12-13" file-name="src/lib.rs" caption="Defining the `search` function in *src/lib.rs*">
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}
-```
 </Listing>
 આપણે `pub` કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી `search` ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!
 
 હવે આપણે `src/lib.rs` માં વ્યાખ્યાયિત કરેલા કોડને `src/main.rs` માં બાઈનરી ક્રેટના અવકાશમાં લાવવાની અને તેને બોલાવવાની જરૂર છે, જે યાદી 12-14 માં દર્શાવેલ છે.
 
 <Listing number="12-14" file-name="src/main.rs" caption="Using the `minigrep` library crate’s `search` function in *src/main.rs*">
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}
-```
 </Listing>
 આપણે `use minigrep::search` લાઇન ઉમેરીએ છીએ જેથી કરીને `search` કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, `run` કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે `search` કાર્યને બોલાવીએ છીએ અને `config.query` મૂલ્ય અને `contents` ને Argumentો તરીકે પસાર કરીએ છીએ. પછી, `run` એક `for` લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે `search` દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે `main` કાર્યમાં રહેલા `println!` કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).
 
@@ -402,18 +360,14 @@ Rust જણાવે છે કે આપણી કોડ `Result` મૂલ્�
 સૌ પ્રથમ, આપણે `search` વિધેયની નિશાની (signature) src/lib.rs માં Listing 12-13 માં દર્શાવ્યા પ્રમાણે વ્યાખ્યાયિત કરીએ, જેમાં `unimplemented!` મેક્રોને બોલાવતું શરીર (body) હશે. જ્યારે આપણે અમલીકરણ ભરીશું ત્યારે આપણે નિશાની વિશે વધુ વિગતવાર સમજાવીશું.
 
 <Listing number="12-13" file-name="src/lib.rs" caption="Defining the `search` function in *src/lib.rs*">
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}
-```
 </Listing>
 આપણે `pub` કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી `search` ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!
 
 હવે આપણે `src/lib.rs` માં વ્યાખ્યાયિત કરેલા કોડને `src/main.rs` માં બાઈનરી ક્રેટના અવકાશમાં લાવવાની અને તેને બોલાવવાની જરૂર છે, જે યાદી 12-14 માં દર્શાવેલ છે.
 
 <Listing number="12-14" file-name="src/main.rs" caption="Using the `minigrep` library crate’s `search` function in *src/main.rs*">
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}
-```
 </Listing>
 આપણે `use minigrep::search` લાઇન ઉમેરીએ છીએ જેથી કરીને `search` કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, `run` કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે `search` કાર્યને બોલાવીએ છીએ અને `config.query` મૂલ્ય અને `contents` ને Argumentો તરીકે પસાર કરીએ છીએ. પછી, `run` એક `for` લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે `search` દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે `main` કાર્યમાં રહેલા `println!` કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).
 
@@ -431,18 +385,14 @@ Rust જણાવે છે કે આપણી કોડ `Result` મૂલ્�
 સૌ પ્રથમ, આપણે `search` વિધેયની નિશાની (signature) src/lib.rs માં Listing 12-13 માં દર્શાવ્યા પ્રમાણે વ્યાખ્યાયિત કરીએ, જેમાં `unimplemented!` મેક્રોને બોલાવતું શરીર (body) હશે. જ્યારે આપણે અમલીકરણ ભરીશું ત્યારે આપણે નિશાની વિશે વધુ વિગતવાર સમજાવીશું.
 
 <Listing number="12-13" file-name="src/lib.rs" caption="Defining the `search` function in *src/lib.rs*">
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}
-```
 </Listing>
 આપણે `pub` કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી `search` ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!
 
 હવે આપણે `src/lib.rs` માં વ્યાખ્યાયિત કરેલા કોડને `src/main.rs` માં બાઈનરી ક્રેટના અવકાશમાં લાવવાની અને તેને બોલાવવાની જરૂર છે, જે યાદી 12-14 માં દર્શાવેલ છે.
 
 <Listing number="12-14" file-name="src/main.rs" caption="Using the `minigrep` library crate’s `search` function in *src/main.rs*">
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}
-```
 </Listing>
 આપણે `use minigrep::search` લાઇન ઉમેરીએ છીએ જેથી કરીને `search` કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, `run` કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે `search` કાર્યને બોલાવીએ છીએ અને `config.query` મૂલ્ય અને `contents` ને Argumentો તરીકે પસાર કરીએ છીએ. પછી, `run` એક `for` લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે `search` દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે `main` કાર્યમાં રહેલા `println!` કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).
 
@@ -452,3 +402,11 @@ Rust જણાવે છે કે આપણી કોડ `Result` મૂલ્�
 
 ચાલો આ નવું પ્રાપ્ત થયેલ મોડ્યુલારિટીનો લાભ લઈએ અને કંઈક એવું કરીએ જે જૂના કોડ સાથે મુશ્કેલ હતું પરંતુ નવા કોડ સાથે સરળ છે: આપણે કેટલાક પરીક્ષણો લખીશું!
 
+
+
+[ch9-custom-types]: ch09-03-to-panic-or-not-to-panic.html#creating-custom-types-for-validation
+[ch9-error-guidelines]: ch09-03-to-panic-or-not-to-panic.html#guidelines-for-error-handling
+[ch9-result]: ch09-02-recoverable-errors-with-result.html
+[ch13]: ch13-00-functional-features.html
+[ch18]: ch18-00-oop.html
+[ch9-question-mark]: ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator

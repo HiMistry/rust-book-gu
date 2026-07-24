@@ -9,16 +9,12 @@
 ફાઈલનું નામ: `src/main.rs`
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-01-variables-are-immutable/src/main.rs}}
-```
 ```
 ચોક્કસ આદેશ ચલાવીને કાર્યક્રમ સાચવો અને ચલાવો: `cargo run`. તમને અપરિવર્તનશીલતાની ભૂલ (immutability error) સંબંધિત સંદેશ મળવો જોઈએ, જે આ પરિણામમાં દર્શાવેલ છે:
 
 ```console
-```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-01-variables-are-immutable/output.txt}}
-```
 ```
 આ ઉદાહરણ દર્શાવે છે કે કમ્પાઇલર તમને તમારા કાર્યક્રમોમાં ભૂલો શોધવામાં કેવી રીતે મદદ કરે છે. કમ્પાઇલરની ભૂલો નિરાશાજનક હોઈ શકે છે, પરંતુ હકીકતમાં તે માત્ર એટલું જ સૂચવે છે કે તમારો કાર્યક્રમ હજી સુરક્ષિત રીતે તમે જે ઇચ્છો છો તે કરી રહ્યો નથી; તેનો અર્થ એ નથી કે તમે સારા પ્રોગ્રામર નથી! અનુભવી Rustaceans પણ કમ્પાઇલરની ભૂલો મેળવે છે.
 
@@ -33,16 +29,12 @@
 ફાઈલ નામ: src/main.rs
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-02-adding-mut/src/main.rs}}
-```
 ```
 હવે જ્યારે આપણે આ કાર્યક્રમ ચલાવીએ છીએ, ત્યારે આપણને આ પરિણામ મળે છે:
 
 ```console
-```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-02-adding-mut/output.txt}}
-```
 ```
 આપણે `x` સાથે સંકળાયેલ મૂલ્યને `5` થી `6` માં બદલી શકીએ છીએ જ્યારે `mut` વપરાય છે. આખરે, પરિવર્તનશીલતા (mutability) વાપરવી કે નહીં તે નક્કી કરવાનું તમારા પર નિર્ભર છે અને તે વિશેષ પરિસ્થિતિમાં શું સ્પષ્ટ લાગે છે તેના પર આધાર રાખે છે.
 
@@ -60,9 +52,7 @@ Constants અચળ (constants) કોઈપણ અવકાશમાં જા�
 પર નહીં. અહીં એક અચળ ઘોષણાનું ઉદાહરણ છે:
 
 ```rust
-```rust
 const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
-```
 ```
 અચળાંકનું નામ `THREE_HOURS_IN_SECONDS` છે, અને તેનું મૂલ્ય 60 (એક મિનિટમાં સેકન્ડની સંખ્યા) ને 60 (એક કલાકમાં મિનિટની સંખ્યા) વડે ગુણાકાર કરીને, અને પછી તેને 3 (આપણે આ કાર્યક્રમમાં ગણવા માંગતા હોઈએ તે કલાકોની સંખ્યા) વડે ગુણાકાર કરવાના પરિણામ પર સેટ કરવામાં આવ્યું છે. Rustનું અચળાંકો માટેનું નામકરણ ધોરણ એ કે બધા અક્ષરો મોટા મૂકે અને શબ્દો વચ્ચે અન્ડરસ્કોર વાપરવું. `compiler`compile time દરમિયાન અમુક ચોક્કસ ક્રિયાઓનું મૂલ્યાંકન કરી શકે છે, જેનાથી આપણે આ મૂલ્યને 10,800 પર સેટ કરવાને બદલે, સમજવામાં સરળ હોય અને ચકાસી શકાય તે રીતે લખવાનું પસંદ કરી શકીએ છીએ. અચળાંક મૂલ્યાંકન વિશે વધુ માહિતી માટે Rust Referenceના વિભાગ જુઓ, જેમાં કયા ક્રિયાઓનો ઉપયોગ કરી શકાય છે તેનું વર્ણન છે.
 
@@ -77,39 +67,35 @@ Constants variable અચળો સમગ્ર કાર્યક્રમ ચ�
 ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે "Hello, world!" છાપે છે. ```rust fn main() { println!("Hello, world!"); } ``` આ કાર્યક્રમ `main` નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે `main` કાર્ય પ્રથમ ચલાવવામાં આવે છે. `println!` એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે "Hello, world!" છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે `cargo run` command વાપરી શકો છો.
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-03-shadowing/src/main.rs}}
-```
 ```
 આ કાર્યક્રમ સૌપ્રથમ `x` ને `5` ની કિંમત આપે છે. ત્યારબાદ, તે `let x =` નો ઉપયોગ કરીને એક નવું variable `x` બનાવે છે, અગાઉની કિંમત લઈને તેમાં `1` ઉમેરે છે જેથી `x` ની કિંમત `6` થાય. પછી, કદબદ્ધ કૌંસ `{}` વડે નિર્માણ પામેલા આંતરિક અવકાશમાં, ત્રીજું `let` વિધાન પણ `x` ને છાયા કરે છે અને એક નવું variable બનાવે છે, અગાઉની કિંમતને `2` વડે ગુણાકાર કરીને `x` ને `12` ની કિંમત આપે છે. જ્યારે તે અવકાશ પૂર્ણ થાય છે, ત્યારે આંતરિક છાયા સમાપ્ત થાય છે અને `x` તેની મૂળ કિંમત `6` પર પાછું ફરે છે. જ્યારે આપણે આ કાર્યક્રમ ચલાવીશું, ત્યારે તે નીચે મુજબનું પરિણામ આપશે:
 
 ```console
-```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-03-shadowing/output.txt}}
-```
 ```
 છાયા પાડવું એ variable `mut` તરીકે નિશ્ચિત કરવાથી અલગ છે, કારણ કે જો આપણે અજાણતાન ફરીથી કોઈ મૂલ્ય સોચવાનો પ્રયત્ન કરીએ તો આપણને કમ્પાઇલ-સમયની ભૂલ મળશે. `let` નો ઉપયોગ કરીને, અમે એક મૂલ્ય પર થોડા રૂપાંતરણો કરી શકીએ છીએ પરંતુ તે રૂપાંતરણો પૂર્ણ થયા પછી variable અપરિવર્તનશીલ રહે છે.
 
 અન્ય તફાવત એ છે કે `mut` અને છાયા પાડવા વચ્ચે, કારણ કે આપણે `let` કીવર્ડનો ફરીથી ઉપયોગ કરતી વખતે અસરકારક રીતે એક નવું variable બનાવી રહ્યા છીએ, અમે મૂલ્યનો પ્રકાર બદલી શકીએ છીએ પરંતુ સમાન નામનો પુનઃઉપયોગ કરી શકીએ છીએ. ઉદાહરણ તરીકે, ધારો કે આપણું કાર્ય userને અમુક લખાણ વચ્ચે કેટલી જગ્યાઓ જોઈએ છે તે દર્શાવવા માટે કહે છે, જે જગ્યાના અક્ષરો ઇનપુટ કરીને, અને પછી અમે તે ઇનપુટને સંખ્યા તરીકે સંગ્રહ કરવા માંગીએ છીએ:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-04-shadowing-can-change-types/src/main.rs:here}}
-```
 ```
 પહેલું `spaces` variable એક સ્ટ્રિંગ પ્રકારનું છે, અને બીજું `spaces` variable એક સંખ્યા પ્રકારનું છે. શૅડોઇંગથી આપણને અલગ નામો શોધવાની જરૂર પડતી નથી, જેમ કે `spaces_str` અને `spaces_num`; તેના બદલે આપણે સરળ `spaces` નામનો ફરી ઉપયોગ કરી શકીએ છીએ. જો કે, જો આપણે અહીં દર્શાવ્યા પ્રમાણે `mut` વાપરવાનો પ્રયત્ન કરીએ, તો આપણને કમ્પાઇલ-ટાઇમ ભૂલ મળશે:
 
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-05-mut-cant-change-types/src/main.rs:here}}
-```
 ```
 ભૂલ દર્શાવે છે કે આપણે ચલનું પ્રકાર બદલવાની અનુમતિ નથી.
 
 ```console
-```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-05-mut-cant-change-types/output.txt}}
-```
 ```
 હવે કે આપણે variable કેવી રીતે કાર્ય કરે છે તે તપાસ્યું છે, ચાલો આપણે જોઈએ કે તેઓ કયા વધુ પ્રકારના ડેટા ધરાવી શકે છે.
 
+
+
+[storing-values-with-variables]: ch02-00-guessing-game-tutorial.html#storing-values-with-variables
+[data-types]: ch03-02-data-types.html#data-types
+[const-eval]: ../reference/const_eval.html
+[comparing-the-guess-to-the-secret-number]: ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number

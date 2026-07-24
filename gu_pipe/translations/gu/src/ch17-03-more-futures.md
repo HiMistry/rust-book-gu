@@ -1,7 +1,7 @@
 <!-- Old headings. Do not remove or links may break. -->
 ### Yielding Control to the Runtime
 
-યાદ રાખો કે “Our First Async Program” વિભાગમાં જણાવ્યા મુજબ, દરેક await બિંદુએ, Rust એક runtime ને કાર્ય થોભાવવાની અને જો રાહ જોવાઇ રહેલું future તૈયાર ન હોય તો બીજા કાર્ય પર સ્વિચ કરવાની તક આપે છે. વિપરીત પણ સાચું છે: Rust માત્ર async બ્લોક્સને થોભાવે છે અને await બિંદુએ runtime ને નિયંત્રણ સોંપે છે. await બિંદુઓ વચ્ચેની દરેક વસ્તુ synchronous હોય છે.
+યાદ રાખો કે [“Our First Async Program”][async-program] વિભાગમાં જણાવ્યા મુજબ, દરેક await બિંદુએ, Rust એક runtime ને કાર્ય થોભાવવાની અને જો રાહ જોવાઇ રહેલું future તૈયાર ન હોય તો બીજા કાર્ય પર સ્વિચ કરવાની તક આપે છે. વિપરીત પણ સાચું છે: Rust માત્ર async બ્લોક્સને થોભાવે છે અને await બિંદુએ runtime ને નિયંત્રણ સોંપે છે. await બિંદુઓ વચ્ચેની દરેક વસ્તુ synchronous હોય છે.
 
 આનો અર્થ એ થાય છે કે જો તમે async બ્લોક માં await બિંદુ વગર ઘણું કામ કરો છો, તો તે future અન્ય futures ની પ્રગતિને અવરોધશે. તમને આને ક્યારેક એક future અન્ય futures ને ભૂખમરાવતું હોવાનું સાંભળવા મળી શકે છે. અમુક કિસ્સાઓમાં, આ કોઈ મોટી વાત ન પણ હોય. જો કે, જો તમે કોઈ ખર્ચાળ સેટઅપ અથવા લાંબા સમય સુધી ચાલતું કાર્ય કરી રહ્યા છો, અથવા જો તમારી પાસે એવું future હોય જે કોઈ ચોક્કસ કાર્યને અનિશ્ચિતકાળ સુધી કરતા રહેશે, તો તમારે runtime ને નિયંત્રણ ક્યારે અને ક્યાં સોંપવું તે વિશે વિચારવાની જરૂર પડશે.
 
@@ -9,9 +9,7 @@
 
 <Listing number="17-14" caption="Using `thread::sleep` to simulate slow operations" file-name="src/main.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-14/src/main.rs:slow}}
-```
 ```
 </Listing>
 આ કોડ `std::thread::sleep` નો ઉપયોગ કરે છે `trpl::sleep` ને બદલે જેથી કરીને `slow` બોલાવવાથી વર્તમાન થ્રેડ અમુક મિલિસેકન્ડ માટે સ્થિર થઈ જશે. આપણે `slow` નો ઉપયોગ લાંબા સમય સુધી ચાલતી અને અવરોધક વાસ્તવિક દુનિયાની કામગીરીનું સ્થાન લેવા માટે કરી શકીએ છીએ.
@@ -20,9 +18,7 @@
 
 <Listing number="17-15" caption="Calling the `slow` function to simulate slow operations" file-name="src/main.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-15/src/main.rs:slow-futures}}
-```
 ```
 </Listing>
 દરેક ભવિષ્ય નિયંત્રણ રનટાઇમ પર પાછું આપે છે માત્ર ધીમા કાર્યો પૂર્ણ કર્યા પછી જ. જો તમે આ કોડ ચલાવો છો, તો તમને આ પરિણામ દેખાશે:
@@ -32,7 +28,6 @@ cd listings/ch17-async-await/listing-17-15/
 cargo run
 copy just the output
 -->
-```text
 ```text
 'a' started.
 'a' ran for 30ms
@@ -45,16 +40,13 @@ copy just the output
 'b' ran for 350ms
 'a' finished.
 ```
-```
 જેમ કે સૂચિ ૧૭-૫ માં આપણે `trpl::select` નો ઉપયોગ કરીને બે URL મેળવવા માટે ભવિષ્યની રેસ કરી હતી, તેમ `select` હજી પણ `a` પૂર્ણ થતાં જ સમાપ્ત થાય છે. જોકે, બે ભવિષ્યમાં `slow` કૉલ્સ વચ્ચે કોઈ આંતરવ્યવહારો નથી. `a` ભવિષ્ય તેની તમામ કામગીરી પૂર્ણ કરે છે જ્યાં સુધી `trpl::sleep` કૉલની રાહ ન લેવાય, પછી `b` ભવિષ્ય તેની પોતાની `trpl::sleep` કૉલની રાહ જુએ ત્યાં સુધી તેની તમામ કામગીરી પૂર્ણ કરે છે, અને અંતે `a` ભવિષ્ય પૂર્ણ થાય છે. બંને ભવિષ્યને તેમના ધીમા કાર્યો વચ્ચે પ્રગતિ કરવા દેવા માટે, આપણે અપેક્ષા રાખવાની જગ્યાઓ (await points) ની જરૂર છે જેથી અમે રનટાઇમ પર નિયંત્રણ પાછું આપી શકીએ. એનો અર્થ એ થાય કે આપણને કંઈક એવું જોઈએ જેની આપણે રાહ જોઈ શકીએ!
 
 આ પ્રકારનું સ્થાનાંતરણ આપણે પહેલાથી જ સૂચિ ૧૭-૧૫ માં જોઈ શકીએ છીએ: જો આપણે `trpl::sleep` ને `a` ભવિષ્યના અંતે દૂર કરીએ, તો તે `b` ભવિષ્ય ચાલ્યા વિના પૂર્ણ થઈ જશે. ચાલો સૂચિ ૧૭-૧૬ માં દર્શાવ્યા પ્રમાણે, પ્રક્રિયા આગળ વધતી બંધ થાય તે માટે `trpl::sleep` કાર્યને પ્રારંભિક બિંદુ તરીકે વાપરવાનો પ્રયાસ કરીએ.
 
 <Listing number="17-16" caption="Using `trpl::sleep` to let operations switch off making progress" file-name="src/main.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-16/src/main.rs:here}}
-```
 ```
 </Listing>
 અમે `trpl::sleep` કૉલ્સ ઉમેર્યા છે, જેમાં દરેક કૉલ વચ્ચે અપેક્ષા બિંદુઓ (await points) આવેલા છે, જેથી `slow` ફંક્શનના બે ભવિષ્યકાળ (futures) ના કાર્યો એકબીજામાં ગૂંથાયેલાં હોય:
@@ -64,7 +56,6 @@ cd listings/ch17-async-await/listing-17-16
 cargo run
 copy just the output
 -->
-```text
 ```text
 'a' started.
 'a' ran for 30ms
@@ -76,16 +67,13 @@ copy just the output
 'b' ran for 15ms
 'a' finished.
 ```
-```
 The `a` ભવિષ્ય હજી થોડીવાર ચાલુ રહે છે નિયંત્રણ `b` ને સોંપતા પહેલાં, કારણ કે તે `slow` કૉલ કરે છે `trpl::sleep` કૉલ કરતા પહેલાં પણ. પરંતુ ત્યારબાદ, ભવિષ્ય એકબીજા સાથે આગળ-પાછળ ફરે છે જ્યારે તેઓએ કોઈ અવેઇટ પોઈન્ટને સ્પર્શ કરે છે. આ કિસ્સામાં, અમે દરેક `slow` કૉલ પછી આવું કર્યું છે, પરંતુ અમે કાર્યને જે રીતે યોગ્ય લાગે તે રીતે વિભાજિત કરી શકીએ છીએ.
 
 અમે ખરેખર અહીં સૂવા નથી માંગતા; અમારો ધ્યેય શક્ય તેટલી ઝડપથી પ્રગતિ કરવાનો છે. અમને માત્ર રનટાઇમને નિયંત્રણ પાછું આપવાની જરૂર છે. અમે `trpl::yield_now` ફંક્શનનો ઉપયોગ કરીને સીધું જ એવું કરી શકીએ છીએ. લિસ્ટિંગ 17-17 માં, અમે બધા `trpl::sleep` કૉલ્સને `trpl::yield_now` થી બદલીએ છીએ.
 
 <Listing number="17-17" caption="Using `yield_now` to let operations switch off making progress" file-name="src/main.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-17/src/main.rs:yields}}
-```
 ```
 </Listing>
 આ કોડ વાસ્તવિક હેતુ વિશે વધુ સ્પષ્ટ છે અને `sleep` નો ઉપયોગ કરવા કરતાં નોંધપાત્ર રીતે ઝડપી પણ હોઈ શકે છે, કારણ કે `sleep` દ્વારા વપરાતા ટાઈમરની ચોકસાઈ પર મર્યાદાઓ હોય છે. આપણે જે `sleep` વર્ઝનનો ઉપયોગ કરી રહ્યા છીએ, તે ઉદાહરણ તરીકે, જો આપણે તેને એક નેનોસેકન્ડનો `Duration` આપીએ તો પણ ઓછામાં ઓછો એક મિલિસેકન્ડ માટે સૂઈ જશે. ફરીથી, આધુનિક કમ્પ્યુટર્સ ઝડપી છે: તેઓ એક મિલિસેકન્ડમાં ઘણું બધું કરી શકે છે!
@@ -102,9 +90,7 @@ The `a` ભવિષ્ય હજી થોડીવાર ચાલુ રહ�
 
 <Listing number="17-18" caption="Using our imagined `timeout` to run a slow operation with a time limit" file-name="src/main.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-18/src/main.rs:here}}
-```
 ```
 </Listing>
 ચાલો આ અમલમાં મૂકીએ! આરંભ કરવા માટે, સૌ પ્રથમ `timeout` માટેની API
@@ -122,9 +108,7 @@ The `a` ભવિષ્ય હજી થોડીવાર ચાલુ રહ�
 <!-- This is not tested because it intentionally does not compile. -->
 <Listing number="17-19" caption="Defining the signature of `timeout`" file-name="src/main.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-19/src/main.rs:declaration}}
-```
 ```
 </Listing>
 વર્તન આપણે જરૂરિયાત છે: આપણે આપેલ સમયગાળા સામે ભવિષ્યને દ્વંદ્વયુદ્ધ કરવું છે. આપણે `trpl::sleep` નો ઉપયોગ કરીને સમયગાળામાંથી ટાઈમર ભવિષ્ય બનાવી શકીએ છીએ, અને કૉલર દ્વારા પાસ કરવામાં આવેલ ભવિષ્ય સાથે તે ટાઈમર ચલાવવા માટે `trpl::select` નો ઉપયોગ કરી શકીએ છીએ.
@@ -133,9 +117,7 @@ Listing 17-20 માં, આપણે `timeout` ને `trpl::select` ની પ
 
 <Listing number="17-20" caption="Defining `timeout` with `select` and `sleep`" file-name="src/main.rs">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-20/src/main.rs:implementation}}
-```
 ```
 </Listing>
 `trpl::select` નું અમલીકરણ નિષ્પક્ષ નથી: તે હંમેશાં Argumentોને તે ક્રમમાં તપાસે છે જેમાં તેઓ પસાર થાય છે (અન્ય `select` અમલીકરણો યાદચ્છિક રીતે કયો Argument પ્રથમ તપાસવો તે પસંદ કરશે). તેથી, અમે `future_to_try` ને `select` માં પ્રથમ પાસ કરીએ છીએ જેથી તેને પૂર્ણ થવાની તક મળે, ભલે `max_time` ખૂબ ટૂંકો સમયગાળો હોય. જો `future_to_try` પ્રથમ પૂર્ણ થાય છે, તો `select` `Left` સાથે `future_to_try` ના આઉટપુટ સાથે પાછું આવશે. જો `timer` પ્રથમ પૂર્ણ થાય છે, તો `select` `Right` સાથે ટાઈમરના `()` ના આઉટપુટ સાથે પાછું આવશે.
@@ -145,9 +127,7 @@ Listing 17-20 માં, આપણે `timeout` ને `trpl::select` ની પ
 આથી, આપણી પાસે બે અન્ય async સહાયકોના ઉપયોગથી કાર્યરત `timeout` બનેલું છે. જો આપણે આપણો કોડ ચલાવીએ, તો તે સમય સમાપ્તિ પછી નિષ્ફળતા મોડ છાપશે:
 
 ```text
-```text
 Failed after 2 seconds
-```
 ```
 કારણ કે ભવિષ્ય અન્ય ભવિષ્ય સાથે સંયોજન પામે છે, તમે નાના અસમક્રીય ઘટકોનો ઉપયોગ કરીને ખરેખર શક્તિશાળી સાધનો બનાવી શકો છો. ઉદાહરણ તરીકે, તમે આ જ અભિગમનો ઉપયોગ સમય મર્યાદાને ફરીથી પ્રયત્ન કરવા માટે કરી શકો છો, અને પછી નેટવર્ક કૉલ્સ (જેમ કે સૂચિ 17-5 માં દર્શાવેલ છે) જેવા કાર્યો સાથે તેનો ઉપયોગ કરી શકો છો.
 
@@ -155,3 +135,6 @@ Failed after 2 seconds
 
 હવે આપણે એકસાથે અનેક ફ્યુચર્સ સાથે કામ કરવાની ઘણી રીતો જોઈ છે. આગળ, આપણે તપાસીશું કે કેવી રીતે સ્ટ્રીમ્સ વડે સમય જતાં ક્રમમાં અનેક ફ્યુચર્સ સાથે કામ કરી શકાય છે.
 
+
+
+[async-program]: ch17-01-futures-and-syntax.html#our-first-async-program

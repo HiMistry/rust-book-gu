@@ -14,16 +14,12 @@
 આ વર્તણૂક દર્શાવવા માટે, આપણે પ્રોગ્રામને `>` સાથે ચલાવીશું અને ફાઇલ પાથ, output.txt , જે અમે સ્ટાન્ડર્ડ આઉટપુટ સ્ટ્રીમને રીડાયરેક્ટ કરવા માંગીએ છીએ. આપણે કોઈ Argumentો પસાર નહીં કરીએ, જેનાથી ભૂલ થવી જોઈએ:
 
 ```console
-```console
 $ cargo run > output.txt
-```
 ```
 `>` સિન્ટેક્સ શેલને જણાવે છે કે સ્ટાન્ડર્ડ આઉટપુટને output.txt માં લખવું, સ્ક્રીન પર નહીં. આપણને અપેક્ષિત ભૂલ સંદેશ સ્ક્રીન પર દેખાયો ન હતો, તેથી તેનો અર્થ એ થાય છે કે તે ફાઈલમાં જવો પડ્યો. આ output.txt માં છે:
 
 ```text
-```text
 Problem parsing arguments: not enough arguments
-```
 ```
 હા, આપણી ભૂલ સંદેશો પ્રમાણિત આઉટપુટમાં છાપાઈ રહ્યો છે. આવી ભૂલ સંદેશાઓ માટે પ્રમાણિત ભૂલ (error) માં છાપવું વધુ ઉપયોગી થશે જેથી સફળ ચાલમાંથી માત્ર માહિતી જ ફાઇલમાં આવે. અમે તે બદલીશું.
 
@@ -33,37 +29,29 @@ Problem parsing arguments: not enough arguments
 
 <Listing number="12-24" file-name="src/main.rs" caption="Writing error messages to standard error instead of standard output using `eprintln!`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-24/src/main.rs:here}}
-```
 ```
 </Listing>
 હવે ચાલો આપણે આ જ રીતે પ્રોગ્રામ ફરીથી ચલાવીએ, કોઈપણ Argumentો વિના અને `>` સાથે પ્રમાણિત આઉટપુટને રીડાયરેક્ટ કરીને:
 
 ```console
-```console
 $ cargo run > output.txt
 Problem parsing arguments: not enough arguments
-```
 ```
 હવે આપણે ભૂલ પડદા પર જોઈએ છીએ અને output.txt માં કંઈ નથી, જે આદેશ વાક્યક્રમ કાર્યક્રમોનું અપેક્ષિત વર્તન છે. ચાલો
 
 પ્રોગ્રામને ફરીથી ચલાવીએ એવા Argumentો સાથે જે ભૂલનું કારણ ન બને પરંતુ હજી પણ પ્રમાણિત આઉટપુટને ફાઈલમાં રીડાયરેક્ટ કરે, જેમ કે:
 
 ```console
-```console
 $ cargo run -- to poem.txt > output.txt
-```
 ```
 અમે ટર્મિનલ પર કોઈ પરિણામ જોશું નહીં, અને output.txt માં અમારા પરિણામો હશે:
 
 ફાઈલનું નામ: output.txt
 
 ```text
-```text
 Are you nobody, too?
 How dreary to be somebody!
-```
 ```
 આ દર્શાવે છે કે હવે આપણે સફળ પરિણામ માટે પ્રમાણિત આઉટપુટ અને ભૂલ માટે પ્રમાણિત ભૂલ આઉટપુટનો ઉપયોગ કરી રહ્યા છીએ, જે યોગ્ય છે.
 

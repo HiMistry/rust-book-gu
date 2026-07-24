@@ -10,17 +10,13 @@
 
 <Listing number="19-8" caption="Attempting to use a refutable pattern with `let`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-08/src/main.rs:here}}
-```
 ```
 </Listing>
 જો `some_option_value` એ `None` મૂલ્ય હોત, તો તે `Some(x)` પેટર્ન સાથે મેળ ખાતો ન હોત, જેનો અર્થ થાય છે કે પેટર્ન જૂઠાણીવાળી છે. જોકે, `let` વિધાન માત્ર અવિભાજ્ય પેટર્નને જ સ્વીકારી શકે છે કારણ કે `None` મૂલ્ય સાથે કોડ શું કરી શકે તેની કોઈ યોગ્ય બાબત નથી. કમ્પાઇલ સમય દરમિયાન, Rust ફરિયાદ કરશે કે અમે જૂઠાણીવાળી પેટર્નનો ઉપયોગ કરવાનો પ્રયાસ કર્યો છે જ્યાં અવિભાજ્ય પેટર્નની જરૂર છે:
 
 ```console
-```console
 {{#include ../listings/ch19-patterns-and-matching/listing-19-08/output.txt}}
-```
 ```
 કારણ કે અમે બધી માન્ય કિંમતોને `Some(x)` પેટર્ન સાથે આવરી ન લીધી (અને ન લઈ શક્યા!), Rust યોગ્ય રીતે કમ્પાઇલર ભૂલ ઉત્પન્ન
 
@@ -28,26 +24,20 @@
 
 <Listing number="19-9" caption="Using `let...else` and a block with refutable patterns instead of `let`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-09/src/main.rs:here}}
-```
 ```
 </Listing>
 આપણે કોડને એક બહારનો માર્ગ આપ્યો છે! આ કોડ સંપૂર્ણપણે યોગ્ય છે, જોકે તેનો અર્થ એ થાય છે કે આપણે ચેતવણી ન મળે તેવાં પેટર્નનો ઉપયોગ કરી શકતા નથી. જો આપણે `let...else` ને એવી પેટર્ન આપીએ જે હંમેશાં મેળ ખાય છે, જેમ કે `x`, જે યાદી 19-10 માં દર્શાવેલ છે, તો કમ્પાઇલર ચેતવણી આપશે.
 
 <Listing number="19-10" caption="Attempting to use an irrefutable pattern with `let...else`">
 ```rust
-```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-10/src/main.rs:here}}
-```
 ```
 </Listing>
 Rust ફરિયાદ કરે છે કે અસ્પષ્ટ પેટર્ન સાથે `let...else` વાપરવું તાર્કિક નથી:
 
 ```console
-```console
 {{#include ../listings/ch19-patterns-and-matching/listing-19-10/output.txt}}
-```
 ```
 એ જ કારણે, `match` વિભાગોએ વિનંતી કરી શકાય તેવા પ્રકાર (refutable patterns) વાપરવા જોઈએ, સિવાય કે છેલ્લા વિભાગમાં, જે બાકી રહેલા મૂલ્યો સાથે અવિનંતી કરી શકાય તેવા પ્રકાર (irrefutable pattern) સાથે મેળ ખાય છે. Rust આપણને માત્ર એક જ વિભાગ ધરાવતા `match` માં અવિનંતી કરી શકાય તેવો પ્રકાર વાપરવાની મંજૂરી આપે છે, પરંતુ આ સિન્ટેક્સ વિશેષ કરીને ઉપયોગી નથી અને તેને સરળ `let` વિધાનથી બદલી શકાય
 
