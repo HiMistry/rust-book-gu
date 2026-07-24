@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -194,20 +194,20 @@
 <span class="boring">}</span></code></pre>
 <p><code>T</code> અને <code>E</code> સામાન્ય પ્રકારના પરિમાણો છે: આપણે જનરિક્સ વિશે પ્રકરણ ૧૦ માં વધુ વિગતવાર ચર્ચા કરીશું. અત્યારે તમારે જે જાણવાની જરૂર છે તે એ છે કે <code>T</code> એ સફળતાની સ્થિતિમાં <code>Ok</code> વિવિધતા (variant) માં પાછો આપવામાં આવનાર મૂલ્યનો પ્રકાર દર્શાવે છે, અને <code>E</code> એ નિષ્ફળતાની સ્થિતિમાં <code>Err</code> વિવિધતામાં પાછો આપવામાં આવનાર ભૂલનો પ્રકાર દર્શાવે છે. કારણ કે <code>Result</code> પાસે આ સામાન્ય પ્રકારના પરિમાણો છે, અમે <code>Result</code> પ્રકાર અને તેના પર વ્યાખ્યાયિત કાર્યોનો ઉપયોગ ઘણી અલગ-અલગ પરિસ્થિતિઓમાં કરી શકીએ છીએ જ્યાં અમે પાછો આપવા માંગીએ છીએ તે સફળ મૂલ્ય અને ભૂલ મૂલ્ય અલગ હોઈ શકે છે.</p>
 <p>ચાલો આપણે એવા વિધેય (function) ને કહીએ જે <code>Result</code> મૂલ્ય આપે છે, કારણ કે તે નિષ્ફળ થઈ શકે છે. યાદી 9-3 માં, આપણે એક ફાઈલ ખોલવાનો પ્રયત્ન કરીએ છીએ.</p>
-<listing number="9-3" file-name="src/main.rs" caption="Opening a file">
-```rust
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-03/src/main.rs}}
-```
-</listing>
-`File::open` નું વળતર પ્રકાર `Result<t, e="">` છે. સામાન્ય પરિમાણ `T` ને `File::open` ના અમલીકરણ દ્વારા સફળ મૂલ્યનો પ્રકાર, `std::fs::File`, સાથે ભરાયેલું છે, જે એક ફાઇલ હેન્ડલ છે. ભૂલ મૂલ્યમાં વપરાતો `E` નો પ્રકાર `std::io::Error` છે. આ વળતર પ્રકાર સૂચવે છે કે `File::open` ની કૉલ સફળ થઈ શકે છે અને આપણને વાંચવા અથવા લખવાની મંજૂરી હોય તેવા ફાઇલ હેન્ડલને પરત કરી શકે છે. ફંક્શન કૉલમાં નિષ્ફળતા પણ આવી શકે છે: ઉદાહરણ તરીકે, ફાઈલ અસ્તિત્વમાં ન હોઈ શકે, અથવા આપણી પાસે ફાઇલને ઍક્સેસ કરવાની પરવાનગી ન હોઈ શકે. `File::open` ફંક્શનને જણાવવાની રીતની જરૂર છે કે તે સફળ થયું કે નિષ્ફળ ગયું અને તે જ સમયે આપણને કાં તો ફાઇલ હેન્ડલ અથવા ભૂલ માહિતી આપવી જોઈએ. આ માહિતી બરાબર `Result` એનમ દ્વારા આપવામાં આવે છે.
+<p><strong>Listing 9-3: Opening a file</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-03/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p><code>File::open</code> નું વળતર પ્રકાર <code>Result&lt;T, E&gt;</code> છે. સામાન્ય પરિમાણ <code>T</code> ને <code>File::open</code> ના અમલીકરણ દ્વારા સફળ મૂલ્યનો પ્રકાર, <code>std::fs::File</code>, સાથે ભરાયેલું છે, જે એક ફાઇલ હેન્ડલ છે. ભૂલ મૂલ્યમાં વપરાતો <code>E</code> નો પ્રકાર <code>std::io::Error</code> છે. આ વળતર પ્રકાર સૂચવે છે કે <code>File::open</code> ની કૉલ સફળ થઈ શકે છે અને આપણને વાંચવા અથવા લખવાની મંજૂરી હોય તેવા ફાઇલ હેન્ડલને પરત કરી શકે છે. ફંક્શન કૉલમાં નિષ્ફળતા પણ આવી શકે છે: ઉદાહરણ તરીકે, ફાઈલ અસ્તિત્વમાં ન હોઈ શકે, અથવા આપણી પાસે ફાઇલને ઍક્સેસ કરવાની પરવાનગી ન હોઈ શકે. <code>File::open</code> ફંક્શનને જણાવવાની રીતની જરૂર છે કે તે સફળ થયું કે નિષ્ફળ ગયું અને તે જ સમયે આપણને કાં તો ફાઇલ હેન્ડલ અથવા ભૂલ માહિતી આપવી જોઈએ. આ માહિતી બરાબર <code>Result</code> એનમ દ્વારા આપવામાં આવે છે.</p>
 <p>જ્યારે <code>File::open</code> સફળ થાય છે, ત્યારે variable <code>greeting_file_result</code> માં રહેલું મૂલ્ય <code>Ok</code> નું ઉદાહરણ હશે જેમાં ફાઇલ હેન્ડલ સમાવિષ્ટ હશે. જ્યારે તે નિષ્ફળ જાય છે, ત્યારે <code>greeting_file_result</code> માં રહેલું મૂલ્ય <code>Err</code> નું ઉદાહરણ હશે જેમાં કયા પ્રકારની ભૂલ આવી હતી તેની વધુ માહિતી હશે. We need to add to</p>
 <p>આપણે લિસ્ટિંગ 9-3 માં રહેલા કોડમાં ફેરફાર કરવો પડશે જેથી <code>File::open</code> જે મૂલ્ય આપે છે તેના આધારે અલગ-અલગ ક્રિયાઓ કરી શકાય. લિસ્ટિંગ 9-4 દર્શાવે છે કે <code>Result</code> ને નિયંત્રિત કરવાનો એક માર્ગ મૂળભૂત સાધન, <code>match</code> અભિવ્યક્તિનો ઉપયોગ કરવો છે જેની ચર્ચા આપણે પ્રકરણ 6 માં કરી હતી.</p>
-<listing number="9-4" file-name="src/main.rs" caption="Using a `match` expression to handle the `Result` variants that might be returned">
-```rust
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-04/src/main.rs}}
-```
-</listing>
-Note that, like the `Option` enum, the `Result` enum and its variants have been brought into scope by the prelude, so we don’t need to specify `Result::` before the `Ok` and `Err` variants in the `match` arms.
+<p><strong>Listing 9-4: Using a <code>match</code> expression to handle the <code>Result</code> variants that might be returned</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-04/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>Note that, like the <code>Option</code> enum, the <code>Result</code> enum and its variants have been brought into scope by the prelude, so we don’t need to specify <code>Result::</code> before the <code>Ok</code> and <code>Err</code> variants in the <code>match</code> arms.</p>
 <p>જ્યારે પરિણામ <code>Ok</code> હોય છે, ત્યારે આ કોડ <code>Ok</code> પ્રકારની અંદર રહેલા <code>file</code> મૂલ્યને પાછું આપશે, અને પછી તે ફાઇલ હેન્ડલ મૂલ્યને <code>greeting_file</code> variable સોંપવામાં આવશે. <code>match</code> પછી, આપણે વાંચવા અથવા લખવા માટે ફાઇલ હેન્ડલનો ઉપયોગ કરી શકીએ છીએ.</p>
 <p>અન્ય <code>match</code> ભાગ <code>match</code> ના અન્ય ભાગમાં, આપણે <code>File::open</code> માંથી <code>Err</code> મૂલ્ય મેળવવાની સ્થિતિને હેન્ડલ કરીએ છીએ. આ ઉદાહરણમાં, આપણે <code>panic!</code> મેક્રોને બોલાવવાનું પસંદ કર્યું છે. જો આપણી વર્તમાન ડિરેક્ટરીમાં hello.txt નામની કોઈ ફાઈલ ન હોય અને આપણે આ કોડ ચલાવીએ, તો આપણે <code>panic!</code> મેક્રોમાંથી નીચે મુજબનું પરિણામ જોઈશું:</p>
 <pre><code class="language-console">{{#include ../listings/ch09-error-handling/listing-09-04/output.txt}}
@@ -215,13 +215,13 @@ Note that, like the `Option` enum, the `Result` enum and its variants have been 
 <p>સામાન્ય રીતે, આ નિષ્કર્ષ આપણને બરાબર શું ખોટું થયું તે જણાવે છે.</p>
 <h3 id="matching-on-different-errors"><a class="header" href="#matching-on-different-errors">Matching on Different Errors</a></h3>
 <p>Listing 9-4 માં રહેલું કોડ <code>panic!</code> કરશે, ભલે <code>File::open</code> નિષ્ફળ થવાનું કારણ ગમે તે હોય. જો કે, આપણે જુદા જુદા નિષ્ફળતા કારણો માટે અલગ અલગ ક્રિયાઓ કરવા માંગીએ છીએ. જો <code>File::open</code> એ કારણે નિષ્ફળ જાય કે ફાઈલ અસ્તિત્વમાં નથી, તો આપણે ફાઈલ બનાવવી અને નવી ફાઈલનું હેન્ડલ પરત કરવું છે. જો <code>File::open</code> અન્ય કોઈ કારણસર નિષ્ફળ જાય—ઉદાહરણ તરીકે, આપણી પાસે ફાઈલ ખોલવાની પરવાનગી ન હોય—તો પણ આપણે કોડને Listing 9-4 માં જે રીતે <code>panic!</code> થયો હતો તે જ રીતે <code>panic!</code> કરવો છે. આ માટે, આપણે એક અંદર <code>match</code> અભિવ્યક્તિ ઉમેરીએ છીએ, જે Listing 9-5 માં દર્શાવેલ છે.</p>
-<listing number="9-5" file-name="src/main.rs" caption="Handling different kinds of errors in different ways">
-tests to fail lol --&gt;
-```rust
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-05/src/main.rs}}
-```
-</listing>
-The type of the value that `File::open` returns inside the `Err` variant is `io::Error`, which is a struct provided by the standard library. This struct has a method, `kind`, that we can call to get an `io::ErrorKind` value. The enum `io::ErrorKind` is provided by the standard library and has variants representing the different kinds of errors that might result from an `io` operation. The variant we want to use is `ErrorKind::NotFound`, which indicates the file we’re trying to open doesn’t exist yet. So, we match on `greeting_file_result`, but we also have an inner match on `error.kind()`.
+<p><strong>Listing 9-5: Handling different kinds of errors in different ways</strong></p>
+<p>tests to fail lol –&gt;</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-05/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>The type of the value that <code>File::open</code> returns inside the <code>Err</code> variant is <code>io::Error</code>, which is a struct provided by the standard library. This struct has a method, <code>kind</code>, that we can call to get an <code>io::ErrorKind</code> value. The enum <code>io::ErrorKind</code> is provided by the standard library and has variants representing the different kinds of errors that might result from an <code>io</code> operation. The variant we want to use is <code>ErrorKind::NotFound</code>, which indicates the file we’re trying to open doesn’t exist yet. So, we match on <code>greeting_file_result</code>, but we also have an inner match on <code>error.kind()</code>.</p>
 <p>આપણે આંતરિક <code>match</code> માં જે શરત ચકાસવા માંગીએ છીએ તે એ છે કે <code>error.kind()</code> દ્વારા પરત કરેલ મૂલ્ય <code>ErrorKind</code> enum ના <code>NotFound</code> પ્રકારનું છે કે નહીં. જો એમ હોય, તો આપણે <code>File::create</code> વડે ફાઈલ બનાવવાનો પ્રયત્ન કરીએ છીએ. પરંતુ, કારણ કે <code>File::create</code> પણ નિષ્ફળ થઈ શકે છે, આપણને આંતરિક <code>match</code> અભિવ્યક્તિમાં બીજો ભાગ જોઈએ છે. જ્યારે ફાઈલ બનાવી શકાતી નથી, ત્યારે એક અલગ ભૂલ સંદેશ છાપવામાં આવે છે. બાહ્ય <code>match</code> નો બીજો ભાગ એ જ રહે છે, તેથી ખૂટતી ફાઈલ સિવાયની કોઈપણ ભૂલ પર પ્રોગ્રામ ગભરાઈ જાય છે.</p>
 <blockquote>
 <h4 id="alternatives-to-using-match-with-resultt-e"><a class="header" href="#alternatives-to-using-match-with-resultt-e">Alternatives to Using <code>match</code> with <code>Result&lt;T, E&gt;</code></a></h4>
@@ -244,15 +244,14 @@ panic!(“Problem opening the file: {error:?}”);
 <h4 id="alternatives-to-using-match-with-resultt-e-1"><a class="header" href="#alternatives-to-using-match-with-resultt-e-1">Alternatives to Using <code>match</code> with <code>Result&lt;T, E&gt;</code></a></h4>
 <p><code>match</code> નો ઉપયોગ પૂરતો સારો છે, પરંતુ તે થોડો લાંબો હોઈ શકે છે અને હંમેશા હેતુને સ્પષ્ટ કરતો નથી. <code>Result&lt;T, E&gt;</code> પ્રકારમાં ઘણા સહાયક વિધિઓ વ્યાખ્યાયિત થયેલ છે જે વિવિધ, વધુ ચોક્કસ કાર્યો કરવા માટે છે. <code>unwrap</code> વિધિ એ એક સંક્ષિપ્ત વિધિ છે જે <code>match</code> અભિવ્યક્તિની જેમ જ અમલમાં મૂકવામાં આવી છે જે આપણે યાદી 9-4 માં લખ્યું હતું. જો <code>Result</code> નું મૂલ્ય <code>Ok</code> પ્રકારનું હોય, તો <code>unwrap</code> અંદરના મૂલ્યને પરત કરશે. જો <code>Result</code> <code>Err</code> પ્રકારનું હોય, તો <code>unwrap</code> આપમેળે <code>panic!</code> મેક્રોને બોલાવશે. અહીં <code>unwrap</code> ના ઉપયોગનું ઉદાહરણ છે:</p>
 <h4 id="alternatives-to-using-match-with-resultt-e-2"><a class="header" href="#alternatives-to-using-match-with-resultt-e-2">Alternatives to Using <code>match</code> with <code>Result&lt;T, E&gt;</code></a></h4>
-<listing file-name="src/main.rs">
-```rust
-</listing></blockquote>
+<pre><code class="language-rust"></code></pre>
+</blockquote>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>&gt; {{#rustdoc_include ../listings/ch09-error-handling/no-listing-04-unwrap/src/main.rs}}
 <span class="boring">}</span></code></pre>
 <blockquote>
-<pre><code>&lt;/Listing&gt;
+<pre><code>
 જો આપણે આ કોડ `hello.txt` ફાઈલ વગર ચલાવીએ, તો આપણને `panic!` કૉલ દ્વારા એક ભૂલ સંદેશ દેખાશે જે `unwrap` પદ્ધતિ ઉત્પન્ન કરે છે:
 
 #### Alternatives to Using `match` with `Result&lt;T, E&gt;`
@@ -272,7 +271,7 @@ copy and paste relevant text
 
 #### Alternatives to Using `match` with `Result&lt;T, E&gt;`
 
-&lt;Listing file-name="src/main.rs"&gt;
+
 ```rust
 </code></pre>
 </blockquote>
@@ -281,7 +280,7 @@ copy and paste relevant text
 </span>&gt; {{#rustdoc_include ../listings/ch09-error-handling/no-listing-05-expect/src/main.rs}}
 <span class="boring">}</span></code></pre>
 <blockquote>
-<pre><code>&lt;/Listing&gt;
+<pre><code>
 આપણે `expect` નો ઉપયોગ `unwrap` ની જેમ જ કરીએ છીએ: ફાઈલ હેન્ડલ પરત કરવા અથવા `panic!` મેક્રોને બોલાવવા માટે. `expect` દ્વારા `panic!` માં વપરાતો ભૂલ સંદેશ એ પરિમાણ હશે જે આપણે `expect` ને આપીએ છીએ, ડિફોલ્ટ `panic!` સંદેશ જે `unwrap` વાપરે છે તેના બદલે. આ તેવું દેખાય છે:
 
 cd listings/ch09-error-handling/no-listing-05-expect
@@ -301,18 +300,20 @@ copy and paste relevant text
 
 ઉદાહરણ તરીકે, યાદી 9-6 એક એવું વિધેય દર્શાવે છે જે ફાઈલમાંથી user નામ વાંચે છે. જો ફાઈલ અસ્તિત્વમાં ન હોય અથવા વાંચી શકાતી ન હોય, તો આ વિધેય તે ભૂલોને કોલિંગ કોડ પર પાછી મોકલશે.
 
-&lt;Listing number="9-6" file-name="src/main.rs" caption="A function that returns errors to the calling code using `match`"&gt;
-file panics. We do want to include it for reader experimentation purposes, but
-don't want to include it for rustdoc testing purposes. --&gt;
-```rust
+**Listing 9-6: A function that returns errors to the calling code using `match`**
 </code></pre>
+</blockquote>
+<blockquote>
+<p>file panics. We do want to include it for reader experimentation purposes, but
+don’t want to include it for rustdoc testing purposes. –&gt;</p>
+<pre><code class="language-rust"></code></pre>
 </blockquote>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>&gt; {{#include ../listings/ch09-error-handling/listing-09-06/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <blockquote>
-<pre><code>&lt;/Listing&gt;
+<pre><code>
 આ કાર્યને ઘણો ટૂંકો રીતે લખી શકાય છે, પરંતુ આપણે ભૂલ વ્યવસ્થાપન (error handling) સમજવા માટે પહેલાં તેને જાતે જ કરીએ છીએ; અંતે, આપણે ટૂંકા માર્ગ બતાવીશું. ચાલો પ્રથમ કાર્યના વળતર પ્રકાર (return type) જોઈએ: `Result&lt;String, io::Error&gt;`. આનો અર્થ એ થાય છે કે કાર્ય `Result&lt;T, E&gt;` પ્રકારનું મૂલ્ય આપી રહ્યું છે, જ્યાં સામાન્ય પરિમાણ `T` ને `String` ના નક્કર પ્રકારથી અને સામાન્ય પ્રકાર `E` ને `io::Error` ના નક્કર પ્રકારથી ભરવામાં આવ્યું છે.
 
 જો આ કાર્ય સફળતાપૂર્વક પૂર્ણ થાય, તો આ કાર્યને બોલાવતો કોડ `Ok` મૂલ્ય મેળવે છે, જેમાં `String` હોય છે — જે ફાઈલમાંથી આ કાર્ય વાંચેલો `username` છે. જો આ કાર્યમાં કોઈ સમસ્યા આવે, તો બોલાવતો કોડ `Err` મૂલ્ય મેળવે છે, જેમાં `io::Error` ની એક પ્રત હોય છે, જે સમસ્યાઓ વિશે વધુ માહિતી ધરાવે છે. અમે આ કાર્યના વળતર પ્રકાર તરીકે `io::Error` પસંદ કર્યું કારણ કે તે ફંક્શનના શરીરમાં આપણે જે કામગીરી કરી રહ્યા છીએ તેમાં નિષ્ફળતા આવી શકે છે, જેમ કે `File::open` ફંક્શન અને `read_to_string` પદ્ધતિ, બંને આ પ્રકારનું ભૂલ મૂલ્ય આપે છે.
@@ -329,18 +330,20 @@ don't want to include it for rustdoc testing purposes. --&gt;
 
 ચિત્રલિપી 9-7 દર્શાવે છે કે `read_username_from_file` નું એક અમલીકરણ છે જેનું કાર્ય ચિત્રલિપી 9-6 માં રહેલા અમલીકરણ સમાન છે, પરંતુ આ અમલીકરણ `?` ચિહ્નનો ઉપયોગ કરે છે.
 
-&lt;Listing number="9-7" file-name="src/main.rs" caption="A function that returns errors to the calling code using the `?` operator"&gt;
-file panics. We do want to include it for reader experimentation purposes, but
-don't want to include it for rustdoc testing purposes. --&gt;
-```rust
+**Listing 9-7: A function that returns errors to the calling code using the `?` operator**
 </code></pre>
+</blockquote>
+<blockquote>
+<p>file panics. We do want to include it for reader experimentation purposes, but
+don’t want to include it for rustdoc testing purposes. –&gt;</p>
+<pre><code class="language-rust"></code></pre>
 </blockquote>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>&gt; {{#include ../listings/ch09-error-handling/listing-09-07/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <blockquote>
-<pre><code>&lt;/Listing&gt;
+<pre><code>
 ? ચિહ્નનું વિવરણ `Result` મૂલ્ય પછી મૂકવામાં આવેલું `?` ચિહ્ન, Listing 9-6 માં આપણે `Result` મૂલ્યોને નિયંત્રિત કરવા માટે વ્યાખ્યાયિત કરેલા `match` અભિવ્યક્તિની જેમ જ કાર્ય કરે છે. જો `Result` નું મૂલ્ય `Ok` હોય, તો `Ok` ની અંદરનું મૂલ્ય આ અભિવ્યક્તિમાંથી પાછું આવે છે અને પ્રોગ્રામ ચાલુ રહે છે. જો મૂલ્ય `Err` હોય, તો `Err` સમગ્ર ફંક્શનમાંથી પાછું આવે છે, જાણે કે આપણે `return` કીવર્ડનો ઉપયોગ કર્યો હોય, જેથી ભૂલનું મૂલ્ય કોલિંગ કોડમાં પ્રસારિત થાય.
 
 #### Alternatives to Using `match` with `Result&lt;T, E&gt;`
@@ -353,52 +356,58 @@ don't want to include it for rustdoc testing purposes. --&gt;
 
 `?` ચિહ્ન દૂર કરે છે ઘણી બધી પુનરાવર્તિત પ્રક્રિયાઓ અને આ કાર્યની અમલીકરણ સરળ બનાવે છે. અમે `?` પછી તરત જ પદ્ધતિ કૉલ્સને જોડીને આ કોડને વધુ ટૂંકો પણ કરી શકીએ છીએ, જે યાદી 9-8 માં દર્શાવેલ છે.
 
-&lt;Listing number="9-8" file-name="src/main.rs" caption="Chaining method calls after the `?` operator"&gt;
-file panics. We do want to include it for reader experimentation purposes, but
-don't want to include it for rustdoc testing purposes. --&gt;
-```rust
+**Listing 9-8: Chaining method calls after the `?` operator**
 </code></pre>
+</blockquote>
+<blockquote>
+<p>file panics. We do want to include it for reader experimentation purposes, but
+don’t want to include it for rustdoc testing purposes. –&gt;</p>
+<pre><code class="language-rust"></code></pre>
 </blockquote>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>&gt; {{#include ../listings/ch09-error-handling/listing-09-08/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <blockquote>
-<pre><code>&lt;/Listing&gt;
+<pre><code>
 અમે નવું `String`  `username` માં બનાવવાની ક્રિયાને ફંક્શનની શરૂઆતમાં ખસેડી છે; તે ભાગ બદલાયો નથી. `username_file` નામનું variable (variable) બનાવવાને બદલે, અમે `read_to_string` કૉલને સીધું જ `File::open("hello.txt")?` ના પરિણામ પર જોડી દીધું છે. હજી પણ `read_to_string` કૉલના અંતે  `?`  હાલ્યા કરે છે, અને જ્યારે `File::open` અને `read_to_string` બંને સફળ થાય ત્યારે અમે હજી પણ `Ok` મૂલ્ય ધરાવતા `username` ને પરત કરીએ છીએ, નહિ કે ભૂલોને. કાર્યક્ષમતા ફરીથી યાદી 9-6 અને યાદી 9-7 જેવી જ છે; આ માત્ર તેને લખવાની એક અલગ, વધુ સુગમ (ergonomic) રીત છે.
 
 ચિત્રલિપિ 9-9 દર્શાવે છે કે `fs::read_to_string` નો ઉપયોગ કરીને આને વધુ ટૂંકું કેવી રીતે બનાવવું.
 
 #### Alternatives to Using `match` with `Result&lt;T, E&gt;`
 
-&lt;Listing number="9-9" file-name="src/main.rs" caption="Using `fs::read_to_string` instead of opening and then reading the file"&gt;
-file panics. We do want to include it for reader experimentation purposes, but
-don't want to include it for rustdoc testing purposes. --&gt;
-```rust
+**Listing 9-9: Using `fs::read_to_string` instead of opening and then reading the file**
 </code></pre>
+</blockquote>
+<blockquote>
+<p>file panics. We do want to include it for reader experimentation purposes, but
+don’t want to include it for rustdoc testing purposes. –&gt;</p>
+<pre><code class="language-rust"></code></pre>
 </blockquote>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>&gt; {{#include ../listings/ch09-error-handling/listing-09-09/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <blockquote>
-<pre><code>&lt;/Listing&gt;
+<pre><code>
 ફાઈલને સ્ટ્રિંગમાં વાંચવી એ એક સામાન્ય કાર્ય છે, તેથી સ્ટાન્ડર્ડ લાયબ્રેરી અનુકૂળ `fs::read_to_string` વિધેય પ્રદાન કરે છે જે ફાઈલ ખોલે છે, નવું `String` બનાવે છે, ફાઈલની સામગ્રી વાંચે છે, તે સામગ્રીને તે `String` માં મૂકે છે અને તેને પરત કરે છે. અલબત્ત, `fs::read_to_string` વાપરવાથી આપણને તમામ ભૂલ નિયંત્રણ સમજાવવાની તક મળતી નથી, તેથી અમે પહેલા લાંબો રસ્તો અપનાવ્યો.
 
 `?` ચિહ્ન માત્ર એવા જ વિધેયોમાં વાપરી શકાય છે જેમના વળતર પ્રકાર (return type) તે મૂલ્ય સાથે સુસંગત હોય જેના પર `?` વપરાય છે. આ એટલા માટે છે કારણ કે `?` ચિહ્ન વ્યાખ્યા પ્રમાણે કાર્યમાંથી એક પ્રારંભિક વળતર (early return) કરવા માટે નિર્ધારિત થયેલું છે, જે રીતે આપણે યાદી 9-6 માં  `match` અભિવ્યક્તિનો ઉપયોગ કર્યો હતો. યાદી 9-6 માં, `match` એક `Result` મૂલ્યનો ઉપયોગ કરી રહ્યું હતું, અને પ્રારંભિક વળતર શાખા (arm) એક `Err(e)` મૂલ્ય પરત કરે છે. વિધેયનો વળતર પ્રકાર `Result` હોવો જરૂરી છે જેથી તે આ `return` સાથે સુસંગત રહે.
 
 યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે `?` ઓપરેટરનો ઉપયોગ `main` ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે `?` વાપરીએ છીએ.
 
-&lt;Listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile."&gt;
-```rust
+**Listing 9-10: Attempting to use the `?` in the `main` function that returns `()` won’t compile.**
 </code></pre>
+</blockquote>
+<blockquote>
+<pre><code class="language-rust"></code></pre>
 </blockquote>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>&gt; {{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
 <span class="boring">}</span></code></pre>
 <blockquote>
-<pre><code>&lt;/Listing&gt;
+<pre><code>
 આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
 
 ```console
@@ -415,204 +424,183 @@ don't want to include it for rustdoc testing purposes. --&gt;
 </blockquote>
 <h4 id="shortcuts-for-panic-on-error"><a class="header" href="#shortcuts-for-panic-on-error">Shortcuts for Panic on Error</a></h4>
 <p>અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે <code>?</code> નો ઉપયોગ <code>Option&lt;T&gt;</code> મૂલ્યો સાથે પણ થઈ શકે છે. <code>Result</code> પર <code>?</code> વાપરવા જેવું જ, તમે <code>Option</code> પર <code>?</code> માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે <code>Option</code> આપે છે. <code>Option&lt;T&gt;</code> પર <code>?</code> ઓપરેટરનું વર્તન <code>Result&lt;T, E&gt;</code> પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય <code>None</code> હોય, તો તે કાર્યમાંથી તરત જ <code>None</code> પાછું આપવામાં આવશે. જો મૂલ્ય <code>Some</code> હોય, તો <code>Some</code> ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.</p>
-<listing number="9-11" caption="Using the `?` operator on an `Option&lt;T&gt;` value">
-```rust
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
-```
-</listing>
-આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
+<p>` value“&gt;</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ કાર્ય <code>Option&lt;char&gt;</code> પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ <code>text</code> સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર <code>lines</code> પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર <code>next</code> ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો <code>text</code> ખાલી સ્ટ્રિંગ હોય, તો <code>next</code> ની આ કૉલ <code>None</code> પરત કરશે, જેના પરિણામે આપણે <code>?</code> નો ઉપયોગ કરીને <code>last_char_of_first_line</code> માંથી <code>None</code> પરત કરીએ છીએ. જો <code>text</code> ખાલી સ્ટ્રિંગ ન હોય, તો <code>next</code> એક <code>Some</code> મૂલ્ય પરત કરશે જેમાં <code>text</code> માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.</p>
 <p><code>?</code> નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર <code>chars</code> કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે <code>last</code> કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક <code>Option</code> છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો <code>text</code> ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે <code>"\nhi"</code> . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે <code>Some</code> પ્રકારમાં પાછો આવશે. વચ્ચેનું <code>?</code> ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે <code>Option</code> પર <code>?</code> ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા <code>match</code> અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.</p>
 <p>નોંધ કરો કે તમે <code>Result</code> ધરાવતા ફંક્શનમાં <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, અને તમે <code>Option</code> ધરાવતા ફંક્શનમાં પણ <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, પરંતુ તમે આ બંનેને મિક્સ કરી શકતા નથી. <code>?</code> ઓપરેટર આપોઆપ <code>Result</code> ને <code>Option</code> માં રૂપાંતરિત કરતું નથી અથવા ઊલટું; તે કિસ્સાઓમાં, તમારે <code>Result</code> પર <code>ok</code> મેથડ અથવા <code>Option</code> પર <code>ok_or</code> મેથડ જેવી પદ્ધતિઓનો ઉપયોગ કરીને રૂપાંતરણ સ્પષ્ટપણે કરવું જોઈએ. હવે સુધી, આપણે જે</p>
 <p><code>main</code> ફંક્શનનો ઉપયોગ કર્યો છે તે બધા <code>()</code> રિટર્ન કરે છે. <code>main</code> ફંક્શન વિશેષ છે કારણ કે તે એક્ઝિક્યુટેબલ પ્રોગ્રામનો પ્રવેશ બિંદુ અને બહાર નીકળવાનો બિંદુ છે, અને પ્રોગ્રામની અપેક્ષા મુજબ વર્તવા માટે તેના રિટર્ન પ્રકાર પર નિયંત્રણો હોય છે.</p>
 <p>સદનસીબે, <code>main</code> એક <code>Result&lt;(), E&gt;</code> પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે <code>main</code> ના વળતર પ્રકારને <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> માં બદલ્યા છે અને અંતમાં <code>Ok(())</code> નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.</p>
-<listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result&lt;(), E&gt;` allows the use of the `?` operator on `Result` values.">
-```rust
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
-```
-</listing>
-`Box<dyn error="">` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn error="">` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn error="">` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ માત્ર `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box
+<p><code>allows the use of the</code>?<code>operator on</code>Result` values.“&gt;</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p><code>Box&lt;dyn Error&gt;</code> પ્રકાર એક trait object છે, જેની ચર્ચા આપણે “Using Trait Objects to Abstract over Shared Behavior” અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે <code>Box&lt;dyn Error&gt;</code> ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. <code>main</code> ફંક્શનમાં  <code>Result</code> મૂલ્ય પર <code>?</code> નો ઉપયોગ  <code>Box&lt;dyn Error&gt;</code> ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ <code>Err</code> મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ <code>main</code> ફંક્શનનો ભાગ માત્ર <code>std::io::Error</code> પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં <code>Box&lt;dyn Error]</code> નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર <code>main</code> ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.</p>
 <p>જ્યારે એક <code>main</code> ફંક્શન <code>Result&lt;(), E&gt;</code> પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ <code>Ok(())</code> સાથે <code>main</code> પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો <code>main</code> કોઈ <code>Err</code> મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ <code>0</code> પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ <code>0</code> સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.</p>
 <p><code>main</code> ફંક્શન <code>std::process::Termination</code> ટ્રેઇટને અમલમાં મૂકતી કોઈપણ પ્રકારો પાછી આપી શકે છે, જેમાં એક ફંક્શન <code>report</code> હોય છે જે <code>ExitCode</code> પરત કરે છે. તમારા પોતાના પ્રકારો માટે <code>Termination</code> ટ્રેઇટનો અમલ કેવી રીતે કરવો તે અંગે વધુ માહિતી માટે સ્ટાન્ડર્ડ લાઈબ્રેરી દસ્તાવેજીકરણનો સંદર્ભ લો.</p>
 <p>હવે કે આપણે <code>panic!</code> બોલાવવા અથવા <code>Result</code> પાછળ કરવાની વિગતોની ચર્ચા કરી છે, તો ચાલો આપણે એ વાત પર પાછા ફરીએ કે કયા સંજોગોમાં શું યોગ્ય છે તે નક્કી કેવી રીતે કરવું.</p>
 <p><code>?</code> ચિહ્ન માત્ર એવા જ વિધેયોમાં વાપરી શકાય છે જેમના વળતર પ્રકાર (return type) તે મૂલ્ય સાથે સુસંગત હોય જેના પર <code>?</code> વપરાય છે. આ એટલા માટે છે કારણ કે <code>?</code> ચિહ્ન વ્યાખ્યા પ્રમાણે કાર્યમાંથી એક પ્રારંભિક વળતર (early return) કરવા માટે નિર્ધારિત થયેલું છે, જે રીતે આપણે યાદી 9-6 માં  <code>match</code> અભિવ્યક્તિનો ઉપયોગ કર્યો હતો. યાદી 9-6 માં, <code>match</code> એક <code>Result</code> મૂલ્યનો ઉપયોગ કરી રહ્યું હતું, અને પ્રારંભિક વળતર શાખા (arm) એક <code>Err(e)</code> મૂલ્ય પરત કરે છે. વિધેયનો વળતર પ્રકાર <code>Result</code> હોવો જરૂરી છે જેથી તે આ <code>return</code> સાથે સુસંગત રહે.</p>
 <p>યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે <code>?</code> ઓપરેટરનો ઉપયોગ <code>main</code> ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે <code>?</code> વાપરીએ છીએ.</p>
-<listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
-</listing>
-આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
+<p><strong>Listing 9-10: Attempting to use the <code>?</code> in the <code>main</code> function that returns <code>()</code> won’t compile.</strong></p>
+<p>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}</p>
+<p>આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. <code>?</code> ઓપરેટર <code>File::open</code> દ્વારા પરત કરવામાં આવેલ <code>Result</code> મૂલ્યને અનુસરે છે, પરંતુ આ <code>main</code> કાર્યનો રીટર્ન પ્રકાર <code>()</code> છે, <code>Result</code> નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:</p>
 <p>{{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
 આ ભૂલ દર્શાવે છે કે આપણે <code>?</code> ઓપરેટરનો ઉપયોગ માત્ર એવા જ ફંક્શનમાં કરી શકીએ છીએ જે <code>Result</code>, <code>Option</code>, અથવા અન્ય પ્રકાર પરત કરે છે જે <code>FromResidual</code> લાગુ કરે છે.</p>
 <p>આ ભૂલ સુધારવા માટે, તમારી પાસે બે વિકલ્પો છે. એક વિકલ્પ એ છે કે તમારા ફંક્શનનો રીટર્ન પ્રકાર બદલો જેથી તે તમે <code>?</code> ઓપરેટર સાથે ઉપયોગ કરી રહ્યાં છો તે મૂલ્ય સાથે સુસંગત હોય, જ્યાં સુધી તમને કોઈ પ્રતિબંધ ન હોય. બીજો વિકલ્પ એ છે કે <code>match</code> અથવા <code>Result&lt;T, E&gt;</code> નાં એક પદ્ધતિનો ઉપયોગ કરવો જેથી <code>Result&lt;T, E&gt;</code> ને યોગ્ય રીતે હેન્ડલ કરી શકાય.</p>
 <p>અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે <code>?</code> નો ઉપયોગ <code>Option&lt;T&gt;</code> મૂલ્યો સાથે પણ થઈ શકે છે. <code>Result</code> પર <code>?</code> વાપરવા જેવું જ, તમે <code>Option</code> પર <code>?</code> માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે <code>Option</code> આપે છે. <code>Option&lt;T&gt;</code> પર <code>?</code> ઓપરેટરનું વર્તન <code>Result&lt;T, E&gt;</code> પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય <code>None</code> હોય, તો તે કાર્યમાંથી તરત જ <code>None</code> પાછું આપવામાં આવશે. જો મૂલ્ય <code>Some</code> હોય, તો <code>Some</code> ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.</p>
-<listing number="9-11" caption="Using the `?` operator on an `Option&lt;T&gt;` value">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
-</listing>
-આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
+<p>` value“&gt;
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}</p>
+<p>આ કાર્ય <code>Option&lt;char&gt;</code> પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ <code>text</code> સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર <code>lines</code> પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર <code>next</code> ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો <code>text</code> ખાલી સ્ટ્રિંગ હોય, તો <code>next</code> ની આ કૉલ <code>None</code> પરત કરશે, જેના પરિણામે આપણે <code>?</code> નો ઉપયોગ કરીને <code>last_char_of_first_line</code> માંથી <code>None</code> પરત કરીએ છીએ. જો <code>text</code> ખાલી સ્ટ્રિંગ ન હોય, તો <code>next</code> એક <code>Some</code> મૂલ્ય પરત કરશે જેમાં <code>text</code> માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.</p>
 <p><code>?</code> નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર <code>chars</code> કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે <code>last</code> કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક <code>Option</code> છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો <code>text</code> ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે <code>"\nhi"</code> . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે <code>Some</code> પ્રકારમાં પાછો આવશે. વચ્ચેનું <code>?</code> ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે <code>Option</code> પર <code>?</code> ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા <code>match</code> અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.</p>
 <p>નોંધ કરો કે તમે <code>Result</code> ધરાવતા ફંક્શનમાં <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, અને તમે <code>Option</code> ધરાવતા ફંક્શનમાં પણ <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, પરંતુ તમે આ બંનેને મિક્સ કરી શકતા નથી. <code>?</code> ઓપરેટર આપોઆપ <code>Result</code> ને <code>Option</code> માં રૂપાંતરિત કરતું નથી અથવા ઊલટું; તે કિસ્સાઓમાં, તમારે <code>Result</code> પર <code>ok</code> મેથડ અથવા <code>Option</code> પર <code>ok_or</code> મેથડ જેવી પદ્ધતિઓનો ઉપયોગ કરીને રૂપાંતરણ સ્પષ્ટપણે કરવું જોઈએ. હવે સુધી, આપણે જે</p>
 <p><code>main</code> ફંક્શનનો ઉપયોગ કર્યો છે તે બધા <code>()</code> રિટર્ન કરે છે. <code>main</code> ફંક્શન વિશેષ છે કારણ કે તે એક્ઝિક્યુટેબલ પ્રોગ્રામનો પ્રવેશ બિંદુ અને બહાર નીકળવાનો બિંદુ છે, અને પ્રોગ્રામની અપેક્ષા મુજબ વર્તવા માટે તેના રિટર્ન પ્રકાર પર નિયંત્રણો હોય છે.</p>
 <p>સદનસીબે, <code>main</code> એક <code>Result&lt;(), E&gt;</code> પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે <code>main</code> ના વળતર પ્રકારને <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> માં બદલ્યા છે અને અંતમાં <code>Ok(())</code> નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.</p>
-<listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result&lt;(), E&gt;` allows the use of the `?` operator on `Result` values.">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
-</listing>
-`Box<dyn error="">` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn error="">` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn error="">` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ માત્ર `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box
+<p><code>allows the use of the</code>?<code>operator on</code>Result` values.“&gt;
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}</p>
+<p><code>Box&lt;dyn Error&gt;</code> પ્રકાર એક trait object છે, જેની ચર્ચા આપણે “Using Trait Objects to Abstract over Shared Behavior” અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે <code>Box&lt;dyn Error&gt;</code> ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. <code>main</code> ફંક્શનમાં  <code>Result</code> મૂલ્ય પર <code>?</code> નો ઉપયોગ  <code>Box&lt;dyn Error&gt;</code> ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ <code>Err</code> મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ <code>main</code> ફંક્શનનો ભાગ માત્ર <code>std::io::Error</code> પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં <code>Box&lt;dyn Error]</code> નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર <code>main</code> ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.</p>
 <p>જ્યારે એક <code>main</code> ફંક્શન <code>Result&lt;(), E&gt;</code> પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ <code>Ok(())</code> સાથે <code>main</code> પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો <code>main</code> કોઈ <code>Err</code> મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ <code>0</code> પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ <code>0</code> સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.</p>
 <p><code>main</code> ફંક્શન <code>std::process::Termination</code> ટ્રેઇટને અમલમાં મૂકતી કોઈપણ પ્રકારો પાછી આપી શકે છે, જેમાં એક ફંક્શન <code>report</code> હોય છે જે <code>ExitCode</code> પરત કરે છે. તમારા પોતાના પ્રકારો માટે <code>Termination</code> ટ્રેઇટનો અમલ કેવી રીતે કરવો તે અંગે વધુ માહિતી માટે સ્ટાન્ડર્ડ લાઈબ્રેરી દસ્તાવેજીકરણનો સંદર્ભ લો.</p>
 <p>હવે કે આપણે <code>panic!</code> બોલાવવા અથવા <code>Result</code> પાછળ કરવાની વિગતોની ચર્ચા કરી છે, તો ચાલો આપણે એ વાત પર પાછા ફરીએ કે કયા સંજોગોમાં શું યોગ્ય છે તે નક્કી કેવી રીતે કરવું.</p>
 <p><code>?</code> ચિહ્ન માત્ર એવા જ વિધેયોમાં વાપરી શકાય છે જેમના વળતર પ્રકાર (return type) તે મૂલ્ય સાથે સુસંગત હોય જેના પર <code>?</code> વપરાય છે. આ એટલા માટે છે કારણ કે <code>?</code> ચિહ્ન વ્યાખ્યા પ્રમાણે કાર્યમાંથી એક પ્રારંભિક વળતર (early return) કરવા માટે નિર્ધારિત થયેલું છે, જે રીતે આપણે યાદી 9-6 માં  <code>match</code> અભિવ્યક્તિનો ઉપયોગ કર્યો હતો. યાદી 9-6 માં, <code>match</code> એક <code>Result</code> મૂલ્યનો ઉપયોગ કરી રહ્યું હતું, અને પ્રારંભિક વળતર શાખા (arm) એક <code>Err(e)</code> મૂલ્ય પરત કરે છે. વિધેયનો વળતર પ્રકાર <code>Result</code> હોવો જરૂરી છે જેથી તે આ <code>return</code> સાથે સુસંગત રહે.</p>
 <p>યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે <code>?</code> ઓપરેટરનો ઉપયોગ <code>main</code> ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે <code>?</code> વાપરીએ છીએ.</p>
-<listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
-</listing>
-આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
+<p><strong>Listing 9-10: Attempting to use the <code>?</code> in the <code>main</code> function that returns <code>()</code> won’t compile.</strong></p>
+<p>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}</p>
+<p>આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. <code>?</code> ઓપરેટર <code>File::open</code> દ્વારા પરત કરવામાં આવેલ <code>Result</code> મૂલ્યને અનુસરે છે, પરંતુ આ <code>main</code> કાર્યનો રીટર્ન પ્રકાર <code>()</code> છે, <code>Result</code> નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:</p>
 <p>{{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
 આ ભૂલ દર્શાવે છે કે આપણે <code>?</code> ઓપરેટરનો ઉપયોગ માત્ર એવા જ ફંક્શનમાં કરી શકીએ છીએ જે <code>Result</code>, <code>Option</code>, અથવા અન્ય પ્રકાર પરત કરે છે જે <code>FromResidual</code> લાગુ કરે છે.</p>
 <p>આ ભૂલ સુધારવા માટે, તમારી પાસે બે વિકલ્પો છે. એક વિકલ્પ એ છે કે તમારા ફંક્શનનો રીટર્ન પ્રકાર બદલો જેથી તે તમે <code>?</code> ઓપરેટર સાથે ઉપયોગ કરી રહ્યાં છો તે મૂલ્ય સાથે સુસંગત હોય, જ્યાં સુધી તમને કોઈ પ્રતિબંધ ન હોય. બીજો વિકલ્પ એ છે કે <code>match</code> અથવા <code>Result&lt;T, E&gt;</code> નાં એક પદ્ધતિનો ઉપયોગ કરવો જેથી <code>Result&lt;T, E&gt;</code> ને યોગ્ય રીતે હેન્ડલ કરી શકાય.</p>
 <p>અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે <code>?</code> નો ઉપયોગ <code>Option&lt;T&gt;</code> મૂલ્યો સાથે પણ થઈ શકે છે. <code>Result</code> પર <code>?</code> વાપરવા જેવું જ, તમે <code>Option</code> પર <code>?</code> માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે <code>Option</code> આપે છે. <code>Option&lt;T&gt;</code> પર <code>?</code> ઓપરેટરનું વર્તન <code>Result&lt;T, E&gt;</code> પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય <code>None</code> હોય, તો તે કાર્યમાંથી તરત જ <code>None</code> પાછું આપવામાં આવશે. જો મૂલ્ય <code>Some</code> હોય, તો <code>Some</code> ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.</p>
-<listing number="9-11" caption="Using the `?` operator on an `Option&lt;T&gt;` value">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
-</listing>
-આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
+<p>` value“&gt;
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}</p>
+<p>આ કાર્ય <code>Option&lt;char&gt;</code> પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ <code>text</code> સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર <code>lines</code> પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર <code>next</code> ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો <code>text</code> ખાલી સ્ટ્રિંગ હોય, તો <code>next</code> ની આ કૉલ <code>None</code> પરત કરશે, જેના પરિણામે આપણે <code>?</code> નો ઉપયોગ કરીને <code>last_char_of_first_line</code> માંથી <code>None</code> પરત કરીએ છીએ. જો <code>text</code> ખાલી સ્ટ્રિંગ ન હોય, તો <code>next</code> એક <code>Some</code> મૂલ્ય પરત કરશે જેમાં <code>text</code> માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.</p>
 <p><code>?</code> નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર <code>chars</code> કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે <code>last</code> કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક <code>Option</code> છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો <code>text</code> ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે <code>"\nhi"</code> . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે <code>Some</code> પ્રકારમાં પાછો આવશે. વચ્ચેનું <code>?</code> ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે <code>Option</code> પર <code>?</code> ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા <code>match</code> અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.</p>
 <p>નોંધ કરો કે તમે <code>Result</code> ધરાવતા ફંક્શનમાં <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, અને તમે <code>Option</code> ધરાવતા ફંક્શનમાં પણ <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, પરંતુ તમે આ બંનેને મિક્સ કરી શકતા નથી. <code>?</code> ઓપરેટર આપોઆપ <code>Result</code> ને <code>Option</code> માં રૂપાંતરિત કરતું નથી અથવા ઊલટું; તે કિસ્સાઓમાં, તમારે <code>Result</code> પર <code>ok</code> મેથડ અથવા <code>Option</code> પર <code>ok_or</code> મેથડ જેવી પદ્ધતિઓનો ઉપયોગ કરીને રૂપાંતરણ સ્પષ્ટપણે કરવું જોઈએ. હવે સુધી, આપણે જે</p>
 <p><code>main</code> ફંક્શનનો ઉપયોગ કર્યો છે તે બધા <code>()</code> રિટર્ન કરે છે. <code>main</code> ફંક્શન વિશેષ છે કારણ કે તે એક્ઝિક્યુટેબલ પ્રોગ્રામનો પ્રવેશ બિંદુ અને બહાર નીકળવાનો બિંદુ છે, અને પ્રોગ્રામની અપેક્ષા મુજબ વર્તવા માટે તેના રિટર્ન પ્રકાર પર નિયંત્રણો હોય છે.</p>
 <p>સદનસીબે, <code>main</code> એક <code>Result&lt;(), E&gt;</code> પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે <code>main</code> ના વળતર પ્રકારને <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> માં બદલ્યા છે અને અંતમાં <code>Ok(())</code> નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.</p>
-<listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result&lt;(), E&gt;` allows the use of the `?` operator on `Result` values.">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
-</listing>
-`Box<dyn error="">` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn error="">` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn error="">` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ માત્ર `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box
+<p><code>allows the use of the</code>?<code>operator on</code>Result` values.“&gt;
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}</p>
+<p><code>Box&lt;dyn Error&gt;</code> પ્રકાર એક trait object છે, જેની ચર્ચા આપણે “Using Trait Objects to Abstract over Shared Behavior” અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે <code>Box&lt;dyn Error&gt;</code> ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. <code>main</code> ફંક્શનમાં  <code>Result</code> મૂલ્ય પર <code>?</code> નો ઉપયોગ  <code>Box&lt;dyn Error&gt;</code> ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ <code>Err</code> મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ <code>main</code> ફંક્શનનો ભાગ માત્ર <code>std::io::Error</code> પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં <code>Box&lt;dyn Error]</code> નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર <code>main</code> ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.</p>
 <p>જ્યારે એક <code>main</code> ફંક્શન <code>Result&lt;(), E&gt;</code> પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ <code>Ok(())</code> સાથે <code>main</code> પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો <code>main</code> કોઈ <code>Err</code> મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ <code>0</code> પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ <code>0</code> સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.</p>
 <p><code>main</code> ફંક્શન <code>std::process::Termination</code> ટ્રેઇટને અમલમાં મૂકતી કોઈપણ પ્રકારો પાછી આપી શકે છે, જેમાં એક ફંક્શન <code>report</code> હોય છે જે <code>ExitCode</code> પરત કરે છે. તમારા પોતાના પ્રકારો માટે <code>Termination</code> ટ્રેઇટનો અમલ કેવી રીતે કરવો તે અંગે વધુ માહિતી માટે સ્ટાન્ડર્ડ લાઈબ્રેરી દસ્તાવેજીકરણનો સંદર્ભ લો.</p>
 <p>હવે કે આપણે <code>panic!</code> બોલાવવા અથવા <code>Result</code> પાછળ કરવાની વિગતોની ચર્ચા કરી છે, તો ચાલો આપણે એ વાત પર પાછા ફરીએ કે કયા સંજોગોમાં શું યોગ્ય છે તે નક્કી કેવી રીતે કરવું.</p>
 <p><code>?</code> ચિહ્ન માત્ર એવા જ વિધેયોમાં વાપરી શકાય છે જેમના વળતર પ્રકાર (return type) તે મૂલ્ય સાથે સુસંગત હોય જેના પર <code>?</code> વપરાય છે. આ એટલા માટે છે કારણ કે <code>?</code> ચિહ્ન વ્યાખ્યા પ્રમાણે કાર્યમાંથી એક પ્રારંભિક વળતર (early return) કરવા માટે નિર્ધારિત થયેલું છે, જે રીતે આપણે યાદી 9-6 માં  <code>match</code> અભિવ્યક્તિનો ઉપયોગ કર્યો હતો. યાદી 9-6 માં, <code>match</code> એક <code>Result</code> મૂલ્યનો ઉપયોગ કરી રહ્યું હતું, અને પ્રારંભિક વળતર શાખા (arm) એક <code>Err(e)</code> મૂલ્ય પરત કરે છે. વિધેયનો વળતર પ્રકાર <code>Result</code> હોવો જરૂરી છે જેથી તે આ <code>return</code> સાથે સુસંગત રહે.</p>
 <p>યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે <code>?</code> ઓપરેટરનો ઉપયોગ <code>main</code> ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે <code>?</code> વાપરીએ છીએ.</p>
-<listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
-</listing>
-આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
+<p><strong>Listing 9-10: Attempting to use the <code>?</code> in the <code>main</code> function that returns <code>()</code> won’t compile.</strong></p>
+<p>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}</p>
+<p>આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. <code>?</code> ઓપરેટર <code>File::open</code> દ્વારા પરત કરવામાં આવેલ <code>Result</code> મૂલ્યને અનુસરે છે, પરંતુ આ <code>main</code> કાર્યનો રીટર્ન પ્રકાર <code>()</code> છે, <code>Result</code> નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:</p>
 <p>{{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
 આ ભૂલ દર્શાવે છે કે આપણે <code>?</code> ઓપરેટરનો ઉપયોગ માત્ર એવા જ ફંક્શનમાં કરી શકીએ છીએ જે <code>Result</code>, <code>Option</code>, અથવા અન્ય પ્રકાર પરત કરે છે જે <code>FromResidual</code> લાગુ કરે છે.</p>
 <p>આ ભૂલ સુધારવા માટે, તમારી પાસે બે વિકલ્પો છે. એક વિકલ્પ એ છે કે તમારા ફંક્શનનો રીટર્ન પ્રકાર બદલો જેથી તે તમે <code>?</code> ઓપરેટર સાથે ઉપયોગ કરી રહ્યાં છો તે મૂલ્ય સાથે સુસંગત હોય, જ્યાં સુધી તમને કોઈ પ્રતિબંધ ન હોય. બીજો વિકલ્પ એ છે કે <code>match</code> અથવા <code>Result&lt;T, E&gt;</code> નાં એક પદ્ધતિનો ઉપયોગ કરવો જેથી <code>Result&lt;T, E&gt;</code> ને યોગ્ય રીતે હેન્ડલ કરી શકાય.</p>
 <p>અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે <code>?</code> નો ઉપયોગ <code>Option&lt;T&gt;</code> મૂલ્યો સાથે પણ થઈ શકે છે. <code>Result</code> પર <code>?</code> વાપરવા જેવું જ, તમે <code>Option</code> પર <code>?</code> માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે <code>Option</code> આપે છે. <code>Option&lt;T&gt;</code> પર <code>?</code> ઓપરેટરનું વર્તન <code>Result&lt;T, E&gt;</code> પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય <code>None</code> હોય, તો તે કાર્યમાંથી તરત જ <code>None</code> પાછું આપવામાં આવશે. જો મૂલ્ય <code>Some</code> હોય, તો <code>Some</code> ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.</p>
-<listing number="9-11" caption="Using the `?` operator on an `Option&lt;T&gt;` value">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
-</listing>
-આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
+<p>` value“&gt;
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}</p>
+<p>આ કાર્ય <code>Option&lt;char&gt;</code> પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ <code>text</code> સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર <code>lines</code> પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર <code>next</code> ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો <code>text</code> ખાલી સ્ટ્રિંગ હોય, તો <code>next</code> ની આ કૉલ <code>None</code> પરત કરશે, જેના પરિણામે આપણે <code>?</code> નો ઉપયોગ કરીને <code>last_char_of_first_line</code> માંથી <code>None</code> પરત કરીએ છીએ. જો <code>text</code> ખાલી સ્ટ્રિંગ ન હોય, તો <code>next</code> એક <code>Some</code> મૂલ્ય પરત કરશે જેમાં <code>text</code> માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.</p>
 <p><code>?</code> નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર <code>chars</code> કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે <code>last</code> કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક <code>Option</code> છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો <code>text</code> ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે <code>"\nhi"</code> . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે <code>Some</code> પ્રકારમાં પાછો આવશે. વચ્ચેનું <code>?</code> ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે <code>Option</code> પર <code>?</code> ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા <code>match</code> અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.</p>
 <p>નોંધ કરો કે તમે <code>Result</code> ધરાવતા ફંક્શનમાં <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, અને તમે <code>Option</code> ધરાવતા ફંક્શનમાં પણ <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, પરંતુ તમે આ બંનેને મિક્સ કરી શકતા નથી. <code>?</code> ઓપરેટર આપોઆપ <code>Result</code> ને <code>Option</code> માં રૂપાંતરિત કરતું નથી અથવા ઊલટું; તે કિસ્સાઓમાં, તમારે <code>Result</code> પર <code>ok</code> મેથડ અથવા <code>Option</code> પર <code>ok_or</code> મેથડ જેવી પદ્ધતિઓનો ઉપયોગ કરીને રૂપાંતરણ સ્પષ્ટપણે કરવું જોઈએ. હવે સુધી, આપણે જે</p>
 <p><code>main</code> ફંક્શનનો ઉપયોગ કર્યો છે તે બધા <code>()</code> રિટર્ન કરે છે. <code>main</code> ફંક્શન વિશેષ છે કારણ કે તે એક્ઝિક્યુટેબલ પ્રોગ્રામનો પ્રવેશ બિંદુ અને બહાર નીકળવાનો બિંદુ છે, અને પ્રોગ્રામની અપેક્ષા મુજબ વર્તવા માટે તેના રિટર્ન પ્રકાર પર નિયંત્રણો હોય છે.</p>
 <p>સદનસીબે, <code>main</code> એક <code>Result&lt;(), E&gt;</code> પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે <code>main</code> ના વળતર પ્રકારને <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> માં બદલ્યા છે અને અંતમાં <code>Ok(())</code> નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.</p>
-<listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result&lt;(), E&gt;` allows the use of the `?` operator on `Result` values.">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
-</listing>
-`Box<dyn error="">` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn error="">` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn error="">` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ માત્ર `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box
+<p><code>allows the use of the</code>?<code>operator on</code>Result` values.“&gt;
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}</p>
+<p><code>Box&lt;dyn Error&gt;</code> પ્રકાર એક trait object છે, જેની ચર્ચા આપણે “Using Trait Objects to Abstract over Shared Behavior” અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે <code>Box&lt;dyn Error&gt;</code> ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. <code>main</code> ફંક્શનમાં  <code>Result</code> મૂલ્ય પર <code>?</code> નો ઉપયોગ  <code>Box&lt;dyn Error&gt;</code> ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ <code>Err</code> મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ <code>main</code> ફંક્શનનો ભાગ માત્ર <code>std::io::Error</code> પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં <code>Box&lt;dyn Error]</code> નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર <code>main</code> ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.</p>
 <p>જ્યારે એક <code>main</code> ફંક્શન <code>Result&lt;(), E&gt;</code> પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ <code>Ok(())</code> સાથે <code>main</code> પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો <code>main</code> કોઈ <code>Err</code> મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ <code>0</code> પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ <code>0</code> સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.</p>
 <p><code>main</code> ફંક્શન <code>std::process::Termination</code> ટ્રેઇટને અમલમાં મૂકતી કોઈપણ પ્રકારો પાછી આપી શકે છે, જેમાં એક ફંક્શન <code>report</code> હોય છે જે <code>ExitCode</code> પરત કરે છે. તમારા પોતાના પ્રકારો માટે <code>Termination</code> ટ્રેઇટનો અમલ કેવી રીતે કરવો તે અંગે વધુ માહિતી માટે સ્ટાન્ડર્ડ લાઈબ્રેરી દસ્તાવેજીકરણનો સંદર્ભ લો.</p>
 <p>હવે કે આપણે <code>panic!</code> બોલાવવા અથવા <code>Result</code> પાછળ કરવાની વિગતોની ચર્ચા કરી છે, તો ચાલો આપણે એ વાત પર પાછા ફરીએ કે કયા સંજોગોમાં શું યોગ્ય છે તે નક્કી કેવી રીતે કરવું.</p>
 <p><code>?</code> ચિહ્ન માત્ર એવા જ વિધેયોમાં વાપરી શકાય છે જેમના વળતર પ્રકાર (return type) તે મૂલ્ય સાથે સુસંગત હોય જેના પર <code>?</code> વપરાય છે. આ એટલા માટે છે કારણ કે <code>?</code> ચિહ્ન વ્યાખ્યા પ્રમાણે કાર્યમાંથી એક પ્રારંભિક વળતર (early return) કરવા માટે નિર્ધારિત થયેલું છે, જે રીતે આપણે યાદી 9-6 માં  <code>match</code> અભિવ્યક્તિનો ઉપયોગ કર્યો હતો. યાદી 9-6 માં, <code>match</code> એક <code>Result</code> મૂલ્યનો ઉપયોગ કરી રહ્યું હતું, અને પ્રારંભિક વળતર શાખા (arm) એક <code>Err(e)</code> મૂલ્ય પરત કરે છે. વિધેયનો વળતર પ્રકાર <code>Result</code> હોવો જરૂરી છે જેથી તે આ <code>return</code> સાથે સુસંગત રહે.</p>
 <p>યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે <code>?</code> ઓપરેટરનો ઉપયોગ <code>main</code> ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે <code>?</code> વાપરીએ છીએ.</p>
-<listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
-</listing>
-આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
+<p><strong>Listing 9-10: Attempting to use the <code>?</code> in the <code>main</code> function that returns <code>()</code> won’t compile.</strong></p>
+<p>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}</p>
+<p>આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. <code>?</code> ઓપરેટર <code>File::open</code> દ્વારા પરત કરવામાં આવેલ <code>Result</code> મૂલ્યને અનુસરે છે, પરંતુ આ <code>main</code> કાર્યનો રીટર્ન પ્રકાર <code>()</code> છે, <code>Result</code> નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:</p>
 <p>{{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
 આ ભૂલ દર્શાવે છે કે આપણે <code>?</code> ઓપરેટરનો ઉપયોગ માત્ર એવા જ ફંક્શનમાં કરી શકીએ છીએ જે <code>Result</code>, <code>Option</code>, અથવા અન્ય પ્રકાર પરત કરે છે જે <code>FromResidual</code> લાગુ કરે છે.</p>
 <p>આ ભૂલ સુધારવા માટે, તમારી પાસે બે વિકલ્પો છે. એક વિકલ્પ એ છે કે તમારા ફંક્શનનો રીટર્ન પ્રકાર બદલો જેથી તે તમે <code>?</code> ઓપરેટર સાથે ઉપયોગ કરી રહ્યાં છો તે મૂલ્ય સાથે સુસંગત હોય, જ્યાં સુધી તમને કોઈ પ્રતિબંધ ન હોય. બીજો વિકલ્પ એ છે કે <code>match</code> અથવા <code>Result&lt;T, E&gt;</code> નાં એક પદ્ધતિનો ઉપયોગ કરવો જેથી <code>Result&lt;T, E&gt;</code> ને યોગ્ય રીતે હેન્ડલ કરી શકાય.</p>
 <p>અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે <code>?</code> નો ઉપયોગ <code>Option&lt;T&gt;</code> મૂલ્યો સાથે પણ થઈ શકે છે. <code>Result</code> પર <code>?</code> વાપરવા જેવું જ, તમે <code>Option</code> પર <code>?</code> માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે <code>Option</code> આપે છે. <code>Option&lt;T&gt;</code> પર <code>?</code> ઓપરેટરનું વર્તન <code>Result&lt;T, E&gt;</code> પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય <code>None</code> હોય, તો તે કાર્યમાંથી તરત જ <code>None</code> પાછું આપવામાં આવશે. જો મૂલ્ય <code>Some</code> હોય, તો <code>Some</code> ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.</p>
-<listing number="9-11" caption="Using the `?` operator on an `Option&lt;T&gt;` value">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
-</listing>
-આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
+<p>` value“&gt;
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}</p>
+<p>આ કાર્ય <code>Option&lt;char&gt;</code> પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ <code>text</code> સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર <code>lines</code> પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર <code>next</code> ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો <code>text</code> ખાલી સ્ટ્રિંગ હોય, તો <code>next</code> ની આ કૉલ <code>None</code> પરત કરશે, જેના પરિણામે આપણે <code>?</code> નો ઉપયોગ કરીને <code>last_char_of_first_line</code> માંથી <code>None</code> પરત કરીએ છીએ. જો <code>text</code> ખાલી સ્ટ્રિંગ ન હોય, તો <code>next</code> એક <code>Some</code> મૂલ્ય પરત કરશે જેમાં <code>text</code> માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.</p>
 <p><code>?</code> નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર <code>chars</code> કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે <code>last</code> કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક <code>Option</code> છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો <code>text</code> ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે <code>"\nhi"</code> . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે <code>Some</code> પ્રકારમાં પાછો આવશે. વચ્ચેનું <code>?</code> ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે <code>Option</code> પર <code>?</code> ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા <code>match</code> અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.</p>
 <p>નોંધ કરો કે તમે <code>Result</code> ધરાવતા ફંક્શનમાં <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, અને તમે <code>Option</code> ધરાવતા ફંક્શનમાં પણ <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, પરંતુ તમે આ બંનેને મિક્સ કરી શકતા નથી. <code>?</code> ઓપરેટર આપોઆપ <code>Result</code> ને <code>Option</code> માં રૂપાંતરિત કરતું નથી અથવા ઊલટું; તે કિસ્સાઓમાં, તમારે <code>Result</code> પર <code>ok</code> મેથડ અથવા <code>Option</code> પર <code>ok_or</code> મેથડ જેવી પદ્ધતિઓનો ઉપયોગ કરીને રૂપાંતરણ સ્પષ્ટપણે કરવું જોઈએ. હવે સુધી, આપણે જે</p>
 <p><code>main</code> ફંક્શનનો ઉપયોગ કર્યો છે તે બધા <code>()</code> રિટર્ન કરે છે. <code>main</code> ફંક્શન વિશેષ છે કારણ કે તે એક્ઝિક્યુટેબલ પ્રોગ્રામનો પ્રવેશ બિંદુ અને બહાર નીકળવાનો બિંદુ છે, અને પ્રોગ્રામની અપેક્ષા મુજબ વર્તવા માટે તેના રિટર્ન પ્રકાર પર નિયંત્રણો હોય છે.</p>
 <p>સદનસીબે, <code>main</code> એક <code>Result&lt;(), E&gt;</code> પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે <code>main</code> ના વળતર પ્રકારને <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> માં બદલ્યા છે અને અંતમાં <code>Ok(())</code> નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.</p>
-<listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result&lt;(), E&gt;` allows the use of the `?` operator on `Result` values.">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
-</listing>
-`Box<dyn error="">` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn error="">` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn error="">` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ માત્ર `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box
+<p><code>allows the use of the</code>?<code>operator on</code>Result` values.“&gt;
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}</p>
+<p><code>Box&lt;dyn Error&gt;</code> પ્રકાર એક trait object છે, જેની ચર્ચા આપણે “Using Trait Objects to Abstract over Shared Behavior” અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે <code>Box&lt;dyn Error&gt;</code> ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. <code>main</code> ફંક્શનમાં  <code>Result</code> મૂલ્ય પર <code>?</code> નો ઉપયોગ  <code>Box&lt;dyn Error&gt;</code> ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ <code>Err</code> મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ <code>main</code> ફંક્શનનો ભાગ માત્ર <code>std::io::Error</code> પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં <code>Box&lt;dyn Error]</code> નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર <code>main</code> ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.</p>
 <p>જ્યારે એક <code>main</code> ફંક્શન <code>Result&lt;(), E&gt;</code> પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ <code>Ok(())</code> સાથે <code>main</code> પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો <code>main</code> કોઈ <code>Err</code> મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ <code>0</code> પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ <code>0</code> સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.</p>
 <p><code>main</code> ફંક્શન <code>std::process::Termination</code> ટ્રેઇટને અમલમાં મૂકતી કોઈપણ પ્રકારો પાછી આપી શકે છે, જેમાં એક ફંક્શન <code>report</code> હોય છે જે <code>ExitCode</code> પરત કરે છે. તમારા પોતાના પ્રકારો માટે <code>Termination</code> ટ્રેઇટનો અમલ કેવી રીતે કરવો તે અંગે વધુ માહિતી માટે સ્ટાન્ડર્ડ લાઈબ્રેરી દસ્તાવેજીકરણનો સંદર્ભ લો.</p>
 <p>હવે કે આપણે <code>panic!</code> બોલાવવા અથવા <code>Result</code> પાછળ કરવાની વિગતોની ચર્ચા કરી છે, તો ચાલો આપણે એ વાત પર પાછા ફરીએ કે કયા સંજોગોમાં શું યોગ્ય છે તે નક્કી કેવી રીતે કરવું.</p>
 <h3 id="propagating-errors"><a class="header" href="#propagating-errors">Propagating Errors</a></h3>
 <p><code>?</code> ચિહ્ન માત્ર એવા જ વિધેયોમાં વાપરી શકાય છે જેમના વળતર પ્રકાર (return type) તે મૂલ્ય સાથે સુસંગત હોય જેના પર <code>?</code> વપરાય છે. આ એટલા માટે છે કારણ કે <code>?</code> ચિહ્ન વ્યાખ્યા પ્રમાણે કાર્યમાંથી એક પ્રારંભિક વળતર (early return) કરવા માટે નિર્ધારિત થયેલું છે, જે રીતે આપણે યાદી 9-6 માં  <code>match</code> અભિવ્યક્તિનો ઉપયોગ કર્યો હતો. યાદી 9-6 માં, <code>match</code> એક <code>Result</code> મૂલ્યનો ઉપયોગ કરી રહ્યું હતું, અને પ્રારંભિક વળતર શાખા (arm) એક <code>Err(e)</code> મૂલ્ય પરત કરે છે. વિધેયનો વળતર પ્રકાર <code>Result</code> હોવો જરૂરી છે જેથી તે આ <code>return</code> સાથે સુસંગત રહે.</p>
 <p>યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે <code>?</code> ઓપરેટરનો ઉપયોગ <code>main</code> ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે <code>?</code> વાપરીએ છીએ.</p>
-<listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
-</listing>
-આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
+<p><strong>Listing 9-10: Attempting to use the <code>?</code> in the <code>main</code> function that returns <code>()</code> won’t compile.</strong></p>
+<p>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}</p>
+<p>આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. <code>?</code> ઓપરેટર <code>File::open</code> દ્વારા પરત કરવામાં આવેલ <code>Result</code> મૂલ્યને અનુસરે છે, પરંતુ આ <code>main</code> કાર્યનો રીટર્ન પ્રકાર <code>()</code> છે, <code>Result</code> નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:</p>
 <p>{{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
 આ ભૂલ દર્શાવે છે કે આપણે <code>?</code> ઓપરેટરનો ઉપયોગ માત્ર એવા જ ફંક્શનમાં કરી શકીએ છીએ જે <code>Result</code>, <code>Option</code>, અથવા અન્ય પ્રકાર પરત કરે છે જે <code>FromResidual</code> લાગુ કરે છે.</p>
 <p>આ ભૂલ સુધારવા માટે, તમારી પાસે બે વિકલ્પો છે. એક વિકલ્પ એ છે કે તમારા ફંક્શનનો રીટર્ન પ્રકાર બદલો જેથી તે તમે <code>?</code> ઓપરેટર સાથે ઉપયોગ કરી રહ્યાં છો તે મૂલ્ય સાથે સુસંગત હોય, જ્યાં સુધી તમને કોઈ પ્રતિબંધ ન હોય. બીજો વિકલ્પ એ છે કે <code>match</code> અથવા <code>Result&lt;T, E&gt;</code> નાં એક પદ્ધતિનો ઉપયોગ કરવો જેથી <code>Result&lt;T, E&gt;</code> ને યોગ્ય રીતે હેન્ડલ કરી શકાય.</p>
 <p>અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે <code>?</code> નો ઉપયોગ <code>Option&lt;T&gt;</code> મૂલ્યો સાથે પણ થઈ શકે છે. <code>Result</code> પર <code>?</code> વાપરવા જેવું જ, તમે <code>Option</code> પર <code>?</code> માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે <code>Option</code> આપે છે. <code>Option&lt;T&gt;</code> પર <code>?</code> ઓપરેટરનું વર્તન <code>Result&lt;T, E&gt;</code> પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય <code>None</code> હોય, તો તે કાર્યમાંથી તરત જ <code>None</code> પાછું આપવામાં આવશે. જો મૂલ્ય <code>Some</code> હોય, તો <code>Some</code> ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.</p>
-<listing number="9-11" caption="Using the `?` operator on an `Option&lt;T&gt;` value">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
-</listing>
-આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
+<p>` value“&gt;
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}</p>
+<p>આ કાર્ય <code>Option&lt;char&gt;</code> પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ <code>text</code> સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર <code>lines</code> પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર <code>next</code> ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો <code>text</code> ખાલી સ્ટ્રિંગ હોય, તો <code>next</code> ની આ કૉલ <code>None</code> પરત કરશે, જેના પરિણામે આપણે <code>?</code> નો ઉપયોગ કરીને <code>last_char_of_first_line</code> માંથી <code>None</code> પરત કરીએ છીએ. જો <code>text</code> ખાલી સ્ટ્રિંગ ન હોય, તો <code>next</code> એક <code>Some</code> મૂલ્ય પરત કરશે જેમાં <code>text</code> માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.</p>
 <p><code>?</code> નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર <code>chars</code> કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે <code>last</code> કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક <code>Option</code> છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો <code>text</code> ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે <code>"\nhi"</code> . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે <code>Some</code> પ્રકારમાં પાછો આવશે. વચ્ચેનું <code>?</code> ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે <code>Option</code> પર <code>?</code> ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા <code>match</code> અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.</p>
 <p>નોંધ કરો કે તમે <code>Result</code> ધરાવતા ફંક્શનમાં <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, અને તમે <code>Option</code> ધરાવતા ફંક્શનમાં પણ <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, પરંતુ તમે આ બંનેને મિક્સ કરી શકતા નથી. <code>?</code> ઓપરેટર આપોઆપ <code>Result</code> ને <code>Option</code> માં રૂપાંતરિત કરતું નથી અથવા ઊલટું; તે કિસ્સાઓમાં, તમારે <code>Result</code> પર <code>ok</code> મેથડ અથવા <code>Option</code> પર <code>ok_or</code> મેથડ જેવી પદ્ધતિઓનો ઉપયોગ કરીને રૂપાંતરણ સ્પષ્ટપણે કરવું જોઈએ. હવે સુધી, આપણે જે</p>
 <p><code>main</code> ફંક્શનનો ઉપયોગ કર્યો છે તે બધા <code>()</code> રિટર્ન કરે છે. <code>main</code> ફંક્શન વિશેષ છે કારણ કે તે એક્ઝિક્યુટેબલ પ્રોગ્રામનો પ્રવેશ બિંદુ અને બહાર નીકળવાનો બિંદુ છે, અને પ્રોગ્રામની અપેક્ષા મુજબ વર્તવા માટે તેના રિટર્ન પ્રકાર પર નિયંત્રણો હોય છે.</p>
 <p>સદનસીબે, <code>main</code> એક <code>Result&lt;(), E&gt;</code> પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે <code>main</code> ના વળતર પ્રકારને <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> માં બદલ્યા છે અને અંતમાં <code>Ok(())</code> નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.</p>
-<listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result&lt;(), E&gt;` allows the use of the `?` operator on `Result` values.">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
-</listing>
-`Box<dyn error="">` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn error="">` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn error="">` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ માત્ર `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box
+<p><code>allows the use of the</code>?<code>operator on</code>Result` values.“&gt;
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}</p>
+<p><code>Box&lt;dyn Error&gt;</code> પ્રકાર એક trait object છે, જેની ચર્ચા આપણે “Using Trait Objects to Abstract over Shared Behavior” અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે <code>Box&lt;dyn Error&gt;</code> ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. <code>main</code> ફંક્શનમાં  <code>Result</code> મૂલ્ય પર <code>?</code> નો ઉપયોગ  <code>Box&lt;dyn Error&gt;</code> ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ <code>Err</code> મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ <code>main</code> ફંક્શનનો ભાગ માત્ર <code>std::io::Error</code> પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં <code>Box&lt;dyn Error]</code> નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર <code>main</code> ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.</p>
 <p>જ્યારે એક <code>main</code> ફંક્શન <code>Result&lt;(), E&gt;</code> પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ <code>Ok(())</code> સાથે <code>main</code> પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો <code>main</code> કોઈ <code>Err</code> મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ <code>0</code> પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ <code>0</code> સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.</p>
 <p><code>main</code> ફંક્શન <code>std::process::Termination</code> ટ્રેઇટને અમલમાં મૂકતી કોઈપણ પ્રકારો પાછી આપી શકે છે, જેમાં એક ફંક્શન <code>report</code> હોય છે જે <code>ExitCode</code> પરત કરે છે. તમારા પોતાના પ્રકારો માટે <code>Termination</code> ટ્રેઇટનો અમલ કેવી રીતે કરવો તે અંગે વધુ માહિતી માટે સ્ટાન્ડર્ડ લાઈબ્રેરી દસ્તાવેજીકરણનો સંદર્ભ લો.</p>
 <p>હવે કે આપણે <code>panic!</code> બોલાવવા અથવા <code>Result</code> પાછળ કરવાની વિગતોની ચર્ચા કરી છે, તો ચાલો આપણે એ વાત પર પાછા ફરીએ કે કયા સંજોગોમાં શું યોગ્ય છે તે નક્કી કેવી રીતે કરવું.</p>
 <h4 id="the--operator-shortcut"><a class="header" href="#the--operator-shortcut">The <code>?</code> Operator Shortcut</a></h4>
 <p><code>?</code> ચિહ્ન માત્ર એવા જ વિધેયોમાં વાપરી શકાય છે જેમના વળતર પ્રકાર (return type) તે મૂલ્ય સાથે સુસંગત હોય જેના પર <code>?</code> વપરાય છે. આ એટલા માટે છે કારણ કે <code>?</code> ચિહ્ન વ્યાખ્યા પ્રમાણે કાર્યમાંથી એક પ્રારંભિક વળતર (early return) કરવા માટે નિર્ધારિત થયેલું છે, જે રીતે આપણે યાદી 9-6 માં  <code>match</code> અભિવ્યક્તિનો ઉપયોગ કર્યો હતો. યાદી 9-6 માં, <code>match</code> એક <code>Result</code> મૂલ્યનો ઉપયોગ કરી રહ્યું હતું, અને પ્રારંભિક વળતર શાખા (arm) એક <code>Err(e)</code> મૂલ્ય પરત કરે છે. વિધેયનો વળતર પ્રકાર <code>Result</code> હોવો જરૂરી છે જેથી તે આ <code>return</code> સાથે સુસંગત રહે.</p>
 <p>યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે <code>?</code> ઓપરેટરનો ઉપયોગ <code>main</code> ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે <code>?</code> વાપરીએ છીએ.</p>
-<listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
-</listing>
-આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
+<p><strong>Listing 9-10: Attempting to use the <code>?</code> in the <code>main</code> function that returns <code>()</code> won’t compile.</strong></p>
+<p>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}</p>
+<p>આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. <code>?</code> ઓપરેટર <code>File::open</code> દ્વારા પરત કરવામાં આવેલ <code>Result</code> મૂલ્યને અનુસરે છે, પરંતુ આ <code>main</code> કાર્યનો રીટર્ન પ્રકાર <code>()</code> છે, <code>Result</code> નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:</p>
 <p>{{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
 આ ભૂલ દર્શાવે છે કે આપણે <code>?</code> ઓપરેટરનો ઉપયોગ માત્ર એવા જ ફંક્શનમાં કરી શકીએ છીએ જે <code>Result</code>, <code>Option</code>, અથવા અન્ય પ્રકાર પરત કરે છે જે <code>FromResidual</code> લાગુ કરે છે.</p>
 <p>આ ભૂલ સુધારવા માટે, તમારી પાસે બે વિકલ્પો છે. એક વિકલ્પ એ છે કે તમારા ફંક્શનનો રીટર્ન પ્રકાર બદલો જેથી તે તમે <code>?</code> ઓપરેટર સાથે ઉપયોગ કરી રહ્યાં છો તે મૂલ્ય સાથે સુસંગત હોય, જ્યાં સુધી તમને કોઈ પ્રતિબંધ ન હોય. બીજો વિકલ્પ એ છે કે <code>match</code> અથવા <code>Result&lt;T, E&gt;</code> નાં એક પદ્ધતિનો ઉપયોગ કરવો જેથી <code>Result&lt;T, E&gt;</code> ને યોગ્ય રીતે હેન્ડલ કરી શકાય.</p>
 <p>અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે <code>?</code> નો ઉપયોગ <code>Option&lt;T&gt;</code> મૂલ્યો સાથે પણ થઈ શકે છે. <code>Result</code> પર <code>?</code> વાપરવા જેવું જ, તમે <code>Option</code> પર <code>?</code> માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે <code>Option</code> આપે છે. <code>Option&lt;T&gt;</code> પર <code>?</code> ઓપરેટરનું વર્તન <code>Result&lt;T, E&gt;</code> પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય <code>None</code> હોય, તો તે કાર્યમાંથી તરત જ <code>None</code> પાછું આપવામાં આવશે. જો મૂલ્ય <code>Some</code> હોય, તો <code>Some</code> ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.</p>
-<listing number="9-11" caption="Using the `?` operator on an `Option&lt;T&gt;` value">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
-</listing>
-આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
+<p>` value“&gt;
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}</p>
+<p>આ કાર્ય <code>Option&lt;char&gt;</code> પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ <code>text</code> સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર <code>lines</code> પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર <code>next</code> ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો <code>text</code> ખાલી સ્ટ્રિંગ હોય, તો <code>next</code> ની આ કૉલ <code>None</code> પરત કરશે, જેના પરિણામે આપણે <code>?</code> નો ઉપયોગ કરીને <code>last_char_of_first_line</code> માંથી <code>None</code> પરત કરીએ છીએ. જો <code>text</code> ખાલી સ્ટ્રિંગ ન હોય, તો <code>next</code> એક <code>Some</code> મૂલ્ય પરત કરશે જેમાં <code>text</code> માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.</p>
 <p><code>?</code> નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર <code>chars</code> કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે <code>last</code> કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક <code>Option</code> છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો <code>text</code> ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે <code>"\nhi"</code> . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે <code>Some</code> પ્રકારમાં પાછો આવશે. વચ્ચેનું <code>?</code> ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે <code>Option</code> પર <code>?</code> ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા <code>match</code> અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.</p>
 <p>નોંધ કરો કે તમે <code>Result</code> ધરાવતા ફંક્શનમાં <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, અને તમે <code>Option</code> ધરાવતા ફંક્શનમાં પણ <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, પરંતુ તમે આ બંનેને મિક્સ કરી શકતા નથી. <code>?</code> ઓપરેટર આપોઆપ <code>Result</code> ને <code>Option</code> માં રૂપાંતરિત કરતું નથી અથવા ઊલટું; તે કિસ્સાઓમાં, તમારે <code>Result</code> પર <code>ok</code> મેથડ અથવા <code>Option</code> પર <code>ok_or</code> મેથડ જેવી પદ્ધતિઓનો ઉપયોગ કરીને રૂપાંતરણ સ્પષ્ટપણે કરવું જોઈએ. હવે સુધી, આપણે જે</p>
 <p><code>main</code> ફંક્શનનો ઉપયોગ કર્યો છે તે બધા <code>()</code> રિટર્ન કરે છે. <code>main</code> ફંક્શન વિશેષ છે કારણ કે તે એક્ઝિક્યુટેબલ પ્રોગ્રામનો પ્રવેશ બિંદુ અને બહાર નીકળવાનો બિંદુ છે, અને પ્રોગ્રામની અપેક્ષા મુજબ વર્તવા માટે તેના રિટર્ન પ્રકાર પર નિયંત્રણો હોય છે.</p>
 <p>સદનસીબે, <code>main</code> એક <code>Result&lt;(), E&gt;</code> પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે <code>main</code> ના વળતર પ્રકારને <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> માં બદલ્યા છે અને અંતમાં <code>Ok(())</code> નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.</p>
-<listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result&lt;(), E&gt;` allows the use of the `?` operator on `Result` values.">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
-</listing>
-`Box<dyn error="">` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn error="">` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn error="">` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ માત્ર `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box
+<p><code>allows the use of the</code>?<code>operator on</code>Result` values.“&gt;
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}</p>
+<p><code>Box&lt;dyn Error&gt;</code> પ્રકાર એક trait object છે, જેની ચર્ચા આપણે “Using Trait Objects to Abstract over Shared Behavior” અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે <code>Box&lt;dyn Error&gt;</code> ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. <code>main</code> ફંક્શનમાં  <code>Result</code> મૂલ્ય પર <code>?</code> નો ઉપયોગ  <code>Box&lt;dyn Error&gt;</code> ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ <code>Err</code> મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ <code>main</code> ફંક્શનનો ભાગ માત્ર <code>std::io::Error</code> પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં <code>Box&lt;dyn Error]</code> નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર <code>main</code> ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.</p>
 <p>જ્યારે એક <code>main</code> ફંક્શન <code>Result&lt;(), E&gt;</code> પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ <code>Ok(())</code> સાથે <code>main</code> પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો <code>main</code> કોઈ <code>Err</code> મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ <code>0</code> પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ <code>0</code> સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.</p>
 <p><code>main</code> ફંક્શન <code>std::process::Termination</code> ટ્રેઇટને અમલમાં મૂકતી કોઈપણ પ્રકારો પાછી આપી શકે છે, જેમાં એક ફંક્શન <code>report</code> હોય છે જે <code>ExitCode</code> પરત કરે છે. તમારા પોતાના પ્રકારો માટે <code>Termination</code> ટ્રેઇટનો અમલ કેવી રીતે કરવો તે અંગે વધુ માહિતી માટે સ્ટાન્ડર્ડ લાઈબ્રેરી દસ્તાવેજીકરણનો સંદર્ભ લો.</p>
 <p>હવે કે આપણે <code>panic!</code> બોલાવવા અથવા <code>Result</code> પાછળ કરવાની વિગતોની ચર્ચા કરી છે, તો ચાલો આપણે એ વાત પર પાછા ફરીએ કે કયા સંજોગોમાં શું યોગ્ય છે તે નક્કી કેવી રીતે કરવું.</p>
 <h4 id="where-to-use-the--operator"><a class="header" href="#where-to-use-the--operator">Where to Use the <code>?</code> Operator</a></h4>
 <p><code>?</code> ચિહ્ન માત્ર એવા જ વિધેયોમાં વાપરી શકાય છે જેમના વળતર પ્રકાર (return type) તે મૂલ્ય સાથે સુસંગત હોય જેના પર <code>?</code> વપરાય છે. આ એટલા માટે છે કારણ કે <code>?</code> ચિહ્ન વ્યાખ્યા પ્રમાણે કાર્યમાંથી એક પ્રારંભિક વળતર (early return) કરવા માટે નિર્ધારિત થયેલું છે, જે રીતે આપણે યાદી 9-6 માં  <code>match</code> અભિવ્યક્તિનો ઉપયોગ કર્યો હતો. યાદી 9-6 માં, <code>match</code> એક <code>Result</code> મૂલ્યનો ઉપયોગ કરી રહ્યું હતું, અને પ્રારંભિક વળતર શાખા (arm) એક <code>Err(e)</code> મૂલ્ય પરત કરે છે. વિધેયનો વળતર પ્રકાર <code>Result</code> હોવો જરૂરી છે જેથી તે આ <code>return</code> સાથે સુસંગત રહે.</p>
 <p>યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે <code>?</code> ઓપરેટરનો ઉપયોગ <code>main</code> ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે <code>?</code> વાપરીએ છીએ.</p>
-<listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
-</listing>
-આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
+<p><strong>Listing 9-10: Attempting to use the <code>?</code> in the <code>main</code> function that returns <code>()</code> won’t compile.</strong></p>
+<p>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}</p>
+<p>આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. <code>?</code> ઓપરેટર <code>File::open</code> દ્વારા પરત કરવામાં આવેલ <code>Result</code> મૂલ્યને અનુસરે છે, પરંતુ આ <code>main</code> કાર્યનો રીટર્ન પ્રકાર <code>()</code> છે, <code>Result</code> નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:</p>
 <p>{{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
 આ ભૂલ દર્શાવે છે કે આપણે <code>?</code> ઓપરેટરનો ઉપયોગ માત્ર એવા જ ફંક્શનમાં કરી શકીએ છીએ જે <code>Result</code>, <code>Option</code>, અથવા અન્ય પ્રકાર પરત કરે છે જે <code>FromResidual</code> લાગુ કરે છે.</p>
 <p>આ ભૂલ સુધારવા માટે, તમારી પાસે બે વિકલ્પો છે. એક વિકલ્પ એ છે કે તમારા ફંક્શનનો રીટર્ન પ્રકાર બદલો જેથી તે તમે <code>?</code> ઓપરેટર સાથે ઉપયોગ કરી રહ્યાં છો તે મૂલ્ય સાથે સુસંગત હોય, જ્યાં સુધી તમને કોઈ પ્રતિબંધ ન હોય. બીજો વિકલ્પ એ છે કે <code>match</code> અથવા <code>Result&lt;T, E&gt;</code> નાં એક પદ્ધતિનો ઉપયોગ કરવો જેથી <code>Result&lt;T, E&gt;</code> ને યોગ્ય રીતે હેન્ડલ કરી શકાય.</p>
 <p>અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે <code>?</code> નો ઉપયોગ <code>Option&lt;T&gt;</code> મૂલ્યો સાથે પણ થઈ શકે છે. <code>Result</code> પર <code>?</code> વાપરવા જેવું જ, તમે <code>Option</code> પર <code>?</code> માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે <code>Option</code> આપે છે. <code>Option&lt;T&gt;</code> પર <code>?</code> ઓપરેટરનું વર્તન <code>Result&lt;T, E&gt;</code> પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય <code>None</code> હોય, તો તે કાર્યમાંથી તરત જ <code>None</code> પાછું આપવામાં આવશે. જો મૂલ્ય <code>Some</code> હોય, તો <code>Some</code> ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.</p>
-<listing number="9-11" caption="Using the `?` operator on an `Option&lt;T&gt;` value">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
-</listing>
-આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
+<p>` value“&gt;
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}</p>
+<p>આ કાર્ય <code>Option&lt;char&gt;</code> પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ <code>text</code> સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર <code>lines</code> પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર <code>next</code> ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો <code>text</code> ખાલી સ્ટ્રિંગ હોય, તો <code>next</code> ની આ કૉલ <code>None</code> પરત કરશે, જેના પરિણામે આપણે <code>?</code> નો ઉપયોગ કરીને <code>last_char_of_first_line</code> માંથી <code>None</code> પરત કરીએ છીએ. જો <code>text</code> ખાલી સ્ટ્રિંગ ન હોય, તો <code>next</code> એક <code>Some</code> મૂલ્ય પરત કરશે જેમાં <code>text</code> માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.</p>
 <p><code>?</code> નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર <code>chars</code> કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે <code>last</code> કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક <code>Option</code> છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો <code>text</code> ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે <code>"\nhi"</code> . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે <code>Some</code> પ્રકારમાં પાછો આવશે. વચ્ચેનું <code>?</code> ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે <code>Option</code> પર <code>?</code> ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા <code>match</code> અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.</p>
 <p>નોંધ કરો કે તમે <code>Result</code> ધરાવતા ફંક્શનમાં <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, અને તમે <code>Option</code> ધરાવતા ફંક્શનમાં પણ <code>?</code> ઓપરેટરનો ઉપયોગ કરી શકો છો, પરંતુ તમે આ બંનેને મિક્સ કરી શકતા નથી. <code>?</code> ઓપરેટર આપોઆપ <code>Result</code> ને <code>Option</code> માં રૂપાંતરિત કરતું નથી અથવા ઊલટું; તે કિસ્સાઓમાં, તમારે <code>Result</code> પર <code>ok</code> મેથડ અથવા <code>Option</code> પર <code>ok_or</code> મેથડ જેવી પદ્ધતિઓનો ઉપયોગ કરીને રૂપાંતરણ સ્પષ્ટપણે કરવું જોઈએ. હવે સુધી, આપણે જે</p>
 <p><code>main</code> ફંક્શનનો ઉપયોગ કર્યો છે તે બધા <code>()</code> રિટર્ન કરે છે. <code>main</code> ફંક્શન વિશેષ છે કારણ કે તે એક્ઝિક્યુટેબલ પ્રોગ્રામનો પ્રવેશ બિંદુ અને બહાર નીકળવાનો બિંદુ છે, અને પ્રોગ્રામની અપેક્ષા મુજબ વર્તવા માટે તેના રિટર્ન પ્રકાર પર નિયંત્રણો હોય છે.</p>
 <p>સદનસીબે, <code>main</code> એક <code>Result&lt;(), E&gt;</code> પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે <code>main</code> ના વળતર પ્રકારને <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> માં બદલ્યા છે અને અંતમાં <code>Ok(())</code> નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.</p>
-<listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result&lt;(), E&gt;` allows the use of the `?` operator on `Result` values.">
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
-</listing>
-`Box<dyn error="">` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn error="">` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn error="">` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ માત્ર `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box
+<p><code>allows the use of the</code>?<code>operator on</code>Result` values.“&gt;
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}</p>
+<p><code>Box&lt;dyn Error&gt;</code> પ્રકાર એક trait object છે, જેની ચર્ચા આપણે “Using Trait Objects to Abstract over Shared Behavior” અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે <code>Box&lt;dyn Error&gt;</code> ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. <code>main</code> ફંક્શનમાં  <code>Result</code> મૂલ્ય પર <code>?</code> નો ઉપયોગ  <code>Box&lt;dyn Error&gt;</code> ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ <code>Err</code> મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ <code>main</code> ફંક્શનનો ભાગ માત્ર <code>std::io::Error</code> પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં <code>Box&lt;dyn Error]</code> નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર <code>main</code> ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.</p>
 <p>જ્યારે એક <code>main</code> ફંક્શન <code>Result&lt;(), E&gt;</code> પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ <code>Ok(())</code> સાથે <code>main</code> પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો <code>main</code> કોઈ <code>Err</code> મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ <code>0</code> પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ <code>0</code> સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.</p>
 <p><code>main</code> ફંક્શન <code>std::process::Termination</code> ટ્રેઇટને અમલમાં મૂકતી કોઈપણ પ્રકારો પાછી આપી શકે છે, જેમાં એક ફંક્શન <code>report</code> હોય છે જે <code>ExitCode</code> પરત કરે છે. તમારા પોતાના પ્રકારો માટે <code>Termination</code> ટ્રેઇટનો અમલ કેવી રીતે કરવો તે અંગે વધુ માહિતી માટે સ્ટાન્ડર્ડ લાઈબ્રેરી દસ્તાવેજીકરણનો સંદર્ભ લો.</p>
 <p>હવે કે આપણે <code>panic!</code> બોલાવવા અથવા <code>Result</code> પાછળ કરવાની વિગતોની ચર્ચા કરી છે, તો ચાલો આપણે એ વાત પર પાછા ફરીએ કે કયા સંજોગોમાં શું યોગ્ય છે તે નક્કી કેવી રીતે કરવું.</p>
-</dyn></dyn></dyn></char></dyn></dyn></dyn></char></dyn></dyn></dyn></char></dyn></dyn></dyn></char></dyn></dyn></dyn></char></dyn></dyn></dyn></char></dyn></dyn></dyn></char></dyn></dyn></dyn></char></t,>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -665,6 +653,7 @@ don't want to include it for rustdoc testing purposes. --&gt;
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

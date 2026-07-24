@@ -31,11 +31,12 @@ $ cargo add trpl
 
 ચાલો એક વિધેય લખીને આરંભ કરીએ જે એક પાના URL ને પરિમાણ તરીકે સ્વીકારે, તેની પાસે વિનંતી કરે અને `<title>` ઘટકની લખાણ પાછું આપે (જુઓ યાદી 17-1).
 
-<Listing number="17-1" file-name="src/main.rs" caption="Defining an async function to get the title element from an HTML page">
+**Listing 17-1: Defining an async function to get the title element from an HTML page**
+
 ```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-01/src/main.rs:all}}
 ```
-</Listing>
+
 સૌ પ્રથમ, આપણે `page_title` નામનું વિધેય વ્યાખ્યાયિત કરીએ છીએ અને તેને `async` કીવર્ડથી નિશાનીત કરીએ છીએ. ત્યારબાદ, આપણે `trpl::get` વિધેયનો ઉપયોગ કરીએ છીએ જે પાસ થયેલ URL પરથી માહિતી મેળવે છે અને પ્રતિભાવ (response) માટે અપેક્ષા રાખવા માટે `await` કીવર્ડનો ઉપયોગ કરીએ છીએ. `response` નો લખાણ મેળવવા માટે, આપણે તેના `text` પદ્ધતિને બોલાવીએ છીએ અને ફરીથી `await` કીવર્ડ સાથે તેની રાહ જોઈએ છીએ. આ બંને પગલાં અસિંક્રોનસ (asynchronous) છે. `get` વિધેય માટે, આપણે સર્વર દ્વારા પ્રથમ પ્રતિભાવ ભાગ મોકલવાની રાહ જોવી પડે છે, જેમાં HTTP હેડર્સ, કૂકીઝ વગેરે સમાવિષ્ટ હોઈ શકે છે અને તે પ્રતિભાવ શરીરથી અલગથી પહોંચાડવામાં આવી શકે છે. વિશેષ કરીને જો શરીર ખૂબ મોટું હોય, તો તેના સંપૂર્ણ ભાગને મળવામાં થોડો સમય લાગી શકે છે. આપણે સમગ્ર પ્રતિભાવ આવવાની રાહ જોવી પડે છે, તેથી `text` પદ્ધતિ પણ async છે.
 
 આપણે આ બંને ભવિષ્યકાળને સ્પષ્ટપણે પ્રતીક્ષા કરવી પડે છે, કારણ કે Rustમાં ભવિષ્યકાળ આળસુ હોય છે: જ્યાં સુધી તમે `await` કીવર્ડથી તેમને પૂછશો નહીં ત્યાં સુધી તેઓ કંઈ કરતા નથી. (વાસ્તવમાં, જો તમે ભવિષ્યકાળનો ઉપયોગ ન કરો તો Rust એક compiler ચેતવણી બતાવશે.) આ તમને પ્રકરણ ૧૩ માં "Iterators સાથે વસ્તુઓની શ્રેણીની પ્રક્રિયા" વિભાગમાં iterator ની ચર્ચા યાદ અપાવી શકે છે. Iterators કંઈ કરતા નથી સિવાય કે તમે તેમની `next` પદ્ધતિને કૉલ કરો— સીધી રીતે અથવા `for` લૂપ્સ અથવા `map` જેવી પદ્ધતિઓ દ્વારા જે `next` નો ઉપયોગ કરે છે. એ જ રીતે, ભવિષ્યકાળ કંઈ કરતા નથી સિવાય કે તમે તેમને સ્પષ્ટપણે પૂછશો. આ આળસ Rust ને async કોડ ચલાવવાનું ટાળવા દે છે જ્યાં સુધી તેની ખરેખર જરૂર ન પડે.
@@ -46,11 +47,12 @@ $ cargo add trpl
 
 જુઓ કે Rust નું `await` કીવર્ડ તમે જે અભિવ્યક્તિની રાહ જોઈ રહ્યા છો તેના પછી આવે છે, તે પહેલાં નહીં. એનો અર્થ એ થાય છે કે તે એક પોસ્ટફિક્સ કીવર્ડ છે. આ તમારી પરિચિતતાથી અલગ હોઈ શકે છે જો તમે અન્ય ભાષાઓમાં `async` નો ઉપયોગ કર્યો હોય, પરંતુ Rust માં તે પદ્ધતિઓની શૃંખલાને વધુ સરળ બનાવે છે. પરિણામે, આપણે `page_title` ના ભાગને `trpl::get` અને `text` ફંક્શન કૉલ્સને `await` સાથે જોડીને બદલી શકીએ છીએ, જે યાદી 17-2 માં દર્શાવેલ છે.
 
-<Listing number="17-2" file-name="src/main.rs" caption="Chaining with the `await` keyword">
+**Listing 17-2: Chaining with the `await` keyword**
+
 ```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-02/src/main.rs:chaining}}
 ```
-</Listing>
+
 એથી, આપણે આપણું પ્રથમ async ફંક્શન સફળતાપૂર્વક લખ્યું છે! `main` માં તેને બોલાવવા માટે થોડો કોડ ઉમેરતા પહેલાં, ચાલો આપણે જે લખ્યું છે અને તેનો અર્થ શું છે
 
 તેના વિશે વધુ વાત કરીએ. જ્યારે Rust એક બ્લોકને `async` કીવર્ડ સાથે ચિહ્નિત કરે છે, ત્યારે તે તેને એક અનન્ય, અનામી ડેટા પ્રકારમાં કમ્પાઇલ કરે છે જે `Future` ટ્રેઇટનો અમલ કરે છે. જ્યારે Rust કોઈ ફંક્શનને `async` સાથે ચિહ્નિત કરે છે, ત્યારે તે તેને નોન-async ફંક્શનમાં કમ્પાઇલ કરે છે જેનું શરીર એક async બ્લોક હોય છે. એક async ફંક્શનનો રીટર્ન પ્રકાર એ અનામી ડેટા પ્રકારનો પ્રકાર હોય છે જે કમ્પાઈલર તે async બ્લોક માટે બનાવે છે.
@@ -73,15 +75,15 @@ fn page_title(url: &str) -> impl Future<Output = Option<String>> {
 }
 ચાલો આપણે પરિવર્તિત સંસ્કરણના દરેક ભાગમાંથી પસાર થઈએ:
 
-તે `impl Trait` વાક્યરચનાનો ઉપયોગ કરે છે જેની ચર્ચા આપણે પ્રકરણ ૧૦ માં "Traits as Parameters" વિભાગમાં કરી હતી.
+- તે `impl Trait` વાક્યરચનાનો ઉપયોગ કરે છે જેની ચર્ચા આપણે પ્રકરણ ૧૦ માં "Traits as Parameters" વિભાગમાં કરી હતી.
 
-પાછળ આવેલું મૂલ્ય `Future` trait નું અમલીકરણ કરે છે, જેમાં સંકળાયેલ પ્રકાર `Output` છે. નોંધ કરો કે `Output` પ્રકાર `Option<String>` છે, જે `async fn` સંસ્કરણમાંથી મૂળ વળતર પ્રકાર સમાન છે `page_title`.
+- પાછળ આવેલું મૂલ્ય `Future` trait નું અમલીકરણ કરે છે, જેમાં સંકળાયેલ પ્રકાર `Output` છે. નોંધ કરો કે `Output` પ્રકાર `Option<String>` છે, જે `async fn` સંસ્કરણમાંથી મૂળ વળતર પ્રકાર સમાન છે `page_title`.
 
-મૂળ કાર્યના શરીરમાં બોલાવવામાં આવેલ તમામ કોડને `async move` બ્લોકમાં લપેટેલું છે. યાદ રાખો કે બ્લોક્સ અભિવ્યક્તિઓ છે. આ સમગ્ર બ્લોક એ ફંક્શનમાંથી પાછો આવેલી અભિવ્યક્તિ છે.
+- મૂળ કાર્યના શરીરમાં બોલાવવામાં આવેલ તમામ કોડને `async move` બ્લોકમાં લપેટેલું છે. યાદ રાખો કે બ્લોક્સ અભિવ્યક્તિઓ છે. આ સમગ્ર બ્લોક એ ફંક્શનમાંથી પાછો આવેલી અભિવ્યક્તિ છે.
 
-આ અસિંક બ્લોક `Option<String>` પ્રકારનું મૂલ્ય ઉત્પન્ન કરે છે, જે ઉપર વર્ણવ્યા મુજબ છે. તે મૂલ્ય વળતર પ્રકારમાં `Output` પ્રકાર સાથે મેળ ખાય છે. આ અન્ય બ્લોક્સ જેવું જ છે જે તમે જોયા છે.
+- આ અસિંક બ્લોક `Option<String>` પ્રકારનું મૂલ્ય ઉત્પન્ન કરે છે, જે ઉપર વર્ણવ્યા મુજબ છે. તે મૂલ્ય વળતર પ્રકારમાં `Output` પ્રકાર સાથે મેળ ખાય છે. આ અન્ય બ્લોક્સ જેવું જ છે જે તમે જોયા છે.
 
-નવા ફંક્શનનું શરીર `async move` બ્લોક છે કારણ કે તે `url` પરિમાણને કેવી રીતે વાપરે છે. (આપણે પ્રકરણમાં પછીથી `async` વિરુદ્ધ `async move` વિશે વધુ વાત કરીશું.)
+- નવા ફંક્શનનું શરીર `async move` બ્લોક છે કારણ કે તે `url` પરિમાણને કેવી રીતે વાપરે છે. (આપણે પ્રકરણમાં પછીથી `async` વિરુદ્ધ `async move` વિશે વધુ વાત કરીશું.)
 
 હવે આપણે `main` માં `page_title` ને બોલાવી શકીએ છીએ.
 
@@ -90,11 +92,12 @@ fn page_title(url: &str) -> impl Future<Output = Option<String>> {
 
 શરૂ કરવા માટે, આપણે એક જ પાનાનું શીર્ષક મેળવીશું, જે લિસ્ટિંગ ૧૭-૩ માં દર્શાવેલ છે. અફસોસની વાત છે કે આ કોડ હજી કમ્પાઇલ થતો નથી.
 
-<Listing number="17-3" file-name="src/main.rs" caption="Calling the `page_title` function from `main` with a user-supplied argument">
+**Listing 17-3: Calling the `page_title` function from `main` with a user-supplied argument**
+
 ```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-03/src/main.rs:main}}
 ```
-</Listing>
+
 આપણે “આદેશ વાક્ય Argumentો સ્વીકારવા” વિભાગમાં પ્રકરણ ૧૨ માં વપરાયેલી જ રીત અનુસરીશું. પછી આપણે URL Argumentને `page_title` ને પસાર કરીશું અને પરિણામની રાહ જોઈશું. ભવિષ્ય દ્વારા ઉત્પાદિત મૂલ્ય `Option<String>` હોવાથી, આપણે એક `match` અભિવ્યક્તિનો ઉપયોગ કરીને અલગ-અલગ સંદેશાઓ છાપીએ છીએ કે જેથી પૃષ્ઠમાં `<title>` હતું કે નહીં તે ધ્યાનમાં લેવામાં આવે.
 
 `await` કીવર્ડનો ઉપયોગ માત્ર async કાર્યો અથવા બ્લોક્સમાં જ કરી શકાય છે, અને Rust આપણને વિશેષ `main` કાર્યને `async` તરીકે ચિહ્નિત કરવાની મંજૂરી આપશે નહીં.
@@ -119,12 +122,13 @@ error[E0752]: `main` function is not allowed to be `async`
 
 અમે `page_title` દ્વારા પરત કરવામાં આવેલું ભવિષ્ય સીધું જ `block_on` ને આપી શકીએ છીએ અને, એકવાર તે પૂર્ણ થાય પછી, અમે પરિણામી `Option<String>` સાથે મેળવી શકીએ છીએ જે રીતે અમે સૂચિ 17-3 માં કરવાનો પ્રયાસ કર્યો હતો. જો કે, પ્રકરણના મોટાભાગનાં ઉદાહરણોમાં (અને વાસ્તવિક દુનિયામાં મોટાભાગનો asynchronous કોડ), અમે માત્ર એક જ asynchronous ફંક્શન કૉલ કરતાં વધુ કરીશું, તેથી તેના બદલે અમે એક `async` બ્લોક પસાર કરીશું અને `page_title` કૉલનું પરિણામ સ્પષ્ટપણે અપેક્ષિત કરીશું, જે સૂચિ 17-4 માં દર્શાવેલ છે.
 
-<Listing number="17-4" caption="Awaiting an async block with `trpl::block_on`" file-name="src/main.rs">
+**Listing 17-4: Awaiting an async block with `trpl::block_on`**
+
 <!-- should_panic,noplayground because mdbook test does not pass args -->
 ```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-04/src/main.rs:run}}
 ```
-</Listing>
+
 જ્યારે આપણે આ કોડ ચલાવીએ છીએ, ત્યારે આપણને અપેક્ષિત વર્તન મળે છે:
 
 <!-- manual-regeneration
@@ -162,12 +166,13 @@ The title for https://www.rust-lang.org was
 
 ઉપલબ્ધિ ૧૭-૫ માં, અમે `page_title` ને આદેશ વાક્યમાંથી પસાર થયેલ બે અલગ-અલગ URL સાથે બોલાવીએ છીએ અને જે ભવિષ્ય પ્રથમ પૂર્ણ થાય તે પસંદ કરીને તેની વચ્ચે સ્પર્ધા કરીએ છીએ.
 
-<Listing number="17-5" caption="Calling `page_title` for two URLs to see which returns first" file-name="src/main.rs">
+**Listing 17-5: Calling `page_title` for two URLs to see which returns first**
+
 <!-- should_panic,noplayground because mdbook does not pass args -->
 ```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-05/src/main.rs:all}}
 ```
-</Listing>
+
 અમે સૌપ્રથમ user દ્વારા આપવામાં આવેલ દરેક URL માટે `page_title` ને બોલાવીએ છીએ. અમે પરિણામી ફ્યુચર્સને `title_fut_1` અને `title_fut_2` તરીકે સાચવ્યા છે. યાદ રાખો, આ હજી સુધી કંઈ કરતા નથી, કારણ કે ફ્યુચર્સ આળસુ હોય છે અને અમે હજી સુધી તેમની રાહ જોઈ નથી. પછી અમે ફ્યુચર્સને `trpl::select` માં પસાર કરીએ છીએ, જે કયું ફ્યુચર પ્રથમ પૂર્ણ
 
 થાય છે તે દર્શાવતું મૂલ્ય આપે છે. Note: Under the hood, `trpl::select` is built on a more general `select` function defined in the [`futures`][futures-crate] crate. The `futures` crate’s `select` function can do a lot of things that the `trpl::select` function can’t, but it also has some additional complexity that we can skip over for now.

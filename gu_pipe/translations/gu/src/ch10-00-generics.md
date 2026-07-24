@@ -16,31 +16,34 @@
 
 આપણે ટૂંકા કાર્યક્રમથી આરંભ કરીશું જે યાદીમાં સૌથી મોટો અંક શોધે છે, જે સૂચિ ૧૦-૧ માં દર્શાવેલ છે.
 
-<Listing number="10-1" file-name="src/main.rs" caption="Finding the largest number in a list of numbers">
+**Listing 10-1: Finding the largest number in a list of numbers**
+
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-01/src/main.rs:here}}
 ```
-</Listing>
+
 અમે `number_list` ચલણમાં પૂર્ણાંકોની યાદી સંગ્રહિત કરીએ છીએ અને યાદીમાંના પ્રથમ અંકનો સંદર્ભ `largest` નામના variable મૂકીએ છીએ. ત્યારબાદ અમે યાદીમાંના તમામ અંકો પર ચાલીએ છીએ, અને જો વર્તમાન અંક `largest` માં સંગ્રહિત અંક કરતાં મોટો હોય, તો અમે તે ચરમાં રહેલા સંદર્ભને બદલીએ છીએ. જો કે, જો વર્તમાન અંક અત્યાર સુધી જોવા મળેલા સૌથી મોટા અંક જેટલો અથવા તેનાથી ઓછો હોય, તો ચલણમાં કોઈ ફેરફાર થતો નથી અને કોડ યાદીમાંના આગામી અંક પર આગળ વધે છે. યાદીમાંના તમામ અંકોને ધ્યાનમાં લીધા પછી, `largest` એ સૌથી મોટા અંકનો સંદર્ભ આપવો જોઈએ, જે આ કિસ્સામાં 100 છે.
 
 હવે આપણને બે અલગ-અલગ સંખ્યાઓની યાદીમાં સૌથી મોટી સંખ્યા શોધવાનું કાર્ય સોંપવામાં આવ્યું છે. આવું કરવા માટે, આપણે લિસ્ટિંગ ૧૦-૧ નો કોડ નકલ કરીને બે જુદા જુદા સ્થળોએ વાપરી શકીએ છીએ, જે લિસ્ટિંગ ૧૦-૨ માં દર્શાવેલ છે.
 
-<Listing number="10-2" file-name="src/main.rs" caption="Code to find the largest number in *two* lists of numbers">
+**Listing 10-2: Code to find the largest number in *two* lists of numbers**
+
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-02/src/main.rs}}
 ```
-</Listing>
+
 જોકે આ કોડ કાર્ય કરે છે, કોડનું પુનરાવર્તન કંટાળાજનક અને ભૂલ ઉત્પન્ન કરનારું હોઈ શકે છે. આપણે એ પણ યાદ રાખવું જોઈએ કે જ્યારે આપણે ફેરફાર કરવા માંગીએ છીએ ત્યારે બહુવિધ સ્થળોએ કોડને અપડેટ કરવો પડે છે.
 
 આ પુનરાવર્તનને દૂર કરવા માટે, આપણે એક `function` બનાવીશું જે કોઈપણ પૂર્ણાંકની યાદી પર કાર્ય કરે છે જે પરિમાણ તરીકે આપવામાં આવી છે. આ ઉકેલ આપણને કોડને વધુ સ્પષ્ટ બનાવે છે અને આપણને સૌથી મોટી સંખ્યા શોધવાની વિભાવનાને અમૂર્ત રીતે વ્યક્ત કરવાની મંજૂરી આપે છે.
 
 Listing 10-3 માં, આપણે સૌથી મોટી સંખ્યા શોધતો કોડ `largest` નામની `function` માં બહાર કાઢીએ છીએ. પછી, આપણે Listing 10-2 માંથી બે યાદીઓમાં સૌથી મોટી સંખ્યા શોધવા માટે આ `function` ને બોલાવીએ છીએ. ભવિષ્યમાં આપણી પાસે રહેલી કોઈપણ અન્ય `i32` મૂલ્યોની યાદી પર પણ આપણે આ `function` નો ઉપયોગ કરી શકીએ છીએ.
 
-<Listing number="10-3" file-name="src/main.rs" caption="Abstracted code to find the largest number in two lists">
+**Listing 10-3: Abstracted code to find the largest number in two lists**
+
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-03/src/main.rs:here}}
 ```
-</Listing>
+
 The `largest` Function સૌથી `મોટું` વિધેય (function) એક પરિમાણ (parameter) ધરાવે છે જેને `list` કહેવાય છે, જે `i32` મૂલ્યોનો કોઈ ચોક્કસ ભાગ દર્શાવે છે જે આપણે વિધેયમાં મોકલી શકીએ છીએ. આથી, જ્યારે આપણે વિધેયને બોલાવીએ છીએ, ત્યારે કોડ આપેલ મૂલ્યો પર
 
 ચાલે છે. સારાંશમાં, અહીં એ પગલાંઓ (steps) આપ્યા છે જે અમે લિસ્ટિંગ 10-2 થી લિસ્ટિંગ 10-3 માં

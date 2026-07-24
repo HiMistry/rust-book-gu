@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -188,10 +188,20 @@
 <p>નોંધ: સરળતા માટે, અમે ઘણી સમસ્યાઓને એકસાથે થતી (concurrent) તરીકે ઓળખીએ છીએ, ચોક્કસ રીતે કહીએ તો એકસાથે અને/અથવા સમાંતર (parallel) તરીકે નહીં. આ પ્રકરણ માટે, કૃપા કરીને અમે જ્યાં સુધી એકસાથે થતી (concurrent) શબ્દનો ઉપયોગ કરીએ ત્યાં સુધી માનસિક રીતે એકસાથે અને/અથવા સમાંતર (parallel) શબ્દોનું રૂપાંતર કરો. આગલા પ્રકરણમાં, જ્યાં ભેદ વધુ મહત્વપૂર્ણ છે, અમે વધુ ચોક્કસ રહેશું.</p>
 <p>ઘણી ભાષાઓ એકસાથે થતી (concurrent) સમસ્યાઓ ઉકેલવા માટે જે ઉકેલો આપે છે તેના વિશે કડક હોય છે. દાખલા તરીકે, Erlang પાસે સંદેશ-પસંદગીની સમાંતરતા (concurrency) માટે સરળ કાર્યક્ષમતા છે પરંતુ થ્રેડો વચ્ચે સ્થિતિ વહેંચવાની અસ્પષ્ટ રીતો સિવાય બીજું કંઈ નથી. ઉચ્ચ-સ્તરની ભાષાઓ અમુક નિયંત્રણ છોડીને અમૂર્તતા મેળવવાના ફાયદાઓ આપવા માટે શક્ય ઉકેલોના સમૂહને ટેકો આપવો એ વાજબી વ્યૂહરચના છે. જો કે, નીચલા-સ્તરની (lower-level) ભાષાઓ કોઈપણ પરિસ્થિતિમાં શ્રેષ્ઠ પ્રદર્શન સાથે ઉકેલ પૂરો પાડવાની અપેક્ષા રાખવામાં આવે છે અને તેમની પાસે હાર્ડવેર પર ઓછી અમૂર્તતા હોય છે. તેથી, Rust તમારી પરિસ્થિતિ અને જરૂરિયાતો માટે યોગ્ય હોય તે રીતે સમસ્યાઓને મોડેલ કરવા માટે વિવિધ સાધનો પ્રદાન કરે છે.</p>
 <p>અહીં આ પ્રકરણમાં આપણે જે વિષયો આવરી લઈશું:</p>
+<ul>
+<li>
 <p>એકસાથે કોડના અનેક ભાગો ચલાવવા માટે થ્રેડો કેવી રીતે બનાવવા.</p>
+</li>
+<li>
 <p>સંદેશ-પસારણ એકરૂપતા, જ્યાં ચેનલો થ્રેડો વચ્ચે સંદેશાઓ મોકલે છે.</p>
+</li>
+<li>
 <p>સામાન્ય-સ્થિતિ એકરૂપતા, જ્યાં અનેક થ્રેડો અમુક ડેટાના ભાગને સુલભ પામે છે.</p>
+</li>
+<li>
 <p><code>Sync</code> અને <code>Send</code> લક્ષણો, જે user દ્વારા વ્યાખ્યાયિત પ્રકારો તેમજ પ્રમાણભૂત પુસ્તકાલય દ્વારા પૂરા પાડવામાં આવતા પ્રકારો માટે પણ Rust ની એકરૂપતાની ખાતરીઓ વધારે છે.</p>
+</li>
+</ul>
 
                     </main>
 
@@ -245,6 +255,7 @@
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

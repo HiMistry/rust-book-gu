@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -191,18 +191,18 @@
 <h3 id="encapsulation-that-hides-implementation-details"><a class="header" href="#encapsulation-that-hides-implementation-details">Encapsulation That Hides Implementation Details</a></h3>
 <p>વસ્તુલક્ષી પ્રોગ્રામિંગ (OOP) સાથે સંકળાયેલું બીજું પાસું એ છે અમલીકરણની વિગતોને છુપાવવા, જેને encapsulation કહેવાય છે, જેનો અર્થ થાય છે કે વસ્તુના અમલીકરણની વિગતો તે વસ્તુનો ઉપયોગ કરતા કોડ માટે સુલભ નથી. આથી, વસ્તુ સાથે ક્રિયાપ્રતિક્રિયા કરવાની એકમાત્ર રીત તેની public API દ્વારા છે; વસ્તુનો ઉપયોગ કરતો કોડ વસ્તુના આંતરિક ભાગો સુધી પહોંચી શકતો નથી અને સીધી રીતે ડેટા અથવા વર્તન બદલી શકતો નથી. આનાથી પ્રોગ્રામરને વસ્તુના આંતરિક ભાગોમાં ફેરફાર કરવાની અને રિફેક્ટરિંગ કરવાની તક મળે છે, જેનો ઉપયોગ કરતો કોડ બદલવાની જરૂર વગર.</p>
 <p>અમે પ્રકરણ 7 માં એન્કેપ્સ્યુલેશનને નિયંત્રિત કરવાની રીત ચર્ચી હતી: અમે <code>pub</code> કીવર્ડનો ઉપયોગ કરીને નક્કી કરી શકીએ છીએ કે અમારા કોડમાં કયા મોડ્યુલો, પ્રકારો, ફંક્શનો અને મેથડો જાહેર હોવા જોઈએ, અને ડિફૉલ્ટ રૂપે બાકી બધું ખાનગી હોય છે. ઉદાહરણ તરીકે, અમે એક સ્ટ્રક્ટ <code>AveragedCollection</code> વ્યાખ્યાયિત કરી શકીએ છીએ જેમાં <code>i32</code> મૂલ્યોનો વેક્ટર ધરાવતું ક્ષેત્ર હોય. સ્ટ્રક્ટમાં વેક્ટરના મૂલ્યોની સરેરાશ ધરાવતું ક્ષેત્ર પણ હોઈ શકે છે, એટલે કે સરેરાશની ગણતરી દરેક વખતે જરૂર પડે ત્યારે કરવાની આવશ્યકતા નથી. બીજા શબ્દોમાં કહીએ તો, <code>AveragedCollection</code> આપણને ગણતરી કરેલી સરેરાશને કેશ કરશે. યાદી 18-1 માં <code>AveragedCollection</code> સ્ટ્રક્ટની વ્યાખ્યા છે.</p>
-<listing number="18-1" file-name="src/lib.rs" caption="An `AveragedCollection` struct that maintains a list of integers and the average of the items in the collection">
-```rust
-{{#rustdoc_include ../listings/ch18-oop/listing-18-01/src/lib.rs}}
-```
-</listing>
-સ્ટ્રક્ચરને `pub` તરીકે નિશ્ચિત કરવામાં આવ્યું છે જેથી અન્ય કોડ તેનો ઉપયોગ કરી શકે, પરંતુ સ્ટ્રક્ચરની અંદરના ક્ષેત્રો ખાનગી રહે. આ બાબત અહીં મહત્વપૂર્ણ છે કારણ કે આપણે એ સુનિશ્ચિત કરવા માંગીએ છીએ કે જ્યારે પણ મૂલ્ય ઉમેરવામાં આવે અથવા દૂર કરવામાં આવે ત્યારે સરેરાશ પણ અપડેટ થાય. અમે આ `add`, `remove`, અને `average` પદ્ધતિઓને સ્ટ્રક્ચર પર અમલમાં મૂકીને કરીએ છીએ, જે લિસ્ટિંગ 18-2 માં દર્શાવેલ છે.
-<listing number="18-2" file-name="src/lib.rs" caption="Implementations of the public methods `add`, `remove`, and `average` on `AveragedCollection`">
-```rust
-{{#rustdoc_include ../listings/ch18-oop/listing-18-02/src/lib.rs:here}}
-```
-</listing>
-જાહેર પદ્ધતિઓ `add`, `remove`, અને `average` એ `AveragedCollection` ના ઉદાહરણમાં ડેટાને મેળવવા અથવા બદલવાની એકમાત્ર રીતો છે. જ્યારે કોઈ વસ્તુ `list` માં `add` પદ્ધતિનો ઉપયોગ કરીને ઉમેરવામાં આવે છે અથવા `remove` પદ્ધતિનો ઉપયોગ કરીને દૂર કરવામાં આવે છે, ત્યારે દરેક અમલીકરણ ખાનગી `update_average` પદ્ધતિને બોલાવે છે જે `average` ક્ષેત્રને અપડેટ કરવાનું સંભાળે છે. We
+<p><strong>Listing 18-1: An <code>AveragedCollection</code> struct that maintains a list of integers and the average of the items in the collection</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-01/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>સ્ટ્રક્ચરને <code>pub</code> તરીકે નિશ્ચિત કરવામાં આવ્યું છે જેથી અન્ય કોડ તેનો ઉપયોગ કરી શકે, પરંતુ સ્ટ્રક્ચરની અંદરના ક્ષેત્રો ખાનગી રહે. આ બાબત અહીં મહત્વપૂર્ણ છે કારણ કે આપણે એ સુનિશ્ચિત કરવા માંગીએ છીએ કે જ્યારે પણ મૂલ્ય ઉમેરવામાં આવે અથવા દૂર કરવામાં આવે ત્યારે સરેરાશ પણ અપડેટ થાય. અમે આ <code>add</code>, <code>remove</code>, અને <code>average</code> પદ્ધતિઓને સ્ટ્રક્ચર પર અમલમાં મૂકીને કરીએ છીએ, જે લિસ્ટિંગ 18-2 માં દર્શાવેલ છે.</p>
+<p><strong>Listing 18-2: Implementations of the public methods <code>add</code>, <code>remove</code>, and <code>average</code> on <code>AveragedCollection</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-02/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>જાહેર પદ્ધતિઓ <code>add</code>, <code>remove</code>, અને <code>average</code> એ <code>AveragedCollection</code> ના ઉદાહરણમાં ડેટાને મેળવવા અથવા બદલવાની એકમાત્ર રીતો છે. જ્યારે કોઈ વસ્તુ <code>list</code> માં <code>add</code> પદ્ધતિનો ઉપયોગ કરીને ઉમેરવામાં આવે છે અથવા <code>remove</code> પદ્ધતિનો ઉપયોગ કરીને દૂર કરવામાં આવે છે, ત્યારે દરેક અમલીકરણ ખાનગી <code>update_average</code> પદ્ધતિને બોલાવે છે જે <code>average</code> ક્ષેત્રને અપડેટ કરવાનું સંભાળે છે. We</p>
 <p>અમે <code>list</code> અને <code>average</code> ક્ષેત્રો ખાનગી રાખીએ છીએ જેથી બાહ્ય કોડ પાસે સીધા જ <code>list</code> ક્ષેત્રમાં વસ્તુઓ ઉમેરવાનો કે દૂર કરવાનો કોઈ રસ્તો ન હોય; અન્યથા, <code>list</code> બદલાય ત્યારે <code>average</code> ક્ષેત્ર અસંગત થઈ શકે છે. <code>average</code> પદ્ધતિ <code>average</code> ક્ષેત્રમાં રહેલું મૂલ્ય પરત કરે છે, જે બાહ્ય કોડને <code>average</code> વાંચવાની મંજૂરી આપે છે પરંતુ તેને બદલવાની નહીં.</p>
 <p>કારણ કે આપણે struct <code>AveragedCollection</code> ના અમલીકરણની વિગતોને આવરી લીધી છે, તેથી ભવિષ્યમાં ડેટા સ્ટ્રક્ચર જેવા પાસાંઓમાં સરળતાથી ફેરફાર કરી શકીએ છીએ. ઉદાહરણ તરીકે, આપણે <code>list</code> ક્ષેત્ર માટે <code>Vec&lt;i32&gt;</code> ને બદલે <code>HashSet&lt;i32&gt;</code> નો ઉપયોગ કરી શક્યા હોત. જ્યાં સુધી <code>add</code>, <code>remove</code>, અને <code>average</code> જાહેર પદ્ધતિઓના હસ્તાક્ષરો એ જ રહે, ત્યાં સુધી <code>AveragedCollection</code> નો ઉપયોગ કરતા કોડને ફેરફાર કરવાની જરૂર ન પડે. જો આપણે <code>list</code> ને જાહેર કર્યું હોત, તો આવું જરૂરી નથી: <code>HashSet&lt;i32&gt;</code> અને <code>Vec&lt;i32&gt;</code> માં આઇટમ ઉમેરવા અને દૂર કરવા માટે અલગ-અલગ પદ્ધતિઓ છે, તેથી જો બાહ્ય કોડ સીધી રીતે <code>list</code> માં ફેરફાર કરતો હોત તો તેને ફેરફાર કરવો પડે તેવી શક્યતા છે.</p>
 <p>જો સમાવેશ (encapsulation) એ કોઈ ભાષાને વસ્તુલક્ષી (object oriented) ગણવા માટે આવશ્યક હોય, તો Rust તે જરૂરિયાત પૂરી કરે છે. કોડના જુદા જુદા ભાગો માટે <code>pub</code> વાપરવાનો વિકલ્પ અમલીકરણની વિગતોનું સમાવેશ (encapsulation) સક્રિય કરે છે.</p>
@@ -1923,6 +1923,7 @@
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

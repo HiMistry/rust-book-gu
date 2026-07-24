@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -201,12 +201,12 @@
 <!-- Old headings. Do not remove or links may break. -->
 <h4 id="private-function-tests"><a class="header" href="#private-function-tests">Private Function Tests</a></h4>
 <p>પરીક્ષણ સમુદાયમાં એ અંગે ચર્ચા છે કે ખાનગી કાર્યોને સીધા જ પરીક્ષણ કરવું જોઈએ કે નહીં, અને અન્ય ભાષાઓમાં ખાનગી કાર્યોનું પરીક્ષણ કરવું મુશ્કેલ અથવા અશક્ય બનાવે છે. તમે જે પણ પરીક્ષણ વિચારધારા અનુસરો છો, Rustના ગુપ્તતા નિયમો તમને ખાનગી કાર્યોનું પરીક્ષણ કરવાની મંજૂરી આપે છે. યાદી 11-12 માં <code>internal_adder</code> ખાનગી કાર્ય સાથેના કોડને ધ્યાનમાં લો.</p>
-<listing number="11-12" file-name="src/lib.rs" caption="Testing a private function">
-```rust
-{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-12/src/lib.rs}}
-```
-</listing>
-દર્શાવ્યું છે કે `internal_adder` કાર્યને `pub` તરીકે નિશ્ચિત કરવામાં આવ્યું નથી. પરીક્ષણો માત્ર Rust કોડ છે, અને `tests` મોડ્યુલ એ અન્ય મોડ્યુલ છે. આપણે “મોડ્યુલ વૃક્ષમાં વસ્તુનો ઉલ્લેખ કરવા માટેના માર્ગો” માં ચર્ચા કરી હતી તેમ, બાળ મોડ્યુલોની વસ્તુઓ તેમના પિતૃ મોડ્યુલોની વસ્તુઓનો ઉપયોગ કરી શકે છે. આ પરીક્ષણમાં, અમે `use super::*` સાથે `tests` મોડ્યુલના પિતાની તમામ વસ્તુઓને અવકાશમાં લાવીએ છીએ, અને પછી પરીક્ષણ `internal_adder` ને બોલાવી શકે છે. જો તમને ન લાગે કે ખાનગી કાર્યોનું પરીક્ષણ થવું જોઈએ, તો Rust તમને આવું કરવા માટે દબાણ કરશે નહીં.
+<p><strong>Listing 11-12: Testing a private function</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-12/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>દર્શાવ્યું છે કે <code>internal_adder</code> કાર્યને <code>pub</code> તરીકે નિશ્ચિત કરવામાં આવ્યું નથી. પરીક્ષણો માત્ર Rust કોડ છે, અને <code>tests</code> મોડ્યુલ એ અન્ય મોડ્યુલ છે. આપણે “મોડ્યુલ વૃક્ષમાં વસ્તુનો ઉલ્લેખ કરવા માટેના માર્ગો” માં ચર્ચા કરી હતી તેમ, બાળ મોડ્યુલોની વસ્તુઓ તેમના પિતૃ મોડ્યુલોની વસ્તુઓનો ઉપયોગ કરી શકે છે. આ પરીક્ષણમાં, અમે <code>use super::*</code> સાથે <code>tests</code> મોડ્યુલના પિતાની તમામ વસ્તુઓને અવકાશમાં લાવીએ છીએ, અને પછી પરીક્ષણ <code>internal_adder</code> ને બોલાવી શકે છે. જો તમને ન લાગે કે ખાનગી કાર્યોનું પરીક્ષણ થવું જોઈએ, તો Rust તમને આવું કરવા માટે દબાણ કરશે નહીં.</p>
 <h3 id="integration-tests"><a class="header" href="#integration-tests">Integration Tests</a></h3>
 <p>Rustમાં, એકત્રીકરણ પરીક્ષણો તમારા પુસ્તકાલયથી સંપૂર્ણપણે બાહ્ય હોય છે. તેઓ તમારા પુસ્તકાલયનો ઉપયોગ અન્ય કોઈપણ કોડની જેમ જ કરે છે, જેનો અર્થ થાય છે કે તેઓ માત્ર તમારા પુસ્તકાલયના જાહેર API (API) નો ભાગ હોય તેવા વિધેયોને જ બોલાવી શકે છે. તેમનો હેતુ એ ચકાસવાનો છે કે તમારા પુસ્તકાલયના ઘણા ભાગો યોગ્ય રીતે સાથે કાર્ય કરે છે કે નહીં. કોડના એકમો જે સ્વતંત્ર રીતે યોગ્ય રીતે કાર્ય કરે છે, તેઓ સંકલિત થાય ત્યારે સમસ્યાઓ અનુભવી શકે છે, તેથી સંકલિત કોડની પરીક્ષણ આવરી લેવી પણ મહત્વપૂર્ણ છે. એકત્રીકરણ પરીક્ષણો બનાવવા માટે, તમારે પ્રથમ એક tests ડિરેક્ટરીની જરૂર છે.</p>
 <h4 id="the-tests-directory"><a class="header" href="#the-tests-directory">The <em>tests</em> Directory</a></h4>
@@ -222,12 +222,12 @@
 <pre><code>└── integration_test.rs
 </code></pre>
 <p>Listing 11-13 નો કોડ tests/integration_test.rs ફાઈલમાં દાખલ કરો.</p>
-<listing number="11-13" file-name="tests/integration_test.rs" caption="An integration test of a function in the `adder` crate">
-```rust
-{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-13/tests/integration_test.rs}}
-```
-</listing>
-દરેક ફાઈલ tests ડિરેક્ટરીમાં એક અલગ crate છે, તેથી આપણે આપણી library ને દરેક પરીક્ષણ crate ના scope માં લાવવાની જરૂર છે. એ કારણસર, આપણે કોડની શરૂઆતમાં `use adder::add_two;` ઉમેરીએ છીએ, જે યુનિટ પરીક્ષણોમાં જરૂરી ન હતું.
+<p><strong>Listing 11-13: An integration test of a function in the <code>adder</code> crate</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-13/tests/integration_test.rs}}
+<span class="boring">}</span></code></pre>
+<p>દરેક ફાઈલ tests ડિરેક્ટરીમાં એક અલગ crate છે, તેથી આપણે આપણી library ને દરેક પરીક્ષણ crate ના scope માં લાવવાની જરૂર છે. એ કારણસર, આપણે કોડની શરૂઆતમાં <code>use adder::add_two;</code> ઉમેરીએ છીએ, જે યુનિટ પરીક્ષણોમાં જરૂરી ન હતું.</p>
 <p>આપણે tests/integration_test.rs માં રહેલા કોઈપણ કોડને <code>#[cfg(test)]</code> સાથે નોંધવાની જરૂર નથી. Cargo tests ડિરેક્ટરીને વિશેષ રીતે ગણે છે અને આ ડિરેક્ટરીમાં રહેલી ફાઈલોને માત્ર ત્યારે જ compile કરે છે જ્યારે આપણે <code>cargo test</code> ચલાવીએ છીએ. હવે <code>cargo test</code> ચલાવો:</p>
 <pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/listing-11-13/output.txt}}
 </code></pre>
@@ -326,6 +326,7 @@
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

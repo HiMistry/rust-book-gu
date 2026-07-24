@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -187,26 +187,21 @@
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="method-syntax"><a class="header" href="#method-syntax">Method Syntax</a></h3>
 <p>ચાલો <code>area</code> વિધેયને બદલીએ જે <code>Rectangle</code> પ્રકારની ઉદાહરણ તરીકે પરિમાણ ધરાવે છે અને તેના બદલે <code>Rectangle</code> રચના પર વ્યાખ્યાયિત <code>area</code> પદ્ધતિ બનાવીએ, જે યાદી 5-13 માં દર્શાવેલ છે.</p>
-<listing number="5-13" file-name="src/main.rs" caption="Defining an `area` method on the `Rectangle` struct">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-13/src/main.rs}}
-```
-```
-</listing>
-ના સંદર્ભમાં કાર્યને વ્યાખ્યાયિત કરવા માટે, અમે `Rectangle` માટે એક `impl` (અમલીકરણ) બ્લોક શરૂ કરીએ છીએ. આ `impl` બ્લોકમાંની દરેક વસ્તુ `Rectangle` પ્રકાર સાથે સંકળાયેલી હશે. ત્યારબાદ, અમે `area` કાર્યને `impl` કૌંસમાં ખસેડીએ છીએ અને હસ્તાક્ષરમાં (signature) પ્રથમ (અને આ કિસ્સામાં, એકમાત્ર) પરિમાણને `self` માં બદલીએ છીએ અને સમગ્ર શરીરમાં. `main` માં, જ્યાં આપણે `area` કાર્યને બોલાવ્યું હતું અને `rect1` ને Argument તરીકે પસાર કર્યું હતું, ત્યાં આપણે તેના બદલે પદ્ધતિ સિન્ટેક્સનો ઉપયોગ કરીને આપણા `Rectangle` ઉદાહરણ પર `area` પદ્ધતિને બોલાવી શકીએ છીએ. પદ્ધતિ સિન્ટેક્સ ઉદાહરણ પછી આવે છે: અમે એક ડોટ ઉમેરીએ છીએ ત્યારબાદ પદ્ધતિનું નામ, કૌંસ અને કોઈપણ Argumentો.
+<p><strong>Listing 5-13: Defining an <code>area</code> method on the <code>Rectangle</code> struct</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-13/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>ના સંદર્ભમાં કાર્યને વ્યાખ્યાયિત કરવા માટે, અમે <code>Rectangle</code> માટે એક <code>impl</code> (અમલીકરણ) બ્લોક શરૂ કરીએ છીએ. આ <code>impl</code> બ્લોકમાંની દરેક વસ્તુ <code>Rectangle</code> પ્રકાર સાથે સંકળાયેલી હશે. ત્યારબાદ, અમે <code>area</code> કાર્યને <code>impl</code> કૌંસમાં ખસેડીએ છીએ અને હસ્તાક્ષરમાં (signature) પ્રથમ (અને આ કિસ્સામાં, એકમાત્ર) પરિમાણને <code>self</code> માં બદલીએ છીએ અને સમગ્ર શરીરમાં. <code>main</code> માં, જ્યાં આપણે <code>area</code> કાર્યને બોલાવ્યું હતું અને <code>rect1</code> ને Argument તરીકે પસાર કર્યું હતું, ત્યાં આપણે તેના બદલે પદ્ધતિ સિન્ટેક્સનો ઉપયોગ કરીને આપણા <code>Rectangle</code> ઉદાહરણ પર <code>area</code> પદ્ધતિને બોલાવી શકીએ છીએ. પદ્ધતિ સિન્ટેક્સ ઉદાહરણ પછી આવે છે: અમે એક ડોટ ઉમેરીએ છીએ ત્યારબાદ પદ્ધતિનું નામ, કૌંસ અને કોઈપણ Argumentો.</p>
 <p><code>area</code> ના હસ્તાક્ષરમાં, અમે <code>&amp;self</code> નો ઉપયોગ કરીએ છીએ <code>rectangle: &amp;Rectangle</code> ને બદલે. <code>&amp;self</code> ખરેખર <code>self: &amp;Self</code> માટે ટૂંકું છે. એક <code>impl</code> બ્લોકમાં, <code>Self</code> પ્રકાર એ પ્રકારનું ઉપનામ છે જેના માટે <code>impl</code> બ્લોક છે. પદ્ધતિઓએ તેમના પ્રથમ પરિમાણ તરીકે <code>Self</code> પ્રકારનો <code>self</code> નામનો પરિમાણ હોવો જરૂરી છે, તેથી Rust તમને માત્ર નામ <code>self</code> સાથે આને ટૂંકાવી દેવાની મંજૂરી આપે છે તે સ્થાન પર. નોંધ કરો કે આપણે હજી પણ <code>&amp;</code> નો ઉપયોગ કરવો પડશે <code>self</code> સંક્ષેપની આગળ, જે દર્શાવે છે કે આ પદ્ધતિ <code>Self</code> ઇન્સ્ટન્સ ઉછીના લે છે, જેમ આપણે <code>rectangle: &amp;Rectangle</code> માં કર્યું હતું. પદ્ધતિઓ <code>self</code> નું માલિકી લઈ શકે છે, <code>self</code> ને બદલતા ન હોય તે રીતે ઉછીના લઈ શકે છે, જે આપણે અહીં કર્યું છે, અથવા <code>self</code> ને બદલી શકે તેવી રીતે ઉછીના લઈ શકે છે, જેમ તેઓ અન્ય કોઈપણ પરિમાણ સાથે કરી શકે છે.</p>
 <p>અમે અહીં <code>&amp;self</code> એ જ કારણસર પસંદ કર્યું છે કે જે કારણથી અમે ફંક્શન સંસ્કરણમાં <code>&amp;Rectangle</code> વાપર્યું હતું: અમે માલિકી લેવા માંગતા નથી, અને માત્ર struct માં રહેલા ડેટાને વાંચવા માંગીએ છીએ, તેમાં લખવું નહીં. જો અમે પદ્ધતિ દ્વારા બોલાવેલા ઇન્સ્ટન્સને બદલવા માંગતા હોત, તો અમે પ્રથમ પરિમાણ તરીકે <code>&amp;mut self</code> વાપરત. માત્ર <code>self</code> ને પ્રથમ પરિમાણ તરીકે વાપરીને ઇન્સ્ટન્સની માલિકી લેતી પદ્ધતિ રાખવી એ દુર્લભ છે; આ તકનીક સામાન્ય રીતે ત્યારે જ વપરાય છે જ્યારે પદ્ધતિ <code>self</code> ને અન્ય કંઈક બનાવે છે અને તમે પરિવર્તન પછી મૂળ ઇન્સ્ટન્સનો ઉપયોગ કરવાનું અટકાવવા માંગો છો.</p>
 <p>મુખ્ય કારણ વિધિઓ (methods) કાર્યો (functions) ને બદલે વાપરવાનું મુખ્ય કારણ એ છે કે તે વિધિ સિન્ટેક્સ પૂરો પાડે છે અને દરેક વિધિના હસ્તાક્ષરમાં <code>self</code> ના પ્રકારને ઉલ્લેખ કરવાની જરૂર પડતી નથી, તેમજ વ્યવસ્થાપન પણ. અમે એક પ્રકારની ઘટના સાથે જે કંઈપણ કરી શકીએ છીએ તેને એક <code>impl</code> બ્લોકમાં મૂક્યું છે, જેથી અમારા કોડના ભવિષ્યના userઓને અમારી દ્વારા પૂરી પાડવામાં આવતી લાયબ્રેરીમાં વિવિધ સ્થળોએ <code>Rectangle</code> ની ક્ષમતાઓ શોધવાની જરૂર</p>
 <p>ન પડે. નોંધ કરો કે અમે કોઈ વિધિને struct ના ક્ષેત્ર (field) માંથી એક જ નામ આપી શકીએ છીએ. ઉદાહરણ તરીકે, અમે <code>Rectangle</code> પર <code>width</code> નામની વિધિ પણ વ્યાખ્યાયિત કરી શકીએ છીએ:</p>
-<listing file-name="src/main.rs">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-06-method-field-interaction/src/main.rs:here}}
-```
-```
-</listing>
-અહીં, અમે `width` પદ્ધતિને `true` પરત કરવા માટે પસંદ કરી રહ્યા છીએ જો ઉદાહરણમાં `width` ક્ષેત્રનું મૂલ્ય `0` કરતાં વધારે હોય અને `false` પરત કરવા માટે જો મૂલ્ય `0` હોય: આપણે સમાન નામના પદ્ધતિના ક્ષેત્રની અંદર કોઈપણ હેતુ માટે ક્ષેત્રનો ઉપયોગ કરી શકીએ છીએ. `main` માં, જ્યારે અમે `rect1.width` ને કૌંસ સાથે અનુસરીએ છીએ, ત્યારે Rust જાણે છે કે અમારો અર્થ `width` પદ્ધતિ છે. જ્યારે અમે કૌંસનો ઉપયોગ કરતા નથી, ત્યારે Rust જાણે છે કે અમારો અર્થ `width`
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-06-method-field-interaction/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અહીં, અમે <code>width</code> પદ્ધતિને <code>true</code> પરત કરવા માટે પસંદ કરી રહ્યા છીએ જો ઉદાહરણમાં <code>width</code> ક્ષેત્રનું મૂલ્ય <code>0</code> કરતાં વધારે હોય અને <code>false</code> પરત કરવા માટે જો મૂલ્ય <code>0</code> હોય: આપણે સમાન નામના પદ્ધતિના ક્ષેત્રની અંદર કોઈપણ હેતુ માટે ક્ષેત્રનો ઉપયોગ કરી શકીએ છીએ. <code>main</code> માં, જ્યારે અમે <code>rect1.width</code> ને કૌંસ સાથે અનુસરીએ છીએ, ત્યારે Rust જાણે છે કે અમારો અર્થ <code>width</code> પદ્ધતિ છે. જ્યારે અમે કૌંસનો ઉપયોગ કરતા નથી, ત્યારે Rust જાણે છે કે અમારો અર્થ <code>width</code></p>
 <p>ક્ષેત્ર છે. ઘણીવાર, પરંતુ હંમેશાં નહીં, જ્યારે અમે કોઈ પદ્ધતિને ક્ષેત્રના સમાન નામ આપીએ છીએ, ત્યારે અમે ઇચ્છતા હોઈએ છીએ કે તે માત્ર ક્ષેત્રનું મૂલ્ય પરત કરે અને બીજું કંઈ ન કરે. આ પ્રકારની પદ્ધતિઓને ગેટર્સ કહેવામાં આવે છે, અને Rust અન્ય ભાષાઓની જેમ struct ક્ષેત્રો માટે તેમને આપમેળે લાગુ કરતું નથી. ગેટર્સ ઉપયોગી છે કારણ કે તમે ક્ષેત્રને ખાનગી બનાવી શકો છો પરંતુ પદ્ધતિને જાહેર કરી શકો છો અને આમ પ્રકારના જાહેર API ના ભાગ રૂપે તે ક્ષેત્રની માત્ર વાંચવાની ઍક્સેસ સક્ષમ કરી શકો છો. અમે પ્રકરણ 7 માં જાહેર અને ખાનગી શું છે અને ક્ષેત્ર અથવા પદ્ધતિને જાહેર અથવા ખાનગી તરીકે કેવી રીતે નિયુક્ત કરવું તેની ચર્ચા કરીશું.</p>
 <h3 id="methods-with-more-parameters"><a class="header" href="#methods-with-more-parameters">Methods with More Parameters</a></h3>
 <p>સી અને સી++ માં, પદ્ધતિઓને બોલાવવા માટે બે અલગ-અલગ ઓપરેટર્સનો ઉપયોગ થાય છે: તમે <code>.</code> નો ઉપયોગ કરો છો જો તમે સીધી વસ્તુ પર પદ્ધતિને બોલાવી રહ્યા હોવ અને <code>-&gt;</code> નો ઉપયોગ કરો છો જો તમે વસ્તુના પોઇન્ટર પર પદ્ધતિને બોલાવી રહ્યા હોવ અને પહેલાં પોઇન્ટરને અનડિરેફન્સ કરવાની જરૂર હોય. બીજા શબ્દોમાં કહીએ તો, જો <code>object</code> એક પોઇન્ટર છે, તો <code>object-&gt;something()</code> એ <code>(*object).something()</code> જેવું જ છે.</p>
@@ -234,63 +229,43 @@
 પહેલો વધુ સ્વચ્છ લાગે છે. આ આપોઆપ સંદર્ભિત વર્તન કાર્ય કરે છે કારણ કે પદ્ધતિઓમાં સ્પષ્ટ રીસીવર હોય છે—<code>self</code> નો પ્રકાર. રીસીવર અને પદ્ધતિના નામને જોતાં, Rust ચોક્કસપણે નક્કી કરી શકે છે કે પદ્ધતિ વાંચી રહી છે ( <code>&amp;self</code> ), પરિવર્તન કરી રહી છે ( <code>&amp;mut self</code> ), કે વપરાશ કરી રહી છે ( <code>self</code> ). પદ્ધતિ રીસીવર માટે Rust દ્વારા ઉધાર લેવું ગર્ભિત બનાવવું એ વ્યવહારમાં માલિકીને સરળ બનાવવાનો એક મોટો ભાગ છે.</p>
 <h3 id="પદધતિઓ-જેમાં-વધુ-પરિમાણો-હોય"><a class="header" href="#પદધતિઓ-જેમાં-વધુ-પરિમાણો-હોય">પદ્ધતિઓ જેમાં વધુ પરિમાણો હોય</a></h3>
 <p>ચાલો પદ્ધતિઓનો ઉપયોગ કરવાની પ્રેક્ટિસ કરીએ એક બીજી પદ્ધતિ <code>Rectangle</code> સ્ટ્રક્ચરમાં ઉમેરીને. આ વખતે આપણે ઈચ્છીએ છીએ કે <code>Rectangle</code> નો એક ઇન્સ્ટન્સ બીજા <code>Rectangle</code> ના ઇન્સ્ટન્સને સ્વીકારે અને <code>true</code> પરત કરે જો બીજો <code>Rectangle</code> સંપૂર્ણપણે <code>self</code> (પહેલો <code>Rectangle</code>) ની અંદર બંધબેસે; નહિંતર, તેણે <code>false</code> પરત કરવું જોઈએ. એટલે કે, એકવાર આપણે <code>can_hold</code> પદ્ધતિ વ્યાખ્યાયિત કરી લઈએ, પછી આપણે Listing 5-14 માં દર્શાવેલ પ્રોગ્રામ લખી શકવા જોઈએ.</p>
-<listing number="5-14" file-name="src/main.rs" caption="Using the as-yet-unwritten `can_hold` method">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-14/src/main.rs}}
-```
-```
-</listing>
-કારણ કે `rect2` ના બંને પરિમાણો `rect1` ના પરિમાણો કરતાં નાના છે, પરંતુ `rect3` ની પહોળાઈ `rect1` કરતાં વધારે છે:
-<pre><code class="language-text">```text
-Can rect1 hold rect2? true
+<p><strong>Listing 5-14: Using the as-yet-unwritten <code>can_hold</code> method</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-14/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>કારણ કે <code>rect2</code> ના બંને પરિમાણો <code>rect1</code> ના પરિમાણો કરતાં નાના છે, પરંતુ <code>rect3</code> ની પહોળાઈ <code>rect1</code> કરતાં વધારે છે:</p>
+<pre><code class="language-text">Can rect1 hold rect2? true
 Can rect1 hold rect3? false
 </code></pre>
-<pre><code>આપણે જાણીએ છીએ કે આપણે એક પદ્ધતિ (method) વ્યાખ્યાયિત કરવા માંગીએ છીએ, તેથી તે `impl Rectangle` બ્લોક ની અંદર હશે. પદ્ધતિનું નામ `can_hold` હશે, અને તે બીજા `Rectangle` નો અમૂર્ત ઉછીના લીધેલું પરિમાણ સ્વીકારશે. આપણે કોડ જોઇને પરિમાણનો પ્રકાર જાણી શકીએ છીએ જે પદ્ધતિને બોલાવે છે: `rect1.can_hold(&amp;rect2)` માં `&amp;rect2` પસાર થાય છે, જે `rect2` નો અમૂર્ત ઉછીના લીધેલું છે, જે `Rectangle` નું એક ઉદાહરણ છે. આ તાર્કિક છે કારણ કે આપણે માત્ર `rect2` વાંચવાની જરૂર છે (લેખન કરવાને બદલે, જેના માટે આપણને પરિવર્તનશીલ ઉછીનું જરૂરી હશે), અને આપણે `main` ને `can_hold` પદ્ધતિને બોલાવ્યા પછી ફરીથી તેનો ઉપયોગ કરી શકે તે માટે `rect2` નું માલિકી જાળવી રાખવાની જરૂર છે. `can_hold` નું વળતર મૂલ્ય એક બુલિયન (Boolean) હશે, અને અમલીકરણ તપાસશે કે `self` ની પહોળાઈ અને ઊંચાઈ અનુક્રમે બીજા `Rectangle` ની પહોળાઈ અને ઊંચાઈ કરતાં વધારે છે કે નહીં. ચાલો Listing 5-13 માંથી `impl` બ્લોકમાં નવું `can_hold` પદ્ધતિ ઉમેરીએ, જે Listing 5-15 માં દર્શાવેલ છે.
-
-&lt;Listing number="5-15" file-name="src/main.rs" caption="Implementing the `can_hold` method on `Rectangle` that takes another `Rectangle` instance as a parameter"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-15/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-જ્યારે આપણે લિસ્ટિંગ 5-14 માં `main` ફંક્શન સાથે આ કોડ ચલાવીશું, ત્યારે આપણને આપેલ પરિણામ મળશે. પદ્ધતિઓ (Methods) અનેક પરિમાણો લઈ શકે છે જે આપણે `self` પરિમાણ પછી ઉમેરી શકીએ છીએ, અને તે પરિમાણો ફંક્શન્સમાંના પરિમાણોની જેમ જ કાર્ય કરે છે.
-
-### સંલગ્ન વિધેયો
-
-`impl` બ્લોકમાં વ્યાખ્યાયિત થયેલાં તમામ વિધેયોને સંલગ્ન વિધેયો કહેવામાં આવે છે, કારણ કે તે `impl` નામના પ્રકાર સાથે સંલગ્ન હોય છે. આપણે એવા સંલગ્ન વિધેયો વ્યાખ્યાયિત કરી શકીએ છીએ જેમાં પ્રથમ પરિમાણ તરીકે `self` ન હોય (અને તેથી તે પદ્ધતિઓ નથી), કારણ કે તેમને કાર્ય કરવા માટે પ્રકારની કોઈ ઘટનાની જરૂર હોતી નથી. આપણે પહેલેથી જ આ પ્રકારનું એક વિધેયો વાપર્યું છે: `String::from` વિધેયો જે `String` પ્રકાર પર વ્યાખ્યાયિત થયેલું છે.
-
-જે સંલગ્ન વિધેયો પદ્ધતિઓ નથી, તે ઘણીવાર સ્ટ્રક્ટની નવી ઘટના પાછી આપવા માટે વપરાતા નિર્માણકર્તાઓ માટે ઉપયોગી થાય છે. આને ઘણીવાર `new` કહેવામાં આવે છે, પરંતુ `new` કોઈ વિશેષ નામ નથી અને ભાષામાં બનેલું નથી. ઉદાહરણ તરીકે, આપણે `square` નામનું સંલગ્ન વિધેયો પ્રદાન કરવાનું પસંદ કરી શકીએ છીએ જેમાં એક પરિમાણ હશે અને તેનો ઉપયોગ પહોળાઈ અને ઊંચાઈ બંને માટે થઈ શકે છે, આમ ચોરસ `Rectangle` બનાવવાનું સરળ બને છે, તેના બદલે સમાન મૂલ્ય બે વાર સ્પષ્ટ કરવું પડે:
-
-ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે "Hello, world!" છાપે છે. ```rust fn main() { println!("Hello, world!"); } ``` આ કાર્યક્રમ `main` નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે `main` કાર્ય પ્રથમ ચલાવવામાં આવે છે. `println!` એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે "Hello, world!" છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે `cargo run` command વાપરી શકો છો.
-
-```rust
-```rust
-{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-03-associated-functions/src/main.rs:here}}
-</code></pre>
-<pre><code>Self કીવર્ડ્સ `Self` કીવર્ડ્સ રીટર્ન પ્રકારમાં અને ફંક્શનના શરીરમાં, `impl` કીવર્ડ પછી દેખાતા પ્રકારના ઉપનામ છે, જે આ કિસ્સામાં `Rectangle` છે. આ સંકળાયેલ ફંક્શનને બોલાવવા માટે, આપણે સ્ટ્રક્ટ
-
-નામના સાથે `::` સિન્ટેક્સનો ઉપયોગ કરીએ છીએ; `let sq = Rectangle::square(3);` એ ઉદાહરણ છે. આ ફંક્શન સ્ટ્રક્ટ દ્વારા નામિત થયેલું છે: `::` સિન્ટેક્સ સંકળાયેલ ફંક્શન્સ અને મોડ્યુલ્સ દ્વારા બનાવેલા નેમસ્પેસ બંને માટે વપરાય છે. આપણે પ્રકરણ 7 માં મોડ્યુલો વિશે ચર્ચા કરીશું.
-
-### બહુવિધ `impl` બ્લોક્સ
-
-દરેક struct ને બહુવિધ `impl` બ્લોક્સ હોવાની અનુમતિ છે. ઉદાહરણ તરીકે, યાદી 5-15 એ યાદી 5-16 માં દર્શાવેલ કોડ સમાન છે, જેમાં દરેક પદ્ધતિ તેના પોતાના `impl` બ્લોકમાં છે.
-
-&lt;Listing number="5-16" caption="Rewriting Listing 5-15 using multiple `impl` blocks"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-16/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-અહીં આ પદ્ધતિઓને અનેક `impl` બ્લોક્સમાં વિભાજીત કરવાનો કોઈ હેતુ નથી, પરંતુ આ યોગ્ય વાક્યરચના છે. આપણે પ્રકરણ ૧૦ માં જોઈશું કે જ્યાં બહુવિધ `impl` બ્લોક્સ ક્યારે ઉપયોગી થઈ શકે છે, જ્યારે આપણે સામાન્ય પ્રકારો (types) અને traits વિશે ચર્ચા કરીશું.
-
-## સારાંશ
-
-સ્ટ્રક્ચર્સ તમને કસ્ટમ પ્રકારો બનાવવાની તક આપે છે જે તમારા ક્ષેત્ર માટે અર્થપૂર્ણ હોય છે. સ્ટ્રક્ચર્સનો ઉપયોગ કરીને, તમે એકબીજા સાથે જોડાયેલા ડેટાના સંબંધિત ભાગોને જાળવી શકો છો અને દરેક ભાગનું નામ આપીને તમારા કોડને સ્પષ્ટ કરી શકો છો. `impl` બ્લોક્સમાં, તમે ફંક્શન્સ વ્યાખ્યાયિત કરી શકો છો જે તમારા પ્રકાર સાથે સંકળાયેલા હોય છે, અને મેથડ્સ એ એક પ્રકારના સંકળાયેલ ફંક્શન છે જે તમને તમારા સ્ટ્રક્ચર્સની ઇન્સ્ટન્સનું વર્તન સ્પષ્ટ કરવાની મંજૂરી આપે છે.
-
-પરંતુ સ્ટ્રક્ચર્સ એ કસ્ટમ પ્રકારો બનાવવાનો એકમાત્ર રસ્તો નથી: ચાલો Rust ની enum સુવિધા તરફ વળીએ અને તમારા સાધનપેટીમાં બીજું સાધન ઉમેરીએ.
-
-</code></pre>
+<p>આપણે જાણીએ છીએ કે આપણે એક પદ્ધતિ (method) વ્યાખ્યાયિત કરવા માંગીએ છીએ, તેથી તે <code>impl Rectangle</code> બ્લોક ની અંદર હશે. પદ્ધતિનું નામ <code>can_hold</code> હશે, અને તે બીજા <code>Rectangle</code> નો અમૂર્ત ઉછીના લીધેલું પરિમાણ સ્વીકારશે. આપણે કોડ જોઇને પરિમાણનો પ્રકાર જાણી શકીએ છીએ જે પદ્ધતિને બોલાવે છે: <code>rect1.can_hold(&amp;rect2)</code> માં <code>&amp;rect2</code> પસાર થાય છે, જે <code>rect2</code> નો અમૂર્ત ઉછીના લીધેલું છે, જે <code>Rectangle</code> નું એક ઉદાહરણ છે. આ તાર્કિક છે કારણ કે આપણે માત્ર <code>rect2</code> વાંચવાની જરૂર છે (લેખન કરવાને બદલે, જેના માટે આપણને પરિવર્તનશીલ ઉછીનું જરૂરી હશે), અને આપણે <code>main</code> ને <code>can_hold</code> પદ્ધતિને બોલાવ્યા પછી ફરીથી તેનો ઉપયોગ કરી શકે તે માટે <code>rect2</code> નું માલિકી જાળવી રાખવાની જરૂર છે. <code>can_hold</code> નું વળતર મૂલ્ય એક બુલિયન (Boolean) હશે, અને અમલીકરણ તપાસશે કે <code>self</code> ની પહોળાઈ અને ઊંચાઈ અનુક્રમે બીજા <code>Rectangle</code> ની પહોળાઈ અને ઊંચાઈ કરતાં વધારે છે કે નહીં. ચાલો Listing 5-13 માંથી <code>impl</code> બ્લોકમાં નવું <code>can_hold</code> પદ્ધતિ ઉમેરીએ, જે Listing 5-15 માં દર્શાવેલ છે.</p>
+<p><strong>Listing 5-15: Implementing the <code>can_hold</code> method on <code>Rectangle</code> that takes another <code>Rectangle</code> instance as a parameter</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-15/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>જ્યારે આપણે લિસ્ટિંગ 5-14 માં <code>main</code> ફંક્શન સાથે આ કોડ ચલાવીશું, ત્યારે આપણને આપેલ પરિણામ મળશે. પદ્ધતિઓ (Methods) અનેક પરિમાણો લઈ શકે છે જે આપણે <code>self</code> પરિમાણ પછી ઉમેરી શકીએ છીએ, અને તે પરિમાણો ફંક્શન્સમાંના પરિમાણોની જેમ જ કાર્ય કરે છે.</p>
+<h3 id="સંલગન-વિધેયો"><a class="header" href="#સંલગન-વિધેયો">સંલગ્ન વિધેયો</a></h3>
+<p><code>impl</code> બ્લોકમાં વ્યાખ્યાયિત થયેલાં તમામ વિધેયોને સંલગ્ન વિધેયો કહેવામાં આવે છે, કારણ કે તે <code>impl</code> નામના પ્રકાર સાથે સંલગ્ન હોય છે. આપણે એવા સંલગ્ન વિધેયો વ્યાખ્યાયિત કરી શકીએ છીએ જેમાં પ્રથમ પરિમાણ તરીકે <code>self</code> ન હોય (અને તેથી તે પદ્ધતિઓ નથી), કારણ કે તેમને કાર્ય કરવા માટે પ્રકારની કોઈ ઘટનાની જરૂર હોતી નથી. આપણે પહેલેથી જ આ પ્રકારનું એક વિધેયો વાપર્યું છે: <code>String::from</code> વિધેયો જે <code>String</code> પ્રકાર પર વ્યાખ્યાયિત થયેલું છે.</p>
+<p>જે સંલગ્ન વિધેયો પદ્ધતિઓ નથી, તે ઘણીવાર સ્ટ્રક્ટની નવી ઘટના પાછી આપવા માટે વપરાતા નિર્માણકર્તાઓ માટે ઉપયોગી થાય છે. આને ઘણીવાર <code>new</code> કહેવામાં આવે છે, પરંતુ <code>new</code> કોઈ વિશેષ નામ નથી અને ભાષામાં બનેલું નથી. ઉદાહરણ તરીકે, આપણે <code>square</code> નામનું સંલગ્ન વિધેયો પ્રદાન કરવાનું પસંદ કરી શકીએ છીએ જેમાં એક પરિમાણ હશે અને તેનો ઉપયોગ પહોળાઈ અને ઊંચાઈ બંને માટે થઈ શકે છે, આમ ચોરસ <code>Rectangle</code> બનાવવાનું સરળ બને છે, તેના બદલે સમાન મૂલ્ય બે વાર સ્પષ્ટ કરવું પડે:</p>
+<p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે. <code>rust fn main() { println!("Hello, world!"); } </code> આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-03-associated-functions/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>Self કીવર્ડ્સ <code>Self</code> કીવર્ડ્સ રીટર્ન પ્રકારમાં અને ફંક્શનના શરીરમાં, <code>impl</code> કીવર્ડ પછી દેખાતા પ્રકારના ઉપનામ છે, જે આ કિસ્સામાં <code>Rectangle</code> છે. આ સંકળાયેલ ફંક્શનને બોલાવવા માટે, આપણે સ્ટ્રક્ટ</p>
+<p>નામના સાથે <code>::</code> સિન્ટેક્સનો ઉપયોગ કરીએ છીએ; <code>let sq = Rectangle::square(3);</code> એ ઉદાહરણ છે. આ ફંક્શન સ્ટ્રક્ટ દ્વારા નામિત થયેલું છે: <code>::</code> સિન્ટેક્સ સંકળાયેલ ફંક્શન્સ અને મોડ્યુલ્સ દ્વારા બનાવેલા નેમસ્પેસ બંને માટે વપરાય છે. આપણે પ્રકરણ 7 માં મોડ્યુલો વિશે ચર્ચા કરીશું.</p>
+<h3 id="બહુવિધ-impl-બલોકસ"><a class="header" href="#બહુવિધ-impl-બલોકસ">બહુવિધ <code>impl</code> બ્લોક્સ</a></h3>
+<p>દરેક struct ને બહુવિધ <code>impl</code> બ્લોક્સ હોવાની અનુમતિ છે. ઉદાહરણ તરીકે, યાદી 5-15 એ યાદી 5-16 માં દર્શાવેલ કોડ સમાન છે, જેમાં દરેક પદ્ધતિ તેના પોતાના <code>impl</code> બ્લોકમાં છે.</p>
+<p><strong>Listing 5-16: Rewriting Listing 5-15 using multiple <code>impl</code> blocks</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-16/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અહીં આ પદ્ધતિઓને અનેક <code>impl</code> બ્લોક્સમાં વિભાજીત કરવાનો કોઈ હેતુ નથી, પરંતુ આ યોગ્ય વાક્યરચના છે. આપણે પ્રકરણ ૧૦ માં જોઈશું કે જ્યાં બહુવિધ <code>impl</code> બ્લોક્સ ક્યારે ઉપયોગી થઈ શકે છે, જ્યારે આપણે સામાન્ય પ્રકારો (types) અને traits વિશે ચર્ચા કરીશું.</p>
+<h2 id="સારાંશ"><a class="header" href="#સારાંશ">સારાંશ</a></h2>
+<p>સ્ટ્રક્ચર્સ તમને કસ્ટમ પ્રકારો બનાવવાની તક આપે છે જે તમારા ક્ષેત્ર માટે અર્થપૂર્ણ હોય છે. સ્ટ્રક્ચર્સનો ઉપયોગ કરીને, તમે એકબીજા સાથે જોડાયેલા ડેટાના સંબંધિત ભાગોને જાળવી શકો છો અને દરેક ભાગનું નામ આપીને તમારા કોડને સ્પષ્ટ કરી શકો છો. <code>impl</code> બ્લોક્સમાં, તમે ફંક્શન્સ વ્યાખ્યાયિત કરી શકો છો જે તમારા પ્રકાર સાથે સંકળાયેલા હોય છે, અને મેથડ્સ એ એક પ્રકારના સંકળાયેલ ફંક્શન છે જે તમને તમારા સ્ટ્રક્ચર્સની ઇન્સ્ટન્સનું વર્તન સ્પષ્ટ કરવાની મંજૂરી આપે છે.</p>
+<p>પરંતુ સ્ટ્રક્ચર્સ એ કસ્ટમ પ્રકારો બનાવવાનો એકમાત્ર રસ્તો નથી: ચાલો Rust ની enum સુવિધા તરફ વળીએ અને તમારા સાધનપેટીમાં બીજું સાધન ઉમેરીએ.</p>
 
                     </main>
 
@@ -344,6 +319,7 @@ Can rect1 hold rect3? false
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

@@ -5,36 +5,38 @@
 
 પ્રથમ, આપણે `front_of_house` મોડ્યુલને તેના પોતાના ફાઈલમાં સ્થાનાંતરિત કરીશું. `front_of_house` મોડ્યુલની અંદરનો કોડ દૂર કરો, માત્ર `mod front_of_house;` ઘોષણા જ રાખો, જેથી src/lib.rs માં Listing 7-21 માં દર્શાવેલ કોડ રહે. નોંધ કરો કે જ્યાં સુધી આપણે Listing 7-22 માં src/front_of_house.rs ફાઈલ બનાવતા નથી ત્યાં સુધી આ કમ્પાઇલ થશે નહીં.
 
-<Listing number="7-21" file-name="src/lib.rs" caption="Declaring the `front_of_house` module whose body will be in *src/front_of_house.rs*">
+**Listing 7-21: Declaring the `front_of_house` module whose body will be in *src/front_of_house.rs***
+
 ```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/lib.rs}}
 ```
-</Listing>
+
 આગળ, કૌંસમાં રહેલો કોડ `src/front_of_house.rs` નામની નવી ફાઈલમાં મૂકો, જેવો કે સૂચિ 7-22 માં દર્શાવેલ છે. કમ્પાઇલરને આ ફાઈલ શોધવાની જાણ થાય છે કારણ કે તેને ક્રેટના મૂળમાં `front_of_house` નામના મોડ્યુલ ઘોષણા (declaration) સામે આવી હતી.
 
-<Listing number="7-22" file-name="src/front_of_house.rs" caption="Definitions inside the `front_of_house` module in *src/front_of_house.rs*">
+**Listing 7-22: Definitions inside the `front_of_house` module in *src/front_of_house.rs***
+
 ```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/front_of_house.rs}}
 ```
-</Listing>
+
 નોંધ એક `mod` ઘોષણા તમારા મોડ્યુલ વૃક્ષમાં એકવાર જ લોડ કરવી જોઈએ. એકવાર કમ્પાઇલરને ખબર પડે કે ફાઈલ પ્રોજેક્ટનો ભાગ છે (અને તમે `mod` વિધાન ક્યાં મૂક્યું છે તેના કારણે મોડ્યુલ વૃક્ષમાં કોડ ક્યાં રહેલો છે તે પણ જાણે છે), તો તમારા પ્રોજેક્ટની અન્ય ફાઇલોએ લોડ કરેલી ફાઇલના કોડનો સંદર્ભ લેવા માટે, જ્યાં તે જાહેર કરવામાં આવી હતી ત્યાંનો પાથ વાપરવો જોઈએ, જે "મોડ્યુલ વૃક્ષમાં વસ્તુનો સંદર્ભ લેવા માટેના પાથ" વિભાગમાં સમજાવવામાં આવ્યું છે. બીજા શબ્દોમાં કહીએ તો, `mod` એ "સમાવેશ" ક્રિયા નથી કે જે તમે અન્ય પ્રોગ્રામિંગ ભાષાઓમાં જોઈ હશે.
 
 પછી, આપણે `hosting` મોડ્યુલને તેના પોતાના ફાઈલમાં સ્થાનાંતરિત કરીશું. પ્રક્રિયા થોડી અલગ છે કારણ કે `hosting` એ `front_of_house` નું પેટા મોડ્યુલ છે, મૂળ મોડ્યુલનું નહીં. આપણે `hosting` માટેની ફાઈલ એક નવી ડિરેક્ટરીમાં મૂકીશું જે મોડ્યુલ વૃક્ષમાં તેના પૂર્વજોના નામ પરથી નામિત કરવામાં આવશે, આ કિસ્સામાં
 
 src/front_of_house. `hosting` ને ખસેડવાનું શરૂ કરવા માટે, આપણે src/front_of_house.rs ને માત્ર `hosting` મોડ્યુલની ઘોષણા ધરાવવા માટે બદલીશું:
 
-<Listing file-name="src/front_of_house.rs">
+
 ```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house.rs}}
 ```
-</Listing>
+
 પછી, આપણે src/front_of_house ડિરેક્ટરી અને hosting.rs ફાઈલ બનાવીએ છીએ જેમાં `hosting` મોડ્યુલમાં કરેલાં વ્યાખ્યાઓ સમાવવામાં આવશે:
 
-<Listing file-name="src/front_of_house/hosting.rs">
+
 ```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house/hosting.rs}}
 ```
-</Listing>
+
 જો આપણે તેના બદલે hosting.rs ને src ડિરેક્ટરીમાં મૂકીએ, તો કમ્પાઇલર અપેક્ષા રાખશે કે hosting.rs કોડ `hosting` મોડ્યુલમાં જાહેર થયેલ હોય, જે crate મૂળમાં છે અને `front_of_house` મોડ્યુલના બાળ તરીકે નહીં જાહેર થયેલ હોય. ડિરેક્ટરીઓ અને ફાઇલો મોડ્યુલ વૃક્ષ સાથે વધુ સુસંગત હોય તે માટે કમ્પાઇલરના નિયમો નક્કી કરે છે કે કયા મોડ્યુલ્સના કોડ માટે કઈ ફાઇલો તપાસવી.
 
 > ### Alternate File Paths

@@ -18,11 +18,12 @@ $ cargo run -- searchstring example-filename.txt
 
 યાદી ૧૨-૧ માં આપેલ કોડ તમારા `minigrep` કાર્યક્રમને કોઈપણ આદેશ વાક્ય Argumentો વાંચવાની અને પછી તે મૂલ્યોને વેક્ટર માં એકત્ર કરવાની મંજૂરી આપે છે.
 
-<Listing number="12-1" file-name="src/main.rs" caption="Collecting the command line arguments into a vector and printing them">
+**Listing 12-1: Collecting the command line arguments into a vector and printing them**
+
 ```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-01/src/main.rs}}
 ```
-</Listing>
+
 સૌ પ્રથમ, આપણે `std::env` મોડ્યુલને `use` વિધાન સાથે કાર્યક્ષેત્રમાં લાવીએ છીએ જેથી કરીને આપણે તેના `args` વિધેયનો ઉપયોગ કરી શકીએ. નોંધ કરો કે `std::env::args` વિધેય બે સ્તરોના મોડ્યુલોમાં જડેલું છે. જેમ આપણે પ્રકરણ 7 માં ચર્ચા કરી હતી, જ્યારે ઇચ્છિત વિધેય એક કરતાં વધુ મોડ્યુલોમાં જડેલું હોય, ત્યારે આપણે પિતૃ મોડ્યુલને કાર્યક્ષેત્રમાં લાવવાનું પસંદ કર્યું છે, વિધેયને નહીં. આમ કરવાથી, આપણે `std::env` માંથી અન્ય વિધેયોનો સરળતાથી ઉપયોગ કરી શકીએ છીએ. તે `use std::env::args` ઉમેરવા અને પછી માત્ર `args` સાથે વિધેયને બોલાવવા કરતાં ઓછું અસ્પષ્ટ છે, કારણ કે `args` ને વર્તમાન મોડ્યુલમાં વ્યાખ્યાયિત થયેલ વિધેય માટે ભૂલથી સમજી શકાય છે.
 
 > ### The `args` Function and Invalid Unicode
@@ -45,11 +46,12 @@ $ cargo run -- searchstring example-filename.txt
 
 પ્રોગ્રામ હાલમાં કમાન્ડ લાઇન આર્ગ્યુમેન્ટ તરીકે દર્શાવેલ મૂલ્યોને મેળવી શકે છે. હવે આપણે પ્રોગ્રામના બાકીના ભાગમાં ઉપયોગ માટે બંને આર્ગ્યુમેન્ટના મૂલ્યોને variable સંગ્રહિત કરવાની જરૂર છે. Listing 12-2 માં તે દર્શાવેલું છે.
 
-<Listing number="12-2" file-name="src/main.rs" caption="Creating variables to hold the query argument and file path argument">
+**Listing 12-2: Creating variables to hold the query argument and file path argument**
+
 ```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-02/src/main.rs}}
 ```
-</Listing>
+
 `file_path` અમે જોયું તેમ કે જ્યારે આપણે વેક્ટર છાપ્યું હતું, ત્યારે કાર્યક્રમનું નામ વેક્ટરમાં પ્રથમ મૂલ્ય લે છે `args[0]` પર, તેથી અમે ઇન્ડેક્સ 1 થી Argumentો શરૂ કરીએ છીએ. પહેલી Argument `minigrep` જે શોધવા માટેની સ્ટ્રિંગ છે, તેથી અમે પહેલી Argumentનો સંદર્ભ variable `query` માં મૂકીએ છીએ.
 
 બીજી Argument ફાઇલ પાથ હશે, તેથી અમે બીજી Argumentનો સંદર્ભ variable `file_path` માં મૂકીએ છીએ. અમે કામચલાઉ રીતે આ variable's મૂલ્યો છાપીએ છીએ કે કોડ આપણી ધાર્યા મુજબ કાર્ય કરી રહ્યો છે કે નહીં તે સાબિત કરવા માટે. ચાલો આ કાર્યક્રમ ફરીથી Argumentો `test` અને `sample.txt` સાથે ચલાવીએ:

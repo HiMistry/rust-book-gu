@@ -10,11 +10,12 @@ Listing 21-20 માં રહેલો કોડ આપણી ધારણા �
 
 ચાલો આપણી થ્રેડ પૂલ પર `Drop` લક્ષણનો અમલ કરવાનું શરૂ કરીએ. જ્યારે પૂલને છોડી દેવામાં આવે છે, ત્યારે આપણાં તમામ થ્રેડોએ તેમના કાર્ય પૂર્ણ થાય તે સુનિશ્ચિત કરવા માટે જોડાવા જોઈએ. સૂચિ 21-22 `Drop` અમલીકરણનો પ્રથમ પ્રયાસ દર્શાવે છે; આ કોડ હજી સંપૂર્ણપણે કામ કરશે નહીં.
 
-<Listing number="21-22" file-name="src/lib.rs" caption="Joining each thread when the thread pool goes out of scope">
+**Listing 21-22: Joining each thread when the thread pool goes out of scope**
+
 ```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-22/src/lib.rs:here}}
 ```
-</Listing>
+
 પ્રથમ, અમે થ્રેડ પૂલ `workers` ના દરેક ઘટકમાંથી પસાર થઈએ છીએ. અમે `&mut` નો ઉપયોગ કરીએ છીએ કારણ કે `self` એ પરિવર્તનશીલ સંદર્ભ છે, અને અમારે `worker` ને પણ બદલવાની જરૂર છે. દરેક `worker` માટે, અમે એક સંદેશ છાપીએ છીએ જેમાં જણાવવામાં આવ્યું છે કે આ ચોક્કસ `Worker` ઉદાહરણ બંધ થઈ રહ્યું છે, અને પછી અમે તે `Worker` ઉદાહરણના થ્રેડ પર `join` કૉલ કરીએ છીએ. જો `join` કૉલમાં નિષ્ફળતા આવે, તો અમે `unwrap` નો ઉપયોગ કરીને Rust ને ગભરાટમાં મૂકીએ છીએ અને અણઘડ શટડાઉન (shutdown) માં જઈએ છીએ.
 
 અહીં એ ભૂલ છે જે અમને આ કોડ કમ્પાઇલ કરતી વખતે મળે છે:
@@ -30,11 +31,11 @@ Listing 21-20 માં રહેલો કોડ આપણી ધારણા �
 
 તો, આપણે `ThreadPool` ના `drop` અમલીકરણ આ રીતે અપડેટ કરવાની જરૂર છે:
 
-<Listing file-name="src/lib.rs">
+
 ```rust
 {{#rustdoc_include ../listings/ch21-web-server/no-listing-04-update-drop-definition/src/lib.rs:here}}
 ```
-</Listing>
+
 આ કમ્પાઇલરની ભૂલ નિવારણ કરે છે અને આપણી કોડમાં અન્ય કોઈ ફેરફાર જરૂરી નથી. નોંધ કરો કે, `drop` બોલાવી શકાય છે જ્યારે પ્રોગ્રામ ગભરાય છે (panicking), તેથી `unwrap` પણ ગભરાય શકે છે અને બેવડા ગભરાટનું કારણ બની શકે છે, જે તાત્કાલિક પ્રોગ્રામને ક્રેશ કરે છે અને ચાલુ રહેલી કોઈપણ સફાઈનો અંત લાવે છે. આ એક ઉદાહરણ પ્રોગ્રામ માટે ઠીક છે, પરંતુ ઉત્પાદન કોડ માટે આ ભલામણ કરવામાં આવતું નથી.
 
 ### Signaling to the Threads to Stop Listening for Jobs
@@ -45,25 +46,28 @@ Listing 21-20 માં રહેલો કોડ આપણી ધારણા �
 
 સૌ પ્રથમ, આપણે `sender` ને છોડતા પહેલા થ્રેડો પૂરા થાય તેની રાહ જોવાના બદલે, સ્પષ્ટપણે `sender` ને છોડવા માટે `ThreadPool` ના `drop` અમલીકરણને બદલીશું. સૂચિ 21-23 માં `sender` ને સ્પષ્ટપણે છોડવા માટે `ThreadPool` માં કરેલા ફેરફારો દર્શાવવામાં આવ્યા છે. થ્રેડની જેમ અહીં, આપણે `Option::take` વડે `ThreadPool` માંથી `sender` ને ખસેડી શકવા માટે `Option` નો ઉપયોગ કરવો જરૂરી છે.
 
-<Listing number="21-23" file-name="src/lib.rs" caption="Explicitly dropping `sender` before joining the `Worker` threads">
+**Listing 21-23: Explicitly dropping `sender` before joining the `Worker` threads**
+
 ```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-23/src/lib.rs:here}}
 ```
-</Listing>
+
 `sender` ને છોડી દેવાથી ચેનલ બંધ થઈ જાય છે, જે દર્શાવે છે કે હવે કોઈ સંદેશાઓ મોકલવામાં આવશે નહીં. જ્યારે આવું થાય છે, ત્યારે `Worker` ઇન્સ્ટન્સ દ્વારા અનંત લૂપમાં કરવામાં આવતા તમામ `recv` કૉલ્સ ભૂલ પાછી આપે છે. યાદી 21-24 માં, અમે `Worker` લૂપને એવી રીતે બદલીએ છીએ કે તે તે સ્થિતિમાં લૂપમાંથી શાંતિથી બહાર નીકળી જાય, એટલે કે થ્રેડો `ThreadPool` ના `drop` અમલીકરણ દ્વારા તેમના પર `join` કૉલ કરવામાં આવે ત્યારે પૂર્ણ થઈ જશે.
 
-<Listing number="21-24" file-name="src/lib.rs" caption="Explicitly breaking out of the loop when `recv` returns an error">
+**Listing 21-24: Explicitly breaking out of the loop when `recv` returns an error**
+
 ```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-24/src/lib.rs:here}}
 ```
-</Listing>
+
 આ કોડને ક્રિયામાં જોવા માટે, ચાલો `main` ને એવી રીતે બદલીએ કે તે માત્ર બે વિનંતીઓ સ્વીકારે અને પછી સર્વરને શાંતિથી બંધ કરી દે, જે યાદી 21-25 માં દર્શાવેલ છે.
 
-<Listing number="21-25" file-name="src/main.rs" caption="Shutting down the server after serving two requests by exiting the loop">
+**Listing 21-25: Shutting down the server after serving two requests by exiting the loop**
+
 ```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-25/src/main.rs:here}}
 ```
-</Listing>
+
 તમે વાસ્તવિક વેબ સર્વરને માત્ર બે વિનંતીઓ પૂરી કર્યા પછી બંધ થવા દેતા ન હોત. આ કોડ માત્ર દર્શાવે છે કે સુયોગ્ય શટડાઉન અને સફાઈ
 
 કાર્યરત ક્રમમાં છે. `take` પદ્ધતિ `Iterator` ટ્રેઇટમાં વ્યાખ્યાયિત થયેલી છે અને પુનરાવર્તનને વધુમાં વધુ પ્રથમ બે વસ્તુઓ સુધી મર્યાદિત કરે છે. `ThreadPool` `main` ના અંતે અવકાશમાંથી બહાર નીકળી જશે, અને `drop` અમલીકરણ ચાલશે. સર્વરને
@@ -105,16 +109,16 @@ Shutting down worker 3
 
 છે. સંદર્ભ માટે અહીં સંપૂર્ણ code છે:
 
-<Listing file-name="src/main.rs">
+
 ```rust
 {{#rustdoc_include ../listings/ch21-web-server/no-listing-07-final-code/src/main.rs}}
 ```
-</Listing>
-<Listing file-name="src/lib.rs">
+
+
 ```rust
 {{#rustdoc_include ../listings/ch21-web-server/no-listing-07-final-code/src/lib.rs}}
 ```
-</Listing>
+
 આપણે અહીં વધુ કરી શક્યા હોત! જો તમે આ કાર્યક્રમમાં સુધારા કરવાનું ચાલુ રાખવા માંગતા હો, તો અહીં કેટલાક વિચારો છે:
 
 `ThreadPool` અને તેની જાહેર પદ્ધતિઓ માટે વધુ દસ્તાવેજીકરણ ઉમેરો.
@@ -123,11 +127,11 @@ Shutting down worker 3
 
 `unwrap` ના કોલ્સને વધુ મજબૂત ભૂલ વ્યવસ્થાપન સાથે બદલો.
 
-વેબ વિનંતીઓ પૂરી પાડવા સિવાય અન્ય કોઈ કાર્ય કરવા માટે `ThreadPool` નો ઉપયોગ કરો.
+- વેબ વિનંતીઓ પૂરી પાડવા સિવાય અન્ય કોઈ કાર્ય કરવા માટે `ThreadPool` નો ઉપયોગ કરો.
 
-crates.io પર થ્રેડ પુલ ક્રેટ શોધો અને તેના બદલે તે ક્રેટનો ઉપયોગ કરીને સમાન વેબ સર્વર લાગુ કરો. પછી, તેની API અને અમારી દ્વારા અમલમાં મૂકાયેલ થ્રેડ પુલની મજબૂતાઈ સાથે સરખામણી કરો.
+- crates.io પર થ્રેડ પુલ ક્રેટ શોધો અને તેના બદલે તે ક્રેટનો ઉપયોગ કરીને સમાન વેબ સર્વર લાગુ કરો. પછી, તેની API અને અમારી દ્વારા અમલમાં મૂકાયેલ થ્રેડ પુલની મજબૂતાઈ સાથે સરખામણી કરો.
 
 ## Summary
 
-ખૂબ સારું! તમે પુસ્તકના અંત સુધી પહોંચી ગયા છો! અમે તમને Rustના આ પ્રવાસમાં અમારી સાથે જોડાવા બદલ આભાર માનીએ છીએ. હવે તમે તમારા પોતાના Rust પ્રોજેક્ટ્સ અમલમાં મૂકવા અને અન્ય લોકોના પ્રોજેક્ટ્સમાં મદદ કરવા માટે તૈયાર છો. ધ્યાનમાં રાખો કે Rustaceansનો એક આવકારદાયક સમુદાય છે જે તમને તમારી Rust યાત્રામાં આવતી કોઈપણ મુશ્કેલીઓ દૂર કરવામાં મદદ કરવા માટે ઉત્સુક હશે.
+- ખૂબ સારું! તમે પુસ્તકના અંત સુધી પહોંચી ગયા છો! અમે તમને Rustના આ પ્રવાસમાં અમારી સાથે જોડાવા બદલ આભાર માનીએ છીએ. હવે તમે તમારા પોતાના Rust પ્રોજેક્ટ્સ અમલમાં મૂકવા અને અન્ય લોકોના પ્રોજેક્ટ્સમાં મદદ કરવા માટે તૈયાર છો. ધ્યાનમાં રાખો કે Rustaceansનો એક આવકારદાયક સમુદાય છે જે તમને તમારી Rust યાત્રામાં આવતી કોઈપણ મુશ્કેલીઓ દૂર કરવામાં મદદ કરવા માટે ઉત્સુક હશે.
 

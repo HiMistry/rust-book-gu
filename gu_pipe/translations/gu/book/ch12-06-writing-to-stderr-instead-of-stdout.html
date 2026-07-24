@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -190,60 +190,36 @@
 <p>સૌ પ્રથમ, ચાલો જોઈએ કે <code>minigrep</code> દ્વારા છાપવામાં આવતી સામગ્રી હાલમાં પ્રમાણિત આઉટપુટ પર કેવી રીતે લખાઈ રહી છે, જેમાં કોઈપણ ભૂલ સંદેશો સમાવિષ્ટ છે જેને આપણે પ્રમાણિત ભૂલ પ્રવાહમાં લખવા માંગીએ છીએ. આપણે તે કરીને કરીશું કે પ્રમાણિત આઉટપુટ પ્રવાહને એક ફાઇલમાં રીડાયરેક્ટ કરતી વખતે જાણી જોઈને ભૂલ ઊભી કરીએ. આપણે પ્રમાણિત ભૂલ પ્રવાહને રીડાયરેક્ટ નહીં કરીએ, તેથી પ્રમાણિત ભૂલ પર મોકલવામાં આવતી કોઈપણ સામગ્રી સ્ક્રીન પર દેખાતી રહેશે.</p>
 <p>કમાન્ડ લાઇન પ્રોગ્રામ્સથી અપેક્ષા રાખવામાં આવે છે કે તેઓ ભૂલ સંદેશાઓ પ્રમાણિત ભૂલ પ્રવાહમાં મોકલે જેથી કરીને આપણે પ્રમાણિત આઉટપુટ પ્રવાહને ફાઇલમાં રીડાયરેક્ટ કર્યો હોવા છતાં પણ સ્ક્રીન પર ભૂલ સંદેશો જોઈ શકીએ. હાલમાં આપણો પ્રોગ્રામ યોગ્ય રીતે વર્તતો નથી: આપણે જોશું કે તે ભૂલ સંદેશ આઉટપુટને ફાઇલમાં સાચવે છે!</p>
 <p>આ વર્તણૂક દર્શાવવા માટે, આપણે પ્રોગ્રામને <code>&gt;</code> સાથે ચલાવીશું અને ફાઇલ પાથ, output.txt , જે અમે સ્ટાન્ડર્ડ આઉટપુટ સ્ટ્રીમને રીડાયરેક્ટ કરવા માંગીએ છીએ. આપણે કોઈ Argumentો પસાર નહીં કરીએ, જેનાથી ભૂલ થવી જોઈએ:</p>
-<pre><code class="language-console">```console
-$ cargo run &gt; output.txt
+<pre><code class="language-console">$ cargo run &gt; output.txt
 </code></pre>
-<pre><code>`&gt;` સિન્ટેક્સ શેલને જણાવે છે કે સ્ટાન્ડર્ડ આઉટપુટને output.txt માં લખવું, સ્ક્રીન પર નહીં. આપણને અપેક્ષિત ભૂલ સંદેશ સ્ક્રીન પર દેખાયો ન હતો, તેથી તેનો અર્થ એ થાય છે કે તે ફાઈલમાં જવો પડ્યો. આ output.txt માં છે:
-
-```text
-```text
+<p><code>&gt;</code> સિન્ટેક્સ શેલને જણાવે છે કે સ્ટાન્ડર્ડ આઉટપુટને output.txt માં લખવું, સ્ક્રીન પર નહીં. આપણને અપેક્ષિત ભૂલ સંદેશ સ્ક્રીન પર દેખાયો ન હતો, તેથી તેનો અર્થ એ થાય છે કે તે ફાઈલમાં જવો પડ્યો. આ output.txt માં છે:</p>
+<pre><code class="language-text">Problem parsing arguments: not enough arguments
+</code></pre>
+<p>હા, આપણી ભૂલ સંદેશો પ્રમાણિત આઉટપુટમાં છાપાઈ રહ્યો છે. આવી ભૂલ સંદેશાઓ માટે પ્રમાણિત ભૂલ (error) માં છાપવું વધુ ઉપયોગી થશે જેથી સફળ ચાલમાંથી માત્ર માહિતી જ ફાઇલમાં આવે. અમે તે બદલીશું.</p>
+<h3 id="printing-errors-to-standard-error"><a class="header" href="#printing-errors-to-standard-error">Printing Errors to Standard Error</a></h3>
+<p>આપણે લિસ્ટિંગ ૧૨-૨૪ માં રહેલા કોડનો ઉપયોગ કરીશું જેથી ભૂલ સંદેશાઓ છાપવાની રીત બદલી શકાય. અગાઉના ભાગમાં કરેલા સુધારણાને કારણે, આ પ્રકરણમાં ભૂલ સંદેશાઓ છાપતો તમામ કોડ એક જ ફંક્શન <code>main</code> માં છે. પ્રમાણિત પુસ્તકાલય <code>eprintln!</code> નામનું મેક્રો પ્રદાન કરે છે જે પ્રમાણિત ભૂલ પ્રવાહમાં છાપે છે, તેથી આપણે <code>println!</code> ને બોલાવવાની બે જગ્યાએ <code>eprintln!</code> નો ઉપયોગ કરીશું.</p>
+<p><strong>Listing 12-24: Writing error messages to standard error instead of standard output using <code>eprintln!</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-24/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>હવે ચાલો આપણે આ જ રીતે પ્રોગ્રામ ફરીથી ચલાવીએ, કોઈપણ Argumentો વિના અને <code>&gt;</code> સાથે પ્રમાણિત આઉટપુટને રીડાયરેક્ટ કરીને:</p>
+<pre><code class="language-console">$ cargo run &gt; output.txt
 Problem parsing arguments: not enough arguments
 </code></pre>
-<pre><code>હા, આપણી ભૂલ સંદેશો પ્રમાણિત આઉટપુટમાં છાપાઈ રહ્યો છે. આવી ભૂલ સંદેશાઓ માટે પ્રમાણિત ભૂલ (error) માં છાપવું વધુ ઉપયોગી થશે જેથી સફળ ચાલમાંથી માત્ર માહિતી જ ફાઇલમાં આવે. અમે તે બદલીશું.
-
-### Printing Errors to Standard Error
-
-આપણે લિસ્ટિંગ ૧૨-૨૪ માં રહેલા કોડનો ઉપયોગ કરીશું જેથી ભૂલ સંદેશાઓ છાપવાની રીત બદલી શકાય. અગાઉના ભાગમાં કરેલા સુધારણાને કારણે, આ પ્રકરણમાં ભૂલ સંદેશાઓ છાપતો તમામ કોડ એક જ ફંક્શન `main` માં છે. પ્રમાણિત પુસ્તકાલય `eprintln!` નામનું મેક્રો પ્રદાન કરે છે જે પ્રમાણિત ભૂલ પ્રવાહમાં છાપે છે, તેથી આપણે `println!` ને બોલાવવાની બે જગ્યાએ `eprintln!` નો ઉપયોગ કરીશું.
-
-&lt;Listing number="12-24" file-name="src/main.rs" caption="Writing error messages to standard error instead of standard output using `eprintln!`"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-24/src/main.rs:here}}
+<p>હવે આપણે ભૂલ પડદા પર જોઈએ છીએ અને output.txt માં કંઈ નથી, જે આદેશ વાક્યક્રમ કાર્યક્રમોનું અપેક્ષિત વર્તન છે. ચાલો</p>
+<p>પ્રોગ્રામને ફરીથી ચલાવીએ એવા Argumentો સાથે જે ભૂલનું કારણ ન બને પરંતુ હજી પણ પ્રમાણિત આઉટપુટને ફાઈલમાં રીડાયરેક્ટ કરે, જેમ કે:</p>
+<pre><code class="language-console">$ cargo run -- to poem.txt &gt; output.txt
 </code></pre>
-<pre><code>&lt;/Listing&gt;
-હવે ચાલો આપણે આ જ રીતે પ્રોગ્રામ ફરીથી ચલાવીએ, કોઈપણ Argumentો વિના અને `&gt;` સાથે પ્રમાણિત આઉટપુટને રીડાયરેક્ટ કરીને:
-
-```console
-```console
-$ cargo run &gt; output.txt
-Problem parsing arguments: not enough arguments
-</code></pre>
-<pre><code>હવે આપણે ભૂલ પડદા પર જોઈએ છીએ અને output.txt માં કંઈ નથી, જે આદેશ વાક્યક્રમ કાર્યક્રમોનું અપેક્ષિત વર્તન છે. ચાલો
-
-પ્રોગ્રામને ફરીથી ચલાવીએ એવા Argumentો સાથે જે ભૂલનું કારણ ન બને પરંતુ હજી પણ પ્રમાણિત આઉટપુટને ફાઈલમાં રીડાયરેક્ટ કરે, જેમ કે:
-
-```console
-```console
-$ cargo run -- to poem.txt &gt; output.txt
-</code></pre>
-<pre><code>અમે ટર્મિનલ પર કોઈ પરિણામ જોશું નહીં, અને output.txt માં અમારા પરિણામો હશે:
-
-ફાઈલનું નામ: output.txt
-
-```text
-```text
-Are you nobody, too?
+<p>અમે ટર્મિનલ પર કોઈ પરિણામ જોશું નહીં, અને output.txt માં અમારા પરિણામો હશે:</p>
+<p>ફાઈલનું નામ: output.txt</p>
+<pre><code class="language-text">Are you nobody, too?
 How dreary to be somebody!
 </code></pre>
-<pre><code>આ દર્શાવે છે કે હવે આપણે સફળ પરિણામ માટે પ્રમાણિત આઉટપુટ અને ભૂલ માટે પ્રમાણિત ભૂલ આઉટપુટનો ઉપયોગ કરી રહ્યા છીએ, જે યોગ્ય છે.
-
-## Summary
-
-આ પ્રકરણમાં અત્યાર સુધી તમે જે મુખ્ય વિભાવનાઓ શીખ્યા છો તેનું પુનરાવર્તન કરવામાં આવ્યું છે અને Rust માં સામાન્ય I/O ક્રિયાઓ કેવી રીતે કરવી તે આવરી લેવામાં આવ્યું છે. આદેશ વાક્ય Argumentો, ફાઇલો, પર્યાવરણ variable અને ભૂલો છાપવા માટે `eprintln!` મેક્રોનો ઉપયોગ કરીને, તમે હવે આદેશ વાક્ય એપ્લિકેશન્સ લખવા માટે તૈયાર છો. અગાઉના પ્રકરણોમાંની વિભાવનાઓ સાથે જોડીને, તમારો કોડ સારી રીતે સંગઠિત હશે, યોગ્ય ડેટા સ્ટ્રક્ચર્સમાં ડેટા અસરકારક રીતે સંગ્રહિત કરશે, ભૂલોને સરળતાથી સંભાળશે અને તેનું યોગ્ય પરીક્ષણ કરવામાં આવશે.
-
-આગળ, આપણે Rust ની કેટલીક વિશેષતાઓનું અન્વેષણ કરીશું જે ફંક્શનલ ભાષાઓથી પ્રભાવિત હતી: ક્લોઝર્સ અને ઇટરેટર્સ.
-
-</code></pre>
+<p>આ દર્શાવે છે કે હવે આપણે સફળ પરિણામ માટે પ્રમાણિત આઉટપુટ અને ભૂલ માટે પ્રમાણિત ભૂલ આઉટપુટનો ઉપયોગ કરી રહ્યા છીએ, જે યોગ્ય છે.</p>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>આ પ્રકરણમાં અત્યાર સુધી તમે જે મુખ્ય વિભાવનાઓ શીખ્યા છો તેનું પુનરાવર્તન કરવામાં આવ્યું છે અને Rust માં સામાન્ય I/O ક્રિયાઓ કેવી રીતે કરવી તે આવરી લેવામાં આવ્યું છે. આદેશ વાક્ય Argumentો, ફાઇલો, પર્યાવરણ variable અને ભૂલો છાપવા માટે <code>eprintln!</code> મેક્રોનો ઉપયોગ કરીને, તમે હવે આદેશ વાક્ય એપ્લિકેશન્સ લખવા માટે તૈયાર છો. અગાઉના પ્રકરણોમાંની વિભાવનાઓ સાથે જોડીને, તમારો કોડ સારી રીતે સંગઠિત હશે, યોગ્ય ડેટા સ્ટ્રક્ચર્સમાં ડેટા અસરકારક રીતે સંગ્રહિત કરશે, ભૂલોને સરળતાથી સંભાળશે અને તેનું યોગ્ય પરીક્ષણ કરવામાં આવશે.</p>
+<p>આગળ, આપણે Rust ની કેટલીક વિશેષતાઓનું અન્વેષણ કરીશું જે ફંક્શનલ ભાષાઓથી પ્રભાવિત હતી: ક્લોઝર્સ અને ઇટરેટર્સ.</p>
 
                     </main>
 
@@ -297,6 +273,7 @@ How dreary to be somebody!
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

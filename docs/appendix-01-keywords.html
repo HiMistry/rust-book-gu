@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -186,60 +186,170 @@
 <p>નીચેની યાદીઓમાં એવાં શબ્દો છે જે Rust ભાષા દ્વારા વર્તમાન અથવા ભવિષ્યના ઉપયોગ માટે અનામત રાખવામાં આવ્યાં છે. આથી, તેઓને ઓળખકર્તાઓ (સિવાય કે કાચા ઓળખકર્તાઓ તરીકે, જે આપણે “કાચા ઓળખકર્તાઓ” વિભાગમાં ચર્ચા કરીએ છીએ) તરીકે વાપરવાં શકાતા નથી. ઓળખકર્તાઓ એ વિધેયો, variable, પરિમાણો, struct ક્ષેત્રો, મોડ્યુલો, crates, અચળાંકો, macros, સ્થિર મૂલ્યો, લક્ષણો, પ્રકારો, traits અથવા lifespans ના નામ છે.</p>
 <h3 id="keywords-currently-in-use"><a class="header" href="#keywords-currently-in-use">Keywords Currently in Use</a></h3>
 <p>નીચે વર્તમાનમાં વપરાતા કીવર્ડ્સની યાદી છે, જેમના કાર્યનું વર્ણન આપેલું છે.</p>
+<ul>
+<li>
 <p><code>as</code>: પ્રાથમિક પ્રકાર પરિવર્તન કરો, કોઈ ચોક્કસ ટ્રેઇટને સ્પષ્ટ કરો જેમાં કોઈ વસ્તુ હોય, અથવા <code>use</code> વિધાનોમાં વસ્તુઓનું નામ બદલો.</p>
+</li>
+<li>
 <p><code>async</code>: વર્તમાન થ્રેડને અવરોધ્યા વિના <code>Future</code> પરત કરો.</p>
+</li>
+<li>
 <p><code>await</code>: <code>Future</code> ના પરિણામ તૈયાર થાય ત્યાં સુધી અમલ સ્થગિત કરો.</p>
+</li>
+<li>
 <p><code>break</code>: લૂપમાંથી તાત્કાલિક બહાર નીકળો.</p>
+</li>
+<li>
 <p><code>const</code>: અચળ વસ્તુઓ અથવા અચળ કાચા પોઇન્ટર વ્યાખ્યાયિત કરો.</p>
+</li>
+<li>
 <p><code>continue</code>: આગલા લૂપ પુનરાવર્તનમાં ચાલુ રાખો.</p>
+</li>
+<li>
 <p>crate : એક મોડ્યુલ માર્ગમાં, ક્રેટ મૂળ દર્શાવે છે.</p>
+</li>
+<li>
 <p><code>dyn</code> : ટ્રેઇટ ઓબ્જેક્ટ પર ગતિશીલ વિતરણ.</p>
+</li>
+<li>
 <p><code>else</code> : <code>if</code> અને <code>if let</code> નિયંત્રણ પ્રવાહ રચનાઓ માટે પતન.</p>
+</li>
+<li>
 <p><code>enum</code> : વર્ગીકરણ વ્યાખ્યાયિત કરો.</p>
+</li>
+<li>
 <p><code>extern</code> : બાહ્ય કાર્ય અથવા variable જોડો.</p>
+</li>
+<li>
 <p><code>false</code> : બુલિયન ખોટો શાબ્દિક.</p>
+</li>
+<li>
 <p><code>fn</code> : કાર્ય વ્યાખ્યાયિત કરો અથવા ફંક્શન પોઇન્ટર પ્રકાર.</p>
+</li>
+<li>
 <p><code>for</code> : પુનરાવર્તકમાંથી વસ્તુઓ પર લૂપ કરો, ટ્રેઇટનો અમલ કરો અથવા ઉચ્ચ ક્રમાંકિત જીવનકાળ સ્પષ્ટ કરો.</p>
+</li>
+<li>
 <p><code>if</code> : શરતી અભિવ્યક્તિના પરિણામ પર આધારિત શાખા.</p>
+</li>
+<li>
 <p><code>impl</code> : વાસ્તવિક અથવા લક્ષણ કાર્યક્ષમતા અમલમાં મૂકો.</p>
+</li>
+<li>
 <p><code>in</code> : <code>for</code> લૂપ વાક્યનો ભાગ.</p>
+</li>
+<li>
 <p><code>let</code> : variable જોડો.</p>
+</li>
+<li>
 <p><code>loop</code> : શરત વિના લૂપ કરો.</p>
+</li>
+<li>
 <p><code>match</code> : મૂલ્યને પેટર્ન સાથે મેળવો.</p>
+</li>
+<li>
 <p><code>mod</code> : મોડ્યુલ વ્યાખ્યાયિત કરો.</p>
+</li>
+<li>
 <p><code>move</code> : ક્લોઝર તેના તમામ કેપ્ચર્સનું માલિકી લે છે.</p>
+</li>
+<li>
 <p><code>mut</code> : સંદર્ભો, કાચા pointerો અથવા પેટર્ન બંધનોમાં પરિવર્તનશીલતા દર્શાવો.</p>
+</li>
+<li>
 <p><code>pub</code> : સ્ટ્રક્ચર ક્ષેત્રો, <code>impl</code> બ્લોક્સ અથવા મોડ્યુલ્સમાં જાહેર દૃશ્યતા દર્શાવો.</p>
+</li>
+<li>
 <p><code>ref</code> : સંદર્ભ દ્વારા જોડો.</p>
+</li>
+<li>
 <p><code>return</code> : કાર્યમાંથી પાછા ફરો.</p>
+</li>
+<li>
 <p><code>Self</code> : આપણે જે પ્રકાર વ્યાખ્યાયિત અથવા અમલમાં મૂકી રહ્યા છીએ તેના માટે એક પ્રકારનું ઉપનામ.</p>
+</li>
+<li>
 <p><code>self</code>: પદ્ધતિ વિષય અથવા વર્તમાન મોડ્યુલ.</p>
+</li>
+<li>
 <p><code>static</code>: વૈશ્વિક variable અથવા સમગ્ર કાર્યક્રમ અમલ દરમિયાન ટકી રહેતું આયુષ્ય.</p>
+</li>
+<li>
 <p><code>struct</code>: રચના વ્યાખ્યાયિત કરો.</p>
+</li>
+<li>
 <p><code>super</code>: વર્તમાન મોડ્યુલનું પિતા મોડ્યુલ.</p>
+</li>
+<li>
 <p><code>trait</code>: લક્ષણ વ્યાખ્યાયિત કરો.</p>
+</li>
+<li>
 <p><code>true</code>: બુલિયન સાચું શાબ્દિક.</p>
+</li>
+<li>
 <p><code>type</code>: પ્રકાર ઉપનામ અથવા સંકળાયેલ પ્રકાર વ્યાખ્યાયિત કરો.</p>
+</li>
+<li>
 <p><code>[union][union]</code>: યુનિયન વ્યાખ્યાયિત કરો; તે માત્ર એક કીવર્ડ છે જ્યારે યુનિયન ઘોષણામાં વપરાય છે.</p>
+</li>
+<li>
 <p><code>unsafe</code>: અસુરક્ષિત કોડ, કાર્યો, લક્ષણો અથવા અમલીકરણો દર્શાવો.</p>
+</li>
+<li>
 <p><code>use</code>: પ્રતીકોને અવકાશમાં લાવો.</p>
+</li>
+<li>
 <p>જ્યાં : પ્રકારને મર્યાદિત કરતા કલમો દર્શાવો.</p>
+</li>
+<li>
 <p>જ્યાં સુધી : અભિવ્યક્તિના પરિણામ પર આધારિત શરતી રીતે લૂપ કરો.</p>
+</li>
+</ul>
 <h3 id="keywords-reserved-for-future-use"><a class="header" href="#keywords-reserved-for-future-use">Keywords Reserved for Future Use</a></h3>
+<ul>
+<li>
 <p>નીચે આપેલાં કીવર્ડ્સ હજુ સુધી કોઈ કાર્યક્ષમતા ધરાવતાં નથી, પરંતુ સંભવિત ભવિષ્યના ઉપયોગ માટે Rust દ્વારા અનામત રાખવામાં આવ્યાં છે:</p>
+</li>
+<li>
 <p><code>abstract</code></p>
+</li>
+<li>
 <p><code>become</code></p>
+</li>
+<li>
 <p><code>box</code></p>
+</li>
+<li>
 <p><code>do</code></p>
+</li>
+<li>
 <p><code>final</code></p>
+</li>
+<li>
 <p><code>gen</code></p>
+</li>
+<li>
 <p><code>macro</code></p>
+</li>
+<li>
 <p><code>override</code></p>
+</li>
+<li>
 <p><code>priv</code></p>
+</li>
+<li>
 <p><code>try</code></p>
+</li>
+<li>
 <p><code>typeof</code></p>
+</li>
+<li>
 <p><code>unsized</code></p>
+</li>
+<li>
 <p><code>virtual</code></p>
+</li>
+</ul>
 <p><code>yield</code></p>
 <h3 id="raw-identifiers"><a class="header" href="#raw-identifiers">Raw Identifiers</a></h3>
 <p>કાચી ઓળખકર્તાઓ એ સિન્ટેક્સ છે જે તમને કીવર્ડ્સનો ઉપયોગ કરવાની મંજૂરી આપે છે જ્યાં સામાન્ય રીતે મંજૂરી ન હોય. તમે <code>r#</code> સાથે કીવર્ડને જોડીને કાચી ઓળખકર્તાનો ઉપયોગ કરો છો.</p>
@@ -325,6 +435,7 @@ fn main() {
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

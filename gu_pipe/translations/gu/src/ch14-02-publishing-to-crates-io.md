@@ -10,11 +10,12 @@ Rust અને Cargo માં એવી વિશેષતાઓ છે જે 
 
 દસ્તાવેજીકરણ ટિપ્પણીઓ દસ્તાવેજીકરણ ટિપ્પણીઓ ત્રણ સ્લેશ, `///`, નો ઉપયોગ કરે છે, બે સ્લેશને બદલે, અને ફોર્મેટિંગ માટે માર્કડાઉન નોંધેશનને સમર્થન આપે છે. દસ્તાવેજીકરણ ટિપ્પણીઓને તેઓ જે વસ્તુનું વર્ણન કરે છે તે પહેલાં મૂકો. સૂચિ ૧૪-૧ `my_crate` નામના ક્રેટમાં `add_one` ફંક્શન માટેની દસ્તાવેજીકરણ ટિપ્પણીઓ દર્શાવે છે.
 
-<Listing number="14-1" file-name="src/lib.rs" caption="A documentation comment for a function">
+**Listing 14-1: A documentation comment for a function**
+
 ```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-01/src/lib.rs}}
 ```
-</Listing>
+
 અહીં, અમે `add_one` ફંક્શન શું કરે છે તેનું વર્ણન આપીએ છીએ, `ઉદાહરણો` શીર્ષક સાથે એક વિભાગ શરૂ કરીએ છીએ અને પછી કોડ પ્રદાન કરીએ છીએ જે દર્શાવે છે કે `add_one` ફંક્શનનો ઉપયોગ કેવી રીતે કરવો. અમે આ દસ્તાવેજીકરણ ટિપ્પણીમાંથી HTML દસ્તાવેજીકરણ `cargo doc` ચલાવીને જનરેટ કરી શકીએ છીએ. આ આદેશ Rust સાથે વિતરિત `rustdoc` સાધન ચલાવે છે અને જનરેટ થયેલ HTML દસ્તાવેજીકરણને target/doc
 
 ડિરેક્ટરીમાં મૂકે છે. સુવિધા માટે, `cargo doc --open` ચલાવવાથી તમારા વર્તમાન crate ના દસ્તાવેજીકરણ (અને તમારા બધા crate ના નિર્ભરતાઓના દસ્તાવેજીકરણ) માટે HTML બનાવવામાં આવશે અને પરિણામ વેબ બ્રાઉઝરમાં ખુલ્લું થશે. `add_one` ફંક્શન પર નેવિગેટ કરો અને તમે જોશો કે દસ્તાવેજીકરણ ટિપ્પણીઓમાંનો ટેક્સ્ટ કેવી રીતે રેન્ડર થાય છે, જે આકૃતિ 14-1 માં દર્શાવેલ છે. ઉદાહરણો
@@ -24,11 +25,11 @@ Rust અને Cargo માં એવી વિશેષતાઓ છે જે 
 
 #### Commonly Used Sections
 
-મેં યાદી 14-1 માં `# Examples` માર્કડાઉન હેડિંગનો ઉપયોગ HTML માં “Examples” શીર્ષક સાથે વિભાગ બનાવવા માટે કર્યો છે. અહીં અન્ય કેટલાક વિભાગો છે જે ક્રેટ લેખકો તેમના દસ્તાવેજીકરણમાં સામાન્ય રીતે વાપરે છે:
+- મેં યાદી 14-1 માં `# Examples` માર્કડાઉન હેડિંગનો ઉપયોગ HTML માં “Examples” શીર્ષક સાથે વિભાગ બનાવવા માટે કર્યો છે. અહીં અન્ય કેટલાક વિભાગો છે જે ક્રેટ લેખકો તેમના દસ્તાવેજીકરણમાં સામાન્ય રીતે વાપરે છે:
 
-અણધાર્યા પરિણામો : આ એવા સંજોગો છે જેમાં દસ્તાવેજીકૃત ફંક્શન અણધાર્યું પરિણામ આપી શકે છે. ફંક્શનના કોલર્સ જેમને તેમના પ્રોગ્રામ્સમાં અણધાર્યા પરિણામો ન જોઈતા હોય, તેમણે ખાતરી કરવી જોઈએ કે તેઓ આ પરિસ્થિતિઓમાં ફંક્શનને બોલાવતા નથી.
+- અણધાર્યા પરિણામો : આ એવા સંજોગો છે જેમાં દસ્તાવેજીકૃત ફંક્શન અણધાર્યું પરિણામ આપી શકે છે. ફંક્શનના કોલર્સ જેમને તેમના પ્રોગ્રામ્સમાં અણધાર્યા પરિણામો ન જોઈતા હોય, તેમણે ખાતરી કરવી જોઈએ કે તેઓ આ પરિસ્થિતિઓમાં ફંક્શનને બોલાવતા નથી.
 
-ભૂલો : જો ફંક્શન `Result` પરત કરે છે, તો આવી શકે તેવી ભૂલોના પ્રકારનું વર્ણન કરવું અને કયા સંજોગોમાં તે ભૂલો પાછી મળી શકે છે તે કોલર્સ માટે મદદરૂપ થઈ શકે છે, જેથી તેઓ વિવિધ પ્રકારની ભૂલોને અલગ રીતે હેન્ડલ કરવા માટે કોડ લખી શકે.
+- ભૂલો : જો ફંક્શન `Result` પરત કરે છે, તો આવી શકે તેવી ભૂલોના પ્રકારનું વર્ણન કરવું અને કયા સંજોગોમાં તે ભૂલો પાછી મળી શકે છે તે કોલર્સ માટે મદદરૂપ થઈ શકે છે, જેથી તેઓ વિવિધ પ્રકારની ભૂલોને અલગ રીતે હેન્ડલ કરવા માટે કોડ લખી શકે.
 
 સુરક્ષા: જો ફંક્શનને `unsafe` બોલાવવું સલામત ન હોય (અમે પ્રકરણ ૨૦ માં અસુરક્ષિતતાની ચર્ચા કરીશું), તો એક વિભાગ હોવો જોઈએ જે સમજાવે છે કે શા માટે ફંક્શન અસુરક્ષિત છે અને ફંક્શન કઈ શરતોની અપેક્ષા રાખે છે જે કોલર્સ જાળવવી જોઈએ.
 
@@ -60,11 +61,12 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
 ઉદાહરણ તરીકે, `my_crate` ક્રેટના હેતુનું વર્ણન કરવા માટે, જેમાં `add_one` ફંક્શન છે, આપણે `//!` થી શરૂ થતી ડોક્યુમેન્ટેશન ટીકાઓ src/lib.rs ફાઈલની શરૂઆતમાં ઉમેરીએ છીએ, જે યાદી 14-2 માં દર્શાવેલ છે.
 
-<Listing number="14-2" file-name="src/lib.rs" caption="The documentation for the `my_crate` crate as a whole">
+**Listing 14-2: The documentation for the `my_crate` crate as a whole**
+
 ```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-02/src/lib.rs:here}}
 ```
-</Listing>
+
 માહિતી અહીં છેલ્લા લીટી પછી કોડ નથી જે `//!` થી શરૂ થાય છે. કારણ કે આપણે ટિપ્પણીઓ `//!` થી શરૂ કરી હતી `///` ને બદલે, અમે આ ટિપ્પણી ધરાવતી વસ્તુને દસ્તાવેજીકૃત કરી રહ્યા છીએ, ત્યારબાદની વસ્તુને નહીં. આ કિસ્સામાં, તે વસ્તુ src/lib.rs ફાઇલ છે, જે ક્રેટ રૂટ છે. આ ટિપ્પણીઓ સમગ્ર ક્રેટનું વર્ણન
 
 કરે છે. જ્યારે આપણે `cargo doc --open` ચલાવીએ છીએ, ત્યારે આ ટિપ્પણીઓ `my_crate` ના દસ્તાવેજીકરણના પ્રથમ પૃષ્ઠ પર જાહેર વસ્તુઓની યાદી ઉપર પ્રદર્શિત થશે, જે આકૃતિ 14-2 માં દર્શાવેલ છે.
@@ -85,11 +87,12 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
 ઉપયોગ કરીને. ફરીથી નિકાસ કરવાથી એક સ્થાનમાં રહેલી જાહેર વસ્તુને બીજા સ્થાન પર જાહેર કરવામાં આવે છે, જાણે કે તે બીજા સ્થાન પર વ્યાખ્યાયિત થયેલી હોય. ઉદાહરણ તરીકે, માની લો કે આપણે `art` નામનું પુસ્તકાલય કલાત્મક વિભાવનાઓને મોડેલ કરવા માટે બનાવ્યું છે. આ પુસ્તકાલયમાં બે મોડ્યુલો છે: એક `kinds` મોડ્યુલ જેમાં `PrimaryColor` અને `SecondaryColor` નામના બે enum છે, અને એક `utils` મોડ્યુલ જેમાં `mix` નામનું function છે, જે Listing 14-3 માં દર્શાવેલ છે.
 
-<Listing number="14-3" file-name="src/lib.rs" caption="An `art` library with items organized into `kinds` and `utils` modules">
+**Listing 14-3: An `art` library with items organized into `kinds` and `utils` modules**
+
 ```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-03/src/lib.rs:here}}
 ```
-</Listing>
+
 આકૃતિ ૧૪-૩ દર્શાવે છે કે આ ક્રેટ માટે `cargo doc` દ્વારા જનરેટ થયેલ દસ્તાવેજીકરણના મુખ્ય પૃષ્ઠનું સ્વરૂપ કેવું હશે.
 
 <img alt="Rendered documentation for the `art` crate that lists the `kinds` and `utils` modules" src="img/trpl14-03.png" class="center" />
@@ -99,20 +102,22 @@ Figure 14-3: `art` દસ્તાવેજીકરણનું પ્રથમ
 
 બીજી ક્રેટ (crate) જે આ લાયબ્રેરી પર આધારિત છે, તેને `use` વિધાનની જરૂર પડશે, જે `art` માંથી વસ્તુઓને કાર્યક્ષેત્રમાં લાવશે, વર્તમાન રીતે વ્યાખ્યાયિત મોડ્યુલ માળખું સ્પષ્ટ કરીને. લિસ્ટિંગ 14-4 એ ક્રેટનું ઉદાહરણ દર્શાવે છે જે `PrimaryColor` અને `mix` વસ્તુઓનો ઉપયોગ કરે છે, જે `art` ક્રેટમાંથી આવે છે.
 
-<Listing number="14-4" file-name="src/main.rs" caption="A crate using the `art` crate’s items with its internal structure exported">
+**Listing 14-4: A crate using the `art` crate’s items with its internal structure exported**
+
 ```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-04/src/main.rs}}
 ```
-</Listing>
+
 Listing 14-4 નો લેખક, જે `art` ક્રેટનો ઉપયોગ કરે છે, તેણે શોધવું પડ્યું કે `PrimaryColor` `kinds` મોડ્યુલમાં છે અને `mix` `utils` મોડ્યુલમાં છે. `art` ક્રેટનું મોડ્યુલ માળખું એ `art` ક્રેટ પર કામ કરતા વિકાસકર્તાઓ માટે વધુ સુસંગત છે, જે તેનો ઉપયોગ કરનારાઓ કરતાં. આંતરિક માળખું તેમાં `art` ક્રેટનો ઉપયોગ કેવી રીતે કરવો તે સમજવાનો પ્રયાસ કરી રહેલા વ્યક્તિ માટે કોઈ ઉપયોગી માહિતી ધરાવતું નથી, પરંતુ મૂંઝવણ ઊભી કરે છે કારણ કે તેનો ઉપયોગ કરતા વિકાસકર્તાઓએ શોધવું પડે છે કે ક્યાં જોવાનું છે, અને તેમણે `use` વિધાનોમાં મોડ્યુલ નામો સ્પષ્ટ કરવા પડે છે.
 
 જાહેર API માંથી આંતરિક વ્યવસ્થા દૂર કરવા માટે, આપણે લિસ્ટિંગ 14-3 માં `art` ક્રેટ કોડમાં ફેરફાર કરી શકીએ છીએ અને ટોચના સ્તર પરની વસ્તુઓને ફરીથી નિકાસ કરવા માટે `pub use` વિધાન ઉમેરી શકીએ છીએ, જે લિસ્ટિંગ 14-5 માં દર્શાવેલ છે.
 
-<Listing number="14-5" file-name="src/lib.rs" caption="Adding `pub use` statements to re-export items">
+**Listing 14-5: Adding `pub use` statements to re-export items**
+
 ```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-05/src/lib.rs:here}}
 ```
-</Listing>
+
 આ ક્રેઇટ માટે `cargo doc` દ્વારા ઉત્પન્ન થતું API દસ્તાવેજીકરણ હવે મુખ્ય પૃષ્ઠ પર ફરીથી નિકાસ થયેલ વસ્તુઓને સૂચિબદ્ધ કરશે અને લિંક કરશે, જે આકૃતિ 14-4 માં દર્શાવ્યા મુજબ છે, જેનાથી `PrimaryColor` અને `SecondaryColor` પ્રકારો અને `mix` કાર્ય શોધવાનું સરળ બનશે.
 
 <img alt="Rendered documentation for the `art` crate with the re-exports on the front page" src="img/trpl14-04.png" class="center" />
@@ -120,11 +125,12 @@ Figure 14-4: `art` દસ્તાવેજીકરણનું પ્રથમ
 
 હજી પણ લિસ્ટિંગ 14-3 માંથી આંતરિક રચના જોઈ અને ઉપયોગ કરી શકે છે, જે લિસ્ટિંગ 14-4 માં દર્શાવેલ છે, અથવા તેઓ લિસ્ટિંગ 14-5 માં વધુ અનુકૂળ રચનાનો ઉપયોગ કરી શકે છે, જે લિસ્ટિંગ 14-6 માં બતાવ્યું છે.
 
-<Listing number="14-6" file-name="src/main.rs" caption="A program using the re-exported items from the `art` crate">
+**Listing 14-6: A program using the re-exported items from the `art` crate**
+
 ```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-06/src/main.rs:here}}
 ```
-</Listing>
+
 જ્યારે ઘણાં સંકલિત મોડ્યુલો હોય છે, ત્યારે ટોચના સ્તર પર પ્રકારોને `pub use` સાથે ફરીથી નિકાસ કરવાથી ક્રેટનો ઉપયોગ કરનારા લોકોના અનુભવમાં નોંધપાત્ર ફેરફાર થઈ શકે છે. Another common use of `pub use` is to re-export definitions of a dependency in the current crate to make that crate's definitions part of your crate’s public API. `pub use` નો બીજો સામાન્ય ઉપયોગ એ છે કે વર્તમાન ક્રેટમાં એક નિર્ભરતાની વ્યાખ્યાઓને ફરીથી નિકાસ કરવી જેથી તે ક્રેટની વ્યાખ્યાઓ તમારા ક્રેટના જાહેર API નો ભાગ બને. Creating a useful public API structure
 
 ઉપયોગી જાહેર API માળખું બનાવવું એ વિજ્ઞાન કરતાં કળા છે, અને તમારા userઓ માટે શ્રેષ્ઠ કામ કરે તેવા API શોધવા માટે તમે પુનરાવર્તન કરી શકો છો. Choosing `pub use` gives you flexibility in how you structure your crate internally and decouples that internal structure from what you present to your users. `pub use` પસંદ કરવાથી તમને તમારા ક્રેટને આંતરિક રીતે કેવી રીતે માળખું આપવું તે અંગે લવચીકતા મળે છે અને તે આંતરિક માળખાને તમે userઓ સમક્ષ શું રજૂ કરો છો તેનાથી અલગ કરે છે. Look at some of the code of crates you’ve installed to see if their internal structure differs from their public API. તમે ઇન્સ્ટોલ કરેલા ક્રેટના કેટલાક કોડને જુઓ, જેથી તેમના આંતરિક માળખા તેમની જાહેર API થી અલગ છે કે નહીં તે જાણી શકાય.

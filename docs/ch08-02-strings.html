@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -191,65 +191,65 @@
 <p><code>String</code> પ્રકાર, જે Rust ના પ્રમાણભૂત પુસ્તકાલય દ્વારા આપવામાં આવે છે, તે એક વિકસાવી શકાય તેવા, પરિવર્તનશીલ, માલિકી ધરાવતા, UTF-8 એન્કોડેડ સ્ટ્રિંગ પ્રકાર છે. જ્યારે Rustaceans Rust માં “સ્ટ્રિંગ” નો ઉલ્લેખ કરે છે, ત્યારે તેઓ <code>String</code> અથવા સ્ટ્રિંગ સ્લાઇસ <code>&amp;str</code> બંને પ્રકારોનો સંદર્ભ આપી શકે છે, માત્ર એક જ પ્રકારનો નહીં. ભલે આ વિભાગ મોટે ભાગે <code>String</code> વિશે છે, પરંતુ બંને પ્રકારો Rust ના પ્રમાણભૂત પુસ્તકાલયમાં વ્યાપકપણે વપરાય છે, અને <code>String</code> અને સ્ટ્રિંગ સ્લાઇસ બંને UTF-8 એન્કોડેડ છે.</p>
 <h3 id="creating-a-new-string"><a class="header" href="#creating-a-new-string">Creating a New String</a></h3>
 <p>ઘણાં એવા જ કાર્યક્રમો ઉપલબ્ધ છે જે <code>Vec&lt;T&gt;</code> સાથે ઉપલબ્ધ છે, તે <code>String</code> સાથે પણ ઉપલબ્ધ છે, કારણ કે <code>String</code> ખરેખર બાઇટ્સના વેક્ટર (vector) ની આસપાસ એક આવરણ તરીકે અમલમાં મૂકવામાં આવે છે, જેમાં કેટલીક વધારાની ખાતરીઓ, નિયંત્રણો અને ક્ષમતાઓ છે. Listing 8-11 માં દર્શાવેલ <code>new</code> કાર્યક્રમનું ઉદાહરણ છે જે <code>Vec&lt;T&gt;</code> અને <code>String</code> બંને સાથે સમાન રીતે કાર્ય કરે છે.</p>
-<listing number="8-11" caption="Creating a new, empty `String`">
-```rust
-{{#rustdoc_include ../listings/ch08-common-collections/listing-08-11/src/main.rs:here}}
-```
-</listing>
-આ લીટી એક નવું, ખાલી String નામનું `s` બનાવે છે, જેમાં આપણે પછીથી ડેટા ભરી શકીએ છીએ. ઘણી વાર આપણી પાસે પ્રારંભિક ડેટા હોય છે જેનો ઉપયોગ આપણે String શરૂ કરવા માટે કરવો હોય છે. તે માટે, આપણે `to_string` પદ્ધતિનો ઉપયોગ કરીએ છીએ, જે કોઈપણ Type પર ઉપલબ્ધ છે જે `Display` trait લાગુ કરે છે, જેમ કે string literals કરે છે. યાદી 8-12 બે ઉદાહરણો દર્શાવે છે.
-<listing number="8-12" caption="Using the `to_string` method to create a `String` from a string literal">
-```rust
-{{#rustdoc_include ../listings/ch08-common-collections/listing-08-12/src/main.rs:here}}
-```
-</listing>
-આ કોડ `initial contents` ધરાવતું String બનાવે છે.
+<p><strong>Listing 8-11: Creating a new, empty <code>String</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-11/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ લીટી એક નવું, ખાલી String નામનું <code>s</code> બનાવે છે, જેમાં આપણે પછીથી ડેટા ભરી શકીએ છીએ. ઘણી વાર આપણી પાસે પ્રારંભિક ડેટા હોય છે જેનો ઉપયોગ આપણે String શરૂ કરવા માટે કરવો હોય છે. તે માટે, આપણે <code>to_string</code> પદ્ધતિનો ઉપયોગ કરીએ છીએ, જે કોઈપણ Type પર ઉપલબ્ધ છે જે <code>Display</code> trait લાગુ કરે છે, જેમ કે string literals કરે છે. યાદી 8-12 બે ઉદાહરણો દર્શાવે છે.</p>
+<p><strong>Listing 8-12: Using the <code>to_string</code> method to create a <code>String</code> from a string literal</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-12/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ કોડ <code>initial contents</code> ધરાવતું String બનાવે છે.</p>
 <p>અમે <code>String::from</code> ફંક્શનનો ઉપયોગ કરીને પણ string literal પરથી <code>String</code> બનાવી શકીએ છીએ. લિસ્ટિંગ 8-13 માં રહેલો કોડ લિસ્ટિંગ 8-12 માં રહેલા કોડ સમાન છે જે <code>to_string</code> વાપરે છે.</p>
-<listing number="8-13" caption="Using the `String::from` function to create a `String` from a string literal">
-```rust
-{{#rustdoc_include ../listings/ch08-common-collections/listing-08-13/src/main.rs:here}}
-```
-</listing>
-કારણ કે String નો ઉપયોગ ઘણાં કાર્યો માટે થાય છે, આપણને Strings માટે વિવિધ સામાન્ય APIs વાપરી શકાય છે, જે આપણને ઘણા વિકલ્પો પૂરા પાડે છે. તેમાંથી કેટલાક અતિરેકિત લાગે શકે છે, પરંતુ દરેકનું પોતાનું મહત્વ છે! આ કિસ્સામાં, `String::from` અને `to_string` બંને એક જ કાર્ય કરે છે, તેથી કયો પસંદ કરો એ શૈલી અને વાંચનક્ષમતાનો વિષય છે.
+<p><strong>Listing 8-13: Using the <code>String::from</code> function to create a <code>String</code> from a string literal</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-13/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>કારણ કે String નો ઉપયોગ ઘણાં કાર્યો માટે થાય છે, આપણને Strings માટે વિવિધ સામાન્ય APIs વાપરી શકાય છે, જે આપણને ઘણા વિકલ્પો પૂરા પાડે છે. તેમાંથી કેટલાક અતિરેકિત લાગે શકે છે, પરંતુ દરેકનું પોતાનું મહત્વ છે! આ કિસ્સામાં, <code>String::from</code> અને <code>to_string</code> બંને એક જ કાર્ય કરે છે, તેથી કયો પસંદ કરો એ શૈલી અને વાંચનક્ષમતાનો વિષય છે.</p>
 <p>યાદ રાખો કે Strings UTF-8 એન્કોડેડ હોય છે, તેથી આપણે તેમાં કોઈપણ યોગ્ય રીતે એન્કોડેડ ડેટા સમાવિષ્ટ કરી શકીએ છીએ, જે Listing 8-14 માં દર્શાવેલ છે.</p>
-<listing number="8-14" caption="Storing greetings in different languages in strings">
-```rust
-{{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:here}}
-```
-</listing>
-આ બધાં યોગ્ય `String` મૂલ્યો છે.
+<p><strong>Listing 8-14: Storing greetings in different languages in strings</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ બધાં યોગ્ય <code>String</code> મૂલ્યો છે.</p>
 <h3 id="updating-a-string"><a class="header" href="#updating-a-string">Updating a String</a></h3>
 <p>એક <code>String</code> તેનું કદ અને તેની વિષમતા વધારી શકે છે, જેમ કે <code>Vec&lt;T&gt;</code> ની વિષમતા વધે છે, જો તમે તેમાં વધુ માહિતી ઉમેરો છો. આ ઉપરાંત, તમે અનુકૂળ રીતે <code>+</code> ઓપરેટર અથવા <code>format!</code> મેક્રોનો ઉપયોગ કરીને <code>String</code> મૂલ્યોને જોડવા (concatenate) પણ કરી શકો છો.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h4 id="appending-with-push_str-or-push"><a class="header" href="#appending-with-push_str-or-push">Appending with <code>push_str</code> or <code>push</code></a></h4>
 <p>આપણે <code>String</code> ને <code>push_str</code> પદ્ધતિનો ઉપયોગ કરીને સ્ટ્રિંગ સ્લાઇસ જોડીને વધારી શકીએ છીએ, જે યાદી 8-15 માં દર્શાવેલ છે.</p>
-<listing number="8-15" caption="Appending a string slice to a `String` using the `push_str` method">
-```rust
-{{#rustdoc_include ../listings/ch08-common-collections/listing-08-15/src/main.rs:here}}
-```
-</listing>
-`foobar` `push_str` પદ્ધતિ એક સ્ટ્રિંગ સ્લાઇસ લે છે કારણ કે આપણને જરૂરી નથી કે પરિમાણનું માલિકી સ્થાનો. ઉદાહરણ તરીકે, લિસ્ટિંગ 8-16 માંના કોડમાં, આપણે `s2` નું વિધેય `s1` માં ઉમેર્યા પછી વાપરી શકીએ છીએ.
-<listing number="8-16" caption="Using a string slice after appending its contents to a `String`">
-```rust
-{{#rustdoc_include ../listings/ch08-common-collections/listing-08-16/src/main.rs:here}}
-```
-</listing>
-જો `push_str` પદ્ધતિ `s2` નું માલિકી સ્થાનાંતરિત કરે, તો અમે છેલ્લી લીટી પર તેની કિંમત છાપી શકી ન હોત. જો કે, આ કોડ અપેક્ષા મુજબ કાર્ય કરે છે!
+<p><strong>Listing 8-15: Appending a string slice to a <code>String</code> using the <code>push_str</code> method</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-15/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p><code>foobar</code> <code>push_str</code> પદ્ધતિ એક સ્ટ્રિંગ સ્લાઇસ લે છે કારણ કે આપણને જરૂરી નથી કે પરિમાણનું માલિકી સ્થાનો. ઉદાહરણ તરીકે, લિસ્ટિંગ 8-16 માંના કોડમાં, આપણે <code>s2</code> નું વિધેય <code>s1</code> માં ઉમેર્યા પછી વાપરી શકીએ છીએ.</p>
+<p><strong>Listing 8-16: Using a string slice after appending its contents to a <code>String</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-16/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>જો <code>push_str</code> પદ્ધતિ <code>s2</code> નું માલિકી સ્થાનાંતરિત કરે, તો અમે છેલ્લી લીટી પર તેની કિંમત છાપી શકી ન હોત. જો કે, આ કોડ અપેક્ષા મુજબ કાર્ય કરે છે!</p>
 <p><code>push</code> પદ્ધતિ એક અક્ષરને પરિમાણ તરીકે લે છે અને તેને <code>String</code> માં ઉમેરે છે. યાદી 8-17 <code>push</code> પદ્ધતિનો ઉપયોગ કરીને એક <code>String</code> માં અક્ષર ‘l’ ઉમેરે છે.</p>
-<listing number="8-17" caption="Adding one character to a `String` value using `push`">
-```rust
-{{#rustdoc_include ../listings/ch08-common-collections/listing-08-17/src/main.rs:here}}
-```
-</listing>
-પરિણામ સ્વરૂપે, `s` માં `lol` સમાવિષ્ટ થશે.
+<p><strong>Listing 8-17: Adding one character to a <code>String</code> value using <code>push</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-17/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>પરિણામ સ્વરૂપે, <code>s</code> માં <code>lol</code> સમાવિષ્ટ થશે.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h4 id="concatenating-with--or-format"><a class="header" href="#concatenating-with--or-format">Concatenating with <code>+</code> or <code>format!</code></a></h4>
 <p>ઘણીવાર, તમે બે અસ્તિત્વમાં રહેલા સ્ટ્રિંગને જોડવા માંગો છો. એક રીત એ છે કે <code>+</code> ઓપરેટરનો ઉપયોગ કરવો, જે લિસ્ટિંગ 8-18 માં દર્શાવેલ છે.</p>
-<listing number="8-18" caption="Using the `+` operator to combine two `String` values into a new `String` value">
-```rust
-{{#rustdoc_include ../listings/ch08-common-collections/listing-08-18/src/main.rs:here}}
-```
-</listing>
-શૃંખલા `s3` માં `Hello, world!` સમાવિષ્ટ થશે. `s1` એ જોડાણ પછી માન્ય રહેવાનું કારણ અને આપણે `s2` માટે સંદર્ભનો ઉપયોગ કરવાનું કારણ એ પદ્ધતિના હસ્તાક્ષર સાથે સંબંધિત છે જે જ્યારે આપણે `+` ચિહ્નનો ઉપયોગ કરીએ છીએ ત્યારે બોલાવવામાં આવે છે. `+` ચિહ્ન `add` પદ્ધતિનો ઉપયોગ કરે છે, જેના હસ્તાક્ષર આના જેવા દેખાય છે:
+<p><strong>Listing 8-18: Using the <code>+</code> operator to combine two <code>String</code> values into a new <code>String</code> value</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-18/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>શૃંખલા <code>s3</code> માં <code>Hello, world!</code> સમાવિષ્ટ થશે. <code>s1</code> એ જોડાણ પછી માન્ય રહેવાનું કારણ અને આપણે <code>s2</code> માટે સંદર્ભનો ઉપયોગ કરવાનું કારણ એ પદ્ધતિના હસ્તાક્ષર સાથે સંબંધિત છે જે જ્યારે આપણે <code>+</code> ચિહ્નનો ઉપયોગ કરીએ છીએ ત્યારે બોલાવવામાં આવે છે. <code>+</code> ચિહ્ન <code>add</code> પદ્ધતિનો ઉપયોગ કરે છે, જેના હસ્તાક્ષર આના જેવા દેખાય છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn add(self, s: &amp;str) -&gt; String {
@@ -271,12 +271,12 @@
 <p>આ કોડ <code>s</code> ને <code>tic-tac-toe</code> પર પણ સેટ કરે છે. <code>format!</code> મેક્રો <code>println!</code> જેવું જ કાર્ય કરે છે, પરંતુ તે સ્ક્રીન પર આઉટપુટ છાપવાને બદલે, તેની સામગ્રી સાથે એક <code>String</code> આપે છે. <code>format!</code> નો ઉપયોગ કરતા કોડને વાંચવામાં વધુ સરળતા રહે છે, અને <code>format!</code> મેક્રો દ્વારા ઉત્પન્ન થતો કોડ સંદર્ભો (references) વાપરે છે જેથી આ કૉલ તેના પરિમાણોમાંથી કોઈનું પણ માલિકી (ownership) ન લે.</p>
 <h3 id="indexing-into-strings"><a class="header" href="#indexing-into-strings">Indexing into Strings</a></h3>
 <p>ઘણી અન્ય પ્રોગ્રામિંગ ભાષાઓમાં, સ્ટ્રિંગમાં વ્યક્તિગત અક્ષરોને અનુક્રમણિકા દ્વારા સંદર્ભિત કરીને મેળવવાનું એક માન્ય અને સામાન્ય કાર્ય છે. જો કે, જો તમે Rust માં <code>String</code> ના ભાગોને અનુક્રમણિકા સિન્ટેક્સનો ઉપયોગ કરીને મેળવવાનો પ્રયત્ન કરો છો, તો તમને ભૂલ મળશે. લિસ્ટિંગ 8-19 માં દર્શાવેલ અમાન્ય કોડને ધ્યાનમાં લો.</p>
-<listing number="8-19" caption="Attempting to use indexing syntax with a `String`">
-```rust
-{{#rustdoc_include ../listings/ch08-common-collections/listing-08-19/src/main.rs:here}}
-```
-</listing>
-આ કોડથી નીચેની ભૂલ ઉત્પન્ન થશે:
+<p><strong>Listing 8-19: Attempting to use indexing syntax with a <code>String</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-19/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ કોડથી નીચેની ભૂલ ઉત્પન્ન થશે:</p>
 <pre><code class="language-console">{{#include ../listings/ch08-common-collections/listing-08-19/output.txt}}
 </code></pre>
 <p>ભૂલ વાર્તા કહે છે: Rust String ઇન્ડેક્સિંગને ટેકો આપતું નથી. પરંતુ કેમ? આ પ્રશ્નનો ઉત્તર આપવા માટે, આપણે ચકાસવું પડશે કે Rust Strings મેમરીમાં કેવી રીતે સંગ્રહિત થાય છે.</p>
@@ -416,6 +416,7 @@ let s = &amp;hello[0..4];
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

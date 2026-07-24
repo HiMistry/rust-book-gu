@@ -1,8 +1,8 @@
 ## Paths for Referring to an Item in the Module Tree
 
-મોડ્યુલ વૃક્ષમાં કોઈ વસ્તુ શોધવા માટે Rust ને જણાવવા માટે, આપણે પાથનો ઉપયોગ કરીએ છીએ, જે રીતે ફાઈલ સિસ્ટમમાં નેવિગેટ કરતી વખતે પાથનો ઉપયોગ થાય છે. કાર્યને બોલાવવા માટે, આપણે તેના પાથ વિશે જાણવું જરૂરી છે.
+- મોડ્યુલ વૃક્ષમાં કોઈ વસ્તુ શોધવા માટે Rust ને જણાવવા માટે, આપણે પાથનો ઉપયોગ કરીએ છીએ, જે રીતે ફાઈલ સિસ્ટમમાં નેવિગેટ કરતી વખતે પાથનો ઉપયોગ થાય છે. કાર્યને બોલાવવા માટે, આપણે તેના પાથ વિશે જાણવું જરૂરી છે.
 
-પાથ બે સ્વરૂપ લઈ શકે છે:
+- પાથ બે સ્વરૂપ લઈ શકે છે:
 
 એક સંપૂર્ણ પાથ એ ક્રેટ રૂટથી શરૂ થતો પૂર્ણ પાથ છે; બાહ્ય ક્રેટમાંથી કોડ માટે, સંપૂર્ણ પાથ ક્રેટના નામથી શરૂ થાય છે, અને વર્તમાન ક્રેટમાંથી કોડ માટે તે શાબ્દિક `crate` થી શરૂ થાય છે.
 
@@ -16,11 +16,12 @@
 
 `eat_at_restaurant` કાર્ય જાહેર APIનો ભાગ છે `eat_at_restaurant` ફંક્શન આપણી લાયબ્રેરી ક્રેટના જાહેર APIનો ભાગ છે, માટે અમે તેને `pub` કીવર્ડથી ચિહ્નિત કરીએ છીએ. “`pub` કીવર્ડ સાથે માર્ગોને ઉજાગર કરવા” વિભાગમાં, અમે `pub` વિશે વધુ વિગતોમાં જઈશું.
 
-<Listing number="7-3" file-name="src/lib.rs" caption="Calling the `add_to_waitlist` function using absolute and relative paths">
+**Listing 7-3: Calling the `add_to_waitlist` function using absolute and relative paths**
+
 ```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-03/src/lib.rs}}
 ```
-</Listing>
+
 પ્રથમ વખત જ્યારે આપણે `eat_at_restaurant` માં `add_to_waitlist` કાર્યને બોલાવીએ છીએ, ત્યારે આપણે એક નિરપેક્ષ માર્ગ (absolute path) વાપરીએ છીએ. `add_to_waitlist` કાર્ય એ જ `crate` માં વ્યાખ્યાયિત થયેલું છે જે `eat_at_restaurant` સાથે છે, તેથી આપણે `crate` કીવર્ડનો ઉપયોગ કરીને નિરપેક્ષ માર્ગ શરૂ કરી શકીએ છીએ. પછી આપણે ક્રમિક મોડ્યુલોને સમાવિષ્ટ કરીએ છીએ જ્યાં સુધી આપણે `add_to_waitlist` સુધી પહોંચીએ નહીં. તમે સમાન બંધારણ (structure) ધરાવતી ફાઇલ સિસ્ટમની કલ્પના કરી શકો છો: `add_to_waitlist` કાર્ય ચલાવવા માટે આપણે માર્ગ `/front_of_house/hosting/add_to_waitlist` નો ઉલ્લેખ કરીશું; `crate` નામને શરૂ કરવા માટે વાપરવું એ તમારા શેલમાં ફાઇલ સિસ્ટમનાં મૂળથી શરૂ કરવા માટે `/` વાપરવા જેવું જ છે.
 
 બીજી વખત જ્યારે આપણે `add_to_waitlist` ને `eat_at_restaurant` માં બોલાવીએ છીએ, ત્યારે આપણે સાપેક્ષ માર્ગ (relative path) નો ઉપયોગ કરીએ છીએ. માર્ગ `front_of_house` થી શરૂ થાય છે, જે મોડ્યુલનું નામ છે જે `eat_at_restaurant` જેટલા જ સ્તરના મોડ્યુલ વૃક્ષમાં વ્યાખ્યાયિત થયેલ છે. અહીં ફાઈલ સિસ્ટમ સમકક્ષ `front_of_house/hosting/add_to_waitlist` માર્ગનો ઉપયોગ કરવાનો રહેશે. મોડ્યુલ નામનાથી શરૂ થવાનો અર્થ એ
@@ -29,11 +30,12 @@
 
 ચાલો લિસ્ટિંગ 7-3 ને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ અને જાણીએ કે તે હજુ શા માટે કમ્પાઇલ થતું નથી! આપણને મળતી ભૂલો લિસ્ટિંગ 7-4 માં દર્શાવેલ છે.
 
-<Listing number="7-4" caption="Compiler errors from building the code in Listing 7-3">
+**Listing 7-4: Compiler errors from building the code in Listing 7-3**
+
 ```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-03/output.txt}}
 ```
-</Listing>
+
 ભૂલ સંદેશાઓ જણાવે છે કે મોડ્યુલ `hosting` ખાનગી છે. બીજા શબ્દોમાં કહીએ તો, અમારી પાસે `hosting` મોડ્યુલ અને `add_to_waitlist` ફંક્શન માટે યોગ્ય માર્ગો છે, પરંતુ Rust આપણને તેનો ઉપયોગ કરવાની મંજૂરી આપતું નથી કારણ કે તેની પાસે ખાનગી વિભાગોની પહોંચ નથી. Rust માં, તમામ વસ્તુઓ (ફંક્શન્સ, મેથડ્સ, structs, enums, મોડ્યુલ્સ અને કોન્સ્ટન્ટ્સ) મૂળભૂત રીતે પેરેન્ટ મોડ્યુલ્સ માટે ખાનગી હોય છે. જો તમે ફંક્શન અથવા struct જેવી કોઈ વસ્તુને ખાનગી બનાવવા માંગતા હો, તો તમે
 
 તેને એક મોડ્યુલમાં મૂકો છો. પેરેન્ટ મોડ્યુલની વસ્તુઓ ચાઈલ્ડ મોડ્યુલ્સની ખાનગી વસ્તુઓનો ઉપયોગ કરી શકતી નથી, પરંતુ ચાઈલ્ડ મોડ્યુલ્સ તેમની પૂર્વજ મોડ્યુલ્સમાં રહેલી વસ્તુઓનો ઉપયોગ કરી શકે છે. આ એટલા માટે છે કારણ કે ચાઈલ્ડ મોડ્યુલ્સ તેમના અમલીકરણ વિગતોને આવરી લે છે અને છુપાવે છે, પરંતુ તેઓ જે સંદર્ભમાં વ્યાખ્યાયિત કરવામાં આવ્યા છે તે સંદર્ભ જોઈ શકે છે. અમારી રૂપક ચાલુ રાખવા માટે, ગોપનીયતાના નિયમોને રેસ્ટોરન્ટના બેક ઑફિસ જેવા વિચારો: ત્યાં શું થાય છે તે રેસ્ટોરન્ટના ગ્રાહકો માટે ખાનગી હોય છે, પરંતુ ઑફિસ મેનેજરો તેઓ જે રેસ્ટોરન્ટ ચલાવે છે તેમાં બધું જોઈ અને કરી શકે છે.
@@ -44,29 +46,32 @@ Rust એ મોડ્યુલ સિસ્ટમ આ રીતે કાર્�
 
 ચાલો આપણે યાદી ૭-૪ માં આવેલી ભૂલ પર પાછા જઈએ કે જે જણાવે છે કે `hosting` મોડ્યુલ ખાનગી છે. આપણે ઈચ્છીએ છીએ કે પેરેન્ટ મોડ્યુલમાં રહેલું `eat_at_restaurant` ફંક્શન ચાઈલ્ડ મોડ્યુલમાં રહેલા `add_to_waitlist` ફંક્શનને એક્સેસ કરી શકે, તેથી આપણે `hosting` મોડ્યુલને `pub` કીવર્ડ સાથે માર્ક કરીએ છીએ, જે યાદી ૭-૫ માં દર્શાવેલ છે.
 
-<Listing number="7-5" file-name="src/lib.rs" caption="Declaring the `hosting` module as `pub` to use it from `eat_at_restaurant`">
+**Listing 7-5: Declaring the `hosting` module as `pub` to use it from `eat_at_restaurant`**
+
 ```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-05/src/lib.rs:here}}
 ```
-</Listing>
+
 કમનસીબે, યાદી 7-5 માં રહેલો કોડ હજી પણ કમ્પાઇલર ભૂલો ઉત્પન્ન કરે છે, જે યાદી 7-6 માં દર્શાવેલ છે.
 
-<Listing number="7-6" caption="Compiler errors from building the code in Listing 7-5">
+**Listing 7-6: Compiler errors from building the code in Listing 7-5**
+
 ```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-05/output.txt}}
 ```
-</Listing>
+
 શું થયું? `pub` કીવર્ડને `mod hosting` ની આગળ ઉમેરવાથી મોડ્યુલ જાહેર થાય છે. આ પરિવર્તન સાથે, જો આપણે `front_of_house` ને એક્સેસ કરી શકીએ, તો આપણે `hosting` ને પણ એક્સેસ કરી શકીશું. પરંતુ `hosting` ના વિષમત્ત હજી પણ ખાનગી જ છે; મોડ્યુલને જાહેર કરવાથી તેના વિષમત્ત જાહેર થતા નથી. મોડ્યુલ પરનું `pub` કીવર્ડ માત્ર તેના પૂર્વજ મોડ્યુલોમાં રહેલા કોડને તેમાં સંદર્ભિત કરવાની મંજૂરી આપે છે, પરંતુ તેના આંતરિક કોડને એક્સેસ કરવાની નહીં. કારણ કે મોડ્યુલો કન્ટેનર હોય છે, તેથી માત્ર મોડ્યુલને જાહેર કરીને આપણે ઘણું બધું કરી શકતા નથી; આપણે આગળ વધવું પડશે અને મોડ્યુલમાં રહેલા એક અથવા વધુ વસ્તુઓને પણ જાહેર કરવાનું પસંદ કરવું પડશે.
 
 Listing 7-6 માં દર્શાવેલ ભૂલો જણાવે છે કે `add_to_waitlist` ફંક્શન ખાનગી છે. નિજતાના નિયમો struct, enum, function અને method તેમજ module ને લાગુ પડે છે.
 
 ચાલો આપણે `add_to_waitlist` ફંક્શનને પણ Listing 7-7 માં દર્શાવ્યા પ્રમાણે તેના વ્યાખ્યા પહેલાં `pub` કીવર્ડ ઉમેરીને જાહેર કરીએ.
 
-<Listing number="7-7" file-name="src/lib.rs" caption="Adding the `pub` keyword to `mod hosting` and `fn add_to_waitlist` lets us call the function from `eat_at_restaurant`.">
+**Listing 7-7: Adding the `pub` keyword to `mod hosting` and `fn add_to_waitlist` lets us call the function from `eat_at_restaurant`.**
+
 ```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-07/src/lib.rs:here}}
 ```
-</Listing>
+
 હવે કોડ કમ્પાઇલ થશે! એ સમજવા માટે કે `pub` કીવર્ડ ઉમેરવાથી આપણે આ પાથનો ઉપયોગ `eat_at_restaurant` માં ગોપનીયતાના નિયમો અનુસાર કરી શકીએ છીએ, ચાલો નિરપેક્ષ અને સાપેક્ષ પાથ જોઈએ.
 
 નિરપેક્ષ પાથમાં, આપણે `crate` થી શરૂઆત કરીએ છીએ, જે આપણી crate ના મોડ્યુલ વૃક્ષનું મૂળ છે. `front_of_house` મોડ્યુલ crate રૂટમાં વ્યાખ્યાયિત થયેલું છે. જોકે `front_of_house` જાહેર નથી, કારણ કે `eat_at_restaurant` ફંક્શન એ જ મોડ્યુલમાં વ્યાખ્યાયિત થયેલું છે જેમાં `front_of_house` (એટલે ​​કે, `eat_at_restaurant` અને `front_of_house` ભાઈ-બહેન છે), આપણે `eat_at_restaurant` માંથી `front_of_house` નો સંદર્ભ લઈ શકીએ છીએ. આગળ `hosting` મોડ્યુલ આવેલું છે, જે `pub` સાથે ચિહ્નિત થયેલું છે. આપણે `hosting` ના પિતૃ મોડ્યુલને ઍક્સેસ કરી શકીએ છીએ, તેથી આપણે `hosting` ને ઍક્સેસ કરી શકીએ છીએ. અંતે, `add_to_waitlist` ફંક્શન `pub` સાથે ચિહ્નિત થયેલું છે, અને આપણે તેના પિતૃ મોડ્યુલને ઍક્સેસ કરી શકીએ છીએ, તેથી આ ફંક્શન કૉલ કામ કરે છે!
@@ -89,33 +94,36 @@ Listing 7-6 માં દર્શાવેલ ભૂલો જણાવે છ�
 
 Listing 7-8 નું ઉદાહરણ ઉપસ્થિત પરિસ્થિતિને વર્ણવતું Listing 7-8 માં આપેલ કોડ ધ્યાનમાં લો કે જેમાં એક રસોઈયો ખોટો ઓર્ડર સુધારે છે અને તે જાતે જ ગ્રાહક સુધી પહોંચાડે છે. `back_of_house` મોડ્યુલમાં વ્યાખ્યાયિત થયેલ `fix_incorrect_order` ફંક્શન, પેરેન્ટ મોડ્યુલમાં વ્યાખ્યાયિત થયેલ `deliver_order` ફંક્શનને `super` થી શરૂ થતા માર્ગનો ઉલ્લેખ કરીને બોલાવે છે.
 
-<Listing number="7-8" file-name="src/lib.rs" caption="Calling a function using a relative path starting with `super`">
+**Listing 7-8: Calling a function using a relative path starting with `super`**
+
 ```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-08/src/lib.rs}}
 ```
-</Listing>
+
 `fix_incorrect_order` કાર્ય `back_of_house` મોડ્યુલમાં છે, તેથી આપણે `super` વાપરીને `back_of_house` ના પિતૃ મોડ્યુલમાં જઈ શકીએ છીએ, જે આ કિસ્સામાં `crate` છે, મૂળ. ત્યાંથી, આપણે `deliver_order` શોધીએ અને તેને મેળવીએ છીએ. સફળતા! અમારું માનવું છે કે `back_of_house` મોડ્યુલ અને `deliver_order` કાર્ય એકબીજા સાથેના સંબંધમાં રહેવાની શક્યતા છે અને જો આપણે `crate` ના મોડ્યુલ વૃક્ષને ફરીથી ગોઠવવાનું નક્કી કરીએ તો તે બંને એકસાથે ખસેડી શકાય છે. તેથી, અમે `super` વાપર્યું જેથી કરીને ભવિષ્યમાં આ કોડને અન્ય મોડ્યુલમાં ખસેડવામાં આવે તો અપડેટ કરવા માટે ઓછા સ્થળો રહે.
 
 ### Making Structs and Enums Public
 
 આપણે `pub` નો ઉપયોગ struct અને enum ને જાહેર કરવા માટે પણ કરી શકીએ છીએ, પરંતુ struct અને enum સાથે `pub` ના ઉપયોગમાં થોડા વધારાની વિગતો છે. જો આપણે struct વ્યાખ્યા પહેલાં `pub` વાપરીએ, તો આપણે struct ને જાહેર કરીએ છીએ, પરંતુ struct ના ક્ષેત્રો ખાનગી રહે છે. આપણે દરેક ક્ષેત્રને વ્યક્તિગત રીતે જાહેર અથવા ખાનગી બનાવી શકીએ છીએ. લિસ્ટિંગ 7-9 માં, અમે એક જાહેર `back_of_house::Breakfast` struct વ્યાખ્યાયિત કર્યો છે જેમાં જાહેર `toast` ક્ષેત્ર છે પરંતુ ખાનગી `seasonal_fruit` ક્ષેત્ર પણ છે. આ રેસ્ટોરન્ટના કિસ્સાને મોડેલ કરે છે જ્યાં ગ્રાહક ભોજન સાથે આવતા બ્રેડનો પ્રકાર પસંદ કરી શકે છે, પરંતુ રસોઇયા કયા ફળ આવે છે તેના આધારે નક્કી કરે છે. ઉપલબ્ધ ફળ ઝડપથી બદલાય છે, તેથી ગ્રાહકો ફળ પસંદ કરી શકતા નથી અથવા તેમને શું મળશે તે પણ જોઈ શકતા નથી.
 
-<Listing number="7-9" file-name="src/lib.rs" caption="A struct with some public fields and some private fields">
+**Listing 7-9: A struct with some public fields and some private fields**
+
 ```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-09/src/lib.rs}}
 ```
-</Listing>
+
 કારણ કે `back_of_house::Breakfast` struct માં `toast` ક્ષેત્ર જાહેર છે, તેથી `eat_at_restaurant` માં આપણે ડોટ સંકેતનો ઉપયોગ કરીને `toast` ક્ષેત્રમાં લખી અને વાંચી શકીએ છીએ. નોંધ કરો કે આપણે `seasonal_fruit` ક્ષેત્રનો ઉપયોગ `eat_at_restaurant` માં કરી શકતા નથી, કારણ કે `seasonal_fruit` ખાનગી છે. `seasonal_fruit` ક્ષેત્રના મૂલ્યને બદલતો પંક્તિ દૂર કરવાનો પ્રયાસ કરો અને જુઓ કે તમને શું ભૂલ મળે છે!
 
 વળી, નોંધ કરો કે કારણ કે `back_of_house::Breakfast` માં એક ખાનગી ક્ષેત્ર છે, struct ને `Breakfast` ના instance નું નિર્માણ કરે તેવું જાહેર સંકળાયેલ કાર્ય આપવું જરૂરી છે (અમે તેને અહીં `summer` નામ આપ્યું છે). જો `Breakfast` પાસે આવા કોઈ કાર્ય ન હોત, તો આપણે `eat_at_restaurant` માં `Breakfast` નો instance બનાવી શકતા ન હોત, કારણ કે આપણે ખાનગી `seasonal_fruit` ક્ષેત્રનું મૂલ્ય `eat_at_restaurant` માં સેટ કરી શકતા ન હોત.
 
 બીજા ઉલટા, જો આપણે એક `enum` જાહેર કરીએ, તો તેના બધાં જ પ્રકારો જાહેર થઈ જાય છે. આપણને માત્ર `enum` કીવર્ડ પહેલાં `pub` જોઈએ, જે યાદી 7-10 માં દર્શાવેલું છે.
 
-<Listing number="7-10" file-name="src/lib.rs" caption="Designating an enum as public makes all its variants public.">
+**Listing 7-10: Designating an enum as public makes all its variants public.**
+
 ```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-10/src/lib.rs}}
 ```
-</Listing>
+
 કારણ કે અમે `Appetizer` ઇનમ જાહેર કર્યું છે, તેથી અમે `Soup` અને `Salad` પ્રકારોને `eat_at_restaurant` માં વાપરી શકીએ
 
 છીએ. ઇનમ્સ બહુ ઉપયોગી નથી હોય જો તેમના પ્રકારો જાહેર ન હોય; દરેક ઇનમ પ્રકારને `pub` સાથે નોંધવું એ હેરાનગતિજનક હશે, તેથી ઇનમ પ્રકારો માટેની મૂળભૂત બાબત એ છે કે તેઓ જાહેર હોય. સ્ટ્રક્ચર્સ ઘણીવાર તેમના ક્ષેત્રો જાહેર કર્યા વિના ઉપયોગી હોય છે, તેથી સ્ટ્રક્ચર ક્ષેત્રો સામાન્ય નિયમનું પાલન કરે છે કે બધું જ મૂળભૂત રીતે ખાનગી હોય સિવાય કે `pub` સાથે નોંધવામાં આવે.

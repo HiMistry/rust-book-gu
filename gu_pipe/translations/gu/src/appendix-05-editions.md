@@ -6,11 +6,11 @@ Rust ભાષા અને compiler છ અઠવાડિયાના રિ�
 
 ત્રણ વર્ષોમાં એકવાર, Rust ટીમ નવું Rust આવૃત્તિ (edition) બહાર પાડે છે. દરેક આવૃત્તિ એવાં લક્ષણોને સ્પષ્ટ પેકેજ સાથે જોડે છે જેમાં સંપૂર્ણપણે અપડેટ કરેલું દસ્તાવેજીકરણ અને સાધનો હોય છે. નવા આવૃત્તિઓ સામાન્ય છ-અઠવાડિયાના પ્રકાશન પ્રક્રિયાનો ભાગ રૂપે બહાર આવે છે. Editions serve different purposes for different people: આવૃત્તિઓ જુદા જુદા લોકો માટે જુદા જુદા હેતુ પૂરા પાડે છે: For
 
-active Rust users, a new edition brings together incremental changes into an
+- active Rust users, a new edition brings together incremental changes into an
 
-easy-to-understand package. સક્રિય Rust userઓ માટે, નવું આવૃત્તિ ક્રમશઃ ફેરફારોને સમજવામાં સરળ પેકેજમાં એકત્રિત કરે છે. For non-users, a new edition signals that some major
+- easy-to-understand package. સક્રિય Rust userઓ માટે, નવું આવૃત્તિ ક્રમશઃ ફેરફારોને સમજવામાં સરળ પેકેજમાં એકત્રિત કરે છે. For non-users, a new edition signals that some major
 
-બિન-userઓ માટે, નવું આવૃત્તિ સૂચવે છે કે કેટલાક મોટા પ્રગતિઓ થઈ છે, જે Rust ને ફરીથી તપાસવા યોગ્ય બનાવી શકે છે.
+- બિન-userઓ માટે, નવું આવૃત્તિ સૂચવે છે કે કેટલાક મોટા પ્રગતિઓ થઈ છે, જે Rust ને ફરીથી તપાસવા યોગ્ય બનાવી શકે છે.
 
 જેઓ Rust વિકસાવી રહ્યા છે તેમના માટે, નવું આવૃત્તિ સમગ્ર પ્રોજેક્ટ માટે એક મહોરું પૂરું પાડે છે.
 

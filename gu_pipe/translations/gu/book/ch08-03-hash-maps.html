@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -188,122 +188,81 @@
 <p>તેનો સ્કોર મેળવી શકો છો. આ વિભાગમાં અમે હેશ મેપ્સના મૂળ API વિશે વાત કરીશું, પરંતુ પ્રમાણિત લાયબ્રેરી દ્વારા <code>HashMap&lt;K, V&gt;</code> પર વ્યાખ્યાયિત થયેલાં ઘણાં વધુ ઉપયોગી કાર્યો છુપાયેલાં છે. હંમેશની જેમ, વધુ માહિતી માટે પ્રમાણિત લાયબ્રેરીના દસ્તાવેજો તપાસો.</p>
 <h3 id="creating-a-new-hash-map"><a class="header" href="#creating-a-new-hash-map">Creating a New Hash Map</a></h3>
 <p>એક રીતે ખાલી હૅશ મૅપ બનાવવા માટે <code>new</code> નો ઉપયોગ કરવો અને ઘટકો ઉમેરવા માટે <code>insert</code> નો ઉપયોગ કરવો એ છે. લિસ્ટિંગ 8-20 માં, અમે બે ટીમ ના સ્કોર્સની નોંધ રાખી રહ્યા છીએ જેમના નામ Blue અને Yellow છે. Blue ટીમ 10 પોઈન્ટથી આરંભ કરે છે, અને Yellow ટીમ 50 પોઈન્ટથી આરંભ કરે છે.</p>
-<listing number="8-20" caption="Creating a new hash map and inserting some keys and values">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch08-common-collections/listing-08-20/src/main.rs:here}}
-```
-```
-</listing>
-સૌપ્રથમ, આપણે સ્ટાન્ડર્ડ લાઈબ્રેરીના કલેક્શન્સ ભાગમાંથી `HashMap` ને `use` કરવાની જરૂર છે. આપણી ત્રણ સામાન્ય કલેક્શન્સમાં, આ સૌથી ઓછી વાર વપરાય છે, તેથી તે પ્રીલ્યુડમાં આપોઆપ અવકાશમાં લાવવામાં આવતા લક્ષણોમાં સમાવિષ્ટ નથી. હેશ મેપ્સને સ્ટાન્ડર્ડ લાઈબ્રેરી તરફથી ઓછું સમર્થન પણ છે; ઉદાહરણ તરીકે, તેમને બનાવવા માટે કોઈ બિલ્ટ-ઇન મેક્રો નથી.
+<p><strong>Listing 8-20: Creating a new hash map and inserting some keys and values</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-20/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>સૌપ્રથમ, આપણે સ્ટાન્ડર્ડ લાઈબ્રેરીના કલેક્શન્સ ભાગમાંથી <code>HashMap</code> ને <code>use</code> કરવાની જરૂર છે. આપણી ત્રણ સામાન્ય કલેક્શન્સમાં, આ સૌથી ઓછી વાર વપરાય છે, તેથી તે પ્રીલ્યુડમાં આપોઆપ અવકાશમાં લાવવામાં આવતા લક્ષણોમાં સમાવિષ્ટ નથી. હેશ મેપ્સને સ્ટાન્ડર્ડ લાઈબ્રેરી તરફથી ઓછું સમર્થન પણ છે; ઉદાહરણ તરીકે, તેમને બનાવવા માટે કોઈ બિલ્ટ-ઇન મેક્રો નથી.</p>
 <p>જેમ કે વેક્ટર્સ, હેશ મેપ્સ તેમનો ડેટા હિપ પર સંગ્રહ કરે છે. આ <code>HashMap</code> માં <code>String</code> પ્રકારની કી અને <code>i32</code> પ્રકારના મૂલ્યો હોય છે. વેક્ટર્સની જેમ, હેશ મેપ્સ પણ એકરૂપ હોય છે: બધી કીઓ સમાન પ્રકારની હોવી જોઈએ અને બધા મૂલ્યો સમાન પ્રકારના હોવા જોઈએ.</p>
 <h3 id="accessing-values-in-a-hash-map"><a class="header" href="#accessing-values-in-a-hash-map">Accessing Values in a Hash Map</a></h3>
 <p>આપણે <code>get</code> પદ્ધતિમાં કી આપીને હેશ મેપમાંથી મૂલ્ય મેળવી શકીએ છીએ, જે યાદી 8-21 માં દર્શાવેલ છે.</p>
-<listing number="8-21" caption="Accessing the score for the Blue team stored in the hash map">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch08-common-collections/listing-08-21/src/main.rs:here}}
-```
-```
-</listing>
-અહીં, `score` ને બ્લુ ટીમ સાથે સંકળાયેલું મૂલ્ય મળશે અને પરિણામ `10` થશે. `get` પદ્ધતિ `Option&lt;&amp;V&gt;` પરત કરે છે; જો હેશ મેપમાં તે કી માટે કોઈ મૂલ્ય ન હોય, તો `get` `None` પરત કરશે. આ કાર્યક્રમ `Option` ને `copied` કૉલ કરીને `Option<i32>` મેળવવા માટે હેન્ડલ કરે છે, તેના બદલે `Option&lt;&amp;i32&gt;`, અને પછી `unwrap_or` નો ઉપયોગ `score` ને શૂન્ય પર સેટ કરવા માટે કરે છે જો `scores` માં કી માટે કોઈ એન્ટ્રી ન હોય.
+<p><strong>Listing 8-21: Accessing the score for the Blue team stored in the hash map</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-21/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અહીં, <code>score</code> ને બ્લુ ટીમ સાથે સંકળાયેલું મૂલ્ય મળશે અને પરિણામ <code>10</code> થશે. <code>get</code> પદ્ધતિ <code>Option&lt;&amp;V&gt;</code> પરત કરે છે; જો હેશ મેપમાં તે કી માટે કોઈ મૂલ્ય ન હોય, તો <code>get</code> <code>None</code> પરત કરશે. આ કાર્યક્રમ <code>Option</code> ને <code>copied</code> કૉલ કરીને <code>Option&lt;i32&gt;</code> મેળવવા માટે હેન્ડલ કરે છે, તેના બદલે <code>Option&lt;&amp;i32&gt;</code>, અને પછી <code>unwrap_or</code> નો ઉપયોગ <code>score</code> ને શૂન્ય પર સેટ કરવા માટે કરે છે જો <code>scores</code> માં કી માટે કોઈ એન્ટ્રી ન હોય.</p>
 <p>આપણે વેક્ટરની જેમ જ હેશ મેપમાં દરેક કી-મૂલ્ય જોડી પર પુનરાવર્તન કરી શકીએ છીએ, <code>for</code> લૂપનો ઉપયોગ કરીને:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>```rust
-{{#rustdoc_include ../listings/ch08-common-collections/no-listing-03-iterate-over-hashmap/src/main.rs:here}}
+</span>{{#rustdoc_include ../listings/ch08-common-collections/no-listing-03-iterate-over-hashmap/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
-<pre><code>આ કોડ દરેક જોડીને અનિશ્ચિત ક્રમમાં છાપશે:
-
-```text
-```text
-Yellow: 50
+<p>આ કોડ દરેક જોડીને અનિશ્ચિત ક્રમમાં છાપશે:</p>
+<pre><code class="language-text">Yellow: 50
 Blue: 10
 </code></pre>
-<pre><code>&lt;!-- Old headings. Do not remove or links may break. --&gt;
-### Managing Ownership in Hash Maps
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="managing-ownership-in-hash-maps"><a class="header" href="#managing-ownership-in-hash-maps">Managing Ownership in Hash Maps</a></h3>
+<p>જે પ્રકારો <code>Copy</code> લક્ષણ લાગુ કરે છે, જેમ કે <code>i32</code>, તેમના મૂલ્યો કૂકડા નકશામાં નકલ કરવામાં આવે છે. માલિકીવાળા મૂલ્યો માટે, જેમ કે <code>String</code>, તે મૂલ્યો ખસેડવામાં આવશે અને કૂકડા નકશો તે મૂલ્યોનો માલિક બનશે, જે યાદી 8-22 માં દર્શાવેલ છે.</p>
+<p><strong>Listing 8-22: Showing that keys and values are owned by the hash map once they’re inserted</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-22/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અમે variable <code>field_name</code> અને <code>field_value</code> નો ઉપયોગ કરી શકતા નથી, તે દાખલ કર્યા પછી <code>insert</code> કૉલ દ્વારા હૅશ નકશામાં ખસેડવામાં આવે છે. જો</p>
+<p>આપણે મૂલ્યોના સંદર્ભોને હૅશ નકશામાં દાખલ કરીએ, તો મૂલ્યો હૅશ નકશામાં ખસેડવામાં આવશે નહીં. જે મૂલ્યોનો સંદર્ભ નિર્દેશ કરે છે તે ઓછામાં ઓછા હૅશ નકશો માન્ય હોય ત્યાં સુધી માન્ય હોવા જોઈએ. આપણે પ્રકરણ ૧૦ માં “જીવનકાળ સાથે સંદર્ભોનું પ્રમાણપત્ર” (“Validating References with Lifetimes”) માં આ મુદ્દાઓ વિશે વધુ વાત કરીશું.</p>
+<h3 id="updating-a-hash-map"><a class="header" href="#updating-a-hash-map">Updating a Hash Map</a></h3>
+<p>જોકે કી અને મૂલ્ય જોડીઓની સંખ્યા વધારી શકાય છે, દરેક વિશિષ્ટ કી સાથે એક જ સમયે એક મૂલ્ય સંકળાયેલું હોઈ શકે છે (પરંતુ ઊલટું નહીં: ઉદાહરણ તરીકે, બ્લુ ટીમ અને યલો ટીમ બંને <code>10</code> મૂલ્યને <code>scores</code> હૅશ મેપમાં સંગ્રહિત કરી શકે છે).</p>
+<p>જ્યારે તમે હૅશ મેપમાં રહેલા ડેટાને બદલવા માંગો છો, ત્યારે તમારે એ નિર્ણય લેવો પડે કે કીને પહેલેથી જ મૂલ્ય સોંપવામાં આવ્યું હોય તેવા કિસ્સાને કેવી રીતે હેન્ડલ કરવો. તમે જૂના મૂલ્યને નવા મૂલ્ય સાથે બદલી શકો છો, જૂના મૂલ્યને સંપૂર્ણપણે અવગણી શકો છો. તમે જૂનું મૂલ્ય રાખી શકો છો અને નવા મૂલ્યને અવગણી શકો છો, માત્ર ત્યારે જ નવું મૂલ્ય ઉમેરી શકો છો જો કીને પહેલાથી જ કોઈ મૂલ્ય ન હોય. અથવા તમે જૂના મૂલ્ય અને નવા મૂલ્યને જોડી શકો છો. ચાલો જોઈએ કે આ દરેક કેવી રીતે કરવું!</p>
+<h4 id="overwriting-a-value"><a class="header" href="#overwriting-a-value">Overwriting a Value</a></h4>
+<p>જો આપણે કોઈ કી અને મૂલ્યને હેશ મેપમાં ઉમેરીએ, અને પછી એ જ કીને અલગ મૂલ્ય સાથે ફરીથી ઉમેરીએ, તો તે કી સાથે સંકળાયેલું મૂલ્ય બદલાઈ જશે. યાદી 8-23 માં આપેલ કોડ <code>insert</code> ને બે વાર બોલાવે છે, તેમ છતાં હેશ મેપમાં માત્ર એક જ કી-મૂલ્ય જોડી હશે, કારણ કે આપણે બ્લુ ટીમની કી માટે મૂલ્ય બંને વખત ઉમેરી રહ્યા છીએ.</p>
+<p><strong>Listing 8-23: Replacing a value stored with a particular key</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-23/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ કોડ <code>{"Blue": 25}</code> છાપશે. <code>10</code> નું મૂળ મૂલ્ય બદલાઈ ગયું છે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h4 id="adding-a-key-and-value-only-if-a-key-isnt-present"><a class="header" href="#adding-a-key-and-value-only-if-a-key-isnt-present">Adding a Key and Value Only If a Key Isn’t Present</a></h4>
+<p>ઘણી વાર આપણે ચકાસવું પડે છે કે હેશ મેપમાં કોઈ ચોક્કસ કી અસ્તિત્વ ધરાવે છે કે નહીં, અને પછી નીચે મુજબની ક્રિયાઓ કરવી: જો કી હેશ મેપમાં હાજર હોય, તો તેનું વર્તમાન મૂલ્ય યથાવત્ રહેવું જોઈએ; જો કી હાજર ન હોય, તો તેને અને તેના મૂલ્યને દાખલ કરવું.</p>
+<p>હેશ મેપ્સ પાસે આ માટે એક વિશેષ API છે જેને <code>entry</code> કહેવાય છે, જે ચકાસવા માટેની કીને પરિમાણ તરીકે લે છે. <code>entry</code> પદ્ધતિનું વળતર <code>Entry</code> નામના enum છે, જે એક એવું મૂલ્ય રજૂ કરે છે જે અસ્તિત્વ ધરાવતું હોય પણ ન પણ હોય. ધારો કે આપણે ચકાસવા માંગીએ છીએ કે પીળાં ટીમ માટેની કી સાથે કોઈ મૂલ્ય સંકળાયેલું છે કે નહીં. જો તે ન હોય, તો આપણે મૂલ્ય <code>50</code> દાખલ કરવા માંગીએ છીએ, અને એ જ રીતે વાદળી ટીમ માટે પણ. <code>entry</code> API નો ઉપયોગ કરીને, કોડ લિસ્ટિંગ 8-24 જેવો દેખાશે.</p>
+<p><strong>Listing 8-24: Using the <code>entry</code> method to only insert if the key does not already have a value</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-24/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>or_insert પદ્ધતિ <code>Entry</code> પરની <code>or_insert</code> પદ્ધતિ વ્યાખ્યાયિત કરવામાં આવી છે કે તે અનુરૂપ <code>Entry</code> કી માટે મૂલ્યનો બદલી શકાય તેવો સંદર્ભ (mutable reference) આપે, જો તે કી અસ્તિત્વમાં હોય તો, અને ન હોય તો, તે પરિમાણને આ કી માટે નવું મૂલ્ય તરીકે દાખલ કરે અને નવા મૂલ્યના બદલી શકાય તેવા સંદર્ભને પાછું આપે. આ તકનીક આપણી જાતે તર્ક લખવા કરતાં ઘણી સ્વચ્છ છે અને વધુમાં,</p>
+<p>લોન ચેકર સાથે વધુ સારી રીતે કામ કરે છે. લિસ્ટિંગ 8-24 માં કોડ ચલાવવાથી <code>{"Yellow": 50, "Blue": 10}</code> છપાવશે. <code>entry</code> નો પહેલો કૉલ પીળા ટીમ માટે કી અને <code>50</code> મૂલ્ય દાખલ કરશે, કારણ કે પીળી ટીમને પહેલાથી કોઈ મૂલ્ય નથી. <code>entry</code> નો બીજો કૉલ હેશ મેપમાં ફેરફાર નહીં કરે, કારણ કે નીલી ટીમ પાસે પહેલેથી જ <code>10</code> મૂલ્ય છે.</p>
+<h4 id="updating-a-value-based-on-the-old-value"><a class="header" href="#updating-a-value-based-on-the-old-value">Updating a Value Based on the Old Value</a></h4>
+<p>હૅશ નકશાનો બીજો સામાન્ય ઉપયોગ એ છે કે કોઈ ચાવી (key) નું મૂલ્ય મેળવવું અને પછી જૂની કિંમતના આધારે તેને અપડેટ કરવું. દાખલા તરીકે, યાદી 8-25 માં આપેલ કોડ અમુક લખાણમાં દરેક શબ્દ કેટલી વાર આવે છે તે ગણે છે. અમે હૅશ નકશાનો ઉપયોગ કરીએ છીએ જેમાં શબ્દો ચાવી (key) તરીકે અને મૂલ્ય વધારીને આપણે તે શબ્દ કેટલી વાર જોયો છે તેનો રેકોર્ડ રાખીએ છીએ. જો આપણે કોઈ શબ્દ પહેલીવાર જોઈ રહ્યા હોય, તો અમે પ્રથમ મૂલ્ય <code>0</code> દાખલ કરીશું.</p>
+<p><strong>Listing 8-25: Counting occurrences of words using a hash map that stores words and counts</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-25/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ કોડ <code>{"world": 2, "hello": 1, "wonderful": 1}</code> પ્રિન્ટ કરશે. તમે સમાન કી-વેલ્યુ જોડીઓ અલગ ક્રમમાં છપાયેલી જોઈ શકો છો: યાદ રાખો કે “હેશ મેપમાં વેલ્યુની પ્રાપ્તિ” માં ઉલ્લેખ કર્યો છે તેમ, હેશ મેપ પર પુનરાવર્તન એક અનિશ્ચિત ક્રમમાં થાય છે.</p>
+<p><code>split_whitespace</code> પદ્ધતિ <code>text</code> ના વ્હાઇટસ્પેસથી વિભાજિત સબસ્લાઇસનો ઇટરેટર આપે છે. <code>or_insert</code> પદ્ધતિ નિર્દિષ્ટ કી માટે વેલ્યુનો મ્યુટેબલ રેફરન્સ ( <code>&amp;mut V</code> ) આપે છે. અહીં, અમે તે મ્યુટેબલ રેફરન્સને <code>count</code> variable માં સંગ્રહિત કરીએ છીએ, તેથી તે વેલ્યુને સોંપવા માટે, આપણે પહેલા એસ્ટરિસ્ક ( <code>*</code> ) નો ઉપયોગ કરીને <code>count</code> ને ડિરેફરન્સ કરવું પડશે. મ્યુટેબલ રેફરન્સ <code>for</code> લૂપના અંતે અવકાશમાંથી બહાર નીકળી જાય છે, તેથી આ તમામ ફેરફારો સુરક્ષિત છે અને બોરોઇંગ નિયમો દ્વારા અનુમતિ પામે છે.</p>
+<h3 id="hashing-functions"><a class="header" href="#hashing-functions">Hashing Functions</a></h3>
+<p>અન્યથા, <code>HashMap</code> એક હૅશિંગ કાર્ય કહેવાતા SipHash નો ઉપયોગ કરે છે, જે હૅશ કોષ્ટકો (hash tables) માં Denial-of-Service (DoS) આક્રમણો સામે પ્રતિકાર આપી શકે છે ^siphash. આ ઉપલબ્ધ સૌથી ઝડપી હૅશિંગ એલ્ગોરિધમ નથી, પરંતુ કામગીરીમાં ઘટાડા સાથે મળતું વધુ સારું સુરક્ષા મૂલ્ય યોગ્ય છે. જો તમે તમારા કોડનું વિશ્લેષણ કરો અને શોધો કે ડિફૉલ્ટ હૅશ કાર્ય તમારા હેતુઓ માટે ખૂબ ધીમું છે, તો તમે અન્ય કાર્ય પર સ્વિચ કરી શકો છો જે એક અલગ હૅસર સ્પષ્ટ કરે છે. એક હૅસર એ પ્રકાર છે જે <code>BuildHasher</code> ટ્રેઇટનો અમલ કરે છે. આપણે પ્રકરણ ૧૦ માં ટ્રેઇટ્સ અને તેને કેવી રીતે અમલમાં મૂકવા તે વિશે વાત કરીશું. તમારે તમારી પોતાની હૅસર શરૂઆતથી અમલમાં મૂકવાની જરૂર નથી; crates.io અન્ય Rust userઓ દ્વારા શેર કરવામાં આવતા લાઇબ્રેરીઓ ધરાવે છે જે ઘણા સામાન્ય હૅશિંગ એલ્ગોરિધમ્સનો અમલ કરતા હૅસર્સ પ્રદાન કરે છે.</p>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>વેક્ટર, સ્ટ્રિંગ અને હેશ મેપ એવાં ઘણા કાર્યો પૂરા પાડશે જે પ્રોગ્રામમાં ડેટા સંગ્રહ કરવા, મેળવવા અને બદલવા માટે જરૂરી છે. અહીં કેટલાક કસરતો છે જે ઉકેલવા માટે તમે હવે સજ્જ છો:</p>
+<p>પૂર્ણાંકની યાદીને આપેલ હોય, ત્યારે વેક્ટરનો ઉપયોગ કરીને મધ્યક (જ્યારે ક્રમબદ્ધ કરવામાં આવે, ત્યારે વચ્ચેના સ્થાનનું મૂલ્ય) અને મોડ (સૌથી વધુ વખત આવતું મૂલ્ય; અહીં હેશ મેપ મદદરૂપ થશે) પરત કરો.</p>
+<p>સ્ટ્રિંગને પિગ લેટિનમાં રૂપાંતરિત કરો. દરેક શબ્દનો પહેલો વ્યંજન અંતમાં ખસેડવામાં આવે છે અને ‘એય’ ઉમેરવામાં આવે છે, તેથી ‘ફર્સ્ટ’ ‘ઇરસ્ટ-ફેય’ બની જાય છે. જે શબ્દો સ્વરથી શરૂ થાય છે તેમાં ‘હેય’ ઉમેરવામાં આવે છે (જેમ કે ‘એપલ’ ‘એપલ-હેય’ બની જાય છે). UTF-8 એન્કોડિંગ વિશેની વિગતોને ધ્યાનમાં રાખો!</p>
+<p>હૅશ મૅપ અને વેક્ટરનો ઉપયોગ કરીને, એક લખાણ ઈન્ટરફેસ બનાવો જેથી user કંપનીના વિભાગમાં કર્મચારીઓના નામ ઉમેરી શકે; ઉદાહરણ તરીકે, “સેલીને એન્જિનિયરિંગમાં ઉમેરો” અથવા “અમિરને વેચાણમાં ઉમેરો”. પછી, userને વિભાગમાંના તમામ લોકોની યાદી મેળવવા દો અથવા વિભાગ દ્વારા કંપનીના તમામ લોકોની યાદી મેળવવા દો, જે આલ્ફાબેટીક રીતે ક્રમબદ્ધ હોય.</p>
+<p>સ્ટાન્ડર્ડ લાઈબ્રેરી API દસ્તાવેજીકરણ વેક્ટર્સ, સ્ટ્રિંગ્સ અને હેશ મેપ્સ ધરાવતા પદ્ધતિઓનું વર્ણન કરે છે જે આ કસરતો માટે ઉપયોગી થશે!</p>
+<p>હવે આપણે વધુ જટિલ પ્રોગ્રામમાં પ્રવેશ કરી રહ્યા છીએ જેમાં ક્રિયાઓ નિષ્ફળ થઈ શકે છે, તેથી ભૂલ વ્યવસ્થાપન વિશે ચર્ચા કરવાનો આ યોગ્ય સમય છે. આપણે તે પછી કરીશું!</p>
 
-જે પ્રકારો `Copy` લક્ષણ લાગુ કરે છે, જેમ કે `i32`, તેમના મૂલ્યો કૂકડા નકશામાં નકલ કરવામાં આવે છે. માલિકીવાળા મૂલ્યો માટે, જેમ કે `String`, તે મૂલ્યો ખસેડવામાં આવશે અને કૂકડા નકશો તે મૂલ્યોનો માલિક બનશે, જે યાદી 8-22 માં દર્શાવેલ છે.
-
-&lt;Listing number="8-22" caption="Showing that keys and values are owned by the hash map once they’re inserted"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch08-common-collections/listing-08-22/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-અમે variable `field_name` અને `field_value` નો ઉપયોગ કરી શકતા નથી, તે દાખલ કર્યા પછી `insert` કૉલ દ્વારા હૅશ નકશામાં ખસેડવામાં આવે છે. જો
-
-આપણે મૂલ્યોના સંદર્ભોને હૅશ નકશામાં દાખલ કરીએ, તો મૂલ્યો હૅશ નકશામાં ખસેડવામાં આવશે નહીં. જે મૂલ્યોનો સંદર્ભ નિર્દેશ કરે છે તે ઓછામાં ઓછા હૅશ નકશો માન્ય હોય ત્યાં સુધી માન્ય હોવા જોઈએ. આપણે પ્રકરણ ૧૦ માં "જીવનકાળ સાથે સંદર્ભોનું પ્રમાણપત્ર" ("Validating References with Lifetimes") માં આ મુદ્દાઓ વિશે વધુ વાત કરીશું.
-
-### Updating a Hash Map
-
-જોકે કી અને મૂલ્ય જોડીઓની સંખ્યા વધારી શકાય છે, દરેક વિશિષ્ટ કી સાથે એક જ સમયે એક મૂલ્ય સંકળાયેલું હોઈ શકે છે (પરંતુ ઊલટું નહીં: ઉદાહરણ તરીકે, બ્લુ ટીમ અને યલો ટીમ બંને `10` મૂલ્યને `scores` હૅશ મેપમાં સંગ્રહિત કરી શકે છે).
-
-જ્યારે તમે હૅશ મેપમાં રહેલા ડેટાને બદલવા માંગો છો, ત્યારે તમારે એ નિર્ણય લેવો પડે કે કીને પહેલેથી જ મૂલ્ય સોંપવામાં આવ્યું હોય તેવા કિસ્સાને કેવી રીતે હેન્ડલ કરવો. તમે જૂના મૂલ્યને નવા મૂલ્ય સાથે બદલી શકો છો, જૂના મૂલ્યને સંપૂર્ણપણે અવગણી શકો છો. તમે જૂનું મૂલ્ય રાખી શકો છો અને નવા મૂલ્યને અવગણી શકો છો, માત્ર ત્યારે જ નવું મૂલ્ય ઉમેરી શકો છો જો કીને પહેલાથી જ કોઈ મૂલ્ય ન હોય. અથવા તમે જૂના મૂલ્ય અને નવા મૂલ્યને જોડી શકો છો. ચાલો જોઈએ કે આ દરેક કેવી રીતે કરવું!
-
-#### Overwriting a Value
-
-જો આપણે કોઈ કી અને મૂલ્યને હેશ મેપમાં ઉમેરીએ, અને પછી એ જ કીને અલગ મૂલ્ય સાથે ફરીથી ઉમેરીએ, તો તે કી સાથે સંકળાયેલું મૂલ્ય બદલાઈ જશે. યાદી 8-23 માં આપેલ કોડ `insert` ને બે વાર બોલાવે છે, તેમ છતાં હેશ મેપમાં માત્ર એક જ કી-મૂલ્ય જોડી હશે, કારણ કે આપણે બ્લુ ટીમની કી માટે મૂલ્ય બંને વખત ઉમેરી રહ્યા છીએ.
-
-&lt;Listing number="8-23" caption="Replacing a value stored with a particular key"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch08-common-collections/listing-08-23/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-આ કોડ `{"Blue": 25}` છાપશે. `10` નું મૂળ મૂલ્ય બદલાઈ ગયું છે.
-
-&lt;!-- Old headings. Do not remove or links may break. --&gt;
-#### Adding a Key and Value Only If a Key Isn’t Present
-
-ઘણી વાર આપણે ચકાસવું પડે છે કે હેશ મેપમાં કોઈ ચોક્કસ કી અસ્તિત્વ ધરાવે છે કે નહીં, અને પછી નીચે મુજબની ક્રિયાઓ કરવી: જો કી હેશ મેપમાં હાજર હોય, તો તેનું વર્તમાન મૂલ્ય યથાવત્ રહેવું જોઈએ; જો કી હાજર ન હોય, તો તેને અને તેના મૂલ્યને દાખલ કરવું.
-
-હેશ મેપ્સ પાસે આ માટે એક વિશેષ API છે જેને `entry` કહેવાય છે, જે ચકાસવા માટેની કીને પરિમાણ તરીકે લે છે. `entry` પદ્ધતિનું વળતર `Entry` નામના enum છે, જે એક એવું મૂલ્ય રજૂ કરે છે જે અસ્તિત્વ ધરાવતું હોય પણ ન પણ હોય. ધારો કે આપણે ચકાસવા માંગીએ છીએ કે પીળાં ટીમ માટેની કી સાથે કોઈ મૂલ્ય સંકળાયેલું છે કે નહીં. જો તે ન હોય, તો આપણે મૂલ્ય `50` દાખલ કરવા માંગીએ છીએ, અને એ જ રીતે વાદળી ટીમ માટે પણ. `entry` API નો ઉપયોગ કરીને, કોડ લિસ્ટિંગ 8-24 જેવો દેખાશે.
-
-&lt;Listing number="8-24" caption="Using the `entry` method to only insert if the key does not already have a value"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch08-common-collections/listing-08-24/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-or_insert પદ્ધતિ `Entry` પરની `or_insert` પદ્ધતિ વ્યાખ્યાયિત કરવામાં આવી છે કે તે અનુરૂપ `Entry` કી માટે મૂલ્યનો બદલી શકાય તેવો સંદર્ભ (mutable reference) આપે, જો તે કી અસ્તિત્વમાં હોય તો, અને ન હોય તો, તે પરિમાણને આ કી માટે નવું મૂલ્ય તરીકે દાખલ કરે અને નવા મૂલ્યના બદલી શકાય તેવા સંદર્ભને પાછું આપે. આ તકનીક આપણી જાતે તર્ક લખવા કરતાં ઘણી સ્વચ્છ છે અને વધુમાં,
-
-લોન ચેકર સાથે વધુ સારી રીતે કામ કરે છે. લિસ્ટિંગ 8-24 માં કોડ ચલાવવાથી `{"Yellow": 50, "Blue": 10}` છપાવશે. `entry` નો પહેલો કૉલ પીળા ટીમ માટે કી અને `50` મૂલ્ય દાખલ કરશે, કારણ કે પીળી ટીમને પહેલાથી કોઈ મૂલ્ય નથી. `entry` નો બીજો કૉલ હેશ મેપમાં ફેરફાર નહીં કરે, કારણ કે નીલી ટીમ પાસે પહેલેથી જ `10` મૂલ્ય છે.
-
-#### Updating a Value Based on the Old Value
-
-હૅશ નકશાનો બીજો સામાન્ય ઉપયોગ એ છે કે કોઈ ચાવી (key) નું મૂલ્ય મેળવવું અને પછી જૂની કિંમતના આધારે તેને અપડેટ કરવું. દાખલા તરીકે, યાદી 8-25 માં આપેલ કોડ અમુક લખાણમાં દરેક શબ્દ કેટલી વાર આવે છે તે ગણે છે. અમે હૅશ નકશાનો ઉપયોગ કરીએ છીએ જેમાં શબ્દો ચાવી (key) તરીકે અને મૂલ્ય વધારીને આપણે તે શબ્દ કેટલી વાર જોયો છે તેનો રેકોર્ડ રાખીએ છીએ. જો આપણે કોઈ શબ્દ પહેલીવાર જોઈ રહ્યા હોય, તો અમે પ્રથમ મૂલ્ય `0` દાખલ કરીશું.
-
-&lt;Listing number="8-25" caption="Counting occurrences of words using a hash map that stores words and counts"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch08-common-collections/listing-08-25/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-આ કોડ `{"world": 2, "hello": 1, "wonderful": 1}` પ્રિન્ટ કરશે. તમે સમાન કી-વેલ્યુ જોડીઓ અલગ ક્રમમાં છપાયેલી જોઈ શકો છો: યાદ રાખો કે “હેશ મેપમાં વેલ્યુની પ્રાપ્તિ” માં ઉલ્લેખ કર્યો છે તેમ, હેશ મેપ પર પુનરાવર્તન એક અનિશ્ચિત ક્રમમાં થાય છે.
-
-`split_whitespace` પદ્ધતિ `text` ના વ્હાઇટસ્પેસથી વિભાજિત સબસ્લાઇસનો ઇટરેટર આપે છે. `or_insert` પદ્ધતિ નિર્દિષ્ટ કી માટે વેલ્યુનો મ્યુટેબલ રેફરન્સ ( `&amp;mut V` ) આપે છે. અહીં, અમે તે મ્યુટેબલ રેફરન્સને `count` variable માં સંગ્રહિત કરીએ છીએ, તેથી તે વેલ્યુને સોંપવા માટે, આપણે પહેલા એસ્ટરિસ્ક ( `*` ) નો ઉપયોગ કરીને `count` ને ડિરેફરન્સ કરવું પડશે. મ્યુટેબલ રેફરન્સ `for` લૂપના અંતે અવકાશમાંથી બહાર નીકળી જાય છે, તેથી આ તમામ ફેરફારો સુરક્ષિત છે અને બોરોઇંગ નિયમો દ્વારા અનુમતિ પામે છે.
-
-### Hashing Functions
-
-અન્યથા, `HashMap` એક હૅશિંગ કાર્ય કહેવાતા SipHash નો ઉપયોગ કરે છે, જે હૅશ કોષ્ટકો (hash tables) માં Denial-of-Service (DoS) આક્રમણો સામે પ્રતિકાર આપી શકે છે ^siphash. આ ઉપલબ્ધ સૌથી ઝડપી હૅશિંગ એલ્ગોરિધમ નથી, પરંતુ કામગીરીમાં ઘટાડા સાથે મળતું વધુ સારું સુરક્ષા મૂલ્ય યોગ્ય છે. જો તમે તમારા કોડનું વિશ્લેષણ કરો અને શોધો કે ડિફૉલ્ટ હૅશ કાર્ય તમારા હેતુઓ માટે ખૂબ ધીમું છે, તો તમે અન્ય કાર્ય પર સ્વિચ કરી શકો છો જે એક અલગ હૅસર સ્પષ્ટ કરે છે. એક હૅસર એ પ્રકાર છે જે `BuildHasher` ટ્રેઇટનો અમલ કરે છે. આપણે પ્રકરણ ૧૦ માં ટ્રેઇટ્સ અને તેને કેવી રીતે અમલમાં મૂકવા તે વિશે વાત કરીશું. તમારે તમારી પોતાની હૅસર શરૂઆતથી અમલમાં મૂકવાની જરૂર નથી; crates.io અન્ય Rust userઓ દ્વારા શેર કરવામાં આવતા લાઇબ્રેરીઓ ધરાવે છે જે ઘણા સામાન્ય હૅશિંગ એલ્ગોરિધમ્સનો અમલ કરતા હૅસર્સ પ્રદાન કરે છે.
-
-## Summary
-
-વેક્ટર, સ્ટ્રિંગ અને હેશ મેપ એવાં ઘણા કાર્યો પૂરા પાડશે જે પ્રોગ્રામમાં ડેટા સંગ્રહ કરવા, મેળવવા અને બદલવા માટે જરૂરી છે. અહીં કેટલાક કસરતો છે જે ઉકેલવા માટે તમે હવે સજ્જ છો:
-
-પૂર્ણાંકની યાદીને આપેલ હોય, ત્યારે વેક્ટરનો ઉપયોગ કરીને મધ્યક (જ્યારે ક્રમબદ્ધ કરવામાં આવે, ત્યારે વચ્ચેના સ્થાનનું મૂલ્ય) અને મોડ (સૌથી વધુ વખત આવતું મૂલ્ય; અહીં હેશ મેપ મદદરૂપ થશે) પરત કરો.
-
-સ્ટ્રિંગને પિગ લેટિનમાં રૂપાંતરિત કરો. દરેક શબ્દનો પહેલો વ્યંજન અંતમાં ખસેડવામાં આવે છે અને ‘એય’ ઉમેરવામાં આવે છે, તેથી ‘ફર્સ્ટ’ ‘ઇરસ્ટ-ફેય’ બની જાય છે. જે શબ્દો સ્વરથી શરૂ થાય છે તેમાં ‘હેય’ ઉમેરવામાં આવે છે (જેમ કે ‘એપલ’ ‘એપલ-હેય’ બની જાય છે). UTF-8 એન્કોડિંગ વિશેની વિગતોને ધ્યાનમાં રાખો!
-
-હૅશ મૅપ અને વેક્ટરનો ઉપયોગ કરીને, એક લખાણ ઈન્ટરફેસ બનાવો જેથી user કંપનીના વિભાગમાં કર્મચારીઓના નામ ઉમેરી શકે; ઉદાહરણ તરીકે, “સેલીને એન્જિનિયરિંગમાં ઉમેરો” અથવા “અમિરને વેચાણમાં ઉમેરો”. પછી, userને વિભાગમાંના તમામ લોકોની યાદી મેળવવા દો અથવા વિભાગ દ્વારા કંપનીના તમામ લોકોની યાદી મેળવવા દો, જે આલ્ફાબેટીક રીતે ક્રમબદ્ધ હોય.
-
-સ્ટાન્ડર્ડ લાઈબ્રેરી API દસ્તાવેજીકરણ વેક્ટર્સ, સ્ટ્રિંગ્સ અને હેશ મેપ્સ ધરાવતા પદ્ધતિઓનું વર્ણન કરે છે જે આ કસરતો માટે ઉપયોગી થશે!
-
-હવે આપણે વધુ જટિલ પ્રોગ્રામમાં પ્રવેશ કરી રહ્યા છીએ જેમાં ક્રિયાઓ નિષ્ફળ થઈ શકે છે, તેથી ભૂલ વ્યવસ્થાપન વિશે ચર્ચા કરવાનો આ યોગ્ય સમય છે. આપણે તે પછી કરીશું!
-
-</code></pre>
-</i32>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -356,6 +315,7 @@ or_insert પદ્ધતિ `Entry` પરની `or_insert` પદ્ધતિ
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

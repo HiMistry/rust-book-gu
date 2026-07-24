@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -185,10 +185,20 @@
                         <h1 id="functional-language-features-iterators-and-closures"><a class="header" href="#functional-language-features-iterators-and-closures">Functional Language Features: Iterators and Closures</a></h1>
 <p>Rust ની રચના ઘણાં પ્ર વિદ્યમાન ભાષાઓ અને પદ્ધતિઓથી પ્રેરિત થયેલી છે, અને એક મહત્વપૂર્ણ પ્રભાવ એ કાર્યાત્મક પ્રોગ્રામિંગ (functional programming) છે. કાર્યાત્મક શૈલીમાં પ્રોગ્રામિંગમાં ઘણીવાર વિધેયોને મૂલ્યો તરીકે ઉપયોગ કરવો, તેમને Argumentોમાં પસાર કરવા, અન્ય વિધેયોમાંથી પાછા આપવા, પાછળથી અમલ માટે variable (variable) માં સોંપવા વગેરે જેવી બાબતોનો સમાવેશ થાય છે.</p>
 <p>આ પ્રકરણમાં, અમે કાર્યાત્મક પ્રોગ્રામિંગ શું છે કે નથી તે અંગે ચર્ચા નહીં કરીએ પરંતુ Rust ની કેટલીક વિશેષતાઓ પર ધ્યાન કેન્દ્રિત કરીશું જે ઘણી ભાષાઓમાં જોવા મળતી વિશેષતાઓને મળતી આવે છે, જેને સામાન્ય રીતે કાર્યાત્મક કહેવામાં આવે છે.</p>
+<ul>
+<li>
 <p>વધુ વિશિષ્ટ રીતે, અમે આવરી લઈશું:</p>
+</li>
+<li>
 <p>ક્લોઝર્સ, એક ફંક્શન-જેવું બંધારણ જે તમે ચલણમાં સંગ્રહિત કરી શકો છો</p>
+</li>
+<li>
 <p>ઇટરેટર્સ, તત્વોની શ્રેણીને પ્રક્રિયા કરવાની રીત</p>
+</li>
+<li>
 <p>પ્રકરણ ૧૨ માં I/O પ્રોજેક્ટને સુધારવા માટે ક્લોઝર્સ અને ઇટરેટર્સનો ઉપયોગ કેવી રીતે કરવો</p>
+</li>
+</ul>
 <p>ક્લોઝર્સ અને ઇટરેટર્સનું કાર્યક્ષમતા (સ્પૉઇલર એલર્ટ: તે તમે વિચારી શકો છો તેના કરતાં વધુ ઝડપી છે!)</p>
 <p>આપણે અગાઉ કેટલાક અન્ય Rust લક્ષણો આવરી લીધા છે, જેમ કે પેટર્ન મેચિંગ અને enums, જે કાર્યકારી શૈલીથી પ્રભાવિત છે. કારણ કે closures અને iterators પર નિપુણતા મેળવવી ઝડપી, રૂઢિગત Rust કોડ લખવાનો એક મહત્વપૂર્ણ ભાગ છે, અમે આ સમગ્ર પ્રકરણ તેમને સમર્પિત કરીશું.</p>
 
@@ -244,6 +254,7 @@
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

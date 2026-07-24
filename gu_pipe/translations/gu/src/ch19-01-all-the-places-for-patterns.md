@@ -49,20 +49,22 @@ let x = 5;
 
 ચોક્કસ `let` ના પેટર્ન-મેચિંગ પાસાને વધુ સ્પષ્ટ રીતે સમજવા માટે, યાદી ૧૯-૧ જુઓ, જે `let` સાથે એક પેટર્નનો ઉપયોગ કરીને ટ્યૂપલને વિઘટિત કરે છે.
 
-<Listing number="19-1" caption="Using a pattern to destructure a tuple and create three variables at once">
+**Listing 19-1: Using a pattern to destructure a tuple and create three variables at once**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-01/src/main.rs:here}}
 ```
-</Listing>
+
 અહીં, આપણે એક ટ્યૂપલને પેટર્ન સામે સરખાવે છે. Rust મૂલ્ય `(1, 2, 3)` ને પેટર્ન `(x, y, z)` સાથે સરખાવે છે અને જુએ છે કે મૂલ્ય પેટર્નને બંધબેસે છે—એટલે કે, તે જુએ છે કે બંનેમાં સમાન સંખ્યામાં ઘટકો છે—તેથી Rust `1` ને `x`, `2` ને `y`, અને `3` ને `z` સાથે જોડે છે. તમે આ ટ્યૂપલ પેટર્નને ત્રણ વ્યક્તિગત variable પેટર્નનું નેસ્ટિંગ તરીકે વિચારી શકો છો.
 
 જો પેટર્નમાં ઘટકોની સંખ્યા ટ્યૂપલમાં ઘટકોની સંખ્યા સાથે મેળ ખાતી નથી, તો સમગ્ર પ્રકાર મેળ ખાતો નથી અને આપણને કમ્પાઇલર ભૂલ મળશે. ઉદાહરણ તરીકે, યાદી 19-2 ત્રણ ઘટકો ધરાવતા ટ્યૂપલને બે variable વિઘટિત કરવાનો પ્રયાસ દર્શાવે છે, જે કામ કરશે નહીં.
 
-<Listing number="19-2" caption="Incorrectly constructing a pattern whose variables don’t match the number of elements in the tuple">
+**Listing 19-2: Incorrectly constructing a pattern whose variables don’t match the number of elements in the tuple**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-02/src/main.rs:here}}
 ```
-</Listing>
+
 આ કોડને કમ્પાઇલ કરવાના પ્રયત્નોથી આ પ્રકારની ભૂલ આવે છે:
 
 ```console
@@ -78,11 +80,12 @@ let x = 5;
 
 Listing 19-3 નો કોડ Listing 19-3 માં રહેલો કોડ નક્કી કરે છે કે તમારી પૃષ્ઠભૂમિ કયો રંગ ધારણ કરે, જે અનેક શરતો માટેના પરીક્ષણોની શ્રેણી પર આધારિત છે. આ ઉદાહરણ માટે, અમે એવા variable (variable) બનાવ્યા છે જેમાં અગાઉથી નિશ્ચિત મૂલ્યો હોય, જે વાસ્તવિક કાર્યક્રમ user ઇનપુટ (user input) દ્વારા મેળવી શકે છે.
 
-<Listing number="19-3" file-name="src/main.rs" caption="Mixing `if let`, `else if`, `else if let`, and `else`">
+**Listing 19-3: Mixing `if let`, `else if`, `else if let`, and `else`**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-03/src/main.rs}}
 ```
-</Listing>
+
 જો user પોતાની મનપસંદ રંગ પસંદ કરે છે, તો તે રંગ પૃષ્ઠભૂમિ તરીકે વપરાય છે. જો કોઈ મનપસંદ રંગ પસંદ ન કર્યો હોય અને આજ મંગળવાર હોય, તો પૃષ્ઠભૂમિનો રંગ લીલો હોય છે. અન્યથા, જો user પોતાની ઉંમરને String સ્વરૂપે આપે અને અમે તેને સંખ્યા તરીકે સફળતાપૂર્વક parse કરી શકીએ, તો રંગ જાંબલી અથવા નારંગી હોઈ શકે છે, જે સંખ્યાના મૂલ્ય પર આધાર રાખે છે. જો આ શરતોમાંથી કોઈ પણ લાગુ ન થાય, તો પૃષ્ઠભૂમિનો રંગ વાદળી હોય છે.
 
 આ શરતી માળખું અમને જટિલ જરૂરિયાતોને પહોંચી વળવામાં મદદ કરે છે. અહીં આપેલા hardcoded મૂલ્યો સાથે, આ ઉદાહરણ `Using purple as the background color` પ્રિન્ટ કરશે.
@@ -95,22 +98,24 @@ Listing 19-3 નો કોડ Listing 19-3 માં રહેલો કોડ �
 
 `if let` ની રચના સમાન, `while let` શરતી લૂપ એક `while` લૂપને ચાલુ રાખવા માટે પરવાનગી આપે છે જ્યાં સુધી પેટર્ન મેળ ખાતી રહે. સૂચિ ૧૯-૪ માં, અમે એક `while let` લૂપ બતાવીએ છીએ જે થ્રેડ્સ વચ્ચે મોકલવામાં આવેલા સંદેશાઓની રાહ જુએ છે, પરંતુ આ કિસ્સામાં `Result` ની તપાસ કરે છે `Option` ની બદલે.
 
-<Listing number="19-4" caption="Using a `while let` loop to print values for as long as `rx.recv()` returns `Ok`">
+**Listing 19-4: Using a `while let` loop to print values for as long as `rx.recv()` returns `Ok`**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-04/src/main.rs:here}}
 ```
-</Listing>
+
 આ ઉદાહરણ `1`, `2`, અને પછી `3` છાપે છે. `recv` પદ્ધતિ ચેનલની રીસીવર બાજુથી પ્રથમ સંદેશ લે છે અને `Ok(value)` પરત કરે છે. જ્યારે આપણે પ્રકરણ ૧૬ માં પહેલીવાર `recv` જોયો હતો, ત્યારે આપણે સીધો જ ભૂલને અનરેપ કરી હતી, અથવા આપણે એક `for` લૂપનો ઉપયોગ કરીને પુનરાવર્તક તરીકે તેની સાથે ક્રિયાપ્રતિક્રિયા કરી હતી. જો કે, સૂચિ ૧૯-૪ બતાવે છે તેમ, આપણે `while let` નો પણ ઉપયોગ કરી શકીએ છીએ, કારણ કે `recv` પદ્ધતિ દરેક વખતે સંદેશો આવે ત્યાં સુધી `Ok` પરત કરે છે, જ્યાં સુધી મોકલનાર અસ્તિત્વમાં હોય, અને પછી મોકલનાર બાજુ ડિસ્કનેક્ટ થાય ત્યારે `Err` ઉત્પન્ન કરે છે.
 
 ### `for` Loops
 
 એક `for` લૂપમાં, કીવર્ડ `for` પછી તરત આવતું મૂલ્ય એક પ્રકારનું રૂપ છે. ઉદાહરણ તરીકે, `for x in y` માં, `x` એ રૂપ છે. સૂચિ ૧૯-૫ દર્શાવે છે કે કેવી રીતે રૂપનો ઉપયોગ `for` લૂપમાં ટ્યૂપલને વિઘટિત કરવા, અથવા તો ભાગ પાડવા માટે કરી શકાય છે, જે `for` લૂપનો એક ભાગ છે.
 
-<Listing number="19-5" caption="Using a pattern in a `for` loop to destructure a tuple">
+**Listing 19-5: Using a pattern in a `for` loop to destructure a tuple**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-05/src/main.rs:here}}
 ```
-</Listing>
+
 માહિતી ૧૯-૫ માં આપેલ કોડ નીચે મુજબ છાપશે:
 
 ```console
@@ -122,18 +127,20 @@ Listing 19-3 નો કોડ Listing 19-3 માં રહેલો કોડ �
 
 કાર્ય પરિમાણો પણ પેટર્ન હોઈ શકે છે. લિસ્ટિંગ ૧૯-૬ માં આપેલ કોડ, જે `foo` નામનું કાર્ય વ્યાખ્યાયિત કરે છે અને તે `x` નામના એક પરિમાણ ને `i32` પ્રકારનો સ્વીકારે છે, તે હવેથી પરિચિત લાગશે.
 
-<Listing number="19-6" caption="A function signature using patterns in the parameters">
+**Listing 19-6: A function signature using patterns in the parameters**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-06/src/main.rs:here}}
 ```
-</Listing>
+
 `x` ભાગ એક પ્રકાર છે! જેમ આપણે `let` સાથે કર્યું હતું, તેમ આપણે કાર્યના પરિમાણોમાં એક ટ્યૂપલને પણ પ્રકાર સાથે સરખાવી શકીએ છીએ. સૂચિ ૧૯-૭ ટ્યૂપલમાં રહેલા મૂલ્યોને વિભાજિત કરે છે જ્યારે આપણે તેને કાર્યમાં મોકલીએ છીએ.
 
-<Listing number="19-7" file-name="src/main.rs" caption="A function with parameters that destructure a tuple">
+**Listing 19-7: A function with parameters that destructure a tuple**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-07/src/main.rs}}
 ```
-</Listing>
+
 આ કોડ `Current location: (3, 5)` છાપે છે. મૂલ્યો `&(3, 5)` પેટર્ન `&(x, y)` સાથે મેળ ખાય છે, તેથી `x` એ મૂલ્ય `3` છે અને `y` એ મૂલ્ય `5` છે.
 
 આપણે ક્લોઝર પરિમાણ સૂચિમાં પણ પેટર્નનો ઉપયોગ કરી શકીએ છીએ જે રીતે ફંક્શન પરિમાણ સૂચિમાં કરીએ છીએ, કારણ કે ક્લોઝર ફંક્શન જેવા જ હોય છે, જે વિશે પ્રકરણ ૧૩ માં ચર્ચા કરવામાં આવી છે.

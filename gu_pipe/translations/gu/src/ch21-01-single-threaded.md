@@ -17,11 +17,12 @@ $ cd hello
 ```
 હવે src/main.rs માં લિસ્ટિંગ 21-1 નો કોડ દાખલ કરો આરંભ કરવા માટે. આ કોડ સ્થાનિક સરનામું `127.0.0.1:7878` પર આવતા TCP પ્રવાહોની રાહ જોશે. જ્યારે તેને આવતો પ્રવાહ મળશે, ત્યારે તે `Connection established!` છાપશે.
 
-<Listing number="21-1" file-name="src/main.rs" caption="Listening for incoming streams and printing a message when we receive a stream">
+**Listing 21-1: Listening for incoming streams and printing a message when we receive a stream**
+
 ```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-01/src/main.rs}}
 ```
-</Listing>
+
 `TcpListener`નો ઉપયોગ કરીને, આપણે `127.0.0.1:7878` સરનામાં પર TCP જોડાણો સાંભળી શકીએ છીએ. સરનામાંમાં, કોલન પહેલાંનો ભાગ એક IP સરનામું છે જે તમારા કમ્પ્યુટરનું પ્રતિનિધિત્વ કરે છે (આ દરેક કમ્પ્યુટર પર સમાન હોય છે અને લેખકોના કમ્પ્યુટરને વિશેષ કરીને દર્શાવતું નથી), અને `7878` એ પોર્ટ છે. આપણે આ પોર્ટ બે કારણોસર પસંદ કર્યો છે: સામાન્ય રીતે HTTP આ પોર્ટ પર સ્વીકારવામાં આવતું નથી, તેથી આપણો સર્વર તમારા મશીન પર ચાલી રહેલા અન્ય વેબ સર્વર સાથે સંઘર્ષ કરી શકે તેવી શક્યતા ઓછી છે, અને `7878` એ ટેલિફોન પર rust ટાઈપ કરેલું છે.
 
 The `bind` Function આ પરિસ્થિતિમાં `bind` ફંક્શન `new` ફંક્શનની જેમ જ કાર્ય કરે છે કે તે નવું `TcpListener` ઇન્સ્ટન્સ પાછું આપશે. આ ફંક્શનને `bind` કહેવામાં આવે છે કારણ કે, નેટવર્કિંગમાં, પોર્ટ સાથે જોડાઈને સાંભળવાનું “પોર્ટ સાથે જોડાણ” તરીકે ઓળખાય છે. `bind` ફંક્શન એક `Result<T,
@@ -54,11 +55,12 @@ Connection established!
 
 ચાલો બ્રાઉઝરથી વિનંતી વાંચવાની કાર્યક્ષમતા અમલમાં મૂકીએ! પ્રથમ જોડાણ મેળવવાની અને પછી જોડાણ સાથે કોઈ ક્રિયા કરવાની ચિંતાઓનું વિભાજન કરવા માટે, આપણે જોડાણોની પ્રક્રિયા માટે એક નવું વિધેય શરૂ કરીશું. આ નવા `handle_connection` વિધેયમાં, આપણે TCP સ્ટ્રીમમાંથી ડેટા વાંચીશું અને તેને છાપીશું જેથી કરીને બ્રાઉઝરથી મોકલવામાં આવેલ ડેટા જોઈ શકાય. કોડને લિસ્ટિંગ 21-2 જેવો દેખાવ આપો.
 
-<Listing number="21-2" file-name="src/main.rs" caption="Reading from the `TcpStream` and printing the data">
+**Listing 21-2: Reading from the `TcpStream` and printing the data**
+
 ```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-02/src/main.rs}}
 ```
-</Listing>
+
 અમે `std::io::BufReader` અને `std::io::prelude` ને કાર્યક્ષેત્રમાં લાવીએ છીએ જેથી કરીને આપણને એવા લક્ષણો (traits) અને પ્રકારો (types) મેળવવામાં મદદ મળે, જે પ્રવાહમાંથી વાંચવા અને લખવા માટે પરવાનગી આપે છે. `main` ફંક્શનમાં `for` લૂપમાં, અમે સંદેશ છાપવાને બદલે કે આપણે જોડાણ કર્યું છે, હવે નવા `handle_connection` ફંક્શનને બોલાવીએ છીએ અને તેને `stream` પસાર કરીએ છીએ.
 
 `handle_connection` ફંક્શનમાં, અમે એક નવું `BufReader` ઉદાહરણ બનાવીએ છીએ જે `stream` ના સંદર્ભને આવરી લે છે. `BufReader` આપણી માટે `std::io::Read` લક્ષણની પદ્ધતિઓને સંચાલિત કરીને બફરિંગ ઉમેરે છે.
@@ -145,11 +147,12 @@ HTTP/1.1 200 OK\r\n\r\n
 ```
 સ્થિતિ કોડ ૨૦૦ પ્રમાણિત સફળ પ્રતિભાવ છે. આ લખાણ એક નાનકડો સફળ HTTP પ્રતિભાવ છે. ચાલો આને પ્રવાહમાં લખીએ જેવો આપણો સફળ વિનંતીનો પ્રતિભાવ! `handle_connection` કાર્યમાંથી, `println!` દૂર કરો જે વિનંતી માહિતી છાપી રહ્યું હતું અને તેને Listing 21-3 માં રહેલા કોડ સાથે બદલો.
 
-<Listing number="21-3" file-name="src/main.rs" caption="Writing a tiny successful HTTP response to the stream">
+**Listing 21-3: Writing a tiny successful HTTP response to the stream**
+
 ```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-03/src/main.rs:here}}
 ```
-</Listing>
+
 પ્રથમ નવી રેખા `response` variable વ્યાખ્યાયિત કરે છે જે સફળ સંદેશના ડેટાને ધરાવે છે. પછી, અમે અમારા `response` પર `as_bytes` ને બોલાવીએ છીએ જેથી સ્ટ્રિંગ ડેટાને બાઇટ્સમાં રૂપાંતરિત કરી શકાય. `stream` પરની `write_all` પદ્ધતિ `&[u8]` લે છે અને તે બાઇટ્સને સીધા જ જોડાણમાં મોકલે છે. કારણ કે `write_all` ઓપરેશન નિષ્ફળ થઈ શકે છે, અમે અગાઉની જેમ કોઈપણ ભૂલ પરિણામ પર `unwrap` નો ઉપયોગ કરીએ છીએ. ફરીથી, વાસ્તવિક એપ્લિકેશનમાં, તમે અહીં
 
 ભૂલ હેન્ડલિંગ ઉમેરશો. આ ફેરફારો સાથે, ચાલો અમારો કોડ ચલાવીએ અને વિનંતી કરીએ. અમે હવે ટર્મિનલમાં કોઈ ડેટા પ્રિન્ટ કરી રહ્યા નથી, તેથી અમને કાર્ગોનું આઉટપુટ સિવાય કંઈપણ દેખાશે નહીં. જ્યારે તમે વેબ બ્રાઉઝરમાં 127.0.0.1:7878 લોડ કરો છો, ત્યારે તમને ભૂલને બદલે એક ખાલી પૃષ્ઠ મળવું જોઈએ. તમે માત્ર HTTP વિનંતી પ્રાપ્ત કરવાનું અને પ્રતિસાદ મોકલવાનું જાતે જ કોડ કર્યું છે!
@@ -158,18 +161,20 @@ HTTP/1.1 200 OK\r\n\r\n
 
 ચાલો આપણે એક ખાલી પાનાં કરતાં વધુ પરત કરવાની કાર્યક્ષમતા અમલમાં મૂકીએ. તમારા પ્રોજેક્ટ ડિરેક્ટરીના મૂળમાં, `src` ડિરેક્ટરીમાં નહીં, નવી ફાઈલ `hello.html` બનાવો. તમે કોઈપણ HTML દાખલ કરી શકો છો; સૂચિ 21-4 એક શક્યતા દર્શાવે છે.
 
-<Listing number="21-4" file-name="hello.html" caption="A sample HTML file to return in a response">
+**Listing 21-4: A sample HTML file to return in a response**
+
 ```html
 {{#include ../listings/ch21-web-server/listing-21-05/hello.html}}
 ```
-</Listing>
+
 આ એક લઘુત્તમ HTML5 દસ્તાવેજ છે જેમાં એક શીર્ષક અને થોડો લખાણ છે. જ્યારે વિનંતી પ્રાપ્ત થાય ત્યારે આ સર્વર પરથી પાછું મોકલવા માટે, આપણે `handle_connection` ને સૂચિ 21-5 માં દર્શાવ્યા પ્રમાણે સુધારીશું જેથી HTML ફાઈલ વાંચી શકાય, તેને પ્રતિભાવના ભાગ રૂપે ઉમેરી શકાય અને તે મોકલી શકાય.
 
-<Listing number="21-5" file-name="src/main.rs" caption="Sending the contents of *hello.html* as the body of the response">
+**Listing 21-5: Sending the contents of *hello.html* as the body of the response**
+
 ```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-05/src/main.rs:here}}
 ```
-</Listing>
+
 અમે પ્રમાણભૂત લાયબ્રેરીના ફાઇલસિસ્ટમ મોડ્યુલને કાર્યક્ષેત્રમાં લાવવા માટે `use` વિધાનમાં `fs` ઉમેર્યું છે. ફાઈલની સામગ્રીને સ્ટ્રિંગમાં વાંચવા માટેનો કોડ પરિચિત લાગશે; અમે તેનો ઉપયોગ Listing 12-4 માં ફાઇલની સામગ્રી વાંચવા
 
 માટે કર્યો હતો. આગળ, અમે સફળ પ્રતિભાવના શરીર તરીકે ફાઇલની સામગ્રી ઉમેરવા માટે `format!` નો ઉપયોગ કરીએ છીએ. માન્ય HTTP પ્રતિભાવ સુનિશ્ચિત કરવા માટે, અમે `Content-Length` હેડર ઉમેરીએ છીએ, જે અમારા પ્રતિભાવ શરીરના કદ પર સેટ છે—આ કિસ્સામાં, `hello.html` નું કદ.
@@ -182,11 +187,12 @@ HTTP/1.1 200 OK\r\n\r\n
 
 હાલમાં, આપણો વેબ સર્વર ફાઈલમાં રહેલા HTML ને ગ્રાહક જે પણ વિનંતી કરે તેની પરવાયા વગર પાછો મોકલશે. ચાલો આપણે કાર્યક્ષમતા ઉમેરીએ જેથી બ્રાઉઝર / માટે વિનંતી કરી રહ્યું છે કે નહીં તે ચકાસી શકાય અને જો બ્રાઉઝર અન્ય કંઈપણ માટે વિનંતી કરે તો ભૂલ પાછી મોકલી શકાય. આ માટે આપણે `handle_connection` માં ફેરફાર કરવાની જરૂર છે, જે યાદી 21-6 માં દર્શાવેલ છે. આ નવા કોડમાં મળેલ વિનંતીની સામગ્રીને / માટેની વિનંતી જેવી દેખાય છે તેની સામે તપાસ કરવામાં આવે છે અને `if` અને `else` બ્લોક્સ ઉમેરવામાં આવ્યા છે જેથી વિનંતીઓને અલગ રીતે ગણી શકાય.
 
-<Listing number="21-6" file-name="src/main.rs" caption="Handling requests to */* differently from other requests">
+**Listing 21-6: Handling requests to */* differently from other requests**
+
 ```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-06/src/main.rs:here}}
 ```
-</Listing>
+
 આપણે માત્ર HTTP વિનંતીની પ્રથમ રેખાને જ તપાસવાના છીએ, તેથી સમગ્ર વિનંતીને વેક્ટર (vector) માં વાંચવાને બદલે, આપણે પુનરાવર્તક (iterator) માંથી પ્રથમ ઘટક મેળવવા માટે `next` ને બોલાવીએ છીએ. પહેલું `unwrap` `Option` ની સંભાળ લે છે અને જો પુનરાવર્તકમાં કોઈ ઘટકો ન હોય તો કાર્યક્રમ બંધ કરે છે. બીજું `unwrap` `Result` ને હેન્ડલ કરે છે અને Listing 21-2 માં ઉમેરવામાં આવેલ `map` માં રહેલા `unwrap` જેવો જ પ્રભાવ ધરાવે છે.
 
 ત્યારબાદ, આપણે `request_line` તપાસીએ છીએ કે તે / પાથ (path) પર GET વિનંતીની વિનંતી રેખા બરાબર છે કે નહીં. જો એમ હોય, તો `if` બ્લોક આપણી HTML ફાઇલની સામગ્રી આપે છે.
@@ -197,18 +203,20 @@ HTTP/1.1 200 OK\r\n\r\n
 
 હવે ચાલો Listing 21-7 માં રહેલા કોડને `else` બ્લોકમાં ઉમેરીએ જેથી 404 સ્થિતિ કોડ સાથે પ્રતિભાવ પાઠવવામાં આવે, જે દર્શાવે છે કે વિનંતી માટેની સામગ્રી મળતી નથી. આપણે બ્રાઉઝરમાં પ્રદર્શિત કરવા માટે એક પૃષ્ઠ માટે HTML પણ પાછું આપીશું, જે અંતિમ userને પ્રતિભાવ સૂચવે છે.
 
-<Listing number="21-7" file-name="src/main.rs" caption="Responding with status code 404 and an error page if anything other than */* was requested">
+**Listing 21-7: Responding with status code 404 and an error page if anything other than */* was requested**
+
 ```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-07/src/main.rs:here}}
 ```
-</Listing>
+
 અહીં, આપણી પ્રતિભાવમાં સ્થિતિ કોડ 404 અને કારણ પદ `NOT FOUND` સાથે એક સ્થિતિ રેખા છે. પ્રતિભાવનું શરીર ફાઈલ 404.html માં HTML હશે. તમારે ભૂલ પાના માટે 404.html ફાઈલ hello.html ની બાજુમાં બનાવવાની જરૂર પડશે; ફરીથી, તમે કોઈપણ HTML નો ઉપયોગ કરી શકો છો, અથવા Listing 21-8 માં આપેલ ઉદાહરણ HTML નો ઉપયોગ કરી શકો છો.
 
-<Listing number="21-8" file-name="404.html" caption="Sample content for the page to send back with any 404 response">
+**Listing 21-8: Sample content for the page to send back with any 404 response**
+
 ```html
 {{#include ../listings/ch21-web-server/listing-21-07/404.html}}
 ```
-</Listing>
+
 આ ફેરફારો સાથે, તમારું સર્વર ફરીથી ચલાવો. 127.0.0.1:7878 પર વિનંતી કરવાથી hello.html ની સામગ્રી પાછી મળવી જોઈએ, અને અન્ય કોઈપણ વિનંતી, જેમ કે 127.0.0.1:7878/foo , એ 404.html માંથી ભૂલ HTML પાછું આપવું જોઈએ.
 
 <!-- Old headings. Do not remove or links may break. -->
@@ -216,11 +224,12 @@ HTTP/1.1 200 OK\r\n\r\n
 
 વર્તમાન સમયમાં, `if` અને `else` બ્લોક્સમાં ઘણી બધી પુનરાવૃત્તિ છે: બંને ફાઇલો વાંચી રહ્યા છે અને ફાઇલોની સામગ્રીને સ્ટ્રીમમાં લખી રહ્યા છે. એકમાત્ર તફાવત સ્થિતિ લાઇન (status line) અને ફાઇલનું નામ છે. ચાલો કોડને વધુ સંક્ષિપ્ત બનાવીએ, તે તફાવતોને અલગ `if` અને `else` લીટીઓમાં ખેંચીને, જે સ્થિતિ લાઇન અને ફાઇલના નામને variable (variable) ને સોંપશે; પછી આપણે તે variable's ઉપયોગ શરત વગર જ ફાઇલ વાંચવા અને પ્રતિસાદ લખવા માટે કરી શકીશું. સૂચિ 21-9 માં મોટા `if` અને `else` બ્લોક્સને બદલ્યા પછી મળતો કોડ દર્શાવવામાં આવ્યો છે.
 
-<Listing number="21-9" file-name="src/main.rs" caption="Refactoring the `if` and `else` blocks to contain only the code that differs between the two cases">
+**Listing 21-9: Refactoring the `if` and `else` blocks to contain only the code that differs between the two cases**
+
 ```rust
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-09/src/main.rs:here}}
 ```
-</Listing>
+
 હવે `if` અને `else` બ્લોક્સ માત્ર યોગ્ય મૂલ્યો સ્ટેટસ લાઇન અને ફાઇલનામ માટે ટ્યૂપલમાં આપે છે; ત્યારબાદ આપણે ડિસ્ટ્રક્ચરિંગનો ઉપયોગ કરીને `let` વિધાનમાં પેટર્ન દ્વારા `status_line` અને `filename` નાં બે variable સોંપીએ છીએ, જેની ચર્ચા પ્રકરણ 19 માં થયેલી છે.
 
 અગાઉ ડુપ્લિકેટ કરેલો કોડ હવે `if` અને `else` બ્લોક્સની બહાર છે અને `status_line` અને `filename` variable's ઉપયોગ કરે છે. આનાથી બે કેસો વચ્ચેનો તફાવત જોવાનું સરળ બને છે, અને તેનો અર્થ એ થાય છે કે જો આપણે ફાઇલ વાંચવા અને પ્રતિસાદ લખવાની રીત બદલવા માંગતા હોઈએ તો આપણી પાસે કોડને અપડેટ કરવા માટે માત્ર એક જ સ્થાન છે. લિસ્ટિંગ 21-9 માંના કોડનું વર્તન લિસ્ટિંગ 21-7 માં જેવું જ રહેશે.

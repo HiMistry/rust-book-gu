@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -195,12 +195,12 @@
 <h3 id="showing-function-output"><a class="header" href="#showing-function-output">Showing Function Output</a></h3>
 <p>અભાવમાં, જો કોઈ પરીક્ષણ સફળ થાય, તો Rust નું પરીક્ષણ પુસ્તકાલય પ્રમાણિત આઉટપુટમાં છપાયેલ કોઈપણ વસ્તુને ગ્રહણ કરે છે. ઉદાહરણ તરીકે, જો આપણે કોઈ પરીક્ષણમાં <code>println!</code> ને બોલાવીએ અને પરીક્ષણ સફળ થાય, તો આપણે ટર્મિનલમાં <code>println!</code> નું આઉટપુટ જોશું નહીં; આપણે માત્ર તે લીટી જોઈશું જે દર્શાવે છે કે પરીક્ષણ પાસ થયું. જો કોઈ પરીક્ષણ નિષ્ફળ જાય, તો આપણે પ્રમાણિત આઉટપુટમાં છપાયેલું જે કંઈપણ નિષ્ફળતા સંદેશ સાથે જોઈ શકીશું.</p>
 <p>એક ઉદાહરણ તરીકે, યાદી 11-10 માં એક મૂર્ખ કાર્ય છે જે તેના પરિમાણનું મૂલ્ય છાપે છે અને 10 પરત કરે છે, તેમજ એક પરીક્ષણ જે પાસ થાય છે અને એક પરીક્ષણ જે નિષ્ફળ જાય છે.</p>
-<listing number="11-10" file-name="src/lib.rs" caption="Tests for a function that calls `println!`">
-```rust
-{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-10/src/lib.rs}}
-```
-</listing>
-જ્યારે આપણે આ પરીક્ષણો `cargo test` સાથે ચલાવીએ છીએ, ત્યારે આપણને નીચેનું પરિણામ જોવા મળશે:
+<p><strong>Listing 11-10: Tests for a function that calls <code>println!</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-10/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>જ્યારે આપણે આ પરીક્ષણો <code>cargo test</code> સાથે ચલાવીએ છીએ, ત્યારે આપણને નીચેનું પરિણામ જોવા મળશે:</p>
 <pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/listing-11-10/output.txt}}
 </code></pre>
 <p>નોંધ નિષ્ફળ થયેલ પરીક્ષણના સારાંશ આઉટપુટ વિભાગમાં <code>મને 8 મૂલ્ય મળ્યું</code> એવું દર્શાવવામાં આવે છે, જે પરીક્ષણ નિષ્ફળ થવાનું કારણ પણ બતાવે છે. જો આપણે સફળ પરીક્ષણો માટે છપાયેલા મૂલ્યો જોવા માંગતા હોઈએ,</p>
@@ -213,12 +213,12 @@
 <h3 id="running-a-subset-of-tests-by-name"><a class="header" href="#running-a-subset-of-tests-by-name">Running a Subset of Tests by Name</a></h3>
 <p>સંપૂર્ણ પરીક્ષણ સમૂહ ચલાવવામાં કેટલીકવાર ઘણો સમય લાગી શકે છે. જો તમે કોઈ ચોક્કસ ક્ષેત્રના કોડ પર કામ કરી રહ્યા હો, તો તમે માત્ર તે પરીક્ષણો જ ચલાવવા માગી શકો છો જે તે કોડને સંબંધિત હોય. તમે <code>cargo test</code> ને એક Argument તરીકે ચલાવવા માટે ઇચ્છિત પરીક્ષણ(ઓ) ના નામ(ઓ) પસાર કરીને કયા પરીક્ષણો ચલાવવા તે પસંદ કરી શકો છો.</p>
 <p>પ્રદર્શન કરવા માટે કે પરીક્ષણોનો ઉપગણ કેવી રીતે ચલાવવો, અમે પ્રથમ આપણી <code>add_two</code> કાર્ય માટે ત્રણ પરીક્ષણો બનાવીશું, જે યાદી 11-11 માં દર્શાવેલ છે, અને કયા ચલાવવા તે પસંદ કરીશું.</p>
-<listing number="11-11" file-name="src/lib.rs" caption="Three tests with three different names">
-```rust
-{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-11/src/lib.rs}}
-```
-</listing>
-જો આપણે કોઈ Argumentો આપ્યા વિના પરીક્ષણો ચલાવીએ, જેવું કે આપણે અગાઉ જોયું હતું, તો બધાં જ પરીક્ષણો સમાંતર રીતે ચાલશે:
+<p><strong>Listing 11-11: Three tests with three different names</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-11/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>જો આપણે કોઈ Argumentો આપ્યા વિના પરીક્ષણો ચલાવીએ, જેવું કે આપણે અગાઉ જોયું હતું, તો બધાં જ પરીક્ષણો સમાંતર રીતે ચાલશે:</p>
 <pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/listing-11-11/output.txt}}
 </code></pre>
 <h4 id="running-single-tests"><a class="header" href="#running-single-tests">Running Single Tests</a></h4>
@@ -300,6 +300,7 @@
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -187,21 +187,21 @@
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="writing-a-failing-test-for-case-insensitive-search"><a class="header" href="#writing-a-failing-test-for-case-insensitive-search">Writing a Failing Test for Case-Insensitive Search</a></h3>
 <p>અમે સૌપ્રથમ <code>minigrep</code> લાયબ્રેરીમાં એક નવું <code>search_case_insensitive</code> વિધેય ઉમેરીશું જે પર્યાવરણ variable (environment variable) ધરાવતું હોય ત્યારે બોલાશે. અમે TDD પ્રક્રિયાને અનુસરતા રહીશું, તેથી પ્રથમ પગલું ફરીથી નિષ્ફળ પરીક્ષણ લખવાનું છે. અમે નવા <code>search_case_insensitive</code> વિધેય માટે એક નવું પરીક્ષણ ઉમેરીશું અને અમારા જૂના પરીક્ષણને <code>case_sensitive</code> નામ આપીશું જેથી બે પરીક્ષણો વચ્ચેનો તફાવત સ્પષ્ટ થાય, જે યાદી 12-20 માં દર્શાવેલ છે.</p>
-<listing number="12-20" file-name="src/lib.rs" caption="Adding a new failing test for the case-insensitive function we’re about to add">
-```rust
-{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-20/src/lib.rs:here}}
-```
-</listing>
-અમે જૂના પરીક્ષણના `contents` માં ફેરફાર કર્યો છે. અમે એક નવી રેખા ઉમેરી છે જેમાં લખાણ `"Duct tape."` છે, જે મોટા અક્ષર D નો ઉપયોગ કરે છે જે કેસ-સંવેદનશીલ રીતે શોધ કરતી વખતે ક્વેરી `"duct"` સાથે મેળ ખાવું જોઈએ નહીં. આ રીતે જૂના પરીક્ષણને બદલવાથી એ સુનિશ્ચિત કરવામાં મદદ મળે છે કે અમે આકસ્મિક રીતે કેસ-સંવેદનશીલ શોધ કાર્યક્ષમતાને તોડી નાખીએ નહીં જે અમે પહેલાથી જ અમલમાં મૂકી છે. આ પરીક્ષણ હવે પાસ થવું જોઈએ અને જેમ જેમ
+<p><strong>Listing 12-20: Adding a new failing test for the case-insensitive function we’re about to add</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-20/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અમે જૂના પરીક્ષણના <code>contents</code> માં ફેરફાર કર્યો છે. અમે એક નવી રેખા ઉમેરી છે જેમાં લખાણ <code>"Duct tape."</code> છે, જે મોટા અક્ષર D નો ઉપયોગ કરે છે જે કેસ-સંવેદનશીલ રીતે શોધ કરતી વખતે ક્વેરી <code>"duct"</code> સાથે મેળ ખાવું જોઈએ નહીં. આ રીતે જૂના પરીક્ષણને બદલવાથી એ સુનિશ્ચિત કરવામાં મદદ મળે છે કે અમે આકસ્મિક રીતે કેસ-સંવેદનશીલ શોધ કાર્યક્ષમતાને તોડી નાખીએ નહીં જે અમે પહેલાથી જ અમલમાં મૂકી છે. આ પરીક્ષણ હવે પાસ થવું જોઈએ અને જેમ જેમ</p>
 <p>અમે કેસ-અસંવેદનશીલ શોધ પર કામ કરીશું તેમ તેમ તે ચાલુ રહેવું જોઈએ. કેસ-અસંવેદનશીલ શોધ માટેનું નવું પરીક્ષણ ક્વેરી તરીકે <code>"rUsT"</code> નો ઉપયોગ કરે છે. <code>search_case_insensitive</code> ફંક્શનમાં અમે ઉમેરવા જઈ રહ્યા છીએ, ત્યાં ક્વેરી <code>"rUsT"</code> મોટા અક્ષર R સાથેની રેખા <code>"Rust:"</code> અને <code>"Trust me."</code> બંને સાથે મેળ ખાય છે, ભલે તે ક્વેરી કરતાં અલગ કેસિંગ ધરાવતા હોય. આ આપણો નિષ્ફળ પરીક્ષણ છે, અને તે કમ્પાઇલ કરવામાં નિષ્ફળ જશે કારણ કે અમે હજી સુધી <code>search_case_insensitive</code> ફંક્શનને વ્યાખ્યાયિત કર્યું નથી. Listing 12-16 માં <code>search</code> ફંક્શન માટે કર્યા મુજબ હંમેશા ખાલી વેક્ટર પરત કરતા હાડપિંજર અમલીકરણ ઉમેરવા માટે નિઃસંકોચ રહો, જેથી પરીક્ષણ કમ્પાઇલ થાય અને નિષ્ફળ જાય.</p>
 <h3 id="implementing-the-search_case_insensitive-function"><a class="header" href="#implementing-the-search_case_insensitive-function">Implementing the <code>search_case_insensitive</code> Function</a></h3>
 <p><code>search_case_insensitive</code> કાર્ય, યાદી 12-21 માં દર્શાવેલ છે, તે <code>search</code> કાર્ય જેવું જ લગભગ હશે. એકમાત્ર તફાવત એ છે કે અમે <code>query</code> અને દરેક <code>line</code> ને નાના અક્ષરમાં ફેરવીશું જેથી ઇનપુટ Argumentો (arguments) કયા પણ કેસમાં હોય, તેઓ તપાસ કરતી વખતે સમાન કેસમાં હોય.</p>
-<listing number="12-21" file-name="src/lib.rs" caption="Defining the `search_case_insensitive` function to lowercase the query and the line before comparing them">
-```rust
-{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-21/src/lib.rs:here}}
-```
-</listing>
-સૌ પ્રથમ, અમે `query` સ્ટ્રિંગને નાના અક્ષરોમાં ફેરવીએ છીએ અને તેને એક નવા variable (variable) માં સંગ્રહિત કરીએ છીએ, જેનું નામ પહેલાંના `query` ને છાયા પાડે છે. ક્વેરી પર `to_lowercase` બોલાવવું જરૂરી છે જેથી userની ક્વેરી `"rust"` , `"RUST"` , `"Rust"` અથવા `"rUsT"` હોય તો પણ, અમે ક્વેરીને જાણે તે `"rust"` હોય તેમ ગણીશું અને કેસ પ્રત્યે સંવેદનશીલ નહીં રહીએ. જ્યારે `to_lowercase` મૂળભૂત યુનિકોડ (Unicode) ને હેન્ડલ કરશે, ત્યારે તે 100 ટકા સચોટ રહેશે નહીં. જો અમે વાસ્તવિક એપ્લિકેશન લખતા હોત, તો અહીં થોડું વધારે કામ કરવું જોઈતું હતું, પરંતુ આ વિભાગ પર્યાવરણ variables (environment variables) વિશે છે, યુનિકોડ વિશે નહીં, તેથી અમે તેને ત્યાં જ છોડી દઈએ છીએ.
+<p><strong>Listing 12-21: Defining the <code>search_case_insensitive</code> function to lowercase the query and the line before comparing them</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-21/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>સૌ પ્રથમ, અમે <code>query</code> સ્ટ્રિંગને નાના અક્ષરોમાં ફેરવીએ છીએ અને તેને એક નવા variable (variable) માં સંગ્રહિત કરીએ છીએ, જેનું નામ પહેલાંના <code>query</code> ને છાયા પાડે છે. ક્વેરી પર <code>to_lowercase</code> બોલાવવું જરૂરી છે જેથી userની ક્વેરી <code>"rust"</code> , <code>"RUST"</code> , <code>"Rust"</code> અથવા <code>"rUsT"</code> હોય તો પણ, અમે ક્વેરીને જાણે તે <code>"rust"</code> હોય તેમ ગણીશું અને કેસ પ્રત્યે સંવેદનશીલ નહીં રહીએ. જ્યારે <code>to_lowercase</code> મૂળભૂત યુનિકોડ (Unicode) ને હેન્ડલ કરશે, ત્યારે તે 100 ટકા સચોટ રહેશે નહીં. જો અમે વાસ્તવિક એપ્લિકેશન લખતા હોત, તો અહીં થોડું વધારે કામ કરવું જોઈતું હતું, પરંતુ આ વિભાગ પર્યાવરણ variables (environment variables) વિશે છે, યુનિકોડ વિશે નહીં, તેથી અમે તેને ત્યાં જ છોડી દઈએ છીએ.</p>
 <p>નોંધ હવે <code>query</code> એ સ્ટ્રિંગ સ્લાઇસને બદલે <code>String</code> છે, કારણ કે <code>to_lowercase</code> કૉલ કરવાથી નવું ડેટા ઉત્પન્ન થાય છે, હાલના ડેટાનો સંદર્ભ લેતો નથી. ઉદાહરણ તરીકે, જો <code>query</code> <code>"rUsT"</code> હોય, તો તે સ્ટ્રિંગ સ્લાઇસમાં નાના અક્ષર <code>u</code> કે <code>t</code> હોતું નથી, તેથી આપણે <code>"rust"</code> ધરાવતું નવું <code>String</code> ફાળવવું પડે છે. હવે જ્યારે આપણે <code>contains</code> પદ્ધતિને <code>query</code> Argument તરીકે પસાર કરીએ છીએ, ત્યારે આપણે એમ્પરસેન્ડ ઉમેરવાની જરૂર છે, કારણ કે <code>contains</code> ના હસ્તાક્ષર સ્ટ્રિંગ સ્લાઇસ લેવા માટે વ્યાખ્યાયિત કરવામાં આવ્યા છે.</p>
 <p>આગળ, આપણે દરેક <code>line</code> પર <code>to_lowercase</code> ને બોલાવીએ છીએ જેથી બધા અક્ષરો નાના થઈ જાય. હવે કે જ્યારે આપણે <code>line</code> અને <code>query</code> બંનેને નાના અક્ષરમાં ફેરવી લીધા છે, ત્યારે આપણે કેસ ગમે તે હોય તો પણ મેળ ખાતી વસ્તુઓ શોધી શકીશું.</p>
 <p>ચાલો જોઈએ કે આ અમલીકરણ પરીક્ષણો પાસ કરે છે કે નહીં:</p>
@@ -214,18 +214,18 @@
 </span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-22/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>અમે <code>ignore_case</code> ક્ષેત્ર ઉમેર્યું છે જે એક બુલિયન મૂલ્ય ધરાવે છે. હવે, આપણે <code>run</code> વિધેયને <code>ignore_case</code> ક્ષેત્રના મૂલ્યની ચકાસણી કરવા અને તેના આધારે નક્કી કરવા માટે જરૂરી છે કે <code>search</code> વિધેય અથવા <code>search_case_insensitive</code> વિધેયને બોલાવવું, જે યાદી 12-22 માં દર્શાવેલ છે. આ હજી સુધી કમ્પાઇલ થશે નહીં.</p>
-<listing number="12-22" file-name="src/main.rs" caption="Calling either `search` or `search_case_insensitive` based on the value in `config.ignore_case`">
-```rust
-{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-22/src/main.rs:there}}
-```
-</listing>
-અંતે, આપણે પર્યાવરણ variable (environment variable) માટે તપાસ કરવી જરૂરી છે. પર્યાવરણ variables સાથે કાર્ય કરવાના વિધેયો પ્રમાણિત પુસ્તકાલય (standard library) માં `env` મોડ્યુલમાં છે, જે src/main.rs ના પ્રારંભિક ભાગમાં પહેલાથી જ ઉપલબ્ધ છે. આપણે `var` વિધેયનો ઉપયોગ `env` મોડ્યુલમાંથી કરીશું, જેથી ચકાસી શકાય કે `IGNORE_CASE` નામનાં પર્યાવરણ variable માટે કોઈ મૂલ્ય સેટ થયું છે કે નહીં, જે યાદી 12-23 માં દર્શાવેલ છે.
-<listing number="12-23" file-name="src/main.rs" caption="Checking for any value in an environment variable named `IGNORE_CASE`">
-```rust
-{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-23/src/main.rs:here}}
-```
-</listing>
-અહીં, આપણે એક નવું variable, `ignore_case`, બનાવીએ છીએ. તેની કિંમત સેટ કરવા માટે, આપણે `env::var` વિધેયને બોલાવીએ છીએ અને તેને `IGNORE_CASE` પર્યાવરણ ચલનું નામ પસાર કરીએ છીએ. `env::var` વિધેય એક `Result` આપે છે જે સફળ `Ok` પ્રકાર હશે જેમાં પર્યાવરણ variable's કિંમત હોય જો પર્યાવરણ variable કોઈ પણ મૂલ્ય પર સેટ કરેલો હોય. જો પર્યાવરણ variable સેટ ન હોય તો તે `Err` પ્રકાર આપશે.
+<p><strong>Listing 12-22: Calling either <code>search</code> or <code>search_case_insensitive</code> based on the value in <code>config.ignore_case</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-22/src/main.rs:there}}
+<span class="boring">}</span></code></pre>
+<p>અંતે, આપણે પર્યાવરણ variable (environment variable) માટે તપાસ કરવી જરૂરી છે. પર્યાવરણ variables સાથે કાર્ય કરવાના વિધેયો પ્રમાણિત પુસ્તકાલય (standard library) માં <code>env</code> મોડ્યુલમાં છે, જે src/main.rs ના પ્રારંભિક ભાગમાં પહેલાથી જ ઉપલબ્ધ છે. આપણે <code>var</code> વિધેયનો ઉપયોગ <code>env</code> મોડ્યુલમાંથી કરીશું, જેથી ચકાસી શકાય કે <code>IGNORE_CASE</code> નામનાં પર્યાવરણ variable માટે કોઈ મૂલ્ય સેટ થયું છે કે નહીં, જે યાદી 12-23 માં દર્શાવેલ છે.</p>
+<p><strong>Listing 12-23: Checking for any value in an environment variable named <code>IGNORE_CASE</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-23/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અહીં, આપણે એક નવું variable, <code>ignore_case</code>, બનાવીએ છીએ. તેની કિંમત સેટ કરવા માટે, આપણે <code>env::var</code> વિધેયને બોલાવીએ છીએ અને તેને <code>IGNORE_CASE</code> પર્યાવરણ ચલનું નામ પસાર કરીએ છીએ. <code>env::var</code> વિધેય એક <code>Result</code> આપે છે જે સફળ <code>Ok</code> પ્રકાર હશે જેમાં પર્યાવરણ variable’s કિંમત હોય જો પર્યાવરણ variable કોઈ પણ મૂલ્ય પર સેટ કરેલો હોય. જો પર્યાવરણ variable સેટ ન હોય તો તે <code>Err</code> પ્રકાર આપશે.</p>
 <p>આપણે <code>Result</code> પર <code>is_ok</code> પદ્ધતિનો ઉપયોગ કરીએ છીએ કે પર્યાવરણ variable સેટ છે કે નહીં તે તપાસવા માટે, જેનો અર્થ થાય છે કે પ્રોગ્રામને કેસ-સેન્સિટિવ શોધ કરવી જોઈએ. જો <code>IGNORE_CASE</code> પર્યાવરણ variable કોઈ પણ મૂલ્ય પર સેટ ન હોય, તો <code>is_ok</code> <code>false</code> આપશે અને પ્રોગ્રામ કેસ-સેન્સિટિવ શોધ કરશે. આપણે પર્યાવરણ variable’s કિંમતની ચિંતા કરતા નથી, માત્ર તે સેટ છે કે અનસેટ છે તે તપાસીએ છીએ, તેથી આપણે <code>is_ok</code> તપાસી રહ્યા છીએ, <code>unwrap</code>, <code>expect</code>, અથવા <code>Result</code> પરની અન્ય પદ્ધતિઓનો ઉપયોગ કરવાને બદલે જે આપણે અત્યાર સુધી જોયા છે.</p>
 <p>આપણે મૂલ્ય <code>ignore_case</code> variable <code>Config</code> ઉદાહરણમાં મોકલીએ છીએ જેથી <code>run</code> વિધેય તે મૂલ્ય વાંચી શકે અને નક્કી કરી શકે કે <code>search_case_insensitive</code> અથવા <code>search</code> ને બોલાવવું, જે રીતે અમે લિસ્ટિંગ 12-22 માં અમલમાં મુક્યું હતું.</p>
 <p>ચાલો પ્રયત્ન કરીએ! પ્રથમ, આપણે પર્યાવરણ variable સેટ કર્યા વિના અને <code>to</code> ક્વેરી સાથે આપણું કાર્યક્રમ ચલાવીશું, જે કોઈપણ લાઇન સાથે મેળ ખાવું જોઈએ જેમાં બધા નાના અક્ષરોમાં શબ્દ to હોય.</p>
@@ -307,6 +307,7 @@ To an admiring bog!
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

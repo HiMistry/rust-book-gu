@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -191,9 +191,17 @@
 <p>Rust મોટા વિકાસકર્તાઓની ટીમો માટે સહયોગી સાધન તરીકે અસરકારક સાબિત થઈ રહ્યું છે, જેમાં સિસ્ટમ પ્રોગ્રામિંગના જુદા જુદા સ્તરનું જ્ઞાન ધરાવતા લોકો હોય છે. નીચલા સ્તરનો કોડ વિવિધ સૂક્ષ્મ ભૂલોને આકર્ષિત કરે છે, જે મોટાભાગની અન્ય ભાષાઓમાં અનુભવી વિકાસકર્તાઓ દ્વારા વિસ્તૃત પરીક્ષણ અને કાળજીપૂર્વક કોડ સમીક્ષા દ્વારા જ શોધી શકાય છે. Rust માં, કમ્પાઇલર એક ગેટકીપર તરીકે કાર્ય કરે છે, જે આ અસ્પષ્ટ ભૂલો સાથેના કોડને કમ્પાઇલ થવા દેતો નથી, જેમાં એકસાથે ચાલવાની ભૂલોનો પણ સમાવેશ થાય છે. કમ્પાઇલર સાથે કામ કરીને, ટીમ તેમના સમયને પ્રોગ્રામની તર્ક પર કેન્દ્રિત કરવામાં વિતાવી શકે છે, ભૂલોને શોધવામાં નહીં.</p>
 <p>Rust અન્ય આધુનિક વિકાસ સાધનો પણ સિસ્ટમ પ્રોગ્રામિંગની દુનિયામાં લાવે છે:</p>
 <p>Cargo, જે સમાવિષ્ટ નિર્ભરતા વ્યવસ્થાપક અને નિર્માણ સાધન છે, તે Rust ઇકોસિસ્ટમમાં નિર્ભરતા ઉમેરવાનું, કમ્પાઇલ કરવાનું અને તેનું સંચાલન કરવાનું સરળ અને સુસંગત બનાવે છે.</p>
+<ul>
+<li>
 <p><code>rustfmt</code> ફોર્મેટિંગ સાધન વિકાસકર્તાઓ વચ્ચે એકસમાન કોડિંગ શૈલી સુનિશ્ચિત કરે છે.</p>
+</li>
+<li>
 <p>Rust Language Server કોડ પૂર્ણતા અને ઇનલાઇન ભૂલ સંદેશાઓ માટે ஒருங்கிணைந்த વિકાસ પર્યાવરણ (IDE) એકીકરણને સક્ષમ કરે છે.</p>
+</li>
+<li>
 <p>આ અને અન્ય સાધનોનો ઉપયોગ કરીને, વિકાસકર્તાઓ સિસ્ટમ-સ્તરના કોડ લખતી વખતે ઉત્પાદક બની શકે છે.</p>
+</li>
+</ul>
 <h3 id="students"><a class="header" href="#students">Students</a></h3>
 <p>Rust શિષ્યાર્ધિઓ અને સિસ્ટમ વિભાવનાઓ વિશે જાણવા માટે ઉત્સુક હોય તેવા લોકો માટે છે. Rustનો ઉપયોગ કરીને ઘણા લોકોએ ઓપરેટિંગ સિસ્ટમ વિકાસ જેવી બાબતો શીખી છે. સમુદાય ખૂબ જ આવકારદાયક છે અને શિષ્યાર્ધિઓના પ્રશ્નોના ઉત્તર આપવા માટે તૈયાર રહે છે. આ પુસ્તક જેવું કાર્ય કરીને, Rust ટીમ સિસ્ટમ વિભાવનાઓને વધુ લોકો માટે સુલભ બનાવવા માંગે છે, વિશેષ કરીને જેઓ પ્રોગ્રામિંગમાં નવા છે.</p>
 <h3 id="companies"><a class="header" href="#companies">Companies</a></h3>
@@ -222,7 +230,7 @@
 <p>Ferris ફેરિસ | Ferris | Meaning | | –––––––––––––––––––––––––––––––––––––––––––––––––––––––– | ———————————————— | | | આ કોડ સંકલન થતો નથી! | | | આ કોડ ગભરાટ પાડે છે! | | | આ કોડ ઇચ્છિત વર્તન ઉત્પન્ન કરતો</p>
 <p>નથી. | મોટાભાગની પરિસ્થિતિઓમાં, અમે તમને કોઈપણ કોડના યોગ્ય સંસ્કરણ તરફ દોરીશું જે સંકલન થતો નથી.</p>
 <h2 id="source-code"><a class="header" href="#source-code">Source Code</a></h2>
-<p>આ પુસ્તક જેમાંથી ઉત્પન્ન થયેલ છે તે સ્ત્રોત ફાઈલો GitHub પર મળી શકે છે.</p>
+<p>આ પુસ્તક જેમાંથી ઉત્પન્ન થયેલ છે તે સ્ત્રોત ફાઈલો <a href="https://github.com/rust-lang/book/tree/main/src">GitHub</a> પર મળી શકે છે.</p>
 
                     </main>
 
@@ -276,6 +284,7 @@
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -235,12 +235,12 @@
 <p>અતિશય <code>else if</code> અભિવ્યક્તિઓ વાપરવાથી કોડ અવ્યવસ્થિત થઈ શકે છે, તેથી જો તમારી પાસે એક કરતાં વધુ હોય, તો તમે તમારા કોડને સુધારી શકો છો. પ્રકરણ ૬ એક શક્તિશાળી Rust શાખા રચના <code>match</code> વિશે વર્ણવે છે જે આવા કિસ્સાઓ માટે ઉપયોગી છે.</p>
 <h4 id="using-if-in-a-let-statement"><a class="header" href="#using-if-in-a-let-statement">Using <code>if</code> in a <code>let</code> Statement</a></h4>
 <p>કારણ કે <code>if</code> એક અભિવ્યક્તિ છે, આપણે તેનો ઉપયોગ <code>let</code> વિધાનની જમણી બાજુએ variable મૂલ્ય સોંપવા માટે કરી શકીએ છીએ, જે યાદી 3-2 માં દર્શાવેલ છે.</p>
-<listing number="3-2" file-name="src/main.rs" caption="Assigning the result of an `if` expression to a variable">
-```rust
-{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-02/src/main.rs}}
-```
-</listing>
-`number` variable `if` અભિવ્યક્તિના પરિણામ પર આધારિત મૂલ્ય સાથે જોડી દેવામાં આવશે. જુઓ કે શું થાય છે તે જોવા માટે આ કોડ ચલાવો:
+<p><strong>Listing 3-2: Assigning the result of an <code>if</code> expression to a variable</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-02/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p><code>number</code> variable <code>if</code> અભિવ્યક્તિના પરિણામ પર આધારિત મૂલ્ય સાથે જોડી દેવામાં આવશે. જુઓ કે શું થાય છે તે જોવા માટે આ કોડ ચલાવો:</p>
 <pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/listing-03-02/output.txt}}
 </code></pre>
 <p>યાદ રાખવું કે કોડ બ્લોક્સ અંતિમ અભિવ્યક્તિનું મૂલ્યાંકન કરે છે, અને સંખ્યાઓ પણ અભિવ્યક્તિઓ જ હોય છે. આ કિસ્સામાં, સમગ્ર <code>if</code> અભિવ્યક્તિ કયા કોડ બ્લોક ચલાવવામાં આવે તેના પર આધારિત છે. આનો અર્થ એ થાય છે કે <code>if</code> ના દરેક ભાગમાંથી પરિણામો મળવાની સંભાવના ધરાવતા મૂલ્યો સમાન પ્રકારના હોવા જોઈએ; યાદી 3-2 માં, <code>if</code> ભાગ અને <code>else</code> ભાગ બંનેના પરિણામો <code>i32</code> પૂર્ણાંકો હતા. જો પ્રકારો મેળ ખાતા ન હોય, તો નીચે આપેલ ઉદાહરણમાં જેમ કે, આપણને ભૂલ મળશે:</p>
@@ -305,31 +305,31 @@ again!
 <!-- Old headings. Do not remove or links may break. -->
 <h4 id="streamlining-conditional-loops-with-while"><a class="header" href="#streamlining-conditional-loops-with-while">Streamlining Conditional Loops with while</a></h4>
 <p>એક કાર્યક્રમને ઘણીવાર એક ચક્ર (loop) ની અંદર શરતનું મૂલ્યાંકન કરવાની જરૂર પડે છે. જ્યાં સુધી શરત <code>true</code> હોય ત્યાં સુધી ચક્ર ચાલે છે. જ્યારે શરત <code>true</code> રહેવાનું બંધ કરે છે, ત્યારે કાર્યક્રમ <code>break</code> ને બોલાવે છે, જે ચક્રને રોકે છે. <code>loop</code>, <code>if</code>, <code>else</code>, અને <code>break</code> ના સંયોજનનો ઉપયોગ કરીને આ પ્રકારનું વર્તન અમલમાં મૂકવું શક્ય છે; જો તમે ઈચ્છો તો તમે હવે એક કાર્યક્રમમાં તે પ્રયાસ કરી શકો છો. જો કે, આ પેટર્ન એટલી સામાન્ય છે કે Rust પાસે તેના માટે બનેલ ભાષાની રચના છે, જેને <code>while</code> ચક્ર કહેવામાં આવે છે. લિસ્ટિંગ 3-3 માં, અમે ત્રણ વખત કાર્યક્રમને ચક્ર કરવા માટે <code>while</code> નો ઉપયોગ કરીએ છીએ, દરેક વખતે ગણતરી ઘટાડીએ છીએ, અને પછી, ચક્ર પછી, એક સંદેશ છાપવા અને બહાર નીકળવા માટે.</p>
-<listing number="3-3" file-name="src/main.rs" caption="Using a `while` loop to run code while a condition evaluates to `true`">
-```rust
-{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-03/src/main.rs}}
-```
-</listing>
-આ રચના `loop`, `if`, `else`, અને `break` ના ઉપયોગથી જરૂરી થતી ઘણી બધી અંદરની રચનાઓ (nesting) દૂર કરે છે, અને તે વધુ સ્પષ્ટ છે. જ્યાં સુધી કોઈ શરત `true` હોય ત્યાં સુધી કોડ ચાલે છે; અન્યથા, તે લૂપમાંથી બહાર નીકળી જાય છે.
+<p><strong>Listing 3-3: Using a <code>while</code> loop to run code while a condition evaluates to <code>true</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-03/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>આ રચના <code>loop</code>, <code>if</code>, <code>else</code>, અને <code>break</code> ના ઉપયોગથી જરૂરી થતી ઘણી બધી અંદરની રચનાઓ (nesting) દૂર કરે છે, અને તે વધુ સ્પષ્ટ છે. જ્યાં સુધી કોઈ શરત <code>true</code> હોય ત્યાં સુધી કોડ ચાલે છે; અન્યથા, તે લૂપમાંથી બહાર નીકળી જાય છે.</p>
 <h4 id="looping-through-a-collection-with-for"><a class="header" href="#looping-through-a-collection-with-for">Looping Through a Collection with <code>for</code></a></h4>
 <p>તમે જ્યારે કોઈ સંગ્રહના ઘટકો પર ચક્રીય થવા માંગતા હોવ, ત્યારે <code>while</code> રચનાનો ઉપયોગ કરવાનું પસંદ કરી શકો છો, જેમ કે એરે. ઉદાહરણ તરીકે, યાદી 3-4 માં દર્શાવેલ લૂપ એરે <code>a</code> ના દરેક ઘટકને છાપે છે.</p>
-<listing number="3-4" file-name="src/main.rs" caption="Looping through each element of a collection using a `while` loop">
-```rust
-{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-04/src/main.rs}}
-```
-</listing>
-અહીં, કોડ એરેના ઘટકોમાંથી ગણતરી કરે છે. તે ઇન્ડેક્સ `0` થી આરંભ થાય છે અને પછી લૂપ ચલાવે છે જ્યાં સુધી તે એરેના અંતિમ ઇન્ડેક્સ સુધી ન પહોંચે (એટલે કે, જ્યારે `index &lt; 5` હવે `true` ન હોય). આ કોડ ચલાવવાથી એરેના દરેક ઘટક છાપાશે:
+<p><strong>Listing 3-4: Looping through each element of a collection using a <code>while</code> loop</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-04/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>અહીં, કોડ એરેના ઘટકોમાંથી ગણતરી કરે છે. તે ઇન્ડેક્સ <code>0</code> થી આરંભ થાય છે અને પછી લૂપ ચલાવે છે જ્યાં સુધી તે એરેના અંતિમ ઇન્ડેક્સ સુધી ન પહોંચે (એટલે કે, જ્યારે <code>index &lt; 5</code> હવે <code>true</code> ન હોય). આ કોડ ચલાવવાથી એરેના દરેક ઘટક છાપાશે:</p>
 <pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/listing-03-04/output.txt}}
 </code></pre>
 <p>પાંચેય એરે મૂલ્યો ટર્મિનલમાં દેખાય છે, જે અપેક્ષિત છે. ભલે <code>index</code> નું મૂલ્ય અમુક સમયે <code>5</code> સુધી પહોંચી જાય, તેમ છતાં લૂપ એરેમાંથી છઠ્ઠું મૂલ્ય મેળવવાનો પ્રયત્ન કરતા પહેલા જ બંધ થઈ જાય</p>
 <p>છે. However, this approach is error-prone; we could cause the program to panic if the index value or test condition is incorrect. For example, if you changed the definition of the <code>a</code> array to have four elements but forgot to update the condition to <code>while index &lt; 4</code>, the code would panic. It’s also slow, because the compiler adds runtime code to perform the conditional check of whether the index is within the bounds of the array on every iteration through the loop. જો કે, આ અભિગમ ભૂલયુક્ત છે; જો અનુક્રમણિકાનું મૂલ્ય અથવા પરીક્ષણ શરત ખોટી હોય તો આપણે પ્રોગ્રામને ગભરાવવાનું કારણ બની શકે છે. ઉદાહરણ તરીકે, જો તમે <code>a</code> એરેની વ્યાખ્યામાં ચાર ઘટકો ઉમેર્યા હોય પરંતુ શરતને <code>while index &lt; 4</code> માં અપડેટ કરવાનું ભૂલી જાઓ છો, તો કોડ ગભરાઈ જશે. તે ધીમું પણ છે, કારણ કે કમ્પાઇલર દરેક લૂપ પુનરાવર્તન દરમિયાન એરેની સીમામાં અનુક્રમણિકા છે કે નહીં તેની શરતી ચકાસણી કરવા માટે રનટાઇમ કોડ ઉમેરે છે.</p>
 <p>વૈકલ્પિક રીતે, તમે <code>for</code> લૂપનો ઉપયોગ કરી શકો છો અને સંગ્રહમાં દરેક વસ્તુ માટે અમુક કોડ ચલાવી શકો છો. <code>for</code> લૂપ એ યાદી 3-5 માં દર્શાવેલ કોડ જેવું દેખાય છે.</p>
-<listing number="3-5" file-name="src/main.rs" caption="Looping through each element of a collection using a `for` loop">
-```rust
-{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-05/src/main.rs}}
-```
-</listing>
-જ્યારે આપણે આ કોડ ચલાવીશું, ત્યારે આપણને યાદી 3-4 માં જે પરિણામ દેખાય છે તેવું જ પરિણામ જોવા મળશે. વધુ મહત્વની વાત એ છે કે, હવે આપણે કોડની સુરક્ષામાં વધારો કર્યો છે અને એવા ભૂલો થવાની શક્યતાને દૂર કરી છે જે એરેના અંતથી આગળ વધી જવા અથવા પૂરતી દૂર ન જવાથી આવી શકે છે. `for` લૂપમાંથી ઉત્પન્ન થયેલ મશીન કોડ પણ વધુ કાર્યક્ષમ હોઈ શકે છે કારણ કે દરેક પુનરાવર્તનમાં એરેની લંબાઈ સાથે અનુક્રમણિકાની સરખામણી કરવાની જરૂર નથી.
+<p><strong>Listing 3-5: Looping through each element of a collection using a <code>for</code> loop</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-05/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>જ્યારે આપણે આ કોડ ચલાવીશું, ત્યારે આપણને યાદી 3-4 માં જે પરિણામ દેખાય છે તેવું જ પરિણામ જોવા મળશે. વધુ મહત્વની વાત એ છે કે, હવે આપણે કોડની સુરક્ષામાં વધારો કર્યો છે અને એવા ભૂલો થવાની શક્યતાને દૂર કરી છે જે એરેના અંતથી આગળ વધી જવા અથવા પૂરતી દૂર ન જવાથી આવી શકે છે. <code>for</code> લૂપમાંથી ઉત્પન્ન થયેલ મશીન કોડ પણ વધુ કાર્યક્ષમ હોઈ શકે છે કારણ કે દરેક પુનરાવર્તનમાં એરેની લંબાઈ સાથે અનુક્રમણિકાની સરખામણી કરવાની જરૂર નથી.</p>
 <p><code>for</code> લૂપનો ઉપયોગ કરીને, જો તમે એરેમાં રહેલા મૂલ્યોની સંખ્યા બદલો તો તમારે અન્ય કોડને બદલવાની જરૂર નહીં પડે, જે યાદી 3-4 માં વપરાયેલી પદ્ધતિ સાથે થવું જોઈએ.</p>
 <p><code>while</code> માં <code>for</code> લૂપની સલામતી અને સંક્ષિપ્તતા તેને સૌથી વધુ વપરાયેલ લૂપ રચના બનાવે છે. ભલે તમે અમુક કોડને ચોક્કસ સંખ્યામાં વખત ચલાવવા માંગતા હો, જેમ કે Listing 3-3 માં ગણતરી ઉલટાવવાનું ઉદાહરણ હતું, મોટા ભાગના Rustaceans <code>for</code> લૂપનો ઉપયોગ કરશે. આવું કરવા માટે, સ્ટાન્ડર્ડ લાઇબ્રેરી દ્વારા પૂરા પાડવામાં આવેલ <code>Range</code> નો ઉપયોગ કરવો જોઈએ, જે એક સંખ્યાથી શરૂ કરીને બીજી સંખ્યા પહેલાં સમાપ્ત થતી તમામ સંખ્યાઓનું ક્રમશઃ ઉત્પાદન કરે છે.</p>
 <p>અહીં <code>for</code> લૂપ અને અન્ય એક પદ્ધતિ <code>rev</code> નો ઉપયોગ કરીને ગણતરી કેવી દેખાશે તે દર્શાવેલું છે, જે શ્રેણીને ઉલટાવે છે:</p>
@@ -341,9 +341,17 @@ again!
 <p>આ કોડ થોડો વધુ સુખદ છે, ખરું ને?</p>
 <h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
 <p>તમે સફળ થયા! આ એક મોટું પ્રકરણ હતું: તમે variable (variable), સ્કેલર (scalar) અને સંયોજન ડેટા પ્રકારો, વિધેયો (function), ટિપ્પણીઓ (comments), <code>if</code> અભિવ્યક્તિઓ (expressions), અને લૂપ્સ (loops) વિશે શીખ્યા! આ પ્રકરણમાં ચર્ચા કરાયેલ ખ્યાલો સાથે પ્રેક્ટિસ કરવા માટે, નીચે મુજબના કાર્યો કરવા માટે પ્રોગ્રામ બનાવો:</p>
+<ul>
+<li>
 <p>ફahrenheit અને Celsius વચ્ચે તાપમાન રૂપાંતરિત કરો.</p>
+</li>
+<li>
 <p>n વાન Fibonacci સંખ્યા જનરેટ કરો.</p>
+</li>
+<li>
 <p>“The Twelve Days of Christmas” ના રોમાંચક ગીત (Christmas carol) ના શબ્દો છાપો, ગીતમાં રહેલી પુનરાવર્તનનો લાભ લો.</p>
+</li>
+</ul>
 <p>જ્યારે તમે આગળ વધવા માટે તૈયાર હશો, ત્યારે આપણે Rustમાં એક એવી વિભાવના વિશે વાત કરીશું જે અન્ય પ્રોગ્રામિંગ ભાષાઓમાં સામાન્ય રીતે જોવા મળતી નથી: માલિકી (ownership).</p>
 
                     </main>
@@ -398,6 +406,7 @@ again!
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

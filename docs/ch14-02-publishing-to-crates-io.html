@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -188,19 +188,27 @@
 <h3 id="making-useful-documentation-comments"><a class="header" href="#making-useful-documentation-comments">Making Useful Documentation Comments</a></h3>
 <p>તમારા પેકેજોનું સચોટ દસ્તાવેજીકરણ અન્ય userઓને તે કેવી રીતે અને ક્યારે વાપરવું તે જાણવામાં મદદ કરશે, તેથી તેના પર સમય ખર્ચવો યોગ્ય છે. પ્રકરણ ૩ માં, આપણે ચર્ચા કરી હતી કે <code>//</code> નો ઉપયોગ કરીને Rust કોડને કેવી રીતે ટીકા કરવી. Rust પાસે દસ્તાવેજીકરણ ટીકાઓ માટે એક વિશિષ્ટ પ્રકારની ટીકા પણ છે, જેને અનુકૂળ રીતે દસ્તાવેજીકરણ ટીકા કહેવામાં આવે છે, જે HTML દસ્તાવેજીકરણ જનરેટ કરશે. HTML તમારા ક્રેટનો ઉપયોગ કેવી રીતે કરવો માં રસ ધરાવતા પ્રોગ્રામરો માટે જાહેર API આઇટમ્સના દસ્તાવેજોની સામગ્રી દર્શાવે છે, તેના અમલીકરણની વિધિથી વિરુદ્ધ.</p>
 <p>દસ્તાવેજીકરણ ટિપ્પણીઓ દસ્તાવેજીકરણ ટિપ્પણીઓ ત્રણ સ્લેશ, <code>///</code>, નો ઉપયોગ કરે છે, બે સ્લેશને બદલે, અને ફોર્મેટિંગ માટે માર્કડાઉન નોંધેશનને સમર્થન આપે છે. દસ્તાવેજીકરણ ટિપ્પણીઓને તેઓ જે વસ્તુનું વર્ણન કરે છે તે પહેલાં મૂકો. સૂચિ ૧૪-૧ <code>my_crate</code> નામના ક્રેટમાં <code>add_one</code> ફંક્શન માટેની દસ્તાવેજીકરણ ટિપ્પણીઓ દર્શાવે છે.</p>
-<listing number="14-1" file-name="src/lib.rs" caption="A documentation comment for a function">
-```rust
-{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-01/src/lib.rs}}
-```
-</listing>
-અહીં, અમે `add_one` ફંક્શન શું કરે છે તેનું વર્ણન આપીએ છીએ, `ઉદાહરણો` શીર્ષક સાથે એક વિભાગ શરૂ કરીએ છીએ અને પછી કોડ પ્રદાન કરીએ છીએ જે દર્શાવે છે કે `add_one` ફંક્શનનો ઉપયોગ કેવી રીતે કરવો. અમે આ દસ્તાવેજીકરણ ટિપ્પણીમાંથી HTML દસ્તાવેજીકરણ `cargo doc` ચલાવીને જનરેટ કરી શકીએ છીએ. આ આદેશ Rust સાથે વિતરિત `rustdoc` સાધન ચલાવે છે અને જનરેટ થયેલ HTML દસ્તાવેજીકરણને target/doc
+<p><strong>Listing 14-1: A documentation comment for a function</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-01/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>અહીં, અમે <code>add_one</code> ફંક્શન શું કરે છે તેનું વર્ણન આપીએ છીએ, <code>ઉદાહરણો</code> શીર્ષક સાથે એક વિભાગ શરૂ કરીએ છીએ અને પછી કોડ પ્રદાન કરીએ છીએ જે દર્શાવે છે કે <code>add_one</code> ફંક્શનનો ઉપયોગ કેવી રીતે કરવો. અમે આ દસ્તાવેજીકરણ ટિપ્પણીમાંથી HTML દસ્તાવેજીકરણ <code>cargo doc</code> ચલાવીને જનરેટ કરી શકીએ છીએ. આ આદેશ Rust સાથે વિતરિત <code>rustdoc</code> સાધન ચલાવે છે અને જનરેટ થયેલ HTML દસ્તાવેજીકરણને target/doc</p>
 <p>ડિરેક્ટરીમાં મૂકે છે. સુવિધા માટે, <code>cargo doc --open</code> ચલાવવાથી તમારા વર્તમાન crate ના દસ્તાવેજીકરણ (અને તમારા બધા crate ના નિર્ભરતાઓના દસ્તાવેજીકરણ) માટે HTML બનાવવામાં આવશે અને પરિણામ વેબ બ્રાઉઝરમાં ખુલ્લું થશે. <code>add_one</code> ફંક્શન પર નેવિગેટ કરો અને તમે જોશો કે દસ્તાવેજીકરણ ટિપ્પણીઓમાંનો ટેક્સ્ટ કેવી રીતે રેન્ડર થાય છે, જે આકૃતિ 14-1 માં દર્શાવેલ છે. ઉદાહરણો</p>
 <img alt="Rendered HTML documentation for the `add_one` function of `my_crate`" src="img/trpl14-01.png" class="center" />
 આકૃતિ ૧૪-૧: `add_one` કાર્ય માટેનું HTML દસ્તાવેજીકરણ.
 <h4 id="commonly-used-sections"><a class="header" href="#commonly-used-sections">Commonly Used Sections</a></h4>
+<ul>
+<li>
 <p>મેં યાદી 14-1 માં <code># Examples</code> માર્કડાઉન હેડિંગનો ઉપયોગ HTML માં “Examples” શીર્ષક સાથે વિભાગ બનાવવા માટે કર્યો છે. અહીં અન્ય કેટલાક વિભાગો છે જે ક્રેટ લેખકો તેમના દસ્તાવેજીકરણમાં સામાન્ય રીતે વાપરે છે:</p>
+</li>
+<li>
 <p>અણધાર્યા પરિણામો : આ એવા સંજોગો છે જેમાં દસ્તાવેજીકૃત ફંક્શન અણધાર્યું પરિણામ આપી શકે છે. ફંક્શનના કોલર્સ જેમને તેમના પ્રોગ્રામ્સમાં અણધાર્યા પરિણામો ન જોઈતા હોય, તેમણે ખાતરી કરવી જોઈએ કે તેઓ આ પરિસ્થિતિઓમાં ફંક્શનને બોલાવતા નથી.</p>
+</li>
+<li>
 <p>ભૂલો : જો ફંક્શન <code>Result</code> પરત કરે છે, તો આવી શકે તેવી ભૂલોના પ્રકારનું વર્ણન કરવું અને કયા સંજોગોમાં તે ભૂલો પાછી મળી શકે છે તે કોલર્સ માટે મદદરૂપ થઈ શકે છે, જેથી તેઓ વિવિધ પ્રકારની ભૂલોને અલગ રીતે હેન્ડલ કરવા માટે કોડ લખી શકે.</p>
+</li>
+</ul>
 <p>સુરક્ષા: જો ફંક્શનને <code>unsafe</code> બોલાવવું સલામત ન હોય (અમે પ્રકરણ ૨૦ માં અસુરક્ષિતતાની ચર્ચા કરીશું), તો એક વિભાગ હોવો જોઈએ જે સમજાવે છે કે શા માટે ફંક્શન અસુરક્ષિત છે અને ફંક્શન કઈ શરતોની અપેક્ષા રાખે છે જે કોલર્સ જાળવવી જોઈએ.</p>
 <p>મોટાભાગના દસ્તાવેજ નોંધોમાં આ તમામ વિભાગોની જરૂર નથી, પરંતુ આ તમારા કોડ userઓને જાણવામાં રસ હોય તેવા પાસાઓની યાદી તરીકે ઉપયોગી થઈ શકે છે.</p>
 <h4 id="documentation-comments-as-tests"><a class="header" href="#documentation-comments-as-tests">Documentation Comments as Tests</a></h4>
@@ -222,12 +230,12 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <h4 id="contained-item-comments"><a class="header" href="#contained-item-comments">Contained Item Comments</a></h4>
 <p><code>//!</code> પ્રકારની ડોક્યુમેન્ટેશન ટીકાઓ એવા વસ્તુ સાથે સંકળાયેલ હોય છે જેમાં ટીકાઓ સમાવિષ્ટ છે, ત્યારબાદ આવતી વસ્તુઓ સાથે નહીં. સામાન્ય રીતે, આપણે આ ડોક્યુમેન્ટેશન ટીકાઓ ક્રેટના મૂળ ફાઈલ (src/lib.rs દ્વારા પરંપરાગત રીતે) અથવા મોડ્યુલમાં ઉપયોગ કરીએ છીએ જેથી ક્રેટ અથવા સમગ્ર મોડ્યુલનું વર્ણન કરી શકાય.</p>
 <p>ઉદાહરણ તરીકે, <code>my_crate</code> ક્રેટના હેતુનું વર્ણન કરવા માટે, જેમાં <code>add_one</code> ફંક્શન છે, આપણે <code>//!</code> થી શરૂ થતી ડોક્યુમેન્ટેશન ટીકાઓ src/lib.rs ફાઈલની શરૂઆતમાં ઉમેરીએ છીએ, જે યાદી 14-2 માં દર્શાવેલ છે.</p>
-<listing number="14-2" file-name="src/lib.rs" caption="The documentation for the `my_crate` crate as a whole">
-```rust
-{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-02/src/lib.rs:here}}
-```
-</listing>
-માહિતી અહીં છેલ્લા લીટી પછી કોડ નથી જે `//!` થી શરૂ થાય છે. કારણ કે આપણે ટિપ્પણીઓ `//!` થી શરૂ કરી હતી `///` ને બદલે, અમે આ ટિપ્પણી ધરાવતી વસ્તુને દસ્તાવેજીકૃત કરી રહ્યા છીએ, ત્યારબાદની વસ્તુને નહીં. આ કિસ્સામાં, તે વસ્તુ src/lib.rs ફાઇલ છે, જે ક્રેટ રૂટ છે. આ ટિપ્પણીઓ સમગ્ર ક્રેટનું વર્ણન
+<p><strong>Listing 14-2: The documentation for the <code>my_crate</code> crate as a whole</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-02/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>માહિતી અહીં છેલ્લા લીટી પછી કોડ નથી જે <code>//!</code> થી શરૂ થાય છે. કારણ કે આપણે ટિપ્પણીઓ <code>//!</code> થી શરૂ કરી હતી <code>///</code> ને બદલે, અમે આ ટિપ્પણી ધરાવતી વસ્તુને દસ્તાવેજીકૃત કરી રહ્યા છીએ, ત્યારબાદની વસ્તુને નહીં. આ કિસ્સામાં, તે વસ્તુ src/lib.rs ફાઇલ છે, જે ક્રેટ રૂટ છે. આ ટિપ્પણીઓ સમગ્ર ક્રેટનું વર્ણન</p>
 <p>કરે છે. જ્યારે આપણે <code>cargo doc --open</code> ચલાવીએ છીએ, ત્યારે આ ટિપ્પણીઓ <code>my_crate</code> ના દસ્તાવેજીકરણના પ્રથમ પૃષ્ઠ પર જાહેર વસ્તુઓની યાદી ઉપર પ્રદર્શિત થશે, જે આકૃતિ 14-2 માં દર્શાવેલ છે.</p>
 <p>વસ્તુઓ વચ્ચેના દસ્તાવેજીય ટીકાઓ ક્રેટે અને મોડ્યુલોનું વર્ણન કરવા માટે ઉપયોગી છે, વિશેષ કરીને. કન્ટેનરનો મુખ્ય હેતુ સમજાવવા માટે તેનો ઉપયોગ કરો જેથી તમારા userઓ ક્રેટેની વ્યવસ્થાને સમજી શકે.</p>
 <img alt="Rendered HTML documentation with a comment for the crate as a whole" src="img/trpl14-02.png" class="center" />
@@ -238,38 +246,38 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <p>અધ્યાય 7 માં, અમે <code>pub</code> કીવર્ડનો ઉપયોગ કરીને આઇટમને જાહેર કેવી રીતે બનાવવી અને <code>use</code> કીવર્ડથી અવકાશમાં આઇટમ્સ લાવવી તે આવરી લીધી હતી. જો કે, જે માળખું તમને ક્રેટ વિકસાવતી વખતે યોગ્ય લાગે છે તે તમારા userઓ માટે ખૂબ અનુકૂળ ન હોઈ શકે. તમે તમારા સ્ટ્રક્ચર્સને બહુવિધ સ્તરો ધરાવતા વર્ગમાં ગોઠવવા માગી શકો છો, પરંતુ પછીથી તમે વર્ગ વ્યાખ્યાયિત કરેલો પ્રકાર શોધવા માટે લોકોને મુશ્કેલી પડી શકે છે. તેમને <code>use my_crate::some_module::another_module::UsefulType;</code> દાખલ કરવું પડે તેવી અણતрудતા પણ થઈ શકે છે, તેના બદલે <code>use my_crate::UsefulType;</code>.</p>
 <p>ખૂબ જ સારી વાત એ છે કે જો રચના અન્ય પુસ્તકાલયમાંથી વાપરવા માટે અનુકૂળ ન હોય, તો તમારે તમારા આંતરિક સંગઠનને ફરીથી ગોઠવવાની જરૂર નથી: તેના બદલે, તમે વસ્તુઓને ફરીથી નિકાસ કરીને એક જાહેર રચના બનાવી શકો છો જે તમારી ખાનગી રચનાથી અલગ હોય <code>pub use</code> નો</p>
 <p>ઉપયોગ કરીને. ફરીથી નિકાસ કરવાથી એક સ્થાનમાં રહેલી જાહેર વસ્તુને બીજા સ્થાન પર જાહેર કરવામાં આવે છે, જાણે કે તે બીજા સ્થાન પર વ્યાખ્યાયિત થયેલી હોય. ઉદાહરણ તરીકે, માની લો કે આપણે <code>art</code> નામનું પુસ્તકાલય કલાત્મક વિભાવનાઓને મોડેલ કરવા માટે બનાવ્યું છે. આ પુસ્તકાલયમાં બે મોડ્યુલો છે: એક <code>kinds</code> મોડ્યુલ જેમાં <code>PrimaryColor</code> અને <code>SecondaryColor</code> નામના બે enum છે, અને એક <code>utils</code> મોડ્યુલ જેમાં <code>mix</code> નામનું function છે, જે Listing 14-3 માં દર્શાવેલ છે.</p>
-<listing number="14-3" file-name="src/lib.rs" caption="An `art` library with items organized into `kinds` and `utils` modules">
-```rust
-{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-03/src/lib.rs:here}}
-```
-</listing>
-આકૃતિ ૧૪-૩ દર્શાવે છે કે આ ક્રેટ માટે `cargo doc` દ્વારા જનરેટ થયેલ દસ્તાવેજીકરણના મુખ્ય પૃષ્ઠનું સ્વરૂપ કેવું હશે.
+<p><strong>Listing 14-3: An <code>art</code> library with items organized into <code>kinds</code> and <code>utils</code> modules</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-03/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આકૃતિ ૧૪-૩ દર્શાવે છે કે આ ક્રેટ માટે <code>cargo doc</code> દ્વારા જનરેટ થયેલ દસ્તાવેજીકરણના મુખ્ય પૃષ્ઠનું સ્વરૂપ કેવું હશે.</p>
 <img alt="Rendered documentation for the `art` crate that lists the `kinds` and `utils` modules" src="img/trpl14-03.png" class="center" />
 Figure 14-3: `art` દસ્તાવેજીકરણનું પ્રથમ પૃષ્ઠ, જે `kinds` અને `utils` મોડ્યુલો દર્શાવે છે
 <p>નોંધ કરો કે <code>PrimaryColor</code> અને <code>SecondaryColor</code> પ્રકારો પ્રથમ પૃષ્ઠ પર સૂચિબદ્ધ નથી, તેમજ <code>mix</code> ફંક્શન પણ નથી. તેમને જોવા માટે આપણે <code>kinds</code> અને <code>utils</code> પર ક્લિક કરવું પડશે.</p>
 <p>બીજી ક્રેટ (crate) જે આ લાયબ્રેરી પર આધારિત છે, તેને <code>use</code> વિધાનની જરૂર પડશે, જે <code>art</code> માંથી વસ્તુઓને કાર્યક્ષેત્રમાં લાવશે, વર્તમાન રીતે વ્યાખ્યાયિત મોડ્યુલ માળખું સ્પષ્ટ કરીને. લિસ્ટિંગ 14-4 એ ક્રેટનું ઉદાહરણ દર્શાવે છે જે <code>PrimaryColor</code> અને <code>mix</code> વસ્તુઓનો ઉપયોગ કરે છે, જે <code>art</code> ક્રેટમાંથી આવે છે.</p>
-<listing number="14-4" file-name="src/main.rs" caption="A crate using the `art` crate’s items with its internal structure exported">
-```rust
-{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-04/src/main.rs}}
-```
-</listing>
-Listing 14-4 નો લેખક, જે `art` ક્રેટનો ઉપયોગ કરે છે, તેણે શોધવું પડ્યું કે `PrimaryColor` `kinds` મોડ્યુલમાં છે અને `mix` `utils` મોડ્યુલમાં છે. `art` ક્રેટનું મોડ્યુલ માળખું એ `art` ક્રેટ પર કામ કરતા વિકાસકર્તાઓ માટે વધુ સુસંગત છે, જે તેનો ઉપયોગ કરનારાઓ કરતાં. આંતરિક માળખું તેમાં `art` ક્રેટનો ઉપયોગ કેવી રીતે કરવો તે સમજવાનો પ્રયાસ કરી રહેલા વ્યક્તિ માટે કોઈ ઉપયોગી માહિતી ધરાવતું નથી, પરંતુ મૂંઝવણ ઊભી કરે છે કારણ કે તેનો ઉપયોગ કરતા વિકાસકર્તાઓએ શોધવું પડે છે કે ક્યાં જોવાનું છે, અને તેમણે `use` વિધાનોમાં મોડ્યુલ નામો સ્પષ્ટ કરવા પડે છે.
+<p><strong>Listing 14-4: A crate using the <code>art</code> crate’s items with its internal structure exported</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-04/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>Listing 14-4 નો લેખક, જે <code>art</code> ક્રેટનો ઉપયોગ કરે છે, તેણે શોધવું પડ્યું કે <code>PrimaryColor</code> <code>kinds</code> મોડ્યુલમાં છે અને <code>mix</code> <code>utils</code> મોડ્યુલમાં છે. <code>art</code> ક્રેટનું મોડ્યુલ માળખું એ <code>art</code> ક્રેટ પર કામ કરતા વિકાસકર્તાઓ માટે વધુ સુસંગત છે, જે તેનો ઉપયોગ કરનારાઓ કરતાં. આંતરિક માળખું તેમાં <code>art</code> ક્રેટનો ઉપયોગ કેવી રીતે કરવો તે સમજવાનો પ્રયાસ કરી રહેલા વ્યક્તિ માટે કોઈ ઉપયોગી માહિતી ધરાવતું નથી, પરંતુ મૂંઝવણ ઊભી કરે છે કારણ કે તેનો ઉપયોગ કરતા વિકાસકર્તાઓએ શોધવું પડે છે કે ક્યાં જોવાનું છે, અને તેમણે <code>use</code> વિધાનોમાં મોડ્યુલ નામો સ્પષ્ટ કરવા પડે છે.</p>
 <p>જાહેર API માંથી આંતરિક વ્યવસ્થા દૂર કરવા માટે, આપણે લિસ્ટિંગ 14-3 માં <code>art</code> ક્રેટ કોડમાં ફેરફાર કરી શકીએ છીએ અને ટોચના સ્તર પરની વસ્તુઓને ફરીથી નિકાસ કરવા માટે <code>pub use</code> વિધાન ઉમેરી શકીએ છીએ, જે લિસ્ટિંગ 14-5 માં દર્શાવેલ છે.</p>
-<listing number="14-5" file-name="src/lib.rs" caption="Adding `pub use` statements to re-export items">
-```rust
-{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-05/src/lib.rs:here}}
-```
-</listing>
-આ ક્રેઇટ માટે `cargo doc` દ્વારા ઉત્પન્ન થતું API દસ્તાવેજીકરણ હવે મુખ્ય પૃષ્ઠ પર ફરીથી નિકાસ થયેલ વસ્તુઓને સૂચિબદ્ધ કરશે અને લિંક કરશે, જે આકૃતિ 14-4 માં દર્શાવ્યા મુજબ છે, જેનાથી `PrimaryColor` અને `SecondaryColor` પ્રકારો અને `mix` કાર્ય શોધવાનું સરળ બનશે.
+<p><strong>Listing 14-5: Adding <code>pub use</code> statements to re-export items</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-05/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ ક્રેઇટ માટે <code>cargo doc</code> દ્વારા ઉત્પન્ન થતું API દસ્તાવેજીકરણ હવે મુખ્ય પૃષ્ઠ પર ફરીથી નિકાસ થયેલ વસ્તુઓને સૂચિબદ્ધ કરશે અને લિંક કરશે, જે આકૃતિ 14-4 માં દર્શાવ્યા મુજબ છે, જેનાથી <code>PrimaryColor</code> અને <code>SecondaryColor</code> પ્રકારો અને <code>mix</code> કાર્ય શોધવાનું સરળ બનશે.</p>
 <img alt="Rendered documentation for the `art` crate with the re-exports on the front page" src="img/trpl14-04.png" class="center" />
 Figure 14-4: `art` દસ્તાવેજીકરણનું પ્રથમ પાનું જે પુનઃનિકાસની યાદી દર્શાવે છે. `art` ક્રેટ userઓ
 <p>હજી પણ લિસ્ટિંગ 14-3 માંથી આંતરિક રચના જોઈ અને ઉપયોગ કરી શકે છે, જે લિસ્ટિંગ 14-4 માં દર્શાવેલ છે, અથવા તેઓ લિસ્ટિંગ 14-5 માં વધુ અનુકૂળ રચનાનો ઉપયોગ કરી શકે છે, જે લિસ્ટિંગ 14-6 માં બતાવ્યું છે.</p>
-<listing number="14-6" file-name="src/main.rs" caption="A program using the re-exported items from the `art` crate">
-```rust
-{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-06/src/main.rs:here}}
-```
-</listing>
-જ્યારે ઘણાં સંકલિત મોડ્યુલો હોય છે, ત્યારે ટોચના સ્તર પર પ્રકારોને `pub use` સાથે ફરીથી નિકાસ કરવાથી ક્રેટનો ઉપયોગ કરનારા લોકોના અનુભવમાં નોંધપાત્ર ફેરફાર થઈ શકે છે. Another common use of `pub use` is to re-export definitions of a dependency in the current crate to make that crate's definitions part of your crate’s public API. `pub use` નો બીજો સામાન્ય ઉપયોગ એ છે કે વર્તમાન ક્રેટમાં એક નિર્ભરતાની વ્યાખ્યાઓને ફરીથી નિકાસ કરવી જેથી તે ક્રેટની વ્યાખ્યાઓ તમારા ક્રેટના જાહેર API નો ભાગ બને. Creating a useful public API structure
+<p><strong>Listing 14-6: A program using the re-exported items from the <code>art</code> crate</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-06/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>જ્યારે ઘણાં સંકલિત મોડ્યુલો હોય છે, ત્યારે ટોચના સ્તર પર પ્રકારોને <code>pub use</code> સાથે ફરીથી નિકાસ કરવાથી ક્રેટનો ઉપયોગ કરનારા લોકોના અનુભવમાં નોંધપાત્ર ફેરફાર થઈ શકે છે. Another common use of <code>pub use</code> is to re-export definitions of a dependency in the current crate to make that crate’s definitions part of your crate’s public API. <code>pub use</code> નો બીજો સામાન્ય ઉપયોગ એ છે કે વર્તમાન ક્રેટમાં એક નિર્ભરતાની વ્યાખ્યાઓને ફરીથી નિકાસ કરવી જેથી તે ક્રેટની વ્યાખ્યાઓ તમારા ક્રેટના જાહેર API નો ભાગ બને. Creating a useful public API structure</p>
 <p>ઉપયોગી જાહેર API માળખું બનાવવું એ વિજ્ઞાન કરતાં કળા છે, અને તમારા userઓ માટે શ્રેષ્ઠ કામ કરે તેવા API શોધવા માટે તમે પુનરાવર્તન કરી શકો છો. Choosing <code>pub use</code> gives you flexibility in how you structure your crate internally and decouples that internal structure from what you present to your users. <code>pub use</code> પસંદ કરવાથી તમને તમારા ક્રેટને આંતરિક રીતે કેવી રીતે માળખું આપવું તે અંગે લવચીકતા મળે છે અને તે આંતરિક માળખાને તમે userઓ સમક્ષ શું રજૂ કરો છો તેનાથી અલગ કરે છે. Look at some of the code of crates you’ve installed to see if their internal structure differs from their public API. તમે ઇન્સ્ટોલ કરેલા ક્રેટના કેટલાક કોડને જુઓ, જેથી તેમના આંતરિક માળખા તેમની જાહેર API થી અલગ છે કે નહીં તે જાણી શકાય.</p>
 <h3 id="setting-up-a-cratesio-account"><a class="header" href="#setting-up-a-cratesio-account">Setting Up a Crates.io Account</a></h3>
 <p>તમે કોઈપણ ક્રેટે પ્રકાશિત કરી શકો તે પહેલાં, તમારે crates.io પર એક ખાતું બનાવવાની અને API ટોકન મેળવવાની જરૂર છે. આવું કરવા માટે, crates.io ની મુખ્ય પાનાની મુલાકાત લો અને GitHub ખાતા દ્વારા લૉગ ઇન કરો. (GitHub ખાતું હાલમાં જરૂરી છે, પરંતુ ભવિષ્યમાં સાઇટ અન્ય રીતે ખાતું બનાવવા માટે પણ સમર્થ હોઈ શકે છે.) એકવાર તમે લૉગ ઇન થઈ જાઓ, પછી તમારા ખાતાની સેટિંગ્સ https://crates.io/me/ ની મુલાકાત લો અને તમારો API કી મેળવો. પછી, <code>cargo login</code> આદેશ ચલાવો અને જ્યારે પૂછવામાં આવે ત્યારે તમારો API કી પેસ્ટ કરો, જેમ કે:</p>
@@ -422,6 +430,7 @@ cargo yank carol-test --version 2.1.0 --undo
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

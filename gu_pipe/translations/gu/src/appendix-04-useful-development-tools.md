@@ -73,7 +73,7 @@ $ cargo clippy
 ```
 ઉદાહરણ તરીકે, જો તમે એક એવી કાર્યક્રમ લખો છો જે ગાણિતિક અચળાંકનું આશરે મૂલ્ય વાપરે છે, જેમ કે પાઇ, તો આ કાર્યક્રમ કરે છે:
 
-<Listing file-name="src/main.rs">
+
 ```rust
 fn main() {
     let x = 3.1415;
@@ -81,7 +81,7 @@ fn main() {
     println!("the area of the circle is {}", x * r * r);
 }
 ```
-</Listing>
+
 આ પ્રોજેક્ટ પર `cargo clippy` ચલાવવાથી આ ભૂલ આવે છે:
 
 ```text
@@ -99,7 +99,7 @@ error: approximate value of `f{32, 64}::consts::PI` found
 
 નીચે આપેલ કોડ Clippy તરફથી કોઈ ભૂલો કે ચેતવણીઓ ઉત્પન્ન કરતો નથી:
 
-<Listing file-name="src/main.rs">
+
 ```rust
 fn main() {
     let x = std::f64::consts::PI;
@@ -107,7 +107,7 @@ fn main() {
     println!("the area of the circle is {}", x * r * r);
 }
 ```
-</Listing>
+
 વધુ માહિતી માટે, ક્લિપીનું દસ્તાવેજીકરણ જુઓ.
 
 ### IDE Integration Using `rust-analyzer`

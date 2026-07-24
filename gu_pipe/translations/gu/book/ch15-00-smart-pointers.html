@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -188,9 +188,17 @@
 <p>Rust ભાષામાં, માલિકી (ownership) અને ઉછીના લેવાની (borrowing) વિભાવના સાથે, સંદર્ભો (references) અને સ્માર્ટ પોઇન્ટર્સ વચ્ચે એક વધારાનો તફાવત છે: જ્યારે સંદર્ભો માત્ર ડેટા ઉછીના લે છે, ત્યારે મોટાભાગના કિસ્સાઓમાં સ્માર્ટ પોઇન્ટર્સ જે ડેટા તરફ નિર્દેશ કરે છે તેને પોતાના કબજામાં રાખે છે.</p>
 <p>સ્માર્ટ પોઇન્ટર્સ સામાન્ય રીતે સ્ટ્રક્ચનો ઉપયોગ કરીને અમલમાં મૂકવામાં આવે છે. એક સામાન્ય સ્ટ્રક્ચરથી વિપરીત, સ્માર્ટ પોઇન્ટર્સ <code>Deref</code> અને <code>Drop</code> નામના ટ્રેઇટ્સ (traits)નું પાલન કરે છે. <code>Deref</code> ટ્રેઇટ સ્માર્ટ પોઇન્ટર સ્ટ્રક્ચરના ઉદાહરણને સંદર્ભની જેમ વર્તવા દે છે, જેથી તમે તમારા કોડને સંદર્ભો અથવા સ્માર્ટ પોઇન્ટર્સ સાથે કામ કરવા માટે લખી શકો. <code>Drop</code> ટ્રેઇટ તમને તે કોડને કસ્ટમાઇઝ કરવાની મંજૂરી આપે છે જે સ્માર્ટ પોઇન્ટરના ઉદાહરણની અવકાશમાંથી બહાર નીકળી જાય ત્યારે ચલાવવામાં આવે છે. આ પ્રકરણમાં, અમે આ બંને ટ્રેઇટ્સ વિશે ચર્ચા કરીશું અને સમજાવીશું કે તેઓ સ્માર્ટ પોઇન્ટર્સ માટે શા માટે મહત્વપૂર્ણ છે.</p>
 <p>આપેલ કે સ્માર્ટ પોઇન્ટર પેટર્ન એક સામાન્ય ડિઝાઇન પેટર્ન છે જે Rust માં વારંવાર વપરાય છે, આ પ્રકરણમાં બધા હાલના સ્માર્ટ પોઇન્ટર્સ આવરી લેવામાં આવશે નહીં. ઘણાં પુસ્તકાલયો (libraries) પોતાના સ્માર્ટ પોઇન્ટર્સ ધરાવે છે, અને તમે તમારા પોતાના પણ લખી શકો છો. અમે પ્રમાણભૂત પુસ્તકાલય (standard library) માં સૌથી સામાન્ય સ્માર્ટ પોઇન્ટર્સ આવરી લઈશું:</p>
+<ul>
+<li>
 <p><code>Box&lt;T&gt;</code> , હીપ પર મૂલ્યો ફાળવવા માટે</p>
+</li>
+<li>
 <p><code>Rc&lt;T&gt;</code> , એક રેફરન્સ ગણતરી પ્રકાર જે બહુવિધ માલિકીને સક્ષમ કરે છે</p>
+</li>
+<li>
 <p><code>Ref&lt;T&gt;</code> અને <code>RefMut&lt;T&gt;</code>, <code>RefCell&lt;T&gt;</code> દ્વારા ઍક્સેસ કરવામાં આવે છે, જે એક પ્રકાર છે જે કમ્પાઇલ સમયની જગ્યાએ રનટાઇમ પર ઉધાર લેવાના નિયમોનું પાલન કરે છે.</p>
+</li>
+</ul>
 <p>અતિરિક્ત રીતે, આપણે આંતરિક પરિવર્તનશીલતા (interior mutability) પેટર્નનું વિવરણ કરીશું જ્યાં અપરિવર્તનશીલ પ્રકાર (immutable type) આંતરિક મૂલ્યને પરિવર્તિત કરવા માટે API પ્રદાન કરે છે. આપણે સંદર્ભ ચક્ર (reference cycles) વિશે પણ ચર્ચા કરીશું: તે કેવી રીતે સ્મૃતિ લીક (memory leak) કરી શકે છે અને તેને કેવી રીતે અટકાવી શકાય છે.</p>
 <p>ચાલો શરૂ કરીએ!</p>
 
@@ -246,6 +254,7 @@
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

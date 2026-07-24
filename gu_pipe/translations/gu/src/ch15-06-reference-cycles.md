@@ -6,20 +6,21 @@ Rustની સ્મૃતિ સુરક્ષા ખાતરીઓ તેન
 
 ચાલો જોઈએ કે સંદર્ભ ચક્ર કેવી રીતે થઈ શકે છે અને તેને અટકાવવા માટે શું કરવું, યાદી `List` enum ની વ્યાખ્યા અને યાદી 15-25 માં `tail` પદ્ધતિથી આરંભ કરીએ.
 
-<Listing number="15-25" file-name="src/main.rs" caption="A cons list definition that holds a `RefCell<T>` so that we can modify what a `Cons` variant is referring to">
+` so that we can modify what a `Cons` variant is referring to">
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-25/src/main.rs:here}}
 ```
-</Listing>
+
 આપણે યાદી (List) ની વ્યાખ્યાનો બીજો પ્રકાર વાપરી રહ્યા છીએ, જે યાદી 15-5 માં દર્શાવેલ છે. `Cons` પ્રકારના બીજા ઘટક હવે `RefCell<Rc<List>>` છે, જેનો અર્થ થાય છે કે આપણે યાદી 15-24 માં કર્યા મુજબ `i32` મૂલ્યમાં ફેરફાર કરવાની ક્ષમતાને બદલે, `Cons` પ્રકાર નિર્દેશિત કરેલા `List` મૂલ્યમાં ફેરફાર કરવા માંગીએ છીએ. આપણે બીજા ઘટકને મેળવવા માટે અનુકૂળતા ખાતર `tail` પદ્ધતિ પણ ઉમેરી રહ્યા છીએ જો આપણી પાસે `Cons` પ્રકાર હોય તો.
 
 યાદી 15-26 માં, આપણે એક `main` કાર્ય ઉમેરી રહ્યા છીએ જે યાદી 15-25 માં વ્યાખ્યાયિત કરેલાનો ઉપયોગ કરે છે. આ કોડ `a` માં એક યાદી અને `b` માં એક યાદી બનાવે છે જે `a` માં યાદી તરફ નિર્દેશ કરે છે. પછી, તે `a` માં યાદીને `b` તરફ નિર્દેશ કરવા માટે બદલે છે, જેનાથી સંદર્ભ ચક્ર (reference cycle) બને છે. આ પ્રક્રિયાના વિવિધ તબક્કામાં સંદર્ભ ગણતરીઓ શું છે તે દર્શાવવા માટે `println!` વિધાનનો ઉપયોગ કરવામાં આવ્યો છે.
 
-<Listing number="15-26" file-name="src/main.rs" caption="Creating a reference cycle of two `List` values pointing to each other">
+**Listing 15-26: Creating a reference cycle of two `List` values pointing to each other**
+
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-26/src/main.rs:here}}
 ```
-</Listing>
+
 આપણે variable `a` માં `5, Nil` ની પ્રારંભિક યાદી ધરાવતું `Rc<List>` ઉદાહરણ બનાવીએ છીએ. ત્યારબાદ આપણે variable `b` માં બીજું `Rc<List>` ઉદાહરણ બનાવીએ છીએ જે `10` નું મૂલ્ય ધરાવે છે અને `a` માં રહેલી યાદી તરફ નિર્દેશ કરે છે.
 
 આપણે `a` ને એવી રીતે બદલીએ છીએ કે તે હવે `Nil` ને બદલે `b` તરફ નિર્દેશ કરે, જેનાથી એક ચક્ર બને છે. આ કરવા માટે આપણે `tail` પદ્ધતિનો ઉપયોગ કરીને `a` માં રહેલા `RefCell<Rc<List>>` નો સંદર્ભ મેળવીએ છીએ, જેને આપણે variable `link` માં મૂકીએ છીએ. ત્યારબાદ આપણે `RefCell<Rc<List>>` પર `borrow_mut` પદ્ધતિનો ઉપયોગ કરીએ છીએ જેથી અંદરનું મૂલ્ય `Nil` ધરાવતા `Rc<List>` થી બદલાઈને `b` માં રહેલા `Rc<List>` થઈ જાય.
@@ -67,11 +68,12 @@ Figure 15-4: યાદીઓ `a` અને `b` નો સંદર્ભ ચક�
 
 `children` માં `Vec<Rc<Node>>` ની આસપાસ રાખીએ છીએ. આગળ, અમે અમારી struct વ્યાખ્યાનો ઉપયોગ કરીશું અને એક `Node` ઉદાહરણ બનાવીશું જેનું નામ `leaf` છે, જેમાં `3` મૂલ્ય અને કોઈ બાળકો નથી, અને બીજું ઉદાહરણ બનાવીશું જેનું નામ `branch` છે, જેમાં `5` મૂલ્ય અને `leaf` એ તેના બાળકોમાંનું એક છે, જે Listing 15-27 માં દર્શાવેલ છે.
 
-<Listing number="15-27" file-name="src/main.rs" caption="Creating a `leaf` node with no children and a `branch` node with `leaf` as one of its children">
+**Listing 15-27: Creating a `leaf` node with no children and a `branch` node with `leaf` as one of its children**
+
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-27/src/main.rs:there}}
 ```
-</Listing>
+
 આપણે `Rc<Node>` ને `leaf` માં નકલ કરીએ છીએ અને તેને `branch` માં સંગ્રહિત કરીએ છીએ, જેનો અર્થ થાય છે કે `leaf` માં રહેલો `Node` હવે બે માલિકો ધરાવે છે: `leaf` અને `branch`. આપણે `branch.children` દ્વારા `branch` થી `leaf` સુધી પહોંચી શકીએ છીએ, પરંતુ `leaf` થી `branch` સુધી જવાનો કોઈ રસ્તો નથી. તેનું કારણ એ છે કે `leaf` પાસે `branch` નો સંદર્ભ નથી અને તેઓ સંબંધિત છે તે ખબર નથી. આપણે ઈચ્છીએ છીએ કે `leaf` જાણે કે `branch` તેનો પિતા છે. આપણે આવતા પગલામાં આ કરીશું.
 
 #### Adding a Reference from a Child to Its Parent
@@ -89,11 +91,12 @@ Figure 15-4: યાદીઓ `a` અને `b` નો સંદર્ભ ચક�
 ```
 એક નોડ તેના પિતૃ નોડનો સંદર્ભ લઈ શકશે પરંતુ તે તેના પિતૃ નોડનો માલિક નહીં હોય. સૂચિ ૧૫-૨૮ માં, અમે `main` ને આ નવી વ્યાખ્યાનો ઉપયોગ કરવા માટે અપડેટ કરીએ છીએ જેથી `leaf` નોડને તેના પિતૃ, `branch` નો સંદર્ભ લેવાનો માર્ગ મળે.
 
-<Listing number="15-28" file-name="src/main.rs" caption="A `leaf` node with a weak reference to its parent node, `branch`">
+**Listing 15-28: A `leaf` node with a weak reference to its parent node, `branch`**
+
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-28/src/main.rs:there}}
 ```
-</Listing>
+
 Creating the `leaf` node `leaf` નોડ બનાવવાની પ્રક્રિયા યાદગાર 15-27 જેવી જ છે, સિવાય કે `parent` ક્ષેત્ર : `leaf` શરૂઆતમાં કોઈ પેરેન્ટ વગરની હોય છે, તેથી આપણે એક નવું, ખાલી `Weak<Node>`
 
 સંદર્ભ ઉદાહરણ બનાવીએ છીએ. આ સમયે, જ્યારે આપણે `upgrade` પદ્ધતિનો ઉપયોગ કરીને `leaf` ના પેરેન્ટનો સંદર્ભ મેળવવાનો પ્રયત્ન કરીએ છીએ, ત્યારે આપણને `None` મૂલ્ય મળે છે. આ આપણે પ્રથમ `println!` વિધાનના પરિણામમાં જોઈ શકીએ છીએ:
@@ -116,11 +119,12 @@ children: RefCell { value: [] } }] } })
 
 ચાલો જોઈએ કે `Rc<Node>` ઇન્સ્ટન્સના `strong_count` અને `weak_count` મૂલ્યો કેવી રીતે બદલાય છે, એક નવું આંતરિક ક્ષેત્ર બનાવીને અને `branch` ની રચનાને તે ક્ષેત્રમાં ખસેડીને. આમ કરવાથી, આપણે જોઈ શકીએ છીએ કે `branch` બનાવવામાં આવે છે અને જ્યારે તે અવકાશમાંથી બહાર નીકળી જાય ત્યારે તેને નાબૂદ કરવામાં આવે છે. ફેરફારો સૂચિ ૧૫-૨૯ માં દર્શાવ્યા છે.
 
-<Listing number="15-29" file-name="src/main.rs" caption="Creating `branch` in an inner scope and examining strong and weak reference counts">
+**Listing 15-29: Creating `branch` in an inner scope and examining strong and weak reference counts**
+
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-29/src/main.rs:here}}
 ```
-</Listing>
+
 `leaf` બનાવ્યા પછી, તેનું `Rc<Node>` એક મજબૂત ગણતરી અને શૂન્ય નબળી ગણતરી ધરાવે છે. આંતરિક અવકાશમાં, અમે `branch` બનાવીએ છીએ અને તેને `leaf` સાથે સાંકળીએ છીએ, જેના પરિણામે જ્યારે આપણે ગણતરીઓ છાપીએ છીએ, ત્યારે `branch` માંનું `Rc<Node>` એક મજબૂત ગણતરી 1 અને નબળી ગણતરી 1 (કારણ કે `leaf.parent` `Weak<Node>` સાથે `branch` તરફ નિર્દેશ કરે છે) ધરાવશે. જ્યારે આપણે `leaf` માં ગણતરીઓ છાપીએ છીએ, ત્યારે આપણે જોઈશું કે તેની મજબૂત ગણતરી 2 હશે કારણ કે `branch` હવે `branch.children` માં `leaf` ના `Rc<Node>` ની નકલ સંગ્રહિત કરે છે, પરંતુ તેની નબળી ગણતરી હજી પણ શૂન્ય રહેશે.
 
 જ્યારે આંતરિક અવકાશ પૂર્ણ થાય છે, ત્યારે `branch` અવકાશમાંથી બહાર જાય છે અને `Rc<Node>` ની પ્રબળ ગણતરી 0 સુધી ઘટે છે, જેથી તેનું `Node` નાશ પામે છે. `leaf.parent` માંથી મળતી 1 ની નબળી ગણતરી `Node` નાશ પામવામાં કોઈ ભાગ લેતી નથી, તેથી આપણને સ્મૃતિ લીક થતું નથી!

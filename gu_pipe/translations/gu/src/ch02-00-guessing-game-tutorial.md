@@ -51,11 +51,12 @@ The `run` Command `run` આદેશ પ્રોજેક્ટ પર ઝડ�
 
 અનુમાન લગાવવાની રમત કાર્યક્રમના પ્રથમ ભાગમાં user પાસેથી ઇનપુટ માંગવામાં આવશે, તે ઇનપુટની પ્રક્રિયા કરવામાં આવશે અને ખાતરી કરવામાં આવશે કે ઇનપુટ અપેક્ષિત સ્વરૂપમાં છે. શરૂ કરવા માટે, આપણે ખેલાડીને અનુમાન દાખલ કરવાની મંજૂરી આપીશું. Listing 2-1 નો કોડ src/main.rs માં દાખલ કરો.
 
-<Listing number="2-1" file-name="src/main.rs" caption="Code that gets a guess from the user and prints it">
+**Listing 2-1: Code that gets a guess from the user and prints it**
+
 ```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:all}}
 ```
-</Listing>
+
 આ કોડમાં ઘણી માહિતી છે, તેથી ચાલો તેને લીટી દર લીટી જોઈએ. user પાસેથી ઇનપુટ મેળવવા અને પછી પરિણામને આઉટપુટ તરીકે છાપવા માટે, આપણે `io` ઇનપુટ/આઉટપુટ લાયબ્રેરીને કાર્યક્ષેત્રમાં લાવવાની જરૂર છે. `io` લાયબ્રેરી પ્રમાણિત લાયબ્રેરીમાંથી આવે છે, જેને `std` કહેવામાં આવે છે:
 
 ```rust
@@ -218,7 +219,8 @@ cd listings/ch02-guessing-game-tutorial/listing-02-02/
 rm Cargo.lock
 cargo clean
 cargo build -->
-<Listing number="2-2" caption="The output from running `cargo build` after adding the `rand` crate as a dependency">
+**Listing 2-2: The output from running `cargo build` after adding the `rand` crate as a dependency**
+
 ```console
 $ cargo build
   Updating crates.io index
@@ -241,7 +243,7 @@ $ cargo build
  Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
   Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.48s
 ```
-</Listing>
+
 તમે જુદા જુદા વર્ઝન નંબરો (પણ તે બધા `code` સાથે સુસંગત રહેશે, SemVer ના આભારી!) અને અલગ-અલગ લીટીઓ જોઈ શકો છો (ઓપરેટિંગ સિસ્ટમ પર આધાર રાખીને), અને લીટીઓ અલગ ક્રમમાં હોઈ શકે છે.
 
 જ્યારે આપણે કોઈ બાહ્ય નિર્ભરતા (dependency) ઉમેરીએ છીએ, ત્યારે Cargo રજિસ્ટ્રીમાંથી તે નિર્ભરતાને જરૂરી બધી નવીનતમ આવૃત્તિઓ મેળવે છે, જે [Crates.io][cratesio] માંથી ડેટાની નકલ છે. Crates.io એ એવી જગ્યા છે જ્યાં Rust ઇકોસિસ્ટમના લોકો તેમના ઓપન સોર્સ Rust પ્રોજેક્ટ્સ અન્ય લોકો માટે ઉપયોગ કરવા મૂકે છે.
@@ -297,11 +299,12 @@ rand = "0.999.0"
 
 ચાલો `rand` નો ઉપયોગ કરીને અનુમાન કરવા માટે એક સંખ્યા જનરેટ કરવાનું શરૂ કરીએ. આગામી પગલું src/main.rs ને અપડેટ કરવું છે, જે યાદી 2-3 માં દર્શાવેલ છે.
 
-<Listing number="2-3" file-name="src/main.rs" caption="Adding code to generate a random number">
+**Listing 2-3: Adding code to generate a random number**
+
 ```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-03/src/main.rs:all}}
 ```
-</Listing>
+
 પ્રથમ, અમે લાઈન `use rand::Rng;` ઉમેરીએ છીએ. `Rng` ટ્રેઇટ એ પદ્ધતિઓ વ્યાખ્યાયિત કરે છે જે રેન્ડમ નંબર જનરેટર અમલમાં મૂકે છે, અને તે પદ્ધતિઓનો ઉપયોગ કરવા માટે આ ટ્રેઇટ અવકાશમાં હોવી આવશ્યક છે. પ્રકરણ ૧૦ વિગતવાર ટ્રેઇટ્સને આવરી લેશે.
 
 આગળ, અમે વચ્ચે બે લાઈનો ઉમેરી રહ્યા છીએ. પ્રથમ લાઈનમાં, અમે `rand::thread_rng` ફંક્શનને બોલાવીએ છીએ જે આપણને ચોક્કસ રેન્ડમ નંબર જનરેટર આપે છે: એક જે વર્તમાન થ્રેડ સ્થાનિક છે અને ઓપરેટિંગ સિસ્ટમ દ્વારા બીજિત છે. પછી, અમે રેન્ડમ નંબર જનરેટર પર `gen_range` પદ્ધતિને બોલાવીએ છીએ. આ પદ્ધતિ `Rng` ટ્રેઇટ દ્વારા વ્યાખ્યાયિત કરવામાં આવી છે જેનો ઉપયોગ કરીને અમે `use rand::Rng;` નિવેદન સાથે અવકાશમાં લાવ્યા છીએ. `gen_range` પદ્ધતિ એક રેન્જ અભિવ્યક્તિને Argument તરીકે લે છે અને શ્રેણીમાં રેન્ડમ નંબર જનરેટ કરે છે. અહીં આપણે જે રેન્જ અભિવ્યક્તિનો ઉપયોગ કરી રહ્યા છીએ તે `start..=end` સ્વરૂપ ધરાવે છે અને નીચલા અને ઉપલા બંને સરહદો પર સમાવિષ્ટ છે, તેથી આપણને ૧ થી ૧૦૦ વચ્ચેની સંખ્યા મેળવવા માટે `1..=100` સ્પષ્ટ કરવાની જરૂર છે.
@@ -345,11 +348,12 @@ You guessed: 5
 
 હવે આપણી પાસે userનો ઇનપુટ અને એક યાદ્ચ્છિક સંખ્યા છે, તો આપણે તેમની સરખામણી કરી શકીએ છીએ. આ ક્રિયા સૂચિ 2-4 માં દર્શાવેલ છે. નોંધ કરો કે આ કોડ હજી કમ્પાઇલ થશે નહીં, જે અમે સમજાવીશું.
 
-<Listing number="2-4" file-name="src/main.rs" caption="Handling the possible return values of comparing two numbers">
+**Listing 2-4: Handling the possible return values of comparing two numbers**
+
 ```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-04/src/main.rs:here}}
 ```
-</Listing>
+
 સૌ પ્રથમ, આપણે બીજું `use` વિધાન ઉમેરીએ છીએ, જે `std::cmp::Ordering` પ્રકારને પ્રમાણિત પુસ્તકાલયમાંથી અવકાશમાં લાવે છે. `Ordering` પ્રકાર એ અન્ય enum છે અને તેમાં `Less`, `Greater`, અને `Equal` વિવિધતાઓ છે. આ ત્રણ પરિણામો છે જે બે મૂલ્યોની સરખામણી કરતી વખતે શક્ય છે.
 
 પછી, આપણે નીચેના ભાગમાં પાંચ નવી લીટીઓ ઉમેરીએ છીએ જે `Ordering` પ્રકારનો ઉપયોગ કરે છે. `cmp` પદ્ધતિ બે મૂલ્યોની સરખામણી કરે છે અને તેની કોઈપણ વસ્તુ પર બોલાવી શકાય છે જેની સરખામણી કરી શકાય છે. તે તમે જેની સાથે સરખામણી કરવા માંગો છો તેના સંદર્ભ લે છે: અહીં, તે `guess` ની `secret_number` સાથે સરખામણી કરે છે. પછી, તે `use` વિધાન સાથે અવકાશમાં લાવવામાં આવેલા `Ordering` enum ની એક વિવિધતા પરત કરે છે. અમે [`match`][match] અભિવ્યક્તિનો ઉપયોગ કરીએ છીએ કે `cmp` કૉલમાંથી પરત કરવામાં આવેલી `Ordering` ની કઈ વિવિધતા હતી તેના આધારે આગળ શું કરવું તે નક્કી કરવા માટે, જે મૂલ્યો `guess` અને `secret_number` માં છે.
@@ -482,11 +486,12 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 રમતની વર્તણૂકને વધુ સુધારવા માટે, જ્યારે user અંક સિવાયનો ઇનપુટ આપે ત્યારે પ્રોગ્રામ ક્રેશ થવાને બદલે, ચાલો રમતને તે ઇનપુટને અવગણવા દે જેથી કરીને user અનુમાન લગાવવાનું ચાલુ રાખી શકે. આપણે લિસ્ટિંગ 2-5 માં દર્શાવ્યા પ્રમાણે `guess` ને [`String`][string] થી `u32` માં રૂપાંતરિત કરતી લીટીમાં ફેરફાર કરીને આ કરી શકીએ છીએ.
 
-<Listing number="2-5" file-name="src/main.rs" caption="Ignoring a non-number guess and asking for another guess instead of crashing the program">
+**Listing 2-5: Ignoring a non-number guess and asking for another guess instead of crashing the program**
+
 ```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-05/src/main.rs:here}}
 ```
-</Listing>
+
 જો `parse` ભૂલ પર ક્રેશ થવાનું ટાળીને ભૂલનું સંચાલન કરવા માટે, અમે `expect` કૉલથી `match` અભિવ્યક્તિમાં જઈએ છીએ. યાદ રાખો કે `parse` એક [`Result`][result] પ્રકાર આપે છે અને `Result` એ એક enum છે જેમાં `Ok` અને `Err` પ્રકારો આવેલાં છે. અમે અહીં `match` અભિવ્યક્તિનો ઉપયોગ કરી રહ્યા છીએ, જેવી રીતે અમે `cmp` પદ્ધતિના `Ordering` પરિણામ સાથે
 
 કર્યું હતું. If `parse` is able to successfully turn the string into a number, it will return an `Ok` value that contains the resultant number. That `Ok` value will match the first arm’s pattern, and the [`match`][match] expression will just return the `num` value that `parse` produced and put inside the `Ok` value. That number will end up right where we want it in the new `guess` variable we’re creating. જો `parse` સક્ષમ હોય તો સ્ટ્રિંગને સંખ્યામાં ફેરવી શકે છે, તો તે એક `Ok` મૂલ્ય આપશે જેમાં પરિણામી સંખ્યા સમાવિષ્ટ હશે. તે `Ok` મૂલ્ય પ્રથમ આર્મની પેટર્ન સાથે મેળ ખાય છે, અને `match` અભિવ્યક્તિ માત્ર `num` મૂલ્ય પરત કરશે જે `parse` ઉત્પન્ન કરે છે અને તેને `Ok` મૂલ્યમાં મૂકે છે. તે સંખ્યા અમારા દ્વારા નિર્માણ પામતા નવા `guess` ચલકમાં યોગ્ય જગ્યાએ આવી જશે.
@@ -527,11 +532,12 @@ You win!
 ```
 શાનદાર! એક નાનકડા અંતિમ સુધારણા સાથે, આપણે અનુમાન લગાવવાની રમત પૂરી કરીશું. યાદ કરો કે આ કાર્યક્રમ હજી સુધી ગુપ્ત સંખ્યા છાપી રહ્યો છે. પરીક્ષણ માટે તે સારું કામ કર્યું હતું, પરંતુ તેનાથી રમત બગડે છે. ચાલો `println!` ને દૂર કરીએ જે ગુપ્ત સંખ્યા દર્શાવે છે. સૂચિ 2-6 અંતિમ કોડ દર્શાવે છે.
 
-<Listing number="2-6" file-name="src/main.rs" caption="Complete guessing game code">
+**Listing 2-6: Complete guessing game code**
+
 ```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-06/src/main.rs}}
 ```
-</Listing>
+
 હવે, તમે અનુમાન લગાવવાની રમત સફળતાપૂર્વક બનાવેલી છે. અભિનંદન!
 
 ## Summary

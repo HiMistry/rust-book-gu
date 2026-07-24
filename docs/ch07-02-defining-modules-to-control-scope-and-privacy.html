@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -186,14 +186,26 @@
 <h2 id="control-scope-and-privacy-with-modules"><a class="header" href="#control-scope-and-privacy-with-modules">Control Scope and Privacy with Modules</a></h2>
 <p>આ વિભાગમાં, આપણે મોડ્યુલ્સ અને મોડ્યુલ સિસ્ટમના અન્ય ભાગો વિશે વાત કરીશું, વિશેષ કરીને પાથ (paths), જે તમને વસ્તુઓને નામ આપવા દે છે; <code>use</code> કીવર્ડ જે પાથને ક્ષેત્રમાં લાવે છે; અને વસ્તુઓને જાહેર કરવા માટે <code>pub</code> કીવર્ડ. આપણે <code>as</code> કીવર્ડ, બાહ્ય પેકેજો અને ગ્લોબ ઓપરેટર વિશે પણ ચર્ચા કરીશું.</p>
 <h3 id="modules-cheat-sheet"><a class="header" href="#modules-cheat-sheet">Modules Cheat Sheet</a></h3>
-<p>અગાઉ આપણે મોડ્યુલ્સ અને પાથની વિગતોમાં જઈએ તે પહેલાં, અહીં એક સંક્ષિપ્ત સંદર્ભ આપવામાં આવ્યો છે કે કેવી રીતે મોડ્યુલ્સ, પાથ, <code>use</code> કીવર્ડ અને <code>pub</code> કીવર્ડ કમ્પાઇલર (compiler) માં કાર્ય કરે છે, અને મોટાભાગના વિકાસકર્તાઓ (developers) તેમનો કોડ કેવી રીતે ગોઠવે છે. આ પ્રકરણમાં આપણે આ નિયમોના ઉદાહરણો જોઈશું, પરંતુ મોડ્યુલ્સ કેવી રીતે કાર્ય કરે છે તેની યાદ અપાવવા માટે આ એક ઉત્તમ સ્થળ છે.</p>
-<pre><code class="language-text">ક્રેટ રૂટથી આરંભ કરો: જ્યારે ક્રેકેટ (crate) ને કમ્પાઇલ કરવામાં આવે છે, ત્યારે કમ્પાઇલર પ્રથમ ક્રેકેટ રૂટ ફાઈલ (સામાન્ય રીતે `src/lib.rs` લાયબ્રેરી ક્રેકેટ માટે અને `src/main.rs` બાઈનરી ક્રેકેટ માટે) માં કમ્પાઇલ કરવા માટે કોડ શોધે છે.
+<ul>
+<li>અગાઉ આપણે મોડ્યુલ્સ અને પાથની વિગતોમાં જઈએ તે પહેલાં, અહીં એક સંક્ષિપ્ત સંદર્ભ આપવામાં આવ્યો છે કે કેવી રીતે મોડ્યુલ્સ, પાથ, <code>use</code> કીવર્ડ અને <code>pub</code> કીવર્ડ કમ્પાઇલર (compiler) માં કાર્ય કરે છે, અને મોટાભાગના વિકાસકર્તાઓ (developers) તેમનો કોડ કેવી રીતે ગોઠવે છે. આ પ્રકરણમાં આપણે આ નિયમોના ઉદાહરણો જોઈશું, પરંતુ મોડ્યુલ્સ કેવી રીતે કાર્ય કરે છે તેની યાદ અપાવવા માટે આ એક ઉત્તમ સ્થળ છે.</li>
+</ul>
+<pre><code class="language-text">- ક્રેટ રૂટથી આરંભ કરો: જ્યારે ક્રેકેટ (crate) ને કમ્પાઇલ કરવામાં આવે છે, ત્યારે કમ્પાઇલર પ્રથમ ક્રેકેટ રૂટ ફાઈલ (સામાન્ય રીતે `src/lib.rs` લાયબ્રેરી ક્રેકેટ માટે અને `src/main.rs` બાઈનરી ક્રેકેટ માટે) માં કમ્પાઇલ કરવા માટે કોડ શોધે છે.
 
 </code></pre>
+<ul>
+<li>
 <p>મોડ્યુલો જાહેર કરવા : ક્રેટ રૂટ ફાઈલમાં, તમે નવા મોડ્યુલો જાહેર કરી શકો છો; ઉદાહરણ તરીકે, જો તમે “ગાર્ડન” મોડ્યુલો જાહેર કરો <code>mod garden;</code> તો, કમ્પાઇલર આ સ્થળોએ મોડ્યુલનો કોડ શોધશે: ઇનલાઇન, કુંજી કૌંસની અંદર જે સેમિકોલન પછી આવે છે <code>mod garden</code>.</p>
+</li>
+<li>
 <p>src/garden.rs ફાઈલમાં</p>
+</li>
+<li>
 <p>src/garden/mod.rs ફાઈલમાં</p>
+</li>
+<li>
 <p>ઉપ-મોડ્યુલો જાહેર કરવા : કરેટ રૂટ સિવાયની કોઈપણ ફાઈલમાં, તમે ઉપ-મોડ્યુલો જાહેર કરી શકો છો. ઉદાહરણ તરીકે, તમે <code>mod vegetables;</code> src/garden.rs માં જાહેર કરી શકો છો. કમ્પાઇલર પેરેન્ટ મોડ્યુલના નામવાળા ડિરેક્ટરીમાં આ સ્થળોએ સબમોડ્યુલનો કોડ શોધશે: ઇનલાઇન, <code>mod vegetables</code> ની તરત જ પછી, અર્ધવૃત્તીય કૌંસને બદલે</p>
+</li>
+</ul>
 <p>સેમિકોલનની જગ્યાએ. ફાઈલમાં</p>
 <p>src/garden/vegetables.rs ફાઈલમાં src/garden/vegetables/mod.rs</p>
 <p>પાથ ટુ કોડ ઇન મોડ્યુલ્સ : એકવાર જ્યારે કોઈ મોડ્યુલ તમારી ક્રેટનો ભાગ બની જાય છે, ત્યારે તમે તે જ ક્રેટમાં ગમે ત્યાંથી તે મોડ્યુલમાં રહેલા કોડનો ઉલ્લેખ કરી શકો છો, જ્યાં સુધી ગોપનીયતાના નિયમો અનુમતિ આપે છે, કોડના પાથનો ઉપયોગ કરીને. દાખલા તરીકે, <code>Asparagus</code> પ્રકાર ગાર્ડન વેજીટેબલ્સ મોડ્યુલમાં જોડેલો હશે, જે <code>crate::garden::vegetables::Asparagus</code> પર મળી રહેશે.</p>
@@ -211,18 +223,16 @@
 ├── garden.rs
 └── main.rs
 આ કિસ્સામાં, ક્રેટ રૂટ ફાઈલ src/main.rs છે, અને તેમાં આ બાબતો સમાવિષ્ટ છે:</p>
-<listing file-name="src/main.rs">
-```rust
-{{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/main.rs}}
-```
-</listing>
-`pub mod garden;` લાઇન કમ્પાઇલરને જણાવે છે કે તે src/garden.rs માં મળેલ કોડનો સમાવેશ કરે, જે આ પ્રમાણે છે:
-<listing file-name="src/garden.rs">
-```rust
-{{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/garden.rs}}
-```
-</listing>
-અહીં, `pub mod vegetables;` એનો અર્થ થાય છે કે src/garden/vegetables.rs માં રહેલો કોડ પણ સામેલ કરવામાં આવ્યો છે. તે કોડ આ પ્રમાણે છે:
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p><code>pub mod garden;</code> લાઇન કમ્પાઇલરને જણાવે છે કે તે src/garden.rs માં મળેલ કોડનો સમાવેશ કરે, જે આ પ્રમાણે છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/garden.rs}}
+<span class="boring">}</span></code></pre>
+<p>અહીં, <code>pub mod vegetables;</code> એનો અર્થ થાય છે કે src/garden/vegetables.rs માં રહેલો કોડ પણ સામેલ કરવામાં આવ્યો છે. તે કોડ આ પ્રમાણે છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/garden/vegetables.rs}}
@@ -233,27 +243,26 @@
 <p>ઉદાહરણ તરીકે, ચાલો એક લાઈબ્રેરી <code>crate</code> લખીએ જે રેસ્ટોરન્ટની કાર્યક્ષમતા પ્રદાન કરે છે. આપણે ફંક્શનના હસ્તાક્ષરો (signatures) વ્યાખ્યાયિત કરીશું પરંતુ તેમના અમલીકરણને બદલે કોડના આયોજન પર ધ્યાન કેન્દ્રિત કરવા માટે તેમની અંદર ખાલી જગ્યા રાખીશું.</p>
 <p>જંયારે રેસ્ટોરન્ટ ઉદ્યોગમાં, રેસ્ટોરન્ટના અમુક ભાગોને આગળનો વિભાગ અને પાછળનો વિભાગ કહેવામાં આવે છે. આગળનો વિભાગ એ હોય છે જ્યાં ગ્રાહકો હાજર હોય છે; જેમાં હોસ્ટ ગ્રાહકોને બેસાડે છે, સર્વર્સ ઓર્ડર લે છે અને ચુકવણી સ્વીકારે છે, અને બારટેન્ડર પીણાં બનાવે છે. પાછળનો વિભાગ એ હોય છે જ્યાં રસોઈયાઓ રસોડામાં કામ કરે છે, વાસણો સાફ કરનારા સફાઈ કરે છે, અને વ્યવસ્થાપકો વહીવટી કાર્ય કરે છે.</p>
 <p>આ રીતે આપણી crate ને માળખું આપવા માટે, આપણે તેનાં કાર્યોને સંકલિત modules માં ગોઠવી શકીએ છીએ. <code>cargo new restaurant --lib</code> ચલાવીને  <code>restaurant</code> નામની નવી library બનાવો. પછી Listing 7-1 માં રહેલા કોડને src/lib.rs માં દાખલ કરો જેથી અમુક modules અને function signatures વ્યાખ્યાયિત થાય; આ કોડ આગળના વિભાગનો ભાગ છે.</p>
-<listing number="7-1" file-name="src/lib.rs" caption="A `front_of_house` module containing other modules that then contain functions">
-```rust
-{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-01/src/lib.rs}}
-```
-</listing>
-આપણે એક મોડ્યુલ વ્યાખ્યાયિત કરીએ છીએ જેમાં `mod` કીવર્ડ ત્યારબાદ મોડ્યુલનું નામ આવે છે (આ કિસ્સામાં, `front_of_house`). મોડ્યુલનો ભાગ પછી કુંડાકી અક્ષરો (`curly brackets`) ની અંદર જાય છે. મોડ્યુલોની અંદર, આપણે અન્ય મોડ્યુલો પણ મૂકી શકીએ છીએ, જેમ કે આ કિસ્સામાં `hosting` અને `serving` મોડ્યુલો છે. મોડ્યુલો અન્ય વસ્તુઓ માટે વ્યાખ્યાઓ પણ રાખી શકે છે, જેમ કે structs, enums, constants, traits અને Listing 7-1 માં દર્શાવેલ functions.
+<p><strong>Listing 7-1: A <code>front_of_house</code> module containing other modules that then contain functions</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-01/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>આપણે એક મોડ્યુલ વ્યાખ્યાયિત કરીએ છીએ જેમાં <code>mod</code> કીવર્ડ ત્યારબાદ મોડ્યુલનું નામ આવે છે (આ કિસ્સામાં, <code>front_of_house</code>). મોડ્યુલનો ભાગ પછી કુંડાકી અક્ષરો (<code>curly brackets</code>) ની અંદર જાય છે. મોડ્યુલોની અંદર, આપણે અન્ય મોડ્યુલો પણ મૂકી શકીએ છીએ, જેમ કે આ કિસ્સામાં <code>hosting</code> અને <code>serving</code> મોડ્યુલો છે. મોડ્યુલો અન્ય વસ્તુઓ માટે વ્યાખ્યાઓ પણ રાખી શકે છે, જેમ કે structs, enums, constants, traits અને Listing 7-1 માં દર્શાવેલ functions.</p>
 <p>મોડ્યુલોનો ઉપયોગ કરીને, આપણે સંબંધિત વ્યાખ્યાઓને એકસાથે જૂથબદ્ધ કરી શકીએ છીએ અને નામ આપી શકીએ છીએ કે તેઓ શા માટે સંબંધિત છે. આ કોડનો ઉપયોગ કરતા પ્રોગ્રામરો વ્યાખ્યાઓ વાંચવાને બદલે જૂથોના આધારે કોડ નેવિગેટ કરી શકે છે, જેનાથી તેમના માટે સુસંગત વ્યાખ્યાઓ શોધવાનું સરળ બને છે. આ કોડમાં નવી કાર્યક્ષમતા ઉમેરતા પ્રોગ્રામરોને પ્રોગ્રામને વ્યવસ્થિત રાખવા માટે કોડ ક્યાં મૂકવો તે ખબર પડશે.</p>
 <p>અગાઉ, અમે ઉલ્લેખ કર્યો હતો કે src/main.rs અને src/lib.rs ને <code>crate</code> મૂળ કહેવામાં આવે છે. આ નામ આપવાનું કારણ એ છે કે આ બે ફાઇલોની સામગ્રી એક મોડ્યુલ બનાવે છે જેનું નામ <code>crate</code> છે, જે <code>crate</code> ના મોડ્યુલ માળખાના મૂળમાં હોય છે, જેને મોડ્યુલ વૃક્ષ પણ કહેવાય છે. Listing 7-2 shows the module tree for the structure</p>
 <p>in Listing 7-1. લિસ્ટિંગ 7-2 માં સ્ટ્રક્ચર માટેનું મોડ્યુલ વૃક્ષ દર્શાવવામાં આવ્યું છે જે લિસ્ટિંગ 7-1 માં છે.</p>
-<listing number="7-2" caption="The module tree for the code in Listing 7-1">
-crate
- └── front_of_house
-     ├── hosting
-     │   ├── add_to_waitlist
-     │   └── seat_at_table
-     └── serving
-         ├── take_order
-         ├── serve_order
-         └── take_payment
-</listing>
-આ વૃક્ષ દર્શાવે છે કે કેટલાક મોડ્યુલો અન્ય મોડ્યુલોમાં કેવી રીતે સમાયેલા છે; ઉદાહરણ તરીકે, `hosting` એ `front_of_house` માં સમાયેલું છે. આ વૃક્ષ એ પણ દર્શાવે છે કે કેટલાક મોડ્યુલો ભાઈબંધો છે, એટલે કે તેઓ એક જ મોડ્યુલમાં વ્યાખ્યાયિત થયેલા છે; `hosting` અને `serving` એ `front_of_house` ની અંદર વ્યાખ્યાયિત ભાઈબંધો છે. જો મોડ્યુલ A મોડ્યુલ B ની અંદર સમાયેલું હોય, તો આપણે કહીએ છીએ કે મોડ્યુલ A એ મોડ્યુલ B નું સંતાન છે અને મોડ્યુલ B એ મોડ્યુલ A નો પિતા છે. નોંધ કરો કે સમગ્ર મોડ્યુલ વૃક્ષ `crate` નામના ગર્ભિત મોડ્યુલ હેઠળ મૂળિત થયેલું છે.
+<p><strong>Listing 7-2: The module tree for the code in Listing 7-1</strong></p>
+<p>crate
+└── front_of_house
+├── hosting
+│   ├── add_to_waitlist
+│   └── seat_at_table
+└── serving
+├── take_order
+├── serve_order
+└── take_payment</p>
+<p>આ વૃક્ષ દર્શાવે છે કે કેટલાક મોડ્યુલો અન્ય મોડ્યુલોમાં કેવી રીતે સમાયેલા છે; ઉદાહરણ તરીકે, <code>hosting</code> એ <code>front_of_house</code> માં સમાયેલું છે. આ વૃક્ષ એ પણ દર્શાવે છે કે કેટલાક મોડ્યુલો ભાઈબંધો છે, એટલે કે તેઓ એક જ મોડ્યુલમાં વ્યાખ્યાયિત થયેલા છે; <code>hosting</code> અને <code>serving</code> એ <code>front_of_house</code> ની અંદર વ્યાખ્યાયિત ભાઈબંધો છે. જો મોડ્યુલ A મોડ્યુલ B ની અંદર સમાયેલું હોય, તો આપણે કહીએ છીએ કે મોડ્યુલ A એ મોડ્યુલ B નું સંતાન છે અને મોડ્યુલ B એ મોડ્યુલ A નો પિતા છે. નોંધ કરો કે સમગ્ર મોડ્યુલ વૃક્ષ <code>crate</code> નામના ગર્ભિત મોડ્યુલ હેઠળ મૂળિત થયેલું છે.</p>
 <p>મોડ્યુલ વૃક્ષ મોડ્યુલ વૃક્ષ તમને તમારા કમ્પ્યુટર પર ફાઇલસિસ્ટમના ડિરેક્ટરી વૃક્ષની યાદ અપાવી શકે છે; આ તુલના ઘણી યોગ્ય છે! જેમ ફાઇલસિસ્ટમમાં ડિરેક્ટરીઓ હોય છે, તેમ તમે તમારા કોડને વ્યવસ્થિત કરવા માટે મોડ્યુલોનો ઉપયોગ કરો છો. અને જેમ ડિરેક્ટરીમાં ફાઇલો શોધવાની જરૂર પડે છે, તેમ આપણે આપણા મોડ્યુલોને શોધવા માટે એક માર્ગની જરૂર છે.</p>
 
                     </main>
@@ -308,6 +317,7 @@ crate
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

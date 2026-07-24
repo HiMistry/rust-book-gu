@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -187,60 +187,60 @@
 <h3 id="function-pointers"><a class="header" href="#function-pointers">Function Pointers</a></h3>
 <p>અમે ક્લોઝરને ફંક્શનમાં કેવી રીતે પસાર કરવા તેની ચર્ચા કરી છે; તમે નિયમિત ફંક્શનને પણ ફંક્શનમાં પસાર કરી શકો છો! આ તકનીક ત્યારે ઉપયોગી છે જ્યારે તમે નવું ક્લોઝર વ્યાખ્યાયિત કરવાને બદલે, પહેલાથી વ્યાખ્યાયિત કરેલા ફંક્શનને પસાર કરવા માંગો છો. ફંક્શન <code>fn</code> પ્રકારમાં રૂપાંતર પામે છે (નાની ‘f’ સાથે), જેને <code>Fn</code> ક્લોઝર ટ્રેઇટ સાથે મૂંઝવવું જોઈએ નહીં. <code>fn</code> પ્રકારને ફંક્શન પોઈન્ટર કહેવામાં આવે છે. ફંક્શન પોઈન્ટર વડે ફંક્શન પસાર કરવાથી તમે ફંક્શનને અન્ય ફંક્શનના આર્ગ્યુમેન્ટ તરીકે વાપરી શકશો.</p>
 <p>કારણ નિર્ધારિત કરવા માટેનું વાક્યરચના, ક્લોઝર્સ (closures) જેવું જ છે, જે યાદી 20-28 માં દર્શાવેલ છે, જ્યાં અમે એક વિધેય <code>add_one</code> વ્યાખ્યાયિત કર્યું છે જે તેના પરિમાણમાં 1 ઉમેરે છે. વિધેય <code>do_twice</code> બે પરિમાણો લે છે: કોઈપણ વિધેયનો ફંક્શન પોઇન્ટર જે <code>i32</code> પરિમાણ લે છે અને <code>i32</code> પરત કરે છે, અને એક <code>i32</code> મૂલ્ય. <code>do_twice</code> વિધેય <code>f</code> વિધેયને બે વાર બોલાવે છે, તેને <code>arg</code> મૂલ્ય પાસ કરે છે, પછી બંને ફંક્શન કૉલ પરિણામોને એકસાથે ઉમેરે છે. <code>main</code> વિધેય <code>do_twice</code> ને Argumentો <code>add_one</code> અને <code>5</code> સાથે બોલાવે છે.</p>
-<listing number="20-28" file-name="src/main.rs" caption="Using the `fn` type to accept a function pointer as an argument">
-```rust
-{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-28/src/main.rs}}
-```
-</listing>
-આ કોડ `The answer is: 12` છાપે છે. અમે ઉલ્લેખ કરીએ છીએ કે `do_twice` માં પરિમાણ `f` એ એક `fn` છે જે એક `i32` પ્રકારનું પરિમાણ લે છે અને `i32` પરત કરે છે. અમે પછી `do_twice` ના શરીરમાં `f` ને બોલાવી શકીએ છીએ. `main` માં, અમે `add_one` નામનું કાર્ય પ્રથમ Argument તરીકે `do_twice` ને આપી શકીએ છીએ.
+<p><strong>Listing 20-28: Using the <code>fn</code> type to accept a function pointer as an argument</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-28/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>આ કોડ <code>The answer is: 12</code> છાપે છે. અમે ઉલ્લેખ કરીએ છીએ કે <code>do_twice</code> માં પરિમાણ <code>f</code> એ એક <code>fn</code> છે જે એક <code>i32</code> પ્રકારનું પરિમાણ લે છે અને <code>i32</code> પરત કરે છે. અમે પછી <code>do_twice</code> ના શરીરમાં <code>f</code> ને બોલાવી શકીએ છીએ. <code>main</code> માં, અમે <code>add_one</code> નામનું કાર્ય પ્રથમ Argument તરીકે <code>do_twice</code> ને આપી શકીએ છીએ.</p>
 <p>ક્લોઝરથી વિપરીત, <code>fn</code> એક લક્ષણ નથી પરંતુ એક પ્રકાર છે, તેથી અમે સીધા જ પરિમાણ પ્રકાર તરીકે <code>fn</code> નો ઉલ્લેખ કરીએ છીએ, જેની સાથે <code>Fn</code> લક્ષણોમાંથી એકને લઈને સામાન્ય પ્રકારના પરિમાણને જાહેર કરતા નથી.</p>
 <p>વિધેય pointerો ત્રણેય ક્લોઝર લક્ષણોનો અમલ કરે છે ( <code>Fn</code> , <code>FnMut</code> , અને <code>FnOnce</code> ), જેનો અર્થ થાય છે કે તમે હંમેશાં વિધેય pointerને ક્લોઝરની અપેક્ષા રાખતા વિધેયના Argument તરીકે આપી શકો છો. તમારા વિધેયો જનરીક પ્રકાર અને એક ક્લોઝર લક્ષણનો ઉપયોગ કરીને લખવાનું શ્રેષ્ઠ છે જેથી તમારા વિધેયો</p>
 <p>કાર્યો અથવા ક્લોઝરો બંને સ્વીકારી શકે. એવું કહેવા છતાં, જ્યાં તમે માત્ર <code>fn</code> સ્વીકારવા માંગતા હોવ તેવો એક દાખલો બાહ્ય કોડ સાથે જોડાણ કરતી વખતે છે જે ક્લોઝર ધરાવતો નથી: C વિધેયો કાર્યોને Argument તરીકે સ્વીકારી શકે છે, પરંતુ C માં ક્લોઝર નથી.</p>
 <p>એક બંધન (ક્લોઝર) વ્યાખ્યાયિત કરેલું કે નામવાળું વિધેય ક્યાં વાપરી શકાય તેનું ઉદાહરણ આપવા માટે, ચાલો પ્રમાણભૂત લાયબ્રેરીમાં <code>Iterator</code> ટ્રેઇટ દ્વારા પૂરા પાડવામાં આવેલ <code>map</code> પદ્ધતિના ઉપયોગને જોઈએ. સંખ્યાઓનું વેક્ટરને શબ્દોના વેક્ટરમાં રૂપાંતરિત કરવા માટે <code>map</code> પદ્ધતિનો ઉપયોગ કરવા માટે, આપણે એક બંધન વાપરી શકીએ છીએ, જે યાદી 20-29 માં દર્શાવેલ છે.</p>
-<listing number="20-29" caption="Using a closure with the `map` method to convert numbers to strings">
-```rust
-{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-29/src/main.rs:here}}
-```
-</listing>
-અથવા, આપણે `map` ના આર્ગ્યુમેન્ટ તરીકે ક્લોઝરને બદલે કોઈ ફંક્શનનું નામ આપી શકીએ છીએ. સૂચિ ૨૦-૩૦ દર્શાવે છે કે તે કેવું દેખાશે.
-<listing number="20-30" caption="Using the `String::to_string` function with the `map` method to convert numbers to strings">
-```rust
-{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-30/src/main.rs:here}}
-```
-</listing>
-નોંધ અહીં આપણે “ઉન્નત લક્ષણો” વિભાગમાં ઉલ્લેખિત સંપૂર્ણ લાયકાતવાળા સિન્ટેક્સનો ઉપયોગ કરવો જોઈએ કારણ કે `to_string` નામનું બહુવિધ વિધેય ઉપલબ્ધ છે. અહીં, આપણે `ToString` લક્ષણમાં વ્યાખ્યાયિત કરેલા `to_string`
+<p><strong>Listing 20-29: Using a closure with the <code>map</code> method to convert numbers to strings</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-29/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અથવા, આપણે <code>map</code> ના આર્ગ્યુમેન્ટ તરીકે ક્લોઝરને બદલે કોઈ ફંક્શનનું નામ આપી શકીએ છીએ. સૂચિ ૨૦-૩૦ દર્શાવે છે કે તે કેવું દેખાશે.</p>
+<p><strong>Listing 20-30: Using the <code>String::to_string</code> function with the <code>map</code> method to convert numbers to strings</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-30/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>નોંધ અહીં આપણે “ઉન્નત લક્ષણો” વિભાગમાં ઉલ્લેખિત સંપૂર્ણ લાયકાતવાળા સિન્ટેક્સનો ઉપયોગ કરવો જોઈએ કારણ કે <code>to_string</code> નામનું બહુવિધ વિધેય ઉપલબ્ધ છે. અહીં, આપણે <code>ToString</code> લક્ષણમાં વ્યાખ્યાયિત કરેલા <code>to_string</code></p>
 <p>વિધેયનો ઉપયોગ કરી રહ્યા છીએ, જે ધોરણ પુસ્તકાલય દ્વારા કોઈપણ પ્રકાર માટે લાગુ કરવામાં આવ્યો છે જે <code>Display</code> લાગુ કરે છે. પ્રકરણ 6 માં “એનમ</p>
 <p>મૂલ્યો” વિભાગને યાદ કરો કે આપણે વ્યાખ્યાયિત કરેલા દરેક એનમ ભિન્નતાનું નામ પણ એક પ્રારંભિક વિધેય બને છે. આપણે આ પ્રારંભિક વિધેયોને ફંક્શન પોઇન્ટર તરીકે ઉપયોગ કરી શકીએ છીએ જે ક્લોઝર લક્ષણોનો અમલ કરે છે, જેનો અર્થ થાય છે કે આપણે ક્લોઝર લેતા પદ્ધતિઓ માટે આ પ્રારંભિક વિધેયોને Argumentો તરીકે સ્પષ્ટ કરી શકીએ છીએ, જેમ કે યાદી 20-31 માં જોયું છે.</p>
-<listing number="20-31" caption="Using an enum initializer with the `map` method to create a `Status` instance from numbers">
-```rust
-{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-31/src/main.rs:here}}
-```
-</listing>
-અહીં, આપણે `Status::Value` ઉદાહરણો દરેક `u32` મૂલ્યની શ્રેણીમાં બનાવીએ છીએ જેના પર `map` કાર્ય બોલાવવામાં આવે છે, `Status::Value` ના પ્રારંભિકા વિધેયનો ઉપયોગ કરીને. કેટલાક લોકોને આ શૈલી પસંદ હોય છે અને કેટલાક લોકોને ક્લોઝરનો ઉપયોગ કરવાનું પસંદ હોય છે. તે સમાન કોડમાં કમ્પાઇલ થાય છે, તેથી જે શૈલી તમને વધુ સ્પષ્ટ લાગે તેનો ઉપયોગ કરો.
+<p><strong>Listing 20-31: Using an enum initializer with the <code>map</code> method to create a <code>Status</code> instance from numbers</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-31/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અહીં, આપણે <code>Status::Value</code> ઉદાહરણો દરેક <code>u32</code> મૂલ્યની શ્રેણીમાં બનાવીએ છીએ જેના પર <code>map</code> કાર્ય બોલાવવામાં આવે છે, <code>Status::Value</code> ના પ્રારંભિકા વિધેયનો ઉપયોગ કરીને. કેટલાક લોકોને આ શૈલી પસંદ હોય છે અને કેટલાક લોકોને ક્લોઝરનો ઉપયોગ કરવાનું પસંદ હોય છે. તે સમાન કોડમાં કમ્પાઇલ થાય છે, તેથી જે શૈલી તમને વધુ સ્પષ્ટ લાગે તેનો ઉપયોગ કરો.</p>
 <h3 id="returning-closures"><a class="header" href="#returning-closures">Returning Closures</a></h3>
 <p>ક્લોઝર્સ ટ્રેઇટ્સ દ્વારા દર્શાવવામાં આવે છે, જેનો અર્થ થાય છે કે તમે ક્લોઝર્સને સીધા જ પરત કરી શકતા નથી. મોટાભાગના કિસ્સાઓમાં જ્યાં તમે ટ્રેઇટ પરત કરવા માંગો છો, ત્યાં તમે ટ્રેઇટનો અમલ કરતો કોંક્રિટ પ્રકાર ફંક્શનના રીટર્ન વેલ્યુ તરીકે વાપરી શકો છો. જો કે, તમે સામાન્ય રીતે ક્લોઝર્સ સાથે આવું કરી શકતા નથી કારણ કે તેમની પાસે કોઈ કોંક્રિટ પ્રકાર હોતો નથી જે પરત કરી શકાય; જો ક્લોઝર તેના સ્કોપમાંથી કોઈ વેલ્યુ કેપ્ચર કરે તો તમને ફંક્શન પોઇન્ટર <code>fn</code> ને રીટર્ન પ્રકાર તરીકે વાપરવાની મંજૂરી નથી, ઉદાહરણ તરીકે.</p>
 <p>નિશ્ચિતપણે, તમે સામાન્ય રીતે <code>impl Trait</code> વાક્યરચનાનો ઉપયોગ કરશો જે આપણે પ્રકરણ ૧૦ માં શીખ્યા હતા. તમે કોઈપણ ફંક્શન પ્રકાર પરત કરી શકો છો, <code>Fn</code>, <code>FnOnce</code>, અને <code>FnMut</code> નો ઉપયોગ કરીને. ઉદાહરણ તરીકે, લિસ્ટિંગ ૨૦-૩૨ નો કોડ બરાબર કમ્પાઇલ થશે.</p>
-<listing number="20-32" caption="Returning a closure from a function using the `impl Trait` syntax">
-```rust
-{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-32/src/lib.rs}}
-```
-</listing>
-જો કે, જેમ આપણે પ્રકરણ ૧૩ માં “ક્લોઝર પ્રકારો અનુમાનિત અને નોંધણી” વિભાગમાં નોંધ્યું હતું તેમ, દરેક ક્લોઝર પોતાનો એક અલગ પ્રકાર પણ છે. જો તમારે બહુવિધ ફંક્શન્સ સાથે કામ કરવાની જરૂર હોય જે સમાન હસ્તાક્ષર પરંતુ જુદા જુદા અમલીકરણો ધરાવે છે, તો તમારે તેમના માટે ટ્રેઇટ ઑબ્જેક્ટનો ઉપયોગ કરવો પડશે. ધ્યાનમાં લો કે જો તમે Listing 20-33 માં દર્શાવેલ જેવું કોડ લખો છો તો શું થાય છે.
-<listing file-name="src/main.rs" number="20-33" caption="Creating a `Vec&lt;T&gt;` of closures defined by functions that return `impl Fn` types">
-```rust
-{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-33/src/main.rs}}
-```
-</listing>
-અહીં બે વિધેયો છે, `returns_closure` અને `returns_initialized_closure`, જે બંને `impl Fn(i32) -&gt; i32` પરત કરે છે. નોંધ કરો કે તેઓ જે ક્લોઝર પરત કરે છે તે અલગ છે, ભલે તેઓ સમાન પ્રકારનું અમલીકરણ કરે. જો આપણે આને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ, તો Rust આપણને જણાવે છે કે તે કામ કરશે નહીં:
+<p><strong>Listing 20-32: Returning a closure from a function using the <code>impl Trait</code> syntax</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-32/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>જો કે, જેમ આપણે પ્રકરણ ૧૩ માં “ક્લોઝર પ્રકારો અનુમાનિત અને નોંધણી” વિભાગમાં નોંધ્યું હતું તેમ, દરેક ક્લોઝર પોતાનો એક અલગ પ્રકાર પણ છે. જો તમારે બહુવિધ ફંક્શન્સ સાથે કામ કરવાની જરૂર હોય જે સમાન હસ્તાક્ષર પરંતુ જુદા જુદા અમલીકરણો ધરાવે છે, તો તમારે તેમના માટે ટ્રેઇટ ઑબ્જેક્ટનો ઉપયોગ કરવો પડશે. ધ્યાનમાં લો કે જો તમે Listing 20-33 માં દર્શાવેલ જેવું કોડ લખો છો તો શું થાય છે.</p>
+<p><code>of closures defined by functions that return</code>impl Fn` types“&gt;</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-33/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>અહીં બે વિધેયો છે, <code>returns_closure</code> અને <code>returns_initialized_closure</code>, જે બંને <code>impl Fn(i32) -&gt; i32</code> પરત કરે છે. નોંધ કરો કે તેઓ જે ક્લોઝર પરત કરે છે તે અલગ છે, ભલે તેઓ સમાન પ્રકારનું અમલીકરણ કરે. જો આપણે આને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ, તો Rust આપણને જણાવે છે કે તે કામ કરશે નહીં:</p>
 <pre><code class="language-text">{{#include ../listings/ch20-advanced-features/listing-20-33/output.txt}}
 </code></pre>
 <p>ભૂલ સંદેશ જણાવે છે કે જ્યારે પણ આપણે <code>impl Trait</code> પરત કરીએ છીએ, ત્યારે Rust એક અનોખી અસ્પષ્ટ પ્રકાર (opaque type) બનાવે છે; એવો પ્રકાર જેમાં આપણે Rust આપણી માટે જે બનાવે છે તેની વિગતો જોઈ શકતા નથી, અને ન તો આપણે અનુમાન લગાવી શકીએ કે Rust કયો પ્રકાર ઉત્પન્ન કરશે. તેથી, ભલે આ કાર્યો સમાન ટ્રેઇટ લાગુ કરતા ક્લોઝર (closure) પરત કરે છે, <code>Fn(i32) -&gt; i32</code> , પણ Rust દરેક માટે બનાવેલા અસ્પષ્ટ પ્રકારો અલગ હોય છે. (આ એ જ રીતે મળતું આવે છે કે જે રીતે Rust જુદા જુદા async બ્લોક્સ માટે અલગ-અલગ કોંક્રિટ પ્રકારો ઉત્પન્ન કરે છે, ભલે તેમનો આઉટપુટ પ્રકાર સમાન હોય, જે આપણે પ્રકરણ 17 માં <a href="ch17-03-more-futures.html">“The <code>Pin</code> Type and the <code>Unpin</code> Trait”</a> માં જોયું હતું.) આપણને હવે આ સમસ્યાનો ઉકેલ ઘણી વાર જોવા મળ્યો છે: આપણે ટ્રેઇટ ઓબ્જેક્ટ (trait object) નો ઉપયોગ કરી શકીએ છીએ, જેમ કે Listing 20-34 માં દર્શાવેલ છે.</p>
-<listing number="20-34" caption="Creating a `Vec&lt;T&gt;` of closures defined by functions that return `Box&lt;dyn Fn&gt;` so that they have the same type">
-```rust
-{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-34/src/main.rs:here}}
-```
-</listing>
-આ કોડ યોગ્ય રીતે સંપાદિત થશે. ટ્રેઇટ ઓબ્જેક્ટ વિશે વધુ માહિતી માટે, પ્રકરણ ૧૮ માં “વહેંચાયેલ વર્તન પર અમૂર્ત કરવા માટે ટ્રેઇટ ઓબ્જેક્ટનો ઉપયોગ” વિભાગ
+<p><code>of closures defined by functions that return</code>Box<dyn fn="">` so that they have the same type“&gt;</dyn></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-34/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ કોડ યોગ્ય રીતે સંપાદિત થશે. ટ્રેઇટ ઓબ્જેક્ટ વિશે વધુ માહિતી માટે, પ્રકરણ ૧૮ માં “વહેંચાયેલ વર્તન પર અમૂર્ત કરવા માટે ટ્રેઇટ ઓબ્જેક્ટનો ઉપયોગ” વિભાગ</p>
 <p>જુઓ. હવે, આપણે મેક્રો જોઈએ!</p>
 
                     </main>
@@ -295,6 +295,7 @@
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

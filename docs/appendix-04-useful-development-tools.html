@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -230,16 +230,12 @@ warning: variable does not need to be mutable
 <pre><code class="language-console">$ cargo clippy
 </code></pre>
 <p>ઉદાહરણ તરીકે, જો તમે એક એવી કાર્યક્રમ લખો છો જે ગાણિતિક અચળાંકનું આશરે મૂલ્ય વાપરે છે, જેમ કે પાઇ, તો આ કાર્યક્રમ કરે છે:</p>
-<listing file-name="src/main.rs">
-```rust
-fn main() {
+<pre class="playground"><code class="language-rust edition2024">fn main() {
     let x = 3.1415;
     let r = 8.0;
     println!("the area of the circle is {}", x * r * r);
-}
-```
-</listing>
-આ પ્રોજેક્ટ પર `cargo clippy` ચલાવવાથી આ ભૂલ આવે છે:
+}</code></pre>
+<p>આ પ્રોજેક્ટ પર <code>cargo clippy</code> ચલાવવાથી આ ભૂલ આવે છે:</p>
 <pre><code class="language-text">error: approximate value of `f{32, 64}::consts::PI` found
  --&gt; src/main.rs:2:13
   |
@@ -252,16 +248,12 @@ fn main() {
 </code></pre>
 <p>આ ભૂલ તમને જણાવે છે કે Rust પાસે પહેલેથી જ વધુ ચોક્કસ <code>PI</code> અચળાંક વ્યાખ્યાયિત થયેલ છે, અને જો તમે અચળાંકનો ઉપયોગ કરો તો તમારું કાર્યક્રમ વધુ સચોટ બનશે. પછી તમારે તમારા કોડને <code>PI</code> અચળાંકનો ઉપયોગ કરવા માટે બદલવો જોઈએ.</p>
 <p>નીચે આપેલ કોડ Clippy તરફથી કોઈ ભૂલો કે ચેતવણીઓ ઉત્પન્ન કરતો નથી:</p>
-<listing file-name="src/main.rs">
-```rust
-fn main() {
+<pre class="playground"><code class="language-rust edition2024">fn main() {
     let x = std::f64::consts::PI;
     let r = 8.0;
     println!("the area of the circle is {}", x * r * r);
-}
-```
-</listing>
-વધુ માહિતી માટે, ક્લિપીનું દસ્તાવેજીકરણ જુઓ.
+}</code></pre>
+<p>વધુ માહિતી માટે, ક્લિપીનું દસ્તાવેજીકરણ જુઓ.</p>
 <h3 id="ide-integration-using-rust-analyzer"><a class="header" href="#ide-integration-using-rust-analyzer">IDE Integration Using <code>rust-analyzer</code></a></h3>
 <p>IDE એકત્રીકરણમાં મદદરૂપ થવા માટે, Rust સમુદાય <a href="https://rust-analyzer.github.io"><code>rust-analyzer</code></a> વાપરવાની ભલામણ કરે છે. આ સાધન કમ્પાઇલર કેન્દ્રિત ઉપયોગિતાઓનો સમૂહ છે જે ભાષા સર્વર પ્રોટોકોલ સાથે વાતચીત કરે છે, જે IDE અને પ્રોગ્રામિંગ ભાષાઓ વચ્ચે સંચાર માટેનું વિશિષ્ટતા છે. વિવિધ ક્લાયન્ટો <code>rust-analyzer</code> નો ઉપયોગ કરી શકે છે, જેમ કે Visual Studio Code માટે Rust એનાલાઇઝર પ્લગ-ઇન.</p>
 <p><a href="https://rust-analyzer.github.io"><code>rust-analyzer</code></a> પ્રોજેક્ટની મુખ્ય પાનાંની મુલાકાત ઇન્સ્ટોલેશન સૂચનાઓ માટે લો, પછી તમારા વિશિષ્ટ IDE માં ભાષા સર્વર આધાર સ્થાપિત કરો. તમારા IDE ને ઓટોકમ્પ્લીશન, વ્યાખ્યા પર જાઓ અને ઇનલાઇન ભૂલો જેવી ક્ષમતાઓ પ્રાપ્ત થશે.</p>
@@ -318,6 +310,7 @@ fn main() {
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

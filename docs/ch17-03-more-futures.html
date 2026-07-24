@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -187,19 +187,19 @@
 <p>યાદ રાખો કે <a href="ch17-01-futures-and-syntax.html#our-first-async-program">“Our First Async Program”</a> વિભાગમાં જણાવ્યા મુજબ, દરેક await બિંદુએ, Rust એક runtime ને કાર્ય થોભાવવાની અને જો રાહ જોવાઇ રહેલું future તૈયાર ન હોય તો બીજા કાર્ય પર સ્વિચ કરવાની તક આપે છે. વિપરીત પણ સાચું છે: Rust માત્ર async બ્લોક્સને થોભાવે છે અને await બિંદુએ runtime ને નિયંત્રણ સોંપે છે. await બિંદુઓ વચ્ચેની દરેક વસ્તુ synchronous હોય છે.</p>
 <p>આનો અર્થ એ થાય છે કે જો તમે async બ્લોક માં await બિંદુ વગર ઘણું કામ કરો છો, તો તે future અન્ય futures ની પ્રગતિને અવરોધશે. તમને આને ક્યારેક એક future અન્ય futures ને ભૂખમરાવતું હોવાનું સાંભળવા મળી શકે છે. અમુક કિસ્સાઓમાં, આ કોઈ મોટી વાત ન પણ હોય. જો કે, જો તમે કોઈ ખર્ચાળ સેટઅપ અથવા લાંબા સમય સુધી ચાલતું કાર્ય કરી રહ્યા છો, અથવા જો તમારી પાસે એવું future હોય જે કોઈ ચોક્કસ કાર્યને અનિશ્ચિતકાળ સુધી કરતા રહેશે, તો તમારે runtime ને નિયંત્રણ ક્યારે અને ક્યાં સોંપવું તે વિશે વિચારવાની જરૂર પડશે.</p>
 <p>ચાલો એક લાંબા સમય સુધી ચાલતા કાર્યનું અનુકરણ કરીએ જેથી ભૂખમરાની સમસ્યા સમજાય, ત્યારબાદ તેને ઉકેલવાની રીત જોઈએ. સૂચિ ૧૭-૧૪ <code>slow</code> વિધેયનો પરિચય આપે છે.</p>
-<listing number="17-14" caption="Using `thread::sleep` to simulate slow operations" file-name="src/main.rs">
-```rust
-{{#rustdoc_include ../listings/ch17-async-await/listing-17-14/src/main.rs:slow}}
-```
-</listing>
-આ કોડ `std::thread::sleep` નો ઉપયોગ કરે છે `trpl::sleep` ને બદલે જેથી કરીને `slow` બોલાવવાથી વર્તમાન થ્રેડ અમુક મિલિસેકન્ડ માટે સ્થિર થઈ જશે. આપણે `slow` નો ઉપયોગ લાંબા સમય સુધી ચાલતી અને અવરોધક વાસ્તવિક દુનિયાની કામગીરીનું સ્થાન લેવા માટે કરી શકીએ છીએ.
+<p><strong>Listing 17-14: Using <code>thread::sleep</code> to simulate slow operations</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-14/src/main.rs:slow}}
+<span class="boring">}</span></code></pre>
+<p>આ કોડ <code>std::thread::sleep</code> નો ઉપયોગ કરે છે <code>trpl::sleep</code> ને બદલે જેથી કરીને <code>slow</code> બોલાવવાથી વર્તમાન થ્રેડ અમુક મિલિસેકન્ડ માટે સ્થિર થઈ જશે. આપણે <code>slow</code> નો ઉપયોગ લાંબા સમય સુધી ચાલતી અને અવરોધક વાસ્તવિક દુનિયાની કામગીરીનું સ્થાન લેવા માટે કરી શકીએ છીએ.</p>
 <p>લિસ્ટિંગ 17-15 માં, આપણે બે ફ્યુચર્સમાં આ પ્રકારનું CPU-બાઉન્ડ કાર્ય કરવાનુ અનુકરણ કરવા માટે <code>slow</code> નો ઉપયોગ કરીએ છીએ.</p>
-<listing number="17-15" caption="Calling the `slow` function to simulate slow operations" file-name="src/main.rs">
-```rust
-{{#rustdoc_include ../listings/ch17-async-await/listing-17-15/src/main.rs:slow-futures}}
-```
-</listing>
-દરેક ભવિષ્ય નિયંત્રણ રનટાઇમ પર પાછું આપે છે માત્ર ધીમા કાર્યો પૂર્ણ કર્યા પછી જ. જો તમે આ કોડ ચલાવો છો, તો તમને આ પરિણામ દેખાશે:
+<p><strong>Listing 17-15: Calling the <code>slow</code> function to simulate slow operations</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-15/src/main.rs:slow-futures}}
+<span class="boring">}</span></code></pre>
+<p>દરેક ભવિષ્ય નિયંત્રણ રનટાઇમ પર પાછું આપે છે માત્ર ધીમા કાર્યો પૂર્ણ કર્યા પછી જ. જો તમે આ કોડ ચલાવો છો, તો તમને આ પરિણામ દેખાશે:</p>
 <!-- manual-regeneration
 cd listings/ch17-async-await/listing-17-15/
 cargo run
@@ -218,12 +218,12 @@ copy just the output
 </code></pre>
 <p>જેમ કે સૂચિ ૧૭-૫ માં આપણે <code>trpl::select</code> નો ઉપયોગ કરીને બે URL મેળવવા માટે ભવિષ્યની રેસ કરી હતી, તેમ <code>select</code> હજી પણ <code>a</code> પૂર્ણ થતાં જ સમાપ્ત થાય છે. જોકે, બે ભવિષ્યમાં <code>slow</code> કૉલ્સ વચ્ચે કોઈ આંતરવ્યવહારો નથી. <code>a</code> ભવિષ્ય તેની તમામ કામગીરી પૂર્ણ કરે છે જ્યાં સુધી <code>trpl::sleep</code> કૉલની રાહ ન લેવાય, પછી <code>b</code> ભવિષ્ય તેની પોતાની <code>trpl::sleep</code> કૉલની રાહ જુએ ત્યાં સુધી તેની તમામ કામગીરી પૂર્ણ કરે છે, અને અંતે <code>a</code> ભવિષ્ય પૂર્ણ થાય છે. બંને ભવિષ્યને તેમના ધીમા કાર્યો વચ્ચે પ્રગતિ કરવા દેવા માટે, આપણે અપેક્ષા રાખવાની જગ્યાઓ (await points) ની જરૂર છે જેથી અમે રનટાઇમ પર નિયંત્રણ પાછું આપી શકીએ. એનો અર્થ એ થાય કે આપણને કંઈક એવું જોઈએ જેની આપણે રાહ જોઈ શકીએ!</p>
 <p>આ પ્રકારનું સ્થાનાંતરણ આપણે પહેલાથી જ સૂચિ ૧૭-૧૫ માં જોઈ શકીએ છીએ: જો આપણે <code>trpl::sleep</code> ને <code>a</code> ભવિષ્યના અંતે દૂર કરીએ, તો તે <code>b</code> ભવિષ્ય ચાલ્યા વિના પૂર્ણ થઈ જશે. ચાલો સૂચિ ૧૭-૧૬ માં દર્શાવ્યા પ્રમાણે, પ્રક્રિયા આગળ વધતી બંધ થાય તે માટે <code>trpl::sleep</code> કાર્યને પ્રારંભિક બિંદુ તરીકે વાપરવાનો પ્રયાસ કરીએ.</p>
-<listing number="17-16" caption="Using `trpl::sleep` to let operations switch off making progress" file-name="src/main.rs">
-```rust
-{{#rustdoc_include ../listings/ch17-async-await/listing-17-16/src/main.rs:here}}
-```
-</listing>
-અમે `trpl::sleep` કૉલ્સ ઉમેર્યા છે, જેમાં દરેક કૉલ વચ્ચે અપેક્ષા બિંદુઓ (await points) આવેલા છે, જેથી `slow` ફંક્શનના બે ભવિષ્યકાળ (futures) ના કાર્યો એકબીજામાં ગૂંથાયેલાં હોય:
+<p><strong>Listing 17-16: Using <code>trpl::sleep</code> to let operations switch off making progress</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-16/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અમે <code>trpl::sleep</code> કૉલ્સ ઉમેર્યા છે, જેમાં દરેક કૉલ વચ્ચે અપેક્ષા બિંદુઓ (await points) આવેલા છે, જેથી <code>slow</code> ફંક્શનના બે ભવિષ્યકાળ (futures) ના કાર્યો એકબીજામાં ગૂંથાયેલાં હોય:</p>
 <!-- manual-regeneration
 cd listings/ch17-async-await/listing-17-16
 cargo run
@@ -241,42 +241,48 @@ copy just the output
 </code></pre>
 <p>The <code>a</code> ભવિષ્ય હજી થોડીવાર ચાલુ રહે છે નિયંત્રણ <code>b</code> ને સોંપતા પહેલાં, કારણ કે તે <code>slow</code> કૉલ કરે છે <code>trpl::sleep</code> કૉલ કરતા પહેલાં પણ. પરંતુ ત્યારબાદ, ભવિષ્ય એકબીજા સાથે આગળ-પાછળ ફરે છે જ્યારે તેઓએ કોઈ અવેઇટ પોઈન્ટને સ્પર્શ કરે છે. આ કિસ્સામાં, અમે દરેક <code>slow</code> કૉલ પછી આવું કર્યું છે, પરંતુ અમે કાર્યને જે રીતે યોગ્ય લાગે તે રીતે વિભાજિત કરી શકીએ છીએ.</p>
 <p>અમે ખરેખર અહીં સૂવા નથી માંગતા; અમારો ધ્યેય શક્ય તેટલી ઝડપથી પ્રગતિ કરવાનો છે. અમને માત્ર રનટાઇમને નિયંત્રણ પાછું આપવાની જરૂર છે. અમે <code>trpl::yield_now</code> ફંક્શનનો ઉપયોગ કરીને સીધું જ એવું કરી શકીએ છીએ. લિસ્ટિંગ 17-17 માં, અમે બધા <code>trpl::sleep</code> કૉલ્સને <code>trpl::yield_now</code> થી બદલીએ છીએ.</p>
-<listing number="17-17" caption="Using `yield_now` to let operations switch off making progress" file-name="src/main.rs">
-```rust
-{{#rustdoc_include ../listings/ch17-async-await/listing-17-17/src/main.rs:yields}}
-```
-</listing>
-આ કોડ વાસ્તવિક હેતુ વિશે વધુ સ્પષ્ટ છે અને `sleep` નો ઉપયોગ કરવા કરતાં નોંધપાત્ર રીતે ઝડપી પણ હોઈ શકે છે, કારણ કે `sleep` દ્વારા વપરાતા ટાઈમરની ચોકસાઈ પર મર્યાદાઓ હોય છે. આપણે જે `sleep` વર્ઝનનો ઉપયોગ કરી રહ્યા છીએ, તે ઉદાહરણ તરીકે, જો આપણે તેને એક નેનોસેકન્ડનો `Duration` આપીએ તો પણ ઓછામાં ઓછો એક મિલિસેકન્ડ માટે સૂઈ જશે. ફરીથી, આધુનિક કમ્પ્યુટર્સ ઝડપી છે: તેઓ એક મિલિસેકન્ડમાં ઘણું બધું કરી શકે છે!
+<p><strong>Listing 17-17: Using <code>yield_now</code> to let operations switch off making progress</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-17/src/main.rs:yields}}
+<span class="boring">}</span></code></pre>
+<p>આ કોડ વાસ્તવિક હેતુ વિશે વધુ સ્પષ્ટ છે અને <code>sleep</code> નો ઉપયોગ કરવા કરતાં નોંધપાત્ર રીતે ઝડપી પણ હોઈ શકે છે, કારણ કે <code>sleep</code> દ્વારા વપરાતા ટાઈમરની ચોકસાઈ પર મર્યાદાઓ હોય છે. આપણે જે <code>sleep</code> વર્ઝનનો ઉપયોગ કરી રહ્યા છીએ, તે ઉદાહરણ તરીકે, જો આપણે તેને એક નેનોસેકન્ડનો <code>Duration</code> આપીએ તો પણ ઓછામાં ઓછો એક મિલિસેકન્ડ માટે સૂઈ જશે. ફરીથી, આધુનિક કમ્પ્યુટર્સ ઝડપી છે: તેઓ એક મિલિસેકન્ડમાં ઘણું બધું કરી શકે છે!</p>
 <p>આનો અર્થ એ થાય છે કે async ગણતરી-સંબંધિત કાર્યો માટે પણ ઉપયોગી થઈ શકે છે, તમારા પ્રોગ્રામ દ્વારા શું કરવામાં આવી રહ્યું છે તેના આધારે, કારણ કે તે પ્રોગ્રામના જુદા જુદા ભાગો વચ્ચેના સંબંધોને ગોઠવવા માટેનું એક ઉપયોગી સાધન પૂરું પાડે છે (પરંતુ async સ્ટેટ મશીનનો ઓવરહેડ ખર્ચ થાય છે). આ સહકારી મલ્ટીટાસ્કિંગ (cooperative multitasking) નો એક પ્રકાર છે, જેમાં દરેક ફ્યુચર પાસે await પોઈન્ટ દ્વારા નિયંત્રણ સોંપવાની ક્ષમતા હોય છે. દરેક ફ્યુચરની લાંબી અવધિ માટે બ્લોક કરવાનું ટાળવાની પણ જવાબદારી છે. કેટલાક Rust-આધારિત એમ્બેડેડ ઓપરેટિંગ સિસ્ટમ્સમાં, આ મલ્ટીટાસ્કિંગનો એકમાત્ર પ્રકાર છે!</p>
 <p>વાસ્તવિક કોડમાં, તમે સામાન્ય રીતે દરેક લીટી પર <code>await</code> બિંદુઓ સાથે ફંક્શન કૉલ્સને બદલતા નહીં હોય. આ રીતે નિયંત્રણ છોડવું પ્રમાણમાં સસ્તી હોઈ શકે છે, પરંતુ તે નિઃશુલ્ક નથી. ઘણી પરિસ્થિતિઓમાં, ગણતરી-સંબંધિત કાર્યને તોડવાનો પ્રયાસ કરવાથી તે નોંધપાત્ર રીતે ધીમું થઈ શકે છે, તેથી કેટલીકવાર એક કામગીરીને થોડી ક્ષણો માટે અવરોધિત થવા દેવાથી સમગ્ર પ્રદર્શન માટે વધુ સારું હોય છે. તમારા કોડની વાસ્તવિક પ્રદર્શન અવરોધો શું છે તે જોવા માટે હંમેશાં માપન કરો. જો કે, અંતર્ગત ગતિશીલતા ધ્યાનમાં રાખવી મહત્વપૂર્ણ છે, જો તમે એવી ઘણી બધી કામગીરી જોઈ રહ્યા હોવ જે ક્રમિક રીતે થવાની અપેક્ષા હતી પરંતુ તે એકસાથે થઈ રહી છે!</p>
 <h3 id="building-our-own-async-abstractions"><a class="header" href="#building-our-own-async-abstractions">Building Our Own Async Abstractions</a></h3>
 <p>આપણે ભવિષ્યને જોડીને નવા પ્રકારો પણ બનાવી શકીએ છીએ. ઉદાહરણ તરીકે, આપણે પહેલાથી જ ઉપલબ્ધ એસિંક ભાગોનો ઉપયોગ કરીને <code>timeout</code> કાર્ય બનાવી શકીએ છીએ. જ્યારે આપણે પૂર્ણ કરીશું, ત્યારે પરિણામ બીજો ભાગ હશે જેનો ઉપયોગ હજી વધુ એસિંક અમૂર્તતા (abstractions) બનાવવા માટે થઈ શકે છે.</p>
 <p>લિસ્ટિંગ 17-18 દર્શાવે છે કે આપણે આ <code>timeout</code> ને ધીમા ભવિષ્ય સાથે કેવી રીતે કાર્યરત અપેક્ષા રાખીએ છીએ.</p>
-<listing number="17-18" caption="Using our imagined `timeout` to run a slow operation with a time limit" file-name="src/main.rs">
-```rust
-{{#rustdoc_include ../listings/ch17-async-await/listing-17-18/src/main.rs:here}}
-```
-</listing>
-ચાલો આ અમલમાં મૂકીએ! આરંભ કરવા માટે, સૌ પ્રથમ `timeout` માટેની API
+<p><strong>Listing 17-18: Using our imagined <code>timeout</code> to run a slow operation with a time limit</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-18/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>ચાલો આ અમલમાં મૂકીએ! આરંભ કરવા માટે, સૌ પ્રથમ <code>timeout</code> માટેની API</p>
 <p>વિશે વિચારીએ: તે એક async કાર્ય હોવું જોઈએ જેથી આપણે તેની રાહ</p>
 <p>જોઈ શકીએ. તેનો પહેલો પરિમાણ ચલાવવા માટેનું ભવિષ્ય (future) હોવો જોઈએ. આપણે તેને સામાન્ય બનાવી શકીએ છીએ જેથી તે કોઈપણ</p>
 <p>ભવિષ્ય સાથે કામ કરી શકે. તેનો બીજો પરિમાણ રાહ જોવાનો મહત્તમ સમય હશે. જો આપણે <code>Duration</code> નો ઉપયોગ કરીએ, તો <code>trpl::sleep</code> ને પસાર કરવાનું સરળ</p>
 <p>રહેશે. તે <code>Result</code> પરત કરવું જોઈએ. જો ભવિષ્ય સફળતાપૂર્વક પૂર્ણ થાય, તો <code>Result</code> એ ભવિષ્ય દ્વારા ઉત્પાદિત મૂલ્ય સાથે <code>Ok</code> હશે. જો સમય સમાપ્ત થઈ જાય, તો <code>Result</code> એ તે સમયગાળો હશે જેtimeout ની રાહ જોઈ હતી.</p>
-<p>ચિત્રાંક ૧૭-૧૯ આ ઘોષણા દર્શાવે છે.</p>
+<ul>
+<li>ચિત્રાંક ૧૭-૧૯ આ ઘોષણા દર્શાવે છે.</li>
+</ul>
 <!-- This is not tested because it intentionally does not compile. -->
-<listing number="17-19" caption="Defining the signature of `timeout`" file-name="src/main.rs">
-```rust
-{{#rustdoc_include ../listings/ch17-async-await/listing-17-19/src/main.rs:declaration}}
-```
-</listing>
-વર્તન આપણે જરૂરિયાત છે: આપણે આપેલ સમયગાળા સામે ભવિષ્યને દ્વંદ્વયુદ્ધ કરવું છે. આપણે `trpl::sleep` નો ઉપયોગ કરીને સમયગાળામાંથી ટાઈમર ભવિષ્ય બનાવી શકીએ છીએ, અને કૉલર દ્વારા પાસ કરવામાં આવેલ ભવિષ્ય સાથે તે ટાઈમર ચલાવવા માટે `trpl::select` નો ઉપયોગ કરી શકીએ છીએ.
+<ul>
+<li><strong>Listing 17-19: Defining the signature of <code>timeout</code></strong></li>
+</ul>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>- {{#rustdoc_include ../listings/ch17-async-await/listing-17-19/src/main.rs:declaration}}
+<span class="boring">}</span></code></pre>
+<ul>
+<li>વર્તન આપણે જરૂરિયાત છે: આપણે આપેલ સમયગાળા સામે ભવિષ્યને દ્વંદ્વયુદ્ધ કરવું છે. આપણે <code>trpl::sleep</code> નો ઉપયોગ કરીને સમયગાળામાંથી ટાઈમર ભવિષ્ય બનાવી શકીએ છીએ, અને કૉલર દ્વારા પાસ કરવામાં આવેલ ભવિષ્ય સાથે તે ટાઈમર ચલાવવા માટે <code>trpl::select</code> નો ઉપયોગ કરી શકીએ છીએ.</li>
+</ul>
 <p>Listing 17-20 માં, આપણે <code>timeout</code> ને <code>trpl::select</code> ની પરિણામ પર મેળવીને અમલમાં મૂકીએ છીએ.</p>
-<listing number="17-20" caption="Defining `timeout` with `select` and `sleep`" file-name="src/main.rs">
-```rust
-{{#rustdoc_include ../listings/ch17-async-await/listing-17-20/src/main.rs:implementation}}
-```
-</listing>
-`trpl::select` નું અમલીકરણ નિષ્પક્ષ નથી: તે હંમેશાં Argumentોને તે ક્રમમાં તપાસે છે જેમાં તેઓ પસાર થાય છે (અન્ય `select` અમલીકરણો યાદચ્છિક રીતે કયો Argument પ્રથમ તપાસવો તે પસંદ કરશે). તેથી, અમે `future_to_try` ને `select` માં પ્રથમ પાસ કરીએ છીએ જેથી તેને પૂર્ણ થવાની તક મળે, ભલે `max_time` ખૂબ ટૂંકો સમયગાળો હોય. જો `future_to_try` પ્રથમ પૂર્ણ થાય છે, તો `select` `Left` સાથે `future_to_try` ના આઉટપુટ સાથે પાછું આવશે. જો `timer` પ્રથમ પૂર્ણ થાય છે, તો `select` `Right` સાથે ટાઈમરના `()` ના આઉટપુટ સાથે પાછું આવશે.
+<p><strong>Listing 17-20: Defining <code>timeout</code> with <code>select</code> and <code>sleep</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-20/src/main.rs:implementation}}
+<span class="boring">}</span></code></pre>
+<p><code>trpl::select</code> નું અમલીકરણ નિષ્પક્ષ નથી: તે હંમેશાં Argumentોને તે ક્રમમાં તપાસે છે જેમાં તેઓ પસાર થાય છે (અન્ય <code>select</code> અમલીકરણો યાદચ્છિક રીતે કયો Argument પ્રથમ તપાસવો તે પસંદ કરશે). તેથી, અમે <code>future_to_try</code> ને <code>select</code> માં પ્રથમ પાસ કરીએ છીએ જેથી તેને પૂર્ણ થવાની તક મળે, ભલે <code>max_time</code> ખૂબ ટૂંકો સમયગાળો હોય. જો <code>future_to_try</code> પ્રથમ પૂર્ણ થાય છે, તો <code>select</code> <code>Left</code> સાથે <code>future_to_try</code> ના આઉટપુટ સાથે પાછું આવશે. જો <code>timer</code> પ્રથમ પૂર્ણ થાય છે, તો <code>select</code> <code>Right</code> સાથે ટાઈમરના <code>()</code> ના આઉટપુટ સાથે પાછું આવશે.</p>
 <p>જો <code>future_to_try</code> સફળ થાય અને આપણને <code>Left(output)</code> મળે, તો અમે <code>Ok(output)</code> પરત કરીએ છીએ. જો નિંદ્રા સમય પૂરો થઈ જાય અને આપણને <code>Right(())</code> મળે, તો અમે <code>()</code> ને <code>_</code> વડે અવગણીએ છીએ અને તેના બદલે <code>Err(max_time)</code> પરત કરીએ છીએ.</p>
 <p>આથી, આપણી પાસે બે અન્ય async સહાયકોના ઉપયોગથી કાર્યરત <code>timeout</code> બનેલું છે. જો આપણે આપણો કોડ ચલાવીએ, તો તે સમય સમાપ્તિ પછી નિષ્ફળતા મોડ છાપશે:</p>
 <pre><code class="language-text">Failed after 2 seconds
@@ -337,6 +343,7 @@ copy just the output
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

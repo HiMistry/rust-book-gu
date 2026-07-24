@@ -13,22 +13,24 @@ enum Result<T, E> {
 
 ચાલો આપણે એવા વિધેય (function) ને કહીએ જે `Result` મૂલ્ય આપે છે, કારણ કે તે નિષ્ફળ થઈ શકે છે. યાદી 9-3 માં, આપણે એક ફાઈલ ખોલવાનો પ્રયત્ન કરીએ છીએ.
 
-<Listing number="9-3" file-name="src/main.rs" caption="Opening a file">
+**Listing 9-3: Opening a file**
+
 ```rust
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-03/src/main.rs}}
 ```
-</Listing>
+
 `File::open` નું વળતર પ્રકાર `Result<T, E>` છે. સામાન્ય પરિમાણ `T` ને `File::open` ના અમલીકરણ દ્વારા સફળ મૂલ્યનો પ્રકાર, `std::fs::File`, સાથે ભરાયેલું છે, જે એક ફાઇલ હેન્ડલ છે. ભૂલ મૂલ્યમાં વપરાતો `E` નો પ્રકાર `std::io::Error` છે. આ વળતર પ્રકાર સૂચવે છે કે `File::open` ની કૉલ સફળ થઈ શકે છે અને આપણને વાંચવા અથવા લખવાની મંજૂરી હોય તેવા ફાઇલ હેન્ડલને પરત કરી શકે છે. ફંક્શન કૉલમાં નિષ્ફળતા પણ આવી શકે છે: ઉદાહરણ તરીકે, ફાઈલ અસ્તિત્વમાં ન હોઈ શકે, અથવા આપણી પાસે ફાઇલને ઍક્સેસ કરવાની પરવાનગી ન હોઈ શકે. `File::open` ફંક્શનને જણાવવાની રીતની જરૂર છે કે તે સફળ થયું કે નિષ્ફળ ગયું અને તે જ સમયે આપણને કાં તો ફાઇલ હેન્ડલ અથવા ભૂલ માહિતી આપવી જોઈએ. આ માહિતી બરાબર `Result` એનમ દ્વારા આપવામાં આવે છે.
 
 જ્યારે `File::open` સફળ થાય છે, ત્યારે variable `greeting_file_result` માં રહેલું મૂલ્ય `Ok` નું ઉદાહરણ હશે જેમાં ફાઇલ હેન્ડલ સમાવિષ્ટ હશે. જ્યારે તે નિષ્ફળ જાય છે, ત્યારે `greeting_file_result` માં રહેલું મૂલ્ય `Err` નું ઉદાહરણ હશે જેમાં કયા પ્રકારની ભૂલ આવી હતી તેની વધુ માહિતી હશે. We need to add to
 
 આપણે લિસ્ટિંગ 9-3 માં રહેલા કોડમાં ફેરફાર કરવો પડશે જેથી `File::open` જે મૂલ્ય આપે છે તેના આધારે અલગ-અલગ ક્રિયાઓ કરી શકાય. લિસ્ટિંગ 9-4 દર્શાવે છે કે `Result` ને નિયંત્રિત કરવાનો એક માર્ગ મૂળભૂત સાધન, `match` અભિવ્યક્તિનો ઉપયોગ કરવો છે જેની ચર્ચા આપણે પ્રકરણ 6 માં કરી હતી.
 
-<Listing number="9-4" file-name="src/main.rs" caption="Using a `match` expression to handle the `Result` variants that might be returned">
+**Listing 9-4: Using a `match` expression to handle the `Result` variants that might be returned**
+
 ```rust
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-04/src/main.rs}}
 ```
-</Listing>
+
 Note that, like the `Option` enum, the `Result` enum and its variants have been brought into scope by the prelude, so we don’t need to specify `Result::` before the `Ok` and `Err` variants in the `match` arms.
 
 જ્યારે પરિણામ `Ok` હોય છે, ત્યારે આ કોડ `Ok` પ્રકારની અંદર રહેલા `file` મૂલ્યને પાછું આપશે, અને પછી તે ફાઇલ હેન્ડલ મૂલ્યને `greeting_file` variable સોંપવામાં આવશે. `match` પછી, આપણે વાંચવા અથવા લખવા માટે ફાઇલ હેન્ડલનો ઉપયોગ કરી શકીએ છીએ.
@@ -43,12 +45,13 @@ Note that, like the `Option` enum, the `Result` enum and its variants have been 
 ### Matching on Different Errors
 Listing 9-4 માં રહેલું કોડ `panic!` કરશે, ભલે `File::open` નિષ્ફળ થવાનું કારણ ગમે તે હોય. જો કે, આપણે જુદા જુદા નિષ્ફળતા કારણો માટે અલગ અલગ ક્રિયાઓ કરવા માંગીએ છીએ. જો `File::open` એ કારણે નિષ્ફળ જાય કે ફાઈલ અસ્તિત્વમાં નથી, તો આપણે ફાઈલ બનાવવી અને નવી ફાઈલનું હેન્ડલ પરત કરવું છે. જો `File::open` અન્ય કોઈ કારણસર નિષ્ફળ જાય—ઉદાહરણ તરીકે, આપણી પાસે ફાઈલ ખોલવાની પરવાનગી ન હોય—તો પણ આપણે કોડને Listing 9-4 માં જે રીતે `panic!` થયો હતો તે જ રીતે `panic!` કરવો છે. આ માટે, આપણે એક અંદર `match` અભિવ્યક્તિ ઉમેરીએ છીએ, જે Listing 9-5 માં દર્શાવેલ છે.
 
-<Listing number="9-5" file-name="src/main.rs" caption="Handling different kinds of errors in different ways">
+**Listing 9-5: Handling different kinds of errors in different ways**
+
 tests to fail lol -->
 ```rust
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-05/src/main.rs}}
 ```
-</Listing>
+
 The type of the value that `File::open` returns inside the `Err` variant is `io::Error`, which is a struct provided by the standard library. This struct has a method, `kind`, that we can call to get an `io::ErrorKind` value. The enum `io::ErrorKind` is provided by the standard library and has variants representing the different kinds of errors that might result from an `io` operation. The variant we want to use is `ErrorKind::NotFound`, which indicates the file we’re trying to open doesn’t exist yet. So, we match on `greeting_file_result`, but we also have an inner match on `error.kind()`.
 
 આપણે આંતરિક `match` માં જે શરત ચકાસવા માંગીએ છીએ તે એ છે કે `error.kind()` દ્વારા પરત કરેલ મૂલ્ય `ErrorKind` enum ના `NotFound` પ્રકારનું છે કે નહીં. જો એમ હોય, તો આપણે `File::create` વડે ફાઈલ બનાવવાનો પ્રયત્ન કરીએ છીએ. પરંતુ, કારણ કે `File::create` પણ નિષ્ફળ થઈ શકે છે, આપણને આંતરિક `match` અભિવ્યક્તિમાં બીજો ભાગ જોઈએ છે. જ્યારે ફાઈલ બનાવી શકાતી નથી, ત્યારે એક અલગ ભૂલ સંદેશ છાપવામાં આવે છે. બાહ્ય `match` નો બીજો ભાગ એ જ રહે છે, તેથી ખૂટતી ફાઈલ સિવાયની કોઈપણ ભૂલ પર પ્રોગ્રામ ગભરાઈ જાય છે.
@@ -81,13 +84,13 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 >
 > #### Alternatives to Using `match` with `Result<T, E>`
 >
-> <Listing file-name="src/main.rs">
+> 
 > ```rust
 ```rust
 > {{#rustdoc_include ../listings/ch09-error-handling/no-listing-04-unwrap/src/main.rs}}
 ```
 > ```
-> </Listing>
+> 
 > જો આપણે આ કોડ `hello.txt` ફાઈલ વગર ચલાવીએ, તો આપણને `panic!` કૉલ દ્વારા એક ભૂલ સંદેશ દેખાશે જે `unwrap` પદ્ધતિ ઉત્પન્ન કરે છે:
 >
 > #### Alternatives to Using `match` with `Result<T, E>`
@@ -106,13 +109,13 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 >
 > #### Alternatives to Using `match` with `Result<T, E>`
 >
-> <Listing file-name="src/main.rs">
+> 
 > ```rust
 ```rust
 > {{#rustdoc_include ../listings/ch09-error-handling/no-listing-05-expect/src/main.rs}}
 ```
 > ```
-> </Listing>
+> 
 > આપણે `expect` નો ઉપયોગ `unwrap` ની જેમ જ કરીએ છીએ: ફાઈલ હેન્ડલ પરત કરવા અથવા `panic!` મેક્રોને બોલાવવા માટે. `expect` દ્વારા `panic!` માં વપરાતો ભૂલ સંદેશ એ પરિમાણ હશે જે આપણે `expect` ને આપીએ છીએ, ડિફોલ્ટ `panic!` સંદેશ જે `unwrap` વાપરે છે તેના બદલે. આ તેવું દેખાય છે:
 >
 > cd listings/ch09-error-handling/no-listing-05-expect
@@ -131,7 +134,8 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 >
 > ઉદાહરણ તરીકે, યાદી 9-6 એક એવું વિધેય દર્શાવે છે જે ફાઈલમાંથી user નામ વાંચે છે. જો ફાઈલ અસ્તિત્વમાં ન હોય અથવા વાંચી શકાતી ન હોય, તો આ વિધેય તે ભૂલોને કોલિંગ કોડ પર પાછી મોકલશે.
 >
-> <Listing number="9-6" file-name="src/main.rs" caption="A function that returns errors to the calling code using `match`">
+> **Listing 9-6: A function that returns errors to the calling code using `match`**
+
 > file panics. We do want to include it for reader experimentation purposes, but
 > don't want to include it for rustdoc testing purposes. -->
 > ```rust
@@ -139,7 +143,7 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 > {{#include ../listings/ch09-error-handling/listing-09-06/src/main.rs:here}}
 ```
 > ```
-> </Listing>
+> 
 > આ કાર્યને ઘણો ટૂંકો રીતે લખી શકાય છે, પરંતુ આપણે ભૂલ વ્યવસ્થાપન (error handling) સમજવા માટે પહેલાં તેને જાતે જ કરીએ છીએ; અંતે, આપણે ટૂંકા માર્ગ બતાવીશું. ચાલો પ્રથમ કાર્યના વળતર પ્રકાર (return type) જોઈએ: `Result<String, io::Error>`. આનો અર્થ એ થાય છે કે કાર્ય `Result<T, E>` પ્રકારનું મૂલ્ય આપી રહ્યું છે, જ્યાં સામાન્ય પરિમાણ `T` ને `String` ના નક્કર પ્રકારથી અને સામાન્ય પ્રકાર `E` ને `io::Error` ના નક્કર પ્રકારથી ભરવામાં આવ્યું છે.
 >
 > જો આ કાર્ય સફળતાપૂર્વક પૂર્ણ થાય, તો આ કાર્યને બોલાવતો કોડ `Ok` મૂલ્ય મેળવે છે, જેમાં `String` હોય છે — જે ફાઈલમાંથી આ કાર્ય વાંચેલો `username` છે. જો આ કાર્યમાં કોઈ સમસ્યા આવે, તો બોલાવતો કોડ `Err` મૂલ્ય મેળવે છે, જેમાં `io::Error` ની એક પ્રત હોય છે, જે સમસ્યાઓ વિશે વધુ માહિતી ધરાવે છે. અમે આ કાર્યના વળતર પ્રકાર તરીકે `io::Error` પસંદ કર્યું કારણ કે તે ફંક્શનના શરીરમાં આપણે જે કામગીરી કરી રહ્યા છીએ તેમાં નિષ્ફળતા આવી શકે છે, જેમ કે `File::open` ફંક્શન અને `read_to_string` પદ્ધતિ, બંને આ પ્રકારનું ભૂલ મૂલ્ય આપે છે.
@@ -156,7 +160,8 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 >
 > ચિત્રલિપી 9-7 દર્શાવે છે કે `read_username_from_file` નું એક અમલીકરણ છે જેનું કાર્ય ચિત્રલિપી 9-6 માં રહેલા અમલીકરણ સમાન છે, પરંતુ આ અમલીકરણ `?` ચિહ્નનો ઉપયોગ કરે છે.
 >
-> <Listing number="9-7" file-name="src/main.rs" caption="A function that returns errors to the calling code using the `?` operator">
+> **Listing 9-7: A function that returns errors to the calling code using the `?` operator**
+
 > file panics. We do want to include it for reader experimentation purposes, but
 > don't want to include it for rustdoc testing purposes. -->
 > ```rust
@@ -164,7 +169,7 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 > {{#include ../listings/ch09-error-handling/listing-09-07/src/main.rs:here}}
 ```
 > ```
-> </Listing>
+> 
 > ? ચિહ્નનું વિવરણ `Result` મૂલ્ય પછી મૂકવામાં આવેલું `?` ચિહ્ન, Listing 9-6 માં આપણે `Result` મૂલ્યોને નિયંત્રિત કરવા માટે વ્યાખ્યાયિત કરેલા `match` અભિવ્યક્તિની જેમ જ કાર્ય કરે છે. જો `Result` નું મૂલ્ય `Ok` હોય, તો `Ok` ની અંદરનું મૂલ્ય આ અભિવ્યક્તિમાંથી પાછું આવે છે અને પ્રોગ્રામ ચાલુ રહે છે. જો મૂલ્ય `Err` હોય, તો `Err` સમગ્ર ફંક્શનમાંથી પાછું આવે છે, જાણે કે આપણે `return` કીવર્ડનો ઉપયોગ કર્યો હોય, જેથી ભૂલનું મૂલ્ય કોલિંગ કોડમાં પ્રસારિત થાય.
 >
 > #### Alternatives to Using `match` with `Result<T, E>`
@@ -177,7 +182,8 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 >
 > `?` ચિહ્ન દૂર કરે છે ઘણી બધી પુનરાવર્તિત પ્રક્રિયાઓ અને આ કાર્યની અમલીકરણ સરળ બનાવે છે. અમે `?` પછી તરત જ પદ્ધતિ કૉલ્સને જોડીને આ કોડને વધુ ટૂંકો પણ કરી શકીએ છીએ, જે યાદી 9-8 માં દર્શાવેલ છે.
 >
-> <Listing number="9-8" file-name="src/main.rs" caption="Chaining method calls after the `?` operator">
+> **Listing 9-8: Chaining method calls after the `?` operator**
+
 > file panics. We do want to include it for reader experimentation purposes, but
 > don't want to include it for rustdoc testing purposes. -->
 > ```rust
@@ -185,14 +191,15 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 > {{#include ../listings/ch09-error-handling/listing-09-08/src/main.rs:here}}
 ```
 > ```
-> </Listing>
+> 
 > અમે નવું `String`  `username` માં બનાવવાની ક્રિયાને ફંક્શનની શરૂઆતમાં ખસેડી છે; તે ભાગ બદલાયો નથી. `username_file` નામનું variable (variable) બનાવવાને બદલે, અમે `read_to_string` કૉલને સીધું જ `File::open("hello.txt")?` ના પરિણામ પર જોડી દીધું છે. હજી પણ `read_to_string` કૉલના અંતે  `?`  હાલ્યા કરે છે, અને જ્યારે `File::open` અને `read_to_string` બંને સફળ થાય ત્યારે અમે હજી પણ `Ok` મૂલ્ય ધરાવતા `username` ને પરત કરીએ છીએ, નહિ કે ભૂલોને. કાર્યક્ષમતા ફરીથી યાદી 9-6 અને યાદી 9-7 જેવી જ છે; આ માત્ર તેને લખવાની એક અલગ, વધુ સુગમ (ergonomic) રીત છે.
 >
 > ચિત્રલિપિ 9-9 દર્શાવે છે કે `fs::read_to_string` નો ઉપયોગ કરીને આને વધુ ટૂંકું કેવી રીતે બનાવવું.
 >
 > #### Alternatives to Using `match` with `Result<T, E>`
 >
-> <Listing number="9-9" file-name="src/main.rs" caption="Using `fs::read_to_string` instead of opening and then reading the file">
+> **Listing 9-9: Using `fs::read_to_string` instead of opening and then reading the file**
+
 > file panics. We do want to include it for reader experimentation purposes, but
 > don't want to include it for rustdoc testing purposes. -->
 > ```rust
@@ -200,20 +207,21 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 > {{#include ../listings/ch09-error-handling/listing-09-09/src/main.rs:here}}
 ```
 > ```
-> </Listing>
+> 
 > ફાઈલને સ્ટ્રિંગમાં વાંચવી એ એક સામાન્ય કાર્ય છે, તેથી સ્ટાન્ડર્ડ લાયબ્રેરી અનુકૂળ `fs::read_to_string` વિધેય પ્રદાન કરે છે જે ફાઈલ ખોલે છે, નવું `String` બનાવે છે, ફાઈલની સામગ્રી વાંચે છે, તે સામગ્રીને તે `String` માં મૂકે છે અને તેને પરત કરે છે. અલબત્ત, `fs::read_to_string` વાપરવાથી આપણને તમામ ભૂલ નિયંત્રણ સમજાવવાની તક મળતી નથી, તેથી અમે પહેલા લાંબો રસ્તો અપનાવ્યો.
 >
 > `?` ચિહ્ન માત્ર એવા જ વિધેયોમાં વાપરી શકાય છે જેમના વળતર પ્રકાર (return type) તે મૂલ્ય સાથે સુસંગત હોય જેના પર `?` વપરાય છે. આ એટલા માટે છે કારણ કે `?` ચિહ્ન વ્યાખ્યા પ્રમાણે કાર્યમાંથી એક પ્રારંભિક વળતર (early return) કરવા માટે નિર્ધારિત થયેલું છે, જે રીતે આપણે યાદી 9-6 માં  `match` અભિવ્યક્તિનો ઉપયોગ કર્યો હતો. યાદી 9-6 માં, `match` એક `Result` મૂલ્યનો ઉપયોગ કરી રહ્યું હતું, અને પ્રારંભિક વળતર શાખા (arm) એક `Err(e)` મૂલ્ય પરત કરે છે. વિધેયનો વળતર પ્રકાર `Result` હોવો જરૂરી છે જેથી તે આ `return` સાથે સુસંગત રહે.
 >
 > યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે `?` ઓપરેટરનો ઉપયોગ `main` ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે `?` વાપરીએ છીએ.
 >
-> <Listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
+> **Listing 9-10: Attempting to use the `?` in the `main` function that returns `()` won’t compile.**
+
 > ```rust
 ```rust
 > {{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
 ```
 > ```
-> </Listing>
+> 
 > આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
 >
 > ```console
@@ -228,11 +236,11 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 #### Shortcuts for Panic on Error
 અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે `?` નો ઉપયોગ `Option<T>` મૂલ્યો સાથે પણ થઈ શકે છે. `Result` પર `?` વાપરવા જેવું જ, તમે `Option` પર `?` માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે `Option` આપે છે. `Option<T>` પર `?` ઓપરેટરનું વર્તન `Result<T, E>` પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય `None` હોય, તો તે કાર્યમાંથી તરત જ `None` પાછું આપવામાં આવશે. જો મૂલ્ય `Some` હોય, તો `Some` ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.
 
-<Listing number="9-11" caption="Using the `?` operator on an `Option<T>` value">
+` value">
 ```rust
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
 ```
-</Listing>
+
 આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
 
 `?` નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર `chars` કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે `last` કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક `Option` છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો `text` ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે `"\nhi"` . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે `Some` પ્રકારમાં પાછો આવશે. વચ્ચેનું `?` ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે `Option` પર `?` ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા `match` અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.
@@ -243,11 +251,11 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 સદનસીબે, `main` એક `Result<(), E>` પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે `main` ના વળતર પ્રકારને `Result<(), Box<dyn Error>>` માં બદલ્યા છે અને અંતમાં `Ok(())` નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.
 
-<Listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result<(), E>` allows the use of the `?` operator on `Result` values.">
+` allows the use of the `?` operator on `Result` values.">
 ```rust
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
 ```
-</Listing>
+
 `Box<dyn Error>` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn Error>` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn Error>` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ માત્ર `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box<dyn Error]` નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર `main` ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.
 
 જ્યારે એક `main` ફંક્શન `Result<(), E>` પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ `Ok(())` સાથે `main` પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો `main` કોઈ `Err` મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ `0` પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ `0` સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.
@@ -260,9 +268,10 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે `?` ઓપરેટરનો ઉપયોગ `main` ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે `?` વાપરીએ છીએ.
 
-<Listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
+**Listing 9-10: Attempting to use the `?` in the `main` function that returns `()` won’t compile.**
+
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
-</Listing>
+
 આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
 
 {{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
@@ -272,9 +281,9 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે `?` નો ઉપયોગ `Option<T>` મૂલ્યો સાથે પણ થઈ શકે છે. `Result` પર `?` વાપરવા જેવું જ, તમે `Option` પર `?` માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે `Option` આપે છે. `Option<T>` પર `?` ઓપરેટરનું વર્તન `Result<T, E>` પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય `None` હોય, તો તે કાર્યમાંથી તરત જ `None` પાછું આપવામાં આવશે. જો મૂલ્ય `Some` હોય, તો `Some` ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.
 
-<Listing number="9-11" caption="Using the `?` operator on an `Option<T>` value">
+` value">
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
-</Listing>
+
 આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
 
 `?` નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર `chars` કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે `last` કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક `Option` છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો `text` ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે `"\nhi"` . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે `Some` પ્રકારમાં પાછો આવશે. વચ્ચેનું `?` ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે `Option` પર `?` ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા `match` અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.
@@ -285,9 +294,9 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 સદનસીબે, `main` એક `Result<(), E>` પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે `main` ના વળતર પ્રકારને `Result<(), Box<dyn Error>>` માં બદલ્યા છે અને અંતમાં `Ok(())` નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.
 
-<Listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result<(), E>` allows the use of the `?` operator on `Result` values.">
+` allows the use of the `?` operator on `Result` values.">
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
-</Listing>
+
 `Box<dyn Error>` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn Error>` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn Error>` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ માત્ર `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box<dyn Error]` નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર `main` ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.
 
 જ્યારે એક `main` ફંક્શન `Result<(), E>` પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ `Ok(())` સાથે `main` પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો `main` કોઈ `Err` મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ `0` પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ `0` સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.
@@ -300,9 +309,10 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે `?` ઓપરેટરનો ઉપયોગ `main` ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે `?` વાપરીએ છીએ.
 
-<Listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
+**Listing 9-10: Attempting to use the `?` in the `main` function that returns `()` won’t compile.**
+
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
-</Listing>
+
 આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
 
 {{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
@@ -312,9 +322,9 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે `?` નો ઉપયોગ `Option<T>` મૂલ્યો સાથે પણ થઈ શકે છે. `Result` પર `?` વાપરવા જેવું જ, તમે `Option` પર `?` માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે `Option` આપે છે. `Option<T>` પર `?` ઓપરેટરનું વર્તન `Result<T, E>` પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય `None` હોય, તો તે કાર્યમાંથી તરત જ `None` પાછું આપવામાં આવશે. જો મૂલ્ય `Some` હોય, તો `Some` ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.
 
-<Listing number="9-11" caption="Using the `?` operator on an `Option<T>` value">
+` value">
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
-</Listing>
+
 આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
 
 `?` નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર `chars` કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે `last` કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક `Option` છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો `text` ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે `"\nhi"` . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે `Some` પ્રકારમાં પાછો આવશે. વચ્ચેનું `?` ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે `Option` પર `?` ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા `match` અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.
@@ -325,9 +335,9 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 સદનસીબે, `main` એક `Result<(), E>` પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે `main` ના વળતર પ્રકારને `Result<(), Box<dyn Error>>` માં બદલ્યા છે અને અંતમાં `Ok(())` નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.
 
-<Listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result<(), E>` allows the use of the `?` operator on `Result` values.">
+` allows the use of the `?` operator on `Result` values.">
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
-</Listing>
+
 `Box<dyn Error>` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn Error>` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn Error>` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ માત્ર `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box<dyn Error]` નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર `main` ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.
 
 જ્યારે એક `main` ફંક્શન `Result<(), E>` પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ `Ok(())` સાથે `main` પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો `main` કોઈ `Err` મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ `0` પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ `0` સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.
@@ -340,9 +350,10 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે `?` ઓપરેટરનો ઉપયોગ `main` ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે `?` વાપરીએ છીએ.
 
-<Listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
+**Listing 9-10: Attempting to use the `?` in the `main` function that returns `()` won’t compile.**
+
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
-</Listing>
+
 આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
 
 {{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
@@ -352,9 +363,9 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે `?` નો ઉપયોગ `Option<T>` મૂલ્યો સાથે પણ થઈ શકે છે. `Result` પર `?` વાપરવા જેવું જ, તમે `Option` પર `?` માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે `Option` આપે છે. `Option<T>` પર `?` ઓપરેટરનું વર્તન `Result<T, E>` પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય `None` હોય, તો તે કાર્યમાંથી તરત જ `None` પાછું આપવામાં આવશે. જો મૂલ્ય `Some` હોય, તો `Some` ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.
 
-<Listing number="9-11" caption="Using the `?` operator on an `Option<T>` value">
+` value">
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
-</Listing>
+
 આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
 
 `?` નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર `chars` કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે `last` કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક `Option` છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો `text` ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે `"\nhi"` . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે `Some` પ્રકારમાં પાછો આવશે. વચ્ચેનું `?` ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે `Option` પર `?` ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા `match` અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.
@@ -365,9 +376,9 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 સદનસીબે, `main` એક `Result<(), E>` પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે `main` ના વળતર પ્રકારને `Result<(), Box<dyn Error>>` માં બદલ્યા છે અને અંતમાં `Ok(())` નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.
 
-<Listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result<(), E>` allows the use of the `?` operator on `Result` values.">
+` allows the use of the `?` operator on `Result` values.">
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
-</Listing>
+
 `Box<dyn Error>` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn Error>` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn Error>` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ માત્ર `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box<dyn Error]` નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર `main` ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.
 
 જ્યારે એક `main` ફંક્શન `Result<(), E>` પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ `Ok(())` સાથે `main` પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો `main` કોઈ `Err` મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ `0` પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ `0` સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.
@@ -380,9 +391,10 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે `?` ઓપરેટરનો ઉપયોગ `main` ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે `?` વાપરીએ છીએ.
 
-<Listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
+**Listing 9-10: Attempting to use the `?` in the `main` function that returns `()` won’t compile.**
+
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
-</Listing>
+
 આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
 
 {{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
@@ -392,9 +404,9 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે `?` નો ઉપયોગ `Option<T>` મૂલ્યો સાથે પણ થઈ શકે છે. `Result` પર `?` વાપરવા જેવું જ, તમે `Option` પર `?` માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે `Option` આપે છે. `Option<T>` પર `?` ઓપરેટરનું વર્તન `Result<T, E>` પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય `None` હોય, તો તે કાર્યમાંથી તરત જ `None` પાછું આપવામાં આવશે. જો મૂલ્ય `Some` હોય, તો `Some` ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.
 
-<Listing number="9-11" caption="Using the `?` operator on an `Option<T>` value">
+` value">
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
-</Listing>
+
 આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
 
 `?` નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર `chars` કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે `last` કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક `Option` છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો `text` ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે `"\nhi"` . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે `Some` પ્રકારમાં પાછો આવશે. વચ્ચેનું `?` ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે `Option` પર `?` ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા `match` અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.
@@ -405,9 +417,9 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 સદનસીબે, `main` એક `Result<(), E>` પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે `main` ના વળતર પ્રકારને `Result<(), Box<dyn Error>>` માં બદલ્યા છે અને અંતમાં `Ok(())` નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.
 
-<Listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result<(), E>` allows the use of the `?` operator on `Result` values.">
+` allows the use of the `?` operator on `Result` values.">
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
-</Listing>
+
 `Box<dyn Error>` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn Error>` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn Error>` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ માત્ર `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box<dyn Error]` નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર `main` ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.
 
 જ્યારે એક `main` ફંક્શન `Result<(), E>` પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ `Ok(())` સાથે `main` પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો `main` કોઈ `Err` મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ `0` પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ `0` સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.
@@ -421,9 +433,10 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે `?` ઓપરેટરનો ઉપયોગ `main` ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે `?` વાપરીએ છીએ.
 
-<Listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
+**Listing 9-10: Attempting to use the `?` in the `main` function that returns `()` won’t compile.**
+
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
-</Listing>
+
 આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
 
 {{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
@@ -433,9 +446,9 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે `?` નો ઉપયોગ `Option<T>` મૂલ્યો સાથે પણ થઈ શકે છે. `Result` પર `?` વાપરવા જેવું જ, તમે `Option` પર `?` માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે `Option` આપે છે. `Option<T>` પર `?` ઓપરેટરનું વર્તન `Result<T, E>` પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય `None` હોય, તો તે કાર્યમાંથી તરત જ `None` પાછું આપવામાં આવશે. જો મૂલ્ય `Some` હોય, તો `Some` ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.
 
-<Listing number="9-11" caption="Using the `?` operator on an `Option<T>` value">
+` value">
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
-</Listing>
+
 આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
 
 `?` નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર `chars` કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે `last` કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક `Option` છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો `text` ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે `"\nhi"` . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે `Some` પ્રકારમાં પાછો આવશે. વચ્ચેનું `?` ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે `Option` પર `?` ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા `match` અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.
@@ -446,9 +459,9 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 સદનસીબે, `main` એક `Result<(), E>` પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે `main` ના વળતર પ્રકારને `Result<(), Box<dyn Error>>` માં બદલ્યા છે અને અંતમાં `Ok(())` નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.
 
-<Listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result<(), E>` allows the use of the `?` operator on `Result` values.">
+` allows the use of the `?` operator on `Result` values.">
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
-</Listing>
+
 `Box<dyn Error>` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn Error>` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn Error>` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ માત્ર `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box<dyn Error]` નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર `main` ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.
 
 જ્યારે એક `main` ફંક્શન `Result<(), E>` પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ `Ok(())` સાથે `main` પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો `main` કોઈ `Err` મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ `0` પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ `0` સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.
@@ -462,9 +475,10 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે `?` ઓપરેટરનો ઉપયોગ `main` ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે `?` વાપરીએ છીએ.
 
-<Listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
+**Listing 9-10: Attempting to use the `?` in the `main` function that returns `()` won’t compile.**
+
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
-</Listing>
+
 આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
 
 {{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
@@ -474,9 +488,9 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે `?` નો ઉપયોગ `Option<T>` મૂલ્યો સાથે પણ થઈ શકે છે. `Result` પર `?` વાપરવા જેવું જ, તમે `Option` પર `?` માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે `Option` આપે છે. `Option<T>` પર `?` ઓપરેટરનું વર્તન `Result<T, E>` પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય `None` હોય, તો તે કાર્યમાંથી તરત જ `None` પાછું આપવામાં આવશે. જો મૂલ્ય `Some` હોય, તો `Some` ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.
 
-<Listing number="9-11" caption="Using the `?` operator on an `Option<T>` value">
+` value">
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
-</Listing>
+
 આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
 
 `?` નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર `chars` કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે `last` કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક `Option` છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો `text` ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે `"\nhi"` . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે `Some` પ્રકારમાં પાછો આવશે. વચ્ચેનું `?` ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે `Option` પર `?` ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા `match` અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.
@@ -487,9 +501,9 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 સદનસીબે, `main` એક `Result<(), E>` પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે `main` ના વળતર પ્રકારને `Result<(), Box<dyn Error>>` માં બદલ્યા છે અને અંતમાં `Ok(())` નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.
 
-<Listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result<(), E>` allows the use of the `?` operator on `Result` values.">
+` allows the use of the `?` operator on `Result` values.">
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
-</Listing>
+
 `Box<dyn Error>` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn Error>` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn Error>` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ માત્ર `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box<dyn Error]` નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર `main` ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.
 
 જ્યારે એક `main` ફંક્શન `Result<(), E>` પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ `Ok(())` સાથે `main` પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો `main` કોઈ `Err` મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ `0` પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ `0` સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.
@@ -503,9 +517,10 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે `?` ઓપરેટરનો ઉપયોગ `main` ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે `?` વાપરીએ છીએ.
 
-<Listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
+**Listing 9-10: Attempting to use the `?` in the `main` function that returns `()` won’t compile.**
+
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
-</Listing>
+
 આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. `?` ઓપરેટર `File::open` દ્વારા પરત કરવામાં આવેલ `Result` મૂલ્યને અનુસરે છે, પરંતુ આ `main` કાર્યનો રીટર્ન પ્રકાર `()` છે, `Result` નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:
 
 {{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
@@ -515,9 +530,9 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે `?` નો ઉપયોગ `Option<T>` મૂલ્યો સાથે પણ થઈ શકે છે. `Result` પર `?` વાપરવા જેવું જ, તમે `Option` પર `?` માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે `Option` આપે છે. `Option<T>` પર `?` ઓપરેટરનું વર્તન `Result<T, E>` પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય `None` હોય, તો તે કાર્યમાંથી તરત જ `None` પાછું આપવામાં આવશે. જો મૂલ્ય `Some` હોય, તો `Some` ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.
 
-<Listing number="9-11" caption="Using the `?` operator on an `Option<T>` value">
+` value">
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
-</Listing>
+
 આ કાર્ય `Option<char>` પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ `text` સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર `lines` પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર `next` ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો `text` ખાલી સ્ટ્રિંગ હોય, તો `next` ની આ કૉલ `None` પરત કરશે, જેના પરિણામે આપણે `?` નો ઉપયોગ કરીને `last_char_of_first_line` માંથી `None` પરત કરીએ છીએ. જો `text` ખાલી સ્ટ્રિંગ ન હોય, તો `next` એક `Some` મૂલ્ય પરત કરશે જેમાં `text` માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.
 
 `?` નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર `chars` કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે `last` કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક `Option` છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો `text` ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે `"\nhi"` . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે `Some` પ્રકારમાં પાછો આવશે. વચ્ચેનું `?` ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે `Option` પર `?` ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા `match` અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.
@@ -528,9 +543,9 @@ The type of the value that `File::open` returns inside the `Err` variant is `io:
 
 સદનસીબે, `main` એક `Result<(), E>` પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે `main` ના વળતર પ્રકારને `Result<(), Box<dyn Error>>` માં બદલ્યા છે અને અંતમાં `Ok(())` નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.
 
-<Listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result<(), E>` allows the use of the `?` operator on `Result` values.">
+` allows the use of the `?` operator on `Result` values.">
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
-</Listing>
+
 `Box<dyn Error>` પ્રકાર એક trait object છે, જેની ચર્ચા આપણે "Using Trait Objects to Abstract over Shared Behavior" અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે `Box<dyn Error>` ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. `main` ફંક્શનમાં  `Result` મૂલ્ય પર `?` નો ઉપયોગ  `Box<dyn Error>` ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ `Err` મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ `main` ફંક્શનનો ભાગ માત્ર `std::io::Error` પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં `Box<dyn Error]` નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર `main` ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.
 
 જ્યારે એક `main` ફંક્શન `Result<(), E>` પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ `Ok(())` સાથે `main` પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો `main` કોઈ `Err` મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ `0` પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ `0` સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.

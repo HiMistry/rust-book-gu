@@ -34,13 +34,14 @@ $ cd hello_world
 
 હવે બનાવેલી main.rs ફાઈલ ખોલો અને Listing 1-1 માં આપેલ કોડ દાખલ કરો.
 
-<Listing number="1-1" file-name="main.rs" caption="A program that prints `Hello, world!`">
+**Listing 1-1: A program that prints `Hello, world!`**
+
 ```rust
 fn main() {
     println!("Hello, world!");
 }
 ```
-</Listing>
+
 ફાઈલ સાચવો અને તમારા ટર્મિનલ વિન્ડોમાં પાછા જાઓ ~/projects/hello_world ડિરેક્ટરીમાં. લિનક્સ અથવા મૅકઓએસ પર, ફાઈલને કમ્પાઇલ કરવા અને ચલાવવા માટે નીચેના આદેશો દાખલ કરો:
 
 ```console

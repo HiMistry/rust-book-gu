@@ -23,11 +23,12 @@ $ cargo test -- --test-threads=1
 
 એક ઉદાહરણ તરીકે, યાદી 11-10 માં એક મૂર્ખ કાર્ય છે જે તેના પરિમાણનું મૂલ્ય છાપે છે અને 10 પરત કરે છે, તેમજ એક પરીક્ષણ જે પાસ થાય છે અને એક પરીક્ષણ જે નિષ્ફળ જાય છે.
 
-<Listing number="11-10" file-name="src/lib.rs" caption="Tests for a function that calls `println!`">
+**Listing 11-10: Tests for a function that calls `println!`**
+
 ```rust
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-10/src/lib.rs}}
 ```
-</Listing>
+
 જ્યારે આપણે આ પરીક્ષણો `cargo test` સાથે ચલાવીએ છીએ, ત્યારે આપણને નીચેનું પરિણામ જોવા મળશે:
 
 ```console
@@ -51,11 +52,12 @@ $ cargo test -- --show-output
 
 પ્રદર્શન કરવા માટે કે પરીક્ષણોનો ઉપગણ કેવી રીતે ચલાવવો, અમે પ્રથમ આપણી `add_two` કાર્ય માટે ત્રણ પરીક્ષણો બનાવીશું, જે યાદી 11-11 માં દર્શાવેલ છે, અને કયા ચલાવવા તે પસંદ કરીશું.
 
-<Listing number="11-11" file-name="src/lib.rs" caption="Three tests with three different names">
+**Listing 11-11: Three tests with three different names**
+
 ```rust
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-11/src/lib.rs}}
 ```
-</Listing>
+
 જો આપણે કોઈ Argumentો આપ્યા વિના પરીક્ષણો ચલાવીએ, જેવું કે આપણે અગાઉ જોયું હતું, તો બધાં જ પરીક્ષણો સમાંતર રીતે ચાલશે:
 
 ```console

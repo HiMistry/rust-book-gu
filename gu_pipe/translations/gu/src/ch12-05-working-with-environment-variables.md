@@ -7,11 +7,12 @@
 
 અમે સૌપ્રથમ `minigrep` લાયબ્રેરીમાં એક નવું `search_case_insensitive` વિધેય ઉમેરીશું જે પર્યાવરણ variable (environment variable) ધરાવતું હોય ત્યારે બોલાશે. અમે TDD પ્રક્રિયાને અનુસરતા રહીશું, તેથી પ્રથમ પગલું ફરીથી નિષ્ફળ પરીક્ષણ લખવાનું છે. અમે નવા `search_case_insensitive` વિધેય માટે એક નવું પરીક્ષણ ઉમેરીશું અને અમારા જૂના પરીક્ષણને `case_sensitive` નામ આપીશું જેથી બે પરીક્ષણો વચ્ચેનો તફાવત સ્પષ્ટ થાય, જે યાદી 12-20 માં દર્શાવેલ છે.
 
-<Listing number="12-20" file-name="src/lib.rs" caption="Adding a new failing test for the case-insensitive function we’re about to add">
+**Listing 12-20: Adding a new failing test for the case-insensitive function we’re about to add**
+
 ```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-20/src/lib.rs:here}}
 ```
-</Listing>
+
 અમે જૂના પરીક્ષણના `contents` માં ફેરફાર કર્યો છે. અમે એક નવી રેખા ઉમેરી છે જેમાં લખાણ `"Duct tape."` છે, જે મોટા અક્ષર D નો ઉપયોગ કરે છે જે કેસ-સંવેદનશીલ રીતે શોધ કરતી વખતે ક્વેરી `"duct"` સાથે મેળ ખાવું જોઈએ નહીં. આ રીતે જૂના પરીક્ષણને બદલવાથી એ સુનિશ્ચિત કરવામાં મદદ મળે છે કે અમે આકસ્મિક રીતે કેસ-સંવેદનશીલ શોધ કાર્યક્ષમતાને તોડી નાખીએ નહીં જે અમે પહેલાથી જ અમલમાં મૂકી છે. આ પરીક્ષણ હવે પાસ થવું જોઈએ અને જેમ જેમ
 
 અમે કેસ-અસંવેદનશીલ શોધ પર કામ કરીશું તેમ તેમ તે ચાલુ રહેવું જોઈએ. કેસ-અસંવેદનશીલ શોધ માટેનું નવું પરીક્ષણ ક્વેરી તરીકે `"rUsT"` નો ઉપયોગ કરે છે. `search_case_insensitive` ફંક્શનમાં અમે ઉમેરવા જઈ રહ્યા છીએ, ત્યાં ક્વેરી `"rUsT"` મોટા અક્ષર R સાથેની રેખા `"Rust:"` અને `"Trust me."` બંને સાથે મેળ ખાય છે, ભલે તે ક્વેરી કરતાં અલગ કેસિંગ ધરાવતા હોય. આ આપણો નિષ્ફળ પરીક્ષણ છે, અને તે કમ્પાઇલ કરવામાં નિષ્ફળ જશે કારણ કે અમે હજી સુધી `search_case_insensitive` ફંક્શનને વ્યાખ્યાયિત કર્યું નથી. Listing 12-16 માં `search` ફંક્શન માટે કર્યા મુજબ હંમેશા ખાલી વેક્ટર પરત કરતા હાડપિંજર અમલીકરણ ઉમેરવા માટે નિઃસંકોચ રહો, જેથી પરીક્ષણ કમ્પાઇલ થાય અને નિષ્ફળ જાય.
@@ -20,11 +21,12 @@
 
 `search_case_insensitive` કાર્ય, યાદી 12-21 માં દર્શાવેલ છે, તે `search` કાર્ય જેવું જ લગભગ હશે. એકમાત્ર તફાવત એ છે કે અમે `query` અને દરેક `line` ને નાના અક્ષરમાં ફેરવીશું જેથી ઇનપુટ Argumentો (arguments) કયા પણ કેસમાં હોય, તેઓ તપાસ કરતી વખતે સમાન કેસમાં હોય.
 
-<Listing number="12-21" file-name="src/lib.rs" caption="Defining the `search_case_insensitive` function to lowercase the query and the line before comparing them">
+**Listing 12-21: Defining the `search_case_insensitive` function to lowercase the query and the line before comparing them**
+
 ```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-21/src/lib.rs:here}}
 ```
-</Listing>
+
 સૌ પ્રથમ, અમે `query` સ્ટ્રિંગને નાના અક્ષરોમાં ફેરવીએ છીએ અને તેને એક નવા variable (variable) માં સંગ્રહિત કરીએ છીએ, જેનું નામ પહેલાંના `query` ને છાયા પાડે છે. ક્વેરી પર `to_lowercase` બોલાવવું જરૂરી છે જેથી userની ક્વેરી `"rust"` , `"RUST"` , `"Rust"` અથવા `"rUsT"` હોય તો પણ, અમે ક્વેરીને જાણે તે `"rust"` હોય તેમ ગણીશું અને કેસ પ્રત્યે સંવેદનશીલ નહીં રહીએ. જ્યારે `to_lowercase` મૂળભૂત યુનિકોડ (Unicode) ને હેન્ડલ કરશે, ત્યારે તે 100 ટકા સચોટ રહેશે નહીં. જો અમે વાસ્તવિક એપ્લિકેશન લખતા હોત, તો અહીં થોડું વધારે કામ કરવું જોઈતું હતું, પરંતુ આ વિભાગ પર્યાવરણ variables (environment variables) વિશે છે, યુનિકોડ વિશે નહીં, તેથી અમે તેને ત્યાં જ છોડી દઈએ છીએ.
 
 નોંધ હવે `query` એ સ્ટ્રિંગ સ્લાઇસને બદલે `String` છે, કારણ કે `to_lowercase` કૉલ કરવાથી નવું ડેટા ઉત્પન્ન થાય છે, હાલના ડેટાનો સંદર્ભ લેતો નથી. ઉદાહરણ તરીકે, જો `query` `"rUsT"` હોય, તો તે સ્ટ્રિંગ સ્લાઇસમાં નાના અક્ષર `u` કે `t` હોતું નથી, તેથી આપણે `"rust"` ધરાવતું નવું `String` ફાળવવું પડે છે. હવે જ્યારે આપણે `contains` પદ્ધતિને `query` Argument તરીકે પસાર કરીએ છીએ, ત્યારે આપણે એમ્પરસેન્ડ ઉમેરવાની જરૂર છે, કારણ કે `contains` ના હસ્તાક્ષર સ્ટ્રિંગ સ્લાઇસ લેવા માટે વ્યાખ્યાયિત કરવામાં આવ્યા છે.
@@ -45,18 +47,20 @@
 ```
 અમે `ignore_case` ક્ષેત્ર ઉમેર્યું છે જે એક બુલિયન મૂલ્ય ધરાવે છે. હવે, આપણે `run` વિધેયને `ignore_case` ક્ષેત્રના મૂલ્યની ચકાસણી કરવા અને તેના આધારે નક્કી કરવા માટે જરૂરી છે કે `search` વિધેય અથવા `search_case_insensitive` વિધેયને બોલાવવું, જે યાદી 12-22 માં દર્શાવેલ છે. આ હજી સુધી કમ્પાઇલ થશે નહીં.
 
-<Listing number="12-22" file-name="src/main.rs" caption="Calling either `search` or `search_case_insensitive` based on the value in `config.ignore_case`">
+**Listing 12-22: Calling either `search` or `search_case_insensitive` based on the value in `config.ignore_case`**
+
 ```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-22/src/main.rs:there}}
 ```
-</Listing>
+
 અંતે, આપણે પર્યાવરણ variable (environment variable) માટે તપાસ કરવી જરૂરી છે. પર્યાવરણ variables સાથે કાર્ય કરવાના વિધેયો પ્રમાણિત પુસ્તકાલય (standard library) માં `env` મોડ્યુલમાં છે, જે src/main.rs ના પ્રારંભિક ભાગમાં પહેલાથી જ ઉપલબ્ધ છે. આપણે `var` વિધેયનો ઉપયોગ `env` મોડ્યુલમાંથી કરીશું, જેથી ચકાસી શકાય કે `IGNORE_CASE` નામનાં પર્યાવરણ variable માટે કોઈ મૂલ્ય સેટ થયું છે કે નહીં, જે યાદી 12-23 માં દર્શાવેલ છે.
 
-<Listing number="12-23" file-name="src/main.rs" caption="Checking for any value in an environment variable named `IGNORE_CASE`">
+**Listing 12-23: Checking for any value in an environment variable named `IGNORE_CASE`**
+
 ```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-23/src/main.rs:here}}
 ```
-</Listing>
+
 અહીં, આપણે એક નવું variable, `ignore_case`, બનાવીએ છીએ. તેની કિંમત સેટ કરવા માટે, આપણે `env::var` વિધેયને બોલાવીએ છીએ અને તેને `IGNORE_CASE` પર્યાવરણ ચલનું નામ પસાર કરીએ છીએ. `env::var` વિધેય એક `Result` આપે છે જે સફળ `Ok` પ્રકાર હશે જેમાં પર્યાવરણ variable's કિંમત હોય જો પર્યાવરણ variable કોઈ પણ મૂલ્ય પર સેટ કરેલો હોય. જો પર્યાવરણ variable સેટ ન હોય તો તે `Err` પ્રકાર આપશે.
 
 આપણે `Result` પર `is_ok` પદ્ધતિનો ઉપયોગ કરીએ છીએ કે પર્યાવરણ variable સેટ છે કે નહીં તે તપાસવા માટે, જેનો અર્થ થાય છે કે પ્રોગ્રામને કેસ-સેન્સિટિવ શોધ કરવી જોઈએ. જો `IGNORE_CASE` પર્યાવરણ variable કોઈ પણ મૂલ્ય પર સેટ ન હોય, તો `is_ok` `false` આપશે અને પ્રોગ્રામ કેસ-સેન્સિટિવ શોધ કરશે. આપણે પર્યાવરણ variable's કિંમતની ચિંતા કરતા નથી, માત્ર તે સેટ છે કે અનસેટ છે તે તપાસીએ છીએ, તેથી આપણે `is_ok` તપાસી રહ્યા છીએ, `unwrap`, `expect`, અથવા `Result` પરની અન્ય પદ્ધતિઓનો ઉપયોગ કરવાને બદલે જે આપણે અત્યાર સુધી જોયા છે.

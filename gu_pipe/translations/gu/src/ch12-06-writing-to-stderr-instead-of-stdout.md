@@ -27,11 +27,12 @@ Problem parsing arguments: not enough arguments
 
 આપણે લિસ્ટિંગ ૧૨-૨૪ માં રહેલા કોડનો ઉપયોગ કરીશું જેથી ભૂલ સંદેશાઓ છાપવાની રીત બદલી શકાય. અગાઉના ભાગમાં કરેલા સુધારણાને કારણે, આ પ્રકરણમાં ભૂલ સંદેશાઓ છાપતો તમામ કોડ એક જ ફંક્શન `main` માં છે. પ્રમાણિત પુસ્તકાલય `eprintln!` નામનું મેક્રો પ્રદાન કરે છે જે પ્રમાણિત ભૂલ પ્રવાહમાં છાપે છે, તેથી આપણે `println!` ને બોલાવવાની બે જગ્યાએ `eprintln!` નો ઉપયોગ કરીશું.
 
-<Listing number="12-24" file-name="src/main.rs" caption="Writing error messages to standard error instead of standard output using `eprintln!`">
+**Listing 12-24: Writing error messages to standard error instead of standard output using `eprintln!`**
+
 ```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-24/src/main.rs:here}}
 ```
-</Listing>
+
 હવે ચાલો આપણે આ જ રીતે પ્રોગ્રામ ફરીથી ચલાવીએ, કોઈપણ Argumentો વિના અને `>` સાથે પ્રમાણિત આઉટપુટને રીડાયરેક્ટ કરીને:
 
 ```console

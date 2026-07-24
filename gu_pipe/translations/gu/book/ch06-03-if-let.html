@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -184,87 +184,62 @@
                     <main>
                         <h2 id="concise-control-flow-with-if-let-and-letelse"><a class="header" href="#concise-control-flow-with-if-let-and-letelse">Concise Control Flow with <code>if let</code> and <code>let...else</code></a></h2>
 <p><code>if let</code> વાક્યરચના તમને <code>if</code> અને <code>let</code> ને જોડીને એક ઓછું વિસ્તૃત રીતે મૂલ્યોને નિયંત્રિત કરવાની મંજૂરી આપે છે જે એક ચોક્કસ પેટર્ન સાથે બંધબેસે છે, જ્યારે બાકીનાને અવગણે છે. યાદી 6-6 માં આપેલ કાર્યક્રમનો વિચાર કરો, જે <code>config_max</code> variable રહેલા <code>Option&lt;u8&gt;</code> મૂલ્ય સાથે મેળ ખાય છે પરંતુ માત્ર ત્યારે જ કોડ ચલાવવા માંગે છે જ્યારે મૂલ્ય <code>Some</code> પ્રકારનું હોય.</p>
-<listing number="6-6" caption="A `match` that only cares about executing code when the value is `Some`">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-06/src/main.rs:here}}
-```
-```
-</listing>
-જો મૂલ્ય `Some` હોય, તો આપણે `Some` પ્રકારમાં રહેલા મૂલ્યને છાપીએ છીએ, જે પેટર્નમાં variable `max` સાથે બંધાયેલું છે. આપણે `None` મૂલ્ય સાથે કંઈપણ કરવા માંગતા નથી. `match` અભિવ્યક્તિને સંતોષવા માટે, આપણે માત્ર એક જ પ્રકારની પ્રક્રિયા કર્યા પછી `_ =&gt; ()` ઉમેરવું પડે છે, જે ઉમેરવા માટે કંટાળાજનક કોડ છે.
+<p><strong>Listing 6-6: A <code>match</code> that only cares about executing code when the value is <code>Some</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-06/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>જો મૂલ્ય <code>Some</code> હોય, તો આપણે <code>Some</code> પ્રકારમાં રહેલા મૂલ્યને છાપીએ છીએ, જે પેટર્નમાં variable <code>max</code> સાથે બંધાયેલું છે. આપણે <code>None</code> મૂલ્ય સાથે કંઈપણ કરવા માંગતા નથી. <code>match</code> અભિવ્યક્તિને સંતોષવા માટે, આપણે માત્ર એક જ પ્રકારની પ્રક્રિયા કર્યા પછી <code>_ =&gt; ()</code> ઉમેરવું પડે છે, જે ઉમેરવા માટે કંટાળાજનક કોડ છે.</p>
 <p>વૈકલ્પિક રીતે, આપણે તેને <code>if let</code> નો ઉપયોગ કરીને ટૂંકમાં લખી શકીએ છીએ. નીચે આપેલ કોડ Listing 6-6 માં રહેલા <code>match</code> ની જેમ જ વર્તે છે.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>```rust
-{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-12-if-let/src/main.rs:here}}
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-12-if-let/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
-<pre><code>`if let` નું વાક્યરચના `if let` એક પ્રકારનું રૂપ અને અભિવ્યક્તિને સમાન નિશાનીથી અલગ કરે છે. તે `match` ની જેમ જ કાર્ય કરે છે, જેમાં અભિવ્યક્તિને `match` ને આપવામાં આવે છે અને રૂપ એનો પહેલો ભાગ હોય છે. આ કિસ્સામાં, રૂપ `Some(max)` છે, અને `max` એ `Some` ની અંદર રહેલા મૂલ્ય સાથે જોડાયેલું છે. પછી આપણે `if let` બ્લોકના શરીરમાં `max` નો ઉપયોગ કરી શકીએ છીએ જે રીતે આપણે અનુરૂપ `match` ભાગમાં `max` નો ઉપયોગ કર્યો હતો. `if let` બ્લોકમાંનો કોડ માત્ર ત્યારે જ ચાલે છે જ્યારે મૂલ્ય રૂપ સાથે મેળ ખાય છે.
-
-`if let` નો ઉપયોગ કરવાથી ટાઇપિંગ, ઇન્ડેન્ટેશન અને બોઇલરપ્લેટ કોડ ઓછો થાય છે. જો કે, તમે સંપૂર્ણ ચકાસણી (`match`) દ્વારા લાગુ કરવામાં આવતી ખાતરી ગુમાવો છો, જે સુનિશ્ચિત કરે છે કે તમે કોઈપણ કિસ્સાઓને હેન્ડલ કરવાનું ભૂલતા નથી. `match` અને `if let` વચ્ચે પસંદગી તમે તમારા ચોક્કસ પરિસ્થિતિમાં શું કરી રહ્યા છો તેના પર આધાર રાખે છે અને શું સંપૂર્ણ ચકાસણી ગુમાવવાની ભરપાઈ તરીકે સંક્ષિપ્તતા મેળવવી યોગ્ય છે કે
-
-નહીં. બીજા શબ્દોમાં કહીએ તો, તમે `if let` ને એક `match` માટે શર્કરા (sugar) તરીકે વિચારી શકો છો જે મૂલ્ય એક પેટર્ન સાથે મેળ ખાતા હોય ત્યારે કોડ ચલાવે છે અને પછી અન્ય તમામ મૂલ્યોને અવગણે છે.
-
-આપણે `else` ને `if let` સાથે સામેલ કરી શકીએ છીએ. `else` સાથે સંકળાયેલ કોડ બ્લોક એ જ હોય છે જે `match` અભિવ્યક્તિમાં `_` કેસ સાથે સંકળાયેલ હોત, જે `if let` અને `else` સમકક્ષ છે. યાદ કરો લિસ્ટિંગ 6-4 માં `Coin` નું વ્યાખ્યા, જ્યાં `Quarter` પ્રકાર પણ `UsState` મૂલ્ય ધરાવતું હતું. જો આપણે બધા નોન-ક્વાર્ટર સિક્કાઓની ગણતરી કરવા માંગતા હોઈએ અને તે જ સમયે ક્વાર્ટરની સ્થિતિ જાહેર કરવા માંગતા હોઈએ, તો આપણે `match` અભિવ્યક્તિથી આ કરી શકીએ છીએ, જેમ કે:
-
-```rust
-```rust
-{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-13-count-and-announce-match/src/main.rs:here}}
-</code></pre>
-<pre><code>અથવા આપણે `if let` અને `else` અભિવ્યક્તિનો ઉપયોગ કરી શકીએ, આ પ્રમાણે:
-
-```rust
-```rust
-{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-14-count-and-announce-if-let-else/src/main.rs:here}}
-</code></pre>
-<pre><code>## Staying on the “Happy Path” with `let...else`
-
-સામાન્ય રીત મુજબ, જ્યારે કોઈ મૂલ્ય હાજર હોય ત્યારે ગણતરી કરવામાં આવે છે અને અન્યથા એક નિરધારિત મૂલ્ય પાછું આપવામાં આવે છે. આપણા સિક્કાના ઉદાહરણમાં ચાલુ રાખીને, જેમાં `UsState` મૂલ્ય છે, જો આપણે રાજ્યની ઉંમર પ્રમાણે કોઈ મજાકવાળી વાત કહેવા માંગતા હોઈએ, તો આપણે `UsState` પર એક પદ્ધતિ (method) દાખલ કરી શકીએ છીએ, જે નીચે મુજબ છે:
-
-```rust
-```rust
-{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-07/src/main.rs:state}}
-</code></pre>
-<pre><code>પછી, આપણને `if let` નો ઉપયોગ કરવો પડી શકે છે, જેથી સિક્કાના પ્રકાર સાથે મેળ ખાડી શકાય, અને શરતની અંદર `state` variable રજૂ કરી શકાય, જેવું કે લિસ્ટિંગ ૬-૭ માં દર્શાવેલું છે.
-
-&lt;Listing number="6-7" caption="Checking whether a state existed in 1900 by using conditionals nested inside an `if let`"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-07/src/main.rs:describe}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-એ કામ પાર પાડે છે, પરંતુ તે `if let` વિધાનના મુખ્ય ભાગમાં કાર્ય ધકેલી દે છે, અને જો કરવાનું કાર્ય વધુ જટિલ હોય તો, ટોચના સ્તરની શાખાઓ કેવી રીતે સંબંધિત છે તે સમજવું મુશ્કેલ બની શકે છે. આપણે એ હકીકતનો લાભ પણ લઈ શકીએ છીએ કે અભિવ્યક્તિઓ મૂલ્ય ઉત્પન્ન કરે છે કાં તો `if let` માંથી `state` ઉત્પન્ન કરવા માટે અથવા વહેલા પાછા ફરવા માટે, જેમ કે યાદી 6-8 માં દર્શાવેલ છે. (તમે `match` સાથે પણ કંઈક એવું જ કરી શકો છો.)
-
-&lt;Listing number="6-8" caption="Using `if let` to produce a value or return early"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-08/src/main.rs:describe}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-આ અનુસરવું થોડું ત્રાસદાયક છે, જોકે! `if let` ના એક શાખા મૂલ્ય ઉત્પન્ન કરે છે, અને બીજી કાર્યમાંથી સંપૂર્ણપણે પાછી ફરે છે. આ સામાન્ય પેટર્નને
-
-વધુ સારી રીતે વ્યક્ત કરવા માટે, Rust પાસે `let...else` છે. `let...else` વાક્યરચના ડાબી બાજુએ એક પેટર્ન અને જમણી બાજુએ એક અભિવ્યક્તિ લે છે, જે `if let` જેવું જ છે, પરંતુ તેની પાસે `if` શાખા નથી, માત્ર `else` શાખા છે. જો પેટર્ન મેળ ખાય છે, તો તે પેટર્નમાંથી મૂલ્યને બહારના અવકાશમાં બંધિત કરશે. જો પેટર્ન મેળ ખાતું નથી, તો પ્રોગ્રામ `else` વિભાગમાં વહેશે, જે કાર્યમાંથી પાછું ફરવું જોઈએ.
-
-લિસ્ટિંગ ૬-૯ માં, તમે જોઈ શકો છો કે `let...else` નો ઉપયોગ કરીને લિસ્ટિંગ ૬-૮ કેવું દેખાય છે.
-
-&lt;Listing number="6-9" caption="Using `let...else` to clarify the flow through the function"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-09/src/main.rs:describe}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-એ નોંધો કે આ રીતે કાર્યના મુખ્ય ભાગમાં તે "સુખદ માર્ગ" પર રહે છે, જેથી બે શાખાઓ માટે `if let` જેવું નોંધપાત્ર રીતે અલગ નિયંત્રણ પ્રવાહ ન હોય. જો તમારી
-
-પાસે એવી પરિસ્થિતિ હોય જેમાં તમારા પ્રોગ્રામનો તર્ક `match` નો ઉપયોગ કરીને વ્યક્ત કરવા માટે ખૂબ લાંબો હોય, તો યાદ રાખો કે `if let` અને `let...else` પણ તમારા Rust સાધનપેટીમાં ઉપલબ્ધ છે.
-
-## Summary
-
-હવે આપણે જોયું છે કે કેવી રીતે enums નો ઉપયોગ કરીને કસ્ટમ પ્રકારો બનાવી શકાય છે જે મૂલ્યોના સમૂહમાંથી એક હોઈ શકે છે. આપણે સ્ટાન્ડર્ડ લાઈબ્રેરીના `Option&lt;T&gt;` પ્રકારનો ઉપયોગ કેવી રીતે કરવો તે પણ જોયું, જેથી તમે ભૂલો અટકાવવા માટે ટાઈપ સિસ્ટમનો ઉપયોગ કરી શકો. જ્યારે enum માં ડેટા હોય, ત્યારે તમે `match` અથવા `if let` નો ઉપયોગ કરીને તે ડેટા મેળવી અને વાપરી શકો છો, જે તમારી પાસે કેટલા કેસ છે તેના પર આધાર રાખે છે.
-
-તમારા Rust પ્રોગ્રામો હવે structs અને enums નો ઉપયોગ કરીને તમારા ડોમેનના ખ્યાલો વ્યક્ત કરી શકે છે. તમારા API માં ઉપયોગ કરવા માટે કસ્ટમ પ્રકારો બનાવવાથી ટાઈપ સુરક્ષા સુનિશ્ચિત થાય છે: compiler ખાતરી કરશે કે તમારા ફંક્શન્સ માત્ર તે જ મૂલ્યો મેળવે છે જે દરેક ફંક્શન અપેક્ષિત કરે છે.
-
-Rust ના મોડ્યુલ્સ તમારા userઓ માટે સુવ્યવસ્થિત API પ્રદાન કરવા, જે ઉપયોગમાં સરળ હોય અને માત્ર જરૂરી બાબતો જ દર્શાવતું હોય, તો હવે આપણે Rust ના મોડ્યુલ્સ તરફ વળીએ.
-
-</code></pre>
+<p><code>if let</code> નું વાક્યરચના <code>if let</code> એક પ્રકારનું રૂપ અને અભિવ્યક્તિને સમાન નિશાનીથી અલગ કરે છે. તે <code>match</code> ની જેમ જ કાર્ય કરે છે, જેમાં અભિવ્યક્તિને <code>match</code> ને આપવામાં આવે છે અને રૂપ એનો પહેલો ભાગ હોય છે. આ કિસ્સામાં, રૂપ <code>Some(max)</code> છે, અને <code>max</code> એ <code>Some</code> ની અંદર રહેલા મૂલ્ય સાથે જોડાયેલું છે. પછી આપણે <code>if let</code> બ્લોકના શરીરમાં <code>max</code> નો ઉપયોગ કરી શકીએ છીએ જે રીતે આપણે અનુરૂપ <code>match</code> ભાગમાં <code>max</code> નો ઉપયોગ કર્યો હતો. <code>if let</code> બ્લોકમાંનો કોડ માત્ર ત્યારે જ ચાલે છે જ્યારે મૂલ્ય રૂપ સાથે મેળ ખાય છે.</p>
+<p><code>if let</code> નો ઉપયોગ કરવાથી ટાઇપિંગ, ઇન્ડેન્ટેશન અને બોઇલરપ્લેટ કોડ ઓછો થાય છે. જો કે, તમે સંપૂર્ણ ચકાસણી (<code>match</code>) દ્વારા લાગુ કરવામાં આવતી ખાતરી ગુમાવો છો, જે સુનિશ્ચિત કરે છે કે તમે કોઈપણ કિસ્સાઓને હેન્ડલ કરવાનું ભૂલતા નથી. <code>match</code> અને <code>if let</code> વચ્ચે પસંદગી તમે તમારા ચોક્કસ પરિસ્થિતિમાં શું કરી રહ્યા છો તેના પર આધાર રાખે છે અને શું સંપૂર્ણ ચકાસણી ગુમાવવાની ભરપાઈ તરીકે સંક્ષિપ્તતા મેળવવી યોગ્ય છે કે</p>
+<p>નહીં. બીજા શબ્દોમાં કહીએ તો, તમે <code>if let</code> ને એક <code>match</code> માટે શર્કરા (sugar) તરીકે વિચારી શકો છો જે મૂલ્ય એક પેટર્ન સાથે મેળ ખાતા હોય ત્યારે કોડ ચલાવે છે અને પછી અન્ય તમામ મૂલ્યોને અવગણે છે.</p>
+<p>આપણે <code>else</code> ને <code>if let</code> સાથે સામેલ કરી શકીએ છીએ. <code>else</code> સાથે સંકળાયેલ કોડ બ્લોક એ જ હોય છે જે <code>match</code> અભિવ્યક્તિમાં <code>_</code> કેસ સાથે સંકળાયેલ હોત, જે <code>if let</code> અને <code>else</code> સમકક્ષ છે. યાદ કરો લિસ્ટિંગ 6-4 માં <code>Coin</code> નું વ્યાખ્યા, જ્યાં <code>Quarter</code> પ્રકાર પણ <code>UsState</code> મૂલ્ય ધરાવતું હતું. જો આપણે બધા નોન-ક્વાર્ટર સિક્કાઓની ગણતરી કરવા માંગતા હોઈએ અને તે જ સમયે ક્વાર્ટરની સ્થિતિ જાહેર કરવા માંગતા હોઈએ, તો આપણે <code>match</code> અભિવ્યક્તિથી આ કરી શકીએ છીએ, જેમ કે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-13-count-and-announce-match/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અથવા આપણે <code>if let</code> અને <code>else</code> અભિવ્યક્તિનો ઉપયોગ કરી શકીએ, આ પ્રમાણે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-14-count-and-announce-if-let-else/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<h2 id="staying-on-the-happy-path-with-letelse"><a class="header" href="#staying-on-the-happy-path-with-letelse">Staying on the “Happy Path” with <code>let...else</code></a></h2>
+<p>સામાન્ય રીત મુજબ, જ્યારે કોઈ મૂલ્ય હાજર હોય ત્યારે ગણતરી કરવામાં આવે છે અને અન્યથા એક નિરધારિત મૂલ્ય પાછું આપવામાં આવે છે. આપણા સિક્કાના ઉદાહરણમાં ચાલુ રાખીને, જેમાં <code>UsState</code> મૂલ્ય છે, જો આપણે રાજ્યની ઉંમર પ્રમાણે કોઈ મજાકવાળી વાત કહેવા માંગતા હોઈએ, તો આપણે <code>UsState</code> પર એક પદ્ધતિ (method) દાખલ કરી શકીએ છીએ, જે નીચે મુજબ છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-07/src/main.rs:state}}
+<span class="boring">}</span></code></pre>
+<p>પછી, આપણને <code>if let</code> નો ઉપયોગ કરવો પડી શકે છે, જેથી સિક્કાના પ્રકાર સાથે મેળ ખાડી શકાય, અને શરતની અંદર <code>state</code> variable રજૂ કરી શકાય, જેવું કે લિસ્ટિંગ ૬-૭ માં દર્શાવેલું છે.</p>
+<p><strong>Listing 6-7: Checking whether a state existed in 1900 by using conditionals nested inside an <code>if let</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-07/src/main.rs:describe}}
+<span class="boring">}</span></code></pre>
+<p>એ કામ પાર પાડે છે, પરંતુ તે <code>if let</code> વિધાનના મુખ્ય ભાગમાં કાર્ય ધકેલી દે છે, અને જો કરવાનું કાર્ય વધુ જટિલ હોય તો, ટોચના સ્તરની શાખાઓ કેવી રીતે સંબંધિત છે તે સમજવું મુશ્કેલ બની શકે છે. આપણે એ હકીકતનો લાભ પણ લઈ શકીએ છીએ કે અભિવ્યક્તિઓ મૂલ્ય ઉત્પન્ન કરે છે કાં તો <code>if let</code> માંથી <code>state</code> ઉત્પન્ન કરવા માટે અથવા વહેલા પાછા ફરવા માટે, જેમ કે યાદી 6-8 માં દર્શાવેલ છે. (તમે <code>match</code> સાથે પણ કંઈક એવું જ કરી શકો છો.)</p>
+<p><strong>Listing 6-8: Using <code>if let</code> to produce a value or return early</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-08/src/main.rs:describe}}
+<span class="boring">}</span></code></pre>
+<p>આ અનુસરવું થોડું ત્રાસદાયક છે, જોકે! <code>if let</code> ના એક શાખા મૂલ્ય ઉત્પન્ન કરે છે, અને બીજી કાર્યમાંથી સંપૂર્ણપણે પાછી ફરે છે. આ સામાન્ય પેટર્નને</p>
+<p>વધુ સારી રીતે વ્યક્ત કરવા માટે, Rust પાસે <code>let...else</code> છે. <code>let...else</code> વાક્યરચના ડાબી બાજુએ એક પેટર્ન અને જમણી બાજુએ એક અભિવ્યક્તિ લે છે, જે <code>if let</code> જેવું જ છે, પરંતુ તેની પાસે <code>if</code> શાખા નથી, માત્ર <code>else</code> શાખા છે. જો પેટર્ન મેળ ખાય છે, તો તે પેટર્નમાંથી મૂલ્યને બહારના અવકાશમાં બંધિત કરશે. જો પેટર્ન મેળ ખાતું નથી, તો પ્રોગ્રામ <code>else</code> વિભાગમાં વહેશે, જે કાર્યમાંથી પાછું ફરવું જોઈએ.</p>
+<p>લિસ્ટિંગ ૬-૯ માં, તમે જોઈ શકો છો કે <code>let...else</code> નો ઉપયોગ કરીને લિસ્ટિંગ ૬-૮ કેવું દેખાય છે.</p>
+<p><strong>Listing 6-9: Using <code>let...else</code> to clarify the flow through the function</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-09/src/main.rs:describe}}
+<span class="boring">}</span></code></pre>
+<p>એ નોંધો કે આ રીતે કાર્યના મુખ્ય ભાગમાં તે “સુખદ માર્ગ” પર રહે છે, જેથી બે શાખાઓ માટે <code>if let</code> જેવું નોંધપાત્ર રીતે અલગ નિયંત્રણ પ્રવાહ ન હોય. જો તમારી</p>
+<p>પાસે એવી પરિસ્થિતિ હોય જેમાં તમારા પ્રોગ્રામનો તર્ક <code>match</code> નો ઉપયોગ કરીને વ્યક્ત કરવા માટે ખૂબ લાંબો હોય, તો યાદ રાખો કે <code>if let</code> અને <code>let...else</code> પણ તમારા Rust સાધનપેટીમાં ઉપલબ્ધ છે.</p>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>હવે આપણે જોયું છે કે કેવી રીતે enums નો ઉપયોગ કરીને કસ્ટમ પ્રકારો બનાવી શકાય છે જે મૂલ્યોના સમૂહમાંથી એક હોઈ શકે છે. આપણે સ્ટાન્ડર્ડ લાઈબ્રેરીના <code>Option&lt;T&gt;</code> પ્રકારનો ઉપયોગ કેવી રીતે કરવો તે પણ જોયું, જેથી તમે ભૂલો અટકાવવા માટે ટાઈપ સિસ્ટમનો ઉપયોગ કરી શકો. જ્યારે enum માં ડેટા હોય, ત્યારે તમે <code>match</code> અથવા <code>if let</code> નો ઉપયોગ કરીને તે ડેટા મેળવી અને વાપરી શકો છો, જે તમારી પાસે કેટલા કેસ છે તેના પર આધાર રાખે છે.</p>
+<p>તમારા Rust પ્રોગ્રામો હવે structs અને enums નો ઉપયોગ કરીને તમારા ડોમેનના ખ્યાલો વ્યક્ત કરી શકે છે. તમારા API માં ઉપયોગ કરવા માટે કસ્ટમ પ્રકારો બનાવવાથી ટાઈપ સુરક્ષા સુનિશ્ચિત થાય છે: compiler ખાતરી કરશે કે તમારા ફંક્શન્સ માત્ર તે જ મૂલ્યો મેળવે છે જે દરેક ફંક્શન અપેક્ષિત કરે છે.</p>
+<p>Rust ના મોડ્યુલ્સ તમારા userઓ માટે સુવ્યવસ્થિત API પ્રદાન કરવા, જે ઉપયોગમાં સરળ હોય અને માત્ર જરૂરી બાબતો જ દર્શાવતું હોય, તો હવે આપણે Rust ના મોડ્યુલ્સ તરફ વળીએ.</p>
 
                     </main>
 
@@ -318,6 +293,7 @@ Rust ના મોડ્યુલ્સ તમારા userઓ માટે સ
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

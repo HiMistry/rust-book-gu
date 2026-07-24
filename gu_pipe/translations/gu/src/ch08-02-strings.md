@@ -15,36 +15,40 @@
 
 ઘણાં એવા જ કાર્યક્રમો ઉપલબ્ધ છે જે `Vec<T>` સાથે ઉપલબ્ધ છે, તે `String` સાથે પણ ઉપલબ્ધ છે, કારણ કે `String` ખરેખર બાઇટ્સના વેક્ટર (vector) ની આસપાસ એક આવરણ તરીકે અમલમાં મૂકવામાં આવે છે, જેમાં કેટલીક વધારાની ખાતરીઓ, નિયંત્રણો અને ક્ષમતાઓ છે. Listing 8-11 માં દર્શાવેલ `new` કાર્યક્રમનું ઉદાહરણ છે જે `Vec<T>` અને `String` બંને સાથે સમાન રીતે કાર્ય કરે છે.
 
-<Listing number="8-11" caption="Creating a new, empty `String`">
+**Listing 8-11: Creating a new, empty `String`**
+
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-11/src/main.rs:here}}
 ```
-</Listing>
+
 આ લીટી એક નવું, ખાલી String નામનું `s` બનાવે છે, જેમાં આપણે પછીથી ડેટા ભરી શકીએ છીએ. ઘણી વાર આપણી પાસે પ્રારંભિક ડેટા હોય છે જેનો ઉપયોગ આપણે String શરૂ કરવા માટે કરવો હોય છે. તે માટે, આપણે `to_string` પદ્ધતિનો ઉપયોગ કરીએ છીએ, જે કોઈપણ Type પર ઉપલબ્ધ છે જે `Display` trait લાગુ કરે છે, જેમ કે string literals કરે છે. યાદી 8-12 બે ઉદાહરણો દર્શાવે છે.
 
-<Listing number="8-12" caption="Using the `to_string` method to create a `String` from a string literal">
+**Listing 8-12: Using the `to_string` method to create a `String` from a string literal**
+
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-12/src/main.rs:here}}
 ```
-</Listing>
+
 આ કોડ `initial contents` ધરાવતું String બનાવે છે.
 
 અમે `String::from` ફંક્શનનો ઉપયોગ કરીને પણ string literal પરથી `String` બનાવી શકીએ છીએ. લિસ્ટિંગ 8-13 માં રહેલો કોડ લિસ્ટિંગ 8-12 માં રહેલા કોડ સમાન છે જે `to_string` વાપરે છે.
 
-<Listing number="8-13" caption="Using the `String::from` function to create a `String` from a string literal">
+**Listing 8-13: Using the `String::from` function to create a `String` from a string literal**
+
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-13/src/main.rs:here}}
 ```
-</Listing>
+
 કારણ કે String નો ઉપયોગ ઘણાં કાર્યો માટે થાય છે, આપણને Strings માટે વિવિધ સામાન્ય APIs વાપરી શકાય છે, જે આપણને ઘણા વિકલ્પો પૂરા પાડે છે. તેમાંથી કેટલાક અતિરેકિત લાગે શકે છે, પરંતુ દરેકનું પોતાનું મહત્વ છે! આ કિસ્સામાં, `String::from` અને `to_string` બંને એક જ કાર્ય કરે છે, તેથી કયો પસંદ કરો એ શૈલી અને વાંચનક્ષમતાનો વિષય છે.
 
 યાદ રાખો કે Strings UTF-8 એન્કોડેડ હોય છે, તેથી આપણે તેમાં કોઈપણ યોગ્ય રીતે એન્કોડેડ ડેટા સમાવિષ્ટ કરી શકીએ છીએ, જે Listing 8-14 માં દર્શાવેલ છે.
 
-<Listing number="8-14" caption="Storing greetings in different languages in strings">
+**Listing 8-14: Storing greetings in different languages in strings**
+
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:here}}
 ```
-</Listing>
+
 આ બધાં યોગ્ય `String` મૂલ્યો છે.
 
 ### Updating a String
@@ -56,27 +60,30 @@
 
 આપણે `String` ને `push_str` પદ્ધતિનો ઉપયોગ કરીને સ્ટ્રિંગ સ્લાઇસ જોડીને વધારી શકીએ છીએ, જે યાદી 8-15 માં દર્શાવેલ છે.
 
-<Listing number="8-15" caption="Appending a string slice to a `String` using the `push_str` method">
+**Listing 8-15: Appending a string slice to a `String` using the `push_str` method**
+
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-15/src/main.rs:here}}
 ```
-</Listing>
+
 `foobar` `push_str` પદ્ધતિ એક સ્ટ્રિંગ સ્લાઇસ લે છે કારણ કે આપણને જરૂરી નથી કે પરિમાણનું માલિકી સ્થાનો. ઉદાહરણ તરીકે, લિસ્ટિંગ 8-16 માંના કોડમાં, આપણે `s2` નું વિધેય `s1` માં ઉમેર્યા પછી વાપરી શકીએ છીએ.
 
-<Listing number="8-16" caption="Using a string slice after appending its contents to a `String`">
+**Listing 8-16: Using a string slice after appending its contents to a `String`**
+
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-16/src/main.rs:here}}
 ```
-</Listing>
+
 જો `push_str` પદ્ધતિ `s2` નું માલિકી સ્થાનાંતરિત કરે, તો અમે છેલ્લી લીટી પર તેની કિંમત છાપી શકી ન હોત. જો કે, આ કોડ અપેક્ષા મુજબ કાર્ય કરે છે!
 
 `push` પદ્ધતિ એક અક્ષરને પરિમાણ તરીકે લે છે અને તેને `String` માં ઉમેરે છે. યાદી 8-17 `push` પદ્ધતિનો ઉપયોગ કરીને એક `String` માં અક્ષર 'l' ઉમેરે છે.
 
-<Listing number="8-17" caption="Adding one character to a `String` value using `push`">
+**Listing 8-17: Adding one character to a `String` value using `push`**
+
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-17/src/main.rs:here}}
 ```
-</Listing>
+
 પરિણામ સ્વરૂપે, `s` માં `lol` સમાવિષ્ટ થશે.
 
 <!-- Old headings. Do not remove or links may break. -->
@@ -84,11 +91,12 @@
 
 ઘણીવાર, તમે બે અસ્તિત્વમાં રહેલા સ્ટ્રિંગને જોડવા માંગો છો. એક રીત એ છે કે `+` ઓપરેટરનો ઉપયોગ કરવો, જે લિસ્ટિંગ 8-18 માં દર્શાવેલ છે.
 
-<Listing number="8-18" caption="Using the `+` operator to combine two `String` values into a new `String` value">
+**Listing 8-18: Using the `+` operator to combine two `String` values into a new `String` value**
+
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-18/src/main.rs:here}}
 ```
-</Listing>
+
 શૃંખલા `s3` માં `Hello, world!` સમાવિષ્ટ થશે. `s1` એ જોડાણ પછી માન્ય રહેવાનું કારણ અને આપણે `s2` માટે સંદર્ભનો ઉપયોગ કરવાનું કારણ એ પદ્ધતિના હસ્તાક્ષર સાથે સંબંધિત છે જે જ્યારે આપણે `+` ચિહ્નનો ઉપયોગ કરીએ છીએ ત્યારે બોલાવવામાં આવે છે. `+` ચિહ્ન `add` પદ્ધતિનો ઉપયોગ કરે છે, જેના હસ્તાક્ષર આના જેવા દેખાય છે:
 
 ```rust
@@ -118,11 +126,12 @@ fn add(self, s: &str) -> String {
 
 ઘણી અન્ય પ્રોગ્રામિંગ ભાષાઓમાં, સ્ટ્રિંગમાં વ્યક્તિગત અક્ષરોને અનુક્રમણિકા દ્વારા સંદર્ભિત કરીને મેળવવાનું એક માન્ય અને સામાન્ય કાર્ય છે. જો કે, જો તમે Rust માં `String` ના ભાગોને અનુક્રમણિકા સિન્ટેક્સનો ઉપયોગ કરીને મેળવવાનો પ્રયત્ન કરો છો, તો તમને ભૂલ મળશે. લિસ્ટિંગ 8-19 માં દર્શાવેલ અમાન્ય કોડને ધ્યાનમાં લો.
 
-<Listing number="8-19" caption="Attempting to use indexing syntax with a `String`">
+**Listing 8-19: Attempting to use indexing syntax with a `String`**
+
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-19/src/main.rs:here}}
 ```
-</Listing>
+
 આ કોડથી નીચેની ભૂલ ઉત્પન્ન થશે:
 
 ```console

@@ -2,11 +2,12 @@
 
 `if let` વાક્યરચના તમને `if` અને `let` ને જોડીને એક ઓછું વિસ્તૃત રીતે મૂલ્યોને નિયંત્રિત કરવાની મંજૂરી આપે છે જે એક ચોક્કસ પેટર્ન સાથે બંધબેસે છે, જ્યારે બાકીનાને અવગણે છે. યાદી 6-6 માં આપેલ કાર્યક્રમનો વિચાર કરો, જે `config_max` variable રહેલા `Option<u8>` મૂલ્ય સાથે મેળ ખાય છે પરંતુ માત્ર ત્યારે જ કોડ ચલાવવા માંગે છે જ્યારે મૂલ્ય `Some` પ્રકારનું હોય.
 
-<Listing number="6-6" caption="A `match` that only cares about executing code when the value is `Some`">
+**Listing 6-6: A `match` that only cares about executing code when the value is `Some`**
+
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-06/src/main.rs:here}}
 ```
-</Listing>
+
 જો મૂલ્ય `Some` હોય, તો આપણે `Some` પ્રકારમાં રહેલા મૂલ્યને છાપીએ છીએ, જે પેટર્નમાં variable `max` સાથે બંધાયેલું છે. આપણે `None` મૂલ્ય સાથે કંઈપણ કરવા માંગતા નથી. `match` અભિવ્યક્તિને સંતોષવા માટે, આપણે માત્ર એક જ પ્રકારની પ્રક્રિયા કર્યા પછી `_ => ()` ઉમેરવું પડે છે, જે ઉમેરવા માટે કંટાળાજનક કોડ છે.
 
 વૈકલ્પિક રીતે, આપણે તેને `if let` નો ઉપયોગ કરીને ટૂંકમાં લખી શકીએ છીએ. નીચે આપેલ કોડ Listing 6-6 માં રહેલા `match` ની જેમ જ વર્તે છે.
@@ -39,29 +40,32 @@
 ```
 પછી, આપણને `if let` નો ઉપયોગ કરવો પડી શકે છે, જેથી સિક્કાના પ્રકાર સાથે મેળ ખાડી શકાય, અને શરતની અંદર `state` variable રજૂ કરી શકાય, જેવું કે લિસ્ટિંગ ૬-૭ માં દર્શાવેલું છે.
 
-<Listing number="6-7" caption="Checking whether a state existed in 1900 by using conditionals nested inside an `if let`">
+**Listing 6-7: Checking whether a state existed in 1900 by using conditionals nested inside an `if let`**
+
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-07/src/main.rs:describe}}
 ```
-</Listing>
+
 એ કામ પાર પાડે છે, પરંતુ તે `if let` વિધાનના મુખ્ય ભાગમાં કાર્ય ધકેલી દે છે, અને જો કરવાનું કાર્ય વધુ જટિલ હોય તો, ટોચના સ્તરની શાખાઓ કેવી રીતે સંબંધિત છે તે સમજવું મુશ્કેલ બની શકે છે. આપણે એ હકીકતનો લાભ પણ લઈ શકીએ છીએ કે અભિવ્યક્તિઓ મૂલ્ય ઉત્પન્ન કરે છે કાં તો `if let` માંથી `state` ઉત્પન્ન કરવા માટે અથવા વહેલા પાછા ફરવા માટે, જેમ કે યાદી 6-8 માં દર્શાવેલ છે. (તમે `match` સાથે પણ કંઈક એવું જ કરી શકો છો.)
 
-<Listing number="6-8" caption="Using `if let` to produce a value or return early">
+**Listing 6-8: Using `if let` to produce a value or return early**
+
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-08/src/main.rs:describe}}
 ```
-</Listing>
+
 આ અનુસરવું થોડું ત્રાસદાયક છે, જોકે! `if let` ના એક શાખા મૂલ્ય ઉત્પન્ન કરે છે, અને બીજી કાર્યમાંથી સંપૂર્ણપણે પાછી ફરે છે. આ સામાન્ય પેટર્નને
 
 વધુ સારી રીતે વ્યક્ત કરવા માટે, Rust પાસે `let...else` છે. `let...else` વાક્યરચના ડાબી બાજુએ એક પેટર્ન અને જમણી બાજુએ એક અભિવ્યક્તિ લે છે, જે `if let` જેવું જ છે, પરંતુ તેની પાસે `if` શાખા નથી, માત્ર `else` શાખા છે. જો પેટર્ન મેળ ખાય છે, તો તે પેટર્નમાંથી મૂલ્યને બહારના અવકાશમાં બંધિત કરશે. જો પેટર્ન મેળ ખાતું નથી, તો પ્રોગ્રામ `else` વિભાગમાં વહેશે, જે કાર્યમાંથી પાછું ફરવું જોઈએ.
 
 લિસ્ટિંગ ૬-૯ માં, તમે જોઈ શકો છો કે `let...else` નો ઉપયોગ કરીને લિસ્ટિંગ ૬-૮ કેવું દેખાય છે.
 
-<Listing number="6-9" caption="Using `let...else` to clarify the flow through the function">
+**Listing 6-9: Using `let...else` to clarify the flow through the function**
+
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-09/src/main.rs:describe}}
 ```
-</Listing>
+
 એ નોંધો કે આ રીતે કાર્યના મુખ્ય ભાગમાં તે "સુખદ માર્ગ" પર રહે છે, જેથી બે શાખાઓ માટે `if let` જેવું નોંધપાત્ર રીતે અલગ નિયંત્રણ પ્રવાહ ન હોય. જો તમારી
 
 પાસે એવી પરિસ્થિતિ હોય જેમાં તમારા પ્રોગ્રામનો તર્ક `match` નો ઉપયોગ કરીને વ્યક્ત કરવા માટે ખૂબ લાંબો હોય, તો યાદ રાખો કે `if let` અને `let...else` પણ તમારા Rust સાધનપેટીમાં ઉપલબ્ધ છે.

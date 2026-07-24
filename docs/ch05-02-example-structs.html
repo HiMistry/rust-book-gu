@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -185,12 +185,12 @@
                         <h2 id="an-example-program-using-structs"><a class="header" href="#an-example-program-using-structs">An Example Program Using Structs</a></h2>
 <p>જ્યારે આપણે સ્ટ્રક્ચર્સનો ઉપયોગ કરવા માગીએ છીએ તે સમજવા માટે, ચાલો એક એવો કાર્યક્રમ લખીએ જે લંબચોરસનું ક્ષેત્રફળ ગણે છે. આપણે પહેલાં એકલ variable’s ઉપયોગ કરીને શરૂઆત કરીશું અને પછી કાર્યક્રમને એવી રીતે સુધારીશું કે જેથી આપણે સ્ટ્રક્ચર્સનો ઉપયોગ કરીએ.</p>
 <p>ચાલો <code>rectangles</code> નામની નવી બાઈનરી પ્રોજેક્ટ Cargo સાથે બનાવીએ, જે પિક્સેલ્સમાં દર્શાવેલ લંબચોરસની પહોળાઈ અને ઊંચાઈ લેશે અને લંબચોરસનું ક્ષેત્રફળ ગણશે. યાદી 5-8 આપણી પ્રોજેક્ટની <code>src/main.rs</code> માં તે જ રીતે કરવાના એક રીત સાથેનો ટૂંકો કાર્યક્રમ દર્શાવે છે.</p>
-<listing number="5-8" file-name="src/main.rs" caption="Calculating the area of a rectangle specified by separate width and height variables">
-```rust
-{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/src/main.rs:all}}
-```
-</listing>
-હવે, આ કાર્યક્રમ `cargo run` વડે ચલાવો:
+<p><strong>Listing 5-8: Calculating the area of a rectangle specified by separate width and height variables</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/src/main.rs:all}}
+<span class="boring">}</span></code></pre>
+<p>હવે, આ કાર્યક્રમ <code>cargo run</code> વડે ચલાવો:</p>
 <pre><code class="language-console">{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/output.txt}}
 </code></pre>
 <p>આ કોડ લંબચોરસનું ક્ષેત્રફળ શોધવામાં સફળ થાય છે, દરેક પરિમાણ સાથે <code>area</code> ફંક્શનને બોલાવીને, પરંતુ આ કોડને વધુ સ્પષ્ટ અને વાંચી શકાય તેવો બનાવવા માટે આપણે વધુ</p>
@@ -202,33 +202,33 @@
 <p>area ફંક્શન <code>area</code> ફંક્શન એક લંબચોરસનું ક્ષેત્રફળ ગણવાનું છે, પરંતુ આપણે જે ફંક્શન લખ્યું છે તેમાં બે પરિમાણો (parameters) છે, અને આપણા પ્રોગ્રામમાં ક્યાંય સ્પષ્ટ નથી કે આ પરિમાણો સંબંધિત છે. પહોળાઈ અને ઊંચાઈને એકસાથે જૂથબદ્ધ કરવું વધુ સુવાચ્ય અને વ્યવસ્થિત રહેશે. આપણે પહેલાથી જ ચર્પ્ટર 3 ના “ટ્યૂપલ પ્રકાર” (The Tuple Type) વિભાગમાં એક રીતની ચર્ચા કરી છે: ટ્યૂપલનો ઉપયોગ કરીને.</p>
 <h3 id="refactoring-with-tuples"><a class="header" href="#refactoring-with-tuples">Refactoring with Tuples</a></h3>
 <p>ચિત્રલિપિ ૫-૯ આપણી કાર્યક્રમનું અન્ય એક સ્વરૂપ દર્શાવે છે જે ટ્યૂપલ્સનો ઉપયોગ કરે છે.</p>
-<listing number="5-9" file-name="src/main.rs" caption="Specifying the width and height of the rectangle with a tuple">
-```rust
-{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-09/src/main.rs}}
-```
-</listing>
-એક રીતે, આ કાર્યક્રમ વધુ સારો છે. ટ્યૂપલ્સ આપણને થોડી રચના ઉમેરવા દે છે, અને હવે આપણે માત્ર એક જ Argument પસાર કરી રહ્યા છીએ. પરંતુ બીજા રીતે, આ સંસ્કરણ ઓછું સ્પષ્ટ છે: ટ્યૂપલ્સ તેમના ઘટકોને નામ આપતા નથી, તેથી આપણે ટ્યૂપલના ભાગોમાં અનુક્રમણિકા કરવી પડે છે, જે
+<p><strong>Listing 5-9: Specifying the width and height of the rectangle with a tuple</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-09/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>એક રીતે, આ કાર્યક્રમ વધુ સારો છે. ટ્યૂપલ્સ આપણને થોડી રચના ઉમેરવા દે છે, અને હવે આપણે માત્ર એક જ Argument પસાર કરી રહ્યા છીએ. પરંતુ બીજા રીતે, આ સંસ્કરણ ઓછું સ્પષ્ટ છે: ટ્યૂપલ્સ તેમના ઘટકોને નામ આપતા નથી, તેથી આપણે ટ્યૂપલના ભાગોમાં અનુક્રમણિકા કરવી પડે છે, જે</p>
 <p>અમારી ગણતરીને ઓછી દેખી ન કરે છે. પહોળાઈ અને ઊંચાઈ ભેગી કરવી ગણતરી માટે મહત્વનું ન હતું, પરંતુ જો આપણે લંબચોરસને સ્ક્રીન પર દોરવા માંગતા હોઈએ, તો તે મહત્વનું હતું! આપણે એ યાદ રાખવું પડ્યું કે <code>width</code> ટ્યૂપલ અનુક્રમણિકા <code>0</code> છે અને <code>height</code> ટ્યૂપલ અનુક્રમણિકા <code>1</code> છે. જો કોઈ અન્ય વ્યક્તિ અમારી કોડનો ઉપયોગ કરે તો તેને સમજવું અને યાદ રાખવું વધુ મુશ્કેલ બની જશે. આપણે આપેલા ડેટાના અર્થને અમારા કોડમાં વ્યક્ત કર્યો નથી, તેથી ભૂલો દાખલ કરવી સરળ બની ગઈ છે.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="refactoring-with-structs"><a class="header" href="#refactoring-with-structs">Refactoring with Structs</a></h3>
 <p>આપણે ડેટાને લેબલ કરીને અર્થ ઉમેરવા માટે બંધારણોનો ઉપયોગ કરીએ છીએ. આપણે આપનું ટ્યૂપલને એક નામિત બંધારણમાં રૂપાંતરિત કરી શકીએ છીએ, જે સમગ્ર ભાગ તેમજ ભાગો માટે નામો ધરાવે છે, જે યાદી 5-10 માં દર્શાવેલ છે.</p>
-<listing number="5-10" file-name="src/main.rs" caption="Defining a `Rectangle` struct">
-```rust
-{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-10/src/main.rs}}
-```
-</listing>
-અહીં, આપણે એક struct વ્યાખ્યાયિત કર્યો છે અને તેનું નામ `Rectangle` આપ્યું છે. કદાળી કૌંસની અંદર, આપણે ક્ષેત્રો `width` અને `height` તરીકે વ્યાખ્યાયિત કર્યા છે, જે બંનેનો પ્રકાર `u32` છે. પછી, `main` માં, આપણે `Rectangle` ના એક ચોક્કસ ઉદાહરણ બનાવ્યું છે જેની પહોળાઈ `30` અને ઊંચાઈ `50` છે.
+<p><strong>Listing 5-10: Defining a <code>Rectangle</code> struct</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-10/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>અહીં, આપણે એક struct વ્યાખ્યાયિત કર્યો છે અને તેનું નામ <code>Rectangle</code> આપ્યું છે. કદાળી કૌંસની અંદર, આપણે ક્ષેત્રો <code>width</code> અને <code>height</code> તરીકે વ્યાખ્યાયિત કર્યા છે, જે બંનેનો પ્રકાર <code>u32</code> છે. પછી, <code>main</code> માં, આપણે <code>Rectangle</code> ના એક ચોક્કસ ઉદાહરણ બનાવ્યું છે જેની પહોળાઈ <code>30</code> અને ઊંચાઈ <code>50</code> છે.</p>
 <p>આપણો <code>area</code> ફંક્શન હવે એક પરિમાણ સાથે વ્યાખ્યાયિત કરવામાં આવ્યો છે, જેને આપણે <code>rectangle</code> નામ આપ્યું છે, જેનો પ્રકાર struct <code>Rectangle</code> ઉદાહરણની અપરિવર્તનશીલ ઉછીના લીધેલી નકલ (borrow) છે. પ્રકરણ 4 માં જણાવ્યા મુજબ, આપણે struct ની માલિકી લેવાને બદલે તેની નકલ મેળવવી જોઈએ. આ રીતે, <code>main</code> તેની માલિકી જાળવી રાખે છે અને <code>rect1</code> નો ઉપયોગ કરવાનું ચાલુ રાખી શકે છે, જેનું કારણ છે કે આપણે ફંક્શન હસ્તાક્ષરમાં (signature) અને જ્યાં આપણે ફંક્શનને બોલાવીએ છીએ ત્યાં <code>&amp;</code> નો ઉપયોગ કરીએ છીએ.</p>
 <p>area કાર્ય <code>area</code> કાર્ય <code>Rectangle</code> ઉદાહરણના <code>width</code> અને <code>height</code> ક્ષેત્રોને પ્રાપ્ય કરે છે (એ નોંધવું અગત્યનું છે કે ઉછીના લીધેલા struct ઉદાહરણના ક્ષેત્રોને પ્રાપ્ય કરવાથી ક્ષેત્ર મૂલ્યો ખસેડવામાં આવતા નથી, જેના કારણે તમે ઘણીવાર struct ના ઉછીના લીધેલાં ઉદાહરણો જુઓ છો). આપણું <code>area</code> માટેનું કાર્ય હસ્તાક્ષર હવે બરાબર જણાવે છે કે આપણને શું જોઈએ છે: <code>Rectangle</code> નું ક્ષેત્રફળ ગણો, તેના <code>width</code> અને <code>height</code> ક્ષેત્રોનો ઉપયોગ કરીને. આ દર્શાવે છે કે પહોળાઈ અને ઊંચાઈ એકબીજા સાથે સંબંધિત છે, અને તે મૂલ્યોને વર્ણનાત્મક નામો આપે છે, tuple અનુક્રમણિકા મૂલ્યો <code>0</code> અને <code>1</code> નો ઉપયોગ કરવાને બદલે. આ સ્પષ્ટતા માટે એક લાભ છે.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="adding-functionality-with-derived-traits"><a class="header" href="#adding-functionality-with-derived-traits">Adding Functionality with Derived Traits</a></h3>
 <p>જ્યારે આપણે આપણી કાર્યક્રમની ભૂલનિવારણ (debugging) કરી રહ્યા હોઈએ, ત્યારે <code>Rectangle</code> નો એક દાખલો છાપવો ઉપયોગી થઈ શકે છે અને તેના તમામ ક્ષેત્રોના મૂલ્યો જોઈ શકાય. યાદી 5-11 પ્રયત્ન કરે છે કે <code>println!</code> મેક્રોનો ઉપયોગ અગાઉના પ્રકરણોમાં આપણે જે રીતે કર્યો હતો, તે જ રીતે કરવો. જોકે, આ કામ નહીં કરે.</p>
-<listing number="5-11" file-name="src/main.rs" caption="Attempting to print a `Rectangle` instance">
-```rust
-{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/src/main.rs}}
-```
-</listing>
-જ્યારે આપણે આ કોડને કમ્પાઇલ કરીએ છીએ, ત્યારે આપણને આ મુખ્ય સંદેશ સાથેની ભૂલ આવે છે:
+<p><strong>Listing 5-11: Attempting to print a <code>Rectangle</code> instance</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>જ્યારે આપણે આ કોડને કમ્પાઇલ કરીએ છીએ, ત્યારે આપણને આ મુખ્ય સંદેશ સાથેની ભૂલ આવે છે:</p>
 <pre><code class="language-text">{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/output.txt:3}}
 </code></pre>
 <p>The <code>println!</code> Macro <code>println!</code> મેક્રો ઘણા પ્રકારના ફોર્મેટિંગ કરી શકે છે, અને મૂળભૂત રીતે, કુંદળિત કૌંસ <code>println!</code> ને <code>Display</code> તરીકે ઓળખાતા ફોર્મેટિંગનો ઉપયોગ કરવા માટે કહે છે: અંતિમ user માટે સીધા જ આઉટપુટ. અત્યાર સુધી આપણે જોયેલા પ્રાથમિક પ્રકારો <code>Display</code> ને મૂળભૂત રીતે અમલમાં મૂકે છે કારણ કે <code>1</code> અથવા અન્ય કોઈપણ પ્રાથમિક પ્રકારને userને બતાવવાનો માત્ર એક જ રસ્તો હોય છે. પરંતુ સ્ટ્રક્ચર્સ સાથે, <code>println!</code> એ આઉટપુટને કેવી રીતે ફોર્મેટ કરવું જોઈએ તે ઓછું સ્પષ્ટ છે કારણ કે વધુ ડિસ્પ્લે શક્યતાઓ છે: શું તમે અલ્પવિરામ ઇચ્છો છો કે નહીં? શું તમે કૌંસ છાપવા માંગો છો? શું બધા ક્ષેત્રો દર્શાવવા જોઈએ? આ અસ્પષ્ટતાને કારણે, Rust એ અનુમાન કરવાનો પ્રયાસ કરતો નથી કે આપણે શું ઈચ્છીએ છીએ, અને સ્ટ્રક્ચર્સમાં <code>println!</code> સાથે ઉપયોગ કરવા માટે <code>Display</code> નું પ્રદાન કરેલું અમલીકરણ હોતું નથી અને <code>{}</code> પ્લેસહોલ્ડર.</p>
@@ -243,12 +243,12 @@
 <pre><code class="language-text">{{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-01-debug/output.txt:9:10}}
 </code></pre>
 <p>Rust માં ડીબગીંગ માહિતી છાપવાની કાર્યક્ષમતા પણ સામેલ છે, પરંતુ તે કાર્યક્ષમતા આપણી struct માટે ઉપલબ્ધ કરાવવા માટે આપણે સ્પષ્ટપણે પસંદગી કરવી પડશે. આ કરવા માટે, આપણે <code>#[derive(Debug)]</code> એવું બાહ્ય લક્ષણ struct વ્યાખ્યા પહેલાં ઉમેરીએ છીએ, જે Listing 5-12 માં દર્શાવેલ છે.</p>
-<listing number="5-12" file-name="src/main.rs" caption="Adding the attribute to derive the `Debug` trait and printing the `Rectangle` instance using debug formatting">
-```rust
-{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-12/src/main.rs}}
-```
-</listing>
-હવે જ્યારે આપણે આ કાર્યક્રમ ચલાવીશું, ત્યારે આપણને કોઈ ભૂલો નહીં દેખાય અને નીચે મુજબનું પરિણામ મળશે:
+<p><strong>Listing 5-12: Adding the attribute to derive the <code>Debug</code> trait and printing the <code>Rectangle</code> instance using debug formatting</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-12/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>હવે જ્યારે આપણે આ કાર્યક્રમ ચલાવીશું, ત્યારે આપણને કોઈ ભૂલો નહીં દેખાય અને નીચે મુજબનું પરિણામ મળશે:</p>
 <pre><code class="language-console">{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-12/output.txt}}
 </code></pre>
 <p>ચોક્કસ! આ દેખાવમાં સૌથી સુંદર પરિણામ નથી, પરંતુ તે આ ઉદાહરણ માટે તમામ ક્ષેત્રોના મૂલ્યો દર્શાવે છે, જે ડિબગીંગ દરમિયાન ચોક્કસપણે મદદરૂપ થશે. જ્યારે આપણી પાસે મોટા struct હોય, ત્યારે વાંચવામાં સરળ પરિણામ મેળવવું ઉપયોગી થઈ શકે છે; આવી સ્થિતિમાં, આપણે <code>println!</code> સ્ટ્રિંગમાં <code>{:#?}</code> ને બદલે <code>{:?}</code> નો ઉપયોગ કરી શકીએ છીએ. આ ઉદાહરણમાં, <code>{:#?}</code> શૈલીનો ઉપયોગ કરવાથી નીચે મુજબનું પરિણામ આવશે:</p>
@@ -320,6 +320,7 @@
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

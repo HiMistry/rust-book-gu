@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -190,28 +190,26 @@
 <p>કરનાર (transmitter) અને એક સ્વાગત કરનાર (receiver). પ્રસારણ કરનાર ભાગ એ ઉપરવાસનો સ્થાન છે જ્યાં તમે રબર ડકને નદીમાં મુકો છો, અને સ્વાગત કરનાર ભાગ એ વહેતા પાણીના અંતે આવેલું સ્થળ છે. તમારા કોડનો એક ભાગ પ્રસારણ કરનાર પર પદ્ધતિઓ (methods) બોલાવે છે જેમાં તમે જે માહિતી મોકલવા માંગો છો તે હોય છે, અને બીજો ભાગ આવતા સંદેશાઓ માટે સ્વાગત કરનાર બાજુ તપાસે છે. જો પ્રસારણ કરનાર અથવા સ્વાગત કરનાર ભાગ નાખવામાં આવે તો ચેનલ બંધ થયેલી ગણાય છે.</p>
 <p>અહીં, આપણે એક એવી કાર્યક્રમ તરફ આગળ વધીશું જેમાં એક થ્રેડ મૂલ્યો ઉત્પન્ન કરશે અને તેને એક ચેનલ દ્વારા મોકલશે, અને બીજો થ્રેડ તે મૂલ્યો મેળવશે અને છાપશે. આપણે થ્રેડો વચ્ચે સરળ મૂલ્યો મોકલવા માટે ચેનલનો ઉપયોગ કરીશું જેથી આ વિશેષતા સમજાવી શકાય. એકવાર તમે આ પદ્ધતિથી પરિચિત થઈ જાઓ, પછી તમે ચેટ સિસ્ટમ અથવા એવી સિસ્ટમ જેવા અન્ય થ્રેડો સાથે વાતચીત કરવાની જરૂર હોય તેવા થ્રેડો માટે પણ ચેનલોનો ઉપયોગ કરી શકો છો જ્યાં ઘણા થ્રેડો ગણતરીના ભાગો કરે છે અને તેને એક થ્રેડને મોકલે છે જે પરિણામોનું સંકલન કરે છે.</p>
 <p>સૌ પ્રથમ, યાદી ૧૬-૬ માં, આપણે એક ચેનલ બનાવીશું પરંતુ તેનો ઉપયોગ નહીં કરીએ. નોંધ કરો કે આ હજી સુધી કમ્પાઇલ થશે નહીં કારણ કે Rust એ નક્કી કરી શકતું નથી કે આપણે ચેનલ દ્વારા કયા પ્રકારના મૂલ્યો મોકલવા માંગીએ છીએ.</p>
-<listing number="16-6" file-name="src/main.rs" caption="Creating a channel and assigning the two halves to `tx` and `rx`">
-```rust
-{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-06/src/main.rs}}
-```
-</listing>
-અમે `mpsc::channel` વિધેયનો ઉપયોગ કરીને નવું ચેનલ બનાવીએ છીએ; `mpsc` એટલે બહુવિધ ઉત્પાદક, એકગ્રહસ્ત. ટૂંકમાં, Rustના પ્રમાણભૂત પુસ્તકાલય દ્વારા ચેનલોનો અમલ એવો થાય છે કે ચેનલમાં બહુવિધ મોકલવાના છેડા હોઈ શકે છે જે મૂલ્યો ઉત્પન્ન કરે છે પરંતુ માત્ર એક જ મેળવવાનો છેડો હોય છે જે તે મૂલ્યોનો ઉપયોગ કરે છે. અનેક પ્રવાહો એક મોટા નદીમાં ભળી રહ્યાનું કલ્પના કરો: કોઈપણ પ્રવાહ દ્વારા મોકલવામાં આવેલી દરેક વસ્તુ અંતે એક નદીમાં પહોંચશે. અમે હાલમાં એક ઉત્પાદકથી શરૂઆત કરીશું, પરંતુ જ્યારે આ ઉદાહરણ કાર્યરત થશે ત્યારે અમે બહુવિધ ઉત્પાદકો ઉમેરીશું.
+<p><strong>Listing 16-6: Creating a channel and assigning the two halves to <code>tx</code> and <code>rx</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-06/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>અમે <code>mpsc::channel</code> વિધેયનો ઉપયોગ કરીને નવું ચેનલ બનાવીએ છીએ; <code>mpsc</code> એટલે બહુવિધ ઉત્પાદક, એકગ્રહસ્ત. ટૂંકમાં, Rustના પ્રમાણભૂત પુસ્તકાલય દ્વારા ચેનલોનો અમલ એવો થાય છે કે ચેનલમાં બહુવિધ મોકલવાના છેડા હોઈ શકે છે જે મૂલ્યો ઉત્પન્ન કરે છે પરંતુ માત્ર એક જ મેળવવાનો છેડો હોય છે જે તે મૂલ્યોનો ઉપયોગ કરે છે. અનેક પ્રવાહો એક મોટા નદીમાં ભળી રહ્યાનું કલ્પના કરો: કોઈપણ પ્રવાહ દ્વારા મોકલવામાં આવેલી દરેક વસ્તુ અંતે એક નદીમાં પહોંચશે. અમે હાલમાં એક ઉત્પાદકથી શરૂઆત કરીશું, પરંતુ જ્યારે આ ઉદાહરણ કાર્યરત થશે ત્યારે અમે બહુવિધ ઉત્પાદકો ઉમેરીશું.</p>
 <p>mpsc::channel કાર્ય <code>mpsc::channel</code> કાર્ય એક ટ્યૂપલ આપે છે, જેનો પ્રથમ ઘટક પ્રेषણ મুখ છે—ટ્રાન્સમીટર—અને બીજો ઘટક પ્રાપ્તિ મুখ છે—રિસીવર. <code>tx</code> અને <code>rx</code> સંક્ષેપો પરંપરાગત રીતે ઘણા ક્ષેત્રોમાં ટ્રાન્સમીટર અને રિસીવર માટે વપરાય છે, તેથી અમે દરેક મুখ દર્શાવવા માટે અમારા variable આ રીતે નામ આપીએ છીએ. અમે એક <code>let</code> વિધાનનો ઉપયોગ કરી રહ્યા છીએ જેમાં એક પેટર્ન છે જે ટ્યૂપલને વિઘટિત કરે છે; અમે પ્રકરણ 19 માં <code>let</code> વિધાનોમાં પેટર્નની અને વિઘટનની સમજૂતી આપીશું. હાલ માટે, જાણો કે આ રીતે <code>let</code> વિધાનનો ઉપયોગ કરવો એ <code>mpsc::channel</code> દ્વારા પરત કરવામાં આવતા ટ્યૂપલના ભાગોને બહાર કાઢવાની એક અનુકૂળ રીત છે.</p>
 <p>ચાલો પ્રસારણ અંત (transmitting end) ને એક ઉત્પન્ન થયેલ થ્રેડમાં ખસેડીએ અને તેને એક String મોકલીએ જેથી ઉત્પન્ન થયેલ થ્રેડ મુખ્ય થ્રેડ સાથે વાતચીત કરે, જેની જેમ Listing 16-7 માં દર્શાવવામાં આવ્યું છે. આ એવું કરવા સમાન છે કે નદીના ઉપરવાસમાં એક રબર ડક મૂકવામાં આવે અથવા એક થ્રેડથી બીજા થ્રેડ પર ચેટ સંદેશ મોકલવામાં આવે.</p>
-<listing number="16-7" file-name="src/main.rs" caption="Moving `tx` to a spawned thread and sending `&quot;hi&quot;`">
-```rust
-{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-07/src/main.rs}}
-```
-</listing>
-ફરીથી, આપણે `thread::spawn` નો ઉપયોગ કરીને નવું થ્રેડ બનાવી રહ્યા છીએ અને પછી `move` નો ઉપયોગ કરીને `tx` ને ક્લોઝરમાં ખસેડી રહ્યા છીએ જેથી કે સ્પોન થયેલ થ્રેડ `tx` નું માલિકી ધરાવે. સ્પોન થયેલ થ્રેડને ચેનલ દ્વારા સંદેશાઓ મોકલવા માટે ટ્રાન્સમીટરની માલિકી હોવી જરૂરી છે.
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-07/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>ફરીથી, આપણે <code>thread::spawn</code> નો ઉપયોગ કરીને નવું થ્રેડ બનાવી રહ્યા છીએ અને પછી <code>move</code> નો ઉપયોગ કરીને <code>tx</code> ને ક્લોઝરમાં ખસેડી રહ્યા છીએ જેથી કે સ્પોન થયેલ થ્રેડ <code>tx</code> નું માલિકી ધરાવે. સ્પોન થયેલ થ્રેડને ચેનલ દ્વારા સંદેશાઓ મોકલવા માટે ટ્રાન્સમીટરની માલિકી હોવી જરૂરી છે.</p>
 <p>ટ્રાન્સમીટર પાસે <code>send</code> નામની પદ્ધતિ છે જે આપણે મોકલવા માંગતા મૂલ્યને લે છે. <code>send</code> પદ્ધતિ <code>Result&lt;T, E&gt;</code> પ્રકારનું પરિણામ આપે છે, તેથી જો રીસીવર પહેલાં જ નાશ પામ્યો હોય અને મૂલ્ય મોકલવા માટે કોઈ જગ્યા ન હોય, તો મોકલવાની ક્રિયા ભૂલ પરત કરશે. આ ઉદાહરણમાં, અમે ભૂલના કિસ્સામાં ગભરાવવા માટે <code>unwrap</code> ને બોલાવી રહ્યા છીએ. પરંતુ વાસ્તવિક એપ્લિકેશનમાં, આપણે તેને યોગ્ય રીતે હેન્ડલ કરીશું: યોગ્ય ભૂલ વ્યવસ્થાપન વ્યૂહરચનાઓની સમીક્ષા કરવા માટે પ્રકરણ 9 પર પાછા ફરો.</p>
 <p>Listing 16-8 માં, આપણને મુખ્ય થ્રેડમાં રીસીવર પાસેથી મૂલ્ય મળશે. આ પાણીના અંતિમ ભાગે નદીમાંથી રબર ડક પાછો મેળવવા જેવું અથવા ચેટ સંદેશાની પ્રાપ્તિ સમાન છે.</p>
-<listing number="16-8" file-name="src/main.rs" caption="Receiving the value `&quot;hi&quot;` in the main thread and printing it">
-```rust
-{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-08/src/main.rs}}
-```
-</listing>
-પ્રાપ્તકર્તા પાસે બે ઉપયોગી પદ્ધતિઓ છે: `recv` અને `try_recv`. અમે `recv` નો ઉપયોગ કરી રહ્યા છીએ, જે 'પ્રાપ્તિ' માટે ટૂંકું નામ છે, જે મુખ્ય થ્રેડનું કાર્ય સ્થગિત કરશે અને જ્યાં સુધી મૂલ્ય ચેનલમાં મોકલવામાં ન આવે ત્યાં સુધી રાહ જોશે. એકવાર મૂલ્ય મોકલવામાં આવે, `recv` તે `Result<t, e="">` માં પરત કરશે. જ્યારે પ્રસારક બંધ કરે છે, ત્યારે `recv` એક ભૂલ પરત કરશે જે દર્શાવે છે કે હવે વધુ મૂલ્યો આવશે નહીં.
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-08/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>પ્રાપ્તકર્તા પાસે બે ઉપયોગી પદ્ધતિઓ છે: <code>recv</code> અને <code>try_recv</code>. અમે <code>recv</code> નો ઉપયોગ કરી રહ્યા છીએ, જે ‘પ્રાપ્તિ’ માટે ટૂંકું નામ છે, જે મુખ્ય થ્રેડનું કાર્ય સ્થગિત કરશે અને જ્યાં સુધી મૂલ્ય ચેનલમાં મોકલવામાં ન આવે ત્યાં સુધી રાહ જોશે. એકવાર મૂલ્ય મોકલવામાં આવે, <code>recv</code> તે <code>Result&lt;T, E&gt;</code> માં પરત કરશે. જ્યારે પ્રસારક બંધ કરે છે, ત્યારે <code>recv</code> એક ભૂલ પરત કરશે જે દર્શાવે છે કે હવે વધુ મૂલ્યો આવશે નહીં.</p>
 <p><code>try_recv</code> પદ્ધતિ અવરોધિત કરતી નથી, પરંતુ તરત જ <code>Result&lt;T, E&gt;</code> પરત કરશે: જો સંદેશ ઉપલબ્ધ હોય તો <code>Ok</code> મૂલ્ય અને આ સમયે કોઈ સંદેશ ન હોય તો <code>Err</code> મૂલ્ય. <code>try_recv</code> નો ઉપયોગ કરવો એ ફાયદાકારક છે જો આ થ્રેડ પાસે સંદેશાઓની રાહ જોતી વખતે અન્ય કાર્ય કરવાનું હોય: અમે એક લૂપ લખી શકીએ છીએ જે સમયાંતરે <code>try_recv</code> ને બોલાવે છે, ઉપલબ્ધ હોય તો સંદેશને હેન્ડલ કરે છે અને અન્યથા થોડા સમય માટે અન્ય કાર્ય કરે છે જ્યાં સુધી ફરીથી તપાસ કરવામાં ન આવે.</p>
 <p>અમે આ ઉદાહરણમાં સરળતા માટે <code>recv</code> વાપર્યું છે; મુખ્ય થ્રેડ પાસે સંદેશાઓની રાહ જોવા સિવાય બીજું કોઈ કાર્ય નથી, તેથી મુખ્ય થ્રેડને બ્લોક કરવો યોગ્ય છે. જ્યારે</p>
 <p>આપણે લિસ્ટિંગ ૧૬-૮ માં કોડ ચલાવીશું, ત્યારે આપણે મુખ્ય થ્રેડમાંથી છાપવામાં આવેલું મૂલ્ય જોઈ શકીશું:</p>
@@ -224,12 +222,12 @@ changes in the compiler -->
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="transferring-ownership-through-channels"><a class="header" href="#transferring-ownership-through-channels">Transferring Ownership Through Channels</a></h3>
 <p>માલિકીના નિયમો સંદેશ મોકલવામાં મહત્વપૂર્ણ ભાગ ભજવે છે, કારણ કે તે તમને સુરક્ષિત, એકસાથે ચાલતા કોડ લખવામાં મદદ કરે છે. એકસાથે ચાલતા પ્રોગ્રામિંગમાં ભૂલો અટકાવવી એ તમારી Rust પ્રોગ્રામ્સમાં માલિકી વિશે વિચારવાનો ફાયદો છે. ચાલો એક પ્રયોગ કરીએ જે દર્શાવે છે કે ચેનલ્સ અને માલિકી કેવી રીતે સાથે મળીને સમસ્યાઓ અટકાવે છે: આપણે યાદ કરેલ <code>val</code> મૂલ્યને ચેનલ દ્વારા મોકલ્યા પછી, સ્પોન્ડ થ્રેડમાં વાપરવાનો પ્રયત્ન કરીશું. આ કોડ શા માટે મંજૂર નથી તે જોવા માટે લિસ્ટિંગ 16-9 માં કોડ કમ્પાઇલ કરવાનો પ્રયાસ કરો.</p>
-<listing number="16-9" file-name="src/main.rs" caption="Attempting to use `val` after we’ve sent it down the channel">
-```rust
-{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-09/src/main.rs}}
-```
-</listing>
-અહીં, આપણે `val` ને ચેનલ દ્વારા `tx.send` મોકલ્યા પછી છાપવાનો પ્રયત્ન કરીએ છીએ. આ કરવાની મંજૂરી આપવી એ ખરાબ વિચાર છે: એકવાર મૂલ્ય બીજા થ્રેડને મોકલાઈ જાય પછી, તે થ્રેડ તેને વાપરતા પહેલાં આપણે બદલી શકે અથવા નાશ કરી શકે છે. સંભવિતપણે, અન્ય થ્રેડના ફેરફારો અસંગત અથવા અસ્તિત્વહીન ડેટાને કારણે ભૂલો અથવા અનપેક્ષિત પરિણામો લાવી શકે છે. જો કે, Rust આપણને યાદી 16-9 માં કોડ કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ તો એક ભૂલ આપે છે:
+<p><strong>Listing 16-9: Attempting to use <code>val</code> after we’ve sent it down the channel</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-09/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>અહીં, આપણે <code>val</code> ને ચેનલ દ્વારા <code>tx.send</code> મોકલ્યા પછી છાપવાનો પ્રયત્ન કરીએ છીએ. આ કરવાની મંજૂરી આપવી એ ખરાબ વિચાર છે: એકવાર મૂલ્ય બીજા થ્રેડને મોકલાઈ જાય પછી, તે થ્રેડ તેને વાપરતા પહેલાં આપણે બદલી શકે અથવા નાશ કરી શકે છે. સંભવિતપણે, અન્ય થ્રેડના ફેરફારો અસંગત અથવા અસ્તિત્વહીન ડેટાને કારણે ભૂલો અથવા અનપેક્ષિત પરિણામો લાવી શકે છે. જો કે, Rust આપણને યાદી 16-9 માં કોડ કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ તો એક ભૂલ આપે છે:</p>
 <pre><code class="language-console">{{#include ../listings/ch16-fearless-concurrency/listing-16-09/output.txt}}
 </code></pre>
 <p>આપણી એકરૂપતાની ભૂલને કારણે કાળ-સમયની ભૂલ આવી છે. <code>send</code> વિધેય તેના પરિમાણનું માલિકી લે છે, અને જ્યારે મૂલ્ય ખસેડવામાં આવે છે ત્યારે પ્રાપ્તકર્તા તેની માલિકી લે છે. આનાથી આપણને અજાણતાં જ મૂલ્યનો ફરીથી ઉપયોગ કરતા અટકાવે છે; માલિકીની પ્રણાલી ચકાસણી કરે છે કે બધું યોગ્ય છે.</p>
@@ -237,12 +235,12 @@ changes in the compiler -->
 <h3 id="sending-multiple-values"><a class="header" href="#sending-multiple-values">Sending Multiple Values</a></h3>
 <p>લિસ્ટિંગ ૧૬-૮ માં રહેલો કોડ કમ્પાઇલ થયો અને ચાલ્યો, પરંતુ તે સ્પષ્ટપણે દર્શાવતો ન હતો કે બે અલગ થ્રેડો ચેનલ દ્વારા એકબીજા સાથે વાતચીત કરી રહ્યા છે.</p>
 <p>લિસ્ટિંગ ૧૬-૧૦ માં, અમે કેટલાક ફેરફારો કર્યા છે જે સાબિત કરશે કે લિસ્ટિંગ ૧૬-૮ નો કોડ એકસાથે ચાલી રહ્યો છે: સ્પૉન્ડ થ્રેડ હવે અનેક સંદેશાઓ મોકલશે અને દરેક સંદેશા વચ્ચે એક સેકન્ડ માટે થોભશે.</p>
-<listing number="16-10" file-name="src/main.rs" caption="Sending multiple messages and pausing between each one">
-```rust
-{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-10/src/main.rs}}
-```
-</listing>
-આ વખતે, ઉત્પન્ન થયેલ થ્રેડ પાસે સ્ટ્રિંગ્સનો વેક્ટર છે જે આપણે મુખ્ય થ્રેડને મોકલવા માંગીએ છીએ. અમે તેના પર પુનરાવર્તન કરીએ છીએ, દરેકને વ્યક્તિગત રીતે મોકલીએ છીએ, અને દરેક વચ્ચે `thread::sleep` ફંક્શનને એક સેકન્ડના `Duration` મૂલ્ય સાથે બોલાવીને થોભો કરીએ છીએ.
+<p><strong>Listing 16-10: Sending multiple messages and pausing between each one</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-10/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>આ વખતે, ઉત્પન્ન થયેલ થ્રેડ પાસે સ્ટ્રિંગ્સનો વેક્ટર છે જે આપણે મુખ્ય થ્રેડને મોકલવા માંગીએ છીએ. અમે તેના પર પુનરાવર્તન કરીએ છીએ, દરેકને વ્યક્તિગત રીતે મોકલીએ છીએ, અને દરેક વચ્ચે <code>thread::sleep</code> ફંક્શનને એક સેકન્ડના <code>Duration</code> મૂલ્ય સાથે બોલાવીને થોભો કરીએ છીએ.</p>
 <p>મુખ્ય થ્રેડમાં, અમે હવે સ્પષ્ટપણે <code>recv</code> ફંક્શનને બોલાવતા નથી: તેના બદલે, અમે <code>rx</code> ને ઇટરેટર તરીકે ગણીએ છીએ. દરેક મળેલ મૂલ્ય માટે, અમે તેને છાપીએ છીએ. જ્યારે ચેનલ બંધ થાય છે, ત્યારે પુનરાવર્તન સમાપ્ત થશે.</p>
 <p>લિસ્ટિંગ 16-10 માં કોડ ચલાવતી વખતે, તમારે એક સેકન્ડના થોભાવ સાથે દરેક લાઇન વચ્ચે નીચે મુજબનું આઉટપુટ જોવું જોઈએ:</p>
 <!-- Not extracting output because changes to this output aren't significant;
@@ -257,12 +255,12 @@ Got: thread
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="creating-multiple-producers"><a class="header" href="#creating-multiple-producers">Creating Multiple Producers</a></h3>
 <p>અગાઉ અમે ઉલ્લેખ કર્યો હતો કે <code>mpsc</code> એ બહુવિધ ઉત્પાદક, એકલ ઉપભોક્તા માટેનું સંક્ષેપ હતું. ચાલો <code>mpsc</code> નો ઉપયોગ કરીએ અને સૂચિ 16-10 માં કોડને વિસ્તૃત કરીએ જેથી કરીને બહુવિધ થ્રેડો બનાવી શકાય જે તમામ સમાન રીસીવરને મૂલ્યો મોકલે. આપણે ટ્રાન્સમીટરની નકલ કરીને આવું કરી શકીએ છીએ, જે સૂચિ 16-11 માં દર્શાવેલ છે.</p>
-<listing number="16-11" file-name="src/main.rs" caption="Sending multiple messages from multiple producers">
-```rust
-{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-11/src/main.rs:here}}
-```
-</listing>
-આ સમયે, પ્રથમ સ્પોન થયેલ થ્રેડ બનાવતા પહેલાં, અમે ટ્રાન્સમીટર પર `clone` કૉલ કરીએ છીએ. આ આપણને એક નવું ટ્રાન્સમીટર આપશે જે આપણે પ્રથમ સ્પોન થયેલ થ્રેડને આપી શકીએ છીએ. અમે મૂળ ટ્રાન્સમીટરને બીજા સ્પોન થયેલ થ્રેડને આપીએ છીએ. આનાથી આપણને બે થ્રેડ મળે છે, દરેક એક જ રીસીવરને અલગ-અલગ સંદેશાઓ મોકલે છે.
+<p><strong>Listing 16-11: Sending multiple messages from multiple producers</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-11/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ સમયે, પ્રથમ સ્પોન થયેલ થ્રેડ બનાવતા પહેલાં, અમે ટ્રાન્સમીટર પર <code>clone</code> કૉલ કરીએ છીએ. આ આપણને એક નવું ટ્રાન્સમીટર આપશે જે આપણે પ્રથમ સ્પોન થયેલ થ્રેડને આપી શકીએ છીએ. અમે મૂળ ટ્રાન્સમીટરને બીજા સ્પોન થયેલ થ્રેડને આપીએ છીએ. આનાથી આપણને બે થ્રેડ મળે છે, દરેક એક જ રીસીવરને અલગ-અલગ સંદેશાઓ મોકલે છે.</p>
 <p>જ્યારે તમે કોડ ચલાવો છો, ત્યારે તમારું આઉટપુટ કંઈક આવું દેખાશે:</p>
 <!-- Not extracting output because changes to this output aren't significant;
 the changes are likely to be due to the threads running differently rather than
@@ -278,7 +276,7 @@ Got: you
 </code></pre>
 <p>તમે મૂલ્યો અન્ય ક્રમમાં જોઈ શકો છો, જે તમારા સિસ્ટમ પર આધાર રાખે છે. આ જ એ છે જે એકસાથે કાર્ય (concurrency) રસપ્રદ તેમજ મુશ્કેલ બનાવે છે. જો તમે <code>thread::sleep</code> સાથે પ્રયોગ કરો છો, અને જુદા જુદા થ્રેડમાં તેને વિવિધ મૂલ્યો આપો, તો દરેક વખતે પરિણામ અલગ આવશે અને તે અનિશ્ચિત (nondeterministic) હશે. હવે કે આપણે ચેનલો કેવી</p>
 <p>રીતે કાર્ય કરે છે તે જોયું છે, તો ચાલો એક અન્ય પદ્ધતિ જોઈએ જે એકસાથે કાર્ય (concurrency) કરે છે.</p>
-</t,>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -331,6 +329,7 @@ Got: you
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

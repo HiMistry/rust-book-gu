@@ -75,11 +75,12 @@ if અભિવ્યક્તિઓ બધી `if` અભિવ્યક્ત�
 
 કારણ કે `if` એક અભિવ્યક્તિ છે, આપણે તેનો ઉપયોગ `let` વિધાનની જમણી બાજુએ variable મૂલ્ય સોંપવા માટે કરી શકીએ છીએ, જે યાદી 3-2 માં દર્શાવેલ છે.
 
-<Listing number="3-2" file-name="src/main.rs" caption="Assigning the result of an `if` expression to a variable">
+**Listing 3-2: Assigning the result of an `if` expression to a variable**
+
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-02/src/main.rs}}
 ```
-</Listing>
+
 `number` variable `if` અભિવ્યક્તિના પરિણામ પર આધારિત મૂલ્ય સાથે જોડી દેવામાં આવશે. જુઓ કે શું થાય છે તે જોવા માટે આ કોડ ચલાવો:
 
 ```console
@@ -171,22 +172,24 @@ again!
 
 એક કાર્યક્રમને ઘણીવાર એક ચક્ર (loop) ની અંદર શરતનું મૂલ્યાંકન કરવાની જરૂર પડે છે. જ્યાં સુધી શરત `true` હોય ત્યાં સુધી ચક્ર ચાલે છે. જ્યારે શરત `true` રહેવાનું બંધ કરે છે, ત્યારે કાર્યક્રમ `break` ને બોલાવે છે, જે ચક્રને રોકે છે. `loop`, `if`, `else`, અને `break` ના સંયોજનનો ઉપયોગ કરીને આ પ્રકારનું વર્તન અમલમાં મૂકવું શક્ય છે; જો તમે ઈચ્છો તો તમે હવે એક કાર્યક્રમમાં તે પ્રયાસ કરી શકો છો. જો કે, આ પેટર્ન એટલી સામાન્ય છે કે Rust પાસે તેના માટે બનેલ ભાષાની રચના છે, જેને `while` ચક્ર કહેવામાં આવે છે. લિસ્ટિંગ 3-3 માં, અમે ત્રણ વખત કાર્યક્રમને ચક્ર કરવા માટે `while` નો ઉપયોગ કરીએ છીએ, દરેક વખતે ગણતરી ઘટાડીએ છીએ, અને પછી, ચક્ર પછી, એક સંદેશ છાપવા અને બહાર નીકળવા માટે.
 
-<Listing number="3-3" file-name="src/main.rs" caption="Using a `while` loop to run code while a condition evaluates to `true`">
+**Listing 3-3: Using a `while` loop to run code while a condition evaluates to `true`**
+
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-03/src/main.rs}}
 ```
-</Listing>
+
 આ રચના `loop`, `if`, `else`, અને `break` ના ઉપયોગથી જરૂરી થતી ઘણી બધી અંદરની રચનાઓ (nesting) દૂર કરે છે, અને તે વધુ સ્પષ્ટ છે. જ્યાં સુધી કોઈ શરત `true` હોય ત્યાં સુધી કોડ ચાલે છે; અન્યથા, તે લૂપમાંથી બહાર નીકળી જાય છે.
 
 #### Looping Through a Collection with `for`
 
 તમે જ્યારે કોઈ સંગ્રહના ઘટકો પર ચક્રીય થવા માંગતા હોવ, ત્યારે `while` રચનાનો ઉપયોગ કરવાનું પસંદ કરી શકો છો, જેમ કે એરે. ઉદાહરણ તરીકે, યાદી 3-4 માં દર્શાવેલ લૂપ એરે `a` ના દરેક ઘટકને છાપે છે.
 
-<Listing number="3-4" file-name="src/main.rs" caption="Looping through each element of a collection using a `while` loop">
+**Listing 3-4: Looping through each element of a collection using a `while` loop**
+
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-04/src/main.rs}}
 ```
-</Listing>
+
 અહીં, કોડ એરેના ઘટકોમાંથી ગણતરી કરે છે. તે ઇન્ડેક્સ `0` થી આરંભ થાય છે અને પછી લૂપ ચલાવે છે જ્યાં સુધી તે એરેના અંતિમ ઇન્ડેક્સ સુધી ન પહોંચે (એટલે કે, જ્યારે `index < 5` હવે `true` ન હોય). આ કોડ ચલાવવાથી એરેના દરેક ઘટક છાપાશે:
 
 ```console
@@ -198,11 +201,12 @@ again!
 
 વૈકલ્પિક રીતે, તમે `for` લૂપનો ઉપયોગ કરી શકો છો અને સંગ્રહમાં દરેક વસ્તુ માટે અમુક કોડ ચલાવી શકો છો. `for` લૂપ એ યાદી 3-5 માં દર્શાવેલ કોડ જેવું દેખાય છે.
 
-<Listing number="3-5" file-name="src/main.rs" caption="Looping through each element of a collection using a `for` loop">
+**Listing 3-5: Looping through each element of a collection using a `for` loop**
+
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-05/src/main.rs}}
 ```
-</Listing>
+
 જ્યારે આપણે આ કોડ ચલાવીશું, ત્યારે આપણને યાદી 3-4 માં જે પરિણામ દેખાય છે તેવું જ પરિણામ જોવા મળશે. વધુ મહત્વની વાત એ છે કે, હવે આપણે કોડની સુરક્ષામાં વધારો કર્યો છે અને એવા ભૂલો થવાની શક્યતાને દૂર કરી છે જે એરેના અંતથી આગળ વધી જવા અથવા પૂરતી દૂર ન જવાથી આવી શકે છે. `for` લૂપમાંથી ઉત્પન્ન થયેલ મશીન કોડ પણ વધુ કાર્યક્ષમ હોઈ શકે છે કારણ કે દરેક પુનરાવર્તનમાં એરેની લંબાઈ સાથે અનુક્રમણિકાની સરખામણી કરવાની જરૂર નથી.
 
 `for` લૂપનો ઉપયોગ કરીને, જો તમે એરેમાં રહેલા મૂલ્યોની સંખ્યા બદલો તો તમારે અન્ય કોડને બદલવાની જરૂર નહીં પડે, જે યાદી 3-4 માં વપરાયેલી પદ્ધતિ સાથે થવું જોઈએ.
@@ -222,11 +226,11 @@ again!
 
 તમે સફળ થયા! આ એક મોટું પ્રકરણ હતું: તમે variable (variable), સ્કેલર (scalar) અને સંયોજન ડેટા પ્રકારો, વિધેયો (function), ટિપ્પણીઓ (comments), `if` અભિવ્યક્તિઓ (expressions), અને લૂપ્સ (loops) વિશે શીખ્યા! આ પ્રકરણમાં ચર્ચા કરાયેલ ખ્યાલો સાથે પ્રેક્ટિસ કરવા માટે, નીચે મુજબના કાર્યો કરવા માટે પ્રોગ્રામ બનાવો:
 
-ફahrenheit અને Celsius વચ્ચે તાપમાન રૂપાંતરિત કરો.
+- ફahrenheit અને Celsius વચ્ચે તાપમાન રૂપાંતરિત કરો.
 
-n વાન Fibonacci સંખ્યા જનરેટ કરો.
+- n વાન Fibonacci સંખ્યા જનરેટ કરો.
 
-"The Twelve Days of Christmas" ના રોમાંચક ગીત (Christmas carol) ના શબ્દો છાપો, ગીતમાં રહેલી પુનરાવર્તનનો લાભ લો.
+- "The Twelve Days of Christmas" ના રોમાંચક ગીત (Christmas carol) ના શબ્દો છાપો, ગીતમાં રહેલી પુનરાવર્તનનો લાભ લો.
 
 જ્યારે તમે આગળ વધવા માટે તૈયાર હશો, ત્યારે આપણે Rustમાં એક એવી વિભાવના વિશે વાત કરીશું જે અન્ય પ્રોગ્રામિંગ ભાષાઓમાં સામાન્ય રીતે જોવા મળતી નથી: માલિકી (ownership).
 

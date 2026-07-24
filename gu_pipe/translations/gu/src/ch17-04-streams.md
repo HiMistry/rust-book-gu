@@ -7,11 +7,12 @@
 
 માં ઇટરેટર (iterator) અને સ્ટ્રીમ (stream) વચ્ચેની સમાનતાનો અર્થ એ થાય છે કે આપણે કોઈપણ ઇટરેટરથી સ્ટ્રીમ બનાવી શકીએ છીએ. એક ઇટરેટરની જેમ, આપણે તેની `next` પદ્ધતિને બોલાવીને અને પછી આઉટપુટની રાહ જોઈને સ્ટ્રીમ સાથે કાર્ય કરી શકીએ છીએ, જે યાદી 17-21માં દર્શાવેલ છે, જે હજી કમ્પાઇલ (compile) થશે નહીં.
 
-<Listing number="17-21" caption="Creating a stream from an iterator and printing its values" file-name="src/main.rs">
+**Listing 17-21: Creating a stream from an iterator and printing its values**
+
 ```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-21/src/main.rs:stream}}
 ```
-</Listing>
+
 અમે સંખ્યાઓની શ્રેણીથી આરંભ કરીએ છીએ, જેને આપણે પુનરાવર્તક (iterator) માં રૂપાંતરિત કરીએ છીએ અને પછી તમામ મૂલ્યોને બમણા કરવા માટે `map` ને બોલાવીએ છીએ. ત્યારબાદ અમે `trpl::stream_from_iter` વિધેયનો ઉપયોગ કરીને પુનરાવર્તકને પ્રવાહમાં ફેરવીએ છીએ. આગળ, આપણે `while let` લૂપ વડે આવતા આઇટમ્સ પર લૂપ કરીએ છીએ.
 
 કમનસીબે, જ્યારે આપણે કોડ ચલાવવાનો પ્રયત્ન કરીએ છીએ, ત્યારે તે કમ્પાઇલ થતો નથી પરંતુ તેના બદલે જણાવે છે કે કોઈ `next` પદ્ધતિ ઉપલબ્ધ નથી:
@@ -52,11 +53,12 @@ help: there is a method `try_next` with a similar name
 
 સંકલક ભૂલનું નિવારણ એ `trpl::StreamExt` માટે `use` વિધાન ઉમેરવાનું છે, જેવો ઉલ્લેખ લિસ્ટિંગ ૧૭-૨૨ માં છે.
 
-<Listing number="17-22" caption="Successfully using an iterator as the basis for a stream" file-name="src/main.rs">
+**Listing 17-22: Successfully using an iterator as the basis for a stream**
+
 ```rust
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-22/src/main.rs:all}}
 ```
-</Listing>
+
 આ બધાં ઘટકો એકત્રિત થવાથી, આ કોડ આપણી ઇચ્છા મુજબ કાર્ય કરે છે! વળી, હવે કે `StreamExt` અવકાશમાં છે, તેથી અમે પુનરાવર્તકોની જેમ તેના તમામ ઉપયોગી પદ્ધતિઓનો ઉપયોગ કરી શકીએ છીએ.
 
 

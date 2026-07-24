@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -191,14 +191,18 @@
 <p>જો કોઈ પદ્ધતિ કૉલ પરીક્ષણમાં નિષ્ફળ જાય, તો તમે ઇચ્છો છો કે આખું પરીક્ષણ નિષ્ફળ જાય, ભલે તે પદ્ધતિ પરીક્ષણ હેઠળની કાર્યક્ષમતા ન હોય. કારણ કે <code>panic!</code> એ પરીક્ષણને નિષ્ફળ તરીકે ચિહ્નિત કરવાની રીત છે, તેથી <code>unwrap</code> અથવા <code>expect</code>ને કૉલ કરવું એ બરાબર શું થવું જોઈએ.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="when-you-have-more-information-than-the-compiler"><a class="header" href="#when-you-have-more-information-than-the-compiler">When You Have More Information Than the Compiler</a></h3>
-<p>જો તમારી પાસે અન્ય કોઈ તર્ક હોય જે ખાતરી કરે છે કે <code>Result</code> માં <code>Ok</code> મૂલ્ય હશે, પરંતુ તે તર્ક કમ્પાઇલર સમજી શકતો નથી, તો <code>expect</code> ને બોલાવવું પણ યોગ્ય રહેશે. તમારી પાસે હજુ પણ એક <code>Result</code> મૂલ્ય હશે જેને તમારે સંભાળવાની જરૂર પડશે: તમે જે ઓપરેશનને બોલી રહ્યા છો તેમાં સામાન્ય રીતે નિષ્ફળ થવાની શક્યતા છે, ભલે તે તમારા ચોક્કસ પરિસ્થિતિમાં તાર્કિક રીતે અશક્ય હોય. જો તમે મેન્યુઅલી કોડનું નિરીક્ષણ કરીને ખાતરી કરી શકો છો કે તમારી પાસે ક્યારેય <code>Err</code> પ્રકાર નથી, તો <code>expect</code> ને બોલાવવું અને Argument ટેક્સ્ટમાં તમે શા માટે <code>Err</code> પ્રકાર નહીં આવે એનું કારણ દસ્તાવેજીકૃત કરવું સંપૂર્ણપણે સ્વીકાર્ય છે. અહીં એક ઉદાહરણ છે:</p>
+<ul>
+<li>જો તમારી પાસે અન્ય કોઈ તર્ક હોય જે ખાતરી કરે છે કે <code>Result</code> માં <code>Ok</code> મૂલ્ય હશે, પરંતુ તે તર્ક કમ્પાઇલર સમજી શકતો નથી, તો <code>expect</code> ને બોલાવવું પણ યોગ્ય રહેશે. તમારી પાસે હજુ પણ એક <code>Result</code> મૂલ્ય હશે જેને તમારે સંભાળવાની જરૂર પડશે: તમે જે ઓપરેશનને બોલી રહ્યા છો તેમાં સામાન્ય રીતે નિષ્ફળ થવાની શક્યતા છે, ભલે તે તમારા ચોક્કસ પરિસ્થિતિમાં તાર્કિક રીતે અશક્ય હોય. જો તમે મેન્યુઅલી કોડનું નિરીક્ષણ કરીને ખાતરી કરી શકો છો કે તમારી પાસે ક્યારેય <code>Err</code> પ્રકાર નથી, તો <code>expect</code> ને બોલાવવું અને Argument ટેક્સ્ટમાં તમે શા માટે <code>Err</code> પ્રકાર નહીં આવે એનું કારણ દસ્તાવેજીકૃત કરવું સંપૂર્ણપણે સ્વીકાર્ય છે. અહીં એક ઉદાહરણ છે:</li>
+</ul>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch09-error-handling/no-listing-08-unwrap-that-cant-fail/src/main.rs:here}}
+</span>- {{#rustdoc_include ../listings/ch09-error-handling/no-listing-08-unwrap-that-cant-fail/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>આપણે એક <code>IpAddr</code> ઉદાહરણ બનાવી રહ્યા છીએ, જે એક નિશ્ચિત સ્ટ્રિંગને વિશ્લેષણ કરીને બનાવવામાં આવ્યું છે. આપણે જોઈ શકીએ છીએ કે <code>127.0.0.1</code> એ માન્ય IP સરનામું છે, તેથી અહીં <code>expect</code> વાપરવું સ્વીકાર્ય છે. જોકે, એક નિશ્ચિત, માન્ય સ્ટ્રિંગ <code>parse</code> પદ્ધતિનો વળતર પ્રકાર બદલતું નથી: આપણને હજી પણ એક <code>Result</code> મૂલ્ય મળે છે, અને કમ્પાઇલરને હજી પણ <code>Err</code> વિવિધતાની શક્યતા હોવાથી <code>Result</code> ને હેન્ડલ કરવા માટે મજબૂર કરે છે, કારણ કે કમ્પાઇલર એટલું બુદ્ધિશાળી નથી કે આ સ્ટ્રિંગ હંમેશા માન્ય IP સરનામું છે તે જોઈ શકે. જો IP સરનામાનું સ્ટ્રિંગ કોઈ user પાસેથી આવ્યું હોત અને પ્રોગ્રામમાં નિશ્ચિત ન હોત, તો નિષ્ફળ થવાની શક્યતા હોત, તો આપણે <code>Result</code> ને વધુ મજબૂત રીતે હેન્ડલ કરવા ચોક્કસપણે ઈચ્છા પામ્યા. એ ધારણાનો ઉલ્લેખ કરવો કે આ IP સરનામું નિશ્ચિત છે, તે આપણને ભવિષ્યમાં જો આપણે કોઈ અન્ય સ્ત્રોતમાંથી IP સરનામું મેળવવાની જરૂર હોય તો <code>expect</code> ને વધુ સારી ભૂલ-હેન્ડલિંગ કોડથી બદલવા માટે પ્રેરિત કરશે.</p>
 <h3 id="guidelines-for-error-handling"><a class="header" href="#guidelines-for-error-handling">Guidelines for Error Handling</a></h3>
-<p>તમારા કોડને ખરાબ સ્થિતિમાં આવી શકે છે ત્યારે ગભરાટ (panic) થવો યોગ્ય છે. આ સંદર્ભમાં, ખરાબ સ્થિતિ એટલે જ્યારે કોઈ ધારણા, ખાતરી, કરાર અથવા અચલ તૂટી જાય, જેમ કે જ્યારે અમાન્ય મૂલ્યો, વિરોધાભાસી મૂલ્યો અથવા ખૂટતા મૂલ્યો તમારા કોડને આપવામાં આવે છે—વધુમાં નીચેની બાબતોમાંથી એક અથવા વધુ:</p>
+<ul>
+<li>તમારા કોડને ખરાબ સ્થિતિમાં આવી શકે છે ત્યારે ગભરાટ (panic) થવો યોગ્ય છે. આ સંદર્ભમાં, ખરાબ સ્થિતિ એટલે જ્યારે કોઈ ધારણા, ખાતરી, કરાર અથવા અચલ તૂટી જાય, જેમ કે જ્યારે અમાન્ય મૂલ્યો, વિરોધાભાસી મૂલ્યો અથવા ખૂટતા મૂલ્યો તમારા કોડને આપવામાં આવે છે—વધુમાં નીચેની બાબતોમાંથી એક અથવા વધુ:</li>
+</ul>
 <p>ખરાબ સ્થિતિ એ એવી ઘટના છે જે અણધારી હોય છે, જેવી કે user ખોટા ફોર્મેટમાં ડેટા દાખલ કરે છે.</p>
 <p>તમારા કોડને આ ખરાબ સ્થિતિમાં ન હોવું જોઈએ, દરેક પગલાં પર સમસ્યા ચકાસવાને બદલે. આ માહિતી તમારા વપરાયેલા પ્રકારોમાં</p>
 <p>એન્કોડ કરવાનો કોઈ સારો માર્ગ નથી. આપણે પ્રકરણ ૧૮ માં “પ્રકારો તરીકે અવસ્થાઓ અને વર્તણૂકનું એન્કોડિંગ” માં આપણને શું કહેવું છે તેનું ઉદાહરણ દ્વારા કાર્ય કરીશું.</p>
@@ -210,20 +214,19 @@
 <h3 id="custom-types-for-validation"><a class="header" href="#custom-types-for-validation">Custom Types for Validation</a></h3>
 <p>ચાલો આપણે Rustની type systemનો ઉપયોગ કરીને માન્ય મૂલ્યની ખાતરી કરવાની વિચારને વધુ આગળ વધારીએ અને validation માટે એક કસ્ટમ પ્રકાર બનાવવાનો પ્રયાસ કરીએ. પ્રકરણ ૨ માં રહેલા અનુમાન લગાવવાના રમતના પરિણામને યાદ કરો, જેમાં આપણી કોડે userને ૧ થી ૧૦૦ ની વચ્ચેનો અંક પસંદ કરવાનું કહ્યું હતું. આપણે ગુપ્ત અંક સામે તપાસ કરતા પહેલાં userના અનુમાન તે સંખ્યાઓની વચ્ચે છે કે નહીં તેની ચકાસણી ક્યારેય કરી ન હતી; આપણે માત્ર એટલું જ ચકાસ્યું હતું કે અનુમાન હકારાત્મક છે. આ સ્થિતિમાં, પરિણામો ઘણા ગંભીર ન હતા: “ખૂબ ઊંચું” અથવા “ખૂબ નીચું” જેવો આપણો આઉટપુટ તો સાચો જ રહેત. પરંતુ userને માન્ય અનુમાન તરફ માર્ગદર્શન આપવા અને રેન્જની બહારના અંકનો અનુમાન લગાડવા અને ઉદાહરણ તરીકે, અક્ષરો ટાઈપ કરવા વચ્ચે અલગ વર્તન રાખવા માટે આ એક ઉપયોગી સુધારો હશે.</p>
 <p>એક રીત આ અનુમાનને <code>i32</code> તરીકે ઉતારવાની હોઈ શકે છે, માત્ર <code>u32</code> તરીકે નહીં, જેથી નકારાત્મક સંખ્યાઓ પણ સ્વીકારી શકાય, અને પછી સંખ્યાની રેન્જમાં છે કે નહીં તે ચકાસવું, આ પ્રમાણે:</p>
-<listing file-name="src/main.rs">
-```rust
-{{#rustdoc_include ../listings/ch09-error-handling/no-listing-09-guess-out-of-range/src/main.rs:here}}
-```
-</listing>
-if અભિવ્યક્તિની ચકાસણી `if` અભિવ્યક્તિ તપાસ કરે છે કે આપણું મૂલ્ય રેન્જની બહાર છે કે નહીં, userને સમસ્યા વિશે જણાવે છે અને `continue` ને બોલાવીને લૂપના આગામી પુનરાવર્તન (iteration) શરૂ કરે છે અને બીજો પ્રયાસ કરવા માટે કહે છે. `if` અભિવ્યક્તિ પછી, આપણે સરખામણીઓ ચાલુ રાખી શકીએ છીએ `guess` અને ગુપ્ત સંખ્યા વચ્ચે એ જાણીને કે `guess` 1 થી 100 ની વચ્ચે છે. જો કે,
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch09-error-handling/no-listing-09-guess-out-of-range/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>if અભિવ્યક્તિની ચકાસણી <code>if</code> અભિવ્યક્તિ તપાસ કરે છે કે આપણું મૂલ્ય રેન્જની બહાર છે કે નહીં, userને સમસ્યા વિશે જણાવે છે અને <code>continue</code> ને બોલાવીને લૂપના આગામી પુનરાવર્તન (iteration) શરૂ કરે છે અને બીજો પ્રયાસ કરવા માટે કહે છે. <code>if</code> અભિવ્યક્તિ પછી, આપણે સરખામણીઓ ચાલુ રાખી શકીએ છીએ <code>guess</code> અને ગુપ્ત સંખ્યા વચ્ચે એ જાણીને કે <code>guess</code> 1 થી 100 ની વચ્ચે છે. જો કે,</p>
 <p>આ એક આદર્શ ઉકેલ નથી: જો તે સંપૂર્ણપણે નિર્ણાયક હતું કે પ્રોગ્રામ માત્ર 1 થી 100 ની વચ્ચેના મૂલ્યો પર જ કાર્ય કરે, અને તેની પાસે ઘણાં કાર્યો (functions) આ જરૂરિયાત સાથે હોય, તો દરેક કાર્યમાં આવી ચકાસણી રાખવી કંટાળાજનક (tedious) હોઈ શકે છે (અને કામગીરી (performance) પર અસર કરી શકે છે).</p>
 <p>અને, આપણે એક સમર્પિત મોડ્યુલમાં નવું પ્રકાર બનાવી શકીએ છીએ અને પ્રકારની ઉદાહરણ બનાવવા માટે એક વિધેયમાં ચકાસણી મૂકી શકીએ છીએ, જેથી ચકાસણી દરેક જગ્યાએ પુનરાવર્તિત ન થાય. આમ કરવાથી, કાર્યો તેમના હસ્તાક્ષરોમાં નવા પ્રકારનો ઉપયોગ કરી શકે છે અને પ્રાપ્ત થયેલ મૂલ્યોનો આત્મવિશ્વાસથી ઉપયોગ કરી શકે છે. યાદી 9-13 <code>Guess</code> પ્રકારને વ્યાખ્યાયિત કરવાની એક રીત દર્શાવે છે જે માત્ર ત્યારે જ <code>Guess</code> નું ઉદાહરણ બનાવશે જો <code>new</code> વિધેય 1 અને 100 ની વચ્ચેનું મૂલ્ય મેળવે.</p>
-<listing number="9-13" caption="A `Guess` type that will only continue with values between 1 and 100" file-name="src/guessing_game.rs">
-```rust
-{{#rustdoc_include ../listings/ch09-error-handling/listing-09-13/src/guessing_game.rs}}
-```
-</listing>
-નોંધ કરો કે src/guessing_game.rs માં આ કોડમાં એક મોડ્યુલ ઘોષણા `mod guessing_game;` ઉમેરવાની જરૂર છે, જે src/lib.rs માં આપણે અહીં દર્શાવ્યું નથી. આ નવા મોડ્યુલની ફાઈલમાં, અમે `Guess` નામનું struct વ્યાખ્યાયિત કરીએ છીએ જેમાં `value` નામનું ક્ષેત્ર છે જે `i32` ધરાવે છે. અહીં સંખ્યા સંગ્રહિત કરવામાં આવશે.
+<p><strong>Listing 9-13: A <code>Guess</code> type that will only continue with values between 1 and 100</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-13/src/guessing_game.rs}}
+<span class="boring">}</span></code></pre>
+<p>નોંધ કરો કે src/guessing_game.rs માં આ કોડમાં એક મોડ્યુલ ઘોષણા <code>mod guessing_game;</code> ઉમેરવાની જરૂર છે, જે src/lib.rs માં આપણે અહીં દર્શાવ્યું નથી. આ નવા મોડ્યુલની ફાઈલમાં, અમે <code>Guess</code> નામનું struct વ્યાખ્યાયિત કરીએ છીએ જેમાં <code>value</code> નામનું ક્ષેત્ર છે જે <code>i32</code> ધરાવે છે. અહીં સંખ્યા સંગ્રહિત કરવામાં આવશે.</p>
 <p>પછી, અમે <code>Guess</code> પર <code>new</code> નામનું સંકળાયેલું કાર્ય અમલમાં મૂકીએ છીએ જે <code>Guess</code> ના instances બનાવે છે. <code>new</code> કાર્યને એક પરિમાણ <code>value</code> પ્રકાર <code>i32</code> સાથે વ્યાખ્યાયિત કરવામાં આવ્યું છે અને <code>Guess</code> પાછું આપવાનું છે. <code>new</code> કાર્યના body માં રહેલો કોડ <code>value</code> નું પરીક્ષણ કરે છે કે તે 1 અને 100 ની વચ્ચે છે કે નહીં. જો <code>value</code> આ પરીક્ષણને પાસ ન કરે, તો અમે એક <code>panic!</code> કૉલ કરીએ છીએ, જે કોલિંગ કોડ લખતા પ્રોગ્રામરને ચેતવણી આપશે કે તેમની પાસે એક bug છે જેને ઠીક કરવાની જરૂર છે, કારણ કે આ રેન્જની બહાર <code>Guess</code> સાથે <code>value</code> બનાવવું એ કરારનું ઉલ્લંઘન કરશે જેના પર <code>Guess::new</code> આધાર રાખે છે. <code>Guess::new</code> ક્યારે panic થઈ શકે તેની પરિસ્થિતિઓ તેની public-facing API દસ્તાવેજીકરણમાં ચર્चित કરવી જોઈએ; અમે પ્રકરણ 14 માં તમે બનાવશો તે API દસ્તાવેજીકરણમાં panic! ની શક્યતા દર્શાવતી દસ્તાવેજીકરણ સંમેલનોને આવરી લઈશું. જો <code>value</code> પરીક્ષણને પાસ કરે, તો અમે એક નવું <code>Guess</code> બનાવીએ છીએ જેમાં તેનું <code>value</code> ક્ષેત્ર <code>value</code> પરિમાણ પર સેટ કરવામાં આવ્યું છે અને <code>Guess</code> પાછું આપીએ છીએ.</p>
 <p>આગળ, અમે એક પદ્ધતિ અમલમાં મૂકીએ છીએ જેનું નામ <code>value</code> છે, જે <code>self</code> ને ઉછીના લે છે, અન્ય કોઈ પરિમાણો ધરાવતી નથી અને <code>i32</code> પરત કરે છે. આ પ્રકારની પદ્ધતિને કેટલીકવાર ‘ગેટર’ કહેવામાં આવે છે કારણ કે તેનો હેતુ તેના ક્ષેત્રોમાંથી અમુક ડેટા મેળવવાનો અને તેને પરત કરવાનો છે. આ જાહેર પદ્ધતિ જરૂરી છે કારણ કે <code>Guess</code> struct ના <code>value</code> ક્ષેત્ર ખાનગી છે. એ મહત્વનું છે કે <code>value</code> ક્ષેત્ર ખાનગી હોય જેથી કરીને <code>Guess</code> struct નો ઉપયોગ કરતા કોડને <code>value</code> ને સીધું સેટ કરવાની મંજૂરી ન મળે: <code>guessing_game</code> મોડ્યુલની બહારનો કોડ <code>Guess::new</code> ફંક્શનનો ઉપયોગ કરીને <code>Guess</code> નું ઉદાહરણ બનાવવા માટે বাধ্য છે, જેનાથી એ સુનિશ્ચિત થાય છે કે <code>Guess</code> પાસે <code>value</code> હોવાનો કોઈ રસ્તો નથી જે <code>Guess::new</code> ફંક્શનમાંની શરતો દ્વારા તપાસવામાં આવ્યો નથી.</p>
 <p>એક વિધેય જેનો પરિમાણ અથવા પરિણામ માત્ર ૧ થી ૧૦૦ વચ્ચેની સંખ્યાઓ હોય, તો તે તેના નિશાનામાં <code>Guess</code> લે છે કે પરત કરે છે એમ જાહેર કરી શકે છે, <code>i32</code> ને બદલે, અને તેને તેના શરીરમાં કોઈ વધારાની ચકાસણી કરવાની જરૂર નહીં પડે.</p>
@@ -283,6 +286,7 @@ if અભિવ્યક્તિની ચકાસણી `if` અભિવ્�
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

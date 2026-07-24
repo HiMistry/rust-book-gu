@@ -10,11 +10,12 @@
 
 લિસ્ટિંગ 15-14 એક `CustomSmartPointer` સ્ટ્રક્ચર દર્શાવે છે જેની એકમાત્ર કસ્ટમ કાર્યક્ષમતા એ છે કે જ્યારે ઇન્સ્ટન્સ સ્કોપમાંથી બહાર નીકળી જાય ત્યારે તે `Dropping CustomSmartPointer!` પ્રિન્ટ કરશે, જેથી Rust ક્યારે `drop` પદ્ધતિ ચલાવે છે તે બતાવી શકાય.
 
-<Listing number="15-14" file-name="src/main.rs" caption="A `CustomSmartPointer` struct that implements the `Drop` trait where we would put our cleanup code">
+**Listing 15-14: A `CustomSmartPointer` struct that implements the `Drop` trait where we would put our cleanup code**
+
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-14/src/main.rs}}
 ```
-</Listing>
+
 The `Drop` ટ્રેઇટ `Drop` ટ્રેઇટ પ્રીલ્યુડમાં સમાવિષ્ટ છે, તેથી આપણે તેને સ્કોપમાં લાવવાની જરૂર નથી. અમે `CustomSmartPointer` પર `Drop` ટ્રેઇટનો અમલ કરીએ છીએ અને `drop` પદ્ધતિ માટે એક અમલીકરણ આપીએ છીએ જે `println!` ને બોલાવે છે. `drop` પદ્ધતિનું શરીર એવું સ્થાન છે જ્યાં તમે કોઈપણ તર્ક મૂકી શકો છો જે તમે ઇચ્છો કે જ્યારે તમારા પ્રકારની ઇન્સ્ટન્સ સ્કોપમાંથી બહાર જાય ત્યારે ચલે. અમે અહીં થોડો ટેક્સ્ટ છાપી રહ્યા છીએ જેથી દૃષ્ટિની રીતે દર્શાવી શકાય કે
 
 ક્યારે Rust `drop` ને બોલાવશે. `main` માં, અમે `CustomSmartPointer` ની બે ઇન્સ્ટન્સ બનાવીએ છીએ અને પછી `CustomSmartPointers created` છાપીએ છીએ. `main` ના અંતે, અમારા `CustomSmartPointer` ની ઇન્સ્ટન્સ સ્કોપમાંથી બહાર જશે, અને Rust અમારી દ્વારા મૂકવામાં આવેલ કોડને `drop` પદ્ધતિમાં બોલાવશે, અમારો અંતિમ સંદેશ છાપીને. નોંધ કરો કે આપણે `drop` પદ્ધતિને સ્પષ્ટપણે બોલવાની જરૂર નહોતી.
@@ -31,11 +32,12 @@ Rust આપોઆપ જ `drop` ને બોલાવે છે જ્યાર
 
 `Drop` લક્ષણની `drop` પદ્ધતિને જાતે જ બોલાવવાનો પ્રયત્ન કરવો, યાદી 15-14 માંથી `main` કાર્યમાં ફેરફાર કરીને, યાદી 15-15 માં દર્શાવ્યા પ્રમાણે કામ નહીં કરે.
 
-<Listing number="15-15" file-name="src/main.rs" caption="Attempting to call the `drop` method from the `Drop` trait manually to clean up early">
+**Listing 15-15: Attempting to call the `drop` method from the `Drop` trait manually to clean up early**
+
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-15/src/main.rs:here}}
 ```
-</Listing>
+
 જ્યારે આપણે આ કોડને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ છીએ, ત્યારે આપણને આ ભૂલ મળશે:
 
 ```console
@@ -49,11 +51,12 @@ Rust આપણને `drop` સ્પષ્ટ રીતે બોલાવા�
 
 `std::mem::drop` વિધેય `Drop` લક્ષણની `drop` પદ્ધતિથી અલગ છે. અમે તેને Argument તરીકે પસાર કરીને બોલાવીએ છીએ કે જે મૂલ્યને આપણે બળજબરીથી દૂર કરવા માંગીએ છીએ. આ વિધેય પ્રસ્તાવનામાં (prelude) છે, તેથી અમે યાદી 15-15 માં `main` ને સંશોધિત કરી શકીએ છીએ જેથી `drop` વિધેયને બોલાવી શકાય, જે યાદી 15-16 માં દર્શાવેલ છે.
 
-<Listing number="15-16" file-name="src/main.rs" caption="Calling `std::mem::drop` to explicitly drop a value before it goes out of scope">
+**Listing 15-16: Calling `std::mem::drop` to explicitly drop a value before it goes out of scope**
+
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-16/src/main.rs:here}}
 ```
-</Listing>
+
 આ કોડ ચલાવવાથી નીચે મુજબ છાપવામાં આવશે:
 
 ```console

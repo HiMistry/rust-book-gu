@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -192,42 +192,28 @@ cargo build
 cargo build --release
 and ensure output below is accurate
 -->
-<pre><code class="language-console">```console
-$ cargo build
+<pre><code class="language-console">$ cargo build
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.00s
 $ cargo build --release
     Finished `release` profile [optimized] target(s) in 0.32s
 </code></pre>
-<pre><code>The `dev` અને `release` આ વિવિધ રૂપરેખાંકનો છે જે કમ્પાઇલર દ્વારા ઉપયોગમાં લેવાય છે.
-
-Cargo દરેક રૂપરેખાંકન માટે ડિફોલ્ટ સેટિંગ્સ ધરાવે છે, જે ત્યારે લાગુ પડે છે જ્યારે તમે પ્રોજેક્ટની Cargo.toml ફાઇલમાં કોઈ `[profile.*]` વિભાગો સ્પષ્ટપણે ઉમેર્યા નથી. કોઈપણ રૂપરેખાંકનને કસ્ટમાઇઝ કરવા માટે `[profile.*]` વિભાગો ઉમેરીને, તમે ડિફોલ્ટ સેટિંગ્સના કોઈપણ ભાગને બદલી શકો છો. ઉદાહરણ તરીકે, અહીં `dev` અને `release` રૂપરેખાંકો માટે `opt-level` સેટિંગની ડિફોલ્ટ મૂલ્યો છે:
-
-ફાઇલનું નામ: Cargo.toml
-
-```toml
-```toml
-[profile.dev]
+<p>The <code>dev</code> અને <code>release</code> આ વિવિધ રૂપરેખાંકનો છે જે કમ્પાઇલર દ્વારા ઉપયોગમાં લેવાય છે.</p>
+<p>Cargo દરેક રૂપરેખાંકન માટે ડિફોલ્ટ સેટિંગ્સ ધરાવે છે, જે ત્યારે લાગુ પડે છે જ્યારે તમે પ્રોજેક્ટની Cargo.toml ફાઇલમાં કોઈ <code>[profile.*]</code> વિભાગો સ્પષ્ટપણે ઉમેર્યા નથી. કોઈપણ રૂપરેખાંકનને કસ્ટમાઇઝ કરવા માટે <code>[profile.*]</code> વિભાગો ઉમેરીને, તમે ડિફોલ્ટ સેટિંગ્સના કોઈપણ ભાગને બદલી શકો છો. ઉદાહરણ તરીકે, અહીં <code>dev</code> અને <code>release</code> રૂપરેખાંકો માટે <code>opt-level</code> સેટિંગની ડિફોલ્ટ મૂલ્યો છે:</p>
+<p>ફાઇલનું નામ: Cargo.toml</p>
+<pre><code class="language-toml">[profile.dev]
 opt-level = 0
 
 [profile.release]
 opt-level = 3
 </code></pre>
-<pre><code>`opt-level` સેટિંગ `opt-level` સેટિંગ નિયંત્રિત કરે છે કે Rust તમારા કોડ પર કેટલી ઓપ્ટિમાઇઝેશન લાગુ કરશે, જેની રેન્જ 0 થી 3 સુધીની હોય છે. વધુ ઓપ્ટિમાઇઝેશન લાગુ કરવાથી કમ્પાઇલ સમય વધે છે, તેથી જો તમે વિકાસ કરી રહ્યા હોવ અને વારંવાર કોડ કમ્પાઇલ કરી રહ્યા હોવ, તો ઝડપી કમ્પાઇલ માટે ઓછા ઓપ્ટિમાઇઝેશન જોઈએ છે, ભલે પરિણામી કોડ ધીમો ચાલે. આથી `dev` માટે ડિફોલ્ટ `opt-level` `0` છે. જ્યારે તમે તમારો કોડ બહાર પાડવા માટે તૈયાર હોવ, ત્યારે વધુ સમય કમ્પાઇલ કરવામાં શ્રેષ્ઠ છે. તમે માત્ર એકવાર રિલીઝ મોડમાં કમ્પાઇલ કરશો, પરંતુ તમે કમ્પાઈલ કરેલા પ્રોગ્રામને ઘણી વખત ચલાવશો, તેથી રિલીઝ મોડ લાંબા કમ્પાઇલ સમયની બદલે ઝડપી કોડ માટે વેપાર કરે છે. એ જ કારણથી `release` પ્રોફાઇલ માટે ડિફોલ્ટ `opt-level` `3` છે.
-
-ફાઈલનામ: Cargo.toml જો આપણે કોઈ નિશ્ચિત રૂપરેખાંકન બદલવું હોય તો, તેને `Cargo.toml` માં અલગ મૂલ્ય ઉમેરીને કરી શકાય છે. ઉદાહરણ તરીકે, જો આપણે વિકાસ રૂપરેખાંકનમાં ઓપ્ટિમાઇઝેશન સ્તર ૧ વાપરવા માંગતા હોઈએ, તો આપણે આપણી યોજનાના `Cargo.toml` ફાઈલમાં આ બે લીટીઓ
-
-ઉમેરી શકીએ:
-
-```toml
-```toml
-[profile.dev]
+<p><code>opt-level</code> સેટિંગ <code>opt-level</code> સેટિંગ નિયંત્રિત કરે છે કે Rust તમારા કોડ પર કેટલી ઓપ્ટિમાઇઝેશન લાગુ કરશે, જેની રેન્જ 0 થી 3 સુધીની હોય છે. વધુ ઓપ્ટિમાઇઝેશન લાગુ કરવાથી કમ્પાઇલ સમય વધે છે, તેથી જો તમે વિકાસ કરી રહ્યા હોવ અને વારંવાર કોડ કમ્પાઇલ કરી રહ્યા હોવ, તો ઝડપી કમ્પાઇલ માટે ઓછા ઓપ્ટિમાઇઝેશન જોઈએ છે, ભલે પરિણામી કોડ ધીમો ચાલે. આથી <code>dev</code> માટે ડિફોલ્ટ <code>opt-level</code> <code>0</code> છે. જ્યારે તમે તમારો કોડ બહાર પાડવા માટે તૈયાર હોવ, ત્યારે વધુ સમય કમ્પાઇલ કરવામાં શ્રેષ્ઠ છે. તમે માત્ર એકવાર રિલીઝ મોડમાં કમ્પાઇલ કરશો, પરંતુ તમે કમ્પાઈલ કરેલા પ્રોગ્રામને ઘણી વખત ચલાવશો, તેથી રિલીઝ મોડ લાંબા કમ્પાઇલ સમયની બદલે ઝડપી કોડ માટે વેપાર કરે છે. એ જ કારણથી <code>release</code> પ્રોફાઇલ માટે ડિફોલ્ટ <code>opt-level</code> <code>3</code> છે.</p>
+<p>ફાઈલનામ: Cargo.toml જો આપણે કોઈ નિશ્ચિત રૂપરેખાંકન બદલવું હોય તો, તેને <code>Cargo.toml</code> માં અલગ મૂલ્ય ઉમેરીને કરી શકાય છે. ઉદાહરણ તરીકે, જો આપણે વિકાસ રૂપરેખાંકનમાં ઓપ્ટિમાઇઝેશન સ્તર ૧ વાપરવા માંગતા હોઈએ, તો આપણે આપણી યોજનાના <code>Cargo.toml</code> ફાઈલમાં આ બે લીટીઓ</p>
+<p>ઉમેરી શકીએ:</p>
+<pre><code class="language-toml">[profile.dev]
 opt-level = 1
 </code></pre>
-<pre><code>આ કોડ `0` ની પ્રમાણભૂત સંસ્થાને બદલે છે. હવે જ્યારે આપણે `cargo build` ચલાવીશું, ત્યારે Cargo આપણી પસંદગીઓ સાથે `dev` રૂપરેખાંકન માટેની પ્રમાણભૂત બાબતોનો ઉપયોગ કરશે અને `opt-level` ને પણ સમાવશે. કારણ કે આપણે `opt-level` ને `1` પર સેટ કર્યું છે, Cargo ડિફોલ્ટ કરતાં વધુ ઑપ્ટિમાઇઝેશન લાગુ કરશે, પરંતુ રિલીઝ બિલ્ડ
-
-જેટલું નહીં. દરેક રૂપરેખાંકન વિકલ્પો અને પ્રમાણભૂત બાબતોની સંપૂર્ણ યાદી માટે, Cargo ના દસ્તાવેજીકરણ જુઓ.
-
-</code></pre>
+<p>આ કોડ <code>0</code> ની પ્રમાણભૂત સંસ્થાને બદલે છે. હવે જ્યારે આપણે <code>cargo build</code> ચલાવીશું, ત્યારે Cargo આપણી પસંદગીઓ સાથે <code>dev</code> રૂપરેખાંકન માટેની પ્રમાણભૂત બાબતોનો ઉપયોગ કરશે અને <code>opt-level</code> ને પણ સમાવશે. કારણ કે આપણે <code>opt-level</code> ને <code>1</code> પર સેટ કર્યું છે, Cargo ડિફોલ્ટ કરતાં વધુ ઑપ્ટિમાઇઝેશન લાગુ કરશે, પરંતુ રિલીઝ બિલ્ડ</p>
+<p>જેટલું નહીં. દરેક રૂપરેખાંકન વિકલ્પો અને પ્રમાણભૂત બાબતોની સંપૂર્ણ યાદી માટે, Cargo ના દસ્તાવેજીકરણ જુઓ.</p>
 
                     </main>
 
@@ -281,6 +267,7 @@ opt-level = 1
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -190,22 +190,22 @@
 <p>એક પ્રકારનું વર્તન એવાં વિધેયોનો સમૂહ છે જે આપણે તે પ્રકાર પર બોલાવી શકીએ છીએ. જુદા જુદા પ્રકારો સમાન વર્તન વહેંચે છે જો આપણે તે તમામ પ્રકારો પર સમાન વિધેયો બોલાવી શકીએ. <code>trait</code> વ્યાખ્યાઓ એ વિધેય હસ્તાક્ષરોને એકસાથે જૂથ કરવાનો એક માર્ગ છે જેથી કરીને કોઈ હેતુ સાકાર કરવા માટે જરૂરી વર્તનોનો સમૂહ વ્યાખ્યાયિત કરી શકાય.</p>
 <p>ઉદાહરણ તરીકે, ધારો કે આપણી પાસે અનેક <code>struct</code> છે જે વિવિધ પ્રકારની અને માત્રાની લખાણ ધરાવે છે: એક <code>NewsArticle</code> <code>struct</code> જે કોઈ ચોક્કસ સ્થળે નોંધાયેલ સમાચારની વાર્તા ધરાવે છે અને એક <code>SocialPost</code> જે વધુમાં વધુ ૨૮૦ અક્ષરો સાથે મેટાડેટા પણ ધરાવે છે જે દર્શાવે છે કે તે નવી પોસ્ટ છે, ફરીથી પોસ્ટ કરવામાં આવી છે, અથવા અન્ય પોસ્ટનો જવાબ છે.</p>
 <p>આપણે એક મીડિયા એગ્રીગેટર ક્રેટ <code>aggregator</code> બનાવવાની ઈચ્છા કરીએ છીએ જે <code>NewsArticle</code> અથવા <code>SocialPost</code> ઇન્સ્ટન્સમાં સંગ્રહિત ડેટાના સારાંશ દર્શાવી શકે. આ માટે, આપણને દરેક પ્રકારનો સારાંશ જરૂરી છે, અને અમે તે સારાંશ મેળવવા માટે એક ઇન્સ્ટન્સ પર <code>summarize</code> પદ્ધતિને બોલાવીશું. સૂચિ 10-12 જાહેર <code>Summary</code> ટ્રેઇટની વ્યાખ્યા દર્શાવે છે જે આ વર્તન વ્યક્ત કરે છે.</p>
-<listing number="10-12" file-name="src/lib.rs" caption="A `Summary` trait that consists of the behavior provided by a `summarize` method">
-```rust
-{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-12/src/lib.rs}}
-```
-</listing>
-અહીં, આપણે `trait` કીવર્ડનો ઉપયોગ કરીને એક લક્ષણ જાહેર કરીએ છીએ અને પછી લક્ષણનું નામ, જે આ કિસ્સામાં `Summary` છે. આપણે લક્ષણને `pub` તરીકે પણ જાહેર કરીએ છીએ જેથી અન્ય ક્રેટે (crates) આ ક્રેટે પર આધારિત રહીને આ લક્ષણનો ઉપયોગ કરી શકે, જે આપણે થોડા ઉદાહરણોમાં જોઈશું. કુંજી કૌંસની અંદર, આપણે પદ્ધતિ હસ્તાક્ષરો (method signatures) જાહેર કરીએ છીએ જે તે પ્રકારોના વર્તનની સમજૂતી આપે છે જે આ લક્ષણને અમલમાં મૂકે છે, જે આ કિસ્સામાં `fn
+<p><strong>Listing 10-12: A <code>Summary</code> trait that consists of the behavior provided by a <code>summarize</code> method</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-12/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>અહીં, આપણે <code>trait</code> કીવર્ડનો ઉપયોગ કરીને એક લક્ષણ જાહેર કરીએ છીએ અને પછી લક્ષણનું નામ, જે આ કિસ્સામાં <code>Summary</code> છે. આપણે લક્ષણને <code>pub</code> તરીકે પણ જાહેર કરીએ છીએ જેથી અન્ય ક્રેટે (crates) આ ક્રેટે પર આધારિત રહીને આ લક્ષણનો ઉપયોગ કરી શકે, જે આપણે થોડા ઉદાહરણોમાં જોઈશું. કુંજી કૌંસની અંદર, આપણે પદ્ધતિ હસ્તાક્ષરો (method signatures) જાહેર કરીએ છીએ જે તે પ્રકારોના વર્તનની સમજૂતી આપે છે જે આ લક્ષણને અમલમાં મૂકે છે, જે આ કિસ્સામાં `fn</p>
 <p>summarize(&amp;self) -&gt; String<code>છે. પદ્ધતિ હસ્તાક્ષર પછી, કુંજી કૌંસની અંદર અમલીકરણ આપવાને બદલે, આપણે અર્ધવિરામ (semicolon) નો ઉપયોગ કરીએ છીએ. આ લક્ષણને અમલમાં મૂકતો દરેક પ્રકાર પદ્ધતિના શરીર માટે પોતાનું કસ્ટમ વર્તન પ્રદાન કરે છે. કમ્પાઇલર ખાતરી કરશે કે</code>Summary<code>લક્ષણ ધરાવતા કોઈપણ પ્રકારમાં</code>summarize` પદ્ધતિ આ હસ્તાક્ષર સાથે ચોક્કસપણે વ્યાખ્યાયિત થયેલ હશે.</p>
 <p>એક trait તેના શરીરમાં અનેક પદ્ધતિઓ ધરાવી શકે છે: પદ્ધતિઓના હસ્તાક્ષરો એક દીઠ લીટીમાં દર્શાવવામાં આવે છે, અને દરેક લીટી અર્ધવિરામથી અંત થાય છે.</p>
 <h3 id="implementing-a-trait-on-a-type"><a class="header" href="#implementing-a-trait-on-a-type">Implementing a Trait on a Type</a></h3>
 <p>હવે આપણે <code>Summary</code> લક્ષણની ઇચ્છિત હસ્તાક્ષરો નિર્ધારિત કર્યા છે, પછી આપણે આપણાં મીડિયા એકત્રીકરણમાં રહેલા પ્રકારો પર તેને અમલમાં મૂકી શકીએ છીએ. સૂચિ 10-13 <code>NewsArticle</code> સ્ટ્રક્ચર પર <code>Summary</code> લક્ષણનું એક અમલીકરણ દર્શાવે છે જે હેડલાઇન, લેખક અને સ્થાનનો ઉપયોગ કરીને <code>summarize</code> નું વળતર મૂલ્ય બનાવે છે. <code>SocialPost</code> સ્ટ્રક્ચર માટે, આપણે <code>summarize</code> ને user નામ દ્વારા અનુસરવામાં આવે છે, ત્યારબાદ પોસ્ટના સમગ્ર લખાણ તરીકે વ્યાખ્યાયિત કરીએ છીએ, એવું ધારીને કે પોસ્ટની સામગ્રી પહેલાથી જ 280 અક્ષરો સુધી મર્યાદિત છે.</p>
-<listing number="10-13" file-name="src/lib.rs" caption="Implementing the `Summary` trait on the `NewsArticle` and `SocialPost` types">
-```rust
-{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-13/src/lib.rs:here}}
-```
-</listing>
-પ્રકાર પર લક્ષણ (trait) અમલમાં મૂકવું એ સામાન્ય પદ્ધતિઓ અમલમાં મૂકવા જેવું જ છે. તફાવત એ છે કે `impl` પછી, આપણે જે લક્ષણને અમલમાં મૂકવા માંગીએ છીએ તેનું નામ લખીએ છીએ, ત્યારબાદ `for` કીવર્ડનો ઉપયોગ કરીએ છીએ અને પછી આપણે જે પ્રકાર માટે લક્ષણ અમલમાં મૂકવા માંગીએ છીએ તેનું નામ સ્પષ્ટ કરીએ છીએ. `impl` બ્લોકમાં, આપણે તે પદ્ધતિ હસ્તાક્ષરો (signatures) મૂકીએ છીએ જે લક્ષણ વ્યાખ્યામાં નિર્ધારિત કરવામાં આવ્યા છે. દરેક હસ્તાક્ષર પછી અર્ધવિરામ મૂકવાના બદલે, આપણે કદબિંદુઓનો ઉપયોગ કરીએ છીએ અને લક્ષણની પદ્ધતિઓ માટે ચોક્કસ વર્તન ભરપૂર કરીએ છીએ જે વિશેષ પ્રકાર માટે હોવું જોઈએ.
+<p><strong>Listing 10-13: Implementing the <code>Summary</code> trait on the <code>NewsArticle</code> and <code>SocialPost</code> types</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-13/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>પ્રકાર પર લક્ષણ (trait) અમલમાં મૂકવું એ સામાન્ય પદ્ધતિઓ અમલમાં મૂકવા જેવું જ છે. તફાવત એ છે કે <code>impl</code> પછી, આપણે જે લક્ષણને અમલમાં મૂકવા માંગીએ છીએ તેનું નામ લખીએ છીએ, ત્યારબાદ <code>for</code> કીવર્ડનો ઉપયોગ કરીએ છીએ અને પછી આપણે જે પ્રકાર માટે લક્ષણ અમલમાં મૂકવા માંગીએ છીએ તેનું નામ સ્પષ્ટ કરીએ છીએ. <code>impl</code> બ્લોકમાં, આપણે તે પદ્ધતિ હસ્તાક્ષરો (signatures) મૂકીએ છીએ જે લક્ષણ વ્યાખ્યામાં નિર્ધારિત કરવામાં આવ્યા છે. દરેક હસ્તાક્ષર પછી અર્ધવિરામ મૂકવાના બદલે, આપણે કદબિંદુઓનો ઉપયોગ કરીએ છીએ અને લક્ષણની પદ્ધતિઓ માટે ચોક્કસ વર્તન ભરપૂર કરીએ છીએ જે વિશેષ પ્રકાર માટે હોવું જોઈએ.</p>
 <p>હવે પુસ્તકાલયે <code>NewsArticle</code> અને <code>SocialPost</code> પર <code>Summary</code> લક્ષણ (trait) અમલમાં મૂક્યું છે, તેથી હવે ક્રેટના userઓ <code>NewsArticle</code> અને <code>SocialPost</code> નાં ઉદાહરણો પર નિયમિત પદ્ધતિઓ (methods) ની જેમ જ લક્ષણની પદ્ધતિઓને બોલાવી શકે છે. એકમાત્ર ભેદ એ છે કે userએ પ્રકારોની સાથે લક્ષણને પણ કાર્યક્ષેત્રમાં લાવવું પડશે. અહીં એક ઉદાહરણ છે કે કેવી રીતે બાઈનરી ક્રેટ આપણી <code>aggregator</code> પુસ્તકાલય ક્રેટનો ઉપયોગ કરી શકે છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -218,12 +218,12 @@
 <h3 id="using-default-implementations"><a class="header" href="#using-default-implementations">Using Default Implementations</a></h3>
 <p>કેટલીકવાર, કોઈ traitના તમામ methods માટે અમલીકરણો ફરજિયાત કરવાને બદલે, અમુક અથવા બધા methods માટે default વર્તન ધરાવવું ઉપયોગી થઈ શકે છે. પછી, જ્યારે આપણે કોઈ ચોક્કસ type પર traitનું અમલીકરણ કરીએ છીએ, ત્યારે આપણે દરેક methodના default વર્તનને જાળવી શકીએ છીએ અથવા તેને override કરી શકીએ છીએ.</p>
 <p>ઉપયોગિતા 10-14 માં, આપણે <code>Summary</code> traitની <code>summarize</code> method માટે એક default stringનો ઉલ્લેખ કર્યો છે, માત્ર method signatureને વ્યાખ્યાયિત કરવાને બદલે, જેવું કે આપણે ઉપયોગિતા 10-12 માં કર્યું હતું.</p>
-<listing number="10-14" file-name="src/lib.rs" caption="Defining a `Summary` trait with a default implementation of the `summarize` method">
-```rust
-{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-14/src/lib.rs:here}}
-```
-</listing>
-`NewsArticle` ના ઉદાહરણોનો સારાંશ આપવા માટે ડિફોલ્ટ અમલીકરણનો ઉપયોગ કરવા માટે, આપણે `impl Summary for NewsArticle {}` સાથે ખાલી `impl` બ્લોક સ્પષ્ટ કરીએ છીએ.
+<p><strong>Listing 10-14: Defining a <code>Summary</code> trait with a default implementation of the <code>summarize</code> method</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-14/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p><code>NewsArticle</code> ના ઉદાહરણોનો સારાંશ આપવા માટે ડિફોલ્ટ અમલીકરણનો ઉપયોગ કરવા માટે, આપણે <code>impl Summary for NewsArticle {}</code> સાથે ખાલી <code>impl</code> બ્લોક સ્પષ્ટ કરીએ છીએ.</p>
 <p>ભલે આપણે હવે સીધા <code>NewsArticle</code> પર <code>summarize</code> પદ્ધતિને વ્યાખ્યાયિત ન કરતા હોઈએ, આપણે ડિફોલ્ટ અમલીકરણ પ્રદાન કર્યું છે અને ઉલ્લેખ કર્યો છે કે <code>NewsArticle</code> <code>Summary</code> ટ્રેઇટનો અમલ કરે છે. પરિણામે, આપણે હજી પણ <code>NewsArticle</code> ના ઉદાહરણ પર <code>summarize</code> પદ્ધતિને બોલાવી શકીએ છીએ, આ રીતે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -318,12 +318,12 @@
 <p><code>NewsArticle</code> અથવા <code>SocialPost</code> બંને પાછા આપવાની મંજૂરી નથી, કારણ કે કમ્પાઇલર (compiler) માં <code>impl Trait</code> વાક્યરચનાનો અમલ કરવાની રીત અંગેના નિયંત્રણો છે. અમે પ્રકરણ ૧૮ ના “Trait વસ્તુઓનો ઉપયોગ કરીને સામાન્ય વર્તનનું નિરૂપણ” વિભાગમાં આ પ્રકારનું કાર્ય કેવી રીતે લખવું તે આવરી લઈશું.</p>
 <h3 id="using-trait-bounds-to-conditionally-implement-methods"><a class="header" href="#using-trait-bounds-to-conditionally-implement-methods">Using Trait Bounds to Conditionally Implement Methods</a></h3>
 <p>generic પ્રકાર પરિમાણોનો ઉપયોગ કરતી <code>impl</code> બ્લોક સાથે ટ્રેઇટ બાઉન્ડનો ઉપયોગ કરીને, અમે નિર્દિષ્ટ ટ્રેઇટ્સને અમલમાં મૂકતા પ્રકારો માટે પદ્ધતિઓને શરતી રીતે અમલમાં મૂકી શકીએ છીએ. ઉદાહરણ તરીકે, લિસ્ટિંગ 10-15 માં <code>Pair&lt;T&gt;</code> પ્રકાર હંમેશાં <code>new</code> ફંક્શનને અમલમાં મૂકે છે જે <code>Pair&lt;T&gt;</code> નું નવું ઇન્સ્ટન્સ પાછું આપે છે (યાદ કરો કે પ્રકરણ 5 ના “પદ્ધતિ સિન્ટેક્સ” વિભાગમાં <code>Self</code> એ <code>impl</code> બ્લોકના પ્રકારનું ઉપનામ છે, જે આ કિસ્સામાં <code>Pair&lt;T&gt;</code> છે). પરંતુ આગામી <code>impl</code> બ્લોકમાં, <code>Pair&lt;T&gt;</code> માત્ર <code>cmp_display</code> પદ્ધતિને અમલમાં મૂકે છે જો તેના આંતરિક પ્રકાર <code>T</code> <code>PartialOrd</code> ટ્રેઇટને અમલમાં મૂકે છે જે સરખામણી સક્ષમ કરે છે અને <code>Display</code> ટ્રેઇટને અમલમાં મૂકે છે જે પ્રિન્ટિંગ સક્ષમ કરે છે.</p>
-<listing number="10-15" file-name="src/lib.rs" caption="Conditionally implementing methods on a generic type depending on trait bounds">
-```rust
-{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-15/src/lib.rs}}
-```
-</listing>
-અમે અન્ય રીતે પણ એક trait ને કોઈપણ પ્રકાર માટે શરતી રૂપે અમલમાં મૂકી શકીએ છીએ જે અન્ય trait નો અમલ કરે છે. કોઈપણ પ્રકાર પરના trait ના અમલીકરણો કે જે trait ની સીમાઓ સંતોષે છે, તેને વ્યાપક અમલીકરણો કહેવામાં આવે છે અને તેનો ઉપયોગ Rust પ્રમાણિત પુસ્તકાલયમાં મોટા પ્રમાણમાં થાય છે. ઉદાહરણ તરીકે, પ્રમાણિત પુસ્તકાલય `Display` trait નો અમલ કરે તેવા કોઈપણ પ્રકાર પર `ToString` trait નો અમલ કરે છે. પ્રમાણિત પુસ્તકાલયમાં `impl` બ્લોક આ કોડ જેવો દેખાય છે:
+<p><strong>Listing 10-15: Conditionally implementing methods on a generic type depending on trait bounds</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-15/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>અમે અન્ય રીતે પણ એક trait ને કોઈપણ પ્રકાર માટે શરતી રૂપે અમલમાં મૂકી શકીએ છીએ જે અન્ય trait નો અમલ કરે છે. કોઈપણ પ્રકાર પરના trait ના અમલીકરણો કે જે trait ની સીમાઓ સંતોષે છે, તેને વ્યાપક અમલીકરણો કહેવામાં આવે છે અને તેનો ઉપયોગ Rust પ્રમાણિત પુસ્તકાલયમાં મોટા પ્રમાણમાં થાય છે. ઉદાહરણ તરીકે, પ્રમાણિત પુસ્તકાલય <code>Display</code> trait નો અમલ કરે તેવા કોઈપણ પ્રકાર પર <code>ToString</code> trait નો અમલ કરે છે. પ્રમાણિત પુસ્તકાલયમાં <code>impl</code> બ્લોક આ કોડ જેવો દેખાય છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl&lt;T: Display&gt; ToString for T {
@@ -390,6 +390,7 @@
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

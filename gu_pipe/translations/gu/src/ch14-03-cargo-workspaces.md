@@ -105,11 +105,12 @@ Cargo કોઈ ધારી લેતું નથી કે વર્કસ્
 
 આગળ, ચાલો `add_one` ફંક્શન ( `add_one` crate માંથી) ને `adder` crate માં વાપરીએ. `adder/src/main.rs` ફાઈલ ખોલો અને `main` ફંક્શનને Listing 14-7 ની જેમ `add_one` ફંક્શનને બોલાવવા માટે બદલો.
 
-<Listing number="14-7" file-name="adder/src/main.rs" caption="Using the `add_one` library crate from the `adder` crate">
+**Listing 14-7: Using the `add_one` library crate from the `adder` crate**
+
 ```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-07/add/adder/src/main.rs}}
 ```
-</Listing>
+
 ચાલો વર્કસ્પેસ બનાવીએ `cargo build` આદેશ ચલાવીને ટોપ-લેવલ ઉમેરવાની ડિરેક્ટરીમાં!
 
 <!-- manual-regeneration

@@ -13,18 +13,20 @@
 
 અમે પ્રકરણ 7 માં એન્કેપ્સ્યુલેશનને નિયંત્રિત કરવાની રીત ચર્ચી હતી: અમે `pub` કીવર્ડનો ઉપયોગ કરીને નક્કી કરી શકીએ છીએ કે અમારા કોડમાં કયા મોડ્યુલો, પ્રકારો, ફંક્શનો અને મેથડો જાહેર હોવા જોઈએ, અને ડિફૉલ્ટ રૂપે બાકી બધું ખાનગી હોય છે. ઉદાહરણ તરીકે, અમે એક સ્ટ્રક્ટ `AveragedCollection` વ્યાખ્યાયિત કરી શકીએ છીએ જેમાં `i32` મૂલ્યોનો વેક્ટર ધરાવતું ક્ષેત્ર હોય. સ્ટ્રક્ટમાં વેક્ટરના મૂલ્યોની સરેરાશ ધરાવતું ક્ષેત્ર પણ હોઈ શકે છે, એટલે કે સરેરાશની ગણતરી દરેક વખતે જરૂર પડે ત્યારે કરવાની આવશ્યકતા નથી. બીજા શબ્દોમાં કહીએ તો, `AveragedCollection` આપણને ગણતરી કરેલી સરેરાશને કેશ કરશે. યાદી 18-1 માં `AveragedCollection` સ્ટ્રક્ટની વ્યાખ્યા છે.
 
-<Listing number="18-1" file-name="src/lib.rs" caption="An `AveragedCollection` struct that maintains a list of integers and the average of the items in the collection">
+**Listing 18-1: An `AveragedCollection` struct that maintains a list of integers and the average of the items in the collection**
+
 ```rust
 {{#rustdoc_include ../listings/ch18-oop/listing-18-01/src/lib.rs}}
 ```
-</Listing>
+
 સ્ટ્રક્ચરને `pub` તરીકે નિશ્ચિત કરવામાં આવ્યું છે જેથી અન્ય કોડ તેનો ઉપયોગ કરી શકે, પરંતુ સ્ટ્રક્ચરની અંદરના ક્ષેત્રો ખાનગી રહે. આ બાબત અહીં મહત્વપૂર્ણ છે કારણ કે આપણે એ સુનિશ્ચિત કરવા માંગીએ છીએ કે જ્યારે પણ મૂલ્ય ઉમેરવામાં આવે અથવા દૂર કરવામાં આવે ત્યારે સરેરાશ પણ અપડેટ થાય. અમે આ `add`, `remove`, અને `average` પદ્ધતિઓને સ્ટ્રક્ચર પર અમલમાં મૂકીને કરીએ છીએ, જે લિસ્ટિંગ 18-2 માં દર્શાવેલ છે.
 
-<Listing number="18-2" file-name="src/lib.rs" caption="Implementations of the public methods `add`, `remove`, and `average` on `AveragedCollection`">
+**Listing 18-2: Implementations of the public methods `add`, `remove`, and `average` on `AveragedCollection`**
+
 ```rust
 {{#rustdoc_include ../listings/ch18-oop/listing-18-02/src/lib.rs:here}}
 ```
-</Listing>
+
 જાહેર પદ્ધતિઓ `add`, `remove`, અને `average` એ `AveragedCollection` ના ઉદાહરણમાં ડેટાને મેળવવા અથવા બદલવાની એકમાત્ર રીતો છે. જ્યારે કોઈ વસ્તુ `list` માં `add` પદ્ધતિનો ઉપયોગ કરીને ઉમેરવામાં આવે છે અથવા `remove` પદ્ધતિનો ઉપયોગ કરીને દૂર કરવામાં આવે છે, ત્યારે દરેક અમલીકરણ ખાનગી `update_average` પદ્ધતિને બોલાવે છે જે `average` ક્ષેત્રને અપડેટ કરવાનું સંભાળે છે. We
 
 અમે `list` અને `average` ક્ષેત્રો ખાનગી રાખીએ છીએ જેથી બાહ્ય કોડ પાસે સીધા જ `list` ક્ષેત્રમાં વસ્તુઓ ઉમેરવાનો કે દૂર કરવાનો કોઈ રસ્તો ન હોય; અન્યથા, `list` બદલાય ત્યારે `average` ક્ષેત્ર અસંગત થઈ શકે છે. `average` પદ્ધતિ `average` ક્ષેત્રમાં રહેલું મૂલ્ય પરત કરે છે, જે બાહ્ય કોડને `average` વાંચવાની મંજૂરી આપે છે પરંતુ તેને બદલવાની નહીં.

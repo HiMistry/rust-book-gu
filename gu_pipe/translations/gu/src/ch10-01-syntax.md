@@ -8,11 +8,12 @@
 
 આપણે `largest` કાર્ય ચાલુ રાખીએ, સૂચિ 10-4 બે કાર્યો દર્શાવે છે જે સ્લાઇસમાં સૌથી મોટું મૂલ્ય શોધે છે. ત્યારબાદ આપણે આ બધાને એક જનરિક્સનો ઉપયોગ કરતા એકકાર્યમાં જોડીશું.
 
-<Listing number="10-4" file-name="src/main.rs" caption="Two functions that differ only in their names and in the types in their signatures">
+**Listing 10-4: Two functions that differ only in their names and in the types in their signatures**
+
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-04/src/main.rs:here}}
 ```
-</Listing>
+
 `largest_i32` વિધેય એListing 10-3 માં આપણે જે કાઢ્યું તે છે, જે સ્લાઇસમાં સૌથી મોટું `i32` શોધે છે. `largest_char` વિધેય સ્લાઇસમાં સૌથી મોટું `char` શોધે છે. બંને વિધેયોના મુખ્ય ભાગ સમાન કોડ ધરાવે છે, તેથી ચાલો આપણે એક જ વિધેયમાં સામાન્ય પ્રકાર પરિમાણ (generic type parameter) દાખલ કરીને આ બિનજરૂરીયાત દૂર કરીએ. એક
 
 નવા એકલ વિધેયમાં પ્રકારોને પરિમાણિત કરવા માટે, આપણે પ્રકાર પરિમાણને નામ આપવું પડશે, જેવી રીતે આપણે વિધેયના મૂલ્ય પરિમાણો (value parameters) માટે કરીએ છીએ. તમે કોઈપણ ઓળખકર્તા (identifier) નો પ્રકાર પરિમાણ તરીકે ઉપયોગ કરી શકો છો. પરંતુ આપણે `T` નો ઉપયોગ કરીશું, કારણ કે, સંમેલન મુજબ, Rust માં પ્રકાર પરિમાણ નામો ટૂંકા હોય છે, ઘણીવાર માત્ર એક અક્ષર હોય છે, અને Rust નું પ્રકાર નામકરણ સંમેલન UpperCamelCase હોય છે. પ્રકાર માટે ટૂંકું, `T` એ મોટાભાગના Rust પ્રોગ્રામરોની ડિફૉલ્ટ પસંદગી છે.
@@ -26,11 +27,12 @@ fn largest<T>(list: &[T]) -> &T {
 
 10-5 દર્શાવે છે કે સામાન્ય ડેટા પ્રકારને તેના હસ્તાક્ષરમાં ઉપયોગ કરીને `largest` કાર્યની વ્યાખ્યા કેવી રીતે જોડવી. આ યાદી એ પણ બતાવે છે કે આપણે `i32` મૂલ્યો અથવા `char` મૂલ્યોની સ્લાઇસ સાથે કાર્યને કેવી રીતે બોલાવી શકીએ છીએ. નોંધ કરો કે આ કોડ હજી કમ્પાઇલ થશે નહીં.
 
-<Listing number="10-5" file-name="src/main.rs" caption="The `largest` function using generic type parameters; this doesn’t compile yet">
+**Listing 10-5: The `largest` function using generic type parameters; this doesn’t compile yet**
+
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/src/main.rs}}
 ```
-</Listing>
+
 જો આપણે આ કોડ અત્યારે જ કંપાઇલ કરીએ, તો આપણને આ ભૂલ મળશે:
 
 ```console
@@ -42,20 +44,21 @@ std::cmp::PartialOrd મદદરૂપ લખાણમાં `std::cmp::Partial
 
 આપણે `<>` વાક્યરચનાનો ઉપયોગ કરીને એક અથવા વધુ ક્ષેત્રોમાં સામાન્ય પ્રકાર પરિમાણનો ઉપયોગ કરવા માટે માળખાઓ પણ વ્યાખ્યાયિત કરી શકીએ છીએ. સૂચિ ૧૦-૬ એક `Point<T>` માળખું વ્યાખ્યાયિત કરે છે જે કોઈપણ પ્રકારના `x` અને `y` યામ મૂલ્યોને જાળવી રાખે છે.
 
-<Listing number="10-6" file-name="src/main.rs" caption="A `Point<T>` struct that holds `x` and `y` values of type `T`">
+` struct that holds `x` and `y` values of type `T`">
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-06/src/main.rs}}
 ```
-</Listing>
+
 struct વ્યાખ્યાઓમાં સામાન્યતાઓ (generics) નો ઉપયોગ કરવાની રીત struct વ્યાખ્યાઓમાં સામાન્યતાઓનો ઉપયોગ કરવાની રીત કાર્ય વ્યાખ્યાઓ માટે વપરાતી રીત જેવી જ છે. પ્રથમ, આપણે સ્ટ્રક્ચરના નામ પછી તરત જ ખૂણાંની અંદર પ્રકાર પરિમાણનું નામ જાહેર કરીએ છીએ. ત્યારબાદ, આપણે સ્ટ્રક્ચરમાં સામાન્ય પ્રકારનો ઉપયોગ કરીએ છીએ જ્યાં આપણે અન્યથા નક્કર ડેટા પ્રકારો સ્પષ્ટ કરતા હોત. ધ્યાનમાં
 
 રાખો કે અમે માત્ર એક જ સામાન્ય પ્રકારનો ઉપયોગ કરીને `Point<T>` વ્યાખ્યાયિત કર્યો છે, આ વ્યાખ્યા કહે છે કે `Point<T>` સ્ટ્રક્ચર અમુક પ્રકાર `T` પર સામાન્ય છે, અને ક્ષેત્રો `x` અને `y` બંને તે જ પ્રકારના છે, ભલે તે પ્રકાર ગમે તે હોય. જો આપણે `Point<T>` ની એક ઇન્સ્ટન્સ બનાવીએ જેમાં જુદા જુદા પ્રકારોની કિંમતો હોય, જેમ કે લિસ્ટિંગ 10-7 માં છે, તો આપણો કોડ કમ્પાઇલ થશે નહીં.
 
-<Listing number="10-7" file-name="src/main.rs" caption="The fields `x` and `y` must be the same type because both have the same generic data type `T`.">
+**Listing 10-7: The fields `x` and `y` must be the same type because both have the same generic data type `T`.**
+
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-07/src/main.rs}}
 ```
-</Listing>
+
 આ ઉદાહરણમાં, જ્યારે આપણે પૂર્ણાંક મૂલ્ય `5` ને `x` માં સોંપીએ છીએ, ત્યારે આપણે કમ્પાઇલરને જણાવીએ છીએ કે આ `Point<T>` ના ઉદાહરણ માટે સામાન્ય પ્રકાર `T` એ પૂર્ણાંક હશે. પછી, જ્યારે આપણે `y` માટે `4.0` નો ઉલ્લેખ કરીએ છીએ, જેનો પ્રકાર `x` જેટલો જ વ્યાખ્યાયિત કરવામાં આવ્યો છે, ત્યારે આપણને આ પ્રકારની અસંગતતાની ભૂલ મળશે:
 
 ```console
@@ -63,11 +66,11 @@ struct વ્યાખ્યાઓમાં સામાન્યતાઓ (gene
 ```
 `Point` રચનાને વ્યાખ્યાયિત કરવા માટે જેમાં `x` અને `y` બંને સામાન્યિક (generics) છે પરંતુ અલગ-અલગ પ્રકારો હોઈ શકે છે, આપણે બહુવિધ સામાન્યિક પ્રકાર પરિમાણોનો ઉપયોગ કરી શકીએ છીએ. ઉદાહરણ તરીકે, યાદી 10-8 માં, આપણે `Point` ની વ્યાખ્યાને પ્રકાર `T` અને `U` પર સામાન્ય બનાવવા માટે બદલીએ છીએ જ્યાં `x` પ્રકાર `T` નું હોય છે અને `y` પ્રકાર `U` નું હોય છે.
 
-<Listing number="10-8" file-name="src/main.rs" caption="A `Point<T, U>` generic over two types so that `x` and `y` can be values of different types">
+` generic over two types so that `x` and `y` can be values of different types">
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-08/src/main.rs}}
 ```
-</Listing>
+
 હવે `Point` નાં તમામ ઉદાહરણો સ્વીકાર્ય છે! તમે વ્યાખ્યામાં જેટલા જનરિક પ્રકાર પરિમાણો (generic type parameters) ઇચ્છો તેટલા વાપરી શકો છો, પરંતુ વધારે પડતાં વાપરવાથી તમારો કોડ વાંચવામાં મુશ્કેલ બની શકે છે. જો તમને તમારા કોડમાં ઘણાં જનરિક પ્રકારોની જરૂર જણાય, તો એનો અર્થ એ થઈ શકે કે તમારા કોડને નાના ભાગોમાં પુનર્ગઠન કરવાની જરૂર છે.
 
 ### In Enum Definitions
@@ -98,31 +101,33 @@ enum Result<T, E> {
 
 આપણે સ્ટ્રક્ચર્સ અને ઇનમ્સ પર પદ્ધતિઓ અમલમાં મૂકી શકીએ છીએ (જેમ કે આપણે પ્રકરણ 5 માં કર્યું હતું) અને તેમની વ્યાખ્યાઓમાં સામાન્ય પ્રકારોનો પણ ઉપયોગ કરી શકીએ છીએ. સૂચિ 10-9 દર્શાવે છે કે  `Point<T>`  સ્ટ્રક્ચર, જે આપણે સૂચિ 10-6 માં વ્યાખ્યાયિત કર્યું હતું, તેના પર નામકું પદ્ધતિ  `x`  અમલમાં મૂકવામાં આવી છે.
 
-<Listing number="10-9" file-name="src/main.rs" caption="Implementing a method named `x` on the `Point<T>` struct that will return a reference to the `x` field of type `T`">
+` struct that will return a reference to the `x` field of type `T`">
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-09/src/main.rs}}
 ```
-</Listing>
+
 અહીં, આપણે `x` નામની એક પદ્ધતિ વ્યાખ્યાયિત કરી છે જે `Point<T>` પર અમલમાં મૂકાયેલ છે અને તે ક્ષેત્ર `x` માં રહેલા
 
 ડેટાનો સંદર્ભ આપે છે. નોંધ કરો કે આપણે `impl` પછી તરત જ `T` જાહેર કરવું પડશે જેથી કરીને આપણે `T` નો ઉપયોગ એ ઉલ્લેખિત કરવા માટે કરી શકીએ કે અમે `Point<T>` પ્રકાર પર પદ્ધતિઓ અમલમાં મૂકી રહ્યા છીએ. `impl` પછી સામાન્ય પ્રકાર તરીકે `T` જાહેર કરીને, Rust ઓળખી શકે છે કે `Point` માં ખૂણાના કૌંસમાં રહેલો પ્રકાર એક સામાન્ય પ્રકાર છે, કોઈ નક્કર પ્રકાર નથી. આપણે આ સામાન્ય પરિમાણ માટે અલગ નામ પસંદ કરી શક્યા હોત, પરંતુ સમાન નામનો ઉપયોગ કરવો એ પ્રચલિત છે. જો તમે `impl` ની અંદર એક પદ્ધતિ લખો છો જે એક સામાન્ય પ્રકાર જાહેર કરે છે, તો તે પદ્ધતિ પ્રકારના કોઈપણ ઉદાહરણ પર વ્યાખ્યાયિત કરવામાં આવશે, ભલે ગમે તે નક્કર પ્રકાર સામાન્ય પ્રકાર માટે બદલાય છે.
 
 આપણે પ્રકારો પર પદ્ધતિઓ વ્યાખ્યાયિત કરતી વખતે સામાન્ય પ્રકારો પર નિયંત્રણો પણ સ્પષ્ટ કરી શકીએ છીએ. ઉદાહરણ તરીકે, આપણે `Point<f32>` સંસ્થાઓ પર જ પદ્ધતિઓ અમલમાં મૂકી શકીએ છીએ, કોઈપણ સામાન્ય પ્રકારની `Point<T>` સંસ્થાઓ પર નહીં. યાદી 10-10 માં, આપણે નક્કર પ્રકાર `f32` નો ઉપયોગ કરીએ છીએ, જેનો અર્થ થાય છે કે આપણે `impl` પછી કોઈ પ્રકારો જાહેર કરતા નથી.
 
-<Listing number="10-10" file-name="src/main.rs" caption="An `impl` block that only applies to a struct with a particular concrete type for the generic type parameter `T`">
+**Listing 10-10: An `impl` block that only applies to a struct with a particular concrete type for the generic type parameter `T`**
+
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-10/src/main.rs:here}}
 ```
-</Listing>
+
 આ કોડનો અર્થ એ થાય છે કે `Point<f32>` પ્રકારમાં `distance_from_origin` નામની પદ્ધતિ હશે; `Point<T>` ના અન્ય ઉદાહરણો, જ્યાં `T` પ્રકાર `f32` ન હોય, તેમની પાસે આ પદ્ધતિ વ્યાખ્યાયિત થયેલી રહેશે નહીં. આ પદ્ધતિ આપણા બિંદુનું (0.0, 0.0) 좌표ઓવાળા બિંદુથી અંતર માપે છે અને માત્ર ફ્લોટિંગ-પોઇન્ટ પ્રકારો માટે ઉપલબ્ધ ગાણિતિક ક્રિયાઓનો ઉપયોગ
 
 કરે છે. સ્ટ્રક્ચ વ્યાખ્યામાં સામાન્ય પ્રકારના પરિમાણો એ જ હોતા નથી જે તમે તે જ સ્ટ્રક્ચરની પદ્ધતિ હસ્તાક્ષરોમાં વાપરો છો. સૂચિ 10-11 `Point` સ્ટ્રક્ચર માટે સામાન્ય પ્રકારો `X1` અને `Y1` અને `mixup` પદ્ધતિ હસ્તાક્ષર માટે `X2` અને `Y2` નો ઉપયોગ કરે છે જેથી ઉદાહરણ સ્પષ્ટ થાય. આ પદ્ધતિ `self` ના `x` મૂલ્ય (પ્રકાર `X1` ધરાવે છે) અને પસાર થયેલ `Point` ના `y` મૂલ્ય (પ્રકાર `Y2` ધરાવે છે) સાથે એક નવું `Point` ઉદાહરણ બનાવે છે.
 
-<Listing number="10-11" file-name="src/main.rs" caption="A method that uses generic types that are different from its struct’s definition">
+**Listing 10-11: A method that uses generic types that are different from its struct’s definition**
+
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-11/src/main.rs}}
 ```
-</Listing>
+
 `main` માં, આપણે એક `Point` વ્યાખ્યાયિત કર્યો છે જેમાં `x` માટે `i32` (મૂલ્ય `5` સાથે) અને `y` માટે `f64` (મૂલ્ય `10.4` સાથે) છે. `p2` variable એ `Point` struct છે જેમાં `x` માટે સ્ટ્રિંગ સ્લાઇસ (મૂલ્ય `"Hello"` સાથે) અને `y` માટે `char` (મૂલ્ય `c` સાથે) છે. `p1` પર `mixup` ને `p2` Argument સાથે બોલાવવાથી આપણને `p3` મળે છે, જેમાં `x` માટે `i32` હશે કારણ કે `x`, `p1` માંથી આવ્યું છે. `p3` variable `y` માટે `char` હશે કારણ કે `y`, `p2` માંથી આવ્યું છે. `println!` મેક્રો કૉલ `p3.x = 5, p3.y = c` પ્રિન્ટ કરશે.
 
 આ ઉદાહરણનો હેતુ એવા સંજોગો દર્શાવવાનો છે જેમાં અમુક સામાન્ય પરિમાણો `impl` સાથે જાહેર કરવામાં આવે છે અને અમુક પદ્ધતિ વ્યાખ્યા સાથે જાહેર કરવામાં આવે છે. અહીં, સામાન્ય પરિમાણો `X1` અને `Y1` `impl` પછી જાહેર કરવામાં આવ્યા છે કારણ કે તે struct વ્યાખ્યા સાથે સંકળાયેલા છે. સામાન્ય પરિમાણો `X2` અને `Y2` `fn mixup` પછી જાહેર કરવામાં આવ્યા છે કારણ કે તેઓ માત્ર પદ્ધતિ માટે જ સુસંગત છે.
@@ -143,7 +148,7 @@ let float = Some(5.0);
 
 મોનોમોર્ફાઇઝ થયેલ કોડનું સંસ્કરણ નીચેના જેવું દેખાય છે (કમ્પાઇલર અહીં દર્શાવવા માટે ઉપયોગમાં લેવાતા નામો કરતાં અલગ નામોનો ઉપયોગ કરે છે):
 
-<Listing file-name="src/main.rs">
+
 ```rust
 enum Option_i32 {
     Some(i32),
@@ -160,6 +165,6 @@ fn main() {
     let float = Option_f64::Some(5.0);
 }
 ```
-</Listing>
+
 વિકલ્પ (Option) નું સામાન્ય સ્વરૂપ સામાન્ય `Option<T>` ને કમ્પાઇલર દ્વારા નિર્માણ પામેલા વિશિષ્ટ વ્યાખ્યાઓ વડે બદલવામાં આવે છે. કારણ કે Rust સામાન્ય કોડને એવા કોડમાં કમ્પાઇલ કરે છે જે દરેક ઉદાહરણમાં પ્રકાર (type) નો ઉલ્લેખ કરે છે, તેથી સામાન્ય ઉપયોગ માટે કોઈ રનટાઇમ ખર્ચ લાગતો નથી. જ્યારે કોડ ચાલે છે, ત્યારે તે એ જ રીતે કાર્ય કરે છે જે રીતે આપણે દરેક વ્યાખ્યાને જાતે જ વારંવાર લખી હોત. મોનોમોર્ફિઝેશન (monomorphization) ની પ્રક્રિયા Rust ના સામાન્ય સ્વરૂપોને રનટાઇમ પર અત્યંત કાર્યક્ષમ બનાવે છે.
 

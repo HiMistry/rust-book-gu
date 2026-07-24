@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -193,9 +193,17 @@
 <p>નોંધ: મોટા ભાગના ફંક્શન કોલ્સ આ જ રીતે કામ કરે છે, જો તમે તેના વિશે વિચારો તો. તેમ છતાં, ‘બ્લોકિંગ’ શબ્દ સામાન્ય રીતે ફંક્શન કોલ્સ માટે અનામત રાખવામાં આવે છે જે ફાઇલો, નેટવર્ક અથવા કમ્પ્યુટર પર અન્ય સંસાધનો સાથે ક્રિયાપ્રતિક્રિયા કરે છે, કારણ કે તેવા કિસ્સાઓમાં વ્યક્તિગત કાર્યક્રમને બિન-બ્લોકિંગ કામગીરીથી લાભ થાય છે.</p>
 <p>આપણે મુખ્ય થ્રેડને અવરોધિત કરવાનું ટાળી શકતા હોત, જો આપણે દરેક ફાઈલ ડાઉનલોડ કરવા માટે સમર્પિત થ્રેડ શરૂ કર્યો હોત. પરંતુ, તે થ્રેડો દ્વારા વપરાતા સિસ્ટમ સંસાધનોનો ખર્ચ આખરે સમસ્યા બની શકે છે. પ્રથમથી જ કૉલને અવરોધિત ન થાય તે વધુ સારું રહેશે, અને તેના બદલે આપણે કાર્યોની સંખ્યા વ્યાખ્યાયિત કરી શકીએ છીએ જે અમે અમારા પ્રોગ્રામને પૂર્ણ કરવા માંગીએ છીએ અને રનટાઇમને શ્રેષ્ઠ ક્રમ અને રીત પસંદ કરવાની મંજૂરી આપીએ છીએ.</p>
 <p>તે જ Rust ના  async  (અસિંક્રોનસ ના ટૂંકા સ્વરૂપ) એબ્સ્ટ્રેક્શન આપણને શું આપે છે. આ પ્રકરણમાં, તમે async વિશે બધું શીખી શકશો કારણ કે અમે નીચેના વિષયો આવરી લઈએ છીએ:</p>
+<ul>
+<li>
 <p>કેવી રીતે Rust ના <code>async</code> અને <code>await</code> વાક્યરચનાનો ઉપયોગ કરવો અને રનટાઇમ સાથે અસિંક્રોનસ વિધેયો</p>
+</li>
+<li>
 <p>ચલાવવા આ પડકારો ઉકેલવા માટે async મોડેલનો ઉપયોગ કેવી રીતે કરવો જે આપણે પ્રકરણ ૧૬ માં જોયા હતા. મલ્ટીથ્રેડીંગ</p>
+</li>
+<li>
 <p>અને async પૂરક ઉકેલો પૂરા પાડે છે જેને તમે ઘણા કિસ્સાઓમાં જોડી શકો છો.</p>
+</li>
+</ul>
 <p>અગાઉ આપણે જોઈએ છીએ કે <code>async</code> વ્યવહારમાં કેવી રીતે કાર્ય કરે છે, જોકે, આપણને સમાંતરતા (parallelism) અને એકસાથે કરવાની ક્ષમતા (concurrency) વચ્ચેના તફાવતો સમજવા માટે થોડો વિચલન કરવું પડશે.</p>
 <h2 id="parallelism-and-concurrency"><a class="header" href="#parallelism-and-concurrency">Parallelism and Concurrency</a></h2>
 <p>આપણે અત્યાર સુધી સમાંતરતા અને એકસાથેતાને લગભગ એકરૂપ ગણ્યાં છે. હવે આપણે તેમની વચ્ચે ભેદ પાડવાની જરૂર છે, કારણ કે તફાવતો દેખાવા લાગશે જ્યારે આપણે કામ શરૂ કરીશું.</p>
@@ -273,6 +281,7 @@
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

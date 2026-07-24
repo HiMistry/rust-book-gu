@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -188,12 +188,12 @@
 <p>એક બાબત ધ્યાનમાં રાખવાની છે કે જેમ જેમ આપણે આગળ વધીશું તેમ, આમાંથી કંઈપણ એ કોડના તે ભાગોને અસર કરતું નથી જે ક્લોઝર ચલાવવાનું સંભાળે છે, તેથી અહીં બધું એવું જ રહેશે જો આપણે અસિંક્રન રનટાઇમ માટે થ્રેડ પૂલનો ઉપયોગ કરી રહ્યા હોઈએ.</p>
 <h3 id="implementing-the-drop-trait-on-threadpool"><a class="header" href="#implementing-the-drop-trait-on-threadpool">Implementing the <code>Drop</code> Trait on <code>ThreadPool</code></a></h3>
 <p>ચાલો આપણી થ્રેડ પૂલ પર <code>Drop</code> લક્ષણનો અમલ કરવાનું શરૂ કરીએ. જ્યારે પૂલને છોડી દેવામાં આવે છે, ત્યારે આપણાં તમામ થ્રેડોએ તેમના કાર્ય પૂર્ણ થાય તે સુનિશ્ચિત કરવા માટે જોડાવા જોઈએ. સૂચિ 21-22 <code>Drop</code> અમલીકરણનો પ્રથમ પ્રયાસ દર્શાવે છે; આ કોડ હજી સંપૂર્ણપણે કામ કરશે નહીં.</p>
-<listing number="21-22" file-name="src/lib.rs" caption="Joining each thread when the thread pool goes out of scope">
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/listing-21-22/src/lib.rs:here}}
-```
-</listing>
-પ્રથમ, અમે થ્રેડ પૂલ `workers` ના દરેક ઘટકમાંથી પસાર થઈએ છીએ. અમે `&amp;mut` નો ઉપયોગ કરીએ છીએ કારણ કે `self` એ પરિવર્તનશીલ સંદર્ભ છે, અને અમારે `worker` ને પણ બદલવાની જરૂર છે. દરેક `worker` માટે, અમે એક સંદેશ છાપીએ છીએ જેમાં જણાવવામાં આવ્યું છે કે આ ચોક્કસ `Worker` ઉદાહરણ બંધ થઈ રહ્યું છે, અને પછી અમે તે `Worker` ઉદાહરણના થ્રેડ પર `join` કૉલ કરીએ છીએ. જો `join` કૉલમાં નિષ્ફળતા આવે, તો અમે `unwrap` નો ઉપયોગ કરીને Rust ને ગભરાટમાં મૂકીએ છીએ અને અણઘડ શટડાઉન (shutdown) માં જઈએ છીએ.
+<p><strong>Listing 21-22: Joining each thread when the thread pool goes out of scope</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-22/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>પ્રથમ, અમે થ્રેડ પૂલ <code>workers</code> ના દરેક ઘટકમાંથી પસાર થઈએ છીએ. અમે <code>&amp;mut</code> નો ઉપયોગ કરીએ છીએ કારણ કે <code>self</code> એ પરિવર્તનશીલ સંદર્ભ છે, અને અમારે <code>worker</code> ને પણ બદલવાની જરૂર છે. દરેક <code>worker</code> માટે, અમે એક સંદેશ છાપીએ છીએ જેમાં જણાવવામાં આવ્યું છે કે આ ચોક્કસ <code>Worker</code> ઉદાહરણ બંધ થઈ રહ્યું છે, અને પછી અમે તે <code>Worker</code> ઉદાહરણના થ્રેડ પર <code>join</code> કૉલ કરીએ છીએ. જો <code>join</code> કૉલમાં નિષ્ફળતા આવે, તો અમે <code>unwrap</code> નો ઉપયોગ કરીને Rust ને ગભરાટમાં મૂકીએ છીએ અને અણઘડ શટડાઉન (shutdown) માં જઈએ છીએ.</p>
 <p>અહીં એ ભૂલ છે જે અમને આ કોડ કમ્પાઇલ કરતી વખતે મળે છે:</p>
 <pre><code class="language-console">{{#include ../listings/ch21-web-server/listing-21-22/output.txt}}
 </code></pre>
@@ -201,34 +201,33 @@
 <p>જો કે, આ પરિસ્થિતિ માત્ર ત્યારે જ ઊભી થશે જ્યારે <code>Worker</code> ને છોડી દેવામાં આવે. બદલામાં, આપણે <code>Option&lt;thread::JoinHandle&lt;()&gt;&gt;</code> સાથે કામ કરવું પડશે જ્યાં પણ આપણે <code>worker.thread</code> ને પ્રવેશ મેળવીએ છીએ. રૂઢિચુસ્ત Rust માં <code>Option</code> નો ઘણી વાર ઉપયોગ થાય છે, પરંતુ જ્યારે તમે તમારી જાતને એવી કોઈ વસ્તુને <code>Option</code> માં લપેટી નાખો છો જે તમને ખબર છે કે હંમેશા હાજર રહેશે, તો આ પ્રકારના ઉપાય તરીકે, તમારા કોડને વધુ સ્વચ્છ અને ભૂલ-મુક્ત બનાવવા માટે વૈકલ્પિક અભિગમો શોધવાનું એક સારો વિચાર છે.</p>
 <p>આ કિસ્સામાં, એક વધુ સારો વિકલ્પ અસ્તિત્વમાં છે: <code>Vec::drain</code> પદ્ધતિ. તે સ્વીકારે છે કે કઈ વસ્તુઓ દૂર કરવી તે નિર્ધારિત કરવા માટે રેન્જ પરિમાણ અને તે વસ્તુઓના ઇટરેટર પરત કરે છે. <code>..</code> રેન્જ સિન્ટેક્સ પસાર કરવાથી વેક્ટરની દરેક કિંમત દૂર થઈ જશે.</p>
 <p>તો, આપણે <code>ThreadPool</code> ના <code>drop</code> અમલીકરણ આ રીતે અપડેટ કરવાની જરૂર છે:</p>
-<listing file-name="src/lib.rs">
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/no-listing-04-update-drop-definition/src/lib.rs:here}}
-```
-</listing>
-આ કમ્પાઇલરની ભૂલ નિવારણ કરે છે અને આપણી કોડમાં અન્ય કોઈ ફેરફાર જરૂરી નથી. નોંધ કરો કે, `drop` બોલાવી શકાય છે જ્યારે પ્રોગ્રામ ગભરાય છે (panicking), તેથી `unwrap` પણ ગભરાય શકે છે અને બેવડા ગભરાટનું કારણ બની શકે છે, જે તાત્કાલિક પ્રોગ્રામને ક્રેશ કરે છે અને ચાલુ રહેલી કોઈપણ સફાઈનો અંત લાવે છે. આ એક ઉદાહરણ પ્રોગ્રામ માટે ઠીક છે, પરંતુ ઉત્પાદન કોડ માટે આ ભલામણ કરવામાં આવતું નથી.
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/no-listing-04-update-drop-definition/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ કમ્પાઇલરની ભૂલ નિવારણ કરે છે અને આપણી કોડમાં અન્ય કોઈ ફેરફાર જરૂરી નથી. નોંધ કરો કે, <code>drop</code> બોલાવી શકાય છે જ્યારે પ્રોગ્રામ ગભરાય છે (panicking), તેથી <code>unwrap</code> પણ ગભરાય શકે છે અને બેવડા ગભરાટનું કારણ બની શકે છે, જે તાત્કાલિક પ્રોગ્રામને ક્રેશ કરે છે અને ચાલુ રહેલી કોઈપણ સફાઈનો અંત લાવે છે. આ એક ઉદાહરણ પ્રોગ્રામ માટે ઠીક છે, પરંતુ ઉત્પાદન કોડ માટે આ ભલામણ કરવામાં આવતું નથી.</p>
 <h3 id="signaling-to-the-threads-to-stop-listening-for-jobs"><a class="header" href="#signaling-to-the-threads-to-stop-listening-for-jobs">Signaling to the Threads to Stop Listening for Jobs</a></h3>
 <p>આપણે કરેલા તમામ ફેરફારો સાથે, આપણો કોડ કોઈપણ ચેતવણી વગર કમ્પાઇલ થાય છે. જોકે, ખરાબ સમાચાર એ છે કે આ કોડ હજી આપણી ધાર્યા પ્રમાણે કાર્ય કરતો નથી. મુખ્ય બાબત એ છે કે <code>Worker</code> ઇન્સ્ટન્સના થ્રેડો દ્વારા ચલાવવામાં આવતા ક્લોઝર્સમાં રહેલી તર્કસંગતતા: હાલમાં, આપણે <code>join</code> ને બોલાવીએ છીએ, પરંતુ તે થ્રેડોને બંધ નહીં કરે, કારણ કે તેઓ કાયમ માટે નોકરીઓ શોધવા માટે <code>loop</code> કરે છે. જો આપણે આપણી વર્તમાન <code>drop</code> અમલીકરણ સાથે <code>ThreadPool</code> ને છોડી દેવાનો પ્રયત્ન કરીએ, તો મુખ્ય થ્રેડ અનિશ્ચિતકાળ સુધી પ્રથમ થ્રેડ પૂર્ણ થાય તેની રાહ જોતા બ્લોક થશે.</p>
 <p>આ સમસ્યા નિવારવા માટે, આપણે <code>ThreadPool</code> ના <code>drop</code> અમલીકરણમાં અને પછી <code>Worker</code> લૂપમાં ફેરફાર કરવો પડશે.</p>
 <p>સૌ પ્રથમ, આપણે <code>sender</code> ને છોડતા પહેલા થ્રેડો પૂરા થાય તેની રાહ જોવાના બદલે, સ્પષ્ટપણે <code>sender</code> ને છોડવા માટે <code>ThreadPool</code> ના <code>drop</code> અમલીકરણને બદલીશું. સૂચિ 21-23 માં <code>sender</code> ને સ્પષ્ટપણે છોડવા માટે <code>ThreadPool</code> માં કરેલા ફેરફારો દર્શાવવામાં આવ્યા છે. થ્રેડની જેમ અહીં, આપણે <code>Option::take</code> વડે <code>ThreadPool</code> માંથી <code>sender</code> ને ખસેડી શકવા માટે <code>Option</code> નો ઉપયોગ કરવો જરૂરી છે.</p>
-<listing number="21-23" file-name="src/lib.rs" caption="Explicitly dropping `sender` before joining the `Worker` threads">
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/listing-21-23/src/lib.rs:here}}
-```
-</listing>
-`sender` ને છોડી દેવાથી ચેનલ બંધ થઈ જાય છે, જે દર્શાવે છે કે હવે કોઈ સંદેશાઓ મોકલવામાં આવશે નહીં. જ્યારે આવું થાય છે, ત્યારે `Worker` ઇન્સ્ટન્સ દ્વારા અનંત લૂપમાં કરવામાં આવતા તમામ `recv` કૉલ્સ ભૂલ પાછી આપે છે. યાદી 21-24 માં, અમે `Worker` લૂપને એવી રીતે બદલીએ છીએ કે તે તે સ્થિતિમાં લૂપમાંથી શાંતિથી બહાર નીકળી જાય, એટલે કે થ્રેડો `ThreadPool` ના `drop` અમલીકરણ દ્વારા તેમના પર `join` કૉલ કરવામાં આવે ત્યારે પૂર્ણ થઈ જશે.
-<listing number="21-24" file-name="src/lib.rs" caption="Explicitly breaking out of the loop when `recv` returns an error">
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/listing-21-24/src/lib.rs:here}}
-```
-</listing>
-આ કોડને ક્રિયામાં જોવા માટે, ચાલો `main` ને એવી રીતે બદલીએ કે તે માત્ર બે વિનંતીઓ સ્વીકારે અને પછી સર્વરને શાંતિથી બંધ કરી દે, જે યાદી 21-25 માં દર્શાવેલ છે.
-<listing number="21-25" file-name="src/main.rs" caption="Shutting down the server after serving two requests by exiting the loop">
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/listing-21-25/src/main.rs:here}}
-```
-</listing>
-તમે વાસ્તવિક વેબ સર્વરને માત્ર બે વિનંતીઓ પૂરી કર્યા પછી બંધ થવા દેતા ન હોત. આ કોડ માત્ર દર્શાવે છે કે સુયોગ્ય શટડાઉન અને સફાઈ
+<p><strong>Listing 21-23: Explicitly dropping <code>sender</code> before joining the <code>Worker</code> threads</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-23/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p><code>sender</code> ને છોડી દેવાથી ચેનલ બંધ થઈ જાય છે, જે દર્શાવે છે કે હવે કોઈ સંદેશાઓ મોકલવામાં આવશે નહીં. જ્યારે આવું થાય છે, ત્યારે <code>Worker</code> ઇન્સ્ટન્સ દ્વારા અનંત લૂપમાં કરવામાં આવતા તમામ <code>recv</code> કૉલ્સ ભૂલ પાછી આપે છે. યાદી 21-24 માં, અમે <code>Worker</code> લૂપને એવી રીતે બદલીએ છીએ કે તે તે સ્થિતિમાં લૂપમાંથી શાંતિથી બહાર નીકળી જાય, એટલે કે થ્રેડો <code>ThreadPool</code> ના <code>drop</code> અમલીકરણ દ્વારા તેમના પર <code>join</code> કૉલ કરવામાં આવે ત્યારે પૂર્ણ થઈ જશે.</p>
+<p><strong>Listing 21-24: Explicitly breaking out of the loop when <code>recv</code> returns an error</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-24/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ કોડને ક્રિયામાં જોવા માટે, ચાલો <code>main</code> ને એવી રીતે બદલીએ કે તે માત્ર બે વિનંતીઓ સ્વીકારે અને પછી સર્વરને શાંતિથી બંધ કરી દે, જે યાદી 21-25 માં દર્શાવેલ છે.</p>
+<p><strong>Listing 21-25: Shutting down the server after serving two requests by exiting the loop</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-25/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>તમે વાસ્તવિક વેબ સર્વરને માત્ર બે વિનંતીઓ પૂરી કર્યા પછી બંધ થવા દેતા ન હોત. આ કોડ માત્ર દર્શાવે છે કે સુયોગ્ય શટડાઉન અને સફાઈ</p>
 <p>કાર્યરત ક્રમમાં છે. <code>take</code> પદ્ધતિ <code>Iterator</code> ટ્રેઇટમાં વ્યાખ્યાયિત થયેલી છે અને પુનરાવર્તનને વધુમાં વધુ પ્રથમ બે વસ્તુઓ સુધી મર્યાદિત કરે છે. <code>ThreadPool</code> <code>main</code> ના અંતે અવકાશમાંથી બહાર નીકળી જશે, અને <code>drop</code> અમલીકરણ ચાલશે. સર્વરને</p>
 <p><code>cargo run</code> સાથે શરૂ કરો અને ત્રણ વિનંતીઓ કરો. ત્રીજી વિનંતીમાં ભૂલ થવી જોઈએ, અને તમારા ટર્મિનલમાં તમને આના જેવું આઉટપુટ દેખાશે:</p>
 <!-- manual-regeneration
@@ -261,24 +260,30 @@ Shutting down worker 3
 <p>આ ચોક્કસ અમલ (execution) ના એક રસપ્રદ પાસા પર ધ્યાન આપો: <code>ThreadPool</code> એ <code>sender</code> ને છોડી દીધો હતો, અને કોઈ પણ <code>Worker</code> પાસે ભૂલ પહોંચે તે પહેલાં આપણે <code>Worker 0</code> ને જોડાણ (join) કરવાનો પ્રયત્ન કર્યો. <code>Worker 0</code> એ હજી સુધી <code>recv</code> દ્વારા ભૂલ મેળવી ન હતી, તેથી મુખ્ય થ્રેડ (thread) અટકી ગયો, <code>Worker 0</code> પૂર્ણ થાય તેની રાહ જોઈ રહ્યો હતો. તે દરમિયાન, <code>Worker 3</code> ને એક કાર્ય મળ્યું અને પછી બધા થ્રેડને ભૂલ મળી. જ્યારે <code>Worker 0</code> પૂર્ણ થયો, ત્યારે મુખ્ય થ્રેડે બાકીના <code>Worker</code> ઉદાહરણો પૂર્ણ થાય તેની રાહ જોઈ. તે સમયે, તેઓએ તેમના લૂપ્સમાંથી બહાર નીકળીને બંધ કરી દીધા હતા.</p>
 <p>અભિનંદન! આપણે આપણી project પૂર્ણ કરી છે; આપણી પાસે એક મૂળભૂત web server છે જે asynchronously પ્રતિસાદ આપવા માટે thread pool નો ઉપયોગ કરે છે. આપણે server નું સરળતાથી શટડાઉન (shutdown) કરી શકીએ છીએ, જે pool માં રહેલા તમામ threads ને સાફ કરે</p>
 <p>છે. સંદર્ભ માટે અહીં સંપૂર્ણ code છે:</p>
-<listing file-name="src/main.rs">
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/no-listing-07-final-code/src/main.rs}}
-```
-</listing>
-<listing file-name="src/lib.rs">
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/no-listing-07-final-code/src/lib.rs}}
-```
-</listing>
-આપણે અહીં વધુ કરી શક્યા હોત! જો તમે આ કાર્યક્રમમાં સુધારા કરવાનું ચાલુ રાખવા માંગતા હો, તો અહીં કેટલાક વિચારો છે:
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/no-listing-07-final-code/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/no-listing-07-final-code/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>આપણે અહીં વધુ કરી શક્યા હોત! જો તમે આ કાર્યક્રમમાં સુધારા કરવાનું ચાલુ રાખવા માંગતા હો, તો અહીં કેટલાક વિચારો છે:</p>
 <p><code>ThreadPool</code> અને તેની જાહેર પદ્ધતિઓ માટે વધુ દસ્તાવેજીકરણ ઉમેરો.</p>
 <p>પુસ્તકાલયની કાર્યક્ષમતાના પરીક્ષણો ઉમેરો.</p>
 <p><code>unwrap</code> ના કોલ્સને વધુ મજબૂત ભૂલ વ્યવસ્થાપન સાથે બદલો.</p>
+<ul>
+<li>
 <p>વેબ વિનંતીઓ પૂરી પાડવા સિવાય અન્ય કોઈ કાર્ય કરવા માટે <code>ThreadPool</code> નો ઉપયોગ કરો.</p>
+</li>
+<li>
 <p>crates.io પર થ્રેડ પુલ ક્રેટ શોધો અને તેના બદલે તે ક્રેટનો ઉપયોગ કરીને સમાન વેબ સર્વર લાગુ કરો. પછી, તેની API અને અમારી દ્વારા અમલમાં મૂકાયેલ થ્રેડ પુલની મજબૂતાઈ સાથે સરખામણી કરો.</p>
+</li>
+</ul>
 <h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
-<p>ખૂબ સારું! તમે પુસ્તકના અંત સુધી પહોંચી ગયા છો! અમે તમને Rustના આ પ્રવાસમાં અમારી સાથે જોડાવા બદલ આભાર માનીએ છીએ. હવે તમે તમારા પોતાના Rust પ્રોજેક્ટ્સ અમલમાં મૂકવા અને અન્ય લોકોના પ્રોજેક્ટ્સમાં મદદ કરવા માટે તૈયાર છો. ધ્યાનમાં રાખો કે Rustaceansનો એક આવકારદાયક સમુદાય છે જે તમને તમારી Rust યાત્રામાં આવતી કોઈપણ મુશ્કેલીઓ દૂર કરવામાં મદદ કરવા માટે ઉત્સુક હશે.</p>
+<ul>
+<li>ખૂબ સારું! તમે પુસ્તકના અંત સુધી પહોંચી ગયા છો! અમે તમને Rustના આ પ્રવાસમાં અમારી સાથે જોડાવા બદલ આભાર માનીએ છીએ. હવે તમે તમારા પોતાના Rust પ્રોજેક્ટ્સ અમલમાં મૂકવા અને અન્ય લોકોના પ્રોજેક્ટ્સમાં મદદ કરવા માટે તૈયાર છો. ધ્યાનમાં રાખો કે Rustaceansનો એક આવકારદાયક સમુદાય છે જે તમને તમારી Rust યાત્રામાં આવતી કોઈપણ મુશ્કેલીઓ દૂર કરવામાં મદદ કરવા માટે ઉત્સુક હશે.</li>
+</ul>
 
                     </main>
 
@@ -332,6 +337,7 @@ Shutting down worker 3
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

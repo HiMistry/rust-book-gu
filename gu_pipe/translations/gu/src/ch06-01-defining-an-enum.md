@@ -32,11 +32,12 @@
 ```
 એનમનો ઉપયોગ કરવાથી વધુ લાભ થાય છે. આપણી IP સરનામા પ્રકાર વિશે વધુ વિચારતા, હાલમાં આપણી પાસે વાસ્તવિક IP સરનામા ડેટા સંગ્રહિત કરવાની કોઈ રીત નથી; આપણે માત્ર તે પ્રકાર જાણે છીએ. તમને પ્રકરણ ૫ માં સ્ટ્રક્ચર્સ વિશે તાજેતરમાં જ શીખવા મળ્યું છે, તેથી તમે સૂચિ ૬-૧ માં દર્શાવ્યા પ્રમાણે આ સમસ્યાને સ્ટ્રક્ચર્સથી ઉકેલવાનો પ્રયાસ કરી શકો છો.
 
-<Listing number="6-1" caption="Storing the data and `IpAddrKind` variant of an IP address using a `struct`">
+**Listing 6-1: Storing the data and `IpAddrKind` variant of an IP address using a `struct`**
+
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-01/src/main.rs:here}}
 ```
-</Listing>
+
 અહીં, આપણે એક struct `IpAddr` વ્યાખ્યાયિત કર્યો છે જે બે ક્ષેત્રો ધરાવે છે: એક `kind` ક્ષેત્ર જે `IpAddrKind` પ્રકારનું છે (આપણે અગાઉ વ્યાખ્યાયિત કરેલ enum) અને એક `address` ક્ષેત્ર જે `String` પ્રકારનું છે. આ struct ના બે ઉદાહરણો છે. પહેલું `home` છે, અને તેનું `kind` મૂલ્ય `IpAddrKind::V4` છે, સાથે સંકળાયેલું સરનામું ડેટા `127.0.0.1` છે. બીજું ઉદાહરણ `loopback` છે. તે `IpAddrKind` ના અન્ય variant ને તેના `kind` મૂલ્ય તરીકે ધરાવે છે, `V6`, અને તેની સાથે સંકળાયેલું સરનામું `::1` છે. આપણે એક struct નો ઉપયોગ `kind` અને `address` મૂલ્યોને એકસાથે જૂથ બનાવવા માટે કર્યો છે, જેથી હવે variant ને મૂલ્ય સાથે જોડી દેવામાં આવ્યું છે.
 
 જો કે, માત્ર એક enum વાપરીને સમાન વિભાવના દર્શાવવી વધુ સંક્ષિપ્ત છે: struct ની અંદર enum ને બદલે, આપણે સીધા જ દરેક enum પ્રકારમાં માહિતી મૂકી શકીએ છીએ. `IpAddr` enumની આ નવી વ્યાખ્યા કહે છે કે `V4` અને `V6` બંને પ્રકારો સાથે સંકળાયેલ `String` મૂલ્યો ધરાવશે:
@@ -73,16 +74,17 @@ enum IpAddr {
 
 ચાલો યાદી ૬-૨ માં એક અન્ય `enum` નું ઉદાહરણ જોઈએ: આ પ્રકારનાં વિવિધ પ્રકારો તેનાં વિકલ્પોમાં જડિત છે.
 
-<Listing number="6-2" caption="A `Message` enum whose variants each store different amounts and types of values">
+**Listing 6-2: A `Message` enum whose variants each store different amounts and types of values**
+
 ```rust
-{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-02/src/main.rs:here}}
+- {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-02/src/main.rs:here}}
 ```
-</Listing>
-આ enum ચાર પ્રકારો ધરાવે છે:
 
-`Quit`: તેમાં કોઈ ડેટા સંકળાયેલ નથી.
+- આ enum ચાર પ્રકારો ધરાવે છે:
 
-`Move`: તેમાં નામિત ક્ષેત્રો છે, જેમ કે struct માં હોય છે.
+- `Quit`: તેમાં કોઈ ડેટા સંકળાયેલ નથી.
+
+- `Move`: તેમાં નામિત ક્ષેત્રો છે, જેમ કે struct માં હોય છે.
 
 `Write`: તેમાં એક `String` સમાવિષ્ટ છે.
 

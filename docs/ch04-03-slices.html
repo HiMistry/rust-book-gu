@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -192,12 +192,12 @@
 </span>fn first_word(s: &amp;String) -&gt; ?
 <span class="boring">}</span></code></pre>
 <p><code>first_word</code> કાર્યમાં <code>&amp;String</code> પ્રકારનો પરિમાણ છે. આપણને માલિકીની જરૂર નથી, તેથી આ યોગ્ય છે. (વડેસર Rust કોડમાં, કાર્યો તેમના Argumentોની માલિકી લેતા નથી સિવાય કે તેમને જરૂર હોય, અને તેના કારણો આગળ વધતાં સ્પષ્ટ થશે.) પરંતુ આપણે શું પરત કરવું જોઈએ? વાસ્તવમાં આપણી પાસે શબ્દનો ભાગ વિશે વાત કરવાનો કોઈ રસ્તો નથી. જોકે, આપણે જગ્યા દ્વારા દર્શાવવામાં આવે છે તે શબ્દના અંતની અનુક્રમણિકા (index) પરત કરી શકીએ છીએ. ચાલો પ્રયત્ન કરીએ, જેમ કે સૂચિ 4-7 માં દર્શાવેલ છે.</p>
-<listing number="4-7" file-name="src/main.rs" caption="The `first_word` function that returns a byte index value into the `String` parameter">
-```rust
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:here}}
-```
-</listing>
-કારણ કે આપણે `String` ઘટક દ્વારા ઘટક તપાસવું પડે છે કે કોઈ મૂલ્ય ખાલી જગ્યા છે કે નહીં, તેથી આપણે `as_bytes` પદ્ધતિનો ઉપયોગ કરીને આપણી `String` ને બાઇટ્સની શ્રેણીમાં રૂપાંતરિત કરીશું.
+<p><strong>Listing 4-7: The <code>first_word</code> function that returns a byte index value into the <code>String</code> parameter</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>કારણ કે આપણે <code>String</code> ઘટક દ્વારા ઘટક તપાસવું પડે છે કે કોઈ મૂલ્ય ખાલી જગ્યા છે કે નહીં, તેથી આપણે <code>as_bytes</code> પદ્ધતિનો ઉપયોગ કરીને આપણી <code>String</code> ને બાઇટ્સની શ્રેણીમાં રૂપાંતરિત કરીશું.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:as_bytes}}
@@ -215,12 +215,12 @@
 </span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:inside_for}}
 <span class="boring">}</span></code></pre>
 <p>હવે આપણી પાસે સ્ટ્રિંગમાં પ્રથમ શબ્દના અંતિમ અનુક્રમણિકા (index) શોધવાનો એક માર્ગ છે, પરંતુ એક સમસ્યા છે. આપણે <code>usize</code> સ્વરૂપે પરિણામ આપી રહ્યા છીએ, પરંતુ તે માત્ર <code>&amp;String</code> ના સંદર્ભમાં જ અર્થપૂર્ણ સંખ્યા છે. બીજા શબ્દોમાં કહીએ તો, તે <code>String</code> થી અલગ મૂલ્ય હોવાથી, ભવિષ્યમાં તે માન્ય રહેશે તેની કોઈ ખાતરી નથી. યાદી 4-8 માં આપેલા પ્રોગ્રામને ધ્યાનમાં લો જે યાદી 4-7 માંથી <code>first_word</code> ફંક્શનનો ઉપયોગ કરે છે.</p>
-<listing number="4-8" file-name="src/main.rs" caption="Storing the result from calling the `first_word` function and then changing the `String` contents">
-```rust
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-08/src/main.rs:here}}
-```
-</listing>
-આ કાર્યક્રમ કોઈપણ ભૂલો વગર સંપાઈ જાય છે અને જો આપણે `s.clear()` બોલાવ્યા પછી `word` વાપર્યું હોત તો પણ તેવું જ થાય. કારણ કે `word` એ `s` ની સ્થિતિ સાથે જોડાયેલું નથી, `word` માં હજી પણ મૂલ્ય `5` રહેલું છે. આપણે `s` variable સાથે આ મૂલ્ય `5` નો ઉપયોગ કરીને પ્રથમ શબ્દ બહાર કાઢવાનો પ્રયત્ન કરી શકીએ છીએ, પરંતુ તે એક ભૂલ હશે કારણ કે `s` ની સામગ્રીમાં ફેરફાર થયો છે ત્યારથી આપણે
+<p><strong>Listing 4-8: Storing the result from calling the <code>first_word</code> function and then changing the <code>String</code> contents</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-08/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ કાર્યક્રમ કોઈપણ ભૂલો વગર સંપાઈ જાય છે અને જો આપણે <code>s.clear()</code> બોલાવ્યા પછી <code>word</code> વાપર્યું હોત તો પણ તેવું જ થાય. કારણ કે <code>word</code> એ <code>s</code> ની સ્થિતિ સાથે જોડાયેલું નથી, <code>word</code> માં હજી પણ મૂલ્ય <code>5</code> રહેલું છે. આપણે <code>s</code> variable સાથે આ મૂલ્ય <code>5</code> નો ઉપયોગ કરીને પ્રથમ શબ્દ બહાર કાઢવાનો પ્રયત્ન કરી શકીએ છીએ, પરંતુ તે એક ભૂલ હશે કારણ કે <code>s</code> ની સામગ્રીમાં ફેરફાર થયો છે ત્યારથી આપણે</p>
 <p><code>word</code> માં <code>5</code> સાચવ્યું હતું. <code>word</code> માં અનુક્રમણિકા (index) ડેટા સાથે સુસંગત ન થવાની ચિંતા કરવી એ કંટાળાજનક અને ભૂલભરેલું છે! આ અનુક્રમણિકાઓનું સંચાલન વધુ નાજુક બની જાય છે જો આપણે <code>second_word</code> નામનું કાર્ય લખીએ. તેનું સ્વરૂપ આ પ્રમાણે હોવું જોઈએ:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -267,12 +267,11 @@ let slice = &amp;s[..];
 <span class="boring">}</span></code></pre>
 <p>નોંધ: સ્ટ્રિંગ સ્લાઇસ રેન્જ ઇન્ડેક્સિસ માન્ય UTF-8 અક્ષર સીમાઓ પર આવવી જોઈએ. જો તમે મલ્ટિબાઇટ અક્ષરની વચ્ચે સ્ટ્રિંગ સ્લાઇસ બનાવવાનો પ્રયાસ કરો છો, તો તમારો પ્રોગ્રામ ભૂલ સાથે સમાપ્ત થશે. આ</p>
 <p>બધી માહિતી ધ્યાનમાં રાખીને, ચાલો <code>first_word</code> ને સ્લાઇસ પરત કરવા માટે ફરીથી લખીએ. “સ્ટ્રિંગ સ્લાઇસ” દર્શાવતો પ્રકાર <code>&amp;str</code> તરીકે લખવામાં આવે છે:</p>
-<listing file-name="src/main.rs">
-```rust
-{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-18-first-word-slice/src/main.rs:here}}
-```
-</listing>
-આપણે Listing 4-7 માં કર્યા હતો તે જ રીતે, શબ્દના અંત માટે અનુક્રમણિકા મેળવીએ છીએ, એક ખાલી જગ્યાના પ્રથમ ઉદ્ભવને શોધીને. જ્યારે આપણે ખાલી જગ્યા શોધીએ છીએ, ત્યારે આપણે શરૂઆતની સ્થિતિ અને ખાલી જગ્યાના અનુક્રમણિકાને પ્રારંભિક અને અંતિમ અનુક્રમણિકા તરીકે ઉપયોગ કરીને સ્ટ્રિંગ સ્લાઇસ પરત કરીએ છીએ.
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-18-first-word-slice/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આપણે Listing 4-7 માં કર્યા હતો તે જ રીતે, શબ્દના અંત માટે અનુક્રમણિકા મેળવીએ છીએ, એક ખાલી જગ્યાના પ્રથમ ઉદ્ભવને શોધીને. જ્યારે આપણે ખાલી જગ્યા શોધીએ છીએ, ત્યારે આપણે શરૂઆતની સ્થિતિ અને ખાલી જગ્યાના અનુક્રમણિકાને પ્રારંભિક અને અંતિમ અનુક્રમણિકા તરીકે ઉપયોગ કરીને સ્ટ્રિંગ સ્લાઇસ પરત કરીએ છીએ.</p>
 <p>હવે જ્યારે આપણે <code>first_word</code> ને બોલાવીએ છીએ, ત્યારે આપણને એક જ મૂલ્ય પાછું મળે છે જે મૂળ ડેટા સાથે જોડાયેલું છે. આ મૂલ્ય સ્લાઇસના પ્રારંભિક બિંદુનો સંદર્ભ અને સ્લાઇસમાં રહેલા ઘટકોની સંખ્યાથી બનેલું હોય છે.</p>
 <p>ચોક્કસ ભાગ પાછો આપવો એ પણ <code>second_word</code> કાર્ય માટે યોગ્ય રહેશે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -280,12 +279,11 @@ let slice = &amp;s[..];
 </span>fn second_word(s: &amp;String) -&gt; &amp;str {
 <span class="boring">}</span></code></pre>
 <p>હવે આપણી પાસે એક સરળ API છે જે ભૂલ કરવી ઘણી મુશ્કેલ છે, કારણ કે કમ્પાઇલર ખાતરી કરશે કે <code>String</code> માંના રેફરન્સો માન્ય રહે. યાદ કરો, લિસ્ટિંગ 4-8 માં પ્રોગ્રામમાં શું ભૂલ હતી, જ્યારે આપણે પ્રથમ શબ્દના અંત સુધી ઇન્ડેક્સ મેળવ્યો હતો પરંતુ પછી સ્ટ્રિંગ સાફ કરી દીધી, જેથી આપણો ઇન્ડેક્સ અમાન્ય થઈ ગયો? તે કોડ તાર્કિક રીતે ખોટો હતો પણ તેમાં કોઈ તાત્કાલિક ભૂલો દેખાતી ન હતી. સમસ્યાઓ પાછળથી ઊભી થાત જો આપણે ખાલી સ્ટ્રિંગ સાથે પ્રથમ શબ્દના ઇન્ડેક્સનો ઉપયોગ કરવાનું ચાલુ રાખ્યું હોત. સ્લાઇસ આ ભૂલને અશક્ય બનાવે છે અને આપણને ઘણો જલ્દી જણાવે છે કે અમારી કોડમાં સમસ્યા છે. <code>first_word</code> ના સ્લાઇસ વર્ઝનનો ઉપયોગ કરવાથી કમ્પાઇલ-ટાઇમ એરર આવશે:</p>
-<listing file-name="src/main.rs">
-```rust
-{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-19-slice-error/src/main.rs:here}}
-```
-</listing>
-અહીંયા કમ્પાઇલરની ભૂલ છે:
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-19-slice-error/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અહીંયા કમ્પાઇલરની ભૂલ છે:</p>
 <pre><code class="language-console">{{#include ../listings/ch04-understanding-ownership/no-listing-19-slice-error/output.txt}}
 </code></pre>
 <p>ઉધાર લેવાના નિયમો યાદ કરો કે જો આપણી કોઈ વસ્તુની અમૂટ સંદર્ભ (reference) હોય, તો આપણે પરિવર્તનશીલ સંદર્ભ (mutable reference) પણ લઈ શકતા નથી. કારણ કે <code>clear</code> ને <code>String</code> ને ટૂંકાવવાની જરૂર છે, તેથી તેને પરિવર્તનશીલ સંદર્ભ મેળવવો પડે છે. <code>clear</code> બોલાવ્યા પછી <code>println!</code> માં <code>word</code> માં રહેલો સંદર્ભ વપરાય છે, તેથી તે સમયે અમૂટ સંદર્ભ હજી પણ કાર્યરત હોવો જોઈએ. Rust <code>clear</code> માં પરિવર્તનશીલ સંદર્ભ અને <code>word</code> માં અમૂટ સંદર્ભ એકસાથે અસ્તિત્વમાં ન હોય એવું નિયંત્રણ કરે છે, અને પરિણામે કમ્પાઇલેશન નિષ્ફળ જાય છે. માત્ર Rust એ આપણું API વાપરવામાં સરળ બનાવ્યું નથી, પરંતુ તે સમયના સંકલન (compile time) દરમિયાન ભૂલોની એક સંપૂર્ણ શ્રેણીને પણ દૂર કરી દીધી છે!</p>
@@ -304,19 +302,18 @@ let slice = &amp;s[..];
 </span>fn first_word(s: &amp;String) -&gt; &amp;str {
 <span class="boring">}</span></code></pre>
 <p>એક વધુ અનુભવી Rustacean લિસ્ટિંગ 4-9 માં દર્શાવેલ હસ્તાક્ષરનો ઉપયોગ કરશે, કારણ કે તે આપણને <code>&amp;String</code> અને <code>&amp;str</code> બંને મૂલ્યો પર સમાન કાર્યનો ઉપયોગ કરવાની મંજૂરી આપે છે.</p>
-<listing number="4-9" caption="Improving the `first_word` function by using a string slice for the type of the `s` parameter">
-```rust
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-09/src/main.rs:here}}
-```
-</listing>
-જો આપણી પાસે સ્ટ્રિંગ સ્લાઇસ હોય, તો આપણે તેને સીધો જ આપી શકીએ છીએ. જો આપણી પાસે `String` હોય, તો આપણે `String` નો સ્લાઇસ અથવા `String` નો સંદર્ભ આપી શકીએ છીએ. આ લવચીકતા ડિરેફ કોર્શન્સનો લાભ લે છે, જે વિશેષતાને આપણે પ્રકરણ ૧૫ ના “કાર્યો અને પદ્ધતિઓમાં ડિરેફ કોર્શન્સનો ઉપયોગ” વિભાગમાં આવરી
+<p><strong>Listing 4-9: Improving the <code>first_word</code> function by using a string slice for the type of the <code>s</code> parameter</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-09/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>જો આપણી પાસે સ્ટ્રિંગ સ્લાઇસ હોય, તો આપણે તેને સીધો જ આપી શકીએ છીએ. જો આપણી પાસે <code>String</code> હોય, તો આપણે <code>String</code> નો સ્લાઇસ અથવા <code>String</code> નો સંદર્ભ આપી શકીએ છીએ. આ લવચીકતા ડિરેફ કોર્શન્સનો લાભ લે છે, જે વિશેષતાને આપણે પ્રકરણ ૧૫ ના “કાર્યો અને પદ્ધતિઓમાં ડિરેફ કોર્શન્સનો ઉપયોગ” વિભાગમાં આવરી</p>
 <p>લઈશું. <code>String</code> ના સંદર્ભને બદલે સ્ટ્રિંગ સ્લાઇસ લઈને કાર્ય વ્યાખ્યાયિત કરવાથી આપણી API વધુ સામાન્ય અને ઉપયોગી બને છે, કોઈપણ કાર્યક્ષમતા ગુમાવ્યા વિના:</p>
-<listing file-name="src/main.rs">
-```rust
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-09/src/main.rs:usage}}
-```
-</listing>
-### Other Slices
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-09/src/main.rs:usage}}
+<span class="boring">}</span></code></pre>
+<h3 id="other-slices"><a class="header" href="#other-slices">Other Slices</a></h3>
 <p>સ્ટ્રિંગ ભાગો, તમે કદાચ ધારી શકો તેમ, સ્ટ્રિંગ્સ માટે વિશિષ્ટ છે. પરંતુ એક વધુ સામાન્ય ભાગ પ્રકાર પણ છે. આ શૃંખલાને ધ્યાનમાં લો:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -388,6 +385,7 @@ assert_eq!(slice, &amp;[2, 3]);
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -185,11 +185,23 @@
                         <h2 id="appendix-c-derivable-traits"><a class="header" href="#appendix-c-derivable-traits">Appendix C: Derivable Traits</a></h2>
 <p>પુસ્તકમાં જુદા જુદા સ્થળે, અમે <code>derive</code> લક્ષણ વિશે ચર્ચા કરી છે, જે તમે struct અથવા enum વ્યાખ્યા પર લાગુ કરી શકો છો. <code>derive</code> લક્ષણ કોડ જનરેટ કરે છે જે તમારા દ્વારા <code>derive</code> વાક્યરચના સાથે નોંધાયેલ type પર પોતાની ડિફોલ્ટ અમલીકરણ સાથે trait ને અમલમાં મૂકે છે.</p>
 <p>આ પૂરકમાં, અમે સ્ટાન્ડર્ડ લાઈબ્રેરીમાં તમામ traits નો સંદર્ભ આપીએ છીએ જેનો તમે <code>derive</code> સાથે ઉપયોગ કરી શકો છો. દરેક વિભાગ આવરી લે છે:</p>
+<ul>
+<li>
 <p>આ trait મેળવવાથી કઈ ઓપરેટર્સ અને મેથડ્સ સક્ષમ થશે.</p>
+</li>
+<li>
 <p><code>derive</code> દ્વારા પૂરી પાડવામાં આવેલ લક્ષણની અમલીકરણ શું કરે છે.</p>
+</li>
+<li>
 <p>લક્ષણનો અમલ પ્રકાર વિશે શું સૂચવે છે. The</p>
+</li>
+<li>
 <p>તમે લક્ષણનો અમલ ક્યારે કરી શકો છો અને ક્યારે ન કરી શકો તેવા સંજોગો.</p>
+</li>
+<li>
 <p>કાર્યોના ઉદાહરણો જે લક્ષણની આવશ્યકતા ધરાવે છે.</p>
+</li>
+</ul>
 <p>જો તમે <code>derive</code> લક્ષણ દ્વારા પૂરી પાડવામાં આવેલ વર્તનથી અલગ પરિણામ મેળવવા માંગતા હો, તો દરેક લક્ષણ માટે પ્રમાણિત પુસ્તકાલયના દસ્તાવેજોમાં વિગતવાર માહિતી મેળવો કે કેવી રીતે તેને જાતે અમલમાં મૂકવું.</p>
 <p>અહીં દર્શાવેલ લક્ષણો માત્ર તે જ છે જે પ્રમાણિત પુસ્તકાલય દ્વારા વ્યાખ્યાયિત કરવામાં આવ્યા છે અને જેને તમે <code>derive</code> નો ઉપયોગ કરીને તમારા પ્રકારો પર અમલમાં મૂકી શકો છો. પ્રમાણિત પુસ્તકાલયમાં વ્યાખ્યાયિત અન્ય લક્ષણોમાં સમજદાર ડિફોલ્ટ વર્તન હોતું નથી, તેથી તમારે તેને તમારી જરૂરિયાતો અનુસાર જાતે અમલમાં મૂકવાની રહેશે.</p>
 <p>એક એવા ટ્રેઇટનું ઉદાહરણ જે ઉત્પન્ન કરી શકાતું નથી તે <code>Display</code> છે, જે અંતિમ userઓ માટે ફોર્મેટિંગનું સંચાલન કરે છે. તમારે હંમેશાં એક અંતિમ userને પ્રકાર પ્રદર્શિત કરવાની યોગ્ય રીત ધ્યાનમાં લેવી જોઈએ. user કયા ભાગો જોઈ શકે? તેમને કયા ભાગો સુસંગત લાગશે? ડેટાનું કયું ફોર્મેટ તેમના માટે સૌથી વધુ સુસંગત હશે? Rust compiler પાસે આ સમજણ નથી, તેથી તે તમારા માટે યોગ્ય ડિફોલ્ટ વર્તન પ્રદાન કરી શકતું નથી. આ પૂર્તિમાં આપવામાં આવેલ ઉત્પન્ન કરી શકાય તેવા</p>
@@ -280,6 +292,7 @@
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -183,9 +183,17 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h2 id="how-to-write-tests"><a class="header" href="#how-to-write-tests">How to Write Tests</a></h2>
+<ul>
+<li>
 <p>પરીક્ષણો એ Rust કાર્યો છે જે ચકાસણી કરે છે કે બિન-પરીક્ષણ કોડ અપેક્ષિત રીતે કાર્યરત છે. પરીક્ષણ કાર્યોના ભાગો સામાન્ય રીતે આ ત્રણ ક્રિયાઓ કરે છે:</p>
+</li>
+<li>
 <p>જરૂરી ડેટા અથવા સ્થિતિ સેટ કરો.</p>
+</li>
+<li>
 <p>તમે જે કોડનું પરીક્ષણ કરવા માંગો છો તે ચલાવો.</p>
+</li>
+</ul>
 <p>ચકાસો કે પરિણામો તમારી અપેક્ષા મુજબ છે.</p>
 <p>ચાલો જોઈએ કે Rust કયા વિશેષતાઓ પૂરી પાડે છે વિશેષ કરીને એવા પરીક્ષણો લખવા માટે જે આ ક્રિયાઓ કરે છે, જેમાં <code>test</code> લક્ષણ, થોડાં macro અને <code>should_panic</code> લક્ષણનો સમાવેશ થાય છે.</p>
 <!-- Old headings. Do not remove or links may break. -->
@@ -199,7 +207,7 @@
 $ cd adder
 </code></pre>
 <p>src/lib.rs ફાઈલની સામગ્રી તમારા <code>adder</code> લાયબ્રેરીમાં src/lib.rs ફાઈલ Listing 11-1 જેવી દેખાવી જોઈએ.</p>
-<listing number="11-1" file-name="src/lib.rs" caption="The code generated automatically by `cargo new`">
+<p><strong>Listing 11-1: The code generated automatically by <code>cargo new</code></strong></p>
 <!-- manual-regeneration
 cd listings/ch11-writing-automated-tests
 rm -rf listing-11-01
@@ -210,20 +218,18 @@ RUSTFLAGS="-A unused_variables -A dead_code" RUST_TEST_THREADS=1 cargo test >> o
 git diff output.txt # commit any relevant changes; discard irrelevant ones
 cd ../../..
 -->
-```rust
-{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-01/src/lib.rs}}
-```
-</listing>
-ફાઈલ એક ઉદાહરણ `add` કાર્યથી આરંભ થાય છે જેથી આપણી પાસે પરીક્ષણ કરવા માટે કંઈક હોય.
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-01/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>ફાઈલ એક ઉદાહરણ <code>add</code> કાર્યથી આરંભ થાય છે જેથી આપણી પાસે પરીક્ષણ કરવા માટે કંઈક હોય.</p>
 <p>હાલ માટે, ચાલો આપણે માત્ર <code>it_works</code> કાર્ય પર ધ્યાન કેન્દ્રિત કરીએ. <code>#[test]</code> નોંધ પર ધ્યાન આપો: આ લક્ષણ સૂચવે છે કે આ એક પરીક્ષણ કાર્ય છે, જેથી પરીક્ષણ ચલાવનારને ખબર પડે કે આ કાર્યને પરીક્ષણ તરીકે ગણવું. આપણી પાસે <code>tests</code> મોડ્યુલમાં પરીક્ષણ વગરના અન્ય કાર્યો પણ હોઈ શકે છે જે સામાન્ય પરિસ્થિતિઓ ગોઠવવા અથવા સામાન્ય ક્રિયાઓ કરવા માટે મદદ કરે છે, તેથી આપણે હંમેશાં કયા કાર્યો પરીક્ષણો છે તે</p>
 <p>દર્શાવવું જોઈએ. The example function body uses the <code>assert_eq!</code> macro to assert that <code>result</code> , which contains the result of calling <code>add</code> with 2 and 2, equals 4. This assertion serves as an example of the format for a typical test. Let’s run it to see that this test passes. ઉદાહરણ કાર્ય ભાગ <code>assert_eq!</code> મેક્રોનો ઉપયોગ કરે છે જે ચકાસણી કરે છે કે <code>result</code> , જેમાં 2 અને 2 સાથે <code>add</code> બોલાવવાનો પરિણામ સમાયેલું છે, તે 4 બરાબર છે. આ ચકાસણી એક સામાન્ય પરીક્ષણના ફોર્મેટનું ઉદાહરણ તરીકે કામ કરે છે. ચાલો તેને ચલાવીએ જેથી આ પરીક્ષણ પાસ થાય તે જોવા મળે.</p>
 <p><code>cargo test</code> આદેશ <code>cargo test</code> આદેશ આપણી પરિયોજનામાં રહેલાં તમામ પરીક્ષણો ચલાવે છે, જે યાદી 11-2 માં દર્શાવેલું છે.</p>
-<listing number="11-2" caption="The output from running the automatically generated test">
-```console
-{{#include ../listings/ch11-writing-automated-tests/listing-11-01/output.txt}}
-```
-</listing>
-Cargo સંકલિત કર્યું અને પરીક્ષણ ચલાવ્યું. આપણે `running 1 test` લાઇન જોઈએ છીએ. આગલી લાઇન જનરેટ થયેલ પરીક્ષણ કાર્યનું નામ દર્શાવે છે, જે `tests::it_works` કહેવાય છે, અને તે પરીક્ષણને ચલાવવાનો પરિણામ `ok` છે. એકંદર સારાંશ `test result: ok.` નો અર્થ થાય છે કે બધા પરીક્ષણો પાસ થયા છે, અને `1 passed; 0 failed` ભાગ એવા પરીક્ષણોની સંખ્યાનો સરવાળો કરે છે જે પાસ થયા અથવા નિષ્ફળ ગયા.
+<p><strong>Listing 11-2: The output from running the automatically generated test</strong></p>
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/listing-11-01/output.txt}}
+</code></pre>
+<p>Cargo સંકલિત કર્યું અને પરીક્ષણ ચલાવ્યું. આપણે <code>running 1 test</code> લાઇન જોઈએ છીએ. આગલી લાઇન જનરેટ થયેલ પરીક્ષણ કાર્યનું નામ દર્શાવે છે, જે <code>tests::it_works</code> કહેવાય છે, અને તે પરીક્ષણને ચલાવવાનો પરિણામ <code>ok</code> છે. એકંદર સારાંશ <code>test result: ok.</code> નો અર્થ થાય છે કે બધા પરીક્ષણો પાસ થયા છે, અને <code>1 passed; 0 failed</code> ભાગ એવા પરીક્ષણોની સંખ્યાનો સરવાળો કરે છે જે પાસ થયા અથવા નિષ્ફળ ગયા.</p>
 <p>કોઈ પરીક્ષણને અવગણવામાં આવે તેવું ચિહ્નિત કરવું શક્ય છે જેથી તે કોઈ ચોક્કસ સમયે ન ચાલે; આપણે આ બાબતને “Ignoring Tests Unless Specifically Requested” વિભાગમાં પછીથી આ પ્રકરણમાં આવરી લઈશું. કારણ કે આપણે અહીં એવું કર્યું નથી, તેથી સારાંશ <code>0 ignored</code> દર્શાવે છે. આપણે <code>cargo test</code> આદેશને Argument પણ આપી શકીએ છીએ જેથી જે પરીક્ષણોના નામ કોઈ સ્ટ્રિંગ સાથે મેળ ખાય તે ચલાવવામાં આવે; આને ફિલ્ટરિંગ કહેવામાં આવે છે, અને આપણે તેને “Running a Subset of Tests by Name” વિભાગમાં આવરી લઈશું. અહીં, આપણે ચલાવવામાં આવી રહેલા પરીક્ષણોને ફિલ્ટર કર્યા નથી, તેથી સારાંશનો અંત <code>0 filtered out</code> દર્શાવે છે.</p>
 <p>0 માપેલ આંકડો <code>0 માપેલ</code> આંકડો એ પ્રદર્શન માપવા માટેના બેન્ચમાર્ક પરીક્ષણો માટેનો છે. વર્તમાન સમય મુજબ, બેન્ચમાર્ક પરીક્ષણો માત્ર નાઇટલી Rust માં ઉપલબ્ધ છે. વધુ જાણકારી મેળવવા માટે બેન્ચમાર્ક પરીક્ષણો વિશેની દસ્તાવેજીકરણ જુઓ.</p>
 <p>ડોક-ટેસ્ટ એડરથી શરૂ થતો પરીક્ષણ આઉટપુટનો આગળનો ભાગ ડોક-ટેસ્ટ એડરથી શરૂ થતો પરીક્ષણ આઉટપુટનો આગળનો ભાગ કોઈપણ દસ્તાવેજીકરણ પરીક્ષણોના પરિણામો માટે છે. અમારી પાસે હજુ સુધી કોઈ દસ્તાવેજીકરણ પરીક્ષણો નથી, પરંતુ Rust અમારા API દસ્તાવેજીકરણમાં દેખાતા કોઈપણ કોડ ઉદાહરણોને કમ્પાઇલ કરી શકે છે. આ સુવિધા તમારા દસ્તાવેજો અને તમારા કોડને સિંક્રનાઇઝ રાખવામાં મદદ કરે છે! અમે પ્રકરણ 14 ના “દસ્તાવેજીકરણ ટિપ્પણીઓ પરીક્ષણો તરીકે” વિભાગમાં દસ્તાવેજીકરણ પરીક્ષણો કેવી રીતે લખવા તેની ચર્ચા કરીશું. હાલ માટે, અમે <code>Doc-tests</code> આઉટપુટને અવગણીશું.</p>
@@ -237,40 +243,38 @@ Cargo સંકલિત કર્યું અને પરીક્ષણ ચ�
 <pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/no-listing-01-changing-test-name/output.txt}}
 </code></pre>
 <p>હવે આપણે બીજો પરીક્ષણ ઉમેરીશું, પરંતુ આ વખતે આપણે એવો પરીક્ષણ બનાવીશું જે નિષ્ફળ જાય! પરીક્ષણો નિષ્ફળ થાય છે જ્યારે પરીક્ષણ કાર્યમાં કંઈક ગભરાટ (panic) પામે છે. દરેક પરીક્ષણને નવા થ્રેડમાં ચલાવવામાં આવે છે, અને જ્યારે મુખ્ય થ્રેડ જુએ છે કે કોઈ પરીક્ષણ થ્રેડ મૃત્યુ પામ્યો છે, ત્યારે તે પરીક્ષણને નિષ્ફળ તરીકે નોંધવામાં આવે છે. પ્રકરણ 9 માં, આપણે વાત કરી હતી કે ગભરાટ (panic) કરવાનો સૌથી સરળ રસ્તો <code>panic!</code> મેક્રોને બોલાવવાનો છે. નવું પરીક્ષણ એક કાર્ય તરીકે ઉમેરો જેનું નામ <code>another</code> હોય, જેથી તમારી <code>src/lib.rs</code> ફાઈલ લિસ્ટિંગ 11-3 જેવી દેખાય.</p>
-<listing number="11-3" file-name="src/lib.rs" caption="Adding a second test that will fail because we call the `panic!` macro">
-```rust
-{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-03/src/lib.rs}}
-```
-</listing>
-Run the tests again using `cargo test`. The output should look like Listing 11-4, which shows that our `exploration` test passed and `another` failed.
-<listing number="11-4" caption="Test results when one test passes and one test fails">
-```console
-{{#include ../listings/ch11-writing-automated-tests/listing-11-03/output.txt}}
-```
-</listing>
+<p><strong>Listing 11-3: Adding a second test that will fail because we call the <code>panic!</code> macro</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-03/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>Run the tests again using <code>cargo test</code>. The output should look like Listing 11-4, which shows that our <code>exploration</code> test passed and <code>another</code> failed.</p>
+<p><strong>Listing 11-4: Test results when one test passes and one test fails</strong></p>
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/listing-11-03/output.txt}}
+</code></pre>
 <!-- manual-regeneration
 rg panicked listings/ch11-writing-automated-tests/listing-11-03/output.txt
 check the line number of the panic matches the line number in the following paragraph
  -->
-test tests::another `FAILED` દર્શાવે છે. વ્યક્તિગત પરિણામો અને સારાંશ વચ્ચે બે નવા વિભાગો દેખાય છે: પ્રથમ વિભાગ દરેક નિષ્ફળ પરીક્ષણનું વિગતવાર કારણ દર્શાવે છે. આ કિસ્સામાં, આપણને એ વિગતો મળે છે કે `tests::another` એ સંદેશ સાથે ગભરાટ અનુભવ્યો હતો: `Make this test fail`, જે src/lib.rs ફાઈલની 17મી લાઇન પર જોવા મળ્યો. આગળનો વિભાગ માત્ર નિષ્ફળ થયેલા તમામ પરીક્ષણોના નામની યાદી આપે છે, જે ઘણાં પરીક્ષણો અને વિગતવાર નિષ્ફળ પરીક્ષણ આઉટપુટ હોય ત્યારે ઉપયોગી છે. આપણે કોઈ નિષ્ફળ પરીક્ષણનું નામ વાપરીને માત્ર તે જ પરીક્ષણને ચલાવી શકીએ છીએ જેથી તેને વધુ સરળતાથી ડીબગ કરી શકાય; આપણે “Controlling How Tests Are Run” વિભાગમાં પરીક્ષણો ચલાવવાના અન્ય માર્ગો વિશે વધુ વાત કરીશું.
+<p>test tests::another <code>FAILED</code> દર્શાવે છે. વ્યક્તિગત પરિણામો અને સારાંશ વચ્ચે બે નવા વિભાગો દેખાય છે: પ્રથમ વિભાગ દરેક નિષ્ફળ પરીક્ષણનું વિગતવાર કારણ દર્શાવે છે. આ કિસ્સામાં, આપણને એ વિગતો મળે છે કે <code>tests::another</code> એ સંદેશ સાથે ગભરાટ અનુભવ્યો હતો: <code>Make this test fail</code>, જે src/lib.rs ફાઈલની 17મી લાઇન પર જોવા મળ્યો. આગળનો વિભાગ માત્ર નિષ્ફળ થયેલા તમામ પરીક્ષણોના નામની યાદી આપે છે, જે ઘણાં પરીક્ષણો અને વિગતવાર નિષ્ફળ પરીક્ષણ આઉટપુટ હોય ત્યારે ઉપયોગી છે. આપણે કોઈ નિષ્ફળ પરીક્ષણનું નામ વાપરીને માત્ર તે જ પરીક્ષણને ચલાવી શકીએ છીએ જેથી તેને વધુ સરળતાથી ડીબગ કરી શકાય; આપણે “Controlling How Tests Are Run” વિભાગમાં પરીક્ષણો ચલાવવાના અન્ય માર્ગો વિશે વધુ વાત કરીશું.</p>
 <p>સારાંશ લીટી અંતે દર્શાવે છે: એકંદરે, આપણો પરીક્ષણ પરિણામ <code>FAILED</code> છે. આપણી પાસે એક પરીક્ષણ પાસ થયું અને એક નિષ્ફળ ગયું.</p>
 <p>હવે તમે વિવિધ પરિસ્થિતિઓમાં પરીક્ષણ પરિણામો કેવા દેખાય છે તે જોયા પછી, ચાલો અન્ય કેટલીક મેક્રો જોઈએ જે પરીક્ષણોમાં ઉપયોગી છે જેમકે <code>panic!</code> .</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="checking-results-with-assert"><a class="header" href="#checking-results-with-assert">Checking Results with <code>assert!</code></a></h3>
 <p><code>assert!</code> મેક્રો, પ્રમાણિત પુસ્તકાલય દ્વારા પૂરા પાડવામાં આવે છે, તે ઉપયોગી છે જ્યારે તમે કોઈ પરીક્ષણમાં અમુક શરત <code>true</code> હોય એ સુનિશ્ચિત કરવા માંગો છો. અમે <code>assert!</code> મેક્રોને એક Argument આપીએ છીએ જે બુલિયન મૂલ્ય આપે છે. જો મૂલ્ય <code>true</code> હોય, તો કંઈ થતું નથી અને પરીક્ષણ પાસ થાય છે. જો મૂલ્ય <code>false</code> હોય, તો <code>assert!</code> મેક્રો <code>panic!</code> ને બોલાવે છે જેથી પરીક્ષણ નિષ્ફળ જાય. <code>assert!</code> મેક્રોનો ઉપયોગ કરીને અમે ચકાસી શકીએ છીએ કે આપણો કોડ આપણી ધારણા મુજબ કાર્ય કરી રહ્યો છે.</p>
 <p>Chapter 5, Listing 5-15, આપણે <code>Rectangle</code> struct અને <code>can_hold</code> પદ્ધતિનો ઉપયોગ કર્યો હતો, જે અહીં Listing 11-5 માં પુનરાવર્તિત થાય છે. ચાલો આ કોડને src/lib.rs ફાઈલમાં મૂકીએ, પછી <code>assert!</code> macro નો ઉપયોગ કરીને તેના માટે કેટલાક પરીક્ષણો લખીએ.</p>
-<listing number="11-5" file-name="src/lib.rs" caption="The `Rectangle` struct and its `can_hold` method from Chapter 5">
-```rust
-{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-05/src/lib.rs}}
-```
-</listing>
-`can_hold` પદ્ધતિ એક બુલિયન પરત કરે છે, જેનો અર્થ થાય છે કે તે `assert!` મેક્રો માટે એક યોગ્ય ઉપયોગ છે. યાદી 11-6 માં, અમે એક પરીક્ષણ લખીએ છીએ જે 8 પહોળાઈ અને 7 ઊંચાઈ ધરાવતા `Rectangle` ઉદાહરણ બનાવીને `can_hold` પદ્ધતિનું પરીક્ષણ કરે છે અને એ વાતની ખાતરી કરે છે કે તે બીજા `Rectangle` ઉદાહરણને, જેની પહોળાઈ 5 અને ઊંચાઈ 1 છે, સમાવી શકે છે.
-<listing number="11-6" file-name="src/lib.rs" caption="A test for `can_hold` that checks whether a larger rectangle can indeed hold a smaller rectangle">
-```rust
-{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-06/src/lib.rs:here}}
-```
-</listing>
-`use super::*;` મોડ્યુલ એ સામાન્ય મોડ્યુલ છે જે પ્રકરણ 7 માં આપણે આવરી લીધેલા "મોડ્યુલ વૃક્ષમાં વસ્તુનો સંદર્ભ લેવા માટેના માર્ગ" વિભાગમાં લાગુ પડતા સામાન્ય દૃશ્ય નિયમોનું પાલન કરે છે. કારણ કે `tests` મોડ્યુલ એક આંતરિક મોડ્યુલ છે, તેથી આપણે બાહ્ય મોડ્યુલમાં પરીક્ષણ માટેનો કોડ આંતરિક મોડ્યુલના અવકાશમાં લાવવો પડે છે. અમે અહીં ગ્લોબનો ઉપયોગ કરીએ છીએ, જેથી બાહ્ય મોડ્યુલમાં આપણે જે કંઈપણ વ્યાખ્યાયિત કરીએ છીએ તે આ `tests` મોડ્યુલ માટે ઉપલબ્ધ થાય છે.
+<p><strong>Listing 11-5: The <code>Rectangle</code> struct and its <code>can_hold</code> method from Chapter 5</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-05/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p><code>can_hold</code> પદ્ધતિ એક બુલિયન પરત કરે છે, જેનો અર્થ થાય છે કે તે <code>assert!</code> મેક્રો માટે એક યોગ્ય ઉપયોગ છે. યાદી 11-6 માં, અમે એક પરીક્ષણ લખીએ છીએ જે 8 પહોળાઈ અને 7 ઊંચાઈ ધરાવતા <code>Rectangle</code> ઉદાહરણ બનાવીને <code>can_hold</code> પદ્ધતિનું પરીક્ષણ કરે છે અને એ વાતની ખાતરી કરે છે કે તે બીજા <code>Rectangle</code> ઉદાહરણને, જેની પહોળાઈ 5 અને ઊંચાઈ 1 છે, સમાવી શકે છે.</p>
+<p><strong>Listing 11-6: A test for <code>can_hold</code> that checks whether a larger rectangle can indeed hold a smaller rectangle</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-06/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p><code>use super::*;</code> મોડ્યુલ એ સામાન્ય મોડ્યુલ છે જે પ્રકરણ 7 માં આપણે આવરી લીધેલા “મોડ્યુલ વૃક્ષમાં વસ્તુનો સંદર્ભ લેવા માટેના માર્ગ” વિભાગમાં લાગુ પડતા સામાન્ય દૃશ્ય નિયમોનું પાલન કરે છે. કારણ કે <code>tests</code> મોડ્યુલ એક આંતરિક મોડ્યુલ છે, તેથી આપણે બાહ્ય મોડ્યુલમાં પરીક્ષણ માટેનો કોડ આંતરિક મોડ્યુલના અવકાશમાં લાવવો પડે છે. અમે અહીં ગ્લોબનો ઉપયોગ કરીએ છીએ, જેથી બાહ્ય મોડ્યુલમાં આપણે જે કંઈપણ વ્યાખ્યાયિત કરીએ છીએ તે આ <code>tests</code> મોડ્યુલ માટે ઉપલબ્ધ થાય છે.</p>
 <p>આપણે આપણી ચકાસણીને <code>larger_can_hold_smaller</code> નામ આપ્યું છે, અને આપણે બે <code>Rectangle</code> ઉદાહરણો પણ બનાવ્યા છે જેની આપણને જરૂર છે. ત્યારબાદ, આપણે <code>assert!</code> મેક્રોને બોલાવ્યો અને તેને <code>larger.can_hold(&amp;smaller)</code> બોલાવીને મળેલા પરિણામને પસાર કર્યો. આ અભિવ્યક્તિ <code>true</code> પરત કરવા ધારવામાં આવે છે, તેથી આપણી ચકાસણી પાસ થવી જોઈએ. ચાલો જાણીએ!</p>
 <pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/listing-11-06/output.txt}}
 </code></pre>
@@ -296,12 +300,12 @@ test tests::another `FAILED` દર્શાવે છે. વ્યક્તિ
 <h3 id="testing-equality-with-assert_eq-and-assert_ne"><a class="header" href="#testing-equality-with-assert_eq-and-assert_ne">Testing Equality with <code>assert_eq!</code> and <code>assert_ne!</code></a></h3>
 <p>કાર્યક્ષમતા ચકાસવાનો એક સામાન્ય માર્ગ એ છે કે પરીક્ષણ હેઠળના કોડના પરિણામ અને કોડે જે મૂલ્ય પાછું આપવું જોઈએ તે વચ્ચે સમાનતા માટે પરીક્ષણ કરવું. તમે આ <code>assert!</code> મેક્રોનો ઉપયોગ કરીને અને <code>==</code> ઓપરેટરનો ઉપયોગ કરીને અભિવ્યક્તિ પસાર કરીને કરી શકો છો. જો કે, આ એક સામાન્ય પરીક્ષણ હોવાથી, પ્રમાણિત લાયબ્રેરી સમાનતા અથવા અસમાનતા માટે આ પરીક્ષણ કરવા માટે વધુ અનુકૂળ મેક્રો - <code>assert_eq!</code> અને <code>assert_ne!</code> પ્રદાન કરે છે. આ મેક્રો બે Argumentોને સમાનતા અથવા અસમાનતા માટે સરખાવે છે. જો ખાતરી નિષ્ફળ જાય તો તેઓ બંને મૂલ્યો છાપશે, જેનાથી પરીક્ષણ શા માટે નિષ્ફળ ગયું તે જોવાનું સરળ બને છે; તેનાથી વિપરીત, <code>assert!</code> મેક્રો માત્ર એ દર્શાવે છે કે તેને <code>==</code> અભિવ્યક્તિ માટે <code>false</code> મૂલ્ય મળ્યું છે, જે <code>false</code> મૂલ્ય તરફ દોરી જતા મૂલ્યો છાપ્યા વિના.</p>
 <p>Listing 11-7 માં, અમે એક <code>add_two</code> નામનું વિધેય લખીએ છીએ જે તેના પરિમાણમાં <code>2</code> ઉમેરે છે, અને પછી અમે આ વિધેયને <code>assert_eq!</code> મેક્રોનો ઉપયોગ કરીને ચકાસીએ છીએ.</p>
-<listing number="11-7" file-name="src/lib.rs" caption="Testing the function `add_two` using the `assert_eq!` macro">
-```rust
-{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-07/src/lib.rs}}
-```
-</listing>
-ચાલો જોઈએ કે તે સફળ થાય છે કે નહીં!
+<p><strong>Listing 11-7: Testing the function <code>add_two</code> using the <code>assert_eq!</code> macro</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-07/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>ચાલો જોઈએ કે તે સફળ થાય છે કે નહીં!</p>
 <pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/listing-11-07/output.txt}}
 </code></pre>
 <p>ચાલો આપણે એક variable નામનું <code>result</code> બનાવીએ, જે <code>add_two(2)</code> બોલાવવાથી મળેલ પરિણામ ધરાવે છે. ત્યારબાદ, આપણે <code>result</code> અને <code>4</code> ને Argumentો તરીકે <code>assert_eq!</code> મેક્રોને પસાર કરીએ છીએ. આ પરીક્ષણ માટેની આઉટપુટ લાઇન <code>test tests::it_adds_two ... ok</code> છે, અને <code>ok</code> દર્શાવે છે કે આપણું પરીક્ષણ</p>
@@ -347,12 +351,12 @@ test tests::another `FAILED` દર્શાવે છે. વ્યક્તિ
 <p>વળતર મૂલ્યોની ચકાસણી ઉપરાંત, એ મહત્વનું છે કે આપણો કોડ અપેક્ષા મુજબ ભૂલની પરિસ્થિતિઓને નિયંત્રિત કરે છે. ઉદાહરણ તરીકે, પ્રકરણ 9, યાદી 9-13 માં આપણે બનાવેલો <code>Guess</code> પ્રકાર ધ્યાનમાં લો. <code>Guess</code> નો ઉપયોગ કરતા અન્ય કોડને ખાતરી હોય છે કે <code>Guess</code> ઇન્સ્ટન્સમાં માત્ર 1 થી 100 ની વચ્ચેના જ મૂલ્યો હશે. આપણે એક પરીક્ષણ લખી શકીએ છીએ જે એ સુનિશ્ચિત કરે છે કે તે શ્રેણીની બહારના મૂલ્ય સાથે <code>Guess</code> ઇન્સ્ટન્સ બનાવવાનો પ્રયાસ કરવાથી પેનિક થાય.</p>
 <p>આપણે આપેલ પરીક્ષણ કાર્યમાં <code>should_panic</code> લક્ષણ ઉમેરીને આ કરીએ છીએ. જો કાર્યની અંદરનો કોડ પેનિક થાય તો પરીક્ષણ પાસ થાય છે; જો કાર્યની અંદરનો કોડ પેનિક ન થાય તો પરીક્ષણ નિષ્ફળ જાય છે.</p>
 <p>Listing 11-8 દર્શાવે છે કે એક પરીક્ષણ જે <code>Guess::new</code> ના ભૂલ પરિસ્થિતિઓ અપેક્ષા મુજબ થાય છે કે નહીં તે ચકાસે છે.</p>
-<listing number="11-8" file-name="src/lib.rs" caption="Testing that a condition will cause a `panic!`">
-```rust
-{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-08/src/lib.rs}}
-```
-</listing>
-આપણે `#[should_panic]` લક્ષણ `#[test]` લક્ષણ પછી અને પરીક્ષણ કાર્ય પહેલાં મૂકીએ છીએ. ચાલો જોઈએ કે આ પરીક્ષણ સફળ થાય ત્યારે પરિણામ શું આવે છે:
+<p><strong>Listing 11-8: Testing that a condition will cause a <code>panic!</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-08/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>આપણે <code>#[should_panic]</code> લક્ષણ <code>#[test]</code> લક્ષણ પછી અને પરીક્ષણ કાર્ય પહેલાં મૂકીએ છીએ. ચાલો જોઈએ કે આ પરીક્ષણ સફળ થાય ત્યારે પરિણામ શું આવે છે:</p>
 <pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/listing-11-08/output.txt}}
 </code></pre>
 <p>સારું દેખાય છે! હવે આપણે આપણા કોડમાં એક ભૂલ દાખલ કરીએ, જે <code>new</code> વિધેયને 100થી મોટી કિંમત મળે તો ગભરાટ (panic) થતો અટકાવે.</p>
@@ -365,12 +369,12 @@ test tests::another `FAILED` દર્શાવે છે. વ્યક્તિ
 </code></pre>
 <p>આ કિસ્સામાં આપણને બહુ મદદરૂપ સંદેશ મળતો નથી, પરંતુ જ્યારે આપણે પરીક્ષણ વિધેય (function) જોઈએ છીએ, ત્યારે આપણને દેખાય છે કે તે <code>#[should_panic]</code> સાથે નોંધાયેલું છે. આપણને મળેલી નિષ્ફળતાનો અર્થ એ થાય છે કે પરીક્ષણ વિધેયમાં રહેલો કોડ ગભરાટ (panic) ઊભો કરવામાં નિષ્ફળ ગયો હતો. Tests</p>
 <p>જે <code>should_panic</code> વાપરે છે તે પરીક્ષણો અચોક્કસ હોઈ શકે છે. એક <code>should_panic</code> પરીક્ષણ પણ પાસ થઈ જશે જો પરીક્ષણ કોઈ અલગ કારણસર ગભરાટ (panic) ઊભું કરે તો જે આપણે ધારતા હતા. <code>should_panic</code> પરીક્ષણોને વધુ ચોક્કસ બનાવવા માટે, આપણે <code>should_panic</code> લક્ષણ (attribute) માં એક વૈકલ્પિક <code>expected</code> પરિમાણ ઉમેરી શકીએ છીએ. પરીક્ષણ સાધન ખાતરી કરશે કે નિષ્ફળતા સંદેશમાં આપેલ લખાણ સમાવિષ્ટ છે. ઉદાહરણ તરીકે, યાદી 11-9 માં <code>Guess</code> માટે સુધારેલા કોડને ધ્યાનમાં લો જ્યાં <code>new</code> વિધેય (function) અલગ-અલગ સંદેશાઓ સાથે ગભરાટ (panic) ઊભો કરે છે, જે આધાર રાખે છે કે મૂલ્ય ખૂબ નાનું છે કે ખૂબ મોટું.</p>
-<listing number="11-9" file-name="src/lib.rs" caption="Testing for a `panic!` with a panic message containing a specified substring">
-```rust
-{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-09/src/lib.rs:here}}
-```
-</listing>
-આ પરીક્ષણ સફળ થશે કારણ કે આપણે `should_panic` લક્ષણના `expected` પરિમાણમાં જે મૂલ્ય આપ્યું છે, તે સંદેશનો એક ભાગ છે જેનાથી `Guess::new` વિધેય ગભરાટ અનુભવે છે. આપણે સંપૂર્ણ ગભરાટ સંદેશ સ્પષ્ટ કરી શક્યા હોત, જે આ કિસ્સામાં `Guess value must be less than or equal to 100, got 200` હોત. તમે શું સ્પષ્ટ કરવાનું પસંદ કરો છો તે નિર્ધારિત કરે છે કે ગભરાટ સંદેશનો કેટલો ભાગ અનન્ય અથવા ગતિશીલ છે અને તમે તમારી પરીક્ષણને કેટલી ચોકસાઈથી કરવા માંગો છો. આ કિસ્સામાં, ગભરાટ સંદેશનો એક ભાગ પૂરતો છે તેની ખાતરી કરવા માટે કે પરીક્ષણ વિધેયમાં રહેલો `else if value &gt; 100` વિભાગ ચલાય છે.
+<p><strong>Listing 11-9: Testing for a <code>panic!</code> with a panic message containing a specified substring</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-09/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ પરીક્ષણ સફળ થશે કારણ કે આપણે <code>should_panic</code> લક્ષણના <code>expected</code> પરિમાણમાં જે મૂલ્ય આપ્યું છે, તે સંદેશનો એક ભાગ છે જેનાથી <code>Guess::new</code> વિધેય ગભરાટ અનુભવે છે. આપણે સંપૂર્ણ ગભરાટ સંદેશ સ્પષ્ટ કરી શક્યા હોત, જે આ કિસ્સામાં <code>Guess value must be less than or equal to 100, got 200</code> હોત. તમે શું સ્પષ્ટ કરવાનું પસંદ કરો છો તે નિર્ધારિત કરે છે કે ગભરાટ સંદેશનો કેટલો ભાગ અનન્ય અથવા ગતિશીલ છે અને તમે તમારી પરીક્ષણને કેટલી ચોકસાઈથી કરવા માંગો છો. આ કિસ્સામાં, ગભરાટ સંદેશનો એક ભાગ પૂરતો છે તેની ખાતરી કરવા માટે કે પરીક્ષણ વિધેયમાં રહેલો <code>else if value &gt; 100</code> વિભાગ ચલાય છે.</p>
 <p>ચોક્કસ પરિસ્થિતિમાં <code>should_panic</code> પરીક્ષણ જેમાં અપેક્ષિત સંદેશ હોય, તે નિષ્ફળ જાય ત્યારે શું થાય છે તે જોવા માટે, ચાલો આપણી કોડમાં ફરીથી એક ભૂલ દાખલ કરીએ. આ માટે આપણે <code>if value &lt; 1</code> અને <code>else if value &gt; 100</code> બ્લોક્સના ભાગો બદલીએ:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -443,6 +447,7 @@ test tests::another `FAILED` દર્શાવે છે. વ્યક્તિ
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

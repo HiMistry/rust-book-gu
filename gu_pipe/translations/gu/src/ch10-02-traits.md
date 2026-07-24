@@ -13,11 +13,12 @@
 
 આપણે એક મીડિયા એગ્રીગેટર ક્રેટ `aggregator` બનાવવાની ઈચ્છા કરીએ છીએ જે `NewsArticle` અથવા `SocialPost` ઇન્સ્ટન્સમાં સંગ્રહિત ડેટાના સારાંશ દર્શાવી શકે. આ માટે, આપણને દરેક પ્રકારનો સારાંશ જરૂરી છે, અને અમે તે સારાંશ મેળવવા માટે એક ઇન્સ્ટન્સ પર `summarize` પદ્ધતિને બોલાવીશું. સૂચિ 10-12 જાહેર `Summary` ટ્રેઇટની વ્યાખ્યા દર્શાવે છે જે આ વર્તન વ્યક્ત કરે છે.
 
-<Listing number="10-12" file-name="src/lib.rs" caption="A `Summary` trait that consists of the behavior provided by a `summarize` method">
+**Listing 10-12: A `Summary` trait that consists of the behavior provided by a `summarize` method**
+
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-12/src/lib.rs}}
 ```
-</Listing>
+
 અહીં, આપણે `trait` કીવર્ડનો ઉપયોગ કરીને એક લક્ષણ જાહેર કરીએ છીએ અને પછી લક્ષણનું નામ, જે આ કિસ્સામાં `Summary` છે. આપણે લક્ષણને `pub` તરીકે પણ જાહેર કરીએ છીએ જેથી અન્ય ક્રેટે (crates) આ ક્રેટે પર આધારિત રહીને આ લક્ષણનો ઉપયોગ કરી શકે, જે આપણે થોડા ઉદાહરણોમાં જોઈશું. કુંજી કૌંસની અંદર, આપણે પદ્ધતિ હસ્તાક્ષરો (method signatures) જાહેર કરીએ છીએ જે તે પ્રકારોના વર્તનની સમજૂતી આપે છે જે આ લક્ષણને અમલમાં મૂકે છે, જે આ કિસ્સામાં `fn
 
 summarize(&self) -> String` છે. પદ્ધતિ હસ્તાક્ષર પછી, કુંજી કૌંસની અંદર અમલીકરણ આપવાને બદલે, આપણે અર્ધવિરામ (semicolon) નો ઉપયોગ કરીએ છીએ. આ લક્ષણને અમલમાં મૂકતો દરેક પ્રકાર પદ્ધતિના શરીર માટે પોતાનું કસ્ટમ વર્તન પ્રદાન કરે છે. કમ્પાઇલર ખાતરી કરશે કે `Summary` લક્ષણ ધરાવતા કોઈપણ પ્રકારમાં `summarize` પદ્ધતિ આ હસ્તાક્ષર સાથે ચોક્કસપણે વ્યાખ્યાયિત થયેલ હશે.
@@ -28,11 +29,12 @@ summarize(&self) -> String` છે. પદ્ધતિ હસ્તાક્ષ�
 
 હવે આપણે `Summary` લક્ષણની ઇચ્છિત હસ્તાક્ષરો નિર્ધારિત કર્યા છે, પછી આપણે આપણાં મીડિયા એકત્રીકરણમાં રહેલા પ્રકારો પર તેને અમલમાં મૂકી શકીએ છીએ. સૂચિ 10-13 `NewsArticle` સ્ટ્રક્ચર પર `Summary` લક્ષણનું એક અમલીકરણ દર્શાવે છે જે હેડલાઇન, લેખક અને સ્થાનનો ઉપયોગ કરીને `summarize` નું વળતર મૂલ્ય બનાવે છે. `SocialPost` સ્ટ્રક્ચર માટે, આપણે `summarize` ને user નામ દ્વારા અનુસરવામાં આવે છે, ત્યારબાદ પોસ્ટના સમગ્ર લખાણ તરીકે વ્યાખ્યાયિત કરીએ છીએ, એવું ધારીને કે પોસ્ટની સામગ્રી પહેલાથી જ 280 અક્ષરો સુધી મર્યાદિત છે.
 
-<Listing number="10-13" file-name="src/lib.rs" caption="Implementing the `Summary` trait on the `NewsArticle` and `SocialPost` types">
+**Listing 10-13: Implementing the `Summary` trait on the `NewsArticle` and `SocialPost` types**
+
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-13/src/lib.rs:here}}
 ```
-</Listing>
+
 પ્રકાર પર લક્ષણ (trait) અમલમાં મૂકવું એ સામાન્ય પદ્ધતિઓ અમલમાં મૂકવા જેવું જ છે. તફાવત એ છે કે `impl` પછી, આપણે જે લક્ષણને અમલમાં મૂકવા માંગીએ છીએ તેનું નામ લખીએ છીએ, ત્યારબાદ `for` કીવર્ડનો ઉપયોગ કરીએ છીએ અને પછી આપણે જે પ્રકાર માટે લક્ષણ અમલમાં મૂકવા માંગીએ છીએ તેનું નામ સ્પષ્ટ કરીએ છીએ. `impl` બ્લોકમાં, આપણે તે પદ્ધતિ હસ્તાક્ષરો (signatures) મૂકીએ છીએ જે લક્ષણ વ્યાખ્યામાં નિર્ધારિત કરવામાં આવ્યા છે. દરેક હસ્તાક્ષર પછી અર્ધવિરામ મૂકવાના બદલે, આપણે કદબિંદુઓનો ઉપયોગ કરીએ છીએ અને લક્ષણની પદ્ધતિઓ માટે ચોક્કસ વર્તન ભરપૂર કરીએ છીએ જે વિશેષ પ્રકાર માટે હોવું જોઈએ.
 
 હવે પુસ્તકાલયે `NewsArticle` અને `SocialPost` પર `Summary` લક્ષણ (trait) અમલમાં મૂક્યું છે, તેથી હવે ક્રેટના userઓ `NewsArticle` અને `SocialPost` નાં ઉદાહરણો પર નિયમિત પદ્ધતિઓ (methods) ની જેમ જ લક્ષણની પદ્ધતિઓને બોલાવી શકે છે. એકમાત્ર ભેદ એ છે કે userએ પ્રકારોની સાથે લક્ષણને પણ કાર્યક્ષેત્રમાં લાવવું પડશે. અહીં એક ઉદાહરણ છે કે કેવી રીતે બાઈનરી ક્રેટ આપણી `aggregator` પુસ્તકાલય ક્રેટનો ઉપયોગ કરી શકે છે:
@@ -53,11 +55,12 @@ summarize(&self) -> String` છે. પદ્ધતિ હસ્તાક્ષ�
 
 ઉપયોગિતા 10-14 માં, આપણે `Summary` traitની `summarize` method માટે એક default stringનો ઉલ્લેખ કર્યો છે, માત્ર method signatureને વ્યાખ્યાયિત કરવાને બદલે, જેવું કે આપણે ઉપયોગિતા 10-12 માં કર્યું હતું.
 
-<Listing number="10-14" file-name="src/lib.rs" caption="Defining a `Summary` trait with a default implementation of the `summarize` method">
+**Listing 10-14: Defining a `Summary` trait with a default implementation of the `summarize` method**
+
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-14/src/lib.rs:here}}
 ```
-</Listing>
+
 `NewsArticle` ના ઉદાહરણોનો સારાંશ આપવા માટે ડિફોલ્ટ અમલીકરણનો ઉપયોગ કરવા માટે, આપણે `impl Summary for NewsArticle {}` સાથે ખાલી `impl` બ્લોક સ્પષ્ટ કરીએ છીએ.
 
 ભલે આપણે હવે સીધા `NewsArticle` પર `summarize` પદ્ધતિને વ્યાખ્યાયિત ન કરતા હોઈએ, આપણે ડિફોલ્ટ અમલીકરણ પ્રદાન કર્યું છે અને ઉલ્લેખ કર્યો છે કે `NewsArticle` `Summary` ટ્રેઇટનો અમલ કરે છે. પરિણામે, આપણે હજી પણ `NewsArticle` ના ઉદાહરણ પર `summarize` પદ્ધતિને બોલાવી શકીએ છીએ, આ રીતે:
@@ -173,11 +176,12 @@ fn some_function<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 {
 
 generic પ્રકાર પરિમાણોનો ઉપયોગ કરતી `impl` બ્લોક સાથે ટ્રેઇટ બાઉન્ડનો ઉપયોગ કરીને, અમે નિર્દિષ્ટ ટ્રેઇટ્સને અમલમાં મૂકતા પ્રકારો માટે પદ્ધતિઓને શરતી રીતે અમલમાં મૂકી શકીએ છીએ. ઉદાહરણ તરીકે, લિસ્ટિંગ 10-15 માં `Pair<T>` પ્રકાર હંમેશાં `new` ફંક્શનને અમલમાં મૂકે છે જે `Pair<T>` નું નવું ઇન્સ્ટન્સ પાછું આપે છે (યાદ કરો કે પ્રકરણ 5 ના "પદ્ધતિ સિન્ટેક્સ" વિભાગમાં `Self` એ `impl` બ્લોકના પ્રકારનું ઉપનામ છે, જે આ કિસ્સામાં `Pair<T>` છે). પરંતુ આગામી `impl` બ્લોકમાં, `Pair<T>` માત્ર `cmp_display` પદ્ધતિને અમલમાં મૂકે છે જો તેના આંતરિક પ્રકાર `T` `PartialOrd` ટ્રેઇટને અમલમાં મૂકે છે જે સરખામણી સક્ષમ કરે છે અને `Display` ટ્રેઇટને અમલમાં મૂકે છે જે પ્રિન્ટિંગ સક્ષમ કરે છે.
 
-<Listing number="10-15" file-name="src/lib.rs" caption="Conditionally implementing methods on a generic type depending on trait bounds">
+**Listing 10-15: Conditionally implementing methods on a generic type depending on trait bounds**
+
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-15/src/lib.rs}}
 ```
-</Listing>
+
 અમે અન્ય રીતે પણ એક trait ને કોઈપણ પ્રકાર માટે શરતી રૂપે અમલમાં મૂકી શકીએ છીએ જે અન્ય trait નો અમલ કરે છે. કોઈપણ પ્રકાર પરના trait ના અમલીકરણો કે જે trait ની સીમાઓ સંતોષે છે, તેને વ્યાપક અમલીકરણો કહેવામાં આવે છે અને તેનો ઉપયોગ Rust પ્રમાણિત પુસ્તકાલયમાં મોટા પ્રમાણમાં થાય છે. ઉદાહરણ તરીકે, પ્રમાણિત પુસ્તકાલય `Display` trait નો અમલ કરે તેવા કોઈપણ પ્રકાર પર `ToString` trait નો અમલ કરે છે. પ્રમાણિત પુસ્તકાલયમાં `impl` બ્લોક આ કોડ જેવો દેખાય છે:
 
 ```rust

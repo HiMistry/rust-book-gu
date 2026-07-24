@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -214,23 +214,25 @@
 <blockquote>
 <pre><code>variable `s` એક સ્ટ્રિંગ લિટરલનો ઉલ્લેખ કરે છે, જેમાં સ્ટ્રિંગનું મૂલ્ય આપણા પ્રોગ્રામના લખાણમાં કાયમી રીતે કોડ થયેલું હોય છે. variable જ્યાં સુધી તે જાહેર કરવામાં આવે ત્યાં સુધી વર્તમાન અવકાશ (scope) ના અંત સુધી માન્ય રહે છે. યાદી 4-1 એક એવા પ્રોગ્રામને દર્શાવે છે જેમાં ટિપ્પણીઓ દ્વારા સમજાવવામાં આવ્યું છે કે variable `s` ક્યાં માન્ય રહેશે.
 
-&lt;Listing number="4-1" caption="A variable and the scope in which it is valid"&gt;
-```rust
+**Listing 4-1: A variable and the scope in which it is valid**
 </code></pre>
+</blockquote>
+<blockquote>
+<pre><code class="language-rust"></code></pre>
 </blockquote>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>&gt; {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-01/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <blockquote>
-<pre><code>&lt;/Listing&gt;
+<pre><code>
 અર્થાત, અહીં બે મહત્વના કાળખંડ છે:
 
 જ્યારે `s` અવકાશમાં આવે છે, ત્યારે તે પ્રસાધિત (valid) હોય છે.
 
 તે અવકાશમાંથી બહાર ન જાય ત્યાં સુધી પ્રસાધિત જ રહે છે.
 
-### The Stack and the Heap
+- ### The Stack and the Heap
 
 આ સમયે, ક્ષેત્રો અને variable's માન્યતા વચ્ચેનો સંબંધ અન્ય પ્રોગ્રામિંગ ભાષાઓમાં જોવા મળતો જ છે. હવે આપણે આ સમજણ પર આધારિત `String` પ્રકારને પરિચય આપીશું.
 
@@ -276,7 +278,7 @@
 
 જો કે, બીજો ભાગ અલગ છે. કચરો એકત્રીકરનાર (GC) વાળી ભાષાઓમાં, GC વપરાશમાં ન હોય તેવી સ્મૃતિને ટ્રેક કરે છે અને સાફ કરે છે, અને આપણે તેના વિશે વિચારવાની જરૂર નથી. મોટાભાગની GC વગરની ભાષાઓમાં, તે આપણી જવાબદારી છે કે ક્યારે સ્મૃતિનો ઉપયોગ થતો નથી તે ઓળખવું અને તેને મુક્ત કરવા માટે કોડને સ્પષ્ટપણે બોલાવવો, જેમ આપણે તેની વિનંતી કરી હતી. આ યોગ્ય રીતે કરવું ઐતિહાસિક રીતે એક મુશ્કેલ પ્રોગ્રામિંગ સમસ્યા રહી છે. જો આપણે ભૂલી જઈએ, તો આપણે સ્મૃતિનો વ્યય કરીશું. જો આપણે તે ખૂબ વહેલો કરીએ, તો આપણી પાસે અમાન્ય variable હશે. જો આપણે તેને બે વાર કરીએ, તો તે પણ એક ખામી છે. આપણે બરાબર એક `allocate` સાથે બરાબર એક `free` જોડવાની જરૂર છે.
 
-Rust એક અલગ માર્ગ અપનાવે છે: સ્મૃતિ આપોઆપ પરત થઈ જાય છે જ્યારે તે variable (variable) જેની માલિકી ધરાવે છે, તે અવકાશમાંથી બહાર નીકળી જાય છે. અહીંયા આપણા અવકાશના ઉદાહરણનું એક વર્ઝન યાદી 4-1 માંથી લેવામાં આવ્યું છે, જેમાં `String` નો ઉપયોગ સાદી શબ્દશઃ વેલ્યુને બદલે કરવામાં આવ્યો છે:
+- Rust એક અલગ માર્ગ અપનાવે છે: સ્મૃતિ આપોઆપ પરત થઈ જાય છે જ્યારે તે variable (variable) જેની માલિકી ધરાવે છે, તે અવકાશમાંથી બહાર નીકળી જાય છે. અહીંયા આપણા અવકાશના ઉદાહરણનું એક વર્ઝન યાદી 4-1 માંથી લેવામાં આવ્યું છે, જેમાં `String` નો ઉપયોગ સાદી શબ્દશઃ વેલ્યુને બદલે કરવામાં આવ્યો છે:
 
 ### The Stack and the Heap
 
@@ -296,16 +298,26 @@ Rust એક અલગ માર્ગ અપનાવે છે: સ્મૃત
 
 Rust માં, એક કરતાં વધુ variable સમાન માહિતી સાથે જુદી જુદી રીતે ક્રિયાપ્રતિક્રિયા કરી શકે છે. સૂચિ 4-2 એક ઉદાહરણ દર્શાવે છે જેમાં પૂર્ણાંકનો ઉપયોગ થયો છે.
 
-&lt;Listing number="4-2" caption="Assigning the integer value of variable `x` to `y`"&gt;
-```rust
+**Listing 4-2: Assigning the integer value of variable `x` to `y`**
 </code></pre>
+</blockquote>
+<blockquote>
+<ul>
+<li>
+<ul>
+<li>
+<pre><code class="language-rust"></code></pre>
+</li>
+</ul>
+</li>
+</ul>
 </blockquote>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>&gt; {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-02/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <blockquote>
-<pre><code>&lt;/Listing&gt;
+<pre><code>
 આપણે કદાચ અનુમાન લગાવી શકીએ કે આ શું કરી રહ્યું છે: “મૂલ્ય `5` ને `x` સાથે જોડો; પછી, `x` માં રહેલા મૂલ્યની નકલ કરો અને તેને `y` સાથે જોડો.” હવે આપણી પાસે બે variable, `x` અને `y`, છે અને બંને `5` બરાબર છે. આ ખરેખર થઈ રહ્યું છે, કારણ કે પૂર્ણાંક સરળ મૂલ્યો છે જેનું જાણીતું, નિશ્ચિત કદ હોય છે, અને આ બે `5` મૂલ્યોને સ્ટેક પર ધકેલવામાં આવે છે.
 
 હવે ચાલો `String` સંસ્કરણ જોઈએ:
@@ -323,8 +335,14 @@ Rust માં, એક કરતાં વધુ variable સમાન માહ
 </code></pre>
 </blockquote>
 <h3 id="ownership-rules"><a class="header" href="#ownership-rules">Ownership Rules</a></h3>
+<ul>
+<li>
 <p>નકલ કરશે અને તેને <code>s2</code> સાથે જોડી દેશે. પરંતુ આ બરાબર નથી થતું. જુઓ આકૃતિ 4-1, જ્યાં <code>String</code> ની અંદર શું થઈ રહ્યું છે તે જોવા માટે. એક <code>String</code> ત્રણ ભાગોથી બનેલું હોય છે, જે ડાબી બાજુ દર્શાવેલ છે: સ્ટ્રિંગની સામગ્રી ધરાવતા મેમરી તરફનો pointer, લંબાઈ અને ક્ષમતા. આ માહિતીનો સમૂહ સ્ટેક પર સંગ્રહિત થાય છે. જમણી બાજુએ હીપમાં રહેલી મેમરી છે જે સામગ્રી ધરાવે છે.</p>
+</li>
+<li>
 <p>આકૃતિ 4-1: <code>String</code> ના સ્મૃતિમાં નિરૂપણ, જે મૂલ્ય <code>"hello"</code> ધરાવે છે અને <code>s1</code> સાથે જોડાયેલું છે</p>
+</li>
+</ul>
 <p>લંબાઈ એ બાઇટ્સમાં સ્મૃતિની માત્રા દર્શાવે છે, જેનો ઉપયોગ <code>String</code> ની સામગ્રી હાલમાં કરી રહી છે. ક્ષમતા એ કુલ સ્મૃતિની માત્રા છે, બાઇટ્સમાં, જે <code>String</code> ને ફાળવણીકાર (allocator) પાસેથી મળી છે. લંબાઈ અને ક્ષમતા વચ્ચેનો તફાવત મહત્વપૂર્ણ છે, પરંતુ વર્તમાન સંદર્ભમાં તે જરૂરી નથી, તેથી હાલ માટે ક્ષમતાને અવગણી શકાય છે.</p>
 <p>જ્યારે આપણે <code>s1</code> ને <code>s2</code> માં સોંપીએ છીએ, ત્યારે <code>String</code> ડેટાની નકલ કરવામાં આવે છે, એટલે કે પોઇન્ટર, લંબાઈ અને ક્ષમતા જે સ્ટેક પર હોય તેની નકલ કરવામાં આવે છે. હીપ (heap) પર રહેલા ડેટાની નકલ થતી નથી, જેના પર પોઇન્ટર નિર્દેશ કરે છે. બીજા શબ્દોમાં કહીએ તો, સ્મૃતિમાં ડેટાનું નિરૂપણ આકૃતિ 4-2 જેવું દેખાય છે.</p>
 <p>આકૃતિ 4-2: variable <code>s2</code> ની સ્મૃતિમાં રજૂઆત, જેમાં <code>s1</code> ના pointer, લંબાઈ અને ક્ષમતાની નકલ છે.</p>
@@ -376,112 +394,110 @@ Rust માં, એક કરતાં વધુ variable સમાન માહ
 <p>તેમાં માત્ર એવા જ પ્રકારો હોય જે <code>Copy</code> પણ અમલમાં મૂકે છે. ઉદાહરણ તરીકે, <code>(i32, i32)</code> <code>Copy</code> અમલમાં મૂકે છે, પરંતુ <code>(i32, String)</code> નથી કરતા.</p>
 <h3 id="variable-scope"><a class="header" href="#variable-scope">Variable Scope</a></h3>
 <p>વિધેયને મૂલ્ય પહોંચાડવાની પદ્ધતિઓ variable મૂલ્ય સોંપવા જેવી જ છે. વિધેયને variable પહોંચાડવાથી સ્થળાંતર અથવા નકલ થશે, જેમ સોંપણીમાં થાય છે. સૂચિ 4-3 માં કેટલીક નોંધો સાથેનું ઉદાહરણ છે, જે દર્શાવે છે કે variables ક્યાં પ્રવેશ કરે છે અને અવકાશમાંથી બહાર નીકળે છે.</p>
-<listing number="4-3" file-name="src/main.rs" caption="Functions with ownership and scope annotated">
-```rust
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-03/src/main.rs}}
-```
-</listing>
-જો આપણે `takes_ownership` કૉલ પછી `s` વાપરવાનો પ્રયત્ન કરીએ, તો Rust એક કમ્પાઇલ-ટાઇમ ભૂલ આપશે. આ સ્થિર તપાસો આપણને ભૂલોથી સુરક્ષિત કરે છે. જુઓ કે તમે `main` માં કોડ ઉમેરી શકો છો જે `s` અને `x` નો ઉપયોગ કરે છે જેથી તમે જોઈ શકો કે તમે તેનો ઉપયોગ ક્યાં કરી શકો છો અને માલિકીના નિયમો તમને ક્યાં કરવા દેતા નથી.
+<p><strong>Listing 4-3: Functions with ownership and scope annotated</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-03/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>જો આપણે <code>takes_ownership</code> કૉલ પછી <code>s</code> વાપરવાનો પ્રયત્ન કરીએ, તો Rust એક કમ્પાઇલ-ટાઇમ ભૂલ આપશે. આ સ્થિર તપાસો આપણને ભૂલોથી સુરક્ષિત કરે છે. જુઓ કે તમે <code>main</code> માં કોડ ઉમેરી શકો છો જે <code>s</code> અને <code>x</code> નો ઉપયોગ કરે છે જેથી તમે જોઈ શકો કે તમે તેનો ઉપયોગ ક્યાં કરી શકો છો અને માલિકીના નિયમો તમને ક્યાં કરવા દેતા નથી.</p>
 <h3 id="the-string-type"><a class="header" href="#the-string-type">The <code>String</code> Type</a></h3>
 <p>વળતર મૂલ્યો માલિકીનું સ્થાનાંતરણ પણ કરી શકે છે. સૂચિ 4-4 એક ફંક્શનનું ઉદાહરણ દર્શાવે છે જે અમુક મૂલ્ય પાછું આપે છે, જેમાં સૂચિ 4-3 માં દર્શાવેલ એનોટેશન્સ જેવા જ હોય છે.</p>
-<listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
-```rust
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-```
-</listing>
-ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય `drop` દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While
+<p><strong>Listing 4-4: Transferring ownership of return values</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય <code>drop</code> દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While</p>
 <p>જ્યારે આ કામ કરે છે, ત્યારે માલિકી લેવી અને પછી દરેક કાર્ય (function) સાથે માલિકી પાછી આપવી થોડી કંટાળાજનક છે. જો આપણે કોઈ કાર્યને મૂલ્યનો ઉપયોગ કરવા દેવા માંગતા હોઈએ પરંતુ માલિકી ન લેવા માંગતા હોય તો શું કરવું? એવું બહુ હેરાન કરે તેવું છે કે જે કંઈપણ આપણે અંદર મોકલીએ, તેને ફરીથી વાપરવા માટે પાછું મોકલવાની જરૂર પડે છે, ઉપરાંત કાર્યના ભાગરૂપે પરિણામી ડેટાને પણ આપણને પાછો મેળવવો પડે છે.</p>
 <p>Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને બહુવિધ મૂલ્યો પરત કરવાની છૂટ આપે છે, જે યાદી 4-5 માં દર્શાવેલ છે.</p>
-<listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
-```rust
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-```
-</listing>
-પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).
+<p><strong>Listing 4-5: Returning ownership of parameters</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).</p>
 <h3 id="memory-and-allocation"><a class="header" href="#memory-and-allocation">Memory and Allocation</a></h3>
 <p>વળતર મૂલ્યો માલિકીનું સ્થાનાંતરણ પણ કરી શકે છે. સૂચિ 4-4 એક ફંક્શનનું ઉદાહરણ દર્શાવે છે જે અમુક મૂલ્ય પાછું આપે છે, જેમાં સૂચિ 4-3 માં દર્શાવેલ એનોટેશન્સ જેવા જ હોય છે.</p>
-<listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-</listing>
-ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય `drop` દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While
+<p><strong>Listing 4-4: Transferring ownership of return values</strong></p>
+<p>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}</p>
+<p>ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય <code>drop</code> દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While</p>
 <p>જ્યારે આ કામ કરે છે, ત્યારે માલિકી લેવી અને પછી દરેક કાર્ય (function) સાથે માલિકી પાછી આપવી થોડી કંટાળાજનક છે. જો આપણે કોઈ કાર્યને મૂલ્યનો ઉપયોગ કરવા દેવા માંગતા હોઈએ પરંતુ માલિકી ન લેવા માંગતા હોય તો શું કરવું? એવું બહુ હેરાન કરે તેવું છે કે જે કંઈપણ આપણે અંદર મોકલીએ, તેને ફરીથી વાપરવા માટે પાછું મોકલવાની જરૂર પડે છે, ઉપરાંત કાર્યના ભાગરૂપે પરિણામી ડેટાને પણ આપણને પાછો મેળવવો પડે છે.</p>
 <p>Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને બહુવિધ મૂલ્યો પરત કરવાની છૂટ આપે છે, જે યાદી 4-5 માં દર્શાવેલ છે.</p>
-<listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-</listing>
-પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).
+<p><strong>Listing 4-5: Returning ownership of parameters</strong></p>
+<p>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}</p>
+<p>પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).</p>
 <h4 id="variables-and-data-interacting-with-move"><a class="header" href="#variables-and-data-interacting-with-move">Variables and Data Interacting with Move</a></h4>
 <p>વળતર મૂલ્યો માલિકીનું સ્થાનાંતરણ પણ કરી શકે છે. સૂચિ 4-4 એક ફંક્શનનું ઉદાહરણ દર્શાવે છે જે અમુક મૂલ્ય પાછું આપે છે, જેમાં સૂચિ 4-3 માં દર્શાવેલ એનોટેશન્સ જેવા જ હોય છે.</p>
-<listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-</listing>
-ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય `drop` દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While
+<p><strong>Listing 4-4: Transferring ownership of return values</strong></p>
+<p>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}</p>
+<p>ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય <code>drop</code> દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While</p>
 <p>જ્યારે આ કામ કરે છે, ત્યારે માલિકી લેવી અને પછી દરેક કાર્ય (function) સાથે માલિકી પાછી આપવી થોડી કંટાળાજનક છે. જો આપણે કોઈ કાર્યને મૂલ્યનો ઉપયોગ કરવા દેવા માંગતા હોઈએ પરંતુ માલિકી ન લેવા માંગતા હોય તો શું કરવું? એવું બહુ હેરાન કરે તેવું છે કે જે કંઈપણ આપણે અંદર મોકલીએ, તેને ફરીથી વાપરવા માટે પાછું મોકલવાની જરૂર પડે છે, ઉપરાંત કાર્યના ભાગરૂપે પરિણામી ડેટાને પણ આપણને પાછો મેળવવો પડે છે.</p>
 <p>Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને બહુવિધ મૂલ્યો પરત કરવાની છૂટ આપે છે, જે યાદી 4-5 માં દર્શાવેલ છે.</p>
-<listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-</listing>
-પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).
+<p><strong>Listing 4-5: Returning ownership of parameters</strong></p>
+<p>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}</p>
+<p>પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).</p>
 <h4 id="scope-and-assignment"><a class="header" href="#scope-and-assignment">Scope and Assignment</a></h4>
 <p>વળતર મૂલ્યો માલિકીનું સ્થાનાંતરણ પણ કરી શકે છે. સૂચિ 4-4 એક ફંક્શનનું ઉદાહરણ દર્શાવે છે જે અમુક મૂલ્ય પાછું આપે છે, જેમાં સૂચિ 4-3 માં દર્શાવેલ એનોટેશન્સ જેવા જ હોય છે.</p>
-<listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-</listing>
-ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય `drop` દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While
+<p><strong>Listing 4-4: Transferring ownership of return values</strong></p>
+<p>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}</p>
+<p>ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય <code>drop</code> દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While</p>
 <p>જ્યારે આ કામ કરે છે, ત્યારે માલિકી લેવી અને પછી દરેક કાર્ય (function) સાથે માલિકી પાછી આપવી થોડી કંટાળાજનક છે. જો આપણે કોઈ કાર્યને મૂલ્યનો ઉપયોગ કરવા દેવા માંગતા હોઈએ પરંતુ માલિકી ન લેવા માંગતા હોય તો શું કરવું? એવું બહુ હેરાન કરે તેવું છે કે જે કંઈપણ આપણે અંદર મોકલીએ, તેને ફરીથી વાપરવા માટે પાછું મોકલવાની જરૂર પડે છે, ઉપરાંત કાર્યના ભાગરૂપે પરિણામી ડેટાને પણ આપણને પાછો મેળવવો પડે છે.</p>
 <p>Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને બહુવિધ મૂલ્યો પરત કરવાની છૂટ આપે છે, જે યાદી 4-5 માં દર્શાવેલ છે.</p>
-<listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-</listing>
-પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).
+<p><strong>Listing 4-5: Returning ownership of parameters</strong></p>
+<p>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}</p>
+<p>પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).</p>
 <h4 id="variables-and-data-interacting-with-clone"><a class="header" href="#variables-and-data-interacting-with-clone">Variables and Data Interacting with Clone</a></h4>
 <p>વળતર મૂલ્યો માલિકીનું સ્થાનાંતરણ પણ કરી શકે છે. સૂચિ 4-4 એક ફંક્શનનું ઉદાહરણ દર્શાવે છે જે અમુક મૂલ્ય પાછું આપે છે, જેમાં સૂચિ 4-3 માં દર્શાવેલ એનોટેશન્સ જેવા જ હોય છે.</p>
-<listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-</listing>
-ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય `drop` દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While
+<p><strong>Listing 4-4: Transferring ownership of return values</strong></p>
+<p>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}</p>
+<p>ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય <code>drop</code> દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While</p>
 <p>જ્યારે આ કામ કરે છે, ત્યારે માલિકી લેવી અને પછી દરેક કાર્ય (function) સાથે માલિકી પાછી આપવી થોડી કંટાળાજનક છે. જો આપણે કોઈ કાર્યને મૂલ્યનો ઉપયોગ કરવા દેવા માંગતા હોઈએ પરંતુ માલિકી ન લેવા માંગતા હોય તો શું કરવું? એવું બહુ હેરાન કરે તેવું છે કે જે કંઈપણ આપણે અંદર મોકલીએ, તેને ફરીથી વાપરવા માટે પાછું મોકલવાની જરૂર પડે છે, ઉપરાંત કાર્યના ભાગરૂપે પરિણામી ડેટાને પણ આપણને પાછો મેળવવો પડે છે.</p>
 <p>Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને બહુવિધ મૂલ્યો પરત કરવાની છૂટ આપે છે, જે યાદી 4-5 માં દર્શાવેલ છે.</p>
-<listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-</listing>
-પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).
+<p><strong>Listing 4-5: Returning ownership of parameters</strong></p>
+<p>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}</p>
+<p>પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).</p>
 <h4 id="stack-only-data-copy"><a class="header" href="#stack-only-data-copy">Stack-Only Data: Copy</a></h4>
+<ul>
+<li>
 <p>વળતર મૂલ્યો માલિકીનું સ્થાનાંતરણ પણ કરી શકે છે. સૂચિ 4-4 એક ફંક્શનનું ઉદાહરણ દર્શાવે છે જે અમુક મૂલ્ય પાછું આપે છે, જેમાં સૂચિ 4-3 માં દર્શાવેલ એનોટેશન્સ જેવા જ હોય છે.</p>
-<listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-</listing>
-ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય `drop` દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While
+</li>
+<li>
+<p><strong>Listing 4-4: Transferring ownership of return values</strong></p>
+</li>
+<li>
+<p>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}</p>
+</li>
+<li>
+<p>ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય <code>drop</code> દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While</p>
+</li>
+<li>
 <p>જ્યારે આ કામ કરે છે, ત્યારે માલિકી લેવી અને પછી દરેક કાર્ય (function) સાથે માલિકી પાછી આપવી થોડી કંટાળાજનક છે. જો આપણે કોઈ કાર્યને મૂલ્યનો ઉપયોગ કરવા દેવા માંગતા હોઈએ પરંતુ માલિકી ન લેવા માંગતા હોય તો શું કરવું? એવું બહુ હેરાન કરે તેવું છે કે જે કંઈપણ આપણે અંદર મોકલીએ, તેને ફરીથી વાપરવા માટે પાછું મોકલવાની જરૂર પડે છે, ઉપરાંત કાર્યના ભાગરૂપે પરિણામી ડેટાને પણ આપણને પાછો મેળવવો પડે છે.</p>
+</li>
+</ul>
 <p>Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને બહુવિધ મૂલ્યો પરત કરવાની છૂટ આપે છે, જે યાદી 4-5 માં દર્શાવેલ છે.</p>
-<listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-</listing>
-પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).
+<p><strong>Listing 4-5: Returning ownership of parameters</strong></p>
+<p>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}</p>
+<p>પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).</p>
 <h3 id="ownership-and-functions"><a class="header" href="#ownership-and-functions">Ownership and Functions</a></h3>
 <p>વળતર મૂલ્યો માલિકીનું સ્થાનાંતરણ પણ કરી શકે છે. સૂચિ 4-4 એક ફંક્શનનું ઉદાહરણ દર્શાવે છે જે અમુક મૂલ્ય પાછું આપે છે, જેમાં સૂચિ 4-3 માં દર્શાવેલ એનોટેશન્સ જેવા જ હોય છે.</p>
-<listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-</listing>
-ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય `drop` દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While
+<p><strong>Listing 4-4: Transferring ownership of return values</strong></p>
+<p>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}</p>
+<p>ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય <code>drop</code> દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While</p>
 <p>જ્યારે આ કામ કરે છે, ત્યારે માલિકી લેવી અને પછી દરેક કાર્ય (function) સાથે માલિકી પાછી આપવી થોડી કંટાળાજનક છે. જો આપણે કોઈ કાર્યને મૂલ્યનો ઉપયોગ કરવા દેવા માંગતા હોઈએ પરંતુ માલિકી ન લેવા માંગતા હોય તો શું કરવું? એવું બહુ હેરાન કરે તેવું છે કે જે કંઈપણ આપણે અંદર મોકલીએ, તેને ફરીથી વાપરવા માટે પાછું મોકલવાની જરૂર પડે છે, ઉપરાંત કાર્યના ભાગરૂપે પરિણામી ડેટાને પણ આપણને પાછો મેળવવો પડે છે.</p>
 <p>Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને બહુવિધ મૂલ્યો પરત કરવાની છૂટ આપે છે, જે યાદી 4-5 માં દર્શાવેલ છે.</p>
-<listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-</listing>
-પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).
+<p><strong>Listing 4-5: Returning ownership of parameters</strong></p>
+<p>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}</p>
+<p>પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).</p>
 <h3 id="return-values-and-scope"><a class="header" href="#return-values-and-scope">Return Values and Scope</a></h3>
 <p>વળતર મૂલ્યો માલિકીનું સ્થાનાંતરણ પણ કરી શકે છે. સૂચિ 4-4 એક ફંક્શનનું ઉદાહરણ દર્શાવે છે જે અમુક મૂલ્ય પાછું આપે છે, જેમાં સૂચિ 4-3 માં દર્શાવેલ એનોટેશન્સ જેવા જ હોય છે.</p>
-<listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-</listing>
-ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય `drop` દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While
+<p><strong>Listing 4-4: Transferring ownership of return values</strong></p>
+<p>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}</p>
+<p>ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય <code>drop</code> દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. While</p>
 <p>જ્યારે આ કામ કરે છે, ત્યારે માલિકી લેવી અને પછી દરેક કાર્ય (function) સાથે માલિકી પાછી આપવી થોડી કંટાળાજનક છે. જો આપણે કોઈ કાર્યને મૂલ્યનો ઉપયોગ કરવા દેવા માંગતા હોઈએ પરંતુ માલિકી ન લેવા માંગતા હોય તો શું કરવું? એવું બહુ હેરાન કરે તેવું છે કે જે કંઈપણ આપણે અંદર મોકલીએ, તેને ફરીથી વાપરવા માટે પાછું મોકલવાની જરૂર પડે છે, ઉપરાંત કાર્યના ભાગરૂપે પરિણામી ડેટાને પણ આપણને પાછો મેળવવો પડે છે.</p>
 <p>Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને બહુવિધ મૂલ્યો પરત કરવાની છૂટ આપે છે, જે યાદી 4-5 માં દર્શાવેલ છે.</p>
-<listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
-{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-</listing>
-પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).
+<p><strong>Listing 4-5: Returning ownership of parameters</strong></p>
+<p>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}</p>
+<p>પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).</p>
 
                     </main>
 
@@ -535,6 +551,7 @@ Rust માં, એક કરતાં વધુ variable સમાન માહ
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

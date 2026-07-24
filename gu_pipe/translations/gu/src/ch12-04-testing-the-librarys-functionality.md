@@ -21,20 +21,22 @@
 
 src/lib.rs માં, આપણે એક `tests` મોડ્યુલ ઉમેરીશું જેમાં પરીક્ષણ કાર્ય (test function) હશે, જેવું આપણે પ્રકરણ ૧૧ માં કર્યું હતું. આ પરીક્ષણ કાર્ય `search` કાર્યનું ઇચ્છિત વર્તન સ્પષ્ટ કરે છે: તે ક્વેરી (query) અને શોધવા માટેનો લખાણ ગ્રહણ કરશે, અને તે લખાણની માત્ર એ જ લીટીઓ પરત કરશે જેમાં ક્વેરી હોય. યાદી ૧૨-૧૫ આ પરીક્ષણને દર્શાવે છે.
 
-<Listing number="12-15" file-name="src/lib.rs" caption="Creating a failing test for the `search` function for the functionality we wish we had">
+**Listing 12-15: Creating a failing test for the `search` function for the functionality we wish we had**
+
 ```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-15/src/lib.rs:here}}
 ```
-</Listing>
+
 આ પરીક્ષણ `"duct"` શબ્દ શોધે છે. જે લખાણોમાં આપણે શોધી રહ્યા છીએ તે ત્રણ લીટીઓનાં છે, જેમાંની માત્ર એક લીટીમાં `"duct"` આવેલું છે (નોંધ કરો કે ઉઘાડતી બેવડી અવતરણ ચિહ્નની પછી બેકસ્લેશ Rust ને આ શબ્દપ્રયોગની શરૂઆતમાં નવી લાઇન મૂકવાનું કહેતું નથી). આપણે ખાતરી કરીએ છીએ કે `search` કાર્ય દ્વારા મળેલું પરિણામ માત્ર એ જ લીટી
 
 ધરાવે છે જેની આપણને અપેક્ષા છે. જો આપણે આ પરીક્ષણ ચલાવીએ, તો તે હાલમાં નિષ્ફળ થશે કારણ કે `unimplemented!` મેક્રો "not implemented" સંદેશ સાથે ગભરાટ (panic) પાડે છે. TDD ના સિદ્ધાંતો અનુસાર, આપણે માત્ર એટલો જ કોડ ઉમેરવાનો એક નાનો પગલું લઈશું કે જેથી કાર્યને બોલાવવાથી ગભરાટ ન થાય - `search` કાર્યને હંમેશા ખાલી વેક્ટર પરત કરવા માટે વ્યાખ્યાયિત કરીને. પછી, પરીક્ષણ સંકલન (compile) થશે અને નિષ્ફળ જશે કારણ કે ખાલી વેક્ટર એ `"safe, fast, productive."` લીટી ધરાવતા વેક્ટર સાથે મેળ ખાતું નથી.
 
-<Listing number="12-16" file-name="src/lib.rs" caption="Defining just enough of the `search` function so that calling it won’t panic">
+**Listing 12-16: Defining just enough of the `search` function so that calling it won’t panic**
+
 ```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-16/src/lib.rs:here}}
 ```
-</Listing>
+
 હવે ચાલો ચર્ચા કરીએ કે શા માટે આપણે સ્પષ્ટ આયુષ્ય `'a` ને `search` ના નિશ્ચિત રૂપરેખામાં વ્યાખ્યાયિત કરવાની અને તે આયુષ્યનો ઉપયોગ `contents` Argument અને વળતર મૂલ્ય સાથે કરવાની જરૂર છે. યાદ કરો પ્રકરણ ૧૦ માં કે આયુષ્ય પરિમાણો કઈ Argument આયુષ્યને વળતર આયુષ્ય સાથે જોડે છે. આ કિસ્સામાં, અમે દર્શાવે છે કે પરત કરેલ વેક્ટર સ્ટ્રિંગ સ્લાઇસ ધરાવવું જોઈએ જે `contents` Argumentના સ્લાઇસનો સંદર્ભ આપે છે (બળિયા `query` Argumentને બદલે).
 
 બીજા શબ્દોમાં કહીએ તો, અમે Rust ને જણાવીએ છીએ કે `search` ફંક્શન દ્વારા પરત કરવામાં આવેલ ડેટા `contents` Argumentમાં `search` ફંક્શનમાં પસાર કરવામાં આવેલા ડેટા જેટલો લાંબો જીવશે. આ મહત્વપૂર્ણ છે! સ્લાઇસ દ્વારા સંદર્ભિત ડેટા સંદર્ભને માન્ય રાખવા માટે માન્ય હોવું જરૂરી છે; જો કમ્પાઇલર ધારે છે કે અમે `query` ને બદલે `contents` ના સ્ટ્રિંગ સ્લાઇસ બનાવી રહ્યા છીએ, તો તે તેની સલામતી તપાસ ખોટી રીતે કરશે.
@@ -68,33 +70,36 @@ Rust ને ખબર નહિ કે આપણને આઉટપુટ મા
 
 Rust has a helpful method to handle line-by-line iteration of strings, conveniently named `lines`, that works as shown in Listing 12-17. Note that this won’t compile yet.
 
-<Listing number="12-17" file-name="src/lib.rs" caption="Iterating through each line in `contents`">
+**Listing 12-17: Iterating through each line in `contents`**
+
 ```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-17/src/lib.rs:here}}
 ```
-</Listing>
+
 `lines` પદ્ધતિ એક પુનરાવર્તક (iterator) આપે છે. આપણે પુનરાવર્તકો વિશે પ્રકરણ ૧૩ માં વિગતવાર ચર્ચા કરીશું. પરંતુ યાદ રાખો કે તમે આ પુનરાવર્તકનો ઉપયોગ કરવાની રીત સૂચિ ૩-૫ માં જોઈ હતી, જ્યાં અમે એક સંગ્રહના દરેક ઘટક પર કોડ ચલાવવા માટે પુનરાવર્તક સાથે `for` લૂપનો ઉપયોગ કર્યો હતો.
 
 #### Searching Each Line for the Query
 
 ત્યારબાદ, અમે ચકાસીશું કે વર્તમાન રેખામાં અમારો ક્વેરી સ્ટ્રિંગ છે કે નહીં. સદભાગ્યે, સ્ટ્રિંગ્સ પાસે એક ઉપયોગી પદ્ધતિ નામ `contains` છે જે આ કાર્ય કરે છે! `search` ફંક્શનમાં `contains` પદ્ધતિને બોલાવો, જેમ કે Listing 12-18 માં દર્શાવેલ છે. નોંધ કરો કે હજી પણ આ કમ્પાઇલ થશે નહીં.
 
-<Listing number="12-18" file-name="src/lib.rs" caption="Adding functionality to see whether the line contains the string in `query`">
+**Listing 12-18: Adding functionality to see whether the line contains the string in `query`**
+
 ```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-18/src/lib.rs:here}}
 ```
-</Listing>
+
 હાલમાં, અમે કાર્યક્ષમતા વિકસાવી રહ્યા છીએ. કોડને કમ્પાઇલ કરવા માટે, આપણે ફંક્શન હસ્તાક્ષરમાં દર્શાવ્યા મુજબ બોડીમાંથી મૂલ્ય પરત કરવું પડશે.
 
 #### Storing Matching Lines
 
 આ કાર્ય પૂર્ણ કરવા માટે, આપણે મેળ ખાતી લીટીઓને સંગ્રહિત કરવાની એક રીત જોઈએ છે જે આપણે પરત કરવા માંગીએ છીએ. તે માટે, આપણે `for` લૂપ પહેલાં એક પરિવર્તનશીલ વેક્ટર બનાવી શકીએ અને `push` પદ્ધતિને બોલાવીને વેક્ટરમાં `line` સંગ્રહિત કરી શકીએ. `for` લૂપ પછી, આપણે વેક્ટરને પરત કરીએ છીએ, જે યાદી 12-19 માં દર્શાવેલ છે.
 
-<Listing number="12-19" file-name="src/lib.rs" caption="Storing the lines that match so that we can return them">
+**Listing 12-19: Storing the lines that match so that we can return them**
+
 ```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-19/src/lib.rs:here}}
 ```
-</Listing>
+
 હવે `search` વિધેય માત્ર એ જ લીટીઓ પાછી આપવી જોઈએ જેમાં `query` હોય, અને આપણી ચકાસણી સફળ થવી જોઈએ. ચાલો ચકાસણી ચલાવીએ:
 
 ```console

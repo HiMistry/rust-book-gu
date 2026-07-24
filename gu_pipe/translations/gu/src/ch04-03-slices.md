@@ -13,11 +13,12 @@ fn first_word(s: &String) -> ?
 ```
 `first_word` કાર્યમાં `&String` પ્રકારનો પરિમાણ છે. આપણને માલિકીની જરૂર નથી, તેથી આ યોગ્ય છે. (વડેસર Rust કોડમાં, કાર્યો તેમના Argumentોની માલિકી લેતા નથી સિવાય કે તેમને જરૂર હોય, અને તેના કારણો આગળ વધતાં સ્પષ્ટ થશે.) પરંતુ આપણે શું પરત કરવું જોઈએ? વાસ્તવમાં આપણી પાસે શબ્દનો ભાગ વિશે વાત કરવાનો કોઈ રસ્તો નથી. જોકે, આપણે જગ્યા દ્વારા દર્શાવવામાં આવે છે તે શબ્દના અંતની અનુક્રમણિકા (index) પરત કરી શકીએ છીએ. ચાલો પ્રયત્ન કરીએ, જેમ કે સૂચિ 4-7 માં દર્શાવેલ છે.
 
-<Listing number="4-7" file-name="src/main.rs" caption="The `first_word` function that returns a byte index value into the `String` parameter">
+**Listing 4-7: The `first_word` function that returns a byte index value into the `String` parameter**
+
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:here}}
 ```
-</Listing>
+
 કારણ કે આપણે `String` ઘટક દ્વારા ઘટક તપાસવું પડે છે કે કોઈ મૂલ્ય ખાલી જગ્યા છે કે નહીં, તેથી આપણે `as_bytes` પદ્ધતિનો ઉપયોગ કરીને આપણી `String` ને બાઇટ્સની શ્રેણીમાં રૂપાંતરિત કરીશું.
 
 ```rust
@@ -39,11 +40,12 @@ fn first_word(s: &String) -> ?
 ```
 હવે આપણી પાસે સ્ટ્રિંગમાં પ્રથમ શબ્દના અંતિમ અનુક્રમણિકા (index) શોધવાનો એક માર્ગ છે, પરંતુ એક સમસ્યા છે. આપણે `usize` સ્વરૂપે પરિણામ આપી રહ્યા છીએ, પરંતુ તે માત્ર `&String` ના સંદર્ભમાં જ અર્થપૂર્ણ સંખ્યા છે. બીજા શબ્દોમાં કહીએ તો, તે `String` થી અલગ મૂલ્ય હોવાથી, ભવિષ્યમાં તે માન્ય રહેશે તેની કોઈ ખાતરી નથી. યાદી 4-8 માં આપેલા પ્રોગ્રામને ધ્યાનમાં લો જે યાદી 4-7 માંથી `first_word` ફંક્શનનો ઉપયોગ કરે છે.
 
-<Listing number="4-8" file-name="src/main.rs" caption="Storing the result from calling the `first_word` function and then changing the `String` contents">
+**Listing 4-8: Storing the result from calling the `first_word` function and then changing the `String` contents**
+
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-08/src/main.rs:here}}
 ```
-</Listing>
+
 આ કાર્યક્રમ કોઈપણ ભૂલો વગર સંપાઈ જાય છે અને જો આપણે `s.clear()` બોલાવ્યા પછી `word` વાપર્યું હોત તો પણ તેવું જ થાય. કારણ કે `word` એ `s` ની સ્થિતિ સાથે જોડાયેલું નથી, `word` માં હજી પણ મૂલ્ય `5` રહેલું છે. આપણે `s` variable સાથે આ મૂલ્ય `5` નો ઉપયોગ કરીને પ્રથમ શબ્દ બહાર કાઢવાનો પ્રયત્ન કરી શકીએ છીએ, પરંતુ તે એક ભૂલ હશે કારણ કે `s` ની સામગ્રીમાં ફેરફાર થયો છે ત્યારથી આપણે
 
 `word` માં `5` સાચવ્યું હતું. `word` માં અનુક્રમણિકા (index) ડેટા સાથે સુસંગત ન થવાની ચિંતા કરવી એ કંટાળાજનક અને ભૂલભરેલું છે! આ અનુક્રમણિકાઓનું સંચાલન વધુ નાજુક બની જાય છે જો આપણે `second_word` નામનું કાર્ય લખીએ. તેનું સ્વરૂપ આ પ્રમાણે હોવું જોઈએ:
@@ -100,11 +102,11 @@ let slice = &s[..];
 
 બધી માહિતી ધ્યાનમાં રાખીને, ચાલો `first_word` ને સ્લાઇસ પરત કરવા માટે ફરીથી લખીએ. "સ્ટ્રિંગ સ્લાઇસ" દર્શાવતો પ્રકાર `&str` તરીકે લખવામાં આવે છે:
 
-<Listing file-name="src/main.rs">
+
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-18-first-word-slice/src/main.rs:here}}
 ```
-</Listing>
+
 આપણે Listing 4-7 માં કર્યા હતો તે જ રીતે, શબ્દના અંત માટે અનુક્રમણિકા મેળવીએ છીએ, એક ખાલી જગ્યાના પ્રથમ ઉદ્ભવને શોધીને. જ્યારે આપણે ખાલી જગ્યા શોધીએ છીએ, ત્યારે આપણે શરૂઆતની સ્થિતિ અને ખાલી જગ્યાના અનુક્રમણિકાને પ્રારંભિક અને અંતિમ અનુક્રમણિકા તરીકે ઉપયોગ કરીને સ્ટ્રિંગ સ્લાઇસ પરત કરીએ છીએ.
 
 હવે જ્યારે આપણે `first_word` ને બોલાવીએ છીએ, ત્યારે આપણને એક જ મૂલ્ય પાછું મળે છે જે મૂળ ડેટા સાથે જોડાયેલું છે. આ મૂલ્ય સ્લાઇસના પ્રારંભિક બિંદુનો સંદર્ભ અને સ્લાઇસમાં રહેલા ઘટકોની સંખ્યાથી બનેલું હોય છે.
@@ -116,11 +118,11 @@ fn second_word(s: &String) -> &str {
 ```
 હવે આપણી પાસે એક સરળ API છે જે ભૂલ કરવી ઘણી મુશ્કેલ છે, કારણ કે કમ્પાઇલર ખાતરી કરશે કે `String` માંના રેફરન્સો માન્ય રહે. યાદ કરો, લિસ્ટિંગ 4-8 માં પ્રોગ્રામમાં શું ભૂલ હતી, જ્યારે આપણે પ્રથમ શબ્દના અંત સુધી ઇન્ડેક્સ મેળવ્યો હતો પરંતુ પછી સ્ટ્રિંગ સાફ કરી દીધી, જેથી આપણો ઇન્ડેક્સ અમાન્ય થઈ ગયો? તે કોડ તાર્કિક રીતે ખોટો હતો પણ તેમાં કોઈ તાત્કાલિક ભૂલો દેખાતી ન હતી. સમસ્યાઓ પાછળથી ઊભી થાત જો આપણે ખાલી સ્ટ્રિંગ સાથે પ્રથમ શબ્દના ઇન્ડેક્સનો ઉપયોગ કરવાનું ચાલુ રાખ્યું હોત. સ્લાઇસ આ ભૂલને અશક્ય બનાવે છે અને આપણને ઘણો જલ્દી જણાવે છે કે અમારી કોડમાં સમસ્યા છે. `first_word` ના સ્લાઇસ વર્ઝનનો ઉપયોગ કરવાથી કમ્પાઇલ-ટાઇમ એરર આવશે:
 
-<Listing file-name="src/main.rs">
+
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-19-slice-error/src/main.rs:here}}
 ```
-</Listing>
+
 અહીંયા કમ્પાઇલરની ભૂલ છે:
 
 ```console
@@ -147,20 +149,21 @@ fn first_word(s: &String) -> &str {
 ```
 એક વધુ અનુભવી Rustacean લિસ્ટિંગ 4-9 માં દર્શાવેલ હસ્તાક્ષરનો ઉપયોગ કરશે, કારણ કે તે આપણને `&String` અને `&str` બંને મૂલ્યો પર સમાન કાર્યનો ઉપયોગ કરવાની મંજૂરી આપે છે.
 
-<Listing number="4-9" caption="Improving the `first_word` function by using a string slice for the type of the `s` parameter">
+**Listing 4-9: Improving the `first_word` function by using a string slice for the type of the `s` parameter**
+
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-09/src/main.rs:here}}
 ```
-</Listing>
+
 જો આપણી પાસે સ્ટ્રિંગ સ્લાઇસ હોય, તો આપણે તેને સીધો જ આપી શકીએ છીએ. જો આપણી પાસે `String` હોય, તો આપણે `String` નો સ્લાઇસ અથવા `String` નો સંદર્ભ આપી શકીએ છીએ. આ લવચીકતા ડિરેફ કોર્શન્સનો લાભ લે છે, જે વિશેષતાને આપણે પ્રકરણ ૧૫ ના “કાર્યો અને પદ્ધતિઓમાં ડિરેફ કોર્શન્સનો ઉપયોગ” વિભાગમાં આવરી
 
 લઈશું. `String` ના સંદર્ભને બદલે સ્ટ્રિંગ સ્લાઇસ લઈને કાર્ય વ્યાખ્યાયિત કરવાથી આપણી API વધુ સામાન્ય અને ઉપયોગી બને છે, કોઈપણ કાર્યક્ષમતા ગુમાવ્યા વિના:
 
-<Listing file-name="src/main.rs">
+
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-09/src/main.rs:usage}}
 ```
-</Listing>
+
 ### Other Slices
 
 સ્ટ્રિંગ ભાગો, તમે કદાચ ધારી શકો તેમ, સ્ટ્રિંગ્સ માટે વિશિષ્ટ છે. પરંતુ એક વધુ સામાન્ય ભાગ પ્રકાર પણ છે. આ શૃંખલાને ધ્યાનમાં લો:

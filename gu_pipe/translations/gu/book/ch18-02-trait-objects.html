@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -192,91 +192,69 @@
 <p>આપણે <code>gui</code> ને જે વર્તન આપવા માંગીએ છીએ, તેને અમલમાં મૂકવા માટે, આપણે એક ટ્રેઇટ વ્યાખ્યાયિત કરીશું જેનું નામ <code>Draw</code> હશે અને જેમાં <code>draw</code> નામની એક પદ્ધતિ હશે. પછી, આપણે એક વેક્ટર વ્યાખ્યાયિત કરી શકીએ જે ટ્રેઇટ ઓબ્જેક્ટ લે છે. એક ટ્રેઇટ ઓબ્જેક્ટ આપણી નિર્દિષ્ટ ટ્રેઇટને અમલમાં મૂકતા પ્રકારના ઉદાહરણ અને રનટાઇમ પર તે પ્રકાર પર ટ્રેઇટ પદ્ધતિઓ શોધવા માટે વપરાતી કોષ્ટક બંને તરફ નિર્દેશ કરે છે. આપણે કોઈ પ્રકારની પોઇન્ટર, જેમ કે રેફરન્સ અથવા <code>Box&lt;T&gt;</code> સ્માર્ટ પોઇન્ટરનો ઉલ્લેખ કરીને, પછી <code>dyn</code> કીવર્ડનો ઉપયોગ કરીને અને સંબંધિત ટ્રેઇટનો ઉલ્લેખ કરીને એક ટ્રેઇટ ઓબ્જેક્ટ બનાવી શકીએ છીએ. (અમે પ્રકરણ 20 માં “ડાયનેમિકલી સાઈઝ્ડ પ્રકારો અને <code>Sized</code> ટ્રેઇટ” માં સમજાવીશું કે શા માટે ટ્રેઇટ ઓબ્જેક્ટ્સને પોઇન્ટરનો ઉપયોગ કરવો આવશ્યક છે.) આપણે જનરિક અથવા કોંક્રિટ પ્રકારના બદલે ટ્રેઇટ ઓબ્જેક્ટનો ઉપયોગ કરી શકીએ છીએ. જ્યાં પણ આપણે ટ્રેઇટ ઓબ્જેક્ટનો ઉપયોગ કરીએ છીએ, ત્યાં Rust નું પ્રકાર સિસ્ટમ ખાતરી કરશે કે તે સંદર્ભમાં વપરાતા કોઈપણ મૂલ્ય ટ્રેઇટ ઓબ્જેક્ટના ટ્રેઇટને અમલમાં મૂકશે. પરિણામે, આપણે કમ્પાઇલ સમયે તમામ સંભવિત પ્રકારો જાણવાની જરૂર નથી.</p>
 <p>અમે ઉલ્લેખ કર્યો છે કે, Rustમાં, અમે struct અને enum ને “objects” તરીકે ઓળખવાનું ટાળીએ છીએ, જેથી તેને અન્ય ભાષાઓના objectsથી અલગ પાડી શકાય. struct અથવા enum માં, struct ક્ષેત્રોમાં રહેલો ડેટા અને <code>impl</code> બ્લોક્સમાં વર્તન વિભાજિત હોય છે, જ્યારે અન્ય ભાષાઓમાં, ડેટા અને વર્તનને એક જ concept તરીકે જોડવામાં આવે છે જેને object કહેવામાં આવે છે. Trait objects અન્ય ભાષાઓના objectsથી અલગ હોય છે કારણ કે અમે trait object માં ડેટા ઉમેરી શકતા નથી. Trait objects અન્ય ભાષાઓના objects જેટલા સામાન્ય રીતે ઉપયોગી નથી: તેમનો ચોક્કસ હેતુ સામાન્ય વર્તન પર abstraction કરવાની મંજૂરી આપવાનો છે.</p>
 <p>Listing 18-3 દર્શાવે છે કેવી રીતે <code>Draw</code> નામનું એક લક્ષણ (trait) વ્યાખ્યાયિત કરવું, જેમાં <code>draw</code> નામની એક પદ્ધતિ (method) છે.</p>
-<listing number="18-3" file-name="src/lib.rs" caption="Definition of the `Draw` trait">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch18-oop/listing-18-03/src/lib.rs}}
-```
-```
-</listing>
-આ સિન્ટેક્સ આપણી અગાઉની ચર્ચાથી મળતું આવે છે, જેમાં આપણે ટ્રેઇટ કેવી રીતે વ્યાખ્યાયિત કરવાના છે તે જોયું હતું. ત્યારબાદ નવું સિન્ટેક્સ આવે છે: લિસ્ટિંગ ૧૮-૪ એક સ્ટ્રક્ચર વ્યાખ્યાયિત કરે છે જેનું નામ `Screen` છે, જે `components` નામના વેક્ટરને ધરાવે છે. આ વેક્ટરનો પ્રકાર `Box<dyn draw="">` છે, જે ટ્રેઇટ ઓબ્જેક્ટ છે; તે `Box` ની અંદરના કોઈપણ પ્રકાર માટે એક વિકલ્પ છે જે `Draw` ટ્રેઇટનું પાલન કરે છે.
-<listing number="18-4" file-name="src/lib.rs" caption="Definition of the `Screen` struct with a `components` field holding a vector of trait objects that implement the `Draw` trait">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch18-oop/listing-18-04/src/lib.rs:here}}
-```
-```
-</listing>
-`Screen` રચના પર, અમે `run` નામની પદ્ધતિ વ્યાખ્યાયિત કરીશું જે તેના દરેક `components` પર `draw` પદ્ધતિને બોલાવશે, જેમ કે સૂચિ ૧૮-૫ માં દર્શાવેલ છે.
-<listing number="18-5" file-name="src/lib.rs" caption="A `run` method on `Screen` that calls the `draw` method on each component">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch18-oop/listing-18-05/src/lib.rs:here}}
-```
-```
-</listing>
-આ રીતે કાર્ય કરે છે struct વ્યાખ્યાયિત કરવાથી અલગ, જેમાં સામાન્ય પ્રકાર પરિમાણ અને લક્ષણ સીમાઓનો ઉપયોગ થાય છે. એક સામાન્ય પ્રકાર પરિમાણને એક સમયે માત્ર એક જ નક્કર પ્રકાર સાથે બદલી શકાય છે, જ્યારે લક્ષણ વસ્તુઓ રનટાઇમ પર બહુવિધ નક્કર પ્રકારોને ભરવા માટે મંજૂરી આપે છે. ઉદાહરણ તરીકે, આપણે `Screen` struct ને સામાન્ય પ્રકાર અને લક્ષણ સીમાનો ઉપયોગ કરીને વ્યાખ્યાયિત કરી શકતા હતા, જે યાદી 18-6 માં દર્શાવેલ છે.
-<listing number="18-6" file-name="src/lib.rs" caption="An alternate implementation of the `Screen` struct and its `run` method using generics and trait bounds">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch18-oop/listing-18-06/src/lib.rs:here}}
-```
-```
-</listing>
-આમ કરવાથી આપણને એક `Screen` ઇન્સ્ટન્સ સુધી સીમિત રાખવામાં આવે છે, જેમાં ઘટકોની યાદી હોય જે બધાં `Button` પ્રકારના અથવા બધાં `TextField` પ્રકારના હોય. જો તમારી પાસે હંમેશા સમાન પ્રકારના જ કલેક્શન હશે, તો સામાન્યિકરણ (generics) અને લક્ષણ સીમાઓ (trait bounds) વાપરવી વધુ સારી છે,
+<p><strong>Listing 18-3: Definition of the <code>Draw</code> trait</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-03/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>આ સિન્ટેક્સ આપણી અગાઉની ચર્ચાથી મળતું આવે છે, જેમાં આપણે ટ્રેઇટ કેવી રીતે વ્યાખ્યાયિત કરવાના છે તે જોયું હતું. ત્યારબાદ નવું સિન્ટેક્સ આવે છે: લિસ્ટિંગ ૧૮-૪ એક સ્ટ્રક્ચર વ્યાખ્યાયિત કરે છે જેનું નામ <code>Screen</code> છે, જે <code>components</code> નામના વેક્ટરને ધરાવે છે. આ વેક્ટરનો પ્રકાર <code>Box&lt;dyn Draw&gt;</code> છે, જે ટ્રેઇટ ઓબ્જેક્ટ છે; તે <code>Box</code> ની અંદરના કોઈપણ પ્રકાર માટે એક વિકલ્પ છે જે <code>Draw</code> ટ્રેઇટનું પાલન કરે છે.</p>
+<p><strong>Listing 18-4: Definition of the <code>Screen</code> struct with a <code>components</code> field holding a vector of trait objects that implement the <code>Draw</code> trait</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-04/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p><code>Screen</code> રચના પર, અમે <code>run</code> નામની પદ્ધતિ વ્યાખ્યાયિત કરીશું જે તેના દરેક <code>components</code> પર <code>draw</code> પદ્ધતિને બોલાવશે, જેમ કે સૂચિ ૧૮-૫ માં દર્શાવેલ છે.</p>
+<p><strong>Listing 18-5: A <code>run</code> method on <code>Screen</code> that calls the <code>draw</code> method on each component</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-05/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ રીતે કાર્ય કરે છે struct વ્યાખ્યાયિત કરવાથી અલગ, જેમાં સામાન્ય પ્રકાર પરિમાણ અને લક્ષણ સીમાઓનો ઉપયોગ થાય છે. એક સામાન્ય પ્રકાર પરિમાણને એક સમયે માત્ર એક જ નક્કર પ્રકાર સાથે બદલી શકાય છે, જ્યારે લક્ષણ વસ્તુઓ રનટાઇમ પર બહુવિધ નક્કર પ્રકારોને ભરવા માટે મંજૂરી આપે છે. ઉદાહરણ તરીકે, આપણે <code>Screen</code> struct ને સામાન્ય પ્રકાર અને લક્ષણ સીમાનો ઉપયોગ કરીને વ્યાખ્યાયિત કરી શકતા હતા, જે યાદી 18-6 માં દર્શાવેલ છે.</p>
+<p><strong>Listing 18-6: An alternate implementation of the <code>Screen</code> struct and its <code>run</code> method using generics and trait bounds</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-06/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આમ કરવાથી આપણને એક <code>Screen</code> ઇન્સ્ટન્સ સુધી સીમિત રાખવામાં આવે છે, જેમાં ઘટકોની યાદી હોય જે બધાં <code>Button</code> પ્રકારના અથવા બધાં <code>TextField</code> પ્રકારના હોય. જો તમારી પાસે હંમેશા સમાન પ્રકારના જ કલેક્શન હશે, તો સામાન્યિકરણ (generics) અને લક્ષણ સીમાઓ (trait bounds) વાપરવી વધુ સારી છે,</p>
 <p>કારણ કે વ્યાખ્યાઓ કમ્પાઇલ સમયે ચોક્કસ પ્રકારોનો ઉપયોગ કરવા માટે એકરૂપ કરવામાં આવશે. બીજી બાજુ, લક્ષણ વસ્તુઓ (trait objects) નો ઉપયોગ કરતા પદ્ધતિ સાથે, એક <code>Screen</code> ઇન્સ્ટન્સ <code>Vec&lt;T&gt;</code> ને સમાવી શકે છે જેમાં <code>Box&lt;Button&gt;</code> તેમજ <code>Box&lt;TextField&gt;</code> હોય. ચાલો જોઈએ કે આ કેવી રીતે કાર્ય કરે છે, અને પછી આપણે રનટાઇમ પ્રદર્શનની અસરો વિશે વાત કરીશું.</p>
 <h3 id="implementing-the-trait"><a class="header" href="#implementing-the-trait">Implementing the Trait</a></h3>
 <p>હવે આપણે કેટલાક પ્રકારો ઉમેરીશું જે <code>Draw</code> લક્ષણને અમલમાં મૂકે છે. આપણે <code>Button</code> પ્રકાર પ્રદાન કરીશું. ફરીથી, વાસ્તવમાં GUI પુસ્તકાલયનો અમલ કરવો એ આ પુસ્તકની કાર્યક્ષેત્રની બહાર છે, તેથી <code>draw</code> પદ્ધતિ તેના શરીરમાં કોઈ ઉપયોગી અમલ ધરાવશે નહીં. શું અમલ દેખાઈ શકે છે તેની કલ્પના કરવા માટે, એક <code>Button</code> struct માં <code>width</code>, <code>height</code> અને <code>label</code> જેવા ક્ષેત્રો હોઈ શકે છે, જે Listing 18-7 માં દર્શાવેલ છે.</p>
-<listing number="18-7" file-name="src/lib.rs" caption="A `Button` struct that implements the `Draw` trait">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch18-oop/listing-18-07/src/lib.rs:here}}
-```
-```
-</listing>
-width, height અને label ક્ષેત્રો Button પર અન્ય ઘટકો (components) ના ક્ષેત્રોથી અલગ હશે; દાખલા તરીકે, TextField પ્રકારમાં તે જ ક્ષેત્રો ઉપરાંત placeholder ક્ષેત્ર પણ હોઈ શકે છે. આપણે સ્ક્રીન પર દોરવા માંગીએ છીએ તે દરેક પ્રકાર Draw trait નો અમલ કરશે પરંતુ તે ચોક્કસ પ્રકારને કેવી રીતે દોરવો તે વ્યાખ્યાયિત કરવા માટે draw પદ્ધતિમાં અલગ કોડનો ઉપયોગ કરશે, જેમ કે Button અહીં કરે છે (વાસ્તવિક GUI કોડ વિના, ઉલ્લેખ કર્યો તેમ). Button પ્રકાર, ઉદાહરણ તરીકે, માં એક વધારાનો `impl` બ્લોક હોઈ શકે છે જેમાં user બટન પર ક્લિક કરે ત્યારે શું થાય છે તેના સંબંધિત પદ્ધતિઓ હોય છે. આ પ્રકારની પદ્ધતિઓ TextField જેવા પ્રકારો પર લાગુ થશે નહીં.
+<p><strong>Listing 18-7: A <code>Button</code> struct that implements the <code>Draw</code> trait</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-07/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>width, height અને label ક્ષેત્રો Button પર અન્ય ઘટકો (components) ના ક્ષેત્રોથી અલગ હશે; દાખલા તરીકે, TextField પ્રકારમાં તે જ ક્ષેત્રો ઉપરાંત placeholder ક્ષેત્ર પણ હોઈ શકે છે. આપણે સ્ક્રીન પર દોરવા માંગીએ છીએ તે દરેક પ્રકાર Draw trait નો અમલ કરશે પરંતુ તે ચોક્કસ પ્રકારને કેવી રીતે દોરવો તે વ્યાખ્યાયિત કરવા માટે draw પદ્ધતિમાં અલગ કોડનો ઉપયોગ કરશે, જેમ કે Button અહીં કરે છે (વાસ્તવિક GUI કોડ વિના, ઉલ્લેખ કર્યો તેમ). Button પ્રકાર, ઉદાહરણ તરીકે, માં એક વધારાનો <code>impl</code> બ્લોક હોઈ શકે છે જેમાં user બટન પર ક્લિક કરે ત્યારે શું થાય છે તેના સંબંધિત પદ્ધતિઓ હોય છે. આ પ્રકારની પદ્ધતિઓ TextField જેવા પ્રકારો પર લાગુ થશે નહીં.</p>
 <p>જો કોઈ વ્યક્તિ આપણી લાયબ્રેરીનો ઉપયોગ કરીને <code>SelectBox</code> સ્ટ્રક્ચર અમલમાં મૂકવાનું નક્કી કરે છે જેમાં <code>width</code>, <code>height</code>, અને <code>options</code> ક્ષેત્રો હોય, તો તેઓ <code>Draw</code> ટ્રેઇટને <code>SelectBox</code> પ્રકાર પર પણ અમલમાં મૂકશે, જેની જેમ લિસ્ટિંગ 18-8 માં દર્શાવેલું છે.</p>
-<listing number="18-8" file-name="src/main.rs" caption="Another crate using `gui` and implementing the `Draw` trait on a `SelectBox` struct">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch18-oop/listing-18-08/src/main.rs:here}}
-```
-```
-</listing>
-અમારા પુસ્તકાલયનો user હવે `main` વિધેય લખી શકે છે જેથી કરીને `Screen` ઉદાહરણ બનાવી શકાય. `Screen` ઉદાહરણમાં, તેઓ `SelectBox` અને `Button` ઉમેરી શકે છે, દરેકને `Box<t>` માં મૂકીને એક trait object બનાવે. ત્યારબાદ તેઓ `Screen` ઉદાહરણ પર `run` પદ્ધતિને બોલાવી શકે છે, જે દરેક ઘટકો પર `draw` ને બોલાવશે. સૂચિ 18-9 આ અમલીકરણ દર્શાવે છે.
-<listing number="18-9" file-name="src/main.rs" caption="Using trait objects to store values of different types that implement the same trait">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch18-oop/listing-18-09/src/main.rs:here}}
-```
-```
-</listing>
-જ્યારે અમે આ લાયબ્રેરી લખી હતી, ત્યારે અમને ખબર નહોતી કે કોઈ વ્યક્તિ `SelectBox` પ્રકાર ઉમેરી શકે છે, પરંતુ અમારા `Screen` અમલીકરણમાં નવા પ્રકાર પર કાર્ય કરવાની અને તેને દોરવાની ક્ષમતા હતી કારણ કે `SelectBox`  `Draw` ટ્રેઇટનો અમલ કરે છે, જેનો અર્થ થાય છે કે તે `draw` પદ્ધતિનો અમલ કરે છે.
+<p><strong>Listing 18-8: Another crate using <code>gui</code> and implementing the <code>Draw</code> trait on a <code>SelectBox</code> struct</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-08/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અમારા પુસ્તકાલયનો user હવે <code>main</code> વિધેય લખી શકે છે જેથી કરીને <code>Screen</code> ઉદાહરણ બનાવી શકાય. <code>Screen</code> ઉદાહરણમાં, તેઓ <code>SelectBox</code> અને <code>Button</code> ઉમેરી શકે છે, દરેકને <code>Box&lt;T&gt;</code> માં મૂકીને એક trait object બનાવે. ત્યારબાદ તેઓ <code>Screen</code> ઉદાહરણ પર <code>run</code> પદ્ધતિને બોલાવી શકે છે, જે દરેક ઘટકો પર <code>draw</code> ને બોલાવશે. સૂચિ 18-9 આ અમલીકરણ દર્શાવે છે.</p>
+<p><strong>Listing 18-9: Using trait objects to store values of different types that implement the same trait</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-09/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>જ્યારે અમે આ લાયબ્રેરી લખી હતી, ત્યારે અમને ખબર નહોતી કે કોઈ વ્યક્તિ <code>SelectBox</code> પ્રકાર ઉમેરી શકે છે, પરંતુ અમારા <code>Screen</code> અમલીકરણમાં નવા પ્રકાર પર કાર્ય કરવાની અને તેને દોરવાની ક્ષમતા હતી કારણ કે <code>SelectBox</code>  <code>Draw</code> ટ્રેઇટનો અમલ કરે છે, જેનો અર્થ થાય છે કે તે <code>draw</code> પદ્ધતિનો અમલ કરે છે.</p>
 <p>આ ખ્યાલ—માત્ર એવા સંદેશાઓની ચિંતા કરવી કે જે મૂલ્ય પ્રતિસાદ આપે છે તેનાથી વિરુદ્ધ મૂલ્યના નક્કર પ્રકારની—ડાયનેમિકલી ટાઇપ્ડ ભાષાઓમાં “डक ટાઈપિંગ” ના ખ્યાલ જેવો જ છે: જો તે બતકની જેમ ચાલે અને બતકની જેમ કર્કશ કરે, તો તે બતક હોવું જોઈએ! <code>Listing 18-5</code> માં <code>Screen</code> પર <code>run</code> ના અમલીકરણમાં, <code>run</code> ને દરેક ઘટકના નક્કર પ્રકારની જાણકારી પડતી નથી. તે તપાસતું નથી કે કોઈ ઘટક <code>Button</code> અથવા <code>SelectBox</code> નો ઉદાહરણ છે કે નહીં, તે માત્ર ઘટક પર <code>draw</code> પદ્ધતિને બોલાવે છે. <code>components</code> વેક્ટરના મૂલ્યોના પ્રકાર તરીકે <code>Box&lt;dyn Draw&gt;</code> નિર્દિષ્ટ કરીને, અમે વ્યાખ્યાયિત કર્યા છે કે <code>Screen</code> ને એવા મૂલ્યોની જરૂર છે જેના પર આપણે <code>draw</code> પદ્ધતિને બોલાવી શકીએ છીએ.</p>
 <p>ગુણધર્મોની વસ્તુઓ અને Rust ના પ્રકાર પ્રણાલીનો ઉપયોગ કરીને, એવી કોડ લખવાનો ફાયદો એ છે કે આપણે ક્યારેય ચકાસવું પડતું નથી કે કોઈ મૂલ્ય ચોક્કસ પદ્ધતિને અમલમાં મૂકે છે કે નહીં, અથવા જો કોઈ મૂલ્ય પદ્ધતિને અમલમાં ન મૂકતું હોય તો ભૂલો થવાની ચિંતા કરવાની જરૂર રહેતી નથી અને તેમ છતાં આપણે તેને બોલાવીએ છીએ. Rust આપણી કોડને કમ્પાઇલ કરશે</p>
 <p>નહીં જો મૂલ્યો તે ગુણધર્મોની વસ્તુઓને જરૂરી હોય તેવી વિશેષતાઓ (traits) ને અમલમાં ન મૂકતા હોય. ઉદાહરણ તરીકે, યાદી 18-10 દર્શાવે છે કે શું થાય છે જ્યારે આપણે <code>String</code> ને ઘટક તરીકે લઈને <code>Screen</code> બનાવવાનો પ્રયત્ન કરીએ છીએ.</p>
-<listing number="18-10" file-name="src/main.rs" caption="Attempting to use a type that doesn’t implement the trait object’s trait">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch18-oop/listing-18-10/src/main.rs}}
-```
-```
-</listing>
-આ ભૂલ આપણે એ કારણથી મળશે કે `String`  `Draw`  traitનું પાલન કરતું નથી:
-<pre><code class="language-console">```console
-{{#include ../listings/ch18-oop/listing-18-10/output.txt}}
+<p><strong>Listing 18-10: Attempting to use a type that doesn’t implement the trait object’s trait</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-10/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>આ ભૂલ આપણે એ કારણથી મળશે કે <code>String</code>  <code>Draw</code>  traitનું પાલન કરતું નથી:</p>
+<pre><code class="language-console">{{#include ../listings/ch18-oop/listing-18-10/output.txt}}
 </code></pre>
-<pre><code>આ ભૂલ આપણને જણાવે છે કે કાં તો આપણે `Screen` ને કંઈક એવું આપી રહ્યા છીએ જે આપણો હેતુ ન હતો અને તેથી આપણે અલગ પ્રકાર આપવો જોઈએ, અથવા આપણે `String` પર `Draw` અમલમાં મૂકવો જોઈએ જેથી `Screen` તેના પર `draw` બોલાવી શકે.
+<p>આ ભૂલ આપણને જણાવે છે કે કાં તો આપણે <code>Screen</code> ને કંઈક એવું આપી રહ્યા છીએ જે આપણો હેતુ ન હતો અને તેથી આપણે અલગ પ્રકાર આપવો જોઈએ, અથવા આપણે <code>String</code> પર <code>Draw</code> અમલમાં મૂકવો જોઈએ જેથી <code>Screen</code> તેના પર <code>draw</code> બોલાવી શકે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="performing-dynamic-dispatch"><a class="header" href="#performing-dynamic-dispatch">Performing Dynamic Dispatch</a></h3>
+<p>યાદ કરો કે પ્રકરણ ૧૦ માં “જનરિક્સનો ઉપયોગ કરીને કોડની કાર્યક્ષમતા” વિભાગમાં જનરિક્સ પર થયેલ મોનોમોર્ફાઇઝેશન પ્રક્રિયા વિશે આપણો ચર્ચા થઈ હતી: કમ્પાઇલર દરેક નક્કર પ્રકાર માટે જેનો આપણે જનરિક પ્રકાર પરિમાણના સ્થાને ઉપયોગ કરીએ છીએ, તેના માટે બિન-જનરિક અમલીકરણો ઉત્પન્ન કરે છે. મોનોમોર્ફાઇઝેશનથી મળતા કોડમાં સ્થિર ડિસ્પેચ થાય છે, જે ત્યારે થાય છે જ્યારે કમ્પાઇલરને કમ્પાઇલ સમયે તમે કઈ મેથડ બોલાવી રહ્યા છો તે ખબર હોય છે. આ વિરોધાભાસી છે ગતિશીલ ડિસ્પેચ સાથે, જે ત્યારે થાય છે જ્યારે કમ્પાઇલરને કમ્પાઇલ સમયે કઈ મેથડ બોલાવવાની છે તે ખબર ન પડે. ગતિશીલ ડિસ્પેચના કિસ્સાઓમાં, કમ્પાઇલર એવો કોડ ઉત્પન્ન કરે છે કે જે રનટાઇમ પર કઈ મેથડને બોલાવવી તે જાણશે.</p>
+<p>જ્યારે આપણે trait objects નો ઉપયોગ કરીએ છીએ, ત્યારે Rust ને dynamic dispatch (ગતિશીલ વિતરણ) નો ઉપયોગ કરવો પડે છે. compiler (સંકલક) એ ખબર હોતી નથી કે trait objects વાપરતા કોડ સાથે કયા પ્રકારો (types) વપરાઈ શકે છે, તેથી તે જાણતો નથી કે કયા પ્રકાર પર અમલમાં મૂકેલી કઈ પદ્ધતિ (method) બોલાવવી. તેના બદલે, runtime (ચાલુકાળ) દરમિયાન, Rust trait object ની અંદરના pointers (પોઇન્ટર્સ) નો ઉપયોગ કરીને કઈ પદ્ધતિ બોલાવવાની છે તે જાણે છે. આ શોધ (lookup) એક runtime cost (ચાલુકાળ ખર્ચ) લાવે છે જે static dispatch (સ્થિર વિતરણ) સાથે થતો નથી. Dynamic dispatch (ગતિશીલ વિતરણ) compiler (સંકલક) ને પદ્ધતિના કોડને inline (ઇનલાઇન) કરવાનું પસંદ કરવાથી પણ અટકાવે છે, જેના પરિણામે કેટલાક optimizations (ઑપ્ટિમાઇઝેશન) અટકી જાય છે, અને Rust પાસે dynamic dispatch (ગતિશીલ વિતરણ) નો ઉપયોગ ક્યાં કરી શકાય અને ક્યાં ન કરી શકાય તેના નિયમો છે, જેને dyn compatibility (ડાયન સુસંગતતા) કહેવામાં આવે છે. આ નિયમો ચર્ચાના અવકાશની બહાર છે, પરંતુ તમે સંદર્ભમાં વધુ માહિતી મેળવી શકો છો. જો કે, અમને Listing 18-5 માં લખેલા કોડમાં વધારાની લવચીકતા (flexibility) મળી અને Listing 18-9 માં સમર્થન આપવા માટે સક્ષમ હતા, તેથી તે ધ્યાનમાં લેવા જેવો trade-off (વેપાર) છે.</p>
 
-&lt;!-- Old headings. Do not remove or links may break. --&gt;
-### Performing Dynamic Dispatch
-
-યાદ કરો કે પ્રકરણ ૧૦ માં "જનરિક્સનો ઉપયોગ કરીને કોડની કાર્યક્ષમતા" વિભાગમાં જનરિક્સ પર થયેલ મોનોમોર્ફાઇઝેશન પ્રક્રિયા વિશે આપણો ચર્ચા થઈ હતી: કમ્પાઇલર દરેક નક્કર પ્રકાર માટે જેનો આપણે જનરિક પ્રકાર પરિમાણના સ્થાને ઉપયોગ કરીએ છીએ, તેના માટે બિન-જનરિક અમલીકરણો ઉત્પન્ન કરે છે. મોનોમોર્ફાઇઝેશનથી મળતા કોડમાં સ્થિર ડિસ્પેચ થાય છે, જે ત્યારે થાય છે જ્યારે કમ્પાઇલરને કમ્પાઇલ સમયે તમે કઈ મેથડ બોલાવી રહ્યા છો તે ખબર હોય છે. આ વિરોધાભાસી છે ગતિશીલ ડિસ્પેચ સાથે, જે ત્યારે થાય છે જ્યારે કમ્પાઇલરને કમ્પાઇલ સમયે કઈ મેથડ બોલાવવાની છે તે ખબર ન પડે. ગતિશીલ ડિસ્પેચના કિસ્સાઓમાં, કમ્પાઇલર એવો કોડ ઉત્પન્ન કરે છે કે જે રનટાઇમ પર કઈ મેથડને બોલાવવી તે જાણશે.
-
-જ્યારે આપણે trait objects નો ઉપયોગ કરીએ છીએ, ત્યારે Rust ને dynamic dispatch (ગતિશીલ વિતરણ) નો ઉપયોગ કરવો પડે છે. compiler (સંકલક) એ ખબર હોતી નથી કે trait objects વાપરતા કોડ સાથે કયા પ્રકારો (types) વપરાઈ શકે છે, તેથી તે જાણતો નથી કે કયા પ્રકાર પર અમલમાં મૂકેલી કઈ પદ્ધતિ (method) બોલાવવી. તેના બદલે, runtime (ચાલુકાળ) દરમિયાન, Rust trait object ની અંદરના pointers (પોઇન્ટર્સ) નો ઉપયોગ કરીને કઈ પદ્ધતિ બોલાવવાની છે તે જાણે છે. આ શોધ (lookup) એક runtime cost (ચાલુકાળ ખર્ચ) લાવે છે જે static dispatch (સ્થિર વિતરણ) સાથે થતો નથી. Dynamic dispatch (ગતિશીલ વિતરણ) compiler (સંકલક) ને પદ્ધતિના કોડને inline (ઇનલાઇન) કરવાનું પસંદ કરવાથી પણ અટકાવે છે, જેના પરિણામે કેટલાક optimizations (ઑપ્ટિમાઇઝેશન) અટકી જાય છે, અને Rust પાસે dynamic dispatch (ગતિશીલ વિતરણ) નો ઉપયોગ ક્યાં કરી શકાય અને ક્યાં ન કરી શકાય તેના નિયમો છે, જેને dyn compatibility (ડાયન સુસંગતતા) કહેવામાં આવે છે. આ નિયમો ચર્ચાના અવકાશની બહાર છે, પરંતુ તમે સંદર્ભમાં વધુ માહિતી મેળવી શકો છો. જો કે, અમને Listing 18-5 માં લખેલા કોડમાં વધારાની લવચીકતા (flexibility) મળી અને Listing 18-9 માં સમર્થન આપવા માટે સક્ષમ હતા, તેથી તે ધ્યાનમાં લેવા જેવો trade-off (વેપાર) છે.
-
-</code></pre>
-</t></dyn>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -329,6 +307,7 @@ width, height અને label ક્ષેત્રો Button પર અન્�
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

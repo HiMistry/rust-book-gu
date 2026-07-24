@@ -17,32 +17,36 @@
 
 Listing 18-3 દર્શાવે છે કેવી રીતે `Draw` નામનું એક લક્ષણ (trait) વ્યાખ્યાયિત કરવું, જેમાં `draw` નામની એક પદ્ધતિ (method) છે.
 
-<Listing number="18-3" file-name="src/lib.rs" caption="Definition of the `Draw` trait">
+**Listing 18-3: Definition of the `Draw` trait**
+
 ```rust
 {{#rustdoc_include ../listings/ch18-oop/listing-18-03/src/lib.rs}}
 ```
-</Listing>
+
 આ સિન્ટેક્સ આપણી અગાઉની ચર્ચાથી મળતું આવે છે, જેમાં આપણે ટ્રેઇટ કેવી રીતે વ્યાખ્યાયિત કરવાના છે તે જોયું હતું. ત્યારબાદ નવું સિન્ટેક્સ આવે છે: લિસ્ટિંગ ૧૮-૪ એક સ્ટ્રક્ચર વ્યાખ્યાયિત કરે છે જેનું નામ `Screen` છે, જે `components` નામના વેક્ટરને ધરાવે છે. આ વેક્ટરનો પ્રકાર `Box<dyn Draw>` છે, જે ટ્રેઇટ ઓબ્જેક્ટ છે; તે `Box` ની અંદરના કોઈપણ પ્રકાર માટે એક વિકલ્પ છે જે `Draw` ટ્રેઇટનું પાલન કરે છે.
 
-<Listing number="18-4" file-name="src/lib.rs" caption="Definition of the `Screen` struct with a `components` field holding a vector of trait objects that implement the `Draw` trait">
+**Listing 18-4: Definition of the `Screen` struct with a `components` field holding a vector of trait objects that implement the `Draw` trait**
+
 ```rust
 {{#rustdoc_include ../listings/ch18-oop/listing-18-04/src/lib.rs:here}}
 ```
-</Listing>
+
 `Screen` રચના પર, અમે `run` નામની પદ્ધતિ વ્યાખ્યાયિત કરીશું જે તેના દરેક `components` પર `draw` પદ્ધતિને બોલાવશે, જેમ કે સૂચિ ૧૮-૫ માં દર્શાવેલ છે.
 
-<Listing number="18-5" file-name="src/lib.rs" caption="A `run` method on `Screen` that calls the `draw` method on each component">
+**Listing 18-5: A `run` method on `Screen` that calls the `draw` method on each component**
+
 ```rust
 {{#rustdoc_include ../listings/ch18-oop/listing-18-05/src/lib.rs:here}}
 ```
-</Listing>
+
 આ રીતે કાર્ય કરે છે struct વ્યાખ્યાયિત કરવાથી અલગ, જેમાં સામાન્ય પ્રકાર પરિમાણ અને લક્ષણ સીમાઓનો ઉપયોગ થાય છે. એક સામાન્ય પ્રકાર પરિમાણને એક સમયે માત્ર એક જ નક્કર પ્રકાર સાથે બદલી શકાય છે, જ્યારે લક્ષણ વસ્તુઓ રનટાઇમ પર બહુવિધ નક્કર પ્રકારોને ભરવા માટે મંજૂરી આપે છે. ઉદાહરણ તરીકે, આપણે `Screen` struct ને સામાન્ય પ્રકાર અને લક્ષણ સીમાનો ઉપયોગ કરીને વ્યાખ્યાયિત કરી શકતા હતા, જે યાદી 18-6 માં દર્શાવેલ છે.
 
-<Listing number="18-6" file-name="src/lib.rs" caption="An alternate implementation of the `Screen` struct and its `run` method using generics and trait bounds">
+**Listing 18-6: An alternate implementation of the `Screen` struct and its `run` method using generics and trait bounds**
+
 ```rust
 {{#rustdoc_include ../listings/ch18-oop/listing-18-06/src/lib.rs:here}}
 ```
-</Listing>
+
 આમ કરવાથી આપણને એક `Screen` ઇન્સ્ટન્સ સુધી સીમિત રાખવામાં આવે છે, જેમાં ઘટકોની યાદી હોય જે બધાં `Button` પ્રકારના અથવા બધાં `TextField` પ્રકારના હોય. જો તમારી પાસે હંમેશા સમાન પ્રકારના જ કલેક્શન હશે, તો સામાન્યિકરણ (generics) અને લક્ષણ સીમાઓ (trait bounds) વાપરવી વધુ સારી છે,
 
 કારણ કે વ્યાખ્યાઓ કમ્પાઇલ સમયે ચોક્કસ પ્રકારોનો ઉપયોગ કરવા માટે એકરૂપ કરવામાં આવશે. બીજી બાજુ, લક્ષણ વસ્તુઓ (trait objects) નો ઉપયોગ કરતા પદ્ધતિ સાથે, એક `Screen` ઇન્સ્ટન્સ `Vec<T>` ને સમાવી શકે છે જેમાં `Box<Button>` તેમજ `Box<TextField>` હોય. ચાલો જોઈએ કે આ કેવી રીતે કાર્ય કરે છે, અને પછી આપણે રનટાઇમ પ્રદર્શનની અસરો વિશે વાત કરીશું.
@@ -51,27 +55,30 @@ Listing 18-3 દર્શાવે છે કેવી રીતે `Draw` ન�
 
 હવે આપણે કેટલાક પ્રકારો ઉમેરીશું જે `Draw` લક્ષણને અમલમાં મૂકે છે. આપણે `Button` પ્રકાર પ્રદાન કરીશું. ફરીથી, વાસ્તવમાં GUI પુસ્તકાલયનો અમલ કરવો એ આ પુસ્તકની કાર્યક્ષેત્રની બહાર છે, તેથી `draw` પદ્ધતિ તેના શરીરમાં કોઈ ઉપયોગી અમલ ધરાવશે નહીં. શું અમલ દેખાઈ શકે છે તેની કલ્પના કરવા માટે, એક `Button` struct માં `width`, `height` અને `label` જેવા ક્ષેત્રો હોઈ શકે છે, જે Listing 18-7 માં દર્શાવેલ છે.
 
-<Listing number="18-7" file-name="src/lib.rs" caption="A `Button` struct that implements the `Draw` trait">
+**Listing 18-7: A `Button` struct that implements the `Draw` trait**
+
 ```rust
 {{#rustdoc_include ../listings/ch18-oop/listing-18-07/src/lib.rs:here}}
 ```
-</Listing>
+
 width, height અને label ક્ષેત્રો Button પર અન્ય ઘટકો (components) ના ક્ષેત્રોથી અલગ હશે; દાખલા તરીકે, TextField પ્રકારમાં તે જ ક્ષેત્રો ઉપરાંત placeholder ક્ષેત્ર પણ હોઈ શકે છે. આપણે સ્ક્રીન પર દોરવા માંગીએ છીએ તે દરેક પ્રકાર Draw trait નો અમલ કરશે પરંતુ તે ચોક્કસ પ્રકારને કેવી રીતે દોરવો તે વ્યાખ્યાયિત કરવા માટે draw પદ્ધતિમાં અલગ કોડનો ઉપયોગ કરશે, જેમ કે Button અહીં કરે છે (વાસ્તવિક GUI કોડ વિના, ઉલ્લેખ કર્યો તેમ). Button પ્રકાર, ઉદાહરણ તરીકે, માં એક વધારાનો `impl` બ્લોક હોઈ શકે છે જેમાં user બટન પર ક્લિક કરે ત્યારે શું થાય છે તેના સંબંધિત પદ્ધતિઓ હોય છે. આ પ્રકારની પદ્ધતિઓ TextField જેવા પ્રકારો પર લાગુ થશે નહીં.
 
 જો કોઈ વ્યક્તિ આપણી લાયબ્રેરીનો ઉપયોગ કરીને `SelectBox` સ્ટ્રક્ચર અમલમાં મૂકવાનું નક્કી કરે છે જેમાં `width`, `height`, અને `options` ક્ષેત્રો હોય, તો તેઓ `Draw` ટ્રેઇટને `SelectBox` પ્રકાર પર પણ અમલમાં મૂકશે, જેની જેમ લિસ્ટિંગ 18-8 માં દર્શાવેલું છે.
 
-<Listing number="18-8" file-name="src/main.rs" caption="Another crate using `gui` and implementing the `Draw` trait on a `SelectBox` struct">
+**Listing 18-8: Another crate using `gui` and implementing the `Draw` trait on a `SelectBox` struct**
+
 ```rust
 {{#rustdoc_include ../listings/ch18-oop/listing-18-08/src/main.rs:here}}
 ```
-</Listing>
+
 અમારા પુસ્તકાલયનો user હવે `main` વિધેય લખી શકે છે જેથી કરીને `Screen` ઉદાહરણ બનાવી શકાય. `Screen` ઉદાહરણમાં, તેઓ `SelectBox` અને `Button` ઉમેરી શકે છે, દરેકને `Box<T>` માં મૂકીને એક trait object બનાવે. ત્યારબાદ તેઓ `Screen` ઉદાહરણ પર `run` પદ્ધતિને બોલાવી શકે છે, જે દરેક ઘટકો પર `draw` ને બોલાવશે. સૂચિ 18-9 આ અમલીકરણ દર્શાવે છે.
 
-<Listing number="18-9" file-name="src/main.rs" caption="Using trait objects to store values of different types that implement the same trait">
+**Listing 18-9: Using trait objects to store values of different types that implement the same trait**
+
 ```rust
 {{#rustdoc_include ../listings/ch18-oop/listing-18-09/src/main.rs:here}}
 ```
-</Listing>
+
 જ્યારે અમે આ લાયબ્રેરી લખી હતી, ત્યારે અમને ખબર નહોતી કે કોઈ વ્યક્તિ `SelectBox` પ્રકાર ઉમેરી શકે છે, પરંતુ અમારા `Screen` અમલીકરણમાં નવા પ્રકાર પર કાર્ય કરવાની અને તેને દોરવાની ક્ષમતા હતી કારણ કે `SelectBox`  `Draw` ટ્રેઇટનો અમલ કરે છે, જેનો અર્થ થાય છે કે તે `draw` પદ્ધતિનો અમલ કરે છે.
 
 આ ખ્યાલ—માત્ર એવા સંદેશાઓની ચિંતા કરવી કે જે મૂલ્ય પ્રતિસાદ આપે છે તેનાથી વિરુદ્ધ મૂલ્યના નક્કર પ્રકારની—ડાયનેમિકલી ટાઇપ્ડ ભાષાઓમાં "डक ટાઈપિંગ" ના ખ્યાલ જેવો જ છે: જો તે બતકની જેમ ચાલે અને બતકની જેમ કર્કશ કરે, તો તે બતક હોવું જોઈએ! `Listing 18-5` માં `Screen` પર `run` ના અમલીકરણમાં, `run` ને દરેક ઘટકના નક્કર પ્રકારની જાણકારી પડતી નથી. તે તપાસતું નથી કે કોઈ ઘટક `Button` અથવા `SelectBox` નો ઉદાહરણ છે કે નહીં, તે માત્ર ઘટક પર `draw` પદ્ધતિને બોલાવે છે. `components` વેક્ટરના મૂલ્યોના પ્રકાર તરીકે `Box<dyn Draw>` નિર્દિષ્ટ કરીને, અમે વ્યાખ્યાયિત કર્યા છે કે `Screen` ને એવા મૂલ્યોની જરૂર છે જેના પર આપણે `draw` પદ્ધતિને બોલાવી શકીએ છીએ.
@@ -80,11 +87,12 @@ width, height અને label ક્ષેત્રો Button પર અન્�
 
 નહીં જો મૂલ્યો તે ગુણધર્મોની વસ્તુઓને જરૂરી હોય તેવી વિશેષતાઓ (traits) ને અમલમાં ન મૂકતા હોય. ઉદાહરણ તરીકે, યાદી 18-10 દર્શાવે છે કે શું થાય છે જ્યારે આપણે `String` ને ઘટક તરીકે લઈને `Screen` બનાવવાનો પ્રયત્ન કરીએ છીએ.
 
-<Listing number="18-10" file-name="src/main.rs" caption="Attempting to use a type that doesn’t implement the trait object’s trait">
+**Listing 18-10: Attempting to use a type that doesn’t implement the trait object’s trait**
+
 ```rust
 {{#rustdoc_include ../listings/ch18-oop/listing-18-10/src/main.rs}}
 ```
-</Listing>
+
 આ ભૂલ આપણે એ કારણથી મળશે કે `String`  `Draw`  traitનું પાલન કરતું નથી:
 
 ```console

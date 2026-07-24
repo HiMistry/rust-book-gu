@@ -15,11 +15,12 @@
 
 નામિત variables એ અચળ પેટર્ન છે જે કોઈપણ મૂલ્ય સાથે જોડાય છે, અને અમે આ પુસ્તકમાં ઘણી વખત તેનો ઉપયોગ કર્યો છે. જો કે, જ્યારે તમે `match`, `if let` અથવા `while let` અભિવ્યક્તિઓમાં નામિત variable's ઉપયોગ કરો છો ત્યારે એક ગૂંચવણ ઊભી થાય છે. કારણ કે આ પ્રકારની દરેક અભિવ્યક્તિ નવી અવકાશ શરૂ કરે છે, પેટર્નના ભાગ રૂપે જાહેર કરાયેલા variables બાહ્ય રચનાઓ (constructs) ની બહાર સમાન નામના variable છાંકી દેશે, જે અન્ય તમામ variables સાથે થાય છે. લિસ્ટિંગ 19-11 માં, અમે `x` નામનો એક variable `Some(5)` મૂલ્ય સાથે અને `y` નામનો variable `10` મૂલ્ય સાથે જાહેર કરીએ છીએ. પછી અમે `x` ના મૂલ્ય પર એક `match` અભિવ્યક્તિ બનાવીએ છીએ. મેચ આર્મના પેટર્ન અને અંતમાં `println!` જુઓ, અને આ કોડ ચલાવતા પહેલા અથવા આગળ વાંચતા પહેલા કોડ શું છાપશે તે સમજવાનો પ્રયાસ કરો.
 
-<Listing number="19-11" file-name="src/main.rs" caption="A `match` expression with an arm that introduces a new variable which shadows an existing variable `y`">
+**Listing 19-11: A `match` expression with an arm that introduces a new variable which shadows an existing variable `y`**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-11/src/main.rs:here}}
 ```
-</Listing>
+
 ચાલો જોઈએ કે જ્યારે `match` અભિવ્યક્તિ ચાલે છે ત્યારે શું થાય છે. પ્રથમ મેચ આર્મમાં રહેલી પેટર્ન `x` ની વ્યાખ્યાયિત કિંમત સાથે મેળ ખાતી નથી, તેથી કોડ
 
 આગળ વધે છે. બીજા મેચ આર્મમાં રહેલી પેટર્ન એક નવું variable નામ `y` રજૂ કરે છે જે `Some` ની અંદરની કોઈપણ કિંમત સાથે મેળ ખાય છે. કારણ કે આપણે `match` અભિવ્યક્તિની અંદર એક નવા અવકાશમાં છીએ, તે એક નવું `y` variable છે, જે શરૂઆતમાં `10` મૂલ્ય સાથે જાહેર કરાયેલ `y` નથી. આ નવી `y` જોડાણ `Some` ની અંદરની કોઈપણ કિંમત સાથે મેળ ખાય છે, જે `x` માં આપેલું છે. તેથી, આ નવી `y` `Some` ના આંતરિક મૂલ્ય સાથે જોડાય છે. તે મૂલ્ય `5` છે, તેથી તે આર્મ માટેનું અભિવ્યક્તિ ચલાવવામાં આવે છે અને `Matched, y = 5` છાપવામાં આવે છે.
@@ -67,29 +68,32 @@ Rust જાણી શકે છે કે `'c'` પ્રથમ પ્રકા�
 
 ચિત્રાંક ૧૯-૧૨ દર્શાવે છે કે એક `Point` struct જેમાં બે ક્ષેત્રો, `x` અને `y`, છે, જેને આપણે `let` વિધાન સાથે પેટર્નનો ઉપયોગ કરીને વિભાજિત કરી શકીએ છીએ.
 
-<Listing number="19-12" file-name="src/main.rs" caption="Destructuring a struct’s fields into separate variables">
+**Listing 19-12: Destructuring a struct’s fields into separate variables**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-12/src/main.rs}}
 ```
-</Listing>
+
 આ કોડ `a` અને `b` નાં variable બનાવે છે જે `p` સ્ટ્રક્ચરના `x` અને `y` ક્ષેત્રોના મૂલ્યો સાથે મેળ ખાય છે. આ ઉદાહરણ દર્શાવે છે કે પેટર્નમાં variable'sં નામ સ્ટ્રક્ચરના ક્ષેત્રનાં નામો સાથે મેળ ખાતા હોવા જરૂરી નથી. જોકે, કયો variable કયા ક્ષેત્રમાંથી આવ્યો છે તે યાદ રાખવામાં સરળતા રહે તે માટે ઘણીવાર variable'sં નામોને ક્ષેત્રોનાં નામો સાથે મેળવવામાં આવે છે. આ સામાન્ય પ્રયોગને લીધે અને `let Point { x: x, y: y } = p;` લખવાથી ઘણો પુનરાવર્તન થાય છે, Rust પેટર્ન માટે એક ટૂંકું રૂપ ધરાવે છે જે સ્ટ્રક્ચર ક્ષેત્રો સાથે મેળ ખાય છે: તમારે માત્ર સ્ટ્રક્ચર ક્ષેત્રનું નામ સૂચિબદ્ધ કરવાની જરૂર છે, અને પેટર્નમાંથી બનાવેલા variable'sં નામો સમાન હશે. યાદી 19-13 યાદી 19-12 માં રહેલા કોડની જેમ જ વર્તે છે, પરંતુ `let` પેટર્નમાં બનાવેલા variable `x` અને `y` છે, `a` અને `b` નહીં.
 
-<Listing number="19-13" file-name="src/main.rs" caption="Destructuring struct fields using struct field shorthand">
+**Listing 19-13: Destructuring struct fields using struct field shorthand**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-13/src/main.rs}}
 ```
-</Listing>
+
 આ કોડ `x` અને `y` નામના variable બનાવે છે જે `p` variable's `x` અને `y` ક્ષેત્રો સાથે મેળ ખાય છે. પરિણામ એ આવે છે કે `x` અને `y` variable `p` સ્ટ્રક્ચરની કિંમતો હોય છે.
 
 આપણે સાહિત્યિક મૂલ્યો સાથે પણ વિઘટન કરી શકીએ છીએ સ્ટ્રક્ચર પેટર્નના ભાગ રૂપે તમામ ક્ષેત્રો માટે variable બનાવ્યા વિના. આમ કરવાથી આપણને અમુક ક્ષેત્રોને ચોક્કસ મૂલ્યો માટે ચકાસવાની મંજૂરી મળે છે જ્યારે અન્ય ક્ષેત્રોને વિઘટન કરવા માટે variable બનાવવામાં આવે છે.
 
 લિસ્ટિંગ 19-14 માં, આપણી પાસે એક `match` અભિવ્યક્તિ છે જે `Point` મૂલ્યોને ત્રણ કેસોમાં વિભાજિત કરે છે: એવા બિંદુઓ જે સીધા જ `x` અક્ષ પર આવેલા હોય (જે સાચું હોય છે જ્યારે `y = 0`), `y` અક્ષ પર (`x = 0`), અથવા કોઈ પણ અક્ષ પર નહીં.
 
-<Listing number="19-14" file-name="src/main.rs" caption="Destructuring and matching literal values in one pattern">
+**Listing 19-14: Destructuring and matching literal values in one pattern**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-14/src/main.rs:here}}
 ```
-</Listing>
+
 પહેલો ભાગ કોઈપણ બિંદુ સાથે મેળ ખાય છે જે `x` અક્ષ પર આવેલું હોય, જો `y` ક્ષેત્રનું મૂલ્ય શાબ્દિક `0` સાથે મેળ ખાતું હોય તો. પેટર્ન હજી પણ એક `x` variable બનાવે છે જેનો ઉપયોગ આપણે આ ભાગ માટે કોડમાં કરી શકીએ છીએ. એ
 
 જ રીતે, બીજો ભાગ `y` અક્ષ પરના કોઈપણ બિંદુ સાથે મેળ ખાય છે જો `x` ક્ષેત્રનું મૂલ્ય `0` હોય અને `y` ક્ષેત્રના મૂલ્ય માટે એક variable `y` બનાવે છે. ત્રીજો ભાગ કોઈ પણ શાબ્દિક સ્પષ્ટીકરણ કરતો નથી, તેથી તે કોઈપણ અન્ય `Point` સાથે મેળ ખાય છે અને બંને `x` અને `y` ક્ષેત્રો માટે variables બનાવે છે.
@@ -103,11 +107,12 @@ Rust જાણી શકે છે કે `'c'` પ્રથમ પ્રકા�
 
 આ પુસ્તકમાં આપણે એનુમ્સને તોડ્યા છે (ઉદાહરણ તરીકે, પ્રકરણ ૬ માં યાદી ૬-૫), પરંતુ આપણે સ્પષ્ટપણે ચર્ચા કરી નથી કે એનુમને તોડવાનો દાખલો એ ડેટાની રીત સાથે સુસંગત છે જે એનુમમાં સંગ્રહિત છે. ઉદાહરણ તરીકે, યાદી ૧૯-૧૫ માં, આપણે `Message` એનુમનો ઉપયોગ કરીએ છીએ યાદી ૬-૨ માંથી અને પેટર્ન સાથે એક `match` લખીએ છીએ જે દરેક આંતરિક મૂલ્યને તોડશે.
 
-<Listing number="19-15" file-name="src/main.rs" caption="Destructuring enum variants that hold different kinds of values">
+**Listing 19-15: Destructuring enum variants that hold different kinds of values**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-15/src/main.rs}}
 ```
-</Listing>
+
 આ કોડ `Change color to red 0, green 160, and blue 255` પ્રિન્ટ કરશે. જુદા જુદા આર્મ્સના કોડને ચલાવવા માટે `msg` નું મૂલ્ય બદલીને પ્રયત્ન કરો. ડેટા વગરના enum variants માટે, જેમ કે `Message::Quit`, અમે મૂલ્યને વધુ વિઘટિત કરી શકતા નથી. અમે માત્ર સાચું `Message::Quit` મૂલ્ય મેળવી શકીએ છીએ, અને તે પેટર્નમાં કોઈ variable નથી.
 
 struct-like enum variants માટે, જેમ કે `Message::Move`, અમે struct સાથે મેળ ખાવા માટે સ્પષ્ટ કરેલા પેટર્ન જેવું જ પેટર્ન વાપરી શકીએ છીએ. variant નામના પછી, અમે કૌંસ મૂકીને પછી ક્ષેત્રોની યાદી variable સાથે કરીએ છીએ જેથી આ આર્મ માટે કોડમાં ભાગો તોડી શકાય. અહીં અમે Listing 19-13 માં કર્યા મુજબ ટૂંકાવીને ફોર્મ વાપરીએ છીએ.
@@ -119,11 +124,12 @@ struct-like enum variants માટે, જેમ કે `Message::Move`, અમ
 
 આ અત્યાર સુધીના ઉદાહરણોમાં, આપણે માત્ર એક સ્તર ઊંડા struct અથવા enum સાથે મેળવ્યા છે, પરંતુ નેસ્ટેડ વસ્તુઓ સાથે પણ મેળવી શકાય છે! દાખલા તરીકે, આપણે Listing 19-16 માં દર્શાવેલ `ChangeColor` સંદેશમાં RGB અને HSV રંગોને ટેકો આપવા માટે Listing 19-15 માં રહેલા કોડને સુધારી શકીએ છીએ.
 
-<Listing number="19-16" caption="Matching on nested enums">
+**Listing 19-16: Matching on nested enums**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-16/src/main.rs}}
 ```
-</Listing>
+
 પહેલા ભાગનું પેટર્ન `match` અભિવ્યક્તિમાં `Message::ChangeColor` એnum પ્રકારના વિકલ્પ સાથે મેળ ખાય છે જેમાં `Color::Rgb` પ્રકારનો વિકલ્પ સમાયેલો છે; ત્યારબાદ, પેટર્ન ત્રણ આંતરિક `i32` મૂલ્યોને જોડે છે. બીજા ભાગનું પેટર્ન પણ `Message::ChangeColor` એnum પ્રકારના વિકલ્પ સાથે મેળ ખાય છે, પરંતુ આંતરિક એnum `Color::Hsv` સાથે મેળ ખાય છે. આપણે આ જટિલ શરતોને એક જ `match` અભિવ્યક્તિમાં દર્શાવી શકીએ છીએ, ભલે બે એnums સામેલ હોય.
 
 <!-- Old headings. Do not remove or links may break. -->
@@ -147,11 +153,12 @@ struct-like enum variants માટે, જેમ કે `Message::Move`, અમ
 
 અમે અન્ડરસ્કોરનો ઉપયોગ એક વાઇલ્ડકાર્ડ પેટર્ન તરીકે કર્યો છે જે કોઈપણ મૂલ્યને મેળવશે પરંતુ તે મૂલ્ય સાથે જોડાશે નહીં. આ વિશેષ કરીને `match` અભિવ્યક્તિના છેલ્લા ભાગમાં ઉપયોગી છે, પરંતુ અમે તેને કોઈપણ પેટર્નમાં પણ વાપરી શકીએ છીએ, જેમાં ફંક્શન પરિમાણોનો સમાવેશ થાય છે, જે લિસ્ટિંગ 19-17 માં દર્શાવેલ છે.
 
-<Listing number="19-17" file-name="src/main.rs" caption="Using `_` in a function signature">
+**Listing 19-17: Using `_` in a function signature**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-17/src/main.rs}}
 ```
-</Listing>
+
 આ કોડ `3` મૂલ્યને પ્રથમ Argument તરીકે સંપૂર્ણપણે અવગણશે અને `This code only uses the y parameter: 4` છાપશે. મોટાભાગના કિસ્સાઓમાં જ્યારે તમારે
 
 કોઈ ચોક્કસ ફંક્શન પરિમાણની હવે જરૂર ન હોય, ત્યારે તમે હસ્તાક્ષર બદલો છો જેથી તેમાં વપરાયેલ પરિમાણ સામેલ ન હોય. ફંક્શન પરિમાણને અવગણવું એ વિશેષ કરીને તેવા કિસ્સાઓમાં ઉપયોગી થઈ શકે છે જ્યારે, ઉદાહરણ તરીકે, તમે એક ટ્રેઇટનો અમલ કરી રહ્યા હોવ અને તમને ચોક્કસ પ્રકારનું હસ્તાક્ષરની જરૂર હોય પરંતુ તમારા અમલીકરણમાં ફંક્શન બોડીને એક પણ પરિમાણની જરૂર ન હોય. પછી તમે નામનો ઉપયોગ કરવાથી મળતા બિનજરૂરી ફંક્શન પરિમાણો વિશે કમ્પાઇલર ચેતવણી ટાળો છો.
@@ -161,22 +168,24 @@ struct-like enum variants માટે, જેમ કે `Message::Move`, અમ
 
 આપણે પેટર્નની અંદર પણ `_` નો ઉપયોગ કરી શકીએ છીએ જેથી કરીને માત્ર મૂલ્યનો અમુક ભાગ અવગણવામાં આવે, દાખલા તરીકે, જ્યારે આપણે માત્ર મૂલ્યના અમુક ભાગ માટે ચકાસણી કરવા માંગીએ છીએ પરંતુ અનુરૂપ કોડમાં અન્ય ભાગોની જરૂર ન હોય. સૂચિ 19-18 એ કોડ દર્શાવે છે જે સેટિંગના મૂલ્યનું સંચાલન કરે છે. વ્યવસાયિક આવશ્યકતાઓ એવી છે કે userને હાલના સેટિંગના કસ્ટમાઇઝેશનને ફરીથી લખવાની મંજૂરી ન હોવી જોઈએ પરંતુ જો તે હાલમાં સેટ ન હોય તો સેટિંગને દૂર કરી શકે છે અને તેને મૂલ્ય આપી શકે છે.
 
-<Listing number="19-18" caption="Using an underscore within patterns that match `Some` variants when we don’t need to use the value inside the `Some`">
+**Listing 19-18: Using an underscore within patterns that match `Some` variants when we don’t need to use the value inside the `Some`**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-18/src/main.rs:here}}
 ```
-</Listing>
+
 આ કોડ `Can't overwrite an existing customized value` અને ત્યારબાદ `setting is Some(5)` પ્રિન્ટ કરશે. પ્રથમ `match` શસ્ત્રમાં, આપણે `Some` પ્રકારના મૂલ્યો સાથે મેળ કરવાની કે તેનો ઉપયોગ કરવાની જરૂર નથી, પરંતુ આપણે એ સ્થિતિ માટે પરીક્ષણ કરવું જરૂરી છે જ્યારે `setting_value` અને `new_setting_value` બંને `Some` પ્રકારના હોય. તે સ્થિતિમાં, આપણે `setting_value` બદલવાનું શા માટે શક્ય નથી તેનું કારણ પ્રિન્ટ કરીએ છીએ, અને તે બદલાતું નથી.
 
 અન્ય તમામ સ્થિતિઓમાં (જો `setting_value` અથવા `new_setting_value` બંને `None` હોય), જે બીજા શસ્ત્રમાં `_` પેટર્ન દ્વારા દર્શાવવામાં આવ્યું છે, આપણે `new_setting_value` ને `setting_value` બનવાની મંજૂરી આપવા માંગીએ છીએ.
 
 આપણે એક જ પેટર્નમાં અન્ડરસ્કોરનો ઉપયોગ અનેક સ્થળોએ કરીને અમુક ચોક્કસ મૂલ્યોને અવગણી શકીએ છીએ. પરિશિષ્ટ ૧૯-૧૯ એવા ઉદાહરણ દર્શાવે છે જેમાં પાંચ વસ્તુઓના ટ્યૂપલમાં બીજા અને ચોથા મૂલ્યોને અવગણવામાં આવે છે.
 
-<Listing number="19-19" caption="Ignoring multiple parts of a tuple">
+**Listing 19-19: Ignoring multiple parts of a tuple**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-19/src/main.rs:here}}
 ```
-</Listing>
+
 આ કોડ `Some numbers: 2, 8, 32` છાપશે, અને મૂલ્યો `4` અને `16` અવગણવામાં આવશે.
 
 <!-- Old headings. Do not remove or links may break. -->
@@ -184,56 +193,62 @@ struct-like enum variants માટે, જેમ કે `Message::Move`, અમ
 
 જો તમે variable બનાવો છો પણ તેનો ઉપયોગ ક્યાંય નથી કરતા, તો Rust સામાન્ય રીતે ચેતવણી જારી કરશે કારણ કે ન વપરાયેલ variable ભૂલ હોઈ શકે છે. જોકે, કેટલીકવાર એવું કરવું ઉપયોગી થઈ શકે છે કે તમે હજી સુધી variable's ઉપયોગ નહીં કરો, જેમ કે જ્યારે તમે પ્રોટોટાઇપિંગ કરી રહ્યા હોવ અથવા કોઈ project શરૂ કરી રહ્યા હોવ. આ સ્થિતિમાં, તમે Rust ને variable's નામની શરૂઆત અન્ડરસ્કોરથી કરીને ન વપરાયેલ variable વિશે ચેતવણી ન આપવાનું કહી શકો છો. Listing 19-20 માં, અમે બે ન વપરાયેલા variable બનાવીએ છીએ, પરંતુ જ્યારે આપણે આ કોડને compile કરીએ છીએ, ત્યારે અમને તેમાંથી માત્ર એક જ ચેતવણી મળવી જોઈએ.
 
-<Listing number="19-20" file-name="src/main.rs" caption="Starting a variable name with an underscore to avoid getting unused variable warnings">
+**Listing 19-20: Starting a variable name with an underscore to avoid getting unused variable warnings**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-20/src/main.rs}}
 ```
-</Listing>
+
 અહીં, આપણને ચિંતાજનક સંદેશો મળે છે કે variable `y` નો ઉપયોગ કરવામાં આવ્યો નથી, પરંતુ આપણને `_x` ના ઉપયોગ ન થવા અંગે
 
 કોઈ ચિંતાજનક સંદેશો મળતો નથી. એ નોંધવું અગત્યનું છે કે માત્ર `_` વાપરવા અને એક નામ વાપરવા વચ્ચે થોડો તફાવત હોય છે જે અક્ષરથી શરૂ થાય છે. `_x` હજી પણ મૂલ્યને variable જોડે છે, જ્યારે `_` કંઈપણ જોડે નહીં. આ ભેદ મહત્વપૂર્ણ હોવાનું દર્શાવવા માટે, યાદી 19-21 આપણને ભૂલ પ્રદાન કરશે.
 
-<Listing number="19-21" caption="An unused variable starting with an underscore still binds the value, which might take ownership of the value.">
+**Listing 19-21: An unused variable starting with an underscore still binds the value, which might take ownership of the value.**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-21/src/main.rs:here}}
 ```
-</Listing>
+
 આપણે એક ભૂલ મેળવીશું કારણ કે `s` મૂલ્ય હજી પણ `_s` માં ખસેડવામાં આવશે, જે આપણને `s` ફરીથી વાપરતા અટકાવશે. જોકે, માત્ર અન્ડરસ્કોરનો ઉપયોગ કરવાથી ક્યારેય કોઈ મૂલ્ય સાથે જોડાતું નથી. સૂચિ ૧૯-૨૨ કોઈપણ ભૂલો વગર સંકલિત થશે કારણ કે `s`  `_` માં ખસેડવામાં આવતું નથી.
 
-<Listing number="19-22" caption="Using an underscore does not bind the value.">
+**Listing 19-22: Using an underscore does not bind the value.**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-22/src/main.rs:here}}
 ```
-</Listing>
+
 આ કોડ યોગ્ય રીતે કાર્ય કરે છે કારણ કે આપણે `s` ને કશું સાથે જોડીએ છીએ નહીં; તે ખસેડવામાં આવતું નથી.
 
 #### Remaining Parts of a Value with `..`
 
 ઘણા ભાગો ધરાવતા મૂલ્યો માટે, અમે `..` સિન્ટેક્સનો ઉપયોગ કરીને ચોક્કસ ભાગોનો ઉપયોગ કરી શકીએ છીએ અને બાકીનાને અવગણી શકીએ છીએ, જેનાથી દરેક અવગણિત મૂલ્ય માટે અન્ડરસ્કોરની યાદી બનાવવાની જરૂરિયાત ટાળી શકાય છે. `..` પેટર્ન એવા મૂલ્યના ભાગોને અવગણે છે જે પેટર્નના બાકીના ભાગમાં સ્પષ્ટ રીતે મેળવવામાં આવ્યાં નથી. લિસ્ટિંગ 19-23 માં, આપણી પાસે એક `Point` સ્ટ્રક્ચર છે જે ત્રિ-પરિમાણીય અવકાશમાં કોઓર્ડિનેટ ધરાવે છે. `match` અભિવ્યક્તિમાં, અમે માત્ર `x` કોઓર્ડિનેટ પર કાર્ય કરવા અને `y` અને `z` ક્ષેત્રોમાં રહેલા મૂલ્યોને અવગણવા માંગીએ છીએ.
 
-<Listing number="19-23" caption="Ignoring all fields of a `Point` except for `x` by using `..`">
+**Listing 19-23: Ignoring all fields of a `Point` except for `x` by using `..`**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-23/src/main.rs:here}}
 ```
-</Listing>
+
 આપણે `x` મૂલ્ય દર્શાવેલું અને પછી માત્ર `..` પેટર્ન ઉમેર્યું છે. આ `y: _` અને `z: _` સૂચિબદ્ધ કરવાની જરૂરિયાત કરતાં વધુ ઝડપી છે, વિશેષ કરીને જ્યારે આપણે એવા structures સાથે કામ કરી રહ્યા હોઈએ જેમાં ઘણા ક્ષેત્રો હોય અને માત્ર એક કે બે જ ક્ષેત્રો
 
 સંબંધિત હોય. The syntax `..` will expand to as many values as it needs to be. Listing 19-24 shows how to use `..` with a tuple. `..` સિન્ટેક્સ જેટલા જરૂરી હોય તેટલા મૂલ્યોમાં વિસ્તરણ પામશે. સૂચિ ૧૯-૨૪ દર્શાવે છે કે tuple સાથે `..` નો ઉપયોગ કેવી રીતે કરવો.
 
-<Listing number="19-24" file-name="src/main.rs" caption="Matching only the first and last values in a tuple and ignoring all other values">
+**Listing 19-24: Matching only the first and last values in a tuple and ignoring all other values**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-24/src/main.rs}}
 ```
-</Listing>
+
 આ કોડમાં, પ્રથમ અને અંતિમ મૂલ્યોને `first` અને `last` સાથે મેળવવામાં આવે છે. `..` મધ્યમાંની બધી વસ્તુઓને મેળવીને અવગણશે. જો કે, `..` નો ઉપયોગ
 
 અસ્પષ્ટ ન હોવો જોઈએ. જો કયા મૂલ્યોને મેળવવાના છે અને કયાને અવગણવાના છે તે સ્પષ્ટ ન હોય, તો Rust આપણને ભૂલ આપશે. સૂચિ ૧૯-૨૫ માં `..` નો અસ્પષ્ટ રીતે ઉપયોગ કરવાનું ઉદાહરણ દર્શાવવામાં આવ્યું છે, તેથી તે સંપાઈ શકશે નહીં.
 
-<Listing number="19-25" file-name="src/main.rs" caption="An attempt to use `..` in an ambiguous way">
+**Listing 19-25: An attempt to use `..` in an ambiguous way**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-25/src/main.rs}}
 ```
-</Listing>
+
 જ્યારે આપણે આ ઉદાહરણને કમ્પાઇલ કરીએ છીએ, ત્યારે આપણને આ ભૂલ પ્રાપ્ત થાય છે:
 
 ```console
@@ -248,11 +263,12 @@ Rust માટે એ અશક્ય છે કે ટ્યૂપલમાં 
 
 શરત પેટર્નમાં બનાવેલા variable's ઉપયોગ કરી શકે છે. લિસ્ટિંગ 19-26 એક `match` દર્શાવે છે જ્યાં પ્રથમ આર્મમાં `Some(x)` પેટર્ન છે અને તેમાં `if x % 2 == 0` મેચ ગાર્ડ પણ છે (જે સંખ્યા બે વડે વિભાજ્ય હોય ત્યારે `true` થશે).
 
-<Listing number="19-26" caption="Adding a match guard to a pattern">
+**Listing 19-26: Adding a match guard to a pattern**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-26/src/main.rs:here}}
 ```
-</Listing>
+
 આ ઉદાહરણ `The number 4 is even` છાપશે. જ્યારે `num` ને પ્રથમ શૃંગમાં (arm) રહેલા દાખલા સાથે સરખાવવામાં આવે છે, ત્યારે તે મેળ ખાય છે કારણ કે `Some(4)` એ `Some(x)` સાથે મેળ ખાય છે. ત્યારબાદ, મેચ ગાર્ડ તપાસે છે કે `x` ને 2 વડે ભાગવાથી મળતી શેષ 0 બરાબર છે કે નહીં, અને તે હોવાથી, પ્રથમ શૃંગ પસંદ થાય છે.
 
 જો `num` ને બદલે `Some(5)` હોય, તો પ્રથમ શૃંગમાં રહેલો મેચ ગાર્ડ `false` થયો હોત કારણ કે 5 ને 2 વડે ભાગવાથી મળતી શેષ 1 છે, જે 0 બરાબર નથી. ત્યારબાદ Rust બીજા શૃંગ પર જશે, જે મેળ ખાશે કારણ કે બીજા શૃંગમાં મેચ ગાર્ડ નથી અને તેથી તે કોઈપણ `Some` પ્રકારને મેળ ખાય છે.
@@ -261,22 +277,24 @@ Rust માટે એ અશક્ય છે કે ટ્યૂપલમાં 
 
 જ્યારે આપણે લિસ્ટિંગ ૧૯-૧૧ની ચર્ચા કરી રહ્યા હતા, ત્યારે અમે ઉલ્લેખ કર્યો હતો કે અમે પેટર્ન-શેડોઇંગ સમસ્યાને ઉકેલવા માટે મેચ ગાર્ડનો ઉપયોગ કરી શકીએ છીએ. યાદ કરો કે અમે `match` અભિવ્યક્તિમાં પેટર્નની અંદર એક નવું variable બનાવ્યું હતું, બહારના variable's ઉપયોગ કરવાને બદલે. તે નવા variable's અર્થ એ થયો કે અમે બાહ્ય variable's કિંમત સામે પરીક્ષણ કરી શકતા નથી. લિસ્ટિંગ ૧૯-૨૭ દર્શાવે છે કે આ સમસ્યાને ઠીક કરવા માટે અમે મેચ ગાર્ડનો ઉપયોગ કેવી રીતે કરી શકીએ છીએ.
 
-<Listing number="19-27" file-name="src/main.rs" caption="Using a match guard to test for equality with an outer variable">
+**Listing 19-27: Using a match guard to test for equality with an outer variable**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-27/src/main.rs}}
 ```
-</Listing>
+
 આ કોડ હવે `Default case, x = Some(5)` પ્રિન્ટ કરશે. બીજા `match` આર્મમાં રહેલી પેટર્ન બહારના `y` ને છાયા નહિ કરે, એનો અર્થ એ થાય છે કે આપણે મેચ ગાર્ડમાં બહારના `y` નો ઉપયોગ કરી શકીએ છીએ. `Some(y)` જેવી પેટર્નનો ઉલ્લેખ કરવાને બદલે, જેણે બહારના `y` ને છાયા કર્યા હોત, આપણે `Some(n)` નો ઉલ્લેખ કરીએ છીએ. આ એક નવું variable `n` બનાવે છે, જે કોઈ પણ વસ્તુને છાયા કરતું નથી, કારણ કે `match` ની બહાર `n` નામનું કોઈ variable નથી.
 
 આ મેચ ગાર્ડ `if n == y` પેટર્ન નથી અને તેથી નવા variable (variable) રજૂ કરતું નથી. આ `y` એ બાહ્ય `y` છે, નવું `y` જે તેને છાયા કરે છે તે નહીં, અને આપણે એક એવું મૂલ્ય શોધી શકીએ છીએ
 
 જે બાહ્ય `y` જેટલું જ હોય, `n` ને `y` સાથે સરખાવીને. તમે મેચ ગાર્ડમાં `|` ઓપરેટરનો પણ ઉપયોગ કરી શકો છો જેથી બહુવિધ પેટર્ન (patterns) નિર્દિષ્ટ કરી શકાય; મેચ ગાર્ડ શરત તમામ પેટર્ન પર લાગુ થશે. યાદી ૧૯-૨૮ માં `|` નો ઉપયોગ કરતી પેટર્નને મેચ ગાર્ડ સાથે જોડતી વખતે અગ્રતા દર્શાવવામાં આવી છે. આ ઉદાહરણનો મહત્વપૂર્ણ ભાગ એ છે કે `if y` મેચ ગાર્ડ `4`, `5` અને `6` પર લાગુ થાય છે, ભલે તેવું લાગે કે `if y` માત્ર `6` પર જ લાગુ પડે છે.
 
-<Listing number="19-28" caption="Combining multiple patterns with a match guard">
+**Listing 19-28: Combining multiple patterns with a match guard**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-28/src/main.rs:here}}
 ```
-</Listing>
+
 મેચ શરત જણાવે છે કે આર્મ માત્ર ત્યારે જ મેળ ખાય છે જ્યારે `x` ની કિંમત `4`, `5`, અથવા `6` બરાબર હોય અને `y` `true` હોય. જ્યારે આ કોડ ચાલે છે, ત્યારે પ્રથમ આર્મની પેટર્ન મેળ ખાય છે કારણ કે `x` એ `4` છે, પરંતુ મેચ ગાર્ડ `if y` એ `false` છે, તેથી પહેલી આર્મ પસંદ થતી નથી. કોડ બીજી આર્મ પર આગળ વધે છે, જે મેળ ખાય છે, અને આ પ્રોગ્રામ `no` છાપે છે. તેનું કારણ એ છે કે `if` શરત સમગ્ર પેટર્ન `4 | 5 | 6` ને લાગુ પડે છે, માત્ર છેલ્લી કિંમત `6` ને નહીં. બીજા શબ્દોમાં કહીએ તો, પેટર્ન સંબંધિત મેચ ગાર્ડની અગ્રતા આ પ્રમાણે વર્તે છે:
 
 ```text
@@ -294,11 +312,12 @@ Rust માટે એ અશક્ય છે કે ટ્યૂપલમાં 
 
 એટ ઓપરેટર `@` આપણને એક variable બનાવવાની મંજૂરી આપે છે જે એક જ સમયે મૂલ્ય ધરાવે છે અને તે મૂલ્યને પેટર્ન મેચ માટે ચકાસે છે. લિસ્ટિંગ ૧૯-૨૯ માં, આપણે તપાસવું છે કે `Message::Hello` નું `id` ક્ષેત્ર `3..=7` શ્રેણીમાં છે કે નહીં. આપણે તે મૂલ્યને `id` variable પણ બાંધવા માંગીએ છીએ જેથી કરીને આપણે શસ્ત્ર સાથે સંકળાયેલ કોડમાં તેનો ઉપયોગ કરી શકીએ.
 
-<Listing number="19-29" caption="Using `@` to bind to a value in a pattern while also testing it">
+**Listing 19-29: Using `@` to bind to a value in a pattern while also testing it**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-29/src/main.rs:here}}
 ```
-</Listing>
+
 આ ઉદાહરણ `Found an id in range: 5` છાપશે. `id @` નો ઉપયોગ કરીને રેન્જ `3..=7` પહેલાં દર્શાવવાથી, જે પણ મૂલ્ય રેન્જ સાથે મેળ ખાય છે તે `id` નામના ચલણમાં સંગ્રહિત થાય છે, અને તે જ સમયે ખાતરી કરવામાં
 
 આવે છે કે મૂલ્ય રેન્જ પેટર્ન સાથે મેળ ખાય છે. બીજા ભાગમાં, જ્યાં આપણે માત્ર એક રેન્જ દર્શાવી છે, ત્યાં તે ભાગ સાથે સંકળાયેલ કોડમાં `id` ક્ષેત્રનું વાસ્તવિક મૂલ્ય ધરાવતું ચલણ હોતું નથી. `id` ક્ષેત્રનું મૂલ્ય 10, 11 અથવા 12 હોઈ શકે છે, પરંતુ તે પેટર્ન સાથે સંકળાયેલ કોડને ખબર હોતી નથી કે તે કયું છે. પેટર્ન કોડ `id` ક્ષેત્રમાંથી મૂલ્યનો ઉપયોગ કરી શકતું નથી કારણ કે આપણે `id` મૂલ્યને ચલણમાં સંગ્રહિત કર્યું નથી.

@@ -25,11 +25,11 @@ Mutexes ના ઉપયોગમાં મુશ્કેલી Mutexes ને 
 
 મ્યુટેક્સનો ઉપયોગ કેવી રીતે કરવો તેનું ઉદાહરણ તરીકે, ચાલો લિસ્ટિંગ ૧૬-૧૨ માં દર્શાવ્યા પ્રમાણે એક જ થ્રેડવાળા સંદર્ભમાં મ્યુટેક્સનો ઉપયોગ કરવાનું શરૂ કરીએ.
 
-<Listing number="16-12" file-name="src/main.rs" caption="Exploring the API of `Mutex<T>` in a single-threaded context for simplicity">
+` in a single-threaded context for simplicity">
 ```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-12/src/main.rs}}
 ```
-</Listing>
+
 `new` જેમ કે ઘણા પ્રકારો સાથે, આપણે સંલગ્ન વિધેય `નવું` નો ઉપયોગ કરીને `Mutex<T>` બનાવીએ છીએ. To access the data inside the mutex, we use the `lock` method to acquire the lock. This call will block the current thread so that it can’t do any work until it’s our turn to have the lock. મ્યુટેક્સની અંદરના ડેટાને મેળવવા માટે, આપણે લોક પ્રાપ્ત કરવા માટે `લોક` વિધેયનો ઉપયોગ કરીએ છીએ. આ કાર્ય વર્તમાન થ્રેડને અવરોધિત કરશે જેથી તે આપણી વારી થાય ત્યાં સુધી કોઈ કાર્ય કરી શકે નહીં. The call to `lock`
 
 `unwrap` જો બીજા થ્રેડે લોક ધરાવતો હોય અને તે ગભરાય તો `લોક` વિધેય નિષ્ફળ થઈ શકે છે. આવી સ્થિતિમાં, કોઈ પણ ક્યારેય લોક મેળવી શકશે નહીં, તેથી અમે `અનરેપ` કરવાનું પસંદ કર્યું છે અને જો અમે આવી પરિસ્થિતિમાં હોઈએ તો આ થ્રેડને ગભરાવવાનું નક્કી કર્યું છે.
@@ -45,11 +45,11 @@ Mutexes ના ઉપયોગમાં મુશ્કેલી Mutexes ને 
 
 હવે આપણે `Mutex<T>` નો ઉપયોગ કરીને બહુવિધ થ્રેડો વચ્ચે મૂલ્ય વહેંચવાનો પ્રયાસ કરીએ. આપણે ૧૦ થ્રેડો ચાલુ કરીશું અને દરેકને એક કાઉન્ટર મૂલ્યમાં ૧ વધારવાનું કહીશું, જેથી કાઉન્ટર ૦ થી ૧૦ સુધી પહોંચે. લિસ્ટિંગ ૧૬-૧૩ માંનું ઉદાહરણ કમ્પાઇલર ભૂલ આપશે, અને આપણે તે ભૂલનો ઉપયોગ `Mutex<T>` ના ઉપયોગ વિશે વધુ જાણવા માટે કરીશું અને કેવી રીતે Rust આપણને તેનો યોગ્ય રીતે ઉપયોગ કરવામાં મદદ કરે છે તે સમજવા માટે.
 
-<Listing number="16-13" file-name="src/main.rs" caption="Ten threads, each incrementing a counter guarded by a `Mutex<T>`">
+`">
 ```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-13/src/main.rs}}
 ```
-</Listing>
+
 અમે `counter` variable બનાવીએ છીએ જે `Mutex<T>` ની અંદર `i32` મૂલ્ય રાખે છે, જેમ કે આપણે સૂચિ ૧૬-૧૨ માં કર્યું હતું. ત્યારબાદ, અમે સંખ્યાઓની શ્રેણી પર પુનરાવર્તન કરીને ૧૦ થ્રેડ્સ (threads) બનાવીએ છીએ. અમે `thread::spawn` નો ઉપયોગ કરીએ છીએ અને બધા થ્રેડ્સને એક જ ક્લોઝર (closure) આપીએ છીએ: જે કાઉન્ટરને થ્રેડમાં ખસેડે છે, `Mutex<T>` પર `lock` પદ્ધતિથી લોક મેળવે છે, અને ત્યારબાદ મ્યુટેક્સ (mutex) માં રહેલા મૂલ્યમાં ૧ ઉમેરે છે. જ્યારે કોઈ થ્રેડ તેનું ક્લોઝર પૂર્ણ કરે છે, ત્યારે `num` અવકાશમાંથી બહાર નીકળી જશે અને બીજા થ્રેડને લોક મેળવવા માટે મુક્ત કરશે.
 
 મુખ્ય થ્રેડમાં, અમે બધા જોડાણ હેન્ડલ એકત્રિત કરીએ છીએ. પછી, જેમ કે આપણે યાદશક્તિ ૧૬-૨ માં કર્યું હતું, દરેક હેન્ડલ પર `join` ને બોલાવીએ છીએ જેથી તમામ થ્રેડ પૂર્ણ થાય. તે સમયે, મુખ્ય થ્રેડ તાળું મેળવશે અને આ કાર્યક્રમના પરિણામને છાપશે.
@@ -65,11 +65,11 @@ Mutexes ના ઉપયોગમાં મુશ્કેલી Mutexes ને 
 
 પ્રકરણ ૧૫ માં, અમે `Rc<T>` સ્માર્ટ પોઇન્ટરનો ઉપયોગ કરીને એક મૂલ્યને બહુવિધ માલિકોને આપ્યું હતું, જેથી સંદર્ભ ગણતરીવાળું મૂલ્ય બનાવી શકાય. ચાલો અહીં પણ એ જ કરીએ અને જોઈએ કે શું થાય છે. અમે યાદી ૧૬-૧૪ માં `Rc<T>` માં `Mutex<T>` ને લપેટીશું અને થ્રેડને માલિકી સોંપતા પહેલાં `Rc<T>` ની નકલ કરીશું.
 
-<Listing number="16-14" file-name="src/main.rs" caption="Attempting to use `Rc<T>` to allow multiple threads to own the `Mutex<T>`">
+` to allow multiple threads to own the `Mutex<T>`">
 ```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-14/src/main.rs}}
 ```
-</Listing>
+
 ફરી એકવાર, આપણે કમ્પાઇલ કરીએ છીએ અને મેળવીએ છીએ... અલગ ભૂલો! કમ્પાઈલર આપણને ઘણું શીખવે છે:
 
 ```console
@@ -87,11 +87,11 @@ Mutexes ના ઉપયોગમાં મુશ્કેલી Mutexes ને 
 
 ચાલો આપણી ઉદાહરણ પર પાછા ફરીએ: `Arc<T>` અને `Rc<T>` સમાન API ધરાવે છે, તેથી આપણે આપણી કાર્યક્રમમાં ફેરફાર કરીને તેને સુધારી શકીશું - `use` લાઇન બદલીને, `new` કૉલ બદલીને અને `clone` કૉલ બદલીને. યાદી 16-15 માં રહેલો કોડ અંતે કમ્પાઇલ થશે અને ચાલશે.
 
-<Listing number="16-15" file-name="src/main.rs" caption="Using an `Arc<T>` to wrap the `Mutex<T>` to be able to share ownership across multiple threads">
+` to wrap the `Mutex<T>` to be able to share ownership across multiple threads">
 ```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-15/src/main.rs}}
 ```
-</Listing>
+
 આ કોડ નીચે મુજબ છાપશે:
 
 <!-- Not extracting output because changes to this output aren't significant;

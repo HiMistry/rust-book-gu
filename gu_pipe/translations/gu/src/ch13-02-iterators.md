@@ -4,20 +4,22 @@
 
 Rust માં, પુનરાવર્તકો આળસુ (lazy) હોય છે, એટલે કે જ્યાં સુધી તમે પુનરાવર્તકની વપરાશ કરતા પદ્ધતિઓને બોલાવશો નહીં ત્યાં સુધી તેનો કોઈ અસર થતો નથી. ઉદાહરણ તરીકે, Listing 13-10 માં આપેલ કોડ `v1` વેક્ટરની વસ્તુઓ પર એક પુનરાવર્તક બનાવે છે, જે `Vec<T>` પર વ્યાખ્યાયિત `iter` પદ્ધતિને બોલાવીને કરવામાં આવે છે. આ કોડ પોતે કોઈ ઉપયોગી કાર્ય કરતો નથી.
 
-<Listing number="13-10" file-name="src/main.rs" caption="Creating an iterator">
+**Listing 13-10: Creating an iterator**
+
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-10/src/main.rs:here}}
 ```
-</Listing>
+
 ઇટરેટર `v1_iter` ચલણમાં સંગ્રહિત છે. એકવાર આપણે ઇટરેટર બનાવ્યા પછી, અમે તેનો ઉપયોગ વિવિધ રીતે કરી શકીએ છીએ. લિસ્ટિંગ 3-5 માં, અમે કોડના દરેક ઘટક પર અમલ કરવા માટે `for` લૂપનો ઉપયોગ કરીને એરે પર ઇટરેટ કર્યું હતું. આંતરિક રીતે, આ આપોઆપ એક ઇટરેટર બનાવ્યું અને પછી તેનો ઉપયોગ કર્યો, પરંતુ અત્યાર સુધી અમે તે કેવી રીતે
 
 કાર્ય કરે છે તેના પર ધ્યાન આપ્યું ન હતું. In the example in Listing 13-11, we separate the creation of the iterator from the use of the iterator in the `for` loop. When the `for` loop is called using the iterator in `v1_iter`, each element in the iterator is used in one iteration of the loop, which prints out each value. લિસ્ટિંગ 13-11 માંના ઉદાહરણમાં, અમે `for` લૂપમાં ઇટરેટરના ઉપયોગથી ઇટરેટરની રચનાને અલગ કરીએ છીએ. જ્યારે `v1_iter` માંના ઇટરેટરનો ઉપયોગ કરીને `for` લૂપ બોલાવવામાં આવે છે, ત્યારે ઇટરેટરના દરેક ઘટકનો ઉપયોગ લૂપના એક પુનરાવર્તનમાં થાય છે, જે દરેક મૂલ્ય છાપે છે.
 
-<Listing number="13-11" file-name="src/main.rs" caption="Using an iterator in a `for` loop">
+**Listing 13-11: Using an iterator in a `for` loop**
+
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-11/src/main.rs:here}}
 ```
-</Listing>
+
 ભાષાઓમાં જે તેમના પ્રમાણિત પુસ્તકાલયો દ્વારા ઇટરેટર (iterator) પ્રદાન કરતા નથી, તમે સંભવતઃ આ જ કાર્યક્ષમતા લખશો એ માટે એક variable અનુક્રમણિકા 0 થી શરૂ કરીને, તે variable's ઉપયોગ વેક્ટર (vector) માં અનુક્રમિત કરવા માટે મૂલ્ય મેળવવા અને variable's મૂલ્યમાં વધારો કરવો જ્યાં સુધી તે વેક્ટર (vector) માં વસ્તુઓની કુલ સંખ્યા સુધી ન પહોંચે ત્યાં સુધી લૂપ (loop) માં. ઇટરેટર (iterator) તમારા માટે આ તમામ તર્કનું
 
 સંચાલન કરે છે, જે તમને પુનરાવર્તિત કોડને ઘટાડે છે જેને તમે સંભવિતપણે ભૂલ કરી શકો છો. ઇટરેટર (iterator) તમને વધુ લવચીકતા આપે છે જેથી સમાન તર્કનો ઉપયોગ ઘણાં વિવિધ પ્રકારના ક્રમો સાથે કરી શકાય, માત્ર વેક્ટર (vector) જેવા અનુક્રમિત કરી શકાય તેવા ડેટા સ્ટ્રક્ચર (data structure) સાથે જ નહીં. ચાલો જોઈએ કે ઇટરેટર (iterator) તે કેવી રીતે કરે છે.
@@ -41,11 +43,12 @@ Iterator લક્ષણ `Iterator` લક્ષણ માત્ર એક જ �
 
 `None` આપે છે. આપણે પુનરાવર્તકો પર સીધી રીતે `next` પદ્ધતિ બોલાવી શકીએ છીએ; યાદી 13-12 દર્શાવે છે કે વેક્ટરથી બનાવેલ પુનરાવર્તક પર `next` ને વારંવાર બોલાવવાથી કયા મૂલ્યો પાછા મળે છે.
 
-<Listing number="13-12" file-name="src/lib.rs" caption="Calling the `next` method on an iterator">
+**Listing 13-12: Calling the `next` method on an iterator**
+
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-12/src/lib.rs:here}}
 ```
-</Listing>
+
 એ નોંધ લેવી જરૂરી છે કે આપણે `v1_iter` ને પરિવર્તનશીલ બનાવવું પડ્યું હતું: પુનરાવર્તક (iterator) પર `next` પદ્ધતિને બોલાવવાથી આંતરિક સ્થિતિ બદલાય છે, જેનો પુનરાવર્તક ક્રમમાં પોતાની સ્થિતિ જાળવવા માટે ઉપયોગ કરે છે. બીજા શબ્દોમાં કહીએ તો, આ કોડ પુનરાવર્તકની વપરાશિતા કરે છે, અથવા તેનો ઉપયોગ પૂરો કરે છે. `next` ના દરેક બોલાવવાથી પુનરાવર્તકમાંથી એક ઘટક ખતમ થઈ જાય છે. જ્યારે આપણે `for` લૂપનો ઉપયોગ કર્યો ત્યારે આપણે `v1_iter` ને પરિવર્તનશીલ બનાવવાની જરૂર ન હતી, કારણ કે લૂપે `v1_iter` નું માલિકી સ્વીકાર્યું અને દૃશ્યમાન રીતે તેને પરિવર્તનશીલ બનાવી દીધું.
 
 વળી, `next` કૉલથી મળતા મૂલ્યો વેક્ટરના મૂલ્યોના અપરિવર્તનશીલ સંદર્ભો (immutable references) છે. `iter` પદ્ધતિ અપરિવર્તનશીલ સંદર્ભો પર ઇટરેટર ઉત્પન્ન કરે છે. જો આપણે એવો ઇટરેટર બનાવવા માંગતા હોઈએ જે `v1` નું માલિકી સ્થાનો અને માલિકીવાળા મૂલ્યો (owned values) આપે, તો આપણે `iter` ને બદલે `into_iter` કૉલ કરી શકીએ છીએ. એ જ રીતે, જો આપણે પરિવર્તનશીલ સંદર્ભો (mutable references) પર ઇટરેટ કરવા માંગતા હોઈએ, તો આપણે `iter` ને બદલે `iter_mut` કૉલ કરી શકીએ છીએ.
@@ -56,11 +59,12 @@ Iterator લક્ષણ `Iterator` લક્ષણ માત્ર એક જ �
 
 જે પદ્ધતિઓ `next` ને બોલાવે છે તેને user આધારિત અનુકૂલકો (consuming adapters) કહેવામાં આવે છે કારણ કે તેમને બોલાવવાથી ઇટરેટર વપરાશ પામે છે. એક ઉદાહરણ `sum` પદ્ધતિનું છે, જે ઇટરેટરની માલિકી લે છે અને વારંવાર `next` ને બોલાવીને વસ્તુઓ પર પુનરાવર્તન કરે છે, આમ ઇટરેટરનો વપરાશ કરે છે. જેમ જેમ તે પુનરાવર્તન કરે છે, તેમ તેમ તે દરેક વસ્તુને ચાલુ કુલ (running total) માં ઉમેરે છે અને પુનરાવર્તન પૂર્ણ થાય ત્યારે કુલ રકમ આપે છે. યાદી 13-13 માં `sum` પદ્ધતિના ઉપયોગનું ઉદાહરણ દર્શાવતું પરીક્ષણ (test) છે.
 
-<Listing number="13-13" file-name="src/lib.rs" caption="Calling the `sum` method to get the total of all items in the iterator">
+**Listing 13-13: Calling the `sum` method to get the total of all items in the iterator**
+
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-13/src/lib.rs:here}}
 ```
-</Listing>
+
 આપણે `sum` ફંક્શનને બોલાવ્યા પછી `v1_iter` વાપરવાની અનુમતિ નથી, કારણ કે `sum` તેના પર બોલાવવામાં આવેલ ઇટરેટરનું માલિકી લે છે.
 
 ### Methods That Produce Other Iterators
@@ -69,11 +73,12 @@ Iterator લક્ષણ `Iterator` લક્ષણ માત્ર એક જ �
 
 ઉદાહરણ ૧૩-૧૪ માં ઇટરેટર અનુરૂપક પદ્ધતિ `map` ને બોલાવવાનું ઉદાહરણ દર્શાવવામાં આવ્યું છે, જે દરેક વસ્તુ પર કોલ કરવા માટે ક્લોઝર (closure) લે છે જ્યારે વસ્તુઓનું પુનરાવર્તન કરવામાં આવે છે. `map` પદ્ધતિ એક નવો ઇટરેટર આપે છે જે સુધારેલી વસ્તુઓ ઉત્પન્ન કરે છે. અહીં, ક્લોઝર એક નવો ઇટરેટર બનાવે છે જેમાં વેક્ટરની દરેક વસ્તુ ૧ થી વધારી દેવામાં આવશે.
 
-<Listing number="13-14" file-name="src/main.rs" caption="Calling the iterator adapter `map` to create a new iterator">
+**Listing 13-14: Calling the iterator adapter `map` to create a new iterator**
+
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-14/src/main.rs:here}}
 ```
-</Listing>
+
 જો કે, આ કોડ એક ચેતવણી ઉત્પન્ન કરે છે:
 
 ```console
@@ -85,11 +90,12 @@ Listing 13-14 નો કોડ કંઈ કરતો નથી; આપણો �
 
 Listing 13-15 માં, આપણે `map` કૉલથી પરત થતા iterator પર પુનરાવર્તન કરવાના પરિણામોને વેક્ટર (vector) માં એકત્રિત કરીએ છીએ. આ વેક્ટર મૂળ વેક્ટરની દરેક વસ્તુ ધરાવશે, જે 1 થી વધેલી હશે.
 
-<Listing number="13-15" file-name="src/main.rs" caption="Calling the `map` method to create a new iterator, and then calling the `collect` method to consume the new iterator and create a vector">
+**Listing 13-15: Calling the `map` method to create a new iterator, and then calling the `collect` method to consume the new iterator and create a vector**
+
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-15/src/main.rs:here}}
 ```
-</Listing>
+
 કારણ કે `map` એક ક્લોઝર લે છે, આપણી પાસે દરેક વસ્તુ પર કરવા માટે ઇચ્છિત કોઈપણ ક્રિયા સ્પષ્ટ કરવાની ક્ષમતા છે. આ એક ઉત્તમ ઉદાહરણ છે કે કેવી રીતે ક્લોઝર તમને વર્તણૂકને કસ્ટમાઇઝ કરવાની મંજૂરી આપે છે જ્યારે `Iterator` ટ્રેઇટ દ્વારા પૂરી પાડવામાં આવતી પુનરાવર્તન વર્તણૂકનો ફરી ઉપયોગ કરે છે.
 
 તમે જટિલ ક્રિયાઓ કરવા માટે વાચકક્ષમ રીતે બહુવિધ ઇટરેટર એડેપ્ટર કૉલ્સને સાંકળી શકો છો. પરંતુ બધા ઇટરેટર આળસુ હોવાથી, તમારે પરિણામો મેળવવા માટે એડેપ્ટર પદ્ધતિઓના કૉલ્સમાંથી એકને બોલાવવો પડશે.
@@ -103,11 +109,12 @@ Listing 13-15 માં, આપણે `map` કૉલથી પરત થતા 
 
 Listing 13-16 માં, અમે `filter` નો ઉપયોગ કરીએ છીએ જેમાં એક ક્લોઝર છે જે તેના પર્યાવરણમાંથી `shoe_size` variable ગ્રહણ કરે છે જેથી `Shoe` સ્ટ્રક્ચરના સં instances પર પુનરાવર્તન કરી શકાય. તે માત્ર નિર્દિષ્ટ કદનાં જૂતાં જ પરત કરશે.
 
-<Listing number="13-16" file-name="src/lib.rs" caption="Using the `filter` method with a closure that captures `shoe_size`">
+**Listing 13-16: Using the `filter` method with a closure that captures `shoe_size`**
+
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-16/src/lib.rs}}
 ```
-</Listing>
+
 કાર્ય વેક્ટર (vector) ની જૂતાની અને એક જૂતાના કદને પરિમાણો તરીકે સ્વીકારે છે. તે માત્ર નિર્ધારિત કદના જૂતાઓ ધરાવતું વેક્ટર પરત કરે છે. `shoes_in_size`
 
 ના મુખ્ય ભાગમાં, અમે `into_iter` ને બોલાવીએ છીએ જેથી કરીને વેક્ટરનું માલિકી લેતો એક ઇટરેટર (iterator) બને. ત્યારબાદ, અમે `filter` ને બોલાવીએ છીએ જેથી તે ઇટરેટરને નવું રૂપ આપીએ જે માત્ર એવા ઘટકો ધરાવે છે જેના માટે ક્લોઝર (closure) `true` પરત કરે છે. ક્લોઝર

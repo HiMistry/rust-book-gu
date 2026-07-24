@@ -4,11 +4,12 @@
 
 ચાલો `rectangles` નામની નવી બાઈનરી પ્રોજેક્ટ Cargo સાથે બનાવીએ, જે પિક્સેલ્સમાં દર્શાવેલ લંબચોરસની પહોળાઈ અને ઊંચાઈ લેશે અને લંબચોરસનું ક્ષેત્રફળ ગણશે. યાદી 5-8 આપણી પ્રોજેક્ટની `src/main.rs` માં તે જ રીતે કરવાના એક રીત સાથેનો ટૂંકો કાર્યક્રમ દર્શાવે છે.
 
-<Listing number="5-8" file-name="src/main.rs" caption="Calculating the area of a rectangle specified by separate width and height variables">
+**Listing 5-8: Calculating the area of a rectangle specified by separate width and height variables**
+
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/src/main.rs:all}}
 ```
-</Listing>
+
 હવે, આ કાર્યક્રમ `cargo run` વડે ચલાવો:
 
 ```console
@@ -27,11 +28,12 @@ area ફંક્શન `area` ફંક્શન એક લંબચોરસ�
 
 ચિત્રલિપિ ૫-૯ આપણી કાર્યક્રમનું અન્ય એક સ્વરૂપ દર્શાવે છે જે ટ્યૂપલ્સનો ઉપયોગ કરે છે.
 
-<Listing number="5-9" file-name="src/main.rs" caption="Specifying the width and height of the rectangle with a tuple">
+**Listing 5-9: Specifying the width and height of the rectangle with a tuple**
+
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-09/src/main.rs}}
 ```
-</Listing>
+
 એક રીતે, આ કાર્યક્રમ વધુ સારો છે. ટ્યૂપલ્સ આપણને થોડી રચના ઉમેરવા દે છે, અને હવે આપણે માત્ર એક જ Argument પસાર કરી રહ્યા છીએ. પરંતુ બીજા રીતે, આ સંસ્કરણ ઓછું સ્પષ્ટ છે: ટ્યૂપલ્સ તેમના ઘટકોને નામ આપતા નથી, તેથી આપણે ટ્યૂપલના ભાગોમાં અનુક્રમણિકા કરવી પડે છે, જે
 
 અમારી ગણતરીને ઓછી દેખી ન કરે છે. પહોળાઈ અને ઊંચાઈ ભેગી કરવી ગણતરી માટે મહત્વનું ન હતું, પરંતુ જો આપણે લંબચોરસને સ્ક્રીન પર દોરવા માંગતા હોઈએ, તો તે મહત્વનું હતું! આપણે એ યાદ રાખવું પડ્યું કે `width` ટ્યૂપલ અનુક્રમણિકા `0` છે અને `height` ટ્યૂપલ અનુક્રમણિકા `1` છે. જો કોઈ અન્ય વ્યક્તિ અમારી કોડનો ઉપયોગ કરે તો તેને સમજવું અને યાદ રાખવું વધુ મુશ્કેલ બની જશે. આપણે આપેલા ડેટાના અર્થને અમારા કોડમાં વ્યક્ત કર્યો નથી, તેથી ભૂલો દાખલ કરવી સરળ બની ગઈ છે.
@@ -41,11 +43,12 @@ area ફંક્શન `area` ફંક્શન એક લંબચોરસ�
 
 આપણે ડેટાને લેબલ કરીને અર્થ ઉમેરવા માટે બંધારણોનો ઉપયોગ કરીએ છીએ. આપણે આપનું ટ્યૂપલને એક નામિત બંધારણમાં રૂપાંતરિત કરી શકીએ છીએ, જે સમગ્ર ભાગ તેમજ ભાગો માટે નામો ધરાવે છે, જે યાદી 5-10 માં દર્શાવેલ છે.
 
-<Listing number="5-10" file-name="src/main.rs" caption="Defining a `Rectangle` struct">
+**Listing 5-10: Defining a `Rectangle` struct**
+
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-10/src/main.rs}}
 ```
-</Listing>
+
 અહીં, આપણે એક struct વ્યાખ્યાયિત કર્યો છે અને તેનું નામ `Rectangle` આપ્યું છે. કદાળી કૌંસની અંદર, આપણે ક્ષેત્રો `width` અને `height` તરીકે વ્યાખ્યાયિત કર્યા છે, જે બંનેનો પ્રકાર `u32` છે. પછી, `main` માં, આપણે `Rectangle` ના એક ચોક્કસ ઉદાહરણ બનાવ્યું છે જેની પહોળાઈ `30` અને ઊંચાઈ `50` છે.
 
 આપણો `area` ફંક્શન હવે એક પરિમાણ સાથે વ્યાખ્યાયિત કરવામાં આવ્યો છે, જેને આપણે `rectangle` નામ આપ્યું છે, જેનો પ્રકાર struct `Rectangle` ઉદાહરણની અપરિવર્તનશીલ ઉછીના લીધેલી નકલ (borrow) છે. પ્રકરણ 4 માં જણાવ્યા મુજબ, આપણે struct ની માલિકી લેવાને બદલે તેની નકલ મેળવવી જોઈએ. આ રીતે, `main` તેની માલિકી જાળવી રાખે છે અને `rect1` નો ઉપયોગ કરવાનું ચાલુ રાખી શકે છે, જેનું કારણ છે કે આપણે ફંક્શન હસ્તાક્ષરમાં (signature) અને જ્યાં આપણે ફંક્શનને બોલાવીએ છીએ ત્યાં `&` નો ઉપયોગ કરીએ છીએ.
@@ -57,11 +60,12 @@ area કાર્ય `area` કાર્ય `Rectangle` ઉદાહરણના
 
 જ્યારે આપણે આપણી કાર્યક્રમની ભૂલનિવારણ (debugging) કરી રહ્યા હોઈએ, ત્યારે `Rectangle` નો એક દાખલો છાપવો ઉપયોગી થઈ શકે છે અને તેના તમામ ક્ષેત્રોના મૂલ્યો જોઈ શકાય. યાદી 5-11 પ્રયત્ન કરે છે કે `println!` મેક્રોનો ઉપયોગ અગાઉના પ્રકરણોમાં આપણે જે રીતે કર્યો હતો, તે જ રીતે કરવો. જોકે, આ કામ નહીં કરે.
 
-<Listing number="5-11" file-name="src/main.rs" caption="Attempting to print a `Rectangle` instance">
+**Listing 5-11: Attempting to print a `Rectangle` instance**
+
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/src/main.rs}}
 ```
-</Listing>
+
 જ્યારે આપણે આ કોડને કમ્પાઇલ કરીએ છીએ, ત્યારે આપણને આ મુખ્ય સંદેશ સાથેની ભૂલ આવે છે:
 
 ```text
@@ -88,11 +92,12 @@ The `println!` Macro `println!` મેક્રો ઘણા પ્રકાર�
 ```
 Rust માં ડીબગીંગ માહિતી છાપવાની કાર્યક્ષમતા પણ સામેલ છે, પરંતુ તે કાર્યક્ષમતા આપણી struct માટે ઉપલબ્ધ કરાવવા માટે આપણે સ્પષ્ટપણે પસંદગી કરવી પડશે. આ કરવા માટે, આપણે `#[derive(Debug)]` એવું બાહ્ય લક્ષણ struct વ્યાખ્યા પહેલાં ઉમેરીએ છીએ, જે Listing 5-12 માં દર્શાવેલ છે.
 
-<Listing number="5-12" file-name="src/main.rs" caption="Adding the attribute to derive the `Debug` trait and printing the `Rectangle` instance using debug formatting">
+**Listing 5-12: Adding the attribute to derive the `Debug` trait and printing the `Rectangle` instance using debug formatting**
+
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-12/src/main.rs}}
 ```
-</Listing>
+
 હવે જ્યારે આપણે આ કાર્યક્રમ ચલાવીશું, ત્યારે આપણને કોઈ ભૂલો નહીં દેખાય અને નીચે મુજબનું પરિણામ મળશે:
 
 ```console

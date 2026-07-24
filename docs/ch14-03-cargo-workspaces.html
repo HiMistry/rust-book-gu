@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -260,12 +260,12 @@ copy output below
 </code></pre>
 <p>Cargo કોઈ ધારી લેતું નથી કે વર્કસ્પેસમાં રહેલા crates એકબીજા પર આધારિત છે, તેથી આપણે અવલંબન સંબંધો વિશે સ્પષ્ટપણે જણાવવાની જરૂર છે.</p>
 <p>આગળ, ચાલો <code>add_one</code> ફંક્શન ( <code>add_one</code> crate માંથી) ને <code>adder</code> crate માં વાપરીએ. <code>adder/src/main.rs</code> ફાઈલ ખોલો અને <code>main</code> ફંક્શનને Listing 14-7 ની જેમ <code>add_one</code> ફંક્શનને બોલાવવા માટે બદલો.</p>
-<listing number="14-7" file-name="adder/src/main.rs" caption="Using the `add_one` library crate from the `adder` crate">
-```rust
-{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-07/add/adder/src/main.rs}}
-```
-</listing>
-ચાલો વર્કસ્પેસ બનાવીએ `cargo build` આદેશ ચલાવીને ટોપ-લેવલ ઉમેરવાની ડિરેક્ટરીમાં!
+<p><strong>Listing 14-7: Using the <code>add_one</code> library crate from the <code>adder</code> crate</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-07/add/adder/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>ચાલો વર્કસ્પેસ બનાવીએ <code>cargo build</code> આદેશ ચલાવીને ટોપ-લેવલ ઉમેરવાની ડિરેક્ટરીમાં!</p>
 <!-- manual-regeneration
 cd listings/ch14-more-about-cargo/listing-14-07/add
 cargo build
@@ -456,6 +456,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

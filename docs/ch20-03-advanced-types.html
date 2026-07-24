@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -208,18 +208,18 @@
 </span>Box&lt;dyn Fn() + Send + 'static&gt;
 <span class="boring">}</span></code></pre>
 <p>આ લાંબી પ્રકારને કાર્ય નિશાનોમાં અને પ્રકાર નોંધણીઓમાં સમગ્ર કોડમાં લખવી કંટાળાજનક અને ભૂલ ઉત્પન્ન કરનારી હોઈ શકે છે. યાદ કરો કે સૂચિ ૨૦-૨૫ માં જેવો કોડ ધરાવતો પ્રોજેક્ટ કેવી રીતે દેખાશે.</p>
-<listing number="20-25" caption="Using a long type in many places">
-```rust
-{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-25/src/main.rs:here}}
-```
-</listing>
-એક પ્રકારની ઉપનામ (type alias) આ કોડને વધુ વ્યવસ્થિત બનાવે છે, પુનરાવર્તનને ઘટાડીને. યાદી ૨૦-૨૬ માં, અમે `Thunk` નામનું એક ઉપનામ રજૂ કર્યું છે જે વિસ્તૃત પ્રકાર માટે વપરાય છે અને તેનાથી પ્રકારના તમામ ઉલ્લેખોને ટૂંકા ઉપનામ `Thunk` વડે બદલી શકાય છે.
-<listing number="20-26" caption="Introducing a type alias, `Thunk`, to reduce repetition">
-```rust
-{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-26/src/main.rs:here}}
-```
-</listing>
-આ કોડ વાંચવા અને લખવામાં ઘણો સરળ છે! એક અર્થપૂર્ણ નામ પ્રકાર ઉપનામ માટે પસંદ કરવું એ તમારા હેતુને સમજાવવામાં પણ મદદ કરી શકે છે (thunk એ એક શબ્દ છે જેનો અર્થ થાય છે પછીથી મૂલ્યાંકન કરવા માટેનો કોડ, તેથી તે ક્લોઝર માટે યોગ્ય નામ છે જે સંગ્રહિત થાય છે).
+<p><strong>Listing 20-25: Using a long type in many places</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-25/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>એક પ્રકારની ઉપનામ (type alias) આ કોડને વધુ વ્યવસ્થિત બનાવે છે, પુનરાવર્તનને ઘટાડીને. યાદી ૨૦-૨૬ માં, અમે <code>Thunk</code> નામનું એક ઉપનામ રજૂ કર્યું છે જે વિસ્તૃત પ્રકાર માટે વપરાય છે અને તેનાથી પ્રકારના તમામ ઉલ્લેખોને ટૂંકા ઉપનામ <code>Thunk</code> વડે બદલી શકાય છે.</p>
+<p><strong>Listing 20-26: Introducing a type alias, <code>Thunk</code>, to reduce repetition</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-26/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ કોડ વાંચવા અને લખવામાં ઘણો સરળ છે! એક અર્થપૂર્ણ નામ પ્રકાર ઉપનામ માટે પસંદ કરવું એ તમારા હેતુને સમજાવવામાં પણ મદદ કરી શકે છે (thunk એ એક શબ્દ છે જેનો અર્થ થાય છે પછીથી મૂલ્યાંકન કરવા માટેનો કોડ, તેથી તે ક્લોઝર માટે યોગ્ય નામ છે જે સંગ્રહિત થાય છે).</p>
 <p>પ્રકારના ઉપનામોનો ઉપયોગ સામાન્ય રીતે <code>Result&lt;T, E&gt;</code> પ્રકાર સાથે પુનરાવર્તનને ઘટાડવા માટે પણ થાય છે. પ્રમાણભૂત લાયબ્રેરીમાં <code>std::io</code> મોડ્યુલને ધ્યાનમાં લો. I/O કામગીરી ઘણીવાર પરિસ્થિતિઓને સંભાળવા માટે <code>Result&lt;T, E&gt;</code> પરત કરે છે જ્યારે કામગીરી નિષ્ફળ જાય છે. આ લાયબ્રેરીમાં <code>std::io::Error</code> નામનું સ્ટ્રક્ચર છે જે તમામ સંભવિત I/O ભૂલોને રજૂ કરે છે. <code>std::io</code> માંના ઘણાં કાર્યો <code>Result&lt;T, E&gt;</code> પરત કરશે, જ્યાં <code>E</code> એ <code>std::io::Error</code> હશે, જેમ કે <code>Write</code> ટ્રેઇટમાંનાં આ કાર્યો:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -244,12 +244,12 @@
 <span class="boring">}</span></code></pre>
 <p>આ કોડને “ફંક્શન <code>bar</code> ક્યારેય રિટર્ન કરતું નથી” એ રીતે વાંચવામાં આવે છે. જે ફંક્શન ક્યારેય રિટર્ન ન કરે તેને ડાયવર્ટિંગ ફંક્શન કહેવાય છે. આપણે <code>!</code> પ્રકારના વેલ્યૂ બનાવી શકતા નથી, તેથી <code>bar</code> ક્યારેય રિટર્ન કરી શકે નહીં.</p>
 <p>પરંતુ તમે એવા પ્રકારના વેલ્યૂ બનાવી શકતા નથી તો તેનો ઉપયોગ શું? યાદ કરો લિસ્ટિંગ 2-5 નો કોડ; સંખ્યા અનુમાન લગાવવાની રમતના ભાગ રૂપે; અમે અહીં લિસ્ટિંગ 20-27 માં તેનો થોડો ભાગ ફરીથી પ્રસ્તુત કર્યો છે.</p>
-<listing number="20-27" caption="A `match` with an arm that ends in `continue`">
-```rust
-{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-05/src/main.rs:ch19}}
-```
-</listing>
-તે સમયે, અમે આ કોડમાં કેટલીક વિગતો અવગણી હતી. પ્રકરણ ૬ માં “`match` નિયંત્રણ પ્રવાહ રચના” વિભાગમાં, અમે ચર્ચા કરી હતી કે `match` શસ્ત્રોએ સમાન type પરત કરવું આવશ્યક છે. તેથી, ઉદાહરણ તરીકે, નીચેનો કોડ કામ કરતો નથી:
+<p><strong>Listing 20-27: A <code>match</code> with an arm that ends in <code>continue</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-05/src/main.rs:ch19}}
+<span class="boring">}</span></code></pre>
+<p>તે સમયે, અમે આ કોડમાં કેટલીક વિગતો અવગણી હતી. પ્રકરણ ૬ માં “<code>match</code> નિયંત્રણ પ્રવાહ રચના” વિભાગમાં, અમે ચર્ચા કરી હતી કે <code>match</code> શસ્ત્રોએ સમાન type પરત કરવું આવશ્યક છે. તેથી, ઉદાહરણ તરીકે, નીચેનો કોડ કામ કરતો નથી:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-08-match-arms-different-types/src/main.rs:here}}
@@ -350,6 +350,7 @@
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

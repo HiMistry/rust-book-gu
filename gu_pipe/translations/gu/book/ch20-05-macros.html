@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -184,168 +184,122 @@
                     <main>
                         <h2 id="macros"><a class="header" href="#macros">Macros</a></h2>
 <p>આપણે આ પુસ્તકમાં <code>println!</code> જેવા મેક્રોનો ઉપયોગ કર્યો છે, પરંતુ આપણે મેક્રો શું છે અને તે કેવી રીતે કાર્ય કરે છે તેની સંપૂર્ણ તપાસ કરી નથી. મેક્રો શબ્દ Rustની વિશેષતાઓનાં કુટુંબનો ઉલ્લેખ કરે છે—<code>macro_rules!</code> સાથેના ઘોષણાત્મક મેક્રો અને ત્રણ પ્રકારના પ્રક્રિયાત્મક મેક્રો:</p>
+<ul>
+<li>
 <p>સ્ટ્રક્ચર્સ અને ઇનમ્સ પર વપરાતા <code>derive</code> એટ્રીબ્યુટ સાથે ઉમેરાયેલ કોડને સ્પષ્ટ કરતા કસ્ટમ <code>#[derive]</code> મેક્રો.</p>
+</li>
+<li>
 <p>એટ્રીબ્યુટ જેવો મેક્રો કોઈપણ વસ્તુ પર ઉપયોગ કરી શકાય તેવા કસ્ટમ એટ્રીબ્યુટ્સને વ્યાખ્યાયિત કરે છે.</p>
+</li>
+<li>
 <p>ફંક્શન જેવો મેક્રો ફંક્શન કોલ જેવો દેખાય છે પરંતુ તેમના Argument તરીકે ઉલ્લેખિત ટોકન્સ પર કાર્ય કરે છે.</p>
+</li>
+</ul>
 <p>આપણે આ દરેક બાબતો વિશે ક્રમશઃ ચર્ચા કરીશું, પરંતુ સૌપ્રથમ, આપણે જોઈએ કે શા માટે આપણી પાસે ફંક્શન હોવા છતાં પણ મેક્રોની જરૂરિયાત છે.</p>
 <h3 id="the-difference-between-macros-and-functions"><a class="header" href="#the-difference-between-macros-and-functions">The Difference Between Macros and Functions</a></h3>
 <p>મૂળભૂત રીતે, મેક્રો એ કોડ લખવાની એક રીત છે જે અન્ય કોડ લખે છે, જેને મેટાપ્રોગ્રામિંગ કહેવામાં આવે છે. પૂર્તિ C માં, અમે <code>derive</code> લક્ષણની ચર્ચા કરીએ છીએ, જે તમારા માટે વિવિધ traits નું અમલીકરણ ઉત્પન્ન કરે છે. અમે સમગ્ર પુસ્તકમાં <code>println!</code> અને <code>vec!</code> મેક્રોનો પણ ઉપયોગ કર્યો છે. આ બધા મેક્રો તમે જાતે લખેલા કોડ કરતાં વધુ કોડ ઉત્પન્ન કરે છે.</p>
 <p>મેટાપ્રોગ્રામિંગ એ તમારે લખવા અને જાળવવો પડતા કોડની માત્રા ઘટાડવા માટે ઉપયોગી છે, જે ફંક્શન્સની ભૂમિકાઓમાં પણ એક છે. જો કે, મેક્રો પાસે કેટલીક વધારાની શક્તિઓ છે જે ફંક્શન પાસે નથી.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>```rust
-ફંક્શન હસ્તાક્ષરની ઘોષણા ફંક્શન હસ્તાક્ષર (function signature) એ ફંક્શનના પરિમાણોની સંખ્યા અને પ્રકાર જાહેર કરે છે. મેક્રોઝ, બીજી બાજુ, variable સંખ્યામાં પરિમાણો લઈ શકે છે: આપણે `println!("hello")` ને એક Argument સાથે અથવા `println!("hello {}", name)` ને બે Argumentો સાથે બોલાવી શકીએ છીએ. ઉપરાંત, મેક્રોઝ કમ્પાઇલર કોડનો અર્થ સમજાવતા પહેલા વિસ્તૃત થાય છે, તેથી મેક્રો કોઈ આપેલ પ્રકાર પર લક્ષણ (trait) લાગુ કરી શકે છે. ફંક્શન આમ કરી શકતું નથી, કારણ કે તે રનટાઇમ (runtime) પર બોલાવવામાં આવે છે અને લક્ષણ કમ્પાઇલ ટાઇમ (compile time) પર અમલમાં મૂકવાની જરૂર હોય છે.
+</span>ફંક્શન હસ્તાક્ષરની ઘોષણા ફંક્શન હસ્તાક્ષર (function signature) એ ફંક્શનના પરિમાણોની સંખ્યા અને પ્રકાર જાહેર કરે છે. મેક્રોઝ, બીજી બાજુ, variable સંખ્યામાં પરિમાણો લઈ શકે છે: આપણે `println!("hello")` ને એક Argument સાથે અથવા `println!("hello {}", name)` ને બે Argumentો સાથે બોલાવી શકીએ છીએ. ઉપરાંત, મેક્રોઝ કમ્પાઇલર કોડનો અર્થ સમજાવતા પહેલા વિસ્તૃત થાય છે, તેથી મેક્રો કોઈ આપેલ પ્રકાર પર લક્ષણ (trait) લાગુ કરી શકે છે. ફંક્શન આમ કરી શકતું નથી, કારણ કે તે રનટાઇમ (runtime) પર બોલાવવામાં આવે છે અને લક્ષણ કમ્પાઇલ ટાઇમ (compile time) પર અમલમાં મૂકવાની જરૂર હોય છે.
 
 <span class="boring">}</span></code></pre>
-<pre><code>મેક્રોને કાર્યની જગ્યાએ અમલમાં મૂકવાનો ગેરવિરોધ એ છે કે મેક્રો વ્યાખ્યાઓ કાર્યોની વ્યાખ્યાઓ કરતાં વધુ જટિલ હોય છે કારણ કે તમે `Rust` કોડ લખી રહ્યા છો જે `Rust` કોડ લખે છે. આ પરોક્ષતાને લીધે, મેક્રો વ્યાખ્યાઓ સામાન્ય રીતે કાર્યોની વ્યાખ્યાઓ કરતાં વાંચવા, સમજવા અને જાળવવા માટે વધુ મુશ્કેલ હોય છે.
-
-મેક્રો અને કાર્ય વચ્ચે બીજો મહત્વપૂર્ણ તફાવત એ છે કે તમારે ફાઈલમાં તેમને બોલાવતા પહેલા મેક્રો વ્યાખ્યાયિત કરવા અથવા તેમની અવકાશમાં લાવવા આવશ્યક છે, વિરુદ્ધમાં તમે કોઈપણ જગ્યાએ કાર્યોને વ્યાખ્યાયિત કરી શકો છો અને ગમે ત્યાંથી બોલાવી શકો છો.
-
-&lt;!-- Old headings. Do not remove or links may break. --&gt;
-### Declarative Macros for General Metaprogramming
-
-Rust માં મેક્રોનો સૌથી વધુ વપરાતો પ્રકાર નિવેદનાત્મક મેક્રો છે. આને કેટલીકવાર “ઉદાહરણ દ્વારા મેક્રો,” ``macro_rules!`  મેક્રો,” અથવા ફક્ત “મેક્રો” તરીકે પણ ઓળખવામાં આવે છે. મૂળભૂત રીતે, નિવેદનાત્મક મેક્રો તમને Rust `match` અભિવ્યક્તિ જેવું કંઈક લખવાની મંજૂરી આપે છે. પ્રકરણ 6 માં ચર્ચા કર્યા મુજબ, `match` અભિવ્યક્તિઓ નિયંત્રણ રચનાઓ છે જે એક અભિવ્યક્તિ લે છે, અભિવ્યક્તિના પરિણામી મૂલ્યની પેટર્ન સાથે સરખામણી કરે છે અને પછી મેળ ખાતી પેટર્ન સાથે સંકળાયેલ કોડ ચલાવે છે. મેક્રો પણ કોઈ મૂલ્યને પેટર્ન સાથે સરખાવે છે જે ચોક્કસ કોડ સાથે સંકળાયેલ છે: આ પરિસ્થિતિમાં, મૂલ્ય એ સાચી Rust સ્રોત કોડ છે જે મેક્રોને પસાર કરવામાં આવે છે; પેટર્ન તે સ્રોત કોડની રચના સાથે સરખાવવામાં આવે છે; અને દરેક પેટર્ન સાથે સંકળાયેલ કોડ, જ્યારે મેળ ખાય છે, ત્યારે મેક્રોને પસાર કરવામાં આવેલા કોડને બદલે છે. આ બધું જ કમ્પાઇલેશન દરમિયાન થાય છે.
-
-મેક્રોની વ્યાખ્યા મેક્રોને વ્યાખ્યાયિત કરવા માટે, તમે `macro_rules!` રચનાનો ઉપયોગ કરો છો. ચાલો જોઈએ કે `macro_rules!` નો ઉપયોગ કેવી રીતે કરવો, આથી `vec!` મેક્રો કેવી રીતે વ્યાખ્યાયિત થયેલ છે તે તપાસીએ. પ્રકરણ 8 માં, આપણે જોયું હતું કે કેવી રીતે આપણે `vec!` મેક્રોનો ઉપયોગ ચોક્કસ મૂલ્યો સાથે નવું વેક્ટર બનાવવા માટે કરી શકીએ છીએ. ઉદાહરણ તરીકે, નીચે આપેલ મેક્રો ત્રણ પૂર્ણાંકો ધરાવતું નવું વેક્ટર બનાવે છે:
-
-```rust
-```rust
-let v: Vec&lt;u32&gt; = vec![1, 2, 3];
-</code></pre>
-<pre><code>આપણે `vec!` મેક્રોનો ઉપયોગ બે પૂર્ણાંકોનું વેક્ટર અથવા પાંચ સ્ટ્રિંગ સ્લાઇસનું વેક્ટર બનાવવા માટે પણ કરી શકીએ છીએ. આપણે સમાન કાર્ય કરવા માટે ફંક્શનનો ઉપયોગ કરી શકતા નથી, કારણ કે આપણને શરૂઆતમાં મૂલ્યોની સંખ્યા કે પ્રકાર ખબર હોતી નથી.
-
-સૂચિ 20-35 `vec!` મેક્રોની થોડી સરળ વ્યાખ્યા દર્શાવે છે.
-
-&lt;Listing number="20-35" file-name="src/lib.rs" caption="A simplified version of the `vec!` macro definition"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-35/src/lib.rs}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-નોંધ: `vec!` મેક્રોની પ્રમાણભૂત લાયબ્રેરીમાં વ્યાખ્યામાં શરૂઆતમાં યોગ્ય માત્રામાં મેમરી ફાળવવાનું કોડ સમાવિષ્ટ છે. આ કોડ એક ઓપ્ટિમાઇઝેશન છે જે અમે ઉદાહરણને સરળ બનાવવા માટે અહીં સામેલ કરતા નથી. `#[macro_export]` એનોટેશન સૂચવે છે
-
-કે આ મેક્રો વ્યાખ્યાયિત થયેલ ક્રેટમાં જ્યાં સુધી મેક્રો વ્યાપકમાં ન આવે ત્યાં સુધી ઉપલબ્ધ કરાવવો જોઈએ. આ એનોટેશન વિના, મેક્રોને વ્યાપકમાં લાવી શકાય તેમ નથી. અમે પછી મેક્રો વ્યાખ્યા
-
-સાથે `macro_rules!` શરૂ કરીએ છીએ અને આપણે જે મેક્રો વ્યાખ્યાયિત કરી રહ્યા છીએ તેનું નામ ઉદ્ગારવાચક ચિહ્ન વિના. નામ, આ કિસ્સામાં `vec`, એ ઘનબ્રકેટ દ્વારા અનુસરવામાં આવે છે જે મેક્રો વ્યાખ્યાના શરીરને દર્શાવે છે.
-
-`vec!` શરીરની રચના `match` અભિવ્યક્તિની રચના જેવી જ છે. અહીં આપણી પાસે એક શૃંગ (arm) છે જેમાં પેટર્ન `( $( $x:expr ),* )` છે, ત્યારબાદ `=&gt;` અને આ પેટર્ન સાથે સંકળાયેલ કોડ બ્લોક છે. જો પેટર્ન બંધબેસે તો, સંકળાયેલ કોડ બ્લોક ઉત્સર્જિત થશે. એ હકીકતને ધ્યાનમાં લેતા કે આ મેક્રોમાં આ એકમાત્ર પેટર્ન છે, ત્યારે મેળવવાનો માત્ર એક જ માન્ય માર્ગ છે; અન્ય કોઈ પણ પેટર્ન ભૂલ તરફ દોરી જશે. વધુ જટિલ મેક્રોમાં એક કરતાં વધુ શૃંગ હશે.
-
-મેક્રો વ્યાખ્યાઓમાં માન્ય પેટર્ન સિન્ટેક્સ (syntax) પ્રકરણ ૧૯ માં આવરી લેવાયેલા પેટર્ન સિન્ટેક્સથી અલગ છે કારણ
-
-કે મેક્રો પેટર્ન મૂલ્યોને બદલે Rust કોડ માળખા સામે મેળવવામાં આવે છે. ચાલો જોઈએ કે યાદી ૨૦-૨૯ માં પેટર્નના ભાગોનો અર્થ શું થાય છે; સંપૂર્ણ મેક્રો પેટર્ન સિન્ટેક્સ માટે, Rust સંદર્ભ જુઓ. સૌ પ્રથમ, અમે સમગ્ર પેટર્નને સમાવવા માટે કૌંસનો સમૂહ વાપરીએ છીએ. અમે એક ડોલર ચિન્હ ( `$` ) નો ઉપયોગ મેક્રો સિસ્ટમમાં એક variable જાહેર કરવા માટે કરીએ છીએ જે પેટર્ન સાથે મેળ ખાતા Rust કોડને ધરાવશે. ડોલર ચિન્હ સ્પષ્ટ કરે છે કે આ નિયમિત Rust variable's જગ્યાએ મેક્રો variable છે. આગળ, કૌંસનો સમૂહ આવે છે જે પેટર્નને અનુરૂપ મૂલ્યોને કબજે કરે છે અને તેને રિપ્લેસમેન્ટ કોડમાં ઉપયોગ માટે ઉપલબ્ધ કરાવે છે. `$()` ની અંદર ` $x:expr` આવે છે, જે કોઈપણ Rust અભિવ્યક્તિ સાથે મેળ ખાય છે અને અભિવ્યક્તિને નામ ` $x` આપે છે.
-
-અલ્પવિરામ `$()` પછી એક અક્ષરિય અલ્પવિરામseparator કેરેક્ટર દેખાશે, જે `$()` માં રહેલા કોડ સાથેના દરેક સંયોજન વચ્ચે આવે છે. `*` એ ઉલ્લેખ કરે છે કે તે પેટર્ન પહેલાંની વસ્તુઓ શૂન્ય અથવા વધુ વખત મેચ થઈ શકે છે.
-
-જ્યારે આપણે આ macro ને `vec![1, 2, 3];` સાથે બોલાવીએ છીએ, ત્યારે `$x` પેટર્ન ત્રણ વખત મેચ થાય છે, જેમાં `1`, `2`, અને `3` અભિવ્યક્તિઓનો સમાવેશ થાય છે.
-
-હવે ચાલો આ arm સાથે સંકળાયેલા કોડના ભાગમાં રહેલી પેટર્નની તપાસ કરીએ: દરેક મેચ થયેલ ભાગ માટે `$()*` ની અંદર `temp_vec.push()` જનરેટ થાય છે, જે પેટર્નના મેચ થવાના આધારે શૂન્ય અથવા વધુ વખત થઈ શકે છે. `$x` ને દરેક મેચ થયેલ અભિવ્યક્તિથી બદલવામાં આવે છે. જ્યારે આપણે આ macro ને `vec![1, 2, 3];` સાથે બોલાવીએ છીએ, ત્યારે આ macro કૉલને બદલે જનરેટ થતો કોડ નીચે મુજબ હશે:
-
-{
-    let mut temp_vec = Vec::new();
-    temp_vec.push(1);
-    temp_vec.push(2);
-    temp_vec.push(3);
-    temp_vec
+<p>મેક્રોને કાર્યની જગ્યાએ અમલમાં મૂકવાનો ગેરવિરોધ એ છે કે મેક્રો વ્યાખ્યાઓ કાર્યોની વ્યાખ્યાઓ કરતાં વધુ જટિલ હોય છે કારણ કે તમે <code>Rust</code> કોડ લખી રહ્યા છો જે <code>Rust</code> કોડ લખે છે. આ પરોક્ષતાને લીધે, મેક્રો વ્યાખ્યાઓ સામાન્ય રીતે કાર્યોની વ્યાખ્યાઓ કરતાં વાંચવા, સમજવા અને જાળવવા માટે વધુ મુશ્કેલ હોય છે.</p>
+<p>મેક્રો અને કાર્ય વચ્ચે બીજો મહત્વપૂર્ણ તફાવત એ છે કે તમારે ફાઈલમાં તેમને બોલાવતા પહેલા મેક્રો વ્યાખ્યાયિત કરવા અથવા તેમની અવકાશમાં લાવવા આવશ્યક છે, વિરુદ્ધમાં તમે કોઈપણ જગ્યાએ કાર્યોને વ્યાખ્યાયિત કરી શકો છો અને ગમે ત્યાંથી બોલાવી શકો છો.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="declarative-macros-for-general-metaprogramming"><a class="header" href="#declarative-macros-for-general-metaprogramming">Declarative Macros for General Metaprogramming</a></h3>
+<p>Rust માં મેક્રોનો સૌથી વધુ વપરાતો પ્રકાર નિવેદનાત્મક મેક્રો છે. આને કેટલીકવાર “ઉદાહરણ દ્વારા મેક્રો,” ``macro_rules!<code> મેક્રો,” અથવા ફક્ત “મેક્રો” તરીકે પણ ઓળખવામાં આવે છે. મૂળભૂત રીતે, નિવેદનાત્મક મેક્રો તમને Rust</code>match<code>અભિવ્યક્તિ જેવું કંઈક લખવાની મંજૂરી આપે છે. પ્રકરણ 6 માં ચર્ચા કર્યા મુજબ,</code>match` અભિવ્યક્તિઓ નિયંત્રણ રચનાઓ છે જે એક અભિવ્યક્તિ લે છે, અભિવ્યક્તિના પરિણામી મૂલ્યની પેટર્ન સાથે સરખામણી કરે છે અને પછી મેળ ખાતી પેટર્ન સાથે સંકળાયેલ કોડ ચલાવે છે. મેક્રો પણ કોઈ મૂલ્યને પેટર્ન સાથે સરખાવે છે જે ચોક્કસ કોડ સાથે સંકળાયેલ છે: આ પરિસ્થિતિમાં, મૂલ્ય એ સાચી Rust સ્રોત કોડ છે જે મેક્રોને પસાર કરવામાં આવે છે; પેટર્ન તે સ્રોત કોડની રચના સાથે સરખાવવામાં આવે છે; અને દરેક પેટર્ન સાથે સંકળાયેલ કોડ, જ્યારે મેળ ખાય છે, ત્યારે મેક્રોને પસાર કરવામાં આવેલા કોડને બદલે છે. આ બધું જ કમ્પાઇલેશન દરમિયાન થાય છે.</p>
+<p>મેક્રોની વ્યાખ્યા મેક્રોને વ્યાખ્યાયિત કરવા માટે, તમે <code>macro_rules!</code> રચનાનો ઉપયોગ કરો છો. ચાલો જોઈએ કે <code>macro_rules!</code> નો ઉપયોગ કેવી રીતે કરવો, આથી <code>vec!</code> મેક્રો કેવી રીતે વ્યાખ્યાયિત થયેલ છે તે તપાસીએ. પ્રકરણ 8 માં, આપણે જોયું હતું કે કેવી રીતે આપણે <code>vec!</code> મેક્રોનો ઉપયોગ ચોક્કસ મૂલ્યો સાથે નવું વેક્ટર બનાવવા માટે કરી શકીએ છીએ. ઉદાહરણ તરીકે, નીચે આપેલ મેક્રો ત્રણ પૂર્ણાંકો ધરાવતું નવું વેક્ટર બનાવે છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let v: Vec&lt;u32&gt; = vec![1, 2, 3];
+<span class="boring">}</span></code></pre>
+<p>આપણે <code>vec!</code> મેક્રોનો ઉપયોગ બે પૂર્ણાંકોનું વેક્ટર અથવા પાંચ સ્ટ્રિંગ સ્લાઇસનું વેક્ટર બનાવવા માટે પણ કરી શકીએ છીએ. આપણે સમાન કાર્ય કરવા માટે ફંક્શનનો ઉપયોગ કરી શકતા નથી, કારણ કે આપણને શરૂઆતમાં મૂલ્યોની સંખ્યા કે પ્રકાર ખબર હોતી નથી.</p>
+<p>સૂચિ 20-35 <code>vec!</code> મેક્રોની થોડી સરળ વ્યાખ્યા દર્શાવે છે.</p>
+<p><strong>Listing 20-35: A simplified version of the <code>vec!</code> macro definition</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-35/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>નોંધ: <code>vec!</code> મેક્રોની પ્રમાણભૂત લાયબ્રેરીમાં વ્યાખ્યામાં શરૂઆતમાં યોગ્ય માત્રામાં મેમરી ફાળવવાનું કોડ સમાવિષ્ટ છે. આ કોડ એક ઓપ્ટિમાઇઝેશન છે જે અમે ઉદાહરણને સરળ બનાવવા માટે અહીં સામેલ કરતા નથી. <code>#[macro_export]</code> એનોટેશન સૂચવે છે</p>
+<p>કે આ મેક્રો વ્યાખ્યાયિત થયેલ ક્રેટમાં જ્યાં સુધી મેક્રો વ્યાપકમાં ન આવે ત્યાં સુધી ઉપલબ્ધ કરાવવો જોઈએ. આ એનોટેશન વિના, મેક્રોને વ્યાપકમાં લાવી શકાય તેમ નથી. અમે પછી મેક્રો વ્યાખ્યા</p>
+<p>સાથે <code>macro_rules!</code> શરૂ કરીએ છીએ અને આપણે જે મેક્રો વ્યાખ્યાયિત કરી રહ્યા છીએ તેનું નામ ઉદ્ગારવાચક ચિહ્ન વિના. નામ, આ કિસ્સામાં <code>vec</code>, એ ઘનબ્રકેટ દ્વારા અનુસરવામાં આવે છે જે મેક્રો વ્યાખ્યાના શરીરને દર્શાવે છે.</p>
+<p><code>vec!</code> શરીરની રચના <code>match</code> અભિવ્યક્તિની રચના જેવી જ છે. અહીં આપણી પાસે એક શૃંગ (arm) છે જેમાં પેટર્ન <code>( $( $x:expr ),* )</code> છે, ત્યારબાદ <code>=&gt;</code> અને આ પેટર્ન સાથે સંકળાયેલ કોડ બ્લોક છે. જો પેટર્ન બંધબેસે તો, સંકળાયેલ કોડ બ્લોક ઉત્સર્જિત થશે. એ હકીકતને ધ્યાનમાં લેતા કે આ મેક્રોમાં આ એકમાત્ર પેટર્ન છે, ત્યારે મેળવવાનો માત્ર એક જ માન્ય માર્ગ છે; અન્ય કોઈ પણ પેટર્ન ભૂલ તરફ દોરી જશે. વધુ જટિલ મેક્રોમાં એક કરતાં વધુ શૃંગ હશે.</p>
+<p>મેક્રો વ્યાખ્યાઓમાં માન્ય પેટર્ન સિન્ટેક્સ (syntax) પ્રકરણ ૧૯ માં આવરી લેવાયેલા પેટર્ન સિન્ટેક્સથી અલગ છે કારણ</p>
+<p>કે મેક્રો પેટર્ન મૂલ્યોને બદલે Rust કોડ માળખા સામે મેળવવામાં આવે છે. ચાલો જોઈએ કે યાદી ૨૦-૨૯ માં પેટર્નના ભાગોનો અર્થ શું થાય છે; સંપૂર્ણ મેક્રો પેટર્ન સિન્ટેક્સ માટે, Rust સંદર્ભ જુઓ. સૌ પ્રથમ, અમે સમગ્ર પેટર્નને સમાવવા માટે કૌંસનો સમૂહ વાપરીએ છીએ. અમે એક ડોલર ચિન્હ ( <code>$</code> ) નો ઉપયોગ મેક્રો સિસ્ટમમાં એક variable જાહેર કરવા માટે કરીએ છીએ જે પેટર્ન સાથે મેળ ખાતા Rust કોડને ધરાવશે. ડોલર ચિન્હ સ્પષ્ટ કરે છે કે આ નિયમિત Rust variable’s જગ્યાએ મેક્રો variable છે. આગળ, કૌંસનો સમૂહ આવે છે જે પેટર્નને અનુરૂપ મૂલ્યોને કબજે કરે છે અને તેને રિપ્લેસમેન્ટ કોડમાં ઉપયોગ માટે ઉપલબ્ધ કરાવે છે. <code>$()</code> ની અંદર <code> $x:expr</code> આવે છે, જે કોઈપણ Rust અભિવ્યક્તિ સાથે મેળ ખાય છે અને અભિવ્યક્તિને નામ <code> $x</code> આપે છે.</p>
+<p>અલ્પવિરામ <code>$()</code> પછી એક અક્ષરિય અલ્પવિરામseparator કેરેક્ટર દેખાશે, જે <code>$()</code> માં રહેલા કોડ સાથેના દરેક સંયોજન વચ્ચે આવે છે. <code>*</code> એ ઉલ્લેખ કરે છે કે તે પેટર્ન પહેલાંની વસ્તુઓ શૂન્ય અથવા વધુ વખત મેચ થઈ શકે છે.</p>
+<p>જ્યારે આપણે આ macro ને <code>vec![1, 2, 3];</code> સાથે બોલાવીએ છીએ, ત્યારે <code>$x</code> પેટર્ન ત્રણ વખત મેચ થાય છે, જેમાં <code>1</code>, <code>2</code>, અને <code>3</code> અભિવ્યક્તિઓનો સમાવેશ થાય છે.</p>
+<p>હવે ચાલો આ arm સાથે સંકળાયેલા કોડના ભાગમાં રહેલી પેટર્નની તપાસ કરીએ: દરેક મેચ થયેલ ભાગ માટે <code>$()*</code> ની અંદર <code>temp_vec.push()</code> જનરેટ થાય છે, જે પેટર્નના મેચ થવાના આધારે શૂન્ય અથવા વધુ વખત થઈ શકે છે. <code>$x</code> ને દરેક મેચ થયેલ અભિવ્યક્તિથી બદલવામાં આવે છે. જ્યારે આપણે આ macro ને <code>vec![1, 2, 3];</code> સાથે બોલાવીએ છીએ, ત્યારે આ macro કૉલને બદલે જનરેટ થતો કોડ નીચે મુજબ હશે:</p>
+<p>{
+let mut temp_vec = Vec::new();
+temp_vec.push(1);
+temp_vec.push(2);
+temp_vec.push(3);
+temp_vec
 }
-અમે એક મેક્રો વ્યાખ્યાયિત કર્યો છે જે કોઈપણ પ્રકારની કોઈપણ સંખ્યામાં Argumentો લઈ શકે છે અને નિર્દિષ્ટ તત્વો ધરાવતું વેક્ટર બનાવવા માટે કોડ ઉત્પન્ન કરી શકે છે.
+અમે એક મેક્રો વ્યાખ્યાયિત કર્યો છે જે કોઈપણ પ્રકારની કોઈપણ સંખ્યામાં Argumentો લઈ શકે છે અને નિર્દિષ્ટ તત્વો ધરાવતું વેક્ટર બનાવવા માટે કોડ ઉત્પન્ન કરી શકે છે.</p>
+<p>મેક્રો લખવા વિશે વધુ જાણવા માટે, ઓનલાઈન દસ્તાવેજીકરણ અથવા અન્ય સ્ત્રોતોનો સંપર્ક કરો, જેમ કે ડેનિયલ કીપ દ્વારા શરૂ કરાયેલ અને લુકાસ વિર્થ દ્વારા ચાલુ રાખવામાં આવેલ “ધ લિટલ બુક ઓફ રસ્ટ મેક્રોઝ”.</p>
+<h3 id="procedural-macros-for-generating-code-from-attributes"><a class="header" href="#procedural-macros-for-generating-code-from-attributes">Procedural Macros for Generating Code from Attributes</a></h3>
+<p>મેક્રોનું બીજું સ્વરૂપ પ્રક્રિયાત્મક મેક્રો (procedural macro) છે, જે કાર્ય (function) સમાન કાર્ય કરે છે અને તે પણ એક પ્રકારની પ્રક્રિયા છે. પ્રક્રિયાત્મક મેક્રો અમુક કોડને ઇનપુટ તરીકે સ્વીકારે છે, તેના પર કાર્ય કરે છે અને પરિણામી કોડ ઉત્પન્ન કરે છે; ઘોષણાત્મક મેક્રોની જેમ દાખલાઓ સાથે મેળ ખાતા નથી અને કોડને અન્ય કોડથી બદલતા નથી. પ્રક્રિયાત્મક મેક્રોના ત્રણ પ્રકાર છે: કસ્ટમ <code>derive</code>, લક્ષણ-સમાન (attribute-like), અને કાર્ય-સમાન (function-like), અને તે બધા સમાન રીતે કાર્ય કરે છે.</p>
+<p>જ્યારે પ્રક્રિયાત્મક મેક્રો (procedural macro) બનાવવામાં આવે છે, ત્યારે વ્યાખ્યાઓ એક અલગ ક્રેટ (crate) માં રહેવી જોઈએ, જેનો વિશિષ્ટ ક્રેટ પ્રકાર હોય છે. આ જટિલ તકનીકી કારણોસર છે, જે ભવિષ્યમાં દૂર કરવાની આપણી આશા છે. યાદી ૨૦-૩૬ (Listing 20-36) માં, અમે એક પ્રક્રિયાત્મક મેક્રો કેવી રીતે વ્યાખ્યાયિત કરવું તે દર્શાવ્યું છે, જ્યાં <code>some_attribute</code> એ કોઈ ચોક્કસ મેક્રો પ્રકારનો ઉપયોગ કરવા માટેનું સ્થાનિક ચિહ્ન છે.</p>
+<p><strong>Listing 20-36: An example of defining a procedural macro</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use proc_macro::TokenStream;
 
-મેક્રો લખવા વિશે વધુ જાણવા માટે, ઓનલાઈન દસ્તાવેજીકરણ અથવા અન્ય સ્ત્રોતોનો સંપર્ક કરો, જેમ કે ડેનિયલ કીપ દ્વારા શરૂ કરાયેલ અને લુકાસ વિર્થ દ્વારા ચાલુ રાખવામાં આવેલ “ધ લિટલ બુક ઓફ રસ્ટ મેક્રોઝ”.
-
-### Procedural Macros for Generating Code from Attributes
-
-મેક્રોનું બીજું સ્વરૂપ પ્રક્રિયાત્મક મેક્રો (procedural macro) છે, જે કાર્ય (function) સમાન કાર્ય કરે છે અને તે પણ એક પ્રકારની પ્રક્રિયા છે. પ્રક્રિયાત્મક મેક્રો અમુક કોડને ઇનપુટ તરીકે સ્વીકારે છે, તેના પર કાર્ય કરે છે અને પરિણામી કોડ ઉત્પન્ન કરે છે; ઘોષણાત્મક મેક્રોની જેમ દાખલાઓ સાથે મેળ ખાતા નથી અને કોડને અન્ય કોડથી બદલતા નથી. પ્રક્રિયાત્મક મેક્રોના ત્રણ પ્રકાર છે: કસ્ટમ `derive`, લક્ષણ-સમાન (attribute-like), અને કાર્ય-સમાન (function-like), અને તે બધા સમાન રીતે કાર્ય કરે છે.
-
-જ્યારે પ્રક્રિયાત્મક મેક્રો (procedural macro) બનાવવામાં આવે છે, ત્યારે વ્યાખ્યાઓ એક અલગ ક્રેટ (crate) માં રહેવી જોઈએ, જેનો વિશિષ્ટ ક્રેટ પ્રકાર હોય છે. આ જટિલ તકનીકી કારણોસર છે, જે ભવિષ્યમાં દૂર કરવાની આપણી આશા છે. યાદી ૨૦-૩૬ (Listing 20-36) માં, અમે એક પ્રક્રિયાત્મક મેક્રો કેવી રીતે વ્યાખ્યાયિત કરવું તે દર્શાવ્યું છે, જ્યાં `some_attribute` એ કોઈ ચોક્કસ મેક્રો પ્રકારનો ઉપયોગ કરવા માટેનું સ્થાનિક ચિહ્ન છે.
-
-&lt;Listing number="20-36" file-name="src/lib.rs" caption="An example of defining a procedural macro"&gt;
-```rust
-```rust
-use proc_macro::TokenStream;
-
-</code></pre>
-<pre><code>#[some_attribute]
+<span class="boring">}</span></code></pre>
+<p>#[some_attribute]
 pub fn some_name(input: TokenStream) -&gt; TokenStream {
-}
-&lt;/Listing&gt;
-ફંક્શન જે પ્રક્રિયાત્મક મેક્રો (procedural macro) વ્યાખ્યાયિત કરે છે, તે `TokenStream` ને ઇનપુટ તરીકે લે છે અને `TokenStream` ને આઉટપુટ તરીકે ઉત્પન્ન કરે છે. `TokenStream` પ્રકારને `proc_macro` ક્રેટ દ્વારા વ્યાખ્યાયિત કરવામાં આવે છે, જે Rust સાથે સમાવિષ્ટ છે, અને તે ટોકન્સ (tokens)ની શ્રેણીનું પ્રતિનિધિત્વ કરે છે. આ મેક્રોનો મુખ્ય ભાગ છે: મેક્રો કાર્યરત કરે છે તે સ્રોત કોડ ઇનપુટ `TokenStream` બનાવે છે, અને મેક્રો દ્વારા ઉત્પન્ન થતો કોડ આઉટપુટ `TokenStream` છે. ફંક્શનમાં એક એટ્રિબ્યુટ (attribute) પણ જોડાયેલું હોય છે જે સ્પષ્ટ કરે છે કે આપણે કયા પ્રકારનું પ્રક્રિયાત્મક મેક્રો બનાવી રહ્યા છીએ. આપણે એક જ ક્રેટમાં અનેક પ્રકારના પ્રક્રિયાત્મક મેક્રો રાખી શકીએ છીએ.
-
-ચાલો પ્રક્રિયાત્મક મેક્રોના વિવિધ પ્રકારો જોઈએ. આપણે એક કસ્ટમ `derive` મેક્રોથી શરૂઆત કરીશું અને પછી અન્ય સ્વરૂપોને અલગ પાડતા સૂક્ષ્મ ભેદ સમજાવીશું.
-
-&lt;!-- Old headings. Do not remove or links may break. --&gt;
-### Custom `derive` Macros
-
-ચાલો એક `hello_macro` નામનું ક્રેટ બનાવીએ જે `HelloMacro` નામનું ટ્રેઇટ વ્યાખ્યાયિત કરે છે, જેમાં એક સંલગ્ન ફંક્શન `hello_macro` નામનું હોય. આપણા userઓને દરેક પ્રકાર માટે `HelloMacro` ટ્રેઇટનો અમલ કરાવવાને બદલે, અમે એક પ્રોસિજરલ મેક્રો પ્રદાન કરીશું જેથી કરીને userઓ તેમના પ્રકારને `#[derive(HelloMacro)]` સાથે નોંધણી કરાવી શકે અને `hello_macro` ફંક્શનના ડિફોલ્ટ અમલ મેળવી શકે. ડિફોલ્ટ અમલમાં `Hello, Macro! My name is TypeName!` પ્રિન્ટ થશે, જ્યાં `TypeName` એ તે પ્રકારનું નામ છે જેના પર આ ટ્રેઇટ વ્યાખ્યાયિત કરવામાં આવ્યું છે. બીજા શબ્દોમાં કહીએ તો, અમે એક એવું ક્રેટ લખીશું જે અન્ય પ્રોગ્રામરને આપણી ક્રેટનો ઉપયોગ કરીને લિસ્ટિંગ 20-37 જેવું કોડ લખવા માટે સક્ષમ કરે.
-
-&lt;Listing number="20-37" file-name="src/main.rs" caption="The code a user of our crate will be able to write when using our procedural macro"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-37/src/main.rs}}
+}</p>
+<p>ફંક્શન જે પ્રક્રિયાત્મક મેક્રો (procedural macro) વ્યાખ્યાયિત કરે છે, તે <code>TokenStream</code> ને ઇનપુટ તરીકે લે છે અને <code>TokenStream</code> ને આઉટપુટ તરીકે ઉત્પન્ન કરે છે. <code>TokenStream</code> પ્રકારને <code>proc_macro</code> ક્રેટ દ્વારા વ્યાખ્યાયિત કરવામાં આવે છે, જે Rust સાથે સમાવિષ્ટ છે, અને તે ટોકન્સ (tokens)ની શ્રેણીનું પ્રતિનિધિત્વ કરે છે. આ મેક્રોનો મુખ્ય ભાગ છે: મેક્રો કાર્યરત કરે છે તે સ્રોત કોડ ઇનપુટ <code>TokenStream</code> બનાવે છે, અને મેક્રો દ્વારા ઉત્પન્ન થતો કોડ આઉટપુટ <code>TokenStream</code> છે. ફંક્શનમાં એક એટ્રિબ્યુટ (attribute) પણ જોડાયેલું હોય છે જે સ્પષ્ટ કરે છે કે આપણે કયા પ્રકારનું પ્રક્રિયાત્મક મેક્રો બનાવી રહ્યા છીએ. આપણે એક જ ક્રેટમાં અનેક પ્રકારના પ્રક્રિયાત્મક મેક્રો રાખી શકીએ છીએ.</p>
+<p>ચાલો પ્રક્રિયાત્મક મેક્રોના વિવિધ પ્રકારો જોઈએ. આપણે એક કસ્ટમ <code>derive</code> મેક્રોથી શરૂઆત કરીશું અને પછી અન્ય સ્વરૂપોને અલગ પાડતા સૂક્ષ્મ ભેદ સમજાવીશું.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="custom-derive-macros"><a class="header" href="#custom-derive-macros">Custom <code>derive</code> Macros</a></h3>
+<p>ચાલો એક <code>hello_macro</code> નામનું ક્રેટ બનાવીએ જે <code>HelloMacro</code> નામનું ટ્રેઇટ વ્યાખ્યાયિત કરે છે, જેમાં એક સંલગ્ન ફંક્શન <code>hello_macro</code> નામનું હોય. આપણા userઓને દરેક પ્રકાર માટે <code>HelloMacro</code> ટ્રેઇટનો અમલ કરાવવાને બદલે, અમે એક પ્રોસિજરલ મેક્રો પ્રદાન કરીશું જેથી કરીને userઓ તેમના પ્રકારને <code>#[derive(HelloMacro)]</code> સાથે નોંધણી કરાવી શકે અને <code>hello_macro</code> ફંક્શનના ડિફોલ્ટ અમલ મેળવી શકે. ડિફોલ્ટ અમલમાં <code>Hello, Macro! My name is TypeName!</code> પ્રિન્ટ થશે, જ્યાં <code>TypeName</code> એ તે પ્રકારનું નામ છે જેના પર આ ટ્રેઇટ વ્યાખ્યાયિત કરવામાં આવ્યું છે. બીજા શબ્દોમાં કહીએ તો, અમે એક એવું ક્રેટ લખીશું જે અન્ય પ્રોગ્રામરને આપણી ક્રેટનો ઉપયોગ કરીને લિસ્ટિંગ 20-37 જેવું કોડ લખવા માટે સક્ષમ કરે.</p>
+<p><strong>Listing 20-37: The code a user of our crate will be able to write when using our procedural macro</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-37/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>આ કોડ <code>Hello, Macro! My name is Pancakes!</code> છાપશે જ્યારે આપણે પૂર્ણ કરીશું. પ્રથમ પગલું એ નવું લાયબ્રેરી ક્રેટ બનાવવાનું છે, આ પ્રમાણે:</p>
+<pre><code class="language-console">$ cargo new hello_macro --lib
 </code></pre>
-<pre><code>&lt;/Listing&gt;
-આ કોડ `Hello, Macro! My name is Pancakes!` છાપશે જ્યારે આપણે પૂર્ણ કરીશું. પ્રથમ પગલું એ નવું લાયબ્રેરી ક્રેટ બનાવવાનું છે, આ પ્રમાણે:
-
-```console
-```console
-$ cargo new hello_macro --lib
+<p>આગળ, સૂચિ 20-38 માં, આપણે <code>HelloMacro</code> ટ્રેઇટ અને તેના સંકળાયેલ કાર્યને વ્યાખ્યાયિત કરીશું.</p>
+<p><strong>Listing 20-38: A simple trait that we will use with the <code>derive</code> macro</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-38/hello_macro/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>આપણી પાસે એક trait અને તેનું કાર્ય છે. આ સમયે, આપણાં crate ના user Listing 20-39 માં દર્શાવ્યા પ્રમાણે ઇચ્છિત કાર્યક્ષમતા પ્રાપ્ત કરવા માટે trait ને અમલમાં મૂકી શકે છે.</p>
+<p><strong>Listing 20-39: How it would look if users wrote a manual implementation of the <code>HelloMacro</code> trait</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-39/pancakes/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>જો કે, તેઓએ દરેક પ્રકાર માટે અમલીકરણ બ્લોક લખવાની જરૂર પડે, જેનો ઉપયોગ તેઓ <code>hello_macro</code> સાથે કરવા ઇચ્છતા હોય; અમે તેમને આ કાર્ય કરવાની જરૂરિયાતથી મુક્ત કરવા માંગીએ છીએ.</p>
+<p>વધુમાં, હજી અમે <code>hello_macro</code> ફંક્શનને ડિફોલ્ટ અમલીકરણ આપી શકતા નથી, જે ટ્રેઇટના પ્રકારનું નામ છાપશે: Rust પાસે રીફ્લેક્શન ક્ષમતાઓ નથી, તેથી તે રનટાઇમ પર પ્રકારનું નામ શોધી શકતું નથી. કોડ જનરેટ કરવા માટે અમારે એક મેક્રોની જરૂર છે કમ્પાઇલ સમયે.</p>
+<p>આગળનો તબક્કો એ પ્રોસિજરલ મેક્રોને વ્યાખ્યાયિત કરવાનો છે. આ લખતી વખતે, પ્રોસિજરલ મેક્રોઝ પોતાની અલગ crate માં હોવા જોઈએ. ભવિષ્યમાં, આ નિયંત્રણ હટાવી શકાય છે. crates અને macro crates ની રચના માટેની પરંપરા નીચે મુજબ છે: <code>foo</code> નામની crate માટે, કસ્ટમ <code>derive</code> પ્રોસિજરલ મેક્રો crate ને <code>foo_derive</code> કહેવામાં આવે છે. ચાલો <code>hello_macro_derive</code> નામની નવી crate શરૂ કરીએ અમારી <code>hello_macro</code> project ની અંદર:</p>
+<pre><code class="language-console">$ cargo new hello_macro_derive --lib
 </code></pre>
-<pre><code>આગળ, સૂચિ 20-38 માં, આપણે `HelloMacro` ટ્રેઇટ અને તેના સંકળાયેલ કાર્યને વ્યાખ્યાયિત કરીશું.
-
-&lt;Listing file-name="src/lib.rs" number="20-38" caption="A simple trait that we will use with the `derive` macro"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-38/hello_macro/src/lib.rs}}
+<p>આપણી બે ક્રેટે એકબીજા સાથે ગાઢ રીતે સંકળાયેલી છે, તેથી આપણે <code>hello_macro</code> ક્રેટેની ડિરેક્ટરીમાં પ્રોસિજરલ મેક્રો ક્રેટે બનાવીએ છીએ. જો આપણે <code>hello_macro</code> માં ટ્રેઇટ વ્યાખ્યા બદલીએ, તો આપણે <code>hello_macro_derive</code> માં પ્રોસિજરલ મેક્રોના અમલીકરણને પણ બદલવું પડશે. આ બે ક્રેટે અલગથી પ્રકાશિત કરવાની જરૂર પડશે, અને આ ક્રેટેનો ઉપયોગ કરતા પ્રોગ્રામરે બંનેને આધાર તરીકે ઉમેરવાની અને બંનેને કાર્યક્ષેત્રમાં લાવવાની જરૂર પડશે. વૈકલ્પિક રીતે, આપણે <code>hello_macro</code> ક્રેટે <code>hello_macro_derive</code> ને આધાર તરીકે વાપરી શકે અને પ્રોસિજરલ મેક્રો કોડને ફરીથી નિકાસ કરી શકે. જો કે, આપણે જે રીતે આ પ્રોજેક્ટનું માળખું બનાવ્યું છે, તેનાથી પ્રોગ્રામરે <code>hello_macro</code> નો ઉપયોગ કરી શકે છે, ભલે તેઓ <code>derive</code> કાર્યક્ષમતા ઇચ્છતા ન હોય.</p>
+<p>આપણે <code>hello_macro_derive</code> ક્રેટને પ્રોસિજરલ મેક્રો ક્રેટ તરીકે જાહેર કરવાની જરૂર છે. આપણે <a href="https://crates.io/crates/syn"><code>syn</code></a> અને <code>quote</code> ક્રેટ્સની કાર્યક્ષમતા પણ જોઈશું, થોડીવારમાં તમે તે જોશો, તેથી આપણે તેમને આધારભૂત વસ્તુઓ (dependency) તરીકે ઉમેરવાની જરૂર છે. <code>hello_macro_derive</code> માટે Cargo.toml ફાઈલમાં નીચે મુજબ ઉમેરો:</p>
+<pre><code class="language-toml">{{#include ../listings/ch20-advanced-features/listing-20-40/hello_macro/hello_macro_derive/Cargo.toml:6:12}}
 </code></pre>
-<pre><code>&lt;/Listing&gt;
-આપણી પાસે એક trait અને તેનું કાર્ય છે. આ સમયે, આપણાં crate ના user Listing 20-39 માં દર્શાવ્યા પ્રમાણે ઇચ્છિત કાર્યક્ષમતા પ્રાપ્ત કરવા માટે trait ને અમલમાં મૂકી શકે છે.
-
-&lt;Listing number="20-39" file-name="src/main.rs" caption="How it would look if users wrote a manual implementation of the `HelloMacro` trait"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-39/pancakes/src/main.rs}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-જો કે, તેઓએ દરેક પ્રકાર માટે અમલીકરણ બ્લોક લખવાની જરૂર પડે, જેનો ઉપયોગ તેઓ `hello_macro` સાથે કરવા ઇચ્છતા હોય; અમે તેમને આ કાર્ય કરવાની જરૂરિયાતથી મુક્ત કરવા માંગીએ છીએ.
-
-વધુમાં, હજી અમે `hello_macro` ફંક્શનને ડિફોલ્ટ અમલીકરણ આપી શકતા નથી, જે ટ્રેઇટના પ્રકારનું નામ છાપશે: Rust પાસે રીફ્લેક્શન ક્ષમતાઓ નથી, તેથી તે રનટાઇમ પર પ્રકારનું નામ શોધી શકતું નથી. કોડ જનરેટ કરવા માટે અમારે એક મેક્રોની જરૂર છે કમ્પાઇલ સમયે.
-
-આગળનો તબક્કો એ પ્રોસિજરલ મેક્રોને વ્યાખ્યાયિત કરવાનો છે. આ લખતી વખતે, પ્રોસિજરલ મેક્રોઝ પોતાની અલગ crate માં હોવા જોઈએ. ભવિષ્યમાં, આ નિયંત્રણ હટાવી શકાય છે. crates અને macro crates ની રચના માટેની પરંપરા નીચે મુજબ છે: `foo` નામની crate માટે, કસ્ટમ `derive` પ્રોસિજરલ મેક્રો crate ને `foo_derive` કહેવામાં આવે છે. ચાલો `hello_macro_derive` નામની નવી crate શરૂ કરીએ અમારી `hello_macro` project ની અંદર:
-
-```console
-```console
-$ cargo new hello_macro_derive --lib
-</code></pre>
-<pre><code>આપણી બે ક્રેટે એકબીજા સાથે ગાઢ રીતે સંકળાયેલી છે, તેથી આપણે `hello_macro` ક્રેટેની ડિરેક્ટરીમાં પ્રોસિજરલ મેક્રો ક્રેટે બનાવીએ છીએ. જો આપણે `hello_macro` માં ટ્રેઇટ વ્યાખ્યા બદલીએ, તો આપણે `hello_macro_derive` માં પ્રોસિજરલ મેક્રોના અમલીકરણને પણ બદલવું પડશે. આ બે ક્રેટે અલગથી પ્રકાશિત કરવાની જરૂર પડશે, અને આ ક્રેટેનો ઉપયોગ કરતા પ્રોગ્રામરે બંનેને આધાર તરીકે ઉમેરવાની અને બંનેને કાર્યક્ષેત્રમાં લાવવાની જરૂર પડશે. વૈકલ્પિક રીતે, આપણે `hello_macro` ક્રેટે `hello_macro_derive` ને આધાર તરીકે વાપરી શકે અને પ્રોસિજરલ મેક્રો કોડને ફરીથી નિકાસ કરી શકે. જો કે, આપણે જે રીતે આ પ્રોજેક્ટનું માળખું બનાવ્યું છે, તેનાથી પ્રોગ્રામરે `hello_macro` નો ઉપયોગ કરી શકે છે, ભલે તેઓ `derive` કાર્યક્ષમતા ઇચ્છતા ન હોય.
-
-આપણે `hello_macro_derive` ક્રેટને પ્રોસિજરલ મેક્રો ક્રેટ તરીકે જાહેર કરવાની જરૂર છે. આપણે `syn` અને `quote` ક્રેટ્સની કાર્યક્ષમતા પણ જોઈશું, થોડીવારમાં તમે તે જોશો, તેથી આપણે તેમને આધારભૂત વસ્તુઓ (dependency) તરીકે ઉમેરવાની જરૂર છે. `hello_macro_derive` માટે Cargo.toml ફાઈલમાં નીચે મુજબ ઉમેરો:
-
-&lt;Listing file-name="hello_macro_derive/Cargo.toml"&gt;
-```toml
-```toml
-{{#include ../listings/ch20-advanced-features/listing-20-40/hello_macro/hello_macro_derive/Cargo.toml:6:12}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-પ્રક્રિયાત્મક મેક્રો (procedural macro) વ્યાખ્યાયિત કરવાનું શરૂ કરવા માટે, કોડને તમારી `src/lib.rs` ફાઈલમાં `hello_macro_derive` ક્રેટમાં મૂકો. નોંધ કરો કે જ્યાં સુધી આપણે `impl_hello_macro` ફંક્શનની વ્યાખ્યા ઉમેરતા નથી ત્યાં સુધી આ કોડ સંપાદિત થશે નહીં.
-
-&lt;Listing number="20-40" file-name="hello_macro_derive/src/lib.rs" caption="Code that most procedural macro crates will require in order to process Rust code"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-40/hello_macro/hello_macro_derive/src/lib.rs}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-જુઓ કે કોડને `hello_macro_derive` વિધેયમાં અને `impl_hello_macro` વિધેયમાં વિભાજિત કરવામાં આવ્યો છે, જે અનુક્રમે `TokenStream`નું વિશ્લેષણ કરવા અને સિન્ટેક્સ ટ્રીનું રૂપાંતર કરવા માટે જવાબદાર છે: આ રીતે પ્રક્રિયાત્મક મેક્રો લખવાનું વધુ અનુકૂળ બને છે. બાહ્ય વિધેયમાં (આ કિસ્સામાં `hello_macro_derive`) રહેલો કોડ લગભગ દરેક પ્રક્રિયાત્મક મેક્રો crate માટે સમાન હશે જે તમે જુઓ છો અથવા બનાવો છો. તમે આંતરિક વિધેય (`impl_hello_macro` આ કિસ્સામાં)ના શરીરમાં સ્પષ્ટ કરેલો કોડ તમારા પ્રક્રિયાત્મક મેક્રોના હેતુને આધારે અલગ હશે.
-
-આપણે ત્રણ નવા ક્રેટ પરિચય આપ્યા છે: `proc_macro` , `syn` , અને `quote` . `proc_macro` ક્રેટ Rust સાથે આવે છે, તેથી આપણે તેને Cargo.toml માં આધારક (dependency) ઉમેરવાની જરૂર નહોતી. `proc_macro` ક્રેટ એ compiler નું API છે જે આપણને આપણા કોડમાંથી Rust કોડ વાંચવા અને સંશોધિત કરવાની મંજૂરી આપે છે. The `syn` crate parses
-
-ક્રેટ સ્ટ્રિંગમાંથી Rust કોડને ડેટા સ્ટ્રક્ચરમાં વિશ્લેષણ કરે છે જેના પર આપણે કાર્ય કરી શકીએ છીએ. The `quote` crate turns `syn` data structures back into Rust code. `quote` ક્રેટ `syn` ડેટા સ્ટ્રક્ચરને પાછા Rust કોડમાં રૂપાંતરિત કરે છે. આ ક્રેટ દ્વારા કોઈપણ પ્રકારના Rust કોડને વિશ્લેષણ કરવાનું ઘણું સરળ બને છે: Rust કોડ માટે સંપૂર્ણ parser લખવાનું કોઈ સરળ કાર્ય નથી.
-
-કાર્ય અમારી લાયબ્રેરીના user દ્વારા કોઈ પ્રકાર પર `#[derive(HelloMacro)]` ઉલ્લેખિત કરવામાં આવે ત્યારે બોલાશે. આ શક્ય છે કારણ કે અમે અહીં `hello_macro_derive` કાર્યને `proc_macro_derive` સાથે વર્ણન કર્યું છે અને નામ `HelloMacro` નિર્ધારિત કર્યું છે, જે અમારા ટ્રેઇટના નામ સાથે મેળ ખાય છે; આ સૌથી વધુ પ્રક્રિયાત્મક મેક્રો
-
-અનુસરતા સંમેલન છે. `hello_macro_derive` કાર્ય સૌપ્રથમ `input` ને `TokenStream` માંથી એવા ડેટા સ્ટ્રક્ચરમાં રૂપાંતરિત કરે છે જેને આપણે પછી અર્થઘટન કરી શકીએ અને તેના પર ક્રિયાઓ કરી શકીએ. અહીં `syn` મહત્વપૂર્ણ ભૂમિકા ભજવે છે. `syn` માં `parse` કાર્ય `TokenStream` લે છે અને `DeriveInput` સ્ટ્રક્ચર આપે છે, જે વિશ્લેષણ કરેલા Rust કોડનું પ્રતિનિધિત્વ કરે છે. યાદી 20-41 આપણને `struct Pancakes;` શબ્દમાળાનું વિશ્લેષણ કર્યા પછી મળતા `DeriveInput` સ્ટ્રક્ચરના સંબંધિત ભાગો દર્શાવે છે.
-
-&lt;Listing number="20-41" caption="The `DeriveInput` instance we get when parsing the code that has the macro’s attribute in Listing 20-37"&gt;
-```rust
-```rust
-DeriveInput {
+<p>પ્રક્રિયાત્મક મેક્રો (procedural macro) વ્યાખ્યાયિત કરવાનું શરૂ કરવા માટે, કોડને તમારી <code>src/lib.rs</code> ફાઈલમાં <code>hello_macro_derive</code> ક્રેટમાં મૂકો. નોંધ કરો કે જ્યાં સુધી આપણે <code>impl_hello_macro</code> ફંક્શનની વ્યાખ્યા ઉમેરતા નથી ત્યાં સુધી આ કોડ સંપાદિત થશે નહીં.</p>
+<p><strong>Listing 20-40: Code that most procedural macro crates will require in order to process Rust code</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-40/hello_macro/hello_macro_derive/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>જુઓ કે કોડને <code>hello_macro_derive</code> વિધેયમાં અને <code>impl_hello_macro</code> વિધેયમાં વિભાજિત કરવામાં આવ્યો છે, જે અનુક્રમે <code>TokenStream</code>નું વિશ્લેષણ કરવા અને સિન્ટેક્સ ટ્રીનું રૂપાંતર કરવા માટે જવાબદાર છે: આ રીતે પ્રક્રિયાત્મક મેક્રો લખવાનું વધુ અનુકૂળ બને છે. બાહ્ય વિધેયમાં (આ કિસ્સામાં <code>hello_macro_derive</code>) રહેલો કોડ લગભગ દરેક પ્રક્રિયાત્મક મેક્રો crate માટે સમાન હશે જે તમે જુઓ છો અથવા બનાવો છો. તમે આંતરિક વિધેય (<code>impl_hello_macro</code> આ કિસ્સામાં)ના શરીરમાં સ્પષ્ટ કરેલો કોડ તમારા પ્રક્રિયાત્મક મેક્રોના હેતુને આધારે અલગ હશે.</p>
+<p>આપણે ત્રણ નવા ક્રેટ પરિચય આપ્યા છે: <code>proc_macro</code> , <code>syn</code> , અને <a href="https://crates.io/crates/quote"><code>quote</code></a> . <code>proc_macro</code> ક્રેટ Rust સાથે આવે છે, તેથી આપણે તેને Cargo.toml માં આધારક (dependency) ઉમેરવાની જરૂર નહોતી. <code>proc_macro</code> ક્રેટ એ compiler નું API છે જે આપણને આપણા કોડમાંથી Rust કોડ વાંચવા અને સંશોધિત કરવાની મંજૂરી આપે છે. The <code>syn</code> crate parses</p>
+<p>ક્રેટ સ્ટ્રિંગમાંથી Rust કોડને ડેટા સ્ટ્રક્ચરમાં વિશ્લેષણ કરે છે જેના પર આપણે કાર્ય કરી શકીએ છીએ. The <code>quote</code> crate turns <a href="https://crates.io/crates/syn"><code>syn</code></a> data structures back into Rust code. <code>quote</code> ક્રેટ <code>syn</code> ડેટા સ્ટ્રક્ચરને પાછા Rust કોડમાં રૂપાંતરિત કરે છે. આ ક્રેટ દ્વારા કોઈપણ પ્રકારના Rust કોડને વિશ્લેષણ કરવાનું ઘણું સરળ બને છે: Rust કોડ માટે સંપૂર્ણ parser લખવાનું કોઈ સરળ કાર્ય નથી.</p>
+<p>કાર્ય અમારી લાયબ્રેરીના user દ્વારા કોઈ પ્રકાર પર <code>#[derive(HelloMacro)]</code> ઉલ્લેખિત કરવામાં આવે ત્યારે બોલાશે. આ શક્ય છે કારણ કે અમે અહીં <code>hello_macro_derive</code> કાર્યને <code>proc_macro_derive</code> સાથે વર્ણન કર્યું છે અને નામ <code>HelloMacro</code> નિર્ધારિત કર્યું છે, જે અમારા ટ્રેઇટના નામ સાથે મેળ ખાય છે; આ સૌથી વધુ પ્રક્રિયાત્મક મેક્રો</p>
+<p>અનુસરતા સંમેલન છે. <code>hello_macro_derive</code> કાર્ય સૌપ્રથમ <code>input</code> ને <code>TokenStream</code> માંથી એવા ડેટા સ્ટ્રક્ચરમાં રૂપાંતરિત કરે છે જેને આપણે પછી અર્થઘટન કરી શકીએ અને તેના પર ક્રિયાઓ કરી શકીએ. અહીં <a href="https://crates.io/crates/syn"><code>syn</code></a> મહત્વપૂર્ણ ભૂમિકા ભજવે છે. <code>syn</code> માં <code>parse</code> કાર્ય <code>TokenStream</code> લે છે અને <code>DeriveInput</code> સ્ટ્રક્ચર આપે છે, જે વિશ્લેષણ કરેલા Rust કોડનું પ્રતિનિધિત્વ કરે છે. યાદી 20-41 આપણને <code>struct Pancakes;</code> શબ્દમાળાનું વિશ્લેષણ કર્યા પછી મળતા <code>DeriveInput</code> સ્ટ્રક્ચરના સંબંધિત ભાગો દર્શાવે છે.</p>
+<p><strong>Listing 20-41: The <code>DeriveInput</code> instance we get when parsing the code that has the macro’s attribute in Listing 20-37</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>DeriveInput {
     // --snip--
 
     ident: Ident {
@@ -362,86 +316,57 @@ DeriveInput {
         }
     )
 }
+<span class="boring">}</span></code></pre>
+<p>આ સ્ટ્રક્ચરના ક્ષેત્રો દર્શાવે છે કે આપણે જે Rust કોડનું વિશ્લેષણ કર્યું છે તે એક યુનિટ સ્ટ્રક્ટ છે, જેમાં <code>ident</code> (ઓળખકર્તા, એટલે કે નામ) <code>Pancakes</code> છે. આ સ્ટ્રક્ચરમાં Rust કોડના તમામ પ્રકારોનું વર્ણન કરવા માટે વધુ ક્ષેત્રો છે; વધુ માહિતી માટે <a href="https://crates.io/crates/syn"><code>syn</code></a> દસ્તાવેજમાં <code>DeriveInput</code> તપાસો. Soon we’ll define the</p>
+<p>જલ્દી જ આપણે <code>impl_hello_macro</code> ફંક્શનને વ્યાખ્યાયિત કરીશું, જ્યાં આપણે જે નવો Rust કોડ ઉમેરવા માંગીએ છીએ તે બનાવીશું. પરંતુ તે પહેલાં, નોંધ કરો કે આપણી <code>derive</code> મેક્રો માટેનું આઉટપુટ પણ એક <code>TokenStream</code> છે. પરત કરેલ <code>TokenStream</code> એ અમારા ક્રેકેટ userઓ દ્વારા લખવામાં આવતા કોડમાં ઉમેરવામાં આવે છે, તેથી જ્યારે તેઓ તેમના ક્રેકેટને કમ્પાઇલ કરે છે, ત્યારે તેમને વધારાની કાર્યક્ષમતા મળશે જે અમે સંશોધિત <code>TokenStream</code> માં પ્રદાન કરીએ છીએ.</p>
+<p>તમે નોંધ્યું હશે કે અહીં <code>syn::parse</code> ફંક્શન નિષ્ફળ જાય તો <code>hello_macro_derive</code> ફંક્શનને પેનિક કરાવવા માટે અમે <code>unwrap</code> નો ઉપયોગ કરી રહ્યા છીએ. આપણી પ્રોસિજરલ મેક્રોને ભૂલો પર પેનિક કરવું જરૂરી છે, કારણ કે <code>proc_macro_derive</code> ફંક્શન્સ <code>Result</code> ને બદલે <code>TokenStream</code> પરત કરવા જોઈએ જેથી પ્રોસિજરલ મેક્રો APIનું પાલન થાય. અમે આ ઉદાહરણને <code>unwrap</code> નો ઉપયોગ કરીને સરળ બનાવ્યું છે; ઉત્પાદન કોડમાં, તમારે શું ખોટું થયું તેની વધુ વિશિષ્ટ ભૂલ સંદેશાઓ આપવા જોઈએ, <code>panic!</code> અથવા</p>
+<p><code>expect</code> નો ઉપયોગ કરીને. હવે જ્યારે આપણી પાસે <code>TokenStream</code> માંથી એનોટેટ કરેલા Rust કોડને <code>DeriveInput</code> ઇન્સ્ટન્સમાં રૂપાંતરિત કરવાનો કોડ છે, તો ચાલો Listing 20-42 માં દર્શાવ્યા પ્રમાણે એનોટેટ કરેલ પ્રકાર પર <code>HelloMacro</code> ટ્રેઇટ જનરેટ કરીએ.</p>
+<p><strong>Listing 20-42: Implementing the <code>HelloMacro</code> trait using the parsed Rust code</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-42/hello_macro/hello_macro_derive/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અમે <code>Ident</code> સ્ટ્રક્ચર ઇન્સ્ટન્સ મેળવીએ છીએ જેમાં નામ (ઉપાધિ) હોય છે જે નોંધાયેલ પ્રકારનું છે, જે <code>ast.ident</code> નો ઉપયોગ કરીને પ્રાપ્ત થાય છે. યાદી 20-41 માં દર્શાવેલ સ્ટ્રક્ચરમાં બતાવે છે કે જ્યારે અમે <code>impl_hello_macro</code> ફંક્શનને યાદી 20-37 માંના કોડ પર ચલાવીએ છીએ, ત્યારે મળતું <code>ident</code>  ફિલ્ડ <code>“Pancakes”</code> મૂલ્ય ધરાવશે. આમ, યાદી 20-42 માંનું <code>name</code> variable <code>Ident</code> સ્ટ્રક્ચર ઇન્સ્ટન્સ ધરાવશે જે છાપવામાં આવે ત્યારે <code>"Pancakes"</code> શબ્દમાળા હશે, જે યાદી 20-37 માંના સ્ટ્રક્ચરનું નામ છે.</p>
+<p>The <code>quote!</code> Macro The <code>quote!</code> macro permits us to define the Rust code that we desire to return. The compiler expects something different from the direct result of the <code>quote!</code> macro’s execution, so we need to convert it to a <code>TokenStream</code>. We accomplish this by calling the <code>into</code> method, which consumes this intermediate representation and returns a value of the required</p>
+<p><code>TokenStream</code> type. The <code>quote!</code> macro also provides some very cool templating mechanics: We can enter <code>#name</code>, and <code>quote!</code> will replace it with the value in the variable <code>name</code>. You can even do some repetition similar to the way regular macros work. Check out <a href="https://docs.rs/quote">the <code>quote</code> crate’s docs</a> for a thorough introduction.</p>
+<p>આપણે આપણી પ્રોસિજરલ મેક્રોને userએ જે પ્રકાર (type) નોંધાવ્યો છે તેના માટે આપણું <code>HelloMacro</code> ટ્રેઇટનો અમલ (implementation) જનરેટ કરવો છે, જે આપણે <code>#name</code> નો ઉપયોગ કરીને મેળવી શકીએ છીએ. ટ્રેઇટ અમલમાં એક ફંક્શન <code>hello_macro</code> હોય છે, જેના શરીરમાં તે કાર્યક્ષમતા (functionality) હોય છે જે આપણને પ્રદાન કરવી છે: <code>Hello, Macro! My name is</code> છાપવું અને પછી નોંધાયેલા પ્રકારનું નામ છાપવું.</p>
+<p>અહીં વપરાયેલું <code>stringify!</code> મેક્રો Rust માં બનેલું છે. તે Rust અભિવ્યક્તિ (expression), જેમ કે <code>1 + 2</code>, લે છે અને કમ્પાઇલ સમયે તેને સ્ટ્રિંગ લિટરલ, જેમ કે <code>"1 + 2"</code> માં ફેરવે છે. આ <code>format!</code> અથવા <code>println!</code> થી અલગ છે, જે એવા મેક્રો છે જે અભિવ્યક્તિનું મૂલ્યાંકન કરે છે અને પછી પરિણામને <code>String</code> માં ફેરવે છે. શક્યતા છે કે <code>#name</code> ઇનપુટને શાબ્દિક રીતે છાપવા માટેની અભિવ્યક્તિ હોઈ શકે છે, તેથી આપણે <code>stringify!</code> નો ઉપયોગ કરીએ છીએ. <code>stringify!</code> નો ઉપયોગ કરવાથી કમ્પાઇલ સમયે <code>#name</code> ને સ્ટ્રિંગ લિટરલમાં રૂપાંતરિત કરીને એક ફાળવણી (allocation) પણ બચે છે.</p>
+<p>At this point હવે, <code>cargo build</code> બંને <code>hello_macro</code> અને <code>hello_macro_derive</code> માં સફળતાપૂર્વક પૂર્ણ થવું જોઈએ. ચાલો આ ક્રેટ્સને લિસ્ટિંગ ૨૦-૩૭ ના કોડ સાથે જોડીએ જેથી પ્રક્રિયાત્મક મેક્રો કાર્યમાં આવે! તમારા પ્રોજેક્ટ્સ ડિરેક્ટરીમાં <code>cargo new pancakes</code> નો ઉપયોગ કરીને એક નવો બાઈનરી પ્રોજેક્ટ બનાવો. આપણે <code>hello_macro</code> અને <code>hello_macro_derive</code> ને <code>pancakes</code> ક્રેટના Cargo.toml માં આધાર તરીકે ઉમેરવાની જરૂર છે. જો તમે તમારા <code>hello_macro</code> અને <code>hello_macro_derive</code> ના વર્ઝનને crates.io પર પ્રકાશિત કરી રહ્યા છો, તો તે નિયમિત આધાર હશે; નહિંતર, તમે તેમને <code>path</code> આધાર તરીકે નીચે મુજબ સ્પષ્ટ કરી શકો છો:</p>
+<pre><code class="language-toml">{{#include ../listings/ch20-advanced-features/no-listing-21-pancakes/pancakes/Cargo.toml:6:8}}
 </code></pre>
-<pre><code>&lt;/Listing&gt;
-આ સ્ટ્રક્ચરના ક્ષેત્રો દર્શાવે છે કે આપણે જે Rust કોડનું વિશ્લેષણ કર્યું છે તે એક યુનિટ સ્ટ્રક્ટ છે, જેમાં `ident` (ઓળખકર્તા, એટલે કે નામ) `Pancakes` છે. આ સ્ટ્રક્ચરમાં Rust કોડના તમામ પ્રકારોનું વર્ણન કરવા માટે વધુ ક્ષેત્રો છે; વધુ માહિતી માટે `syn` દસ્તાવેજમાં `DeriveInput` તપાસો. Soon we’ll define the
-
-જલ્દી જ આપણે `impl_hello_macro` ફંક્શનને વ્યાખ્યાયિત કરીશું, જ્યાં આપણે જે નવો Rust કોડ ઉમેરવા માંગીએ છીએ તે બનાવીશું. પરંતુ તે પહેલાં, નોંધ કરો કે આપણી `derive` મેક્રો માટેનું આઉટપુટ પણ એક `TokenStream` છે. પરત કરેલ `TokenStream` એ અમારા ક્રેકેટ userઓ દ્વારા લખવામાં આવતા કોડમાં ઉમેરવામાં આવે છે, તેથી જ્યારે તેઓ તેમના ક્રેકેટને કમ્પાઇલ કરે છે, ત્યારે તેમને વધારાની કાર્યક્ષમતા મળશે જે અમે સંશોધિત `TokenStream` માં પ્રદાન કરીએ છીએ.
-
-તમે નોંધ્યું હશે કે અહીં `syn::parse` ફંક્શન નિષ્ફળ જાય તો `hello_macro_derive` ફંક્શનને પેનિક કરાવવા માટે અમે `unwrap` નો ઉપયોગ કરી રહ્યા છીએ. આપણી પ્રોસિજરલ મેક્રોને ભૂલો પર પેનિક કરવું જરૂરી છે, કારણ કે `proc_macro_derive` ફંક્શન્સ `Result` ને બદલે `TokenStream` પરત કરવા જોઈએ જેથી પ્રોસિજરલ મેક્રો APIનું પાલન થાય. અમે આ ઉદાહરણને `unwrap` નો ઉપયોગ કરીને સરળ બનાવ્યું છે; ઉત્પાદન કોડમાં, તમારે શું ખોટું થયું તેની વધુ વિશિષ્ટ ભૂલ સંદેશાઓ આપવા જોઈએ, `panic!` અથવા
-
-`expect` નો ઉપયોગ કરીને. હવે જ્યારે આપણી પાસે `TokenStream` માંથી એનોટેટ કરેલા Rust કોડને `DeriveInput` ઇન્સ્ટન્સમાં રૂપાંતરિત કરવાનો કોડ છે, તો ચાલો Listing 20-42 માં દર્શાવ્યા પ્રમાણે એનોટેટ કરેલ પ્રકાર પર `HelloMacro` ટ્રેઇટ જનરેટ કરીએ.
-
-&lt;Listing number="20-42" file-name="hello_macro_derive/src/lib.rs" caption="Implementing the `HelloMacro` trait using the parsed Rust code"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-42/hello_macro/hello_macro_derive/src/lib.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-અમે `Ident` સ્ટ્રક્ચર ઇન્સ્ટન્સ મેળવીએ છીએ જેમાં નામ (ઉપાધિ) હોય છે જે નોંધાયેલ પ્રકારનું છે, જે `ast.ident` નો ઉપયોગ કરીને પ્રાપ્ત થાય છે. યાદી 20-41 માં દર્શાવેલ સ્ટ્રક્ચરમાં બતાવે છે કે જ્યારે અમે `impl_hello_macro` ફંક્શનને યાદી 20-37 માંના કોડ પર ચલાવીએ છીએ, ત્યારે મળતું `ident`  ફિલ્ડ `“Pancakes”` મૂલ્ય ધરાવશે. આમ, યાદી 20-42 માંનું `name` variable `Ident` સ્ટ્રક્ચર ઇન્સ્ટન્સ ધરાવશે જે છાપવામાં આવે ત્યારે `"Pancakes"` શબ્દમાળા હશે, જે યાદી 20-37 માંના સ્ટ્રક્ચરનું નામ છે.
-
-The `quote!` Macro The `quote!` macro permits us to define the Rust code that we desire to return. The compiler expects something different from the direct result of the `quote!` macro’s execution, so we need to convert it to a `TokenStream`. We accomplish this by calling the `into` method, which consumes this intermediate representation and returns a value of the required
-
-`TokenStream` type. The `quote!` macro also provides some very cool templating mechanics: We can enter `#name`, and `quote!` will replace it with the value in the variable `name`. You can even do some repetition similar to the way regular macros work. Check out the `quote` crate’s docs for a thorough introduction.
-
-આપણે આપણી પ્રોસિજરલ મેક્રોને userએ જે પ્રકાર (type) નોંધાવ્યો છે તેના માટે આપણું `HelloMacro` ટ્રેઇટનો અમલ (implementation) જનરેટ કરવો છે, જે આપણે `#name` નો ઉપયોગ કરીને મેળવી શકીએ છીએ. ટ્રેઇટ અમલમાં એક ફંક્શન `hello_macro` હોય છે, જેના શરીરમાં તે કાર્યક્ષમતા (functionality) હોય છે જે આપણને પ્રદાન કરવી છે: `Hello, Macro! My name is` છાપવું અને પછી નોંધાયેલા પ્રકારનું નામ છાપવું.
-
-અહીં વપરાયેલું `stringify!` મેક્રો Rust માં બનેલું છે. તે Rust અભિવ્યક્તિ (expression), જેમ કે `1 + 2`, લે છે અને કમ્પાઇલ સમયે તેને સ્ટ્રિંગ લિટરલ, જેમ કે `"1 + 2"` માં ફેરવે છે. આ `format!` અથવા `println!` થી અલગ છે, જે એવા મેક્રો છે જે અભિવ્યક્તિનું મૂલ્યાંકન કરે છે અને પછી પરિણામને `String` માં ફેરવે છે. શક્યતા છે કે `#name` ઇનપુટને શાબ્દિક રીતે છાપવા માટેની અભિવ્યક્તિ હોઈ શકે છે, તેથી આપણે `stringify!` નો ઉપયોગ કરીએ છીએ. `stringify!` નો ઉપયોગ કરવાથી કમ્પાઇલ સમયે `#name` ને સ્ટ્રિંગ લિટરલમાં રૂપાંતરિત કરીને એક ફાળવણી (allocation) પણ બચે છે.
-
-At this point હવે, `cargo build` બંને `hello_macro` અને `hello_macro_derive` માં સફળતાપૂર્વક પૂર્ણ થવું જોઈએ. ચાલો આ ક્રેટ્સને લિસ્ટિંગ ૨૦-૩૭ ના કોડ સાથે જોડીએ જેથી પ્રક્રિયાત્મક મેક્રો કાર્યમાં આવે! તમારા પ્રોજેક્ટ્સ ડિરેક્ટરીમાં `cargo new pancakes` નો ઉપયોગ કરીને એક નવો બાઈનરી પ્રોજેક્ટ બનાવો. આપણે `hello_macro` અને `hello_macro_derive` ને `pancakes` ક્રેટના Cargo.toml માં આધાર તરીકે ઉમેરવાની જરૂર છે. જો તમે તમારા `hello_macro` અને `hello_macro_derive` ના વર્ઝનને crates.io પર પ્રકાશિત કરી રહ્યા છો, તો તે નિયમિત આધાર હશે; નહિંતર, તમે તેમને `path` આધાર તરીકે નીચે મુજબ સ્પષ્ટ કરી શકો છો:
-
-```toml
-```toml
-{{#include ../listings/ch20-advanced-features/no-listing-21-pancakes/pancakes/Cargo.toml:6:8}}
-</code></pre>
-<pre><code>Listing 20-37 ને src/main.rs માં મૂકો, અને `cargo run` ચલાવો: એ `Hello, Macro! My name is Pancakes!` છાપવું જોઈએ. પ્રક્રિયાત્મક મેક્રોમાંથી `HelloMacro` ટ્રેઇટનું અમલીકરણ `pancakes` ક્રેટે તેને અમલમાં મૂક્યા વિના જ ઉમેરવામાં આવ્યું હતું; `#[derive(HelloMacro)]` એ ટ્રેઇટ અમલીકરણ ઉમેર્યું હતું.
-
-આગળ, ચાલો જોઈએ કે અન્ય પ્રકારના પ્રક્રિયાત્મક મેક્રો કસ્ટમ `derive` મેક્રોથી કેવી રીતે અલગ પડે છે.
-
-### Attribute-Like Macros
-
-લક્ષણ-સમાન મેક્રો કસ્ટમ `derive` મેક્રો જેવા જ હોય છે, પરંતુ `derive` લક્ષણ માટે કોડ ઉત્પન્ન કરવાને બદલે, તે તમને નવા લક્ષણો બનાવવાની મંજૂરી આપે છે. તે વધુ લવચીક પણ છે: `derive` માત્ર struct અને enums માટે જ કામ કરે છે; લક્ષણો અન્ય વસ્તુઓ પર લાગુ કરી શકાય છે, જેમ કે ફંક્શન. વેબ એપ્લિકેશન ફ્રેમવર્કનો ઉપયોગ કરતી વખતે `route` નામનું લક્ષણ ધરાવતા મેક્રો-સમાનના ઉપયોગનું ઉદાહરણ અહીં આપેલું છે:
-
-```rust
-```rust
-#[route(GET, "/")]
-</code></pre>
-<pre><code>fn index() {
-આ `#[route]` લક્ષણ ફ્રેમવર્ક દ્વારા પ્રક્રિયાત્મક મેક્રો તરીકે વ્યાખ્યાયિત કરવામાં આવશે. મેક્રો વ્યાખ્યાન કાર્યનું સ્વરૂપ આ પ્રમાણે હશે:
-
-```rust
-```rust
-#[proc_macro_attribute]
-</code></pre>
-<pre><code>pub fn route(attr: TokenStream, item: TokenStream) -&gt; TokenStream {
-અહીં, આપણી પાસે `TokenStream` પ્રકારના બે પરિમાણો છે. પહેલો એટ્રિબ્યુટની સામગ્રી માટે છે: `GET, "/"` ભાગ. બીજો એ આઇટમનો ભાગ છે જેના પર એટ્રિબ્યુટ જોડાયેલું છે: આ કિસ્સામાં, `fn index() {}` અને ફંક્શનના બાકીના ભાગો.
-
-આ ઉપરાંત, એટ્રિબ્યુટ જેવી મેક્રોઝ કસ્ટમ `derive` મેક્રોઝની જેમ જ કાર્ય કરે છે: તમે `proc-macro` ક્રેટ પ્રકાર સાથે એક ક્રેટ બનાવો છો અને એક ફંક્શનનો અમલ કરો છો જે તમને જોઈતો કોડ ઉત્પન્ન કરે છે!
-
-### Function-Like Macros
-
-કાર્ય-સમાન મેક્રોઝ એવા મેક્રો વ્યાખ્યાયિત કરે છે જે ફંક્શન કૉલ્સ જેવા દેખાય છે. `macro_rules!` મેક્રોઝની જેમ, તે ફંક્શન્સ કરતાં વધુ લવચીક હોય છે; ઉદાહરણ તરીકે, તેઓ અજ્ઞાત સંખ્યામાં Argumentો લઈ શકે છે. જો કે, `macro_rules!` મેક્રોઝને માત્ર આપણે "સામાન્ય મેટાપ્રોગ્રામિંગ માટે ઘોષણાત્મક મેક્રોઝ" વિભાગમાં ચર્ચા કરેલા મેચ-જેવા સિન્ટેક્સનો ઉપયોગ કરીને વ્યાખ્યાયિત કરી શકાય છે. કાર્ય-સમાન મેક્રોઝ `TokenStream` પરિમાણ લે છે, અને તેમની વ્યાખ્યા અન્ય બે પ્રકારના પ્રક્રિયાત્મક મેક્રોઝની જેમ Rust કોડનો ઉપયોગ કરીને તે `TokenStream` ને સંશોધિત કરે છે. કાર્ય-સમાન મેક્રોનું ઉદાહરણ એ `sql!` મેક્રો હોઈ શકે છે જે આ રીતે બોલાવવામાં આવી શકે છે:
-
-```rust
-```rust
-let sql = sql!(SELECT * FROM posts WHERE id=1);
-</code></pre>
-<pre><code>આ `macro` વિધાનની અંદર રહેલા SQL વિધાનનું વિશ્લેષણ કરશે અને ચકાસણી કરશે કે તે વાક્યરચનાની દૃષ્ટિએ સાચું છે, જે `macro_rules!` `macro` કરી શકે તેના કરતાં વધુ જટિલ પ્રક્રિયા છે. `sql!` `macro` આ રીતે વ્યાખ્યાયિત કરવામાં આવશે:
-
-```rust
-```rust
-#[proc_macro]
-</code></pre>
-<pre><code>pub fn sql(input: TokenStream) -&gt; TokenStream {
-આ વ્યાખ્યા કસ્ટમ `derive` મેક્રોના સ્વરૂપ જેવી જ છે: આપણને કૌંસની અંદર રહેલા ટોકન્સ મળે છે અને આપણે જે કોડ ઉત્પન્ન કરવા માંગીએ છીએ તે પાછો આપીએ છીએ.
-
-## Summary
-
-હમ્મ! હવે તમારી પાસે કેટલાક Rust લક્ષણો તમારા સાધન ભંડારમાં છે જેનો તમે કદાચ વારંવાર ઉપયોગ નહીં કરો, પરંતુ તમને ખબર હશે કે તે ખૂબ જ ચોક્કસ સંજોગોમાં ઉપલબ્ધ છે. અમે ઘણા જટિલ વિષયો રજૂ કર્યા છે જેથી જ્યારે તમે તેમને ભૂલ સંદેશ સૂચનો અથવા અન્ય લોકોના કોડમાં જોશો, ત્યારે તમે આ વિભાવનાઓ અને વાક્યરચનાને ઓળખી શકશો. ઉકેલો શોધવા માટે આ પ્રકરણનો સંદર્ભ તરીકે ઉપયોગ કરો.
-
-આગળ, અમે પુસ્તકમાં ચર્ચા કરેલી બધી બાબતોને વ્યવહારમાં મૂકીશું અને એક વધુ પ્રોજેક્ટ કરીશું!
-
-</code></pre>
+<p>Listing 20-37 ને src/main.rs માં મૂકો, અને <code>cargo run</code> ચલાવો: એ <code>Hello, Macro! My name is Pancakes!</code> છાપવું જોઈએ. પ્રક્રિયાત્મક મેક્રોમાંથી <code>HelloMacro</code> ટ્રેઇટનું અમલીકરણ <code>pancakes</code> ક્રેટે તેને અમલમાં મૂક્યા વિના જ ઉમેરવામાં આવ્યું હતું; <code>#[derive(HelloMacro)]</code> એ ટ્રેઇટ અમલીકરણ ઉમેર્યું હતું.</p>
+<p>આગળ, ચાલો જોઈએ કે અન્ય પ્રકારના પ્રક્રિયાત્મક મેક્રો કસ્ટમ <code>derive</code> મેક્રોથી કેવી રીતે અલગ પડે છે.</p>
+<h3 id="attribute-like-macros"><a class="header" href="#attribute-like-macros">Attribute-Like Macros</a></h3>
+<p>લક્ષણ-સમાન મેક્રો કસ્ટમ <code>derive</code> મેક્રો જેવા જ હોય છે, પરંતુ <code>derive</code> લક્ષણ માટે કોડ ઉત્પન્ન કરવાને બદલે, તે તમને નવા લક્ષણો બનાવવાની મંજૂરી આપે છે. તે વધુ લવચીક પણ છે: <code>derive</code> માત્ર struct અને enums માટે જ કામ કરે છે; લક્ષણો અન્ય વસ્તુઓ પર લાગુ કરી શકાય છે, જેમ કે ફંક્શન. વેબ એપ્લિકેશન ફ્રેમવર્કનો ઉપયોગ કરતી વખતે <code>route</code> નામનું લક્ષણ ધરાવતા મેક્રો-સમાનના ઉપયોગનું ઉદાહરણ અહીં આપેલું છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[route(GET, "/")]
+<span class="boring">}</span></code></pre>
+<p>fn index() {
+આ <code>#[route]</code> લક્ષણ ફ્રેમવર્ક દ્વારા પ્રક્રિયાત્મક મેક્રો તરીકે વ્યાખ્યાયિત કરવામાં આવશે. મેક્રો વ્યાખ્યાન કાર્યનું સ્વરૂપ આ પ્રમાણે હશે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[proc_macro_attribute]
+<span class="boring">}</span></code></pre>
+<p>pub fn route(attr: TokenStream, item: TokenStream) -&gt; TokenStream {
+અહીં, આપણી પાસે <code>TokenStream</code> પ્રકારના બે પરિમાણો છે. પહેલો એટ્રિબ્યુટની સામગ્રી માટે છે: <code>GET, "/"</code> ભાગ. બીજો એ આઇટમનો ભાગ છે જેના પર એટ્રિબ્યુટ જોડાયેલું છે: આ કિસ્સામાં, <code>fn index() {}</code> અને ફંક્શનના બાકીના ભાગો.</p>
+<p>આ ઉપરાંત, એટ્રિબ્યુટ જેવી મેક્રોઝ કસ્ટમ <code>derive</code> મેક્રોઝની જેમ જ કાર્ય કરે છે: તમે <code>proc-macro</code> ક્રેટ પ્રકાર સાથે એક ક્રેટ બનાવો છો અને એક ફંક્શનનો અમલ કરો છો જે તમને જોઈતો કોડ ઉત્પન્ન કરે છે!</p>
+<h3 id="function-like-macros"><a class="header" href="#function-like-macros">Function-Like Macros</a></h3>
+<p>કાર્ય-સમાન મેક્રોઝ એવા મેક્રો વ્યાખ્યાયિત કરે છે જે ફંક્શન કૉલ્સ જેવા દેખાય છે. <code>macro_rules!</code> મેક્રોઝની જેમ, તે ફંક્શન્સ કરતાં વધુ લવચીક હોય છે; ઉદાહરણ તરીકે, તેઓ અજ્ઞાત સંખ્યામાં Argumentો લઈ શકે છે. જો કે, <code>macro_rules!</code> મેક્રોઝને માત્ર આપણે “સામાન્ય મેટાપ્રોગ્રામિંગ માટે ઘોષણાત્મક મેક્રોઝ” વિભાગમાં ચર્ચા કરેલા મેચ-જેવા સિન્ટેક્સનો ઉપયોગ કરીને વ્યાખ્યાયિત કરી શકાય છે. કાર્ય-સમાન મેક્રોઝ <code>TokenStream</code> પરિમાણ લે છે, અને તેમની વ્યાખ્યા અન્ય બે પ્રકારના પ્રક્રિયાત્મક મેક્રોઝની જેમ Rust કોડનો ઉપયોગ કરીને તે <code>TokenStream</code> ને સંશોધિત કરે છે. કાર્ય-સમાન મેક્રોનું ઉદાહરણ એ <code>sql!</code> મેક્રો હોઈ શકે છે જે આ રીતે બોલાવવામાં આવી શકે છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let sql = sql!(SELECT * FROM posts WHERE id=1);
+<span class="boring">}</span></code></pre>
+<p>આ <code>macro</code> વિધાનની અંદર રહેલા SQL વિધાનનું વિશ્લેષણ કરશે અને ચકાસણી કરશે કે તે વાક્યરચનાની દૃષ્ટિએ સાચું છે, જે <code>macro_rules!</code> <code>macro</code> કરી શકે તેના કરતાં વધુ જટિલ પ્રક્રિયા છે. <code>sql!</code> <code>macro</code> આ રીતે વ્યાખ્યાયિત કરવામાં આવશે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[proc_macro]
+<span class="boring">}</span></code></pre>
+<p>pub fn sql(input: TokenStream) -&gt; TokenStream {
+આ વ્યાખ્યા કસ્ટમ <code>derive</code> મેક્રોના સ્વરૂપ જેવી જ છે: આપણને કૌંસની અંદર રહેલા ટોકન્સ મળે છે અને આપણે જે કોડ ઉત્પન્ન કરવા માંગીએ છીએ તે પાછો આપીએ છીએ.</p>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>હમ્મ! હવે તમારી પાસે કેટલાક Rust લક્ષણો તમારા સાધન ભંડારમાં છે જેનો તમે કદાચ વારંવાર ઉપયોગ નહીં કરો, પરંતુ તમને ખબર હશે કે તે ખૂબ જ ચોક્કસ સંજોગોમાં ઉપલબ્ધ છે. અમે ઘણા જટિલ વિષયો રજૂ કર્યા છે જેથી જ્યારે તમે તેમને ભૂલ સંદેશ સૂચનો અથવા અન્ય લોકોના કોડમાં જોશો, ત્યારે તમે આ વિભાવનાઓ અને વાક્યરચનાને ઓળખી શકશો. ઉકેલો શોધવા માટે આ પ્રકરણનો સંદર્ભ તરીકે ઉપયોગ કરો.</p>
+<p>આગળ, અમે પુસ્તકમાં ચર્ચા કરેલી બધી બાબતોને વ્યવહારમાં મૂકીશું અને એક વધુ પ્રોજેક્ટ કરીશું!</p>
 
                     </main>
 
@@ -495,6 +420,7 @@ let sql = sql!(SELECT * FROM posts WHERE id=1);
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

@@ -2,18 +2,20 @@
 
 હવે આપણે `file_path` Argument માં દર્શાવેલ ફાઇલ વાંચવા માટે કાર્યક્ષમતા ઉમેરીશું. પ્રથમ, આપણને ચકાસણી માટે એક નમૂના ફાઇલની જરૂર છે: અમે એક એવી ફાઇલનો ઉપયોગ કરીશું જેમાં થોડી માત્રામાં અનેક લીટીઓ સાથે કેટલાક પુનરાવર્તિત શબ્દો હોય. યાદી 12-3 માં એલિઝાબેથ ડિકિન્સનની કવિતા છે જે સારી રીતે કામ કરશે! તમારી યોજનાના મૂળ સ્તર પર poem.txt નામની ફાઇલ બનાવો, અને "હું કોઈ નથી! તમે કોણ છો?" કવિતા દાખલ કરો.
 
-<Listing number="12-3" file-name="poem.txt" caption="A poem by Emily Dickinson makes a good test case.">
+**Listing 12-3: A poem by Emily Dickinson makes a good test case.**
+
 ```text
 {{#include ../listings/ch12-an-io-project/listing-12-03/poem.txt}}
 ```
-</Listing>
+
 સ્થાનમાં લખાણ સાથે, src/main.rs ફાઈલને સંપાદિત કરો અને કોડ ઉમેરો જે ફાઈલ વાંચે, જેમ કે સૂચિ ૧૨-૪ માં દર્શાવેલ છે.
 
-<Listing number="12-4" file-name="src/main.rs" caption="Reading the contents of the file specified by the second argument">
+**Listing 12-4: Reading the contents of the file specified by the second argument**
+
 ```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-04/src/main.rs:here}}
 ```
-</Listing>
+
 પ્રથમ, આપણે પ્રમાણિત લાયબ્રેરીનો એક મહત્વપૂર્ણ ભાગ `use` વિધાન સાથે લાવીએ છીએ: આપણે ફાઇલોને નિયંત્રિત કરવા માટે `std::fs` ની જરૂર છે.
 
 `main` માં, નવું વિધાન `fs::read_to_string`  `file_path` લે છે, તે ફાઇલ ખોલે છે અને `std::io::Result<String>` પ્રકારનું મૂલ્ય પરત કરે છે જેમાં ફાઇલની સામગ્રી હોય છે.

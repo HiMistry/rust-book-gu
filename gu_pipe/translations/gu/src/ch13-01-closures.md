@@ -10,11 +10,12 @@ Rustના ક્લોઝર્સ અનામી ફંક્શન્સ છ
 
 અહીં અમુક રીતો છે જેનાથી આ કરી શકાય છે. આ ઉદાહરણ માટે, આપણે `ShirtColor` નામનું એક enum વાપરવા જઈ રહ્યા છીએ જેમાં `Red` અને `Blue` પ્રકારો છે (ઉપલબ્ધ રંગોની સંખ્યાને સરળતા માટે મર્યાદિત કરે છે). આપણે કંપનીના ઇન્વેન્ટરીને `Inventory` struct વડે દર્શાવીએ છીએ જેમાં `shirts` નામનું ક્ષેત્ર છે જે `Vec<ShirtColor>` ધરાવે છે, જે વર્તમાનમાં સ્ટોકમાં રહેલા શર્ટના રંગોનું પ્રતિનિધિત્વ કરે છે. `Inventory` પર વ્યાખ્યાયિત થયેલ `giveaway` પદ્ધતિ, મફત શર્ટ વિજેતાની વૈકલ્પિક શર્ટ રંગ પસંદગી મેળવે છે અને તે વ્યક્તિને કયો રંગ મળશે તે શર્ટ રંગ આપે છે. આ સેટઅપ લિસ્ટિંગ 13-1 માં દર્શાવવામાં આવ્યું છે.
 
-<Listing number="13-1" file-name="src/main.rs" caption="Shirt company giveaway situation">
+**Listing 13-1: Shirt company giveaway situation**
+
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-01/src/main.rs}}
 ```
-</Listing>
+
 `store` જે `main` માં વ્યાખ્યાયિત થયેલ છે, તેમાં બે વાદળી શર્ટ અને એક લાલ શર્ટ બાકી રહ્યા છે, જે આ મર્યાદિત આવૃત્તિના પ્રમોશન માટે વિતરિત કરવાના છે. અમે `giveaway` પદ્ધતિને એવા user માટે બોલાવીએ છીએ જેને લાલ શર્ટની પસંદગી હોય અને બીજા user માટે જેને કોઈ પસંદગી ન હોય.
 
 ફરીથી, આ કોડને ઘણી રીતે અમલમાં મૂકી શકાય છે, અને અહીં, ક્લોઝર પર ધ્યાન કેન્દ્રિત કરવા માટે, અમે એવા ખ્યાલોને વળગી રહ્યા છીએ જે તમે પહેલાથી જ શીખ્યા છો, સિવાય કે `giveaway` પદ્ધતિના મુખ્ય ભાગમાં ક્લોઝરનો ઉપયોગ થાય છે. `giveaway` પદ્ધતિમાં, અમને userની પસંદગી `Option<ShirtColor>` પ્રકારની પેરામીટર તરીકે મળે છે અને `user_preference` પર `unwrap_or_else` પદ્ધતિને બોલાવીએ છીએ. `Option<T>` પર `unwrap_or_else` પદ્ધતિ પ્રમાણભૂત લાયબ્રેરી દ્વારા વ્યાખ્યાયિત થયેલ છે. તે એક Argument લે છે: કોઈ Argumentો વિનાનું ક્લોઝર જે મૂલ્ય `T` (જે પ્રકાર `Option<T>` ના `Some` ભિન્નતામાં સંગ્રહિત છે, આ કિસ્સામાં `ShirtColor`) પરત કરે છે. જો `Option<T>` એ `Some` ભિન્નતા હોય, તો `unwrap_or_else` `Some` ની અંદરથી મૂલ્ય પરત કરે છે. જો `Option<T>` એ `None` ભિન્નતા હોય, તો `unwrap_or_else` ક્લોઝરને બોલાવે છે અને ક્લોઝર દ્વારા પરત કરવામાં આવેલ મૂલ્ય પરત કરે છે.
@@ -37,11 +38,12 @@ Rustના ક્લોઝર્સ અનામી ફંક્શન્સ છ
 
 variable's જેમ, આપણે પ્રકારની નોંધણીઓ ઉમેરી શકીએ છીએ જો આપણે વધુ સ્પષ્ટતા અને ચોક્સાઈ વધારવા માંગતા હોઈએ, પરંતુ તે જરૂરી કરતાં વધુ વર્ણનાત્મક બની શકે છે. ક્લોઝર માટે પ્રકારોની નોંધણી આ રીતે દેખાશે જે વ્યાખ્યા Listing 13-2 માં દર્શાવવામાં આવી છે. આ ઉદાહરણમાં, અમે એક ક્લોઝરને વ્યાખ્યાયિત કરી રહ્યા છીએ અને તેને એક variable સંગ્રહિત કરી રહ્યા છીએ, જેમ કે અમે Listing 13-1 માં કર્યું હતું તેમ, Argument તરીકે પાસ કરીએ તે જગ્યાએ.
 
-<Listing number="13-2" file-name="src/main.rs" caption="Adding optional type annotations of the parameter and return value types in the closure">
+**Listing 13-2: Adding optional type annotations of the parameter and return value types in the closure**
+
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-02/src/main.rs:here}}
 ```
-</Listing>
+
 ટાઈપ નોંધણીઓ ઉમેર્યા પછી, ક્લોઝર્સનું વાક્યરચના કાર્યોની વાક્યરચના જેવું જ લાગે છે. અહીં, અમે એક કાર્ય વ્યાખ્યાયિત કરીએ છીએ જે તેના પરિમાણમાં 1 ઉમેરે છે અને એક ક્લોઝર કે જેનું વર્તન એવું જ હોય, સરખામણી માટે. અમે સંબંધિત ભાગોને ગોઠવવા માટે થોડી જગ્યાઓ ઉમેરી છે. આ દર્શાવે છે કે ક્લોઝર વાક્યરચના કાર્ય વાક્યરચના જેવી જ છે, પાઇપ્સના ઉપયોગ અને વૈકલ્પિક વાક્યરચનાની માત્રા સિવાય.
 
 ```rust
@@ -54,11 +56,12 @@ let add_one_v4 = |x|               x + 1  ;
 
 ક્લોઝર વ્યાખ્યાઓ માટે, કમ્પાઇલર દરેક પરિમાણ અને તેમના પરત થતા મૂલ્ય માટે એક નક્કર પ્રકારનો અનુમાન કરશે. ઉદાહરણ તરીકે, યાદી 13-3 એક ટૂંકા ક્લોઝરની વ્યાખ્યા દર્શાવે છે જે માત્ર તે મૂલ્ય પરત કરે છે જે તેને પરિમાણ તરીકે મળે છે. આ ક્લોઝર આ ઉદાહરણના હેતુઓ સિવાય બહુ ઉપયોગી નથી. નોંધ કરો કે અમે વ્યાખ્યામાં કોઈ પ્રકારના અર્થઘટન ઉમેર્યા નથી. પ્રકારના અર્થઘટનની ગેરહાજરીને કારણે, અમે કોઈપણ પ્રકાર સાથે ક્લોઝરને બોલાવી શકીએ છીએ, જે આપણે અહીં `String` સાથે પ્રથમ વખત કર્યું છે. જો આપણે પછીથી પૂર્ણાંક સાથે `example_closure` બોલવાનો પ્રયાસ કરીએ, તો આપણને ભૂલ મળશે.
 
-<Listing number="13-3" file-name="src/main.rs" caption="Attempting to call a closure whose types are inferred with two different types">
+**Listing 13-3: Attempting to call a closure whose types are inferred with two different types**
+
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-03/src/main.rs:here}}
 ```
-</Listing>
+
 The compiler gives us this error: સમ્પાઈલર આપણને આ ભૂલ આપે છે:
 
 ```console
@@ -72,11 +75,12 @@ The compiler gives us this error: સમ્પાઈલર આપણને આ �
 
 લિસ્ટિંગ 13-4 માં, અમે એક ક્લોઝર વ્યાખ્યાયિત કરીએ છીએ જે વેક્ટર `list` ના અમુટબલ રેફરન્સને મેળવે છે કારણ કે તેને મૂલ્ય છાપવા માટે માત્ર અમુટબલ રેફરન્સની જરૂર હોય છે.
 
-<Listing number="13-4" file-name="src/main.rs" caption="Defining and calling a closure that captures an immutable reference">
+**Listing 13-4: Defining and calling a closure that captures an immutable reference**
+
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-04/src/main.rs}}
 ```
-</Listing>
+
 આ ઉદાહરણ એ પણ દર્શાવે છે કે એક variable બંધારણ (closure) ની વ્યાખ્યા સાથે જોડાઈ શકે છે, અને પછીથી આપણે variable's નામનો ઉપયોગ કરીને કૌંસ મૂકીને બંધારણને બોલાવી શકીએ છીએ જેમ કે ચલનું નામ કાર્યનું નામ હોય.
 
 કારણ કે આપણી પાસે `list` ના બહુવિધ અપરિવર્તનશીલ સંદર્ભો (references) એકસાથે હોઈ શકે છે, `list` એ બંધારણની વ્યાખ્યા પહેલાંના કોડમાંથી પણ સુલભ (accessible) છે, બંધારણની વ્યાખ્યા પછી પરંતુ બંધારણ બોલાવવામાં આવે તે પહેલાં, અને બંધારણ બોલાવ્યા પછી. આ કોડ સંકલિત (compiles), ચલાવે છે, અને છાપે છે:
@@ -86,11 +90,12 @@ The compiler gives us this error: સમ્પાઈલર આપણને આ �
 ```
 આગળ, સૂચિ ૧૩-૫ માં, અમે ક્લોઝરના મુખ્ય ભાગને બદલીએ છીએ જેથી તે `list` વેક્ટર માં એક ઘટક ઉમેરે. હવે ક્લોઝર એક પરિવર્તનશીલ સંદર્ભને ગ્રહણ કરે છે.
 
-<Listing number="13-5" file-name="src/main.rs" caption="Defining and calling a closure that captures a mutable reference">
+**Listing 13-5: Defining and calling a closure that captures a mutable reference**
+
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-05/src/main.rs}}
 ```
-</Listing>
+
 આ કોડ સંકલન પામે છે, ચલાય છે અને છાપે છે:
 
 ```console
@@ -102,11 +107,12 @@ The compiler gives us this error: સમ્પાઈલર આપણને આ �
 
 આ પદ્ધતિ મોટાભાગે એક નવા થ્રેડમાં બંધ થવાને પસાર કરતી વખતે ઉપયોગી છે જેથી ડેટાને ખસેડી શકાય અને તે નવા થ્રેડની માલિકીમાં હોય. આપણે પ્રકરણ 16 માં, જ્યારે આપણે સમવર્ણન (concurrency) વિશે વાત કરીશું ત્યારે થ્રેડો અને શા માટે તમે તેનો ઉપયોગ કરવા માંગો છો તેના વિશે વિગતવાર ચર્ચા કરીશું, પરંતુ અત્યારે, ચાલો એક નવા થ્રેડને જન્મ આપવાનું સંક્ષિપ્તમાં અન્વેષણ કરીએ જે `move` કીવર્ડની જરૂર હોય તેવા બંધ થવા સાથે. યાદી 13-6 દર્શાવે છે કે યાદી 13-4 ને મુખ્ય થ્રેડને બદલે નવા થ્રેડમાં વેક્ટર છાપવા માટે સુધારેલ છે.
 
-<Listing number="13-6" file-name="src/main.rs" caption="Using `move` to force the closure for the thread to take ownership of `list`">
+**Listing 13-6: Using `move` to force the closure for the thread to take ownership of `list`**
+
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-06/src/main.rs}}
 ```
-</Listing>
+
 અમે એક નવું થ્રેડ શરૂ કરીએ છીએ, અને થ્રેડને ચલાવવા માટે એક ક્લોઝર (closure) Argument તરીકે આપીએ છીએ. ક્લોઝર ભાગ યાદી છાપે છે. યાદીંગ ૧૩-૪ માં, ક્લોઝરે માત્ર `list` ને બદલાતી ન હોય તેવી સંદર્ભ (reference) દ્વારા જ મેળવ્યું હતું, કારણ કે તેને છાપવા માટે `list` ની જેટલી ઓછી ઍક્સેસ (access) જોઈતી હતી. આ ઉદાહરણમાં, ભલે ક્લોઝર ભાગને હજી પણ બદલાતી ન હોય તેવી સંદર્ભની જરૂર હોય, આપણે સ્પષ્ટ કરવું જોઈએ કે `list` ને ક્લોઝરમાં ખસેડવું જોઈએ, અને તે માટે ક્લોઝર વ્યાખ્યાની શરૂઆતમાં `move` કીવર્ડ મૂકવો જોઈએ. જો મુખ્ય થ્રેડે `join` ને નવા થ્રેડ પર બોલાવતા પહેલાં વધુ કામગીરી કરી હોત, તો નવો થ્રેડ બાકીના મુખ્ય થ્રેડ કરતાં પહેલાં પૂરો થઈ શકતો હતો, અથવા મુખ્ય થ્રેડ પ્રથમ પૂરો થઈ શકતો હતો. જો મુખ્ય થ્રેડે `list` નું માલિકી જાળવી રાખ્યું હોત અને તે નવા થ્રેડ પહેલાં સમાપ્ત થઈ ગયો હોત અને `list` ને છોડી દેતો, તો થ્રેડમાં રહેલો બદલાતી ન હોય તેવી સંદર્ભ અમાન્ય બની ગયો હોત. તેથી, કમ્પાઇલર (compiler) આવશ્યક કરે છે કે `list` ને નવા થ્રેડને આપેલા ક્લોઝરમાં ખસેડવામાં આવે જેથી સંદર્ભ માન્ય રહે. પ્રયત્ન કરો કે `move` કીવર્ડ દૂર કરો અથવા ક્લોઝર વ્યાખ્યા પછી મુખ્ય થ્રેડમાં `list` નો ઉપયોગ કરો અને જુઓ કે તમને કયા કમ્પાઇલર ભૂલો મળે છે!
 
 <!-- Old headings. Do not remove or links may break. -->
@@ -149,11 +155,12 @@ impl<T> Option<T> {
 
 હવે ચાલો સ્ટાન્ડર્ડ લાઈબ્રેરી પદ્ધતિ `sort_by_key` જોઈએ, જે સ્લાઇસ પર વ્યાખ્યાયિત થયેલ છે, તે `unwrap_or_else` થી કેવી રીતે અલગ પડે છે અને શા માટે `sort_by_key` ટ્રેઇટ બાઉન્ડ માટે `FnOnce` ને બદલે `FnMut` વાપરે છે. ક્લોઝરને એક Argument મળે છે જે સ્લાઇસમાં હાલની વસ્તુનો સંદર્ભ (reference) સ્વરૂપે હોય છે, અને તે પ્રકાર `K` નું મૂલ્ય આપે છે જેને ક્રમબદ્ધ કરી શકાય છે. આ વિધેય ત્યારે ઉપયોગી છે જ્યારે તમે કોઈ ચોક્કસ લક્ષણ દ્વારા સ્લાઇસને ક્રમબદ્ધ કરવા માંગો છો. યાદી 13-7 માં, આપણી પાસે `Rectangle` ઉદાહરણોની યાદી છે, અને અમે તેમની `width` લક્ષણને નીચલાથી ઊંચા ક્રમમાં ગોઠવવા માટે `sort_by_key` નો ઉપયોગ કરીએ છીએ.
 
-<Listing number="13-7" file-name="src/main.rs" caption="Using `sort_by_key` to order rectangles by width">
+**Listing 13-7: Using `sort_by_key` to order rectangles by width**
+
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-07/src/main.rs}}
 ```
-</Listing>
+
 આ કોડ છાપે છે:
 
 ```console
@@ -163,11 +170,12 @@ impl<T> Option<T> {
 
 બીજી બાજુ, યાદી ૧૩-૮ એવા ક્લોઝરનું ઉદાહરણ દર્શાવે છે જે માત્ર `FnOnce` ટ્રેઇટનો અમલ કરે છે, કારણ કે તે પર્યાવરણમાંથી એક મૂલ્ય ખસેડે છે. કમ્પાઇલર આપણને આ ક્લોઝરને `sort_by_key` સાથે વાપરવા દેશે નહીં.
 
-<Listing number="13-8" file-name="src/main.rs" caption="Attempting to use an `FnOnce` closure with `sort_by_key`">
+**Listing 13-8: Attempting to use an `FnOnce` closure with `sort_by_key`**
+
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-08/src/main.rs}}
 ```
-</Listing>
+
 આ એક કૃત્રિમ, જટિલ રીત (જે કામ કરતું નથી) છે, જે `sort_by_key` ક્લોઝરને કેટલી વાર બોલાવે છે તે ગણવાનો પ્રયાસ કરે છે જ્યારે `list` ને સૉર્ટ કરવામાં આવે છે. આ કોડ `sort_operations` વેક્ટર માંથી ક્લોઝરના પર્યાવરણમાંથી `value` —એક `String`—ને ધકેલીને આ ગણતરી કરવાનો પ્રયાસ કરે છે. ક્લોઝર `value` ને કેપ્ચર કરે છે અને પછી `value` નું માલિકી `sort_operations` વેક્ટરને ટ્રાન્સફર કરીને ક્લોઝરમાંથી `value` ને બહાર ખસેડે છે. આ ક્લોઝરને એકવાર જ બોલાવી શકાય છે; બીજી વાર બોલવાનો પ્રયાસ કરવાથી તે કામ નહીં કરે, કારણ કે `value` હવે `sort_operations` માં ધકેલવા માટે પર્યાવરણમાં રહેશે નહીં! તેથી, આ ક્લોઝર માત્ર `FnOnce` લાગુ કરે છે. જ્યારે આપણે આ કોડને કમ્પાઇલ કરવાનો પ્રયાસ કરીએ છીએ, ત્યારે આપણને આ ભૂલ મળે છે કે `value` ને ક્લોઝરમાંથી ખસેડી શકાતું નથી કારણ કે ક્લોઝરે `FnMut` લાગુ કરવું આવશ્યક છે:
 
 ```console
@@ -175,11 +183,12 @@ impl<T> Option<T> {
 ```
 ભૂલ બંધારણને બંધારણના શરીરમાં રહેલી રેખા તરફ નિર્દેશ કરે છે જે `value` ને પર્યાવરણમાંથી ખસેડે છે. આને સુધારવા માટે, આપણે બંધારણના શરીરને એવી રીતે બદલવું પડશે કે તે પર્યાવરણમાંથી મૂલ્યોને ખસેડતું ન હોય. પર્યાવરણમાં એક કાઉન્ટર રાખવું અને બંધારણના શરીરમાં તેની કિંમત વધારવી એ બંધારણને કેટલી વખત બોલાવવામાં આવે છે તેની ગણતરી કરવાની વધુ સરળ રીત છે. યાદી 13-9 માં બંધારણ `sort_by_key` સાથે કામ કરે છે કારણ કે તે માત્ર `num_sort_operations` કાઉન્ટરનો પરિવર્તનશીલ સંદર્ભ મેળવે છે અને તેથી તેને એક કરતાં વધુ વખત બોલાવી શકાય છે.
 
-<Listing number="13-9" file-name="src/main.rs" caption="Using an `FnMut` closure with `sort_by_key` is allowed.">
+**Listing 13-9: Using an `FnMut` closure with `sort_by_key` is allowed.**
+
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-09/src/main.rs}}
 ```
-</Listing>
+
 The `Fn` Traits `Fn` લક્ષણો કાર્યો અથવા પ્રકારો વ્યાખ્યાયિત કરતી વખતે અથવા તેનો ઉપયોગ કરતી વખતે મહત્વપૂર્ણ છે જે ક્લોઝરનો ઉપયોગ કરે છે. આગલા વિભાગમાં, આપણે ઇટરેટરની ચર્ચા કરીશું. ઘણા ઇટરેટર પદ્ધતિઓ ક્લોઝર Argumentો લે છે, તેથી આગળ વધતા આ ક્લોઝર વિગતો ધ્યાનમાં રાખો!
 
 

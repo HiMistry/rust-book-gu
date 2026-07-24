@@ -8,11 +8,12 @@
 
 ચાલો એક ઉદાહરણ જોઈએ કે શું થાય છે જ્યારે આપણે એક વિવાદાસ્પદ પેટર્નનો ઉપયોગ કરવાનો પ્રયત્ન કરીએ છીએ જ્યાં Rust ને અવિવાદાસ્પદ પેટર્નની જરૂર હોય છે અને ઊલટું. સૂચિ ૧૯-૮ માં એક `let` વિધાન દર્શાવેલું છે, પરંતુ પેટર્ન માટે, આપણે `Some(x)` , એક વિવાદાસ્પદ પેટર્ન નિર્દિષ્ટ કરી છે. તમે અપેક્ષા રાખી શકો તેમ, આ કોડ કમ્પાઇલ થશે નહીં.
 
-<Listing number="19-8" caption="Attempting to use a refutable pattern with `let`">
+**Listing 19-8: Attempting to use a refutable pattern with `let`**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-08/src/main.rs:here}}
 ```
-</Listing>
+
 જો `some_option_value` એ `None` મૂલ્ય હોત, તો તે `Some(x)` પેટર્ન સાથે મેળ ખાતો ન હોત, જેનો અર્થ થાય છે કે પેટર્ન જૂઠાણીવાળી છે. જોકે, `let` વિધાન માત્ર અવિભાજ્ય પેટર્નને જ સ્વીકારી શકે છે કારણ કે `None` મૂલ્ય સાથે કોડ શું કરી શકે તેની કોઈ યોગ્ય બાબત નથી. કમ્પાઇલ સમય દરમિયાન, Rust ફરિયાદ કરશે કે અમે જૂઠાણીવાળી પેટર્નનો ઉપયોગ કરવાનો પ્રયાસ કર્યો છે જ્યાં અવિભાજ્ય પેટર્નની જરૂર છે:
 
 ```console
@@ -22,18 +23,20 @@
 
 કરે છે. જો આપણી પાસે એક અવિશ્વસનીય પેટર્ન હોય જ્યાં એક નિશ્ચિત પેટર્નની જરૂર હોય, તો અમે તેનો ઉકેલ કોડ બદલીને લાવી શકીએ છીએ જે પેટર્નનો ઉપયોગ કરે છે: `let` ને બદલે, અમે `let...else` નો ઉપયોગ કરી શકીએ છીએ. પછી, જો પેટર્ન મેળ ખાતી નથી, તો ચોકડી કૌંસમાં રહેલો કોડ મૂલ્યને સંભાળશે. સૂચિ 19-9 દર્શાવે છે કે સૂચિ 19-8 માં રહેલા કોડને કેવી રીતે સુધારવો.
 
-<Listing number="19-9" caption="Using `let...else` and a block with refutable patterns instead of `let`">
+**Listing 19-9: Using `let...else` and a block with refutable patterns instead of `let`**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-09/src/main.rs:here}}
 ```
-</Listing>
+
 આપણે કોડને એક બહારનો માર્ગ આપ્યો છે! આ કોડ સંપૂર્ણપણે યોગ્ય છે, જોકે તેનો અર્થ એ થાય છે કે આપણે ચેતવણી ન મળે તેવાં પેટર્નનો ઉપયોગ કરી શકતા નથી. જો આપણે `let...else` ને એવી પેટર્ન આપીએ જે હંમેશાં મેળ ખાય છે, જેમ કે `x`, જે યાદી 19-10 માં દર્શાવેલ છે, તો કમ્પાઇલર ચેતવણી આપશે.
 
-<Listing number="19-10" caption="Attempting to use an irrefutable pattern with `let...else`">
+**Listing 19-10: Attempting to use an irrefutable pattern with `let...else`**
+
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-10/src/main.rs:here}}
 ```
-</Listing>
+
 Rust ફરિયાદ કરે છે કે અસ્પષ્ટ પેટર્ન સાથે `let...else` વાપરવું તાર્કિક નથી:
 
 ```console

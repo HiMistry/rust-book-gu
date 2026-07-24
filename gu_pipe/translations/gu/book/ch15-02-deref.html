@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -189,148 +189,97 @@
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="following-the-reference-to-the-value"><a class="header" href="#following-the-reference-to-the-value">Following the Reference to the Value</a></h3>
 <p>એક સામાન્ય સંદર્ભ એ એક પ્રકારનો પોઇન્ટર છે, અને પોઇન્ટરને એક દિશા તરીકે વિચારી શકાય છે જે કોઈ અન્ય સ્થળે સંગ્રહિત મૂલ્ય તરફ નિર્દેશ કરે છે. લિસ્ટિંગ 15-6 માં, આપણે એક <code>i32</code> મૂલ્યનો સંદર્ભ બનાવીએ છીએ અને પછી સંદર્ભ દ્વારા મૂલ્યને અનુસરવા માટે ડિરેફરન્સ ઓપરેટરનો ઉપયોગ કરીએ છીએ.</p>
-<listing number="15-6" file-name="src/main.rs" caption="Using the dereference operator to follow a reference to an `i32` value">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-06/src/main.rs}}
-```
-```
-</listing>
-variable `x` માં `i32` મૂલ્ય `5` છે. અમે `y` ને `x` નો સંદર્ભ સમાન કરીએ છીએ. આપણે ખાતરી કરી શકીએ કે `x` એ `5` બરાબર છે. જો કે, જો આપણે `y` માં રહેલા મૂલ્ય વિશે કોઈ ખાતરી કરવા માંગતા હોઈએ, તો આપણે `*y` વાપરવું પડશે જેથી સંદર્ભને અનુસરી શકાય અને તે જે મૂલ્ય તરફ નિર્દેશ કરે છે તેને મેળવી શકાય (આથી, ડિરેફરન્સ). આમ, કમ્પાઇલર વાસ્તવિક મૂલ્યની તુલના કરી શકે. એકવાર આપણે `y` ને ડિરેફરન્સ કરીએ, પછી આપણી પાસે પૂર્ણાંક મૂલ્યની ઍક્સેસ હોય છે જે `y` નિર્દેશ કરે છે, જેને આપણે `5` સાથે સરખાવી શકીએ છીએ.
+<p><strong>Listing 15-6: Using the dereference operator to follow a reference to an <code>i32</code> value</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-06/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>variable <code>x</code> માં <code>i32</code> મૂલ્ય <code>5</code> છે. અમે <code>y</code> ને <code>x</code> નો સંદર્ભ સમાન કરીએ છીએ. આપણે ખાતરી કરી શકીએ કે <code>x</code> એ <code>5</code> બરાબર છે. જો કે, જો આપણે <code>y</code> માં રહેલા મૂલ્ય વિશે કોઈ ખાતરી કરવા માંગતા હોઈએ, તો આપણે <code>*y</code> વાપરવું પડશે જેથી સંદર્ભને અનુસરી શકાય અને તે જે મૂલ્ય તરફ નિર્દેશ કરે છે તેને મેળવી શકાય (આથી, ડિરેફરન્સ). આમ, કમ્પાઇલર વાસ્તવિક મૂલ્યની તુલના કરી શકે. એકવાર આપણે <code>y</code> ને ડિરેફરન્સ કરીએ, પછી આપણી પાસે પૂર્ણાંક મૂલ્યની ઍક્સેસ હોય છે જે <code>y</code> નિર્દેશ કરે છે, જેને આપણે <code>5</code> સાથે સરખાવી શકીએ છીએ.</p>
 <p>જો આપણે <code>assert_eq!(5, y);</code> લખવાનો પ્રયત્ન કર્યો હોત, તો આપણને આ કમ્પાઈલેશન ભૂલ મળતી હોત:</p>
-<pre><code class="language-console">```console
-{{#include ../listings/ch15-smart-pointers/output-only-01-comparing-to-reference/output.txt}}
+<pre><code class="language-console">{{#include ../listings/ch15-smart-pointers/output-only-01-comparing-to-reference/output.txt}}
 </code></pre>
-<pre><code>સંખ્યા અને સંખ્યાના સંદર્ભની સરખામણી કરવાની મંજૂરી નથી, કારણ કે તે બંને અલગ પ્રકારના છે. આપણે મૂલ્ય મેળવવા માટે સંદર્ભને અનુસરવા માટે ડિરેફરન્સ ઓપરેટરનો ઉપયોગ કરવો જોઈએ.
-
-### Using `Box&lt;T&gt;` Like a Reference
-
-આપણે યાદી ૧૫-૬ માંના કોડને `Box&lt;T&gt;` નો ઉપયોગ કરવા માટે ફરીથી લખી શકીએ છીએ, તેના બદલે સંદર્ભ; યાદી ૧૫-૭ માં `Box&lt;T&gt;` પર વપરાયેલ ડિરેફરન્સ ઓપરેટર, યાદી ૧૫-૬ માં સંદર્ભ પર વપરાયેલ ડિરેફરન્સ ઓપરેટરની જેમ જ કાર્ય કરે છે.
-
-&lt;Listing number="15-7" file-name="src/main.rs" caption="Using the dereference operator on a `Box&lt;i32&gt;`"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-07/src/main.rs}}
+<p>સંખ્યા અને સંખ્યાના સંદર્ભની સરખામણી કરવાની મંજૂરી નથી, કારણ કે તે બંને અલગ પ્રકારના છે. આપણે મૂલ્ય મેળવવા માટે સંદર્ભને અનુસરવા માટે ડિરેફરન્સ ઓપરેટરનો ઉપયોગ કરવો જોઈએ.</p>
+<h3 id="using-boxt-like-a-reference"><a class="header" href="#using-boxt-like-a-reference">Using <code>Box&lt;T&gt;</code> Like a Reference</a></h3>
+<p>આપણે યાદી ૧૫-૬ માંના કોડને <code>Box&lt;T&gt;</code> નો ઉપયોગ કરવા માટે ફરીથી લખી શકીએ છીએ, તેના બદલે સંદર્ભ; યાદી ૧૫-૭ માં <code>Box&lt;T&gt;</code> પર વપરાયેલ ડિરેફરન્સ ઓપરેટર, યાદી ૧૫-૬ માં સંદર્ભ પર વપરાયેલ ડિરેફરન્સ ઓપરેટરની જેમ જ કાર્ય કરે છે.</p>
+<p>`“&gt;</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-07/src/main.rs}}
+<span class="boring">}</span></code></pre>
+<p>મુખ્ય ભેદ આ છે કે Listing 15-7 અને Listing 15-6 વચ્ચે અહીં આપણે <code>y</code> ને એક બોક્સના ઉદાહરણ તરીકે સેટ કરીએ છીએ જે <code>x</code> ના નકલ કરેલા મૂલ્ય તરફ નિર્દેશ કરે છે, તેના બદલે <code>x</code> ના મૂલ્ય તરફ નિર્દેશ કરતા સંદર્ભ (reference). છેલ્લાં ખાતરીપત્રમાં, આપણે બોક્સના pointerને અનુસરવા માટે ડિરેફરન્સ ઓપરેટરનો ઉપયોગ કરી શકીએ છીએ જે રીતે આપણે કર્યું હતું જ્યારે <code>y</code> એક સંદર્ભ હતો. હવે પછી, આપણે <code>Box&lt;T&gt;</code> વિશેષતાની શોધ કરીશું કે જે આપણને ડિરેફરન્સ ઓપરેટરનો ઉપયોગ કરવાની સક્ષમ કરે છે, આપણી પોતાની બોક્સ પ્રકાર વ્યાખ્યાયિત કરીને.</p>
+<h3 id="defining-our-own-smart-pointer"><a class="header" href="#defining-our-own-smart-pointer">Defining Our Own Smart Pointer</a></h3>
+<p>ચાલો એક wrapper type બનાવીએ જે <code>Box&lt;T&gt;</code> પ્રકારની સમાન હોય, જે standard library દ્વારા આપવામાં આવે છે, જેથી સ્માર્ટ પોઇન્ટર પ્રકારો સંદર્ભોથી (references) કેવી રીતે અલગ વર્તે છે તેનો અનુભવ કરી શકાય. પછી, આપણે જોઈશું કે dereference ઓપરેટરનો ઉપયોગ કરવાની ક્ષમતા કેવી રીતે ઉમેરવી.</p>
+<p>નોંધ: <code>MyBox&lt;T&gt;</code> પ્રકાર અને વાસ્તવિક <code>Box&lt;T&gt;</code> વચ્ચે એક મોટું તફાવત છે જે આપણે ટૂંક સમયમાં બનાવીશું: આપણો વર્ઝન તેના ડેટાને heap પર સંગ્રહિત કરશે નહીં. અમે આ ઉદાહરણને <code>Deref</code> પર કેન્દ્રિત કરી રહ્યા છીએ, તેથી ડેટા ખરેખર ક્યાં સંગ્રહિત છે તે pointer-like વર્તન કરતાં ઓછું મહત્વનું છે.</p>
+<p><code>Box&lt;T&gt;</code> પ્રકારની વ્યાખ્યા <code>Box&lt;T&gt;</code> પ્રકાર આખરે એક ઘટક સાથેના ટ્યૂપ સ્ટ્રક્ચર તરીકે વ્યાખ્યાયિત થયેલ છે, તેથી સૂચિ ૧૫-૮ <code>MyBox&lt;T&gt;</code> પ્રકારને એ જ રીતે વ્યાખ્યાયિત કરે છે. અમે <code>new</code> ફંક્શનને પણ વ્યાખ્યાયિત કરીશું જે <code>Box&lt;T&gt;</code> પર વ્યાખ્યાયિત <code>new</code> ફંક્શન સાથે મેળ ખાય છે.</p>
+<p>` type“&gt;</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-08/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આપણે <code>MyBox</code> નામનું struct વ્યાખ્યાયિત કરીએ છીએ અને એક સામાન્ય પરિમાણ <code>T</code> જાહેર કરીએ છીએ કારણ કે આપણે આપણી type ને કોઈપણ પ્રકારના મૂલ્યો ધરાવવાનું છે. <code>MyBox</code> type એ એક tuple struct છે જેમાં <code>T</code> પ્રકારનો એક ઘટક છે. <code>MyBox::new</code> function એક <code>T</code> પ્રકારનું પરિમાણ લે છે અને <code>MyBox</code> instance પરત કરે છે જે પાસ કરેલા મૂલ્યને સમાવે છે. Let’s try adding the <code>main</code> function in Listing 15-7 to Listing 15-8 and changing it to use the</p>
+<p>ચાલો Listing 15-7 માં <code>main</code> function ને Listing 15-8 માં ઉમેરવાનો પ્રયાસ કરીએ અને તેને <code>MyBox&lt;T&gt;</code> type નો ઉપયોગ કરવા માટે બદલીએ જે આપણે વ્યાખ્યાયિત કર્યું છે, <code>Box&lt;T&gt;</code> ને બદલે. Listing 15-9 માં રહેલો code compile થશે નહીં, કારણ કે Rust ને ખબર નથી કે <code>MyBox</code> ને કેવી રીતે dereference કરવું.</p>
+<p><code>in the same way we used references and</code>Box<t>`“&gt;</t></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-09/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અહીં પરિણામી કમ્પાઈલ એરર છે:</p>
+<pre><code class="language-console">{{#include ../listings/ch15-smart-pointers/listing-15-09/output.txt}}
 </code></pre>
-<pre><code>&lt;/Listing&gt;
-મુખ્ય ભેદ આ છે કે Listing 15-7 અને Listing 15-6 વચ્ચે અહીં આપણે `y` ને એક બોક્સના ઉદાહરણ તરીકે સેટ કરીએ છીએ જે `x` ના નકલ કરેલા મૂલ્ય તરફ નિર્દેશ કરે છે, તેના બદલે `x` ના મૂલ્ય તરફ નિર્દેશ કરતા સંદર્ભ (reference). છેલ્લાં ખાતરીપત્રમાં, આપણે બોક્સના pointerને અનુસરવા માટે ડિરેફરન્સ ઓપરેટરનો ઉપયોગ કરી શકીએ છીએ જે રીતે આપણે કર્યું હતું જ્યારે `y` એક સંદર્ભ હતો. હવે પછી, આપણે `Box&lt;T&gt;` વિશેષતાની શોધ કરીશું કે જે આપણને ડિરેફરન્સ ઓપરેટરનો ઉપયોગ કરવાની સક્ષમ કરે છે, આપણી પોતાની બોક્સ પ્રકાર વ્યાખ્યાયિત કરીને.
-
-### Defining Our Own Smart Pointer
-
-ચાલો એક wrapper type બનાવીએ જે `Box&lt;T&gt;` પ્રકારની સમાન હોય, જે standard library દ્વારા આપવામાં આવે છે, જેથી સ્માર્ટ પોઇન્ટર પ્રકારો સંદર્ભોથી (references) કેવી રીતે અલગ વર્તે છે તેનો અનુભવ કરી શકાય. પછી, આપણે જોઈશું કે dereference ઓપરેટરનો ઉપયોગ કરવાની ક્ષમતા કેવી રીતે ઉમેરવી.
-
-નોંધ: `MyBox&lt;T&gt;` પ્રકાર અને વાસ્તવિક `Box&lt;T&gt;` વચ્ચે એક મોટું તફાવત છે જે આપણે ટૂંક સમયમાં બનાવીશું: આપણો વર્ઝન તેના ડેટાને heap પર સંગ્રહિત કરશે નહીં. અમે આ ઉદાહરણને `Deref` પર કેન્દ્રિત કરી રહ્યા છીએ, તેથી ડેટા ખરેખર ક્યાં સંગ્રહિત છે તે pointer-like વર્તન કરતાં ઓછું મહત્વનું છે.
-
-`Box&lt;T&gt;` પ્રકારની વ્યાખ્યા `Box&lt;T&gt;` પ્રકાર આખરે એક ઘટક સાથેના ટ્યૂપ સ્ટ્રક્ચર તરીકે વ્યાખ્યાયિત થયેલ છે, તેથી સૂચિ ૧૫-૮ `MyBox&lt;T&gt;` પ્રકારને એ જ રીતે વ્યાખ્યાયિત કરે છે. અમે `new` ફંક્શનને પણ વ્યાખ્યાયિત કરીશું જે `Box&lt;T&gt;` પર વ્યાખ્યાયિત `new` ફંક્શન સાથે મેળ ખાય છે.
-
-&lt;Listing number="15-8" file-name="src/main.rs" caption="Defining a `MyBox&lt;T&gt;` type"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-08/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-આપણે `MyBox` નામનું struct વ્યાખ્યાયિત કરીએ છીએ અને એક સામાન્ય પરિમાણ `T` જાહેર કરીએ છીએ કારણ કે આપણે આપણી type ને કોઈપણ પ્રકારના મૂલ્યો ધરાવવાનું છે. `MyBox` type એ એક tuple struct છે જેમાં `T` પ્રકારનો એક ઘટક છે. `MyBox::new` function એક `T` પ્રકારનું પરિમાણ લે છે અને `MyBox` instance પરત કરે છે જે પાસ કરેલા મૂલ્યને સમાવે છે. Let’s try adding the `main` function in Listing 15-7 to Listing 15-8 and changing it to use the
-
-ચાલો Listing 15-7 માં `main` function ને Listing 15-8 માં ઉમેરવાનો પ્રયાસ કરીએ અને તેને `MyBox&lt;T&gt;` type નો ઉપયોગ કરવા માટે બદલીએ જે આપણે વ્યાખ્યાયિત કર્યું છે, `Box&lt;T&gt;` ને બદલે. Listing 15-9 માં રહેલો code compile થશે નહીં, કારણ કે Rust ને ખબર નથી કે `MyBox` ને કેવી રીતે dereference કરવું.
-
-&lt;Listing number="15-9" file-name="src/main.rs" caption="Attempting to use `MyBox&lt;T&gt;` in the same way we used references and `Box&lt;T&gt;`"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-09/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-અહીં પરિણામી કમ્પાઈલ એરર છે:
-
-```console
-```console
-{{#include ../listings/ch15-smart-pointers/listing-15-09/output.txt}}
-</code></pre>
-<pre><code>અમારું `MyBox&lt;T&gt;` પ્રકારને ઉકેલી શકાતો નથી કારણ કે અમે અમારા પ્રકાર પર તે ક્ષમતા અમલમાં મૂકી નથી. `*` ચિહ્ન સાથે ઉકેલવાની મંજૂરી આપવા માટે, આપણે `Deref` લક્ષણ (trait) અમલમાં મૂકવું જોઈએ.
-
-&lt;!-- Old headings. Do not remove or links may break. --&gt;
-### Implementing the `Deref` Trait
-
-જેમ કે પ્રકરણ ૧૦ માં "એક પ્રકાર પર લક્ષણનો અમલ" માં ચર્ચા કરવામાં આવી છે, એક લક્ષણને અમલમાં મૂકવા માટે આપણે તેના જરૂરી વિધિઓ (methods) માટે અમલીકરણો આપવા પડે છે. પ્રમાણિત પુસ્તકાલય દ્વારા પૂરા પાડવામાં આવેલ `Deref` લક્ષણ, આપણને `deref` નામની એક વિધિનો અમલ કરવાની આવશ્યકતા રાખે છે જે `self` ને ઉછીના લે છે અને આંતરિક ડેટા માટે સંદર્ભ (reference) આપે છે. યાદી ૧૫-૧૦ માં `MyBox&lt;T&gt;` ની વ્યાખ્યામાં ઉમેરવા માટે `Deref` નો અમલ દર્શાવેલ છે.
-
-&lt;Listing number="15-10" file-name="src/main.rs" caption="Implementing `Deref` on `MyBox&lt;T&gt;`"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-10/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-`type Target = T;` આ સિન્ટેક્સ `Deref` ટ્રેઇટ માટે સંકળાયેલ પ્રકાર (associated type) વ્યાખ્યાયિત કરે છે. સંકળાયેલ પ્રકારો જનરિક પેરામીટર જાહેર કરવાની એક થોડી અલગ રીત છે, પરંતુ હાલમાં તમારે તેમના વિશે ચિંતા કરવાની જરૂર નથી; આપણે પ્રકરણ ૨૦ માં તેમના વિશે વધુ વિગતવાર વાત કરીશું. We fill in the body of the `deref` method with `&amp;self.0` so that `deref` returns a reference
-
-આપણે `deref` મેથડના ભાગમાં `&amp;self.0` ભરીએ છીએ જેથી `deref` એ `*` ઓપરેટર વડે મેળવવા માટે ઇચ્છિત મૂલ્યનો રેફરન્સ આપે; પ્રકરણ ૫ માં “Tuple Structs સાથે વિવિધ પ્રકારો બનાવવું” માંથી યાદ કરો કે `.0` ટ્યુપલ સ્ટ્રક્ટમાં પ્રથમ મૂલ્યને એક્સેસ કરે છે. The `main` function in Listing 15-9 that calls `*` on the `MyBox&lt;T&gt;` value now compiles, and the assertions pass! લિસ્ટિંગ ૧૫-૯ માંનું `main` ફંક્શન જે `MyBox&lt;T&gt;` મૂલ્ય પર `*` ને બોલાવે છે તે હવે કમ્પાઇલ થાય છે, અને એસર્શન્સ પાસ થાય છે!
-
-વગર `Deref` લક્ષણ સાથે, કમ્પાઇલર માત્ર `&amp;` સંદર્ભોને ઉતારી શકે છે. `deref` પદ્ધતિ કમ્પાઇલરને કોઈપણ પ્રકારના મૂલ્યને લેવાની ક્ષમતા આપે છે જે `Deref` લક્ષણને અમલમાં મૂકે છે અને `deref` પદ્ધતિને બોલાવીને એક સંદર્ભ મેળવે છે જેને તે ઉતારી શકે છે.
-
-જ્યારે આપણે Listing 15-9 માં `*y` દાખલ કર્યું, ત્યારે પડછાયામાં Rust એ આ કોડ ચલાવ્યો:
-
-```rust
-```rust
-*(y.deref())
-</code></pre>
-<pre><code>Rust `*` ઓપરેટરને `deref` પદ્ધતિના આહ્વાન અને ત્યારબાદ સાદા ડિરેફરન્સ સાથે બદલે છે, જેથી આપણે એ વિચારવાની જરૂર ન પડે કે આપણે `deref` પદ્ધતિને આહ્વાન કરવી જોઈએ કે નહીં. આ Rust લક્ષણ આપણને એવા કોડ લખવાની મંજૂરી આપે છે જે નિયમિત સંદર્ભ અથવા `Deref` અમલ કરતી પ્ર type સાથે સમાન
-
-રીતે કાર્ય કરે છે. `deref` પદ્ધતિ શા માટે મૂલ્યનો સંદર્ભ પરત કરે છે, અને કૌંસની બહાર `*(y.deref())` માં સાદો ડિરેફરન્સ હજી પણ જરૂરી કેમ છે, એ માલિકી પ્રણાલી સાથે સંબંધિત છે. જો `deref` પદ્ધતિ સીધું મૂલ્ય પરત કરે તેના બદલે મૂલ્યનો સંદર્ભ પરત કરે, તો મૂલ્ય `self` માંથી ખસેડવામાં આવશે. આપણે `MyBox&lt;T&gt;` માં આંતરિક મૂલ્યની માલિકી લેવા માંગતા નથી, અથવા મોટાભાગના કિસ્સાઓમાં જ્યાં આપણે ડિરેફરન્સ ઓપરેટરનો ઉપયોગ કરીએ છીએ.
-
-નોંધ કરો કે `*` ઓપરેટરને `deref` પદ્ધતિમાં કૉલ અને પછી `*` ઓપરેટરમાં એક વખત કૉલ કરીને બદલવામાં આવે છે, જ્યારે પણ આપણે કોડમાં `*` નો ઉપયોગ કરીએ છીએ. કારણ કે `*` ઓપરેટરનું પ્રતિસ્થાપન અનંત રીતે થતું નથી, તેથી આપણને `i32` પ્રકારના ડેટા મળે છે, જે `assert_eq!` માં રહેલા `5` સાથે મેળ ખાય છે, જે લિસ્ટિંગ 15-9 માં દર્શાવેલ છે.
-
-&lt;!-- Old headings. Do not remove or links may break. --&gt;
-### Using Deref Coercion in Functions and Methods
-
-Deref ઉચ્ચારણ એ `Deref` લક્ષણ લાગુ કરતી પ્રકારની સંદર્ભને બીજા પ્રકારના સંદર્ભમાં રૂપાંતરિત કરે છે. દાખલા તરીકે, deref ઉચ્ચારણ `&amp;String` ને `&amp;str` માં રૂપાંતરિત કરી શકે છે કારણ કે `String` એ `Deref` લક્ષણને અમલમાં મૂકે છે જે `&amp;str` પરત કરે છે. Deref ઉચ્ચારણ એ એક સુવિધા છે જે Rust કાર્યો અને પદ્ધતિઓના Argumentો પર કરે છે, અને તે માત્ર `Deref` લક્ષણ લાગુ કરતી પ્રકારો પર જ કાર્ય કરે છે. જ્યારે આપણે કોઈ ચોક્કસ પ્રકારના મૂલ્યનો સંદર્ભ કાર્ય અથવા પદ્ધતિ પરિમાણ પ્રકાર સાથે મેળ ખાતો ન હોય તેવી Argument તરીકે પસાર કરીએ છીએ ત્યારે તે આપમેળે થાય છે. `deref` પદ્ધતિની ક્રમશઃ કૉલ્સ આપેલા પ્રકારને પરિમાણની જરૂરિયાતવાળા પ્રકારમાં રૂપાંતરિત કરે છે.
-
-Deref ઉચ્ચારણ ઉમેરવામાં આવ્યું Rust માં પ્રોગ્રામરોને ફંક્શન અને મેથડ કોલ્સમાં વધારે સ્પષ્ટ સંદર્ભો (references) અને ડિરેફરન્સ (dereferences) `&amp;` અને `*` ઉમેરવાની જરૂરિયાત ટાળવા માટે Deref ઉચ્ચારણ ઉમેરવામાં આવ્યું છે. આ ઉચ્ચારણ સુવિધા આપણને એવું વધુ કોડ લખવાની પણ છૂટ આપે છે જે સંદર્ભો અથવા સ્માર્ટ પોઇન્ટર્સ બંને સાથે કાર્ય
-
-કરી શકે છે. Deref ઉચ્ચારણને ક્રિયામાં જોવા માટે, ચાલો `MyBox&lt;T&gt;` પ્રકારનો ઉપયોગ કરીએ જે આપણે લિસ્ટિંગ 15-8 માં વ્યાખ્યાયિત કર્યો હતો તેમજ લિસ્ટિંગ 15-10 માં ઉમેરવામાં આવેલા `Deref` ના અમલીકરણનો પણ ઉપયોગ કરીએ. લિસ્ટિંગ 15-11 એક ફંક્શનની વ્યાખ્યા દર્શાવે છે જેમાં સ્ટ્રિંગ સ્લાઇસ પેરામીટર છે.
-
-&lt;Listing number="15-11" file-name="src/main.rs" caption="A `hello` function that has the parameter `name` of type `&amp;str`"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-11/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-આપણે `hello` વિધેયને સ્ટ્રિંગ સ્લાઇસ Argument તરીકે બોલાવી શકીએ છીએ, જેમ કે `hello("Rust");`. ડેરફ કોર્ઝનથી `hello` ને `MyBox&lt;String&gt;` પ્રકારના મૂલ્યના સંદર્ભ સાથે બોલાવવાનું શક્ય બને છે, જે યાદી 15-12 માં દર્શાવેલ છે.
-
-&lt;Listing number="15-12" file-name="src/main.rs" caption="Calling `hello` with a reference to a `MyBox&lt;String&gt;` value, which works because of deref coercion"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-12/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-અહીં આપણે `hello` વિધેયને Argument `&amp;m` સાથે બોલાવી રહ્યા છીએ, જે `MyBox&lt;String&gt;` મૂલ્યનો સંદર્ભ છે. કારણ કે આપણે `MyBox&lt;T&gt;` પર `Deref` લક્ષણ લાગુ કર્યું છે યાદી 15-10 માં, Rust `&amp;MyBox&lt;String&gt;` ને `&amp;String` માં રૂપાંતરિત કરી શકે છે `deref` વિધેયને બોલાવીને. પ્રમાણિત પુસ્તકાલય `String` પર `Deref` નું અમલીકરણ પૂરું પાડે છે જે સ્ટ્રિંગ સ્લાઇસ આપે છે, અને આ `Deref` માટે API દસ્તાવેજીકરણમાં દર્શાવેલ છે. Rust ફરીથી `deref` વિધેયને બોલાવે છે જેથી `&amp;String` ને `&amp;str` માં રૂપાંતરિત કરી શકાય, જે `hello` વિધેયની વ્યાખ્યા સાથે મેળ ખાય છે.
-
-જો Rust દ્વારા ડિરેફ સહસંબંધ (deref coercion) અમલમાં ન હોત, તો આપણે `&amp;MyBox&lt;String&gt;` પ્રકારના મૂલ્ય સાથે `hello` ને બોલાવવા માટે લિસ્ટિંગ ૧૫-૧૩ માં આપેલ કોડ લખવો પડત, લિસ્ટિંગ ૧૫-૧૨ માં આપેલ કોડને બદલે.
-
-&lt;Listing number="15-13" file-name="src/main.rs" caption="The code we would have to write if Rust didn’t have deref coercion"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-13/src/main.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-`(*m)` આ `MyBox&lt;String&gt;` ને `String` માં રૂપાંતરિત કરે છે. ત્યારબાદ, `&amp;` અને `[..]` સમગ્ર `String` નો એક સ્ટ્રિંગ સ્લાઇસ લે છે જેથી `hello` ના હસ્તાક્ષર સાથે મેળ ખાય. આ કોડ વગર ડેરફ સંવર્ધન (deref coercion) વાંચવા, લખવા અને સમજવામાં મુશ્કેલ છે, જેમાં આ બધા પ્રતીકો સામેલ છે. ડેરફ સંવર્ધન Rust ને આપોઆપ આ રૂપાંતરણોને નિયંત્રિત કરવાની મંજૂરી આપે છે. જ્યારે
-
-`Deref` લક્ષણ (trait) સામેલ પ્રકારો માટે વ્યાખ્યાયિત કરવામાં આવે છે, ત્યારે Rust પ્રકારોનું વિશ્લેષણ કરે છે અને પરિમાણના પ્રકાર સાથે મેળ ખાતો સંદર્ભ (reference) મેળવવા માટે `Deref::deref` ને જરૂરી જેટલી વખત વાપરે છે. `Deref::deref` કેટલી વખત દાખલ કરવાની જરૂર છે તે કમ્પાઇલ સમયે ઉકેલાય છે, તેથી ડેરફ સંવર્ધનનો લાભ લેવાથી રનટાઇમ દંડ (runtime penalty) લાગતો નથી!
-
-&lt;!-- Old headings. Do not remove or links may break. --&gt;
-### Handling Deref Coercion with Mutable References
-
-જે રીતે તમે અસ્પષ્ટ સંદર્ભો પર `*` ચિહ્ન બદલવા માટે `Deref` લક્ષણનો ઉપયોગ કરો છો, તેવી જ રીતે તમે પરિવર્તનીય સંદર્ભો પર `*` ચિહ્ન બદલવા માટે `DerefMut` લક્ષણનો ઉપયોગ કરી શકો છો.
-
-Rust ત્રણ પરિસ્થિતિઓમાં પ્રકારો અને લક્ષણ અમલીકરણો શોધે ત્યારે દબાણકારી સંકલન કરે છે:
-
-`&amp;T` થી `&amp;U` જ્યારે `T: Deref&lt;Target=U&gt;`
-
-`&amp;mut T` થી `&amp;mut U` જ્યારે `T: DerefMut&lt;Target=U&gt;`
-
-`&amp;mut T` થી `&amp;U` જ્યારે `T: Deref&lt;Target=U&gt;`
-
-પ્રથમ બે કિસ્સાઓ સમાન છે સિવાય કે બીજો પરિવર્તનશીલતાનો અમલ કરે છે. પ્રથમ કિસ્સો જણાવે છે કે જો તમારી પાસે `&amp;T` હોય, અને `T` કોઈ પ્રકાર `U` માં `Deref` લાગુ કરે છે, તો તમે `&amp;U` ને પારદર્શક રીતે મેળવી શકો છો. બીજો કિસ્સો જણાવે છે કે પરિવર્તનશીલ સંદર્ભો માટે પણ એ
-
-જ Deref દબાણ થાય છે. ત્રીજો કિસ્સો વધુ જટિલ છે: Rust એક પરિવર્તનશીલ સંદર્ભને અપરિવર્તનશીલ સંદર્ભમાં પણ રૂપાંતરિત કરશે. પરંતુ વિપરીત શક્ય નથી: અપરિવર્તનશીલ સંદર્ભો ક્યારેય પરિવર્તનશીલ સંદર્ભોમાં રૂપાંતરિત થશે નહીં. ઉધાર લેવાના નિયમોને લીધે, જો તમારી પાસે એક પરિવર્તનશીલ સંદર્ભ હોય, તો તે ડેટા માટે તે જ એકમાત્ર સંદર્ભ હોવો જોઈએ (અન્યથા, પ્રોગ્રામ કમ્પાઇલ થશે નહીં). એક પરિવર્તનશીલ સંદર્ભને એક અપરિવર્તનશીલ સંદર્ભમાં રૂપાંતરિત કરવાથી ઉધાર લેવાના નિયમોનું ઉલ્લંઘન થતું નથી. એક અપરિવર્તનશીલ સંદર્ભને પરિવર્તનશીલ સંદર્ભમાં રૂપાંતરિત કરવાની જરૂરિયાત એ હશે કે તે ડેટા માટે પ્રારંભિક અપરિવર્તનશીલ સંદર્ભ એકમાત્ર અપરિવર્તનશીલ સંદર્ભ છે, પરંતુ ઉધાર લેવાના નિયમો તે ખાતરી આપતા નથી. તેથી, Rust એ ધારણા કરી શકતું નથી કે અપરિવર્તનશીલ સંદર્ભને પરિવર્તનશીલ સંદર્ભમાં રૂપાંતરિત કરવું શક્ય છે.
-
-</code></pre>
+<p>અમારું <code>MyBox&lt;T&gt;</code> પ્રકારને ઉકેલી શકાતો નથી કારણ કે અમે અમારા પ્રકાર પર તે ક્ષમતા અમલમાં મૂકી નથી. <code>*</code> ચિહ્ન સાથે ઉકેલવાની મંજૂરી આપવા માટે, આપણે <code>Deref</code> લક્ષણ (trait) અમલમાં મૂકવું જોઈએ.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="implementing-the-deref-trait"><a class="header" href="#implementing-the-deref-trait">Implementing the <code>Deref</code> Trait</a></h3>
+<p>જેમ કે પ્રકરણ ૧૦ માં “એક પ્રકાર પર લક્ષણનો અમલ” માં ચર્ચા કરવામાં આવી છે, એક લક્ષણને અમલમાં મૂકવા માટે આપણે તેના જરૂરી વિધિઓ (methods) માટે અમલીકરણો આપવા પડે છે. પ્રમાણિત પુસ્તકાલય દ્વારા પૂરા પાડવામાં આવેલ <code>Deref</code> લક્ષણ, આપણને <code>deref</code> નામની એક વિધિનો અમલ કરવાની આવશ્યકતા રાખે છે જે <code>self</code> ને ઉછીના લે છે અને આંતરિક ડેટા માટે સંદર્ભ (reference) આપે છે. યાદી ૧૫-૧૦ માં <code>MyBox&lt;T&gt;</code> ની વ્યાખ્યામાં ઉમેરવા માટે <code>Deref</code> નો અમલ દર્શાવેલ છે.</p>
+<p>`“&gt;</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-10/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p><code>type Target = T;</code> આ સિન્ટેક્સ <code>Deref</code> ટ્રેઇટ માટે સંકળાયેલ પ્રકાર (associated type) વ્યાખ્યાયિત કરે છે. સંકળાયેલ પ્રકારો જનરિક પેરામીટર જાહેર કરવાની એક થોડી અલગ રીત છે, પરંતુ હાલમાં તમારે તેમના વિશે ચિંતા કરવાની જરૂર નથી; આપણે પ્રકરણ ૨૦ માં તેમના વિશે વધુ વિગતવાર વાત કરીશું. We fill in the body of the <code>deref</code> method with <code>&amp;self.0</code> so that <code>deref</code> returns a reference</p>
+<p>આપણે <code>deref</code> મેથડના ભાગમાં <code>&amp;self.0</code> ભરીએ છીએ જેથી <code>deref</code> એ <code>*</code> ઓપરેટર વડે મેળવવા માટે ઇચ્છિત મૂલ્યનો રેફરન્સ આપે; પ્રકરણ ૫ માં “Tuple Structs સાથે વિવિધ પ્રકારો બનાવવું” માંથી યાદ કરો કે <code>.0</code> ટ્યુપલ સ્ટ્રક્ટમાં પ્રથમ મૂલ્યને એક્સેસ કરે છે. The <code>main</code> function in Listing 15-9 that calls <code>*</code> on the <code>MyBox&lt;T&gt;</code> value now compiles, and the assertions pass! લિસ્ટિંગ ૧૫-૯ માંનું <code>main</code> ફંક્શન જે <code>MyBox&lt;T&gt;</code> મૂલ્ય પર <code>*</code> ને બોલાવે છે તે હવે કમ્પાઇલ થાય છે, અને એસર્શન્સ પાસ થાય છે!</p>
+<p>વગર <code>Deref</code> લક્ષણ સાથે, કમ્પાઇલર માત્ર <code>&amp;</code> સંદર્ભોને ઉતારી શકે છે. <code>deref</code> પદ્ધતિ કમ્પાઇલરને કોઈપણ પ્રકારના મૂલ્યને લેવાની ક્ષમતા આપે છે જે <code>Deref</code> લક્ષણને અમલમાં મૂકે છે અને <code>deref</code> પદ્ધતિને બોલાવીને એક સંદર્ભ મેળવે છે જેને તે ઉતારી શકે છે.</p>
+<p>જ્યારે આપણે Listing 15-9 માં <code>*y</code> દાખલ કર્યું, ત્યારે પડછાયામાં Rust એ આ કોડ ચલાવ્યો:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>*(y.deref())
+<span class="boring">}</span></code></pre>
+<p>Rust <code>*</code> ઓપરેટરને <code>deref</code> પદ્ધતિના આહ્વાન અને ત્યારબાદ સાદા ડિરેફરન્સ સાથે બદલે છે, જેથી આપણે એ વિચારવાની જરૂર ન પડે કે આપણે <code>deref</code> પદ્ધતિને આહ્વાન કરવી જોઈએ કે નહીં. આ Rust લક્ષણ આપણને એવા કોડ લખવાની મંજૂરી આપે છે જે નિયમિત સંદર્ભ અથવા <code>Deref</code> અમલ કરતી પ્ર type સાથે સમાન</p>
+<p>રીતે કાર્ય કરે છે. <code>deref</code> પદ્ધતિ શા માટે મૂલ્યનો સંદર્ભ પરત કરે છે, અને કૌંસની બહાર <code>*(y.deref())</code> માં સાદો ડિરેફરન્સ હજી પણ જરૂરી કેમ છે, એ માલિકી પ્રણાલી સાથે સંબંધિત છે. જો <code>deref</code> પદ્ધતિ સીધું મૂલ્ય પરત કરે તેના બદલે મૂલ્યનો સંદર્ભ પરત કરે, તો મૂલ્ય <code>self</code> માંથી ખસેડવામાં આવશે. આપણે <code>MyBox&lt;T&gt;</code> માં આંતરિક મૂલ્યની માલિકી લેવા માંગતા નથી, અથવા મોટાભાગના કિસ્સાઓમાં જ્યાં આપણે ડિરેફરન્સ ઓપરેટરનો ઉપયોગ કરીએ છીએ.</p>
+<p>નોંધ કરો કે <code>*</code> ઓપરેટરને <code>deref</code> પદ્ધતિમાં કૉલ અને પછી <code>*</code> ઓપરેટરમાં એક વખત કૉલ કરીને બદલવામાં આવે છે, જ્યારે પણ આપણે કોડમાં <code>*</code> નો ઉપયોગ કરીએ છીએ. કારણ કે <code>*</code> ઓપરેટરનું પ્રતિસ્થાપન અનંત રીતે થતું નથી, તેથી આપણને <code>i32</code> પ્રકારના ડેટા મળે છે, જે <code>assert_eq!</code> માં રહેલા <code>5</code> સાથે મેળ ખાય છે, જે લિસ્ટિંગ 15-9 માં દર્શાવેલ છે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="using-deref-coercion-in-functions-and-methods"><a class="header" href="#using-deref-coercion-in-functions-and-methods">Using Deref Coercion in Functions and Methods</a></h3>
+<p>Deref ઉચ્ચારણ એ <code>Deref</code> લક્ષણ લાગુ કરતી પ્રકારની સંદર્ભને બીજા પ્રકારના સંદર્ભમાં રૂપાંતરિત કરે છે. દાખલા તરીકે, deref ઉચ્ચારણ <code>&amp;String</code> ને <code>&amp;str</code> માં રૂપાંતરિત કરી શકે છે કારણ કે <code>String</code> એ <code>Deref</code> લક્ષણને અમલમાં મૂકે છે જે <code>&amp;str</code> પરત કરે છે. Deref ઉચ્ચારણ એ એક સુવિધા છે જે Rust કાર્યો અને પદ્ધતિઓના Argumentો પર કરે છે, અને તે માત્ર <code>Deref</code> લક્ષણ લાગુ કરતી પ્રકારો પર જ કાર્ય કરે છે. જ્યારે આપણે કોઈ ચોક્કસ પ્રકારના મૂલ્યનો સંદર્ભ કાર્ય અથવા પદ્ધતિ પરિમાણ પ્રકાર સાથે મેળ ખાતો ન હોય તેવી Argument તરીકે પસાર કરીએ છીએ ત્યારે તે આપમેળે થાય છે. <code>deref</code> પદ્ધતિની ક્રમશઃ કૉલ્સ આપેલા પ્રકારને પરિમાણની જરૂરિયાતવાળા પ્રકારમાં રૂપાંતરિત કરે છે.</p>
+<p>Deref ઉચ્ચારણ ઉમેરવામાં આવ્યું Rust માં પ્રોગ્રામરોને ફંક્શન અને મેથડ કોલ્સમાં વધારે સ્પષ્ટ સંદર્ભો (references) અને ડિરેફરન્સ (dereferences) <code>&amp;</code> અને <code>*</code> ઉમેરવાની જરૂરિયાત ટાળવા માટે Deref ઉચ્ચારણ ઉમેરવામાં આવ્યું છે. આ ઉચ્ચારણ સુવિધા આપણને એવું વધુ કોડ લખવાની પણ છૂટ આપે છે જે સંદર્ભો અથવા સ્માર્ટ પોઇન્ટર્સ બંને સાથે કાર્ય</p>
+<p>કરી શકે છે. Deref ઉચ્ચારણને ક્રિયામાં જોવા માટે, ચાલો <code>MyBox&lt;T&gt;</code> પ્રકારનો ઉપયોગ કરીએ જે આપણે લિસ્ટિંગ 15-8 માં વ્યાખ્યાયિત કર્યો હતો તેમજ લિસ્ટિંગ 15-10 માં ઉમેરવામાં આવેલા <code>Deref</code> ના અમલીકરણનો પણ ઉપયોગ કરીએ. લિસ્ટિંગ 15-11 એક ફંક્શનની વ્યાખ્યા દર્શાવે છે જેમાં સ્ટ્રિંગ સ્લાઇસ પેરામીટર છે.</p>
+<p><strong>Listing 15-11: A <code>hello</code> function that has the parameter <code>name</code> of type <code>&amp;str</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-11/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આપણે <code>hello</code> વિધેયને સ્ટ્રિંગ સ્લાઇસ Argument તરીકે બોલાવી શકીએ છીએ, જેમ કે <code>hello("Rust");</code>. ડેરફ કોર્ઝનથી <code>hello</code> ને <code>MyBox&lt;String&gt;</code> પ્રકારના મૂલ્યના સંદર્ભ સાથે બોલાવવાનું શક્ય બને છે, જે યાદી 15-12 માં દર્શાવેલ છે.</p>
+<p>` value, which works because of deref coercion“&gt;</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-12/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અહીં આપણે <code>hello</code> વિધેયને Argument <code>&amp;m</code> સાથે બોલાવી રહ્યા છીએ, જે <code>MyBox&lt;String&gt;</code> મૂલ્યનો સંદર્ભ છે. કારણ કે આપણે <code>MyBox&lt;T&gt;</code> પર <code>Deref</code> લક્ષણ લાગુ કર્યું છે યાદી 15-10 માં, Rust <code>&amp;MyBox&lt;String&gt;</code> ને <code>&amp;String</code> માં રૂપાંતરિત કરી શકે છે <code>deref</code> વિધેયને બોલાવીને. પ્રમાણિત પુસ્તકાલય <code>String</code> પર <code>Deref</code> નું અમલીકરણ પૂરું પાડે છે જે સ્ટ્રિંગ સ્લાઇસ આપે છે, અને આ <code>Deref</code> માટે API દસ્તાવેજીકરણમાં દર્શાવેલ છે. Rust ફરીથી <code>deref</code> વિધેયને બોલાવે છે જેથી <code>&amp;String</code> ને <code>&amp;str</code> માં રૂપાંતરિત કરી શકાય, જે <code>hello</code> વિધેયની વ્યાખ્યા સાથે મેળ ખાય છે.</p>
+<p>જો Rust દ્વારા ડિરેફ સહસંબંધ (deref coercion) અમલમાં ન હોત, તો આપણે <code>&amp;MyBox&lt;String&gt;</code> પ્રકારના મૂલ્ય સાથે <code>hello</code> ને બોલાવવા માટે લિસ્ટિંગ ૧૫-૧૩ માં આપેલ કોડ લખવો પડત, લિસ્ટિંગ ૧૫-૧૨ માં આપેલ કોડને બદલે.</p>
+<p><strong>Listing 15-13: The code we would have to write if Rust didn’t have deref coercion</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-13/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p><code>(*m)</code> આ <code>MyBox&lt;String&gt;</code> ને <code>String</code> માં રૂપાંતરિત કરે છે. ત્યારબાદ, <code>&amp;</code> અને <code>[..]</code> સમગ્ર <code>String</code> નો એક સ્ટ્રિંગ સ્લાઇસ લે છે જેથી <code>hello</code> ના હસ્તાક્ષર સાથે મેળ ખાય. આ કોડ વગર ડેરફ સંવર્ધન (deref coercion) વાંચવા, લખવા અને સમજવામાં મુશ્કેલ છે, જેમાં આ બધા પ્રતીકો સામેલ છે. ડેરફ સંવર્ધન Rust ને આપોઆપ આ રૂપાંતરણોને નિયંત્રિત કરવાની મંજૂરી આપે છે. જ્યારે</p>
+<p><code>Deref</code> લક્ષણ (trait) સામેલ પ્રકારો માટે વ્યાખ્યાયિત કરવામાં આવે છે, ત્યારે Rust પ્રકારોનું વિશ્લેષણ કરે છે અને પરિમાણના પ્રકાર સાથે મેળ ખાતો સંદર્ભ (reference) મેળવવા માટે <code>Deref::deref</code> ને જરૂરી જેટલી વખત વાપરે છે. <code>Deref::deref</code> કેટલી વખત દાખલ કરવાની જરૂર છે તે કમ્પાઇલ સમયે ઉકેલાય છે, તેથી ડેરફ સંવર્ધનનો લાભ લેવાથી રનટાઇમ દંડ (runtime penalty) લાગતો નથી!</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="handling-deref-coercion-with-mutable-references"><a class="header" href="#handling-deref-coercion-with-mutable-references">Handling Deref Coercion with Mutable References</a></h3>
+<p>જે રીતે તમે અસ્પષ્ટ સંદર્ભો પર <code>*</code> ચિહ્ન બદલવા માટે <code>Deref</code> લક્ષણનો ઉપયોગ કરો છો, તેવી જ રીતે તમે પરિવર્તનીય સંદર્ભો પર <code>*</code> ચિહ્ન બદલવા માટે <code>DerefMut</code> લક્ષણનો ઉપયોગ કરી શકો છો.</p>
+<p>Rust ત્રણ પરિસ્થિતિઓમાં પ્રકારો અને લક્ષણ અમલીકરણો શોધે ત્યારે દબાણકારી સંકલન કરે છે:</p>
+<p><code>&amp;T</code> થી <code>&amp;U</code> જ્યારે <code>T: Deref&lt;Target=U&gt;</code></p>
+<p><code>&amp;mut T</code> થી <code>&amp;mut U</code> જ્યારે <code>T: DerefMut&lt;Target=U&gt;</code></p>
+<p><code>&amp;mut T</code> થી <code>&amp;U</code> જ્યારે <code>T: Deref&lt;Target=U&gt;</code></p>
+<p>પ્રથમ બે કિસ્સાઓ સમાન છે સિવાય કે બીજો પરિવર્તનશીલતાનો અમલ કરે છે. પ્રથમ કિસ્સો જણાવે છે કે જો તમારી પાસે <code>&amp;T</code> હોય, અને <code>T</code> કોઈ પ્રકાર <code>U</code> માં <code>Deref</code> લાગુ કરે છે, તો તમે <code>&amp;U</code> ને પારદર્શક રીતે મેળવી શકો છો. બીજો કિસ્સો જણાવે છે કે પરિવર્તનશીલ સંદર્ભો માટે પણ એ</p>
+<p>જ Deref દબાણ થાય છે. ત્રીજો કિસ્સો વધુ જટિલ છે: Rust એક પરિવર્તનશીલ સંદર્ભને અપરિવર્તનશીલ સંદર્ભમાં પણ રૂપાંતરિત કરશે. પરંતુ વિપરીત શક્ય નથી: અપરિવર્તનશીલ સંદર્ભો ક્યારેય પરિવર્તનશીલ સંદર્ભોમાં રૂપાંતરિત થશે નહીં. ઉધાર લેવાના નિયમોને લીધે, જો તમારી પાસે એક પરિવર્તનશીલ સંદર્ભ હોય, તો તે ડેટા માટે તે જ એકમાત્ર સંદર્ભ હોવો જોઈએ (અન્યથા, પ્રોગ્રામ કમ્પાઇલ થશે નહીં). એક પરિવર્તનશીલ સંદર્ભને એક અપરિવર્તનશીલ સંદર્ભમાં રૂપાંતરિત કરવાથી ઉધાર લેવાના નિયમોનું ઉલ્લંઘન થતું નથી. એક અપરિવર્તનશીલ સંદર્ભને પરિવર્તનશીલ સંદર્ભમાં રૂપાંતરિત કરવાની જરૂરિયાત એ હશે કે તે ડેટા માટે પ્રારંભિક અપરિવર્તનશીલ સંદર્ભ એકમાત્ર અપરિવર્તનશીલ સંદર્ભ છે, પરંતુ ઉધાર લેવાના નિયમો તે ખાતરી આપતા નથી. તેથી, Rust એ ધારણા કરી શકતું નથી કે અપરિવર્તનશીલ સંદર્ભને પરિવર્તનશીલ સંદર્ભમાં રૂપાંતરિત કરવું શક્ય છે.</p>
 
                     </main>
 
@@ -384,6 +333,7 @@ Rust ત્રણ પરિસ્થિતિઓમાં પ્રકારો 
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

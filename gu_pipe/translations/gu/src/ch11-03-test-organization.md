@@ -28,11 +28,12 @@
 
 પરીક્ષણ સમુદાયમાં એ અંગે ચર્ચા છે કે ખાનગી કાર્યોને સીધા જ પરીક્ષણ કરવું જોઈએ કે નહીં, અને અન્ય ભાષાઓમાં ખાનગી કાર્યોનું પરીક્ષણ કરવું મુશ્કેલ અથવા અશક્ય બનાવે છે. તમે જે પણ પરીક્ષણ વિચારધારા અનુસરો છો, Rustના ગુપ્તતા નિયમો તમને ખાનગી કાર્યોનું પરીક્ષણ કરવાની મંજૂરી આપે છે. યાદી 11-12 માં `internal_adder` ખાનગી કાર્ય સાથેના કોડને ધ્યાનમાં લો.
 
-<Listing number="11-12" file-name="src/lib.rs" caption="Testing a private function">
+**Listing 11-12: Testing a private function**
+
 ```rust
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-12/src/lib.rs}}
 ```
-</Listing>
+
 દર્શાવ્યું છે કે `internal_adder` કાર્યને `pub` તરીકે નિશ્ચિત કરવામાં આવ્યું નથી. પરીક્ષણો માત્ર Rust કોડ છે, અને `tests` મોડ્યુલ એ અન્ય મોડ્યુલ છે. આપણે “મોડ્યુલ વૃક્ષમાં વસ્તુનો ઉલ્લેખ કરવા માટેના માર્ગો” માં ચર્ચા કરી હતી તેમ, બાળ મોડ્યુલોની વસ્તુઓ તેમના પિતૃ મોડ્યુલોની વસ્તુઓનો ઉપયોગ કરી શકે છે. આ પરીક્ષણમાં, અમે `use super::*` સાથે `tests` મોડ્યુલના પિતાની તમામ વસ્તુઓને અવકાશમાં લાવીએ છીએ, અને પછી પરીક્ષણ `internal_adder` ને બોલાવી શકે છે. જો તમને ન લાગે કે ખાનગી કાર્યોનું પરીક્ષણ થવું જોઈએ, તો Rust તમને આવું કરવા માટે દબાણ કરશે નહીં.
 
 ### Integration Tests
@@ -56,11 +57,12 @@ adder
     └── integration_test.rs
 Listing 11-13 નો કોડ tests/integration_test.rs ફાઈલમાં દાખલ કરો.
 
-<Listing number="11-13" file-name="tests/integration_test.rs" caption="An integration test of a function in the `adder` crate">
+**Listing 11-13: An integration test of a function in the `adder` crate**
+
 ```rust
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-13/tests/integration_test.rs}}
 ```
-</Listing>
+
 દરેક ફાઈલ tests ડિરેક્ટરીમાં એક અલગ crate છે, તેથી આપણે આપણી library ને દરેક પરીક્ષણ crate ના scope માં લાવવાની જરૂર છે. એ કારણસર, આપણે કોડની શરૂઆતમાં `use adder::add_two;` ઉમેરીએ છીએ, જે યુનિટ પરીક્ષણોમાં જરૂરી ન હતું.
 
 આપણે tests/integration_test.rs માં રહેલા કોઈપણ કોડને `#[cfg(test)]` સાથે નોંધવાની જરૂર નથી. Cargo tests ડિરેક્ટરીને વિશેષ રીતે ગણે છે અને આ ડિરેક્ટરીમાં રહેલી ફાઈલોને માત્ર ત્યારે જ compile કરે છે જ્યારે આપણે `cargo test` ચલાવીએ છીએ. હવે `cargo test` ચલાવો:

@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-8f32c1cd.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -188,14 +188,12 @@
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="simulating-a-slow-request"><a class="header" href="#simulating-a-slow-request">Simulating a Slow Request</a></h3>
 <p>અમે જોશું કે કેવી રીતે ધીરે ધીરે પ્રક્રિયા થતી વિનંતી અન્ય વિનંતીઓને અસર કરી શકે છે જે અમારી વર્તમાન સર્વર અમલીકરણ પર કરવામાં આવી રહી છે. યાદી 21-10 /sleep માટેની વિનંતીને હેન્ડલ કરવાના અમલીકરણને દર્શાવે છે, જેમાં નકલી ધીમો પ્રતિભાવ સમાવિષ્ટ છે જે સર્વરને પાંચ સેકંડ સુધી સૂવા માટે મજબૂર કરશે તે પહેલાં પ્રતિસાદ આપશે.</p>
-<listing number="21-10" file-name="src/main.rs" caption="Simulating a slow request by sleeping for five seconds">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/listing-21-10/src/main.rs:here}}
-```
-```
-</listing>
-અમે ત્રણ પરિસ્થિતિઓ હોવાથી, `if` થી `match` પર સ્વિચ કર્યું છે. આપણે `request_line` ના સ્લાઇસ સાથે પેટર્ન-મેચ કરવા માટે સ્પષ્ટપણે મેચ કરવાની જરૂર છે; `match` આપોઆપ રેફરન્સિંગ અને ડિરેફરન્સિંગ કરતું
+<p><strong>Listing 21-10: Simulating a slow request by sleeping for five seconds</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-10/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અમે ત્રણ પરિસ્થિતિઓ હોવાથી, <code>if</code> થી <code>match</code> પર સ્વિચ કર્યું છે. આપણે <code>request_line</code> ના સ્લાઇસ સાથે પેટર્ન-મેચ કરવા માટે સ્પષ્ટપણે મેચ કરવાની જરૂર છે; <code>match</code> આપોઆપ રેફરન્સિંગ અને ડિરેફરન્સિંગ કરતું</p>
 <p>નથી, જેમ કે ઇક્વાલિટી મેથડ કરે છે. પ્રથમ ભાગ Listing 21-9 માંથી <code>if</code> બ્લોક જેવો જ છે. બીજો ભાગ /sleep માટેની વિનંતી સાથે મેળ ખાય છે. જ્યારે તે વિનંતી પ્રાપ્ત થાય છે, ત્યારે સર્વર સફળ HTML પૃષ્ઠ રેન્ડર કરતા પહેલા પાંચ સેકન્ડ માટે સૂઈ જશે. ત્રીજો ભાગ Listing 21-9 માંથી <code>else</code> બ્લોક જેવો જ છે.</p>
 <p>તમે જોઈ શકો છો કે આપણો સર્વર કેટલો પ્રાથમિક છે: વાસ્તવિક લાયબ્રેરીઓ બહુવિધ વિનંતીઓને વધુ સંક્ષિપ્ત રીતે નિયંત્રિત કરશે! <code>cargo run</code> નો ઉપયોગ કરીને</p>
 <p>સર્વર શરૂ કરો. પછી, બે બ્રાઉઝર વિન્ડો ખોલો: એક http://127.0.0.1:7878 માટે અને બીજું http://127.0.0.1:7878/sleep માટે. જો તમે / URI ને થોડાં વાર દાખલ કરો, તો તમને તે ઝડપથી પ્રતિસાદ આપે છે. પરંતુ જો તમે /sleep દાખલ કરો અને પછી /, લોડ કરો, તો તમને ખબર પડશે કે / <code>sleep</code> ના પાંચ સેકન્ડ પૂરા થાય ત્યાં સુધી રાહ જુએ છે તે પહેલાં લોડ થાય છે.</p>
@@ -211,290 +209,189 @@
 <h4 id="spawning-a-thread-for-each-request"><a class="header" href="#spawning-a-thread-for-each-request">Spawning a Thread for Each Request</a></h4>
 <p>સૌ પ્રથમ, ચાલો જોઈએ કે આપણો કોડ જો દરેક કનેક્શન માટે નવું થ્રેડ બનાવે તો કેવો દેખાશે. ઉપર જણાવ્યા મુજબ, આ અમારો અંતિમ યોજના નથી, કારણ કે અગણિત થ્રેડો ઉત્પન્ન કરવાની સંભાવના છે, પરંતુ તે પહેલાં કાર્યરત મલ્ટિથ્રેડેડ સર્વર મેળવવા માટેની શરૂઆત છે. ત્યારબાદ, અમે થ્રેડ પૂલને સુધારણા તરીકે ઉમેરીશું અને બે ઉકેલોની સરખામણી કરવી સરળ બનશે.</p>
 <p>Listing 21-11 દર્શાવે છે કે <code>main</code> માં દરેક સ્ટ્રીમને નિયંત્રિત કરવા માટે નવું થ્રેડ ઉત્પન્ન કરવા માટે શું ફેરફારો કરવાના રહેશે <code>for</code> લૂપમાં.</p>
-<listing number="21-11" file-name="src/main.rs" caption="Spawning a new thread for each stream">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/listing-21-11/src/main.rs:here}}
-```
-```
-</listing>
-તમે પ્રકરણ ૧૬ માં શીખ્યું હશે તેમ, `thread::spawn` એક નવું થ્રેડ બનાવશે અને પછી નવા થ્રેડમાં ક્લોઝર (closure) માં રહેલા કોડને ચલાવશે. જો તમે આ કોડ ચલાવો અને તમારા બ્રાઉઝરમાં `/sleep` લોડ કરો, તો બીજા બે બ્રાઉઝર ટેબમાં `/` લોડ કરો, તો તમને ખરેખર દેખાશે કે `/` માટેની વિનંતીઓ `/sleep` પૂર્ણ થવાની રાહ જોવાની જરૂર નથી. જોકે, અમે ઉલ્લેખ કર્યો તેમ, આ અંતિમ પરિણામ સિસ્ટમને વધુ પડતી વ્યસ્ત કરી દેશે કારણ કે તમે કોઈ મર્યાદા વિના નવા થ્રેડ બનાવી રહ્યા
+<p><strong>Listing 21-11: Spawning a new thread for each stream</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-11/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>તમે પ્રકરણ ૧૬ માં શીખ્યું હશે તેમ, <code>thread::spawn</code> એક નવું થ્રેડ બનાવશે અને પછી નવા થ્રેડમાં ક્લોઝર (closure) માં રહેલા કોડને ચલાવશે. જો તમે આ કોડ ચલાવો અને તમારા બ્રાઉઝરમાં <code>/sleep</code> લોડ કરો, તો બીજા બે બ્રાઉઝર ટેબમાં <code>/</code> લોડ કરો, તો તમને ખરેખર દેખાશે કે <code>/</code> માટેની વિનંતીઓ <code>/sleep</code> પૂર્ણ થવાની રાહ જોવાની જરૂર નથી. જોકે, અમે ઉલ્લેખ કર્યો તેમ, આ અંતિમ પરિણામ સિસ્ટમને વધુ પડતી વ્યસ્ત કરી દેશે કારણ કે તમે કોઈ મર્યાદા વિના નવા થ્રેડ બનાવી રહ્યા</p>
 <p>છો. You may also recall from Chapter 17 that this is exactly the kind of situation where async and await really shine! Keep that in mind as we build the thread pool and think about how things would look different or the same with async. તમે પ્રકરણ ૧૭ માં પણ યાદ કરી શકો છો કે આ પ્રકારની પરિસ્થિતિમાં async અને await ખરેખર કેવી રીતે ઉપયોગી છે! જ્યારે આપણે થ્રેડ પૂલ બનાવીએ અને async સાથે વસ્તુઓ કેવી રીતે અલગ અથવા સમાન દેખાશે તે વિશે વિચારીએ ત્યારે આ વાત ધ્યાનમાં રાખો.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h4 id="creating-a-finite-number-of-threads"><a class="header" href="#creating-a-finite-number-of-threads">Creating a Finite Number of Threads</a></h4>
 <p>અમે ઈચ્છીએ છીએ કે અમારું થ્રેડ પૂલ સમાન અને પરિચિત રીતે કાર્ય કરે, જેથી અમારા API નો ઉપયોગ કરતા કોડમાં થ્રેડથી થ્રેડ પૂલમાં બદલાવ કરવા માટે મોટા ફેરફારોની જરૂર ન પડે. યાદી 21-12 એ <code>ThreadPool</code> struct માટે કાલ્પનિક ઈન્ટરફેસ દર્શાવે છે જેનો અમે <code>thread::spawn</code> ને બદલે ઉપયોગ કરવા માંગીએ છીએ.</p>
-<listing number="21-12" file-name="src/main.rs" caption="Our ideal `ThreadPool` interface">
-```rust
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/listing-21-12/src/main.rs:here}}
-```
-```
-</listing>
-અમે `ThreadPool::new` નો ઉપયોગ કરીને થ્રેડ્સની સંખ્યાને રૂપરેખાંકિત કરી શકીએ તેવા નવા થ્રેડ પૂલ બનાવીએ છીએ, આ કિસ્સામાં ચાર. પછી, `for` લૂપમાં, `pool.execute` નું ઇન્ટરફેસ `thread::spawn` જેવું જ છે જેમાં ક્લોઝર લેવામાં આવે છે જેને પૂલ દરેક સ્ટ્રીમ માટે ચલાવવો જોઈએ. આપણે `pool.execute` ને અમલમાં મૂકવાની જરૂર છે જેથી તે ક્લોઝર લઈ શકે અને તેને પૂલના થ્રેડને ચલાવવા માટે આપી શકે. આ કોડ હજી સુધી કમ્પાઇલ થશે નહીં, પરંતુ અમે પ્રયત્ન કરીશું જેથી કમ્પાઈલર અમને તેને કેવી રીતે સુધારવું તેની માર્ગદર્શન આપી શકે.
+<p><strong>Listing 21-12: Our ideal <code>ThreadPool</code> interface</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-12/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અમે <code>ThreadPool::new</code> નો ઉપયોગ કરીને થ્રેડ્સની સંખ્યાને રૂપરેખાંકિત કરી શકીએ તેવા નવા થ્રેડ પૂલ બનાવીએ છીએ, આ કિસ્સામાં ચાર. પછી, <code>for</code> લૂપમાં, <code>pool.execute</code> નું ઇન્ટરફેસ <code>thread::spawn</code> જેવું જ છે જેમાં ક્લોઝર લેવામાં આવે છે જેને પૂલ દરેક સ્ટ્રીમ માટે ચલાવવો જોઈએ. આપણે <code>pool.execute</code> ને અમલમાં મૂકવાની જરૂર છે જેથી તે ક્લોઝર લઈ શકે અને તેને પૂલના થ્રેડને ચલાવવા માટે આપી શકે. આ કોડ હજી સુધી કમ્પાઇલ થશે નહીં, પરંતુ અમે પ્રયત્ન કરીશું જેથી કમ્પાઈલર અમને તેને કેવી રીતે સુધારવું તેની માર્ગદર્શન આપી શકે.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h4 id="building-threadpool-using-compiler-driven-development"><a class="header" href="#building-threadpool-using-compiler-driven-development">Building <code>ThreadPool</code> Using Compiler-Driven Development</a></h4>
 <p>Listing 21-12 માં src/main.rs માં ફેરફારો કરો, અને પછી ચાલો <code>cargo check</code> ના કમ્પાઇલર ભૂલોનો ઉપયોગ આપણા વિકાસને આગળ ધપાવવા માટે કરીએ. અહીં પ્રથમ ભૂલ છે જે અમને મળે છે:</p>
-<pre><code class="language-console">```console
-{{#include ../listings/ch21-web-server/listing-21-12/output.txt}}
+<pre><code class="language-console">{{#include ../listings/ch21-web-server/listing-21-12/output.txt}}
 </code></pre>
-<pre><code>ચોક્કસ! આ ભૂલ અમને જણાવે છે કે આપણને `ThreadPool` પ્રકાર અથવા મોડ્યુલની જરૂર છે, તેથી આપણે હવે એક બનાવીશું. અમારા `ThreadPool` અમલીકરણમાં અમારા વેબ સર્વર શું કાર્ય કરી રહ્યું છે તેના પ્રકાર પર આધારિત રહેશે નહીં. તો, ચાલો `hello` ક્રેમને એક બાઈનરી ક્રેટથી લાઈબ્રેરી ક્રેટમાં બદલીએ જેથી કરીને અમારા `ThreadPool` અમલીકરણને જાળવી શકાય. જ્યારે અમે લાઈબ્રેરી ક્રેટમાં ફેરવીશું, ત્યારે અમે થ્રેડ પૂલ લાઇબ્રેરીનો ઉપયોગ કોઈપણ કાર્ય માટે કરી શકીએ છીએ જેનો આપણે થ્રેડ પૂલનો ઉપયોગ કરીને કરવા માંગીએ છીએ, માત્ર વેબ વિનંતીઓ પહોંચાડવા માટે જ નહીં.
-
-src/lib.rs ફાઈલ બનાવો એક `src/lib.rs` ફાઈલ બનાવો જેમાં નીચે મુજબની બાબતો હોય, જે અત્યારે આપણે `ThreadPool` સ્ટ્રક્ચરની સૌથી સરળ વ્યાખ્યા ગણી શકીએ:
-
-&lt;Listing file-name="src/lib.rs"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/no-listing-01-define-threadpool-struct/src/lib.rs}}
+<p>ચોક્કસ! આ ભૂલ અમને જણાવે છે કે આપણને <code>ThreadPool</code> પ્રકાર અથવા મોડ્યુલની જરૂર છે, તેથી આપણે હવે એક બનાવીશું. અમારા <code>ThreadPool</code> અમલીકરણમાં અમારા વેબ સર્વર શું કાર્ય કરી રહ્યું છે તેના પ્રકાર પર આધારિત રહેશે નહીં. તો, ચાલો <code>hello</code> ક્રેમને એક બાઈનરી ક્રેટથી લાઈબ્રેરી ક્રેટમાં બદલીએ જેથી કરીને અમારા <code>ThreadPool</code> અમલીકરણને જાળવી શકાય. જ્યારે અમે લાઈબ્રેરી ક્રેટમાં ફેરવીશું, ત્યારે અમે થ્રેડ પૂલ લાઇબ્રેરીનો ઉપયોગ કોઈપણ કાર્ય માટે કરી શકીએ છીએ જેનો આપણે થ્રેડ પૂલનો ઉપયોગ કરીને કરવા માંગીએ છીએ, માત્ર વેબ વિનંતીઓ પહોંચાડવા માટે જ નહીં.</p>
+<p>src/lib.rs ફાઈલ બનાવો એક <code>src/lib.rs</code> ફાઈલ બનાવો જેમાં નીચે મુજબની બાબતો હોય, જે અત્યારે આપણે <code>ThreadPool</code> સ્ટ્રક્ચરની સૌથી સરળ વ્યાખ્યા ગણી શકીએ:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/no-listing-01-define-threadpool-struct/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>પછી, main.rs ફાઈલને સંપાદિત કરો જેથી <code>ThreadPool</code> લાયબ્રેરી crate માંથી દૃશ્યમાન થાય, આ માટે નીચેના કોડને src/main.rs ની શરૂઆતમાં ઉમેરો:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/no-listing-01-define-threadpool-struct/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ કોડ હજી કામ કરશે નહીં, પરંતુ ચાલો તેને ફરીથી તપાસીએ જેથી કરીને આગામી ભૂલ આવે જે આપણે ઉકેલવાની જરૂર છે:</p>
+<pre><code class="language-console">{{#include ../listings/ch21-web-server/no-listing-01-define-threadpool-struct/output.txt}}
 </code></pre>
-<pre><code>&lt;/Listing&gt;
-પછી, main.rs ફાઈલને સંપાદિત કરો જેથી `ThreadPool` લાયબ્રેરી crate માંથી દૃશ્યમાન થાય, આ માટે નીચેના કોડને src/main.rs ની શરૂઆતમાં ઉમેરો:
-
-&lt;Listing file-name="src/main.rs"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/no-listing-01-define-threadpool-struct/src/main.rs:here}}
+<p>આ ભૂલ દર્શાવે છે કે આગળ આપણે <code>ThreadPool</code> માટે એક સંકળાયેલ વિધેય (associated function) નામનું <code>new</code> બનાવવાની જરૂર છે. આપણને એ પણ ખબર છે કે <code>new</code> ને એક પરિમાણ (parameter) હોવું જોઈએ જે <code>4</code> સ્વીકારી શકે અને <code>ThreadPool</code> નું ઉદાહરણ (instance) પાછું આપે. ચાલો આપણે સૌથી સરળ <code>new</code> વિધેયનો અમલ કરીએ જે તે લક્ષણો ધરાવતું હોય:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/no-listing-02-impl-threadpool-new/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>આપણે <code>usize</code> ને <code>size</code> પરિમાણનો પ્રકાર તરીકે પસંદ કર્યો કારણ કે આપણને ખબર છે કે નકારાત્મક સંખ્યા થ્રેડ્સ માટે તર્કસંગત નથી. આપણને એ પણ ખબર છે કે અમે આ <code>4</code> નો ઉપયોગ થ્રેડ્સના સમૂહમાં ઘટકોની સંખ્યા તરીકે કરીશું, જે <code>usize</code> પ્રકાર માટે છે, જે પ્રકરણ 3 માં “પૂર્ણાંક પ્રકારો” વિભાગમાં ચર્ચા કરવામાં આવી છે.</p>
+<p>ચાલો ફરીથી કોડ જોઈએ:</p>
+<pre><code class="language-console">{{#include ../listings/ch21-web-server/no-listing-02-impl-threadpool-new/output.txt}}
 </code></pre>
-<pre><code>&lt;/Listing&gt;
-આ કોડ હજી કામ કરશે નહીં, પરંતુ ચાલો તેને ફરીથી તપાસીએ જેથી કરીને આગામી ભૂલ આવે જે આપણે ઉકેલવાની જરૂર છે:
-
-```console
-```console
-{{#include ../listings/ch21-web-server/no-listing-01-define-threadpool-struct/output.txt}}
-</code></pre>
-<pre><code>આ ભૂલ દર્શાવે છે કે આગળ આપણે `ThreadPool` માટે એક સંકળાયેલ વિધેય (associated function) નામનું `new` બનાવવાની જરૂર છે. આપણને એ પણ ખબર છે કે `new` ને એક પરિમાણ (parameter) હોવું જોઈએ જે `4` સ્વીકારી શકે અને `ThreadPool` નું ઉદાહરણ (instance) પાછું આપે. ચાલો આપણે સૌથી સરળ `new` વિધેયનો અમલ કરીએ જે તે લક્ષણો ધરાવતું હોય:
-
-&lt;Listing file-name="src/lib.rs"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/no-listing-02-impl-threadpool-new/src/lib.rs}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-આપણે `usize` ને `size` પરિમાણનો પ્રકાર તરીકે પસંદ કર્યો કારણ કે આપણને ખબર છે કે નકારાત્મક સંખ્યા થ્રેડ્સ માટે તર્કસંગત નથી. આપણને એ પણ ખબર છે કે અમે આ `4` નો ઉપયોગ થ્રેડ્સના સમૂહમાં ઘટકોની સંખ્યા તરીકે કરીશું, જે `usize` પ્રકાર માટે છે, જે પ્રકરણ 3 માં "પૂર્ણાંક પ્રકારો" વિભાગમાં ચર્ચા કરવામાં આવી છે.
-
-ચાલો ફરીથી કોડ જોઈએ:
-
-```console
-```console
-{{#include ../listings/ch21-web-server/no-listing-02-impl-threadpool-new/output.txt}}
-</code></pre>
-<pre><code>હવે ભૂલ એટલા માટે આવે છે કે આપણી પાસે `ThreadPool` પર `execute` નામની પદ્ધતિ નથી. "નિશ્ચિત સંખ્યામાં થ્રેડ બનાવવું" વિભાગને યાદ કરો કે આપણે નક્કી કર્યું હતું કે આપણું થ્રેડ પૂલ `thread::spawn` જેવું ઈન્ટરફેસ હોવું જોઈએ. વધુમાં, આપણે `execute` કાર્ય અમલમાં મૂકીશું જેથી તે ક્લોઝરને લે અને તેને પૂલમાં નિષ્ક્રિય થ્રેડને ચલાવવા માટે આપે.
-
-આપણે `ThreadPool` પર `execute` પદ્ધતિને એક ક્લોઝર પરિમાણ તરીકે લેવા માટે વ્યાખ્યાયિત કરીશું. "ક્લોઝરમાંથી કબજે કરેલા મૂલ્યોને બહાર કાઢવા" વિશે પ્રકરણ ૧૩ માં યાદ કરો કે આપણે ત્રણ અલગ-અલગ ટ્રેઇટ સાથે ક્લોઝરને પરિમાણ તરીકે લઈ શકીએ છીએ: `Fn`, `FnMut` અને `FnOnce`. આપણે નક્કી કરવું પડશે કે અહીં કયા પ્રકારના ક્લોઝરનો ઉપયોગ કરવો. આપણને ખબર છે કે આપણે આખરે સ્ટાન્ડર્ડ લાઈબ્રેરીના `thread::spawn` અમલીકરણ જેવું કંઈક કરીશું, તેથી આપણે `thread::spawn` ના પરિમાણ પરની મર્યાદાઓ જોઈ શકીએ છીએ. દસ્તાવેજીકરણ દર્શાવે છે કે નીચે મુજબ:
-
-```rust
-```rust
-pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt;
+<p>હવે ભૂલ એટલા માટે આવે છે કે આપણી પાસે <code>ThreadPool</code> પર <code>execute</code> નામની પદ્ધતિ નથી. “નિશ્ચિત સંખ્યામાં થ્રેડ બનાવવું” વિભાગને યાદ કરો કે આપણે નક્કી કર્યું હતું કે આપણું થ્રેડ પૂલ <code>thread::spawn</code> જેવું ઈન્ટરફેસ હોવું જોઈએ. વધુમાં, આપણે <code>execute</code> કાર્ય અમલમાં મૂકીશું જેથી તે ક્લોઝરને લે અને તેને પૂલમાં નિષ્ક્રિય થ્રેડને ચલાવવા માટે આપે.</p>
+<p>આપણે <code>ThreadPool</code> પર <code>execute</code> પદ્ધતિને એક ક્લોઝર પરિમાણ તરીકે લેવા માટે વ્યાખ્યાયિત કરીશું. “ક્લોઝરમાંથી કબજે કરેલા મૂલ્યોને બહાર કાઢવા” વિશે પ્રકરણ ૧૩ માં યાદ કરો કે આપણે ત્રણ અલગ-અલગ ટ્રેઇટ સાથે ક્લોઝરને પરિમાણ તરીકે લઈ શકીએ છીએ: <code>Fn</code>, <code>FnMut</code> અને <code>FnOnce</code>. આપણે નક્કી કરવું પડશે કે અહીં કયા પ્રકારના ક્લોઝરનો ઉપયોગ કરવો. આપણને ખબર છે કે આપણે આખરે સ્ટાન્ડર્ડ લાઈબ્રેરીના <code>thread::spawn</code> અમલીકરણ જેવું કંઈક કરીશું, તેથી આપણે <code>thread::spawn</code> ના પરિમાણ પરની મર્યાદાઓ જોઈ શકીએ છીએ. દસ્તાવેજીકરણ દર્શાવે છે કે નીચે મુજબ:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt;
     where
         F: FnOnce() -&gt; T,
         F: Send + 'static,
         T: Send + 'static,
+<span class="boring">}</span></code></pre>
+<p>The <code>F</code> પ્રકાર પરિમાણ એ અહીં આપણી ચિંતાનું કેન્દ્ર છે; <code>T</code> પ્રકાર પરિમાણ વળતર મૂલ્ય સાથે સંબંધિત છે, અને તેના વિશે આપણે ચિંતિત નથી. આપણે જોઈ શકીએ છીએ કે <a href="../std/thread/struct.Builder.html#method.spawn"><code>spawn</code></a> <code>FnOnce</code> નો ઉપયોગ <code>F</code> પર trait bound તરીકે કરે છે. સંભવતઃ આપણને પણ એવું જ જોઈએ છે, કારણ કે આપણે આખરે <code>execute</code> માં મળેલાં Argumentને <code>spawn</code> ને પસાર કરીશું. આપણે વધુ ખાતરીપૂર્વક કહી શકીએ છીએ કે <code>FnOnce</code> એ trait છે જે આપણે ઉપયોગ કરવા માંગીએ છીએ, કારણ કે વિનંતી ચલાવવા માટે થ્રેડ માત્ર એક જ વાર તે વિનંતીના closure નું અમલ કરશે, જે <code>FnOnce</code> માં રહેલાં <code>Once</code> સાથે મેળ ખાય છે.</p>
+<p><code>F</code> પ્રકારના પરિમાણની અન્ય વિગતો <code>F</code> પ્રકારનો પરિમાણ પણ <code>Send</code> અને <code>'static</code> ના જીવનકાળ સાથે જોડાયેલો છે, જે આપણી પરિસ્થિતિમાં ઉપયોગી છે: આપણે એક થ્રેડથી બીજા થ્રેડમાં ક્લોઝર મોકલવા માટે <code>Send</code> ની જરૂર છે અને થ્રેડને પૂર્ણ થવામાં કેટલો સમય લાગશે તેની આપણને જાણ નથી, તેથી <code>'static</code> જરૂરી છે. ચાલો <code>ThreadPool</code> પર એક <code>execute</code> પદ્ધતિ બનાવીએ જે <code>F</code> પ્રકારના સામાન્ય પરિમાણ સાથે આ બંધનો ધરાવે છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/no-listing-03-define-execute/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આપણે હજી <code>()</code>  <code>FnOnce</code> પછી વાપરીએ છીએ કારણ કે આ <code>FnOnce</code> એક ક્લોઝર છે જે કોઈ પરિમાણો લેતું નથી અને યુનિટ પ્રકાર <code>()</code> આપે છે. ફંક્શન વ્યાખ્યાઓની જેમ, પરતનો પ્રકાર સહી (signature) માંથી છોડી શકાય છે, પરંતુ ભલે આપણી પાસે કોઈ પરિમાણો ન હોય, આપણે હજી પણ કૌંસની જરૂર છે.</p>
+<p>ફરીથી, આ <code>execute</code> પદ્ધતિનું સરળ અમલીકરણ છે: તે કંઈ કરતું નથી, પરંતુ અમે માત્ર અમારા કોડને કમ્પાઇલ કરવાનો પ્રયાસ કરી રહ્યા છીએ. ચાલો ફરી એકવાર તપાસીએ:</p>
+<pre><code class="language-console">{{#include ../listings/ch21-web-server/no-listing-03-define-execute/output.txt}}
 </code></pre>
-<pre><code>The `F` પ્રકાર પરિમાણ એ અહીં આપણી ચિંતાનું કેન્દ્ર છે; `T` પ્રકાર પરિમાણ વળતર મૂલ્ય સાથે સંબંધિત છે, અને તેના વિશે આપણે ચિંતિત નથી. આપણે જોઈ શકીએ છીએ કે `spawn` `FnOnce` નો ઉપયોગ `F` પર trait bound તરીકે કરે છે. સંભવતઃ આપણને પણ એવું જ જોઈએ છે, કારણ કે આપણે આખરે `execute` માં મળેલાં Argumentને `spawn` ને પસાર કરીશું. આપણે વધુ ખાતરીપૂર્વક કહી શકીએ છીએ કે `FnOnce` એ trait છે જે આપણે ઉપયોગ કરવા માંગીએ છીએ, કારણ કે વિનંતી ચલાવવા માટે થ્રેડ માત્ર એક જ વાર તે વિનંતીના closure નું અમલ કરશે, જે `FnOnce` માં રહેલાં `Once` સાથે મેળ ખાય છે.
-
-`F` પ્રકારના પરિમાણની અન્ય વિગતો `F` પ્રકારનો પરિમાણ પણ `Send` અને `'static` ના જીવનકાળ સાથે જોડાયેલો છે, જે આપણી પરિસ્થિતિમાં ઉપયોગી છે: આપણે એક થ્રેડથી બીજા થ્રેડમાં ક્લોઝર મોકલવા માટે `Send` ની જરૂર છે અને થ્રેડને પૂર્ણ થવામાં કેટલો સમય લાગશે તેની આપણને જાણ નથી, તેથી `'static` જરૂરી છે. ચાલો `ThreadPool` પર એક `execute` પદ્ધતિ બનાવીએ જે `F` પ્રકારના સામાન્ય પરિમાણ સાથે આ બંધનો ધરાવે છે:
-
-&lt;Listing file-name="src/lib.rs"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/no-listing-03-define-execute/src/lib.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-આપણે હજી `()`  `FnOnce` પછી વાપરીએ છીએ કારણ કે આ `FnOnce` એક ક્લોઝર છે જે કોઈ પરિમાણો લેતું નથી અને યુનિટ પ્રકાર `()` આપે છે. ફંક્શન વ્યાખ્યાઓની જેમ, પરતનો પ્રકાર સહી (signature) માંથી છોડી શકાય છે, પરંતુ ભલે આપણી પાસે કોઈ પરિમાણો ન હોય, આપણે હજી પણ કૌંસની જરૂર છે.
-
-ફરીથી, આ `execute` પદ્ધતિનું સરળ અમલીકરણ છે: તે કંઈ કરતું નથી, પરંતુ અમે માત્ર અમારા કોડને કમ્પાઇલ કરવાનો પ્રયાસ કરી રહ્યા છીએ. ચાલો ફરી એકવાર તપાસીએ:
-
-```console
-```console
-{{#include ../listings/ch21-web-server/no-listing-03-define-execute/output.txt}}
-</code></pre>
-<pre><code>તે કમ્પાઇલ થાય છે! પણ નોંધ કરો કે જો તમે `cargo run` ચલાવશો અને બ્રાઉઝરમાં વિનંતી કરશો, તો તમને એ જ ભૂલો દેખાશે જે આપણે પ્રકરણની શરૂઆતમાં જોઈ હતી. આપણું લાયબ્રેરી હજી સુધી `execute` ને પાસ કરેલા ક્લોઝરને બોલાવી રહ્યું નથી!
-
-નોંધ: તમે કડક કમ્પાઇલર્સ ધરાવતી ભાષાઓ, જેમ કે Haskell અને Rust વિશે સાંભળેલી એક કહેવત છે કે "જો કોડ કમ્પાઇલ થાય છે, તો તે કાર્ય કરે છે." પરંતુ આ કહેવત સાર્વત્રિક રીતે સાચી નથી. આપણી પ્રોજેક્ટ કમ્પાઇલ થાય છે, પરંતુ તે કંઈપણ કરતું નથી! જો આપણે કોઈ વાસ્તવિક, સંપૂર્ણ પ્રોજેક્ટ બનાવી રહ્યા હોત, તો આ એક સારો સમય હશે યુનિટ ટેસ્ટ લખવાનું શરૂ કરવા માટે જેથી તપાસ કરી શકાય કે કોડ કમ્પાઇલ થાય છે અને આપણને જે વર્તન જોઈએ છે તે જ હોય.
-
-વિચાર કરો: જો આપણે ક્લોઝરને બદલે ભવિષ્ય (future) ને ચલાવવાનું જઈ રહ્યા હોત તો અહીં શું અલગ હોત?
-
-#### Validating the Number of Threads in `new`
-
-આપણે `new` અને `execute` ના પરિમાણો સાથે કંઈ કર્યું નથી. ચાલો આ વિધેયોના મુખ્ય ભાગોને આપણે જોઈતી વર્તણૂક સાથે અમલમાં મૂકીએ. શરૂ કરવા માટે, ચાલો `new` વિશે વિચારીએ. અગાઉ અમે `size` પરિમાણ માટે એક અનSigned પ્રકાર પસંદ કર્યો હતો કારણ કે નકારાત્મક સંખ્યામાં થ્રેડો ધરાવતો પૂલ તર્કસંગત નથી. જો કે, શૂન્ય થ્રેડો ધરાવતો પૂલ પણ તર્કસંગત નથી, છતાં શૂન્ય એ સંપૂર્ણપણે માન્ય `usize` છે. અમે ખાતરી કરવા માટે કોડ ઉમેરીશું કે `size` શૂન્યથી મોટું છે તે પહેલાં અમે `ThreadPool` ઇન્સ્ટન્સ પરત કરીએ છીએ, અને જો તે શૂન્ય પ્રાપ્ત કરે તો પ્રોગ્રામ ગભરાઈ જશે, Listing 21-13 માં દર્શાવ્યા પ્રમાણે `assert!` મેક્રોનો ઉપયોગ કરીને.
-
-&lt;Listing number="21-13" file-name="src/lib.rs" caption="Implementing `ThreadPool::new` to panic if `size` is zero"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/listing-21-13/src/lib.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-અમે કેટલાક દસ્તાવેજીકરણ પણ ઉમેર્યું છે અમે `ThreadPool` માટે ડોક્યુમેન્ટેશન પણ ઉમેર્યું છે, જેમાં ડોક્યુમેન્ટ કોમેન્ટ્સનો સમાવેશ થાય છે. નોંધ કરો કે અમે સારા દસ્તાવેજીકરણની પદ્ધતિઓનું પાલન કર્યું છે અને અમારી કાર્યપદ્ધતિ કયા પરિસ્થિતિઓમાં ગભરાટ (panic) લાવી શકે છે તે દર્શાવતો વિભાગ ઉમેર્યો છે, જે વિશે પ્રકરણ ૧૪ માં ચર્ચા કરવામાં આવી હતી. `cargo doc --open` ચલાવીને અને `ThreadPool` સ્ટ્રક્ચર પર ક્લિક કરીને જુઓ કે `new` માટે
-
-જનરેટ થયેલ દસ્તાવેજો કેવા દેખાય છે! અહીં આપણે જે રીતે `assert!` મેક્રો ઉમેર્યું છે, તેના બદલે અમે `new` ને `build` માં બદલી શકીએ અને `Result` પરત કરી શકીએ, જેમ કે અમે `Config::build` સાથે I/O પ્રોજેક્ટમાં લિસ્ટિંગ ૧૨-૯ માં કર્યું હતું. પરંતુ અમે આ કિસ્સામાં નક્કી કર્યું છે કે કોઈ થ્રેડ વગર થ્રેડ પૂલ બનાવવાનો પ્રયાસ એ પુનઃપ્રાપ્ય ન હોય તેવો ભૂલ ગણવો જોઈએ. જો તમે મહત્વાકાંક્ષી અનુભવતા હો, તો `new` કાર્યપદ્ધતિ સાથે સરખામણી કરવા માટે નીચેના હસ્તાક્ષર (signature) વાળી `build` નામની એક કાર્યપદ્ધતિ લખવાનો પ્રયાસ કરો:
-
-```rust
-```rust
-pub fn build(size: usize) -&gt; Result&lt;ThreadPool, PoolCreationError&gt; {
-</code></pre>
-<pre><code>#### Creating Space to Store the Threads
-
-હવે આપણી પાસે થ્રેડની માન્ય સંખ્યા જાણવાનો માર્ગ છે જે પૂલ માં સંગ્રહિત કરી શકાય, આપણે તે થ્રેડો બનાવી શકીએ છીએ અને `ThreadPool` સ્ટ્રક્ચરમાં સંગ્રહિત કરી શકીએ છીએ, struct પરત કરતાં પહેલાં. પરંતુ આપણે થ્રેડને કેવી રીતે "સંગ્રહિત" કરીએ? ચાલો ફરી એકવાર `thread::spawn` હસ્તાક્ષર જોઈએ:
-
-```rust
-```rust
-pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt;
+<p>તે કમ્પાઇલ થાય છે! પણ નોંધ કરો કે જો તમે <code>cargo run</code> ચલાવશો અને બ્રાઉઝરમાં વિનંતી કરશો, તો તમને એ જ ભૂલો દેખાશે જે આપણે પ્રકરણની શરૂઆતમાં જોઈ હતી. આપણું લાયબ્રેરી હજી સુધી <code>execute</code> ને પાસ કરેલા ક્લોઝરને બોલાવી રહ્યું નથી!</p>
+<p>નોંધ: તમે કડક કમ્પાઇલર્સ ધરાવતી ભાષાઓ, જેમ કે Haskell અને Rust વિશે સાંભળેલી એક કહેવત છે કે “જો કોડ કમ્પાઇલ થાય છે, તો તે કાર્ય કરે છે.” પરંતુ આ કહેવત સાર્વત્રિક રીતે સાચી નથી. આપણી પ્રોજેક્ટ કમ્પાઇલ થાય છે, પરંતુ તે કંઈપણ કરતું નથી! જો આપણે કોઈ વાસ્તવિક, સંપૂર્ણ પ્રોજેક્ટ બનાવી રહ્યા હોત, તો આ એક સારો સમય હશે યુનિટ ટેસ્ટ લખવાનું શરૂ કરવા માટે જેથી તપાસ કરી શકાય કે કોડ કમ્પાઇલ થાય છે અને આપણને જે વર્તન જોઈએ છે તે જ હોય.</p>
+<p>વિચાર કરો: જો આપણે ક્લોઝરને બદલે ભવિષ્ય (future) ને ચલાવવાનું જઈ રહ્યા હોત તો અહીં શું અલગ હોત?</p>
+<h4 id="validating-the-number-of-threads-in-new"><a class="header" href="#validating-the-number-of-threads-in-new">Validating the Number of Threads in <code>new</code></a></h4>
+<p>આપણે <code>new</code> અને <code>execute</code> ના પરિમાણો સાથે કંઈ કર્યું નથી. ચાલો આ વિધેયોના મુખ્ય ભાગોને આપણે જોઈતી વર્તણૂક સાથે અમલમાં મૂકીએ. શરૂ કરવા માટે, ચાલો <code>new</code> વિશે વિચારીએ. અગાઉ અમે <code>size</code> પરિમાણ માટે એક અનSigned પ્રકાર પસંદ કર્યો હતો કારણ કે નકારાત્મક સંખ્યામાં થ્રેડો ધરાવતો પૂલ તર્કસંગત નથી. જો કે, શૂન્ય થ્રેડો ધરાવતો પૂલ પણ તર્કસંગત નથી, છતાં શૂન્ય એ સંપૂર્ણપણે માન્ય <code>usize</code> છે. અમે ખાતરી કરવા માટે કોડ ઉમેરીશું કે <code>size</code> શૂન્યથી મોટું છે તે પહેલાં અમે <code>ThreadPool</code> ઇન્સ્ટન્સ પરત કરીએ છીએ, અને જો તે શૂન્ય પ્રાપ્ત કરે તો પ્રોગ્રામ ગભરાઈ જશે, Listing 21-13 માં દર્શાવ્યા પ્રમાણે <code>assert!</code> મેક્રોનો ઉપયોગ કરીને.</p>
+<p><strong>Listing 21-13: Implementing <code>ThreadPool::new</code> to panic if <code>size</code> is zero</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-13/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અમે કેટલાક દસ્તાવેજીકરણ પણ ઉમેર્યું છે અમે <code>ThreadPool</code> માટે ડોક્યુમેન્ટેશન પણ ઉમેર્યું છે, જેમાં ડોક્યુમેન્ટ કોમેન્ટ્સનો સમાવેશ થાય છે. નોંધ કરો કે અમે સારા દસ્તાવેજીકરણની પદ્ધતિઓનું પાલન કર્યું છે અને અમારી કાર્યપદ્ધતિ કયા પરિસ્થિતિઓમાં ગભરાટ (panic) લાવી શકે છે તે દર્શાવતો વિભાગ ઉમેર્યો છે, જે વિશે પ્રકરણ ૧૪ માં ચર્ચા કરવામાં આવી હતી. <code>cargo doc --open</code> ચલાવીને અને <code>ThreadPool</code> સ્ટ્રક્ચર પર ક્લિક કરીને જુઓ કે <code>new</code> માટે</p>
+<p>જનરેટ થયેલ દસ્તાવેજો કેવા દેખાય છે! અહીં આપણે જે રીતે <code>assert!</code> મેક્રો ઉમેર્યું છે, તેના બદલે અમે <code>new</code> ને <code>build</code> માં બદલી શકીએ અને <code>Result</code> પરત કરી શકીએ, જેમ કે અમે <code>Config::build</code> સાથે I/O પ્રોજેક્ટમાં લિસ્ટિંગ ૧૨-૯ માં કર્યું હતું. પરંતુ અમે આ કિસ્સામાં નક્કી કર્યું છે કે કોઈ થ્રેડ વગર થ્રેડ પૂલ બનાવવાનો પ્રયાસ એ પુનઃપ્રાપ્ય ન હોય તેવો ભૂલ ગણવો જોઈએ. જો તમે મહત્વાકાંક્ષી અનુભવતા હો, તો <code>new</code> કાર્યપદ્ધતિ સાથે સરખામણી કરવા માટે નીચેના હસ્તાક્ષર (signature) વાળી <code>build</code> નામની એક કાર્યપદ્ધતિ લખવાનો પ્રયાસ કરો:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn build(size: usize) -&gt; Result&lt;ThreadPool, PoolCreationError&gt; {
+<span class="boring">}</span></code></pre>
+<h4 id="creating-space-to-store-the-threads"><a class="header" href="#creating-space-to-store-the-threads">Creating Space to Store the Threads</a></h4>
+<p>હવે આપણી પાસે થ્રેડની માન્ય સંખ્યા જાણવાનો માર્ગ છે જે પૂલ માં સંગ્રહિત કરી શકાય, આપણે તે થ્રેડો બનાવી શકીએ છીએ અને <code>ThreadPool</code> સ્ટ્રક્ચરમાં સંગ્રહિત કરી શકીએ છીએ, struct પરત કરતાં પહેલાં. પરંતુ આપણે થ્રેડને કેવી રીતે “સંગ્રહિત” કરીએ? ચાલો ફરી એકવાર <code>thread::spawn</code> હસ્તાક્ષર જોઈએ:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt;
     where
         F: FnOnce() -&gt; T,
         F: Send + 'static,
         T: Send + 'static,
+<span class="boring">}</span></code></pre>
+<p><code>spawn</code> <code>JoinHandle&lt;T&gt;</code> ચાલો <code>JoinHandle</code> નો ઉપયોગ કરવાનો પ્રયત્ન કરીએ અને જોઈએ કે શું થાય છે. આપણી પરિસ્થિતિમાં, આપણે થ્રેડ પૂલને પાસ કરેલા ક્લોઝર્સ કનેક્શનનું સંચાલન કરશે અને કંઈપણ પરત કરશે નહીં, તેથી <code>T</code> એ યુનિટ પ્રકાર <code>()</code> હશે. The code in Listing 21-14</p>
+<p>લિસ્ટિંગ 21-14 માંનો કોડ કમ્પાઇલ થશે, પરંતુ તે હજી સુધી કોઈ થ્રેડ બનાવતો નથી. આપણે <code>ThreadPool</code> ની વ્યાખ્યાને <code>thread::JoinHandle&lt;()&gt;</code> ઇન્સ્ટન્સના વેક્ટર તરીકે રાખવાનો બદલાવ કર્યો છે, વેક્ટરને <code>size</code> ક્ષમતા સાથે શરૂ કર્યું છે, એક <code>for</code> લૂપ સેટઅપ કર્યો છે જે થ્રેડ બનાવવા માટે અમુક કોડ ચલાવશે અને તેમાં થ્રેડ ધરાવતું <code>ThreadPool</code> ઇન્સ્ટન્સ પરત કર્યું છે.</p>
+<p><strong>Listing 21-14: Creating a vector for <code>ThreadPool</code> to hold the threads</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-14/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આપણે લાયબ્રેરી ક્રેટમાં <code>std::thread</code> ને કાર્યક્ષેત્રમાં લાવ્યું છે કારણ કે આપણે <code>thread::JoinHandle</code> નો ઉપયોગ <code>ThreadPool</code> માં વેક્ટરની વસ્તુઓના પ્રકાર તરીકે કરીએ છીએ. એક માન્ય કદ</p>
+<p>મળ્યા પછી, આપણું <code>ThreadPool</code> એક નવું વેક્ટર બનાવે છે જે <code>size</code> વસ્તુઓ સમાવી શકે છે. <code>with_capacity</code> ફંક્શન એ જ કાર્ય કરે છે જે <code>Vec::new</code> કરે છે પરંતુ એક મહત્વપૂર્ણ તફાવત સાથે: તે વેક્ટરમાં જગ્યા અગાઉથી ફાળવે છે. આપણે જાણીએ છીએ કે આપણે વેક્ટરમાં <code>size</code> ઘટકો સંગ્રહિત કરવાના છે, તેથી આ ફાળવણી શરૂઆતમાં કરવી એ <code>Vec::new</code> નો ઉપયોગ કરતાં થોડી વધુ કાર્યક્ષમ છે, જે ઘટકો દાખલ થતાં તેનું કદ બદલે છે.</p>
+<p>જ્યારે તમે <code>cargo check</code> ફરીથી ચલાવો છો, ત્યારે તે સફળ થવું જોઈએ.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h4 id="sending-code-from-the-threadpool-to-a-thread"><a class="header" href="#sending-code-from-the-threadpool-to-a-thread">Sending Code from the <code>ThreadPool</code> to a Thread</a></h4>
+<p>અમે લિસ્ટિંગ ૨૧-૧૪ માં <code>for</code> લૂપમાં એક ટીપ્પણી મૂકી હતી, જે થ્રેડ બનાવવાની બાબત સાથે સંબંધિત છે. અહીં, અમે જોઈશું કે અમે વાસ્તવમાં થ્રેડ કેવી રીતે બનાવીએ છીએ. પ્રમાણભૂત લાયબ્રેરી <code>thread::spawn</code> ને થ્રેડ બનાવવાના માર્ગ તરીકે પ્રદાન કરે છે, અને <code>thread::spawn</code> ને એવો કોડ અપેક્ષિત છે જે થ્રેડ બનાવ્યાની સાથે જ ચલાવવો જોઈએ. જો કે, અમારા કિસ્સામાં, અમે થ્રેડ બનાવવા માંગીએ છીએ અને પછીથી મોકલવામાં આવતા કોડની રાહ જોવાવી હોય છે. પ્રમાણભૂત લાયબ્રેરીના થ્રેડનો અમલ આ કરવાની કોઈ રીત પ્રદાન કરતો નથી; અમારે તેને જાતે જ અમલમાં મૂકવો પડશે.</p>
+<p>આ વર્તણૂક અમલમાં મૂકવા માટે, અમે <code>ThreadPool</code> અને થ્રેડો વચ્ચે એક નવો ડેટા સ્ટ્રક્ચર રજૂ કરીશું. અમે આ ડેટા સ્ટ્રક્ચર્સને Worker નામ આપીશું, જે પૂલિંગ અમલીકરણોમાં સામાન્ય શબ્દ છે. <code>Worker</code> એ કોડ મેળવે છે જેને ચલાવવાની જરૂર છે અને તેના થ્રેડમાં તે કોડ ચલાવે છે. એક રેસ્ટોરન્ટના રસોડામાં કામ કરતા</p>
+<p>લોકો વિશે વિચારો: Workers રાહ જુએ છે જ્યાં સુધી ગ્રાહકો પાસેથી ઓર્ડર આવે, અને પછી તેઓ તે ઓર્ડર લેવા અને તેને પૂરા કરવા માટે જવાબદાર હોય છે.</p>
+<p>વિકલ્પ તરીકે વર્કર સંચાલક થ્રેડ પૂલમાં <code>JoinHandle&lt;()&gt;</code> ના વેક્ટરને સંગ્રહિત કરવાને બદલે, અમે <code>Worker</code> ના ઉદાહરણો સંગ્રહિત કરીશું. દરેક <code>Worker</code> એક જ <code>JoinHandle&lt;()&gt;</code> ઉદાહરણ સંગ્રહિત કરશે. ત્યારબાદ, અમે <code>Worker</code> પર એક પદ્ધતિ અમલમાં મૂકીશું જે ચલાવવા માટેના કોડનો ક્લોઝર લેશે અને તેને પહેલાથી ચાલી રહેલા થ્રેડને અમલ માટે મોકલશે. અમે દરેક <code>Worker</code> ને એક <code>id</code> પણ આપીશું જેથી પૂલમાં <code>Worker</code> ના જુદા જુદા ઉદાહરણોને લોગિંગ અથવા ડીબગીંગ</p>
+<p>કરતી વખતે ઓળખી શકાય. અહીં નવી પ્રક્રિયા છે જે <code>ThreadPool</code> બનાવતી વખતે થશે. અમે <code>Worker</code> ને આ રીતે સેટ કર્યા પછી થ્રેડ પર ક્લોઝર મોકલવા માટેનો કોડ અમલમાં મૂકીશું:</p>
+<p>Worker રચના વ્યાખ્યાયિત કરો જે <code>id</code> અને <code>JoinHandle&lt;()&gt;</code> ધરાવે છે.</p>
+<p><code>ThreadPool</code> ને <code>Worker</code> ઉદાહરણોના વેક્ટરને સમાવવા માટે બદલો.</p>
+<p><code>Worker::new</code> વિધેય વ્યાખ્યાયિત કરો જે એક <code>id</code> સંખ્યા લે છે અને <code>Worker</code> ઉદાહરણ પરત કરે છે જે <code>id</code> અને ખાલી ક્લોઝર સાથે શરૂ થયેલ થ્રેડ ધરાવે છે.</p>
+<p><code>ThreadPool::new</code> માં, <code>for</code> લૂપ કાઉન્ટરનો ઉપયોગ <code>id</code> જનરેટ કરવા માટે કરો, તે <code>id</code> સાથે એક નવું <code>Worker</code> બનાવો અને વેક્ટરમાં <code>Worker</code> સંગ્રહિત કરો.</p>
+<p>જો તમે પડકાર ઝાલવા તૈયાર છો, તો યાદી ૨૧-૧૫ માં આપેલ કોડ જોતાં પહેલાં આ ફેરફારો જાતે અમલમાં મૂકવાનો પ્રયત્ન કરો.</p>
+<p>તૈયાર છો? અહીં યાદી ૨૧-૧૫ છે જેમાં અગાઉના ફેરફારો કરવા માટેની એક રીત દર્શાવવામાં આવી છે.</p>
+<p><strong>Listing 21-15: Modifying <code>ThreadPool</code> to hold <code>Worker</code> instances instead of holding threads directly</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-15/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આપણે <code>ThreadPool</code> પર ક્ષેત્રનું નામ <code>threads</code> થી બદલીને <code>workers</code> કર્યું છે, કારણ કે હવે તે <code>JoinHandle&lt;()&gt;</code> ઉદાહરણોને બદલે <code>Worker</code> ઉદાહરણો ધરાવે છે. આપણે <code>for</code> લૂપમાં કાઉન્ટરનો ઉપયોગ <code>Worker::new</code> માટે Argument તરીકે કરીએ છીએ, અને દરેક નવા <code>Worker</code></p>
+<p>ને <code>workers</code> નામનાં વેક્ટર (vector) માં સંગ્રહિત કરીએ છીએ. External code (જેમ કે આપણો સર્વર src/main.rs માં) એ <code>ThreadPool</code> ની અંદર <code>Worker</code> struct નો ઉપયોગ કરવા સંબંધિત અમલીકરણ વિગતો જાણવાની જરૂર નથી, તેથી આપણે <code>Worker</code> struct અને તેનું <code>new</code> કાર્ય ખાનગી બનાવીએ છીએ. <code>Worker::new</code> કાર્ય આપણને મળેલ <code>id</code> નો ઉપયોગ કરે છે અને એક <code>JoinHandle&lt;()&gt;</code> ઉદાહરણ સંગ્રહિત કરે છે જે ખાલી ક્લોઝર (closure) નો ઉપયોગ કરીને નવો થ્રેડ શરૂ કરીને બનાવવામાં આવે છે.</p>
+<p>નોંધ: જો ઓપરેટિંગ સિસ્ટમ પૂરતા સિસ્ટમ સંસાધનો ન હોવાને કારણે થ્રેડ બનાવી શકતી નથી, તો <code>thread::spawn</code> ગભરાટ (panic) પાડે છે. તેનાથી આપણી આખી સર્વર ગભરાટ પાડી શકે છે, ભલે કેટલાક થ્રેડો બનાવવામાં સફળ થાય. સરળતા માટે આ વર્તન યોગ્ય છે, પરંતુ ઉત્પાદન થ્રેડ પૂલ અમલીકરણમાં, તમે સંભવતઃ <a href="../std/thread/struct.Builder.html"><code>std::thread::Builder</code></a> અને તેની <code>spawn</code> પદ્ધતિનો ઉપયોગ કરવા માગો છો જે <code>Result</code> પરત કરે છે.</p>
+<p>આ કોડ કમ્પાઇલ થશે અને <code>ThreadPool::new</code> ને Argument તરીકે આપેલા <code>Worker</code> ઉદાહરણોની સંખ્યા સંગ્રહિત કરશે. પરંતુ અમે હજી પણ <code>execute</code> માં મળતા ક્લોઝરને પ્રક્રિયા કરી રહ્યા નથી. ચાલો જોઈએ કે તે કેવી રીતે કરવું આગળ.</p>
+<h4 id="sending-requests-to-threads-via-channels"><a class="header" href="#sending-requests-to-threads-via-channels">Sending Requests to Threads via Channels</a></h4>
+<p>આગામી સમસ્યા એ છે કે <code>thread::spawn</code> ને આપેલા ક્લોઝર્સ કંઈ જ કાર્ય કરતા નથી. હાલમાં, આપણે <code>execute</code> પદ્ધતિમાં ચલાવવા માટે જે ક્લોઝર જોઈએ છીએ તે મેળવીએ છીએ. પરંતુ આપણે દરેક <code>Worker</code> ની રચના સમયે <code>ThreadPool</code> માં રાખવામાં આવેલા કતારમાંથી ચલાવવા માટેનું કોડ મેળવવો પડશે અને તેને તેના થ્રેડને ચલાવવા માટે મોકલવો પડશે.</p>
+<p>આપણે હમણાં જ બનાવેલા <code>Worker</code> સ્ટ્રક્ચર્સને <code>ThreadPool</code> માં રહેલી કતારમાંથી ચલાવવા માટેનો કોડ મેળવવો જોઈએ અને તે કોડને તેના થ્રેડને ચલાવવા માટે મોકલવો જોઈએ.</p>
+<p><code>execute</code> <code>ThreadPool</code> <code>Worker</code> અપણે પ્રકરણ ૧૬માં જે ચેનલો વિશે શીખ્યા—બે થ્રેડો વચ્ચે વાતચીત કરવાનો એક સરળ માર્ગ—તે આ ઉપયોગ માટે યોગ્ય રહેશે. આપણે</p>
+<p>એક ચેનલનો ઉપયોગ કાર્યોની કતાર તરીકે કરીશું, અને <code>execute</code> <code>ThreadPool</code> માંથી કાર્યને <code>Worker</code> ઉદાહરણોમાં મોકલશે, જે</p>
+<p>તેને તેના થ્રેડ પર મોકલશે. આ યોજના છે: <code>ThreadPool</code> એક ચેનલ</p>
+<p>બનાવશે અને સેન્ડરને જાળવી રાખશે. દરેક <code>Worker</code> રીસીવરને જાળવી રાખશે. આપણે એક નવું <code>Job</code> struct બનાવીશું જે ચેનલમાં મોકલવા માટે જરૂરી ક્લોઝર્સને જાળવી રાખશે.</p>
+<p>The <code>execute</code> Method <code>execute</code> પદ્ધતિ મોકલનાર દ્વારા તે ચલાવવા માંગે છે તે કાર્યને</p>
+<p>પ્રગટ કરશે. તેના થ્રેડમાં, <code>Worker</code> તેના રીસીવર પર લૂપ કરશે અને તેને મળેલાં કાર્યોના ક્લોઝર્સનું અમલીકરણ કરશે.</p>
+<p>ચાલો આપણે <code>ThreadPool::new</code> માં એક ચેનલ બનાવીને શરૂઆત કરીએ અને સેન્ડરને <code>ThreadPool</code> ઇન્સ્ટન્સમાં જાળવી રાખીએ, જેની જેમ Listing 21-16 માં દર્શાવેલ છે. હાલ માટે <code>Job</code> સ્ટ્રક્ચરમાં કંઈ પણ નથી, પરંતુ તે એવાં વસ્તુઓના પ્રકારનો હશે જેને આપણે ચેનલ દ્વારા મોકલીશું.</p>
+<p><strong>Listing 21-16: Modifying <code>ThreadPool</code> to store the sender of a channel that transmits <code>Job</code> instances</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-16/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p><code>ThreadPool::new</code> માં, આપણું નવું ચેનલ બનાવીએ છીએ અને પૂલ પાસે સેન્ડર રાખીએ છીએ. આ સફળતાપૂર્વક કમ્પાઇલ થશે.</p>
+<p>ચાલો હવે ચેનલના રીસીવરને દરેક <code>Worker</code>માં મોકલવાનો પ્રયત્ન કરીએ જ્યારે થ્રેડ પૂલ ચેનલ બનાવે છે. આપણને ખબર છે કે આપણે થ્રેડ દ્વારા શરૂ કરાયેલ <code>Worker</code> ઇન્સ્ટન્સમાં રીસીવરનો ઉપયોગ કરવા માંગીએ છીએ, તેથી આપણે ક્લોઝરમાં <code>receiver</code> પેરામીટરનો સંદર્ભ લઈશું. લિસ્ટિંગ 21-17 નો કોડ હજી કમ્પાઇલ થશે નહીં.</p>
+<p><strong>Listing 21-17: Passing the receiver to each <code>Worker</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-17/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અમે કેટલાક નાના અને સરળ ફેરફારો કર્યા છે: અમે રીસીવરને <code>Worker::new</code> માં મોકલીએ છીએ, અને પછી ક્લોઝરમાં તેનો ઉપયોગ કરીએ છીએ.</p>
+<p>જ્યારે અમે આ કોડ ચકાસવાનો પ્રયત્ન કરીએ છીએ, ત્યારે અમને આ ભૂલ મળે છે:</p>
+<pre><code class="language-console">{{#include ../listings/ch21-web-server/listing-21-17/output.txt}}
 </code></pre>
-<pre><code>`spawn` `JoinHandle&lt;T&gt;` ચાલો `JoinHandle` નો ઉપયોગ કરવાનો પ્રયત્ન કરીએ અને જોઈએ કે શું થાય છે. આપણી પરિસ્થિતિમાં, આપણે થ્રેડ પૂલને પાસ કરેલા ક્લોઝર્સ કનેક્શનનું સંચાલન કરશે અને કંઈપણ પરત કરશે નહીં, તેથી `T` એ યુનિટ પ્રકાર `()` હશે. The code in Listing 21-14
-
-લિસ્ટિંગ 21-14 માંનો કોડ કમ્પાઇલ થશે, પરંતુ તે હજી સુધી કોઈ થ્રેડ બનાવતો નથી. આપણે `ThreadPool` ની વ્યાખ્યાને `thread::JoinHandle&lt;()&gt;` ઇન્સ્ટન્સના વેક્ટર તરીકે રાખવાનો બદલાવ કર્યો છે, વેક્ટરને `size` ક્ષમતા સાથે શરૂ કર્યું છે, એક `for` લૂપ સેટઅપ કર્યો છે જે થ્રેડ બનાવવા માટે અમુક કોડ ચલાવશે અને તેમાં થ્રેડ ધરાવતું `ThreadPool` ઇન્સ્ટન્સ પરત કર્યું છે.
-
-&lt;Listing number="21-14" file-name="src/lib.rs" caption="Creating a vector for `ThreadPool` to hold the threads"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/listing-21-14/src/lib.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-આપણે લાયબ્રેરી ક્રેટમાં `std::thread` ને કાર્યક્ષેત્રમાં લાવ્યું છે કારણ કે આપણે `thread::JoinHandle` નો ઉપયોગ `ThreadPool` માં વેક્ટરની વસ્તુઓના પ્રકાર તરીકે કરીએ છીએ. એક માન્ય કદ
-
-મળ્યા પછી, આપણું `ThreadPool` એક નવું વેક્ટર બનાવે છે જે `size` વસ્તુઓ સમાવી શકે છે. `with_capacity` ફંક્શન એ જ કાર્ય કરે છે જે `Vec::new` કરે છે પરંતુ એક મહત્વપૂર્ણ તફાવત સાથે: તે વેક્ટરમાં જગ્યા અગાઉથી ફાળવે છે. આપણે જાણીએ છીએ કે આપણે વેક્ટરમાં `size` ઘટકો સંગ્રહિત કરવાના છે, તેથી આ ફાળવણી શરૂઆતમાં કરવી એ `Vec::new` નો ઉપયોગ કરતાં થોડી વધુ કાર્યક્ષમ છે, જે ઘટકો દાખલ થતાં તેનું કદ બદલે છે.
-
-જ્યારે તમે `cargo check` ફરીથી ચલાવો છો, ત્યારે તે સફળ થવું જોઈએ.
-
-&lt;!-- Old headings. Do not remove or links may break. --&gt;
-#### Sending Code from the `ThreadPool` to a Thread
-
-અમે લિસ્ટિંગ ૨૧-૧૪ માં `for` લૂપમાં એક ટીપ્પણી મૂકી હતી, જે થ્રેડ બનાવવાની બાબત સાથે સંબંધિત છે. અહીં, અમે જોઈશું કે અમે વાસ્તવમાં થ્રેડ કેવી રીતે બનાવીએ છીએ. પ્રમાણભૂત લાયબ્રેરી `thread::spawn` ને થ્રેડ બનાવવાના માર્ગ તરીકે પ્રદાન કરે છે, અને `thread::spawn` ને એવો કોડ અપેક્ષિત છે જે થ્રેડ બનાવ્યાની સાથે જ ચલાવવો જોઈએ. જો કે, અમારા કિસ્સામાં, અમે થ્રેડ બનાવવા માંગીએ છીએ અને પછીથી મોકલવામાં આવતા કોડની રાહ જોવાવી હોય છે. પ્રમાણભૂત લાયબ્રેરીના થ્રેડનો અમલ આ કરવાની કોઈ રીત પ્રદાન કરતો નથી; અમારે તેને જાતે જ અમલમાં મૂકવો પડશે.
-
-આ વર્તણૂક અમલમાં મૂકવા માટે, અમે `ThreadPool` અને થ્રેડો વચ્ચે એક નવો ડેટા સ્ટ્રક્ચર રજૂ કરીશું. અમે આ ડેટા સ્ટ્રક્ચર્સને Worker નામ આપીશું, જે પૂલિંગ અમલીકરણોમાં સામાન્ય શબ્દ છે. `Worker` એ કોડ મેળવે છે જેને ચલાવવાની જરૂર છે અને તેના થ્રેડમાં તે કોડ ચલાવે છે. એક રેસ્ટોરન્ટના રસોડામાં કામ કરતા
-
-લોકો વિશે વિચારો: Workers રાહ જુએ છે જ્યાં સુધી ગ્રાહકો પાસેથી ઓર્ડર આવે, અને પછી તેઓ તે ઓર્ડર લેવા અને તેને પૂરા કરવા માટે જવાબદાર હોય છે.
-
-વિકલ્પ તરીકે વર્કર સંચાલક થ્રેડ પૂલમાં `JoinHandle&lt;()&gt;` ના વેક્ટરને સંગ્રહિત કરવાને બદલે, અમે `Worker` ના ઉદાહરણો સંગ્રહિત કરીશું. દરેક `Worker` એક જ `JoinHandle&lt;()&gt;` ઉદાહરણ સંગ્રહિત કરશે. ત્યારબાદ, અમે `Worker` પર એક પદ્ધતિ અમલમાં મૂકીશું જે ચલાવવા માટેના કોડનો ક્લોઝર લેશે અને તેને પહેલાથી ચાલી રહેલા થ્રેડને અમલ માટે મોકલશે. અમે દરેક `Worker` ને એક `id` પણ આપીશું જેથી પૂલમાં `Worker` ના જુદા જુદા ઉદાહરણોને લોગિંગ અથવા ડીબગીંગ
-
-કરતી વખતે ઓળખી શકાય. અહીં નવી પ્રક્રિયા છે જે `ThreadPool` બનાવતી વખતે થશે. અમે `Worker` ને આ રીતે સેટ કર્યા પછી થ્રેડ પર ક્લોઝર મોકલવા માટેનો કોડ અમલમાં મૂકીશું:
-
-Worker રચના વ્યાખ્યાયિત કરો જે `id` અને `JoinHandle&lt;()&gt;` ધરાવે છે.
-
-`ThreadPool` ને `Worker` ઉદાહરણોના વેક્ટરને સમાવવા માટે બદલો.
-
-`Worker::new` વિધેય વ્યાખ્યાયિત કરો જે એક `id` સંખ્યા લે છે અને `Worker` ઉદાહરણ પરત કરે છે જે `id` અને ખાલી ક્લોઝર સાથે શરૂ થયેલ થ્રેડ ધરાવે છે.
-
-`ThreadPool::new` માં, `for` લૂપ કાઉન્ટરનો ઉપયોગ `id` જનરેટ કરવા માટે કરો, તે `id` સાથે એક નવું `Worker` બનાવો અને વેક્ટરમાં `Worker` સંગ્રહિત કરો.
-
-જો તમે પડકાર ઝાલવા તૈયાર છો, તો યાદી ૨૧-૧૫ માં આપેલ કોડ જોતાં પહેલાં આ ફેરફારો જાતે અમલમાં મૂકવાનો પ્રયત્ન કરો.
-
-તૈયાર છો? અહીં યાદી ૨૧-૧૫ છે જેમાં અગાઉના ફેરફારો કરવા માટેની એક રીત દર્શાવવામાં આવી છે.
-
-&lt;Listing number="21-15" file-name="src/lib.rs" caption="Modifying `ThreadPool` to hold `Worker` instances instead of holding threads directly"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/listing-21-15/src/lib.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-આપણે `ThreadPool` પર ક્ષેત્રનું નામ `threads` થી બદલીને `workers` કર્યું છે, કારણ કે હવે તે `JoinHandle&lt;()&gt;` ઉદાહરણોને બદલે `Worker` ઉદાહરણો ધરાવે છે. આપણે `for` લૂપમાં કાઉન્ટરનો ઉપયોગ `Worker::new` માટે Argument તરીકે કરીએ છીએ, અને દરેક નવા `Worker`
-
-ને `workers` નામનાં વેક્ટર (vector) માં સંગ્રહિત કરીએ છીએ. External code (જેમ કે આપણો સર્વર src/main.rs માં) એ `ThreadPool` ની અંદર `Worker` struct નો ઉપયોગ કરવા સંબંધિત અમલીકરણ વિગતો જાણવાની જરૂર નથી, તેથી આપણે `Worker` struct અને તેનું `new` કાર્ય ખાનગી બનાવીએ છીએ. `Worker::new` કાર્ય આપણને મળેલ `id` નો ઉપયોગ કરે છે અને એક `JoinHandle&lt;()&gt;` ઉદાહરણ સંગ્રહિત કરે છે જે ખાલી ક્લોઝર (closure) નો ઉપયોગ કરીને નવો થ્રેડ શરૂ કરીને બનાવવામાં આવે છે.
-
-નોંધ: જો ઓપરેટિંગ સિસ્ટમ પૂરતા સિસ્ટમ સંસાધનો ન હોવાને કારણે થ્રેડ બનાવી શકતી નથી, તો `thread::spawn` ગભરાટ (panic) પાડે છે. તેનાથી આપણી આખી સર્વર ગભરાટ પાડી શકે છે, ભલે કેટલાક થ્રેડો બનાવવામાં સફળ થાય. સરળતા માટે આ વર્તન યોગ્ય છે, પરંતુ ઉત્પાદન થ્રેડ પૂલ અમલીકરણમાં, તમે સંભવતઃ `std::thread::Builder` અને તેની `spawn` પદ્ધતિનો ઉપયોગ કરવા માગો છો જે `Result` પરત કરે છે.
-
-આ કોડ કમ્પાઇલ થશે અને `ThreadPool::new` ને Argument તરીકે આપેલા `Worker` ઉદાહરણોની સંખ્યા સંગ્રહિત કરશે. પરંતુ અમે હજી પણ `execute` માં મળતા ક્લોઝરને પ્રક્રિયા કરી રહ્યા નથી. ચાલો જોઈએ કે તે કેવી રીતે કરવું આગળ.
-
-#### Sending Requests to Threads via Channels
-
-આગામી સમસ્યા એ છે કે `thread::spawn` ને આપેલા ક્લોઝર્સ કંઈ જ કાર્ય કરતા નથી. હાલમાં, આપણે `execute` પદ્ધતિમાં ચલાવવા માટે જે ક્લોઝર જોઈએ છીએ તે મેળવીએ છીએ. પરંતુ આપણે દરેક `Worker` ની રચના સમયે `ThreadPool` માં રાખવામાં આવેલા કતારમાંથી ચલાવવા માટેનું કોડ મેળવવો પડશે અને તેને તેના થ્રેડને ચલાવવા માટે મોકલવો પડશે.
-
-આપણે હમણાં જ બનાવેલા `Worker` સ્ટ્રક્ચર્સને `ThreadPool` માં રહેલી કતારમાંથી ચલાવવા માટેનો કોડ મેળવવો જોઈએ અને તે કોડને તેના થ્રેડને ચલાવવા માટે મોકલવો જોઈએ.
-
-`execute` `ThreadPool` `Worker` અપણે પ્રકરણ ૧૬માં જે ચેનલો વિશે શીખ્યા—બે થ્રેડો વચ્ચે વાતચીત કરવાનો એક સરળ માર્ગ—તે આ ઉપયોગ માટે યોગ્ય રહેશે. આપણે
-
-એક ચેનલનો ઉપયોગ કાર્યોની કતાર તરીકે કરીશું, અને `execute` `ThreadPool` માંથી કાર્યને `Worker` ઉદાહરણોમાં મોકલશે, જે
-
-તેને તેના થ્રેડ પર મોકલશે. આ યોજના છે: `ThreadPool` એક ચેનલ
-
-બનાવશે અને સેન્ડરને જાળવી રાખશે. દરેક `Worker` રીસીવરને જાળવી રાખશે. આપણે એક નવું `Job` struct બનાવીશું જે ચેનલમાં મોકલવા માટે જરૂરી ક્લોઝર્સને જાળવી રાખશે.
-
-The `execute` Method `execute` પદ્ધતિ મોકલનાર દ્વારા તે ચલાવવા માંગે છે તે કાર્યને
-
-પ્રગટ કરશે. તેના થ્રેડમાં, `Worker` તેના રીસીવર પર લૂપ કરશે અને તેને મળેલાં કાર્યોના ક્લોઝર્સનું અમલીકરણ કરશે.
-
-ચાલો આપણે `ThreadPool::new` માં એક ચેનલ બનાવીને શરૂઆત કરીએ અને સેન્ડરને `ThreadPool` ઇન્સ્ટન્સમાં જાળવી રાખીએ, જેની જેમ Listing 21-16 માં દર્શાવેલ છે. હાલ માટે `Job` સ્ટ્રક્ચરમાં કંઈ પણ નથી, પરંતુ તે એવાં વસ્તુઓના પ્રકારનો હશે જેને આપણે ચેનલ દ્વારા મોકલીશું.
-
-&lt;Listing number="21-16" file-name="src/lib.rs" caption="Modifying `ThreadPool` to store the sender of a channel that transmits `Job` instances"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/listing-21-16/src/lib.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-`ThreadPool::new` માં, આપણું નવું ચેનલ બનાવીએ છીએ અને પૂલ પાસે સેન્ડર રાખીએ છીએ. આ સફળતાપૂર્વક કમ્પાઇલ થશે.
-
-ચાલો હવે ચેનલના રીસીવરને દરેક `Worker`માં મોકલવાનો પ્રયત્ન કરીએ જ્યારે થ્રેડ પૂલ ચેનલ બનાવે છે. આપણને ખબર છે કે આપણે થ્રેડ દ્વારા શરૂ કરાયેલ `Worker` ઇન્સ્ટન્સમાં રીસીવરનો ઉપયોગ કરવા માંગીએ છીએ, તેથી આપણે ક્લોઝરમાં `receiver` પેરામીટરનો સંદર્ભ લઈશું. લિસ્ટિંગ 21-17 નો કોડ હજી કમ્પાઇલ થશે નહીં.
-
-&lt;Listing number="21-17" file-name="src/lib.rs" caption="Passing the receiver to each `Worker`"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/listing-21-17/src/lib.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-અમે કેટલાક નાના અને સરળ ફેરફારો કર્યા છે: અમે રીસીવરને `Worker::new` માં મોકલીએ છીએ, અને પછી ક્લોઝરમાં તેનો ઉપયોગ કરીએ છીએ.
-
-જ્યારે અમે આ કોડ ચકાસવાનો પ્રયત્ન કરીએ છીએ, ત્યારે અમને આ ભૂલ મળે છે:
-
-```console
-```console
-{{#include ../listings/ch21-web-server/listing-21-17/output.txt}}
-</code></pre>
-<pre><code>આ કોડ `receiver` ને અનેક `Worker` ઉદાહરણોમાં મોકલવાનો પ્રયત્ન કરી રહ્યો છે. આ કામ કરશે નહીં, કારણ કે તમને પ્રકરણ ૧૬ યાદ હશે: Rust દ્વારા પૂરા પાડવામાં આવેલ ચેનલ અમલીકરણ બહુવિધ ઉત્પાદક (multiple producer), એકગ્રહ ઉપભોક્તા (single consumer) પ્રકારનું છે. આનો અર્થ એ થાય છે કે આપણે આ કોડને સુધારવા માટે ચેનલના વપરાશ પાતળા ભાગને માત્ર ક્લોન કરી શકતા નથી. આપણને બહુવિધ `Worker` ઉદાહરણો સાથે સંદેશાઓની એક યાદી મોકલવી પણ નથી જોઈતી; જેથી દરેક સંદેશાની માત્ર એક જ વાર પ્રક્રિયા
-
-થાય. વધુમાં, ચેનલ કતારમાંથી કાર્ય લેવામાં `receiver` માં ફેરફાર કરવો જરૂરી છે, તેથી થ્રેડોને `receiver` ને સુરક્ષિત રીતે શેર કરવાની અને તેમાં ફેરફાર કરવાની રીત જોઈએ; નહિંતર આપણને રેસ પરિસ્થિતિઓ (race conditions) આવી શકે છે (જે પ્રકરણ ૧૬ માં આવરી લેવામાં આવ્યું હતું).
-
-પ્રકરણ ૧૬માં ચર્ચા કરાયેલ થ્રેડ-સુરક્ષિત સ્માર્ટ પોઇન્ટર્સને યાદ કરો: બહુવિધ થ્રેડોમાં માલિકી વહેંચવા અને થ્રેડોને મૂલ્ય બદલવાની મંજૂરી આપવા માટે, આપણે `Arc&lt;Mutex&lt;T&gt;&gt;` નો ઉપયોગ કરવો આવશ્યક છે. `Arc` પ્રકારથી બહુવિધ `Worker` ઉદાહરણો રીસીવરનું માલિકી મેળવી શકશે, અને `Mutex` ખાતરી કરશે કે એક સમયે માત્ર એક જ `Worker` રીસીવર પાસેથી કાર્ય મેળવે. સૂચિ ૨૧-૧૮ માં આપણે જે ફેરફારો કરવાના છે તે દર્શાવવામાં આવ્યા છે.
-
-&lt;Listing number="21-18" file-name="src/lib.rs" caption="Sharing the receiver among the `Worker` instances using `Arc` and `Mutex`"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/listing-21-18/src/lib.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-`ThreadPool::નવું` માં, અમે રીસીવરને `Arc` અને `Mutex` માં મૂકીએ છીએ. દરેક નવા `Worker` માટે, અમે `Arc` ની નકલ કરીએ છીએ જેથી સંદર્ભ ગણતરી વધે અને `Worker` ઉદાહરણો રીસીવરની માલિકી વહેંચી શકે.
-
-આ ફેરફારો સાથે, કોડ કમ્પાઇલ થાય છે! આપણે ત્યાં પહોંચી રહ્યા છીએ!
-
-#### Implementing the `execute` Method
-
-ચાલો અંતે `execute` પદ્ધતિને `ThreadPool` પર અમલમાં મૂકીએ. આપણે `Job` ને પણ struct થી બદલીને એક trait object માટે પ્રકાર ઉપનામ બનાવીશું, જે `execute` દ્વારા મળતા closure ના પ્રકારને ધરાવે છે. પ્રકરણ ૨૦ માં "પ્રકાર ઉપનામો અને પ્રકાર અભિગમો" વિભાગમાં ચર્ચા કરવામાં આવી હતી તેમ, પ્રકાર ઉપનામો લાંબા પ્રકારોને સરળતાથી ઉપયોગ માટે ટૂંકા બનાવવાની મંજૂરી આપે છે. લિસ્ટિંગ 21-19 જુઓ.
-
-&lt;Listing number="21-19" file-name="src/lib.rs" caption="Creating a `Job` type alias for a `Box` that holds each closure and then sending the job down the channel"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/listing-21-19/src/lib.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-`Job` `execute` `send` કારણ we use `unwrap` is that we know the failure case won’t happen, but the compiler doesn’t know that.
-
-પરંતુ આપણે હજી પૂર્ણ નથી કર્યા! `Worker` માં, `thread::spawn` ને આપેલ ક્લોઝર માત્ર જ réception અંતિમ બિંદુનો સંદર્ભ આપે છે. તેના બદલે, આપણે ક્લોઝરને અનંતકાળ સુધી લૂપ કરવું પડશે, réception અંતિમ બિંદુ પાસેથી કાર્ય માટે પૂછવું પડશે અને જ્યારે તે એક કાર્ય મેળવે ત્યારે ચલાવવું પડશે. ચાલો Listing 21-20 માં દર્શાવેલ ફેરફાર `Worker::new` માં કરીએ.
-
-&lt;Listing number="21-20" file-name="src/lib.rs" caption="Receiving and executing the jobs in the `Worker` instance’s thread"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/listing-21-20/src/lib.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-અહીં, પ્રથમ આપણે `receiver` પર `lock` કૉલ કરીએ છીએ જેથી મ્યુટેક્સ મેળરી શકાય, અને પછી કોઈપણ ભૂલો માટે ગભરાવવા (panic) માટે `unwrap` કૉલ કરીએ છીએ. મ્યુટેક્સ મેળવવામાં નિષ્ફળતા આવી શકે છે જો મ્યુટેક્સ ઝેરી (poisoned) સ્થિતિમાં હોય, જેવું થઈ શકે છે જો કોઈ અન્ય થ્રેડ લોક છોડવાને બદલે ગભરાવાથી બંધ થઈ ગયો હોય. આ પરિસ્થિતિમાં, આ થ્રેડને ગભરાવવા માટે `unwrap` કૉલ કરવું એ યોગ્ય પગલું છે. તમે તમારી સમજ મુજબ માહિતીપ્રદ ભૂલ સંદેશ સાથે `expect` માં આ `unwrap` બદલી શકો છો.
-
-જો આપણે મ્યુટેક્સ પર લોક મેળવીએ, તો આપણે `recv` ને બોલાવીએ છીએ જેથી ચેનલમાંથી `Job` પ્રાપ્ત કરી શકાય. એક અંતિમ `unwrap` અહીં કોઈપણ ભૂલોને દૂર કરે છે, જે થઈ શકે છે જો સેન્ડર ધરાવતો થ્રેડ બંધ થઈ ગયો હોય, જેમ `send` પદ્ધતિ `Err` પરત કરે છે જો રીસીવર બંધ થઈ જાય.
-
-`recv` કૉલ બ્લોક થાય છે, તેથી જો હજી કોઈ કાર્ય ન હોય, તો વર્તમાન થ્રેડ એક કાર્ય ઉપલબ્ધ થાય ત્યાં સુધી રાહ જુએ છે. `Mutex&lt;T&gt;` ખાતરી કરે છે કે એક સમયે માત્ર એક જ `Worker` થ્રેડ કાર્યની વિનંતી કરવાનો પ્રયાસ કરી રહ્યો છે.
-
-આપણો થ્રેડ પૂલ હવે કાર્યરત સ્થિતિમાં છે! તેને `cargo run` ચલાવો અને કેટલીક વિનંતીઓ કરો:
-
-&lt;!-- manual-regeneration
+<p>આ કોડ <code>receiver</code> ને અનેક <code>Worker</code> ઉદાહરણોમાં મોકલવાનો પ્રયત્ન કરી રહ્યો છે. આ કામ કરશે નહીં, કારણ કે તમને પ્રકરણ ૧૬ યાદ હશે: Rust દ્વારા પૂરા પાડવામાં આવેલ ચેનલ અમલીકરણ બહુવિધ ઉત્પાદક (multiple producer), એકગ્રહ ઉપભોક્તા (single consumer) પ્રકારનું છે. આનો અર્થ એ થાય છે કે આપણે આ કોડને સુધારવા માટે ચેનલના વપરાશ પાતળા ભાગને માત્ર ક્લોન કરી શકતા નથી. આપણને બહુવિધ <code>Worker</code> ઉદાહરણો સાથે સંદેશાઓની એક યાદી મોકલવી પણ નથી જોઈતી; જેથી દરેક સંદેશાની માત્ર એક જ વાર પ્રક્રિયા</p>
+<p>થાય. વધુમાં, ચેનલ કતારમાંથી કાર્ય લેવામાં <code>receiver</code> માં ફેરફાર કરવો જરૂરી છે, તેથી થ્રેડોને <code>receiver</code> ને સુરક્ષિત રીતે શેર કરવાની અને તેમાં ફેરફાર કરવાની રીત જોઈએ; નહિંતર આપણને રેસ પરિસ્થિતિઓ (race conditions) આવી શકે છે (જે પ્રકરણ ૧૬ માં આવરી લેવામાં આવ્યું હતું).</p>
+<p>પ્રકરણ ૧૬માં ચર્ચા કરાયેલ થ્રેડ-સુરક્ષિત સ્માર્ટ પોઇન્ટર્સને યાદ કરો: બહુવિધ થ્રેડોમાં માલિકી વહેંચવા અને થ્રેડોને મૂલ્ય બદલવાની મંજૂરી આપવા માટે, આપણે <code>Arc&lt;Mutex&lt;T&gt;&gt;</code> નો ઉપયોગ કરવો આવશ્યક છે. <code>Arc</code> પ્રકારથી બહુવિધ <code>Worker</code> ઉદાહરણો રીસીવરનું માલિકી મેળવી શકશે, અને <code>Mutex</code> ખાતરી કરશે કે એક સમયે માત્ર એક જ <code>Worker</code> રીસીવર પાસેથી કાર્ય મેળવે. સૂચિ ૨૧-૧૮ માં આપણે જે ફેરફારો કરવાના છે તે દર્શાવવામાં આવ્યા છે.</p>
+<p><strong>Listing 21-18: Sharing the receiver among the <code>Worker</code> instances using <code>Arc</code> and <code>Mutex</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-18/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p><code>ThreadPool::નવું</code> માં, અમે રીસીવરને <code>Arc</code> અને <code>Mutex</code> માં મૂકીએ છીએ. દરેક નવા <code>Worker</code> માટે, અમે <code>Arc</code> ની નકલ કરીએ છીએ જેથી સંદર્ભ ગણતરી વધે અને <code>Worker</code> ઉદાહરણો રીસીવરની માલિકી વહેંચી શકે.</p>
+<p>આ ફેરફારો સાથે, કોડ કમ્પાઇલ થાય છે! આપણે ત્યાં પહોંચી રહ્યા છીએ!</p>
+<h4 id="implementing-the-execute-method"><a class="header" href="#implementing-the-execute-method">Implementing the <code>execute</code> Method</a></h4>
+<p>ચાલો અંતે <code>execute</code> પદ્ધતિને <code>ThreadPool</code> પર અમલમાં મૂકીએ. આપણે <code>Job</code> ને પણ struct થી બદલીને એક trait object માટે પ્રકાર ઉપનામ બનાવીશું, જે <code>execute</code> દ્વારા મળતા closure ના પ્રકારને ધરાવે છે. પ્રકરણ ૨૦ માં “પ્રકાર ઉપનામો અને પ્રકાર અભિગમો” વિભાગમાં ચર્ચા કરવામાં આવી હતી તેમ, પ્રકાર ઉપનામો લાંબા પ્રકારોને સરળતાથી ઉપયોગ માટે ટૂંકા બનાવવાની મંજૂરી આપે છે. લિસ્ટિંગ 21-19 જુઓ.</p>
+<p><strong>Listing 21-19: Creating a <code>Job</code> type alias for a <code>Box</code> that holds each closure and then sending the job down the channel</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-19/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p><code>Job</code> <code>execute</code> <code>send</code> કારણ we use <code>unwrap</code> is that we know the failure case won’t happen, but the compiler doesn’t know that.</p>
+<p>પરંતુ આપણે હજી પૂર્ણ નથી કર્યા! <code>Worker</code> માં, <code>thread::spawn</code> ને આપેલ ક્લોઝર માત્ર જ réception અંતિમ બિંદુનો સંદર્ભ આપે છે. તેના બદલે, આપણે ક્લોઝરને અનંતકાળ સુધી લૂપ કરવું પડશે, réception અંતિમ બિંદુ પાસેથી કાર્ય માટે પૂછવું પડશે અને જ્યારે તે એક કાર્ય મેળવે ત્યારે ચલાવવું પડશે. ચાલો Listing 21-20 માં દર્શાવેલ ફેરફાર <code>Worker::new</code> માં કરીએ.</p>
+<p><strong>Listing 21-20: Receiving and executing the jobs in the <code>Worker</code> instance’s thread</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-20/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અહીં, પ્રથમ આપણે <code>receiver</code> પર <code>lock</code> કૉલ કરીએ છીએ જેથી મ્યુટેક્સ મેળરી શકાય, અને પછી કોઈપણ ભૂલો માટે ગભરાવવા (panic) માટે <code>unwrap</code> કૉલ કરીએ છીએ. મ્યુટેક્સ મેળવવામાં નિષ્ફળતા આવી શકે છે જો મ્યુટેક્સ ઝેરી (poisoned) સ્થિતિમાં હોય, જેવું થઈ શકે છે જો કોઈ અન્ય થ્રેડ લોક છોડવાને બદલે ગભરાવાથી બંધ થઈ ગયો હોય. આ પરિસ્થિતિમાં, આ થ્રેડને ગભરાવવા માટે <code>unwrap</code> કૉલ કરવું એ યોગ્ય પગલું છે. તમે તમારી સમજ મુજબ માહિતીપ્રદ ભૂલ સંદેશ સાથે <code>expect</code> માં આ <code>unwrap</code> બદલી શકો છો.</p>
+<p>જો આપણે મ્યુટેક્સ પર લોક મેળવીએ, તો આપણે <code>recv</code> ને બોલાવીએ છીએ જેથી ચેનલમાંથી <code>Job</code> પ્રાપ્ત કરી શકાય. એક અંતિમ <code>unwrap</code> અહીં કોઈપણ ભૂલોને દૂર કરે છે, જે થઈ શકે છે જો સેન્ડર ધરાવતો થ્રેડ બંધ થઈ ગયો હોય, જેમ <code>send</code> પદ્ધતિ <code>Err</code> પરત કરે છે જો રીસીવર બંધ થઈ જાય.</p>
+<p><code>recv</code> કૉલ બ્લોક થાય છે, તેથી જો હજી કોઈ કાર્ય ન હોય, તો વર્તમાન થ્રેડ એક કાર્ય ઉપલબ્ધ થાય ત્યાં સુધી રાહ જુએ છે. <code>Mutex&lt;T&gt;</code> ખાતરી કરે છે કે એક સમયે માત્ર એક જ <code>Worker</code> થ્રેડ કાર્યની વિનંતી કરવાનો પ્રયાસ કરી રહ્યો છે.</p>
+<p>આપણો થ્રેડ પૂલ હવે કાર્યરત સ્થિતિમાં છે! તેને <code>cargo run</code> ચલાવો અને કેટલીક વિનંતીઓ કરો:</p>
+<!-- manual-regeneration
 cd listings/ch21-web-server/listing-21-20
 cargo run
 make some requests to 127.0.0.1:7878
 Can't automate because the output depends on making requests
---&gt;
-```console
-```console
-$ cargo run
+-->
+<pre><code class="language-console">$ cargo run
    Compiling hello v0.1.0 (file:///projects/hello)
 warning: field `workers` is never read
  --&gt; src/lib.rs:7:5
@@ -530,25 +427,17 @@ Worker 3 got a job; executing.
 Worker 0 got a job; executing.
 Worker 2 got a job; executing.
 </code></pre>
-<pre><code>Success! સફળતા! આપણી પાસે હવે થ્રેડ પૂલ છે જે જોડાણો અસિંક્રોનસ રીતે ચલાવે છે. હંમેશાં ચારથી વધુ થ્રેડ બનાવવામાં આવતા નથી, તેથી જો સર્વર મોટી સંખ્યામાં વિનંતીઓ મેળવે તો આપણી સિસ્ટમ પર ભારણ નહીં પડે. જો આપણે /sleep ને વિનંતી કરીએ, તો સર્વર અન્ય થ્રેડ દ્વારા બીજી વિનંતીઓ ચલાવીને અન્ય વિનંતીઓને સેવા આપી શકશે.
-
-નોંધ: જો તમે એકસાથે બહુવિધ બ્રાઉઝર વિન્ડોમાં /sleep ખોલો છો, તો તે પાંચ-સેકન્ડના અંતરાલમાં એક સમયે લોડ થઈ શકે છે. કેટલાક વેબ બ્રાઉઝર્સ કેશીંગ માટે સમાન વિનંતીઓના બહુવિધ ઉદાહરણો ક્રમિક રીતે ચલાવે છે. આ મર્યાદા આપણી વેબ સર્વર દ્વારા થતી નથી.
-
-આ એક યોગ્ય સમય છે થોભીને વિચારવાનું કે જો આપણે ક્લોઝરની જગ્યાએ ફ્યુચર્સનો ઉપયોગ કર્યો હોત તો લિસ્ટિંગ ૨૧-૧૮, ૨૧-૧૯ અને ૨૧-૨૦ માં રહેલો કોડ કેવી રીતે અલગ હોત. કયા પ્રકારો બદલાય? પદ્ધતિ હસ્તાક્ષરોમાં શું ફેરફાર થાય, જો કોઈ હોય તો? કોડના કયા ભાગો એ જ રહેશે?
-
-અધ્યાય ૧૭ અને અધ્યાય ૧૯ માં `while let` લૂપ વિશે શીખ્યા પછી, તમને આશ્ચર્ય થઈ શકે છે કે શા માટે આપણે લિસ્ટિંગ ૨૧-૨૧ માં દર્શાવેલ `Worker` થ્રેડ કોડ લખ્યો નથી.
-
-&lt;Listing number="21-21" file-name="src/lib.rs" caption="An alternative implementation of `Worker::new` using `while let`"&gt;
-```rust
-```rust
-{{#rustdoc_include ../listings/ch21-web-server/listing-21-21/src/lib.rs:here}}
-</code></pre>
-<pre><code>&lt;/Listing&gt;
-આ કોડ સંકલિત થાય છે અને ચાલે છે, પરંતુ તે ઇચ્છિત થ્રેડીંગ વર્તન પરિણામી નથી: એક ધીમો વિનંતી અન્ય વિનંતીઓને પ્રક્રિયા પામવા માટે રાહ જોવાનારી સ્થિતિમાં મૂકી દેશે. આનું કારણ થોડું સૂક્ષ્મ છે: `Mutex` સ્ટ્રક્ચરમાં કોઈ જાહેર `unlock` પદ્ધતિ નથી, કારણ કે લોકનું માલિકી `LockResult&lt;MutexGuard&lt;T&gt;&gt;` માં રહેલા `MutexGuard&lt;T&gt;` ના જીવનકાળ પર આધારિત છે જે `lock` પદ્ધતિ આપે છે. કમ્પાઇલ સમયે, બોરો ચેકર એ નિયમ લાગુ કરી શકે છે કે `Mutex` દ્વારા સુરક્ષિત સંસાધન ત્યારે જ ઍક્સેસ કરી શકાય છે જ્યારે આપણે લોક ધરાવતા હોઈએ. જો કે, આ અમલીકરણ પણ પરિણામી થઈ શકે છે કે જો આપણે `MutexGuard&lt;T&gt;` ના જીવનકાળ વિશે સભાન ન રહીએ તો લોક અણધારી રીતે લાંબો સમય જાળવી રાખવામાં આવે છે.
-
-Listing 21-20 માં વપરાયેલ `let job = receiver.lock().unwrap().recv().unwrap();` કોડ કાર્ય કરે છે, કારણ કે `let` સાથે, સમીકરણ નિશાનીના જમણી બાજુએ વપરાયેલ કોઈપણ કામચલાઉ મૂલ્યો `let` વિધાન સમાપ્ત થતાંવેંત જ દૂર થઈ જાય છે. જોકે, `while let` (અને `if let` અને `match`) સંકળાયેલ બ્લોકના અંત સુધી કામચલાઉ મૂલ્યોને દૂર કરતું નથી. Listing 21-21 માં, લોક `job()` ની કૉલના સમગ્ર સમયગાળા દરમિયાન જાળવી રાખવામાં આવે છે, જેથી અન્ય `Worker` ઉદાહરણો નોકરીઓ મેળવી શકતા નથી.
-
-</code></pre>
+<p>Success! સફળતા! આપણી પાસે હવે થ્રેડ પૂલ છે જે જોડાણો અસિંક્રોનસ રીતે ચલાવે છે. હંમેશાં ચારથી વધુ થ્રેડ બનાવવામાં આવતા નથી, તેથી જો સર્વર મોટી સંખ્યામાં વિનંતીઓ મેળવે તો આપણી સિસ્ટમ પર ભારણ નહીં પડે. જો આપણે /sleep ને વિનંતી કરીએ, તો સર્વર અન્ય થ્રેડ દ્વારા બીજી વિનંતીઓ ચલાવીને અન્ય વિનંતીઓને સેવા આપી શકશે.</p>
+<p>નોંધ: જો તમે એકસાથે બહુવિધ બ્રાઉઝર વિન્ડોમાં /sleep ખોલો છો, તો તે પાંચ-સેકન્ડના અંતરાલમાં એક સમયે લોડ થઈ શકે છે. કેટલાક વેબ બ્રાઉઝર્સ કેશીંગ માટે સમાન વિનંતીઓના બહુવિધ ઉદાહરણો ક્રમિક રીતે ચલાવે છે. આ મર્યાદા આપણી વેબ સર્વર દ્વારા થતી નથી.</p>
+<p>આ એક યોગ્ય સમય છે થોભીને વિચારવાનું કે જો આપણે ક્લોઝરની જગ્યાએ ફ્યુચર્સનો ઉપયોગ કર્યો હોત તો લિસ્ટિંગ ૨૧-૧૮, ૨૧-૧૯ અને ૨૧-૨૦ માં રહેલો કોડ કેવી રીતે અલગ હોત. કયા પ્રકારો બદલાય? પદ્ધતિ હસ્તાક્ષરોમાં શું ફેરફાર થાય, જો કોઈ હોય તો? કોડના કયા ભાગો એ જ રહેશે?</p>
+<p>અધ્યાય ૧૭ અને અધ્યાય ૧૯ માં <code>while let</code> લૂપ વિશે શીખ્યા પછી, તમને આશ્ચર્ય થઈ શકે છે કે શા માટે આપણે લિસ્ટિંગ ૨૧-૨૧ માં દર્શાવેલ <code>Worker</code> થ્રેડ કોડ લખ્યો નથી.</p>
+<p><strong>Listing 21-21: An alternative implementation of <code>Worker::new</code> using <code>while let</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-21/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આ કોડ સંકલિત થાય છે અને ચાલે છે, પરંતુ તે ઇચ્છિત થ્રેડીંગ વર્તન પરિણામી નથી: એક ધીમો વિનંતી અન્ય વિનંતીઓને પ્રક્રિયા પામવા માટે રાહ જોવાનારી સ્થિતિમાં મૂકી દેશે. આનું કારણ થોડું સૂક્ષ્મ છે: <code>Mutex</code> સ્ટ્રક્ચરમાં કોઈ જાહેર <code>unlock</code> પદ્ધતિ નથી, કારણ કે લોકનું માલિકી <code>LockResult&lt;MutexGuard&lt;T&gt;&gt;</code> માં રહેલા <code>MutexGuard&lt;T&gt;</code> ના જીવનકાળ પર આધારિત છે જે <code>lock</code> પદ્ધતિ આપે છે. કમ્પાઇલ સમયે, બોરો ચેકર એ નિયમ લાગુ કરી શકે છે કે <code>Mutex</code> દ્વારા સુરક્ષિત સંસાધન ત્યારે જ ઍક્સેસ કરી શકાય છે જ્યારે આપણે લોક ધરાવતા હોઈએ. જો કે, આ અમલીકરણ પણ પરિણામી થઈ શકે છે કે જો આપણે <code>MutexGuard&lt;T&gt;</code> ના જીવનકાળ વિશે સભાન ન રહીએ તો લોક અણધારી રીતે લાંબો સમય જાળવી રાખવામાં આવે છે.</p>
+<p>Listing 21-20 માં વપરાયેલ <code>let job = receiver.lock().unwrap().recv().unwrap();</code> કોડ કાર્ય કરે છે, કારણ કે <code>let</code> સાથે, સમીકરણ નિશાનીના જમણી બાજુએ વપરાયેલ કોઈપણ કામચલાઉ મૂલ્યો <code>let</code> વિધાન સમાપ્ત થતાંવેંત જ દૂર થઈ જાય છે. જોકે, <code>while let</code> (અને <code>if let</code> અને <code>match</code>) સંકળાયેલ બ્લોકના અંત સુધી કામચલાઉ મૂલ્યોને દૂર કરતું નથી. Listing 21-21 માં, લોક <code>job()</code> ની કૉલના સમગ્ર સમયગાળા દરમિયાન જાળવી રાખવામાં આવે છે, જેથી અન્ય <code>Worker</code> ઉદાહરણો નોકરીઓ મેળવી શકતા નથી.</p>
 
                     </main>
 
@@ -602,6 +491,7 @@ Listing 21-20 માં વપરાયેલ `let job = receiver.lock().unwrap(
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

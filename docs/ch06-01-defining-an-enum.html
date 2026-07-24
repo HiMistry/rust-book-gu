@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -209,12 +209,12 @@
 </span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-01-defining-enums/src/main.rs:fn_call}}
 <span class="boring">}</span></code></pre>
 <p>એનમનો ઉપયોગ કરવાથી વધુ લાભ થાય છે. આપણી IP સરનામા પ્રકાર વિશે વધુ વિચારતા, હાલમાં આપણી પાસે વાસ્તવિક IP સરનામા ડેટા સંગ્રહિત કરવાની કોઈ રીત નથી; આપણે માત્ર તે પ્રકાર જાણે છીએ. તમને પ્રકરણ ૫ માં સ્ટ્રક્ચર્સ વિશે તાજેતરમાં જ શીખવા મળ્યું છે, તેથી તમે સૂચિ ૬-૧ માં દર્શાવ્યા પ્રમાણે આ સમસ્યાને સ્ટ્રક્ચર્સથી ઉકેલવાનો પ્રયાસ કરી શકો છો.</p>
-<listing number="6-1" caption="Storing the data and `IpAddrKind` variant of an IP address using a `struct`">
-```rust
-{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-01/src/main.rs:here}}
-```
-</listing>
-અહીં, આપણે એક struct `IpAddr` વ્યાખ્યાયિત કર્યો છે જે બે ક્ષેત્રો ધરાવે છે: એક `kind` ક્ષેત્ર જે `IpAddrKind` પ્રકારનું છે (આપણે અગાઉ વ્યાખ્યાયિત કરેલ enum) અને એક `address` ક્ષેત્ર જે `String` પ્રકારનું છે. આ struct ના બે ઉદાહરણો છે. પહેલું `home` છે, અને તેનું `kind` મૂલ્ય `IpAddrKind::V4` છે, સાથે સંકળાયેલું સરનામું ડેટા `127.0.0.1` છે. બીજું ઉદાહરણ `loopback` છે. તે `IpAddrKind` ના અન્ય variant ને તેના `kind` મૂલ્ય તરીકે ધરાવે છે, `V6`, અને તેની સાથે સંકળાયેલું સરનામું `::1` છે. આપણે એક struct નો ઉપયોગ `kind` અને `address` મૂલ્યોને એકસાથે જૂથ બનાવવા માટે કર્યો છે, જેથી હવે variant ને મૂલ્ય સાથે જોડી દેવામાં આવ્યું છે.
+<p><strong>Listing 6-1: Storing the data and <code>IpAddrKind</code> variant of an IP address using a <code>struct</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-01/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>અહીં, આપણે એક struct <code>IpAddr</code> વ્યાખ્યાયિત કર્યો છે જે બે ક્ષેત્રો ધરાવે છે: એક <code>kind</code> ક્ષેત્ર જે <code>IpAddrKind</code> પ્રકારનું છે (આપણે અગાઉ વ્યાખ્યાયિત કરેલ enum) અને એક <code>address</code> ક્ષેત્ર જે <code>String</code> પ્રકારનું છે. આ struct ના બે ઉદાહરણો છે. પહેલું <code>home</code> છે, અને તેનું <code>kind</code> મૂલ્ય <code>IpAddrKind::V4</code> છે, સાથે સંકળાયેલું સરનામું ડેટા <code>127.0.0.1</code> છે. બીજું ઉદાહરણ <code>loopback</code> છે. તે <code>IpAddrKind</code> ના અન્ય variant ને તેના <code>kind</code> મૂલ્ય તરીકે ધરાવે છે, <code>V6</code>, અને તેની સાથે સંકળાયેલું સરનામું <code>::1</code> છે. આપણે એક struct નો ઉપયોગ <code>kind</code> અને <code>address</code> મૂલ્યોને એકસાથે જૂથ બનાવવા માટે કર્યો છે, જેથી હવે variant ને મૂલ્ય સાથે જોડી દેવામાં આવ્યું છે.</p>
 <p>જો કે, માત્ર એક enum વાપરીને સમાન વિભાવના દર્શાવવી વધુ સંક્ષિપ્ત છે: struct ની અંદર enum ને બદલે, આપણે સીધા જ દરેક enum પ્રકારમાં માહિતી મૂકી શકીએ છીએ. <code>IpAddr</code> enumની આ નવી વ્યાખ્યા કહે છે કે <code>V4</code> અને <code>V6</code> બંને પ્રકારો સાથે સંકળાયેલ <code>String</code> મૂલ્યો ધરાવશે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -245,14 +245,22 @@ enum IpAddr {
 <p>આ કોડ દર્શાવે છે કે તમે કોઈ પણ પ્રકારનો ડેટા <code>enum</code> વિવિધતામાં મૂકી શકો છો: <code>String</code>, આંકડાકીય પ્રકારો, અથવા <code>struct</code> દાખલા તરીકે. તમે બીજા <code>enum</code> પણ સામેલ કરી શકો છો! ઉપરાંત, સ્ટાન્ડર્ડ લાઈબ્રેરીના પ્રકારો ઘણીવાર તમે જે વિચારી શકો તેના કરતાં વધુ જટિલ હોતા નથી.</p>
 <p>ધ્યાનમાં રાખો કે ભલે સ્ટાન્ડર્ડ લાઈબ્રેરીમાં <code>IpAddr</code> માટે વ્યાખ્યા હોય, તેમ છતાં આપણે આપણી પોતાની વ્યાખ્યા બનાવી અને ઉપયોગ કરી શકીએ છીએ કારણ કે આપણે સ્ટાન્ડર્ડ લાઈબ્રેરીની વ્યાખ્યાને આપણા કાર્યક્ષેત્રમાં નથી લાવવી. આપણે પ્રકરણ ૭ માં પ્રકારોને કાર્યક્ષેત્રમાં લાવવા વિશે વધુ વાત કરીશું.</p>
 <p>ચાલો યાદી ૬-૨ માં એક અન્ય <code>enum</code> નું ઉદાહરણ જોઈએ: આ પ્રકારનાં વિવિધ પ્રકારો તેનાં વિકલ્પોમાં જડિત છે.</p>
-<listing number="6-2" caption="A `Message` enum whose variants each store different amounts and types of values">
-```rust
-{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-02/src/main.rs:here}}
-```
-</listing>
-આ enum ચાર પ્રકારો ધરાવે છે:
+<p><strong>Listing 6-2: A <code>Message</code> enum whose variants each store different amounts and types of values</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>- {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-02/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<ul>
+<li>
+<p>આ enum ચાર પ્રકારો ધરાવે છે:</p>
+</li>
+<li>
 <p><code>Quit</code>: તેમાં કોઈ ડેટા સંકળાયેલ નથી.</p>
+</li>
+<li>
 <p><code>Move</code>: તેમાં નામિત ક્ષેત્રો છે, જેમ કે struct માં હોય છે.</p>
+</li>
+</ul>
 <p><code>Write</code>: તેમાં એક <code>String</code> સમાવિષ્ટ છે.</p>
 <p><code>ChangeColor</code>: તેમાં ત્રણ <code>i32</code> મૂલ્યો સમાવિષ્ટ છે.</p>
 <p>વ્યાખ્યાનમૂક (enum) ની વ્યાખ્યા વ્યાખ્યાનમૂક (enum) ના પ્રકારો, જેમ કે યાદી 6-2 માં દર્શાવેલ છે, તે રચના (struct) ની વિવિધ વ્યાખ્યાઓ કરવા જેવું જ છે, સિવાય કે વ્યાખ્યાનમૂકમાં <code>struct</code> કીવર્ડનો ઉપયોગ થતો નથી અને તમામ પ્રકારો <code>Message</code> પ્રકાર હેઠળ એકત્રિત કરવામાં આવે છે. આગળની રચનાઓ (structs) અગાઉના વ્યાખ્યાનમૂકના (enum) પ્રકારો જેવો જ ડેટા ધરાવી શકે છે:</p>
@@ -358,6 +366,7 @@ enum IpAddr {
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 

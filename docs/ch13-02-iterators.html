@@ -28,7 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="gu-theme-9b2f46f5.css">
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
         <link rel="stylesheet" href="ferris-d33b75bf.css">
         <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
         <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-78fa1409.js";
+            window.path_to_searchindex_js = "searchindex-ec56e225.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -185,19 +185,19 @@
                         <h2 id="processing-a-series-of-items-with-iterators"><a class="header" href="#processing-a-series-of-items-with-iterators">Processing a Series of Items with Iterators</a></h2>
 <p>પુનરાવર્તક પેટર્ન તમને વસ્તુઓની એક શ્રેણી પર ક્રમશઃ કોઈ કાર્ય કરવા દે છે. એક પુનરાવર્તક દરેક વસ્તુ પર પુનરાવર્તન કરવાની તર્કસંગતતા અને શ્રેણી ક્યારે પૂર્ણ થાય તેની નિર્ધારણની જવાબદારી નિભાવે છે. જ્યારે તમે પુનરાવર્તકોનો ઉપયોગ કરો છો, ત્યારે તમારે તે તર્કસંગતતાને જાતે ફરીથી અમલમાં મૂકવાની જરૂર નથી.</p>
 <p>Rust માં, પુનરાવર્તકો આળસુ (lazy) હોય છે, એટલે કે જ્યાં સુધી તમે પુનરાવર્તકની વપરાશ કરતા પદ્ધતિઓને બોલાવશો નહીં ત્યાં સુધી તેનો કોઈ અસર થતો નથી. ઉદાહરણ તરીકે, Listing 13-10 માં આપેલ કોડ <code>v1</code> વેક્ટરની વસ્તુઓ પર એક પુનરાવર્તક બનાવે છે, જે <code>Vec&lt;T&gt;</code> પર વ્યાખ્યાયિત <code>iter</code> પદ્ધતિને બોલાવીને કરવામાં આવે છે. આ કોડ પોતે કોઈ ઉપયોગી કાર્ય કરતો નથી.</p>
-<listing number="13-10" file-name="src/main.rs" caption="Creating an iterator">
-```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-10/src/main.rs:here}}
-```
-</listing>
-ઇટરેટર `v1_iter` ચલણમાં સંગ્રહિત છે. એકવાર આપણે ઇટરેટર બનાવ્યા પછી, અમે તેનો ઉપયોગ વિવિધ રીતે કરી શકીએ છીએ. લિસ્ટિંગ 3-5 માં, અમે કોડના દરેક ઘટક પર અમલ કરવા માટે `for` લૂપનો ઉપયોગ કરીને એરે પર ઇટરેટ કર્યું હતું. આંતરિક રીતે, આ આપોઆપ એક ઇટરેટર બનાવ્યું અને પછી તેનો ઉપયોગ કર્યો, પરંતુ અત્યાર સુધી અમે તે કેવી રીતે
+<p><strong>Listing 13-10: Creating an iterator</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch13-functional-features/listing-13-10/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>ઇટરેટર <code>v1_iter</code> ચલણમાં સંગ્રહિત છે. એકવાર આપણે ઇટરેટર બનાવ્યા પછી, અમે તેનો ઉપયોગ વિવિધ રીતે કરી શકીએ છીએ. લિસ્ટિંગ 3-5 માં, અમે કોડના દરેક ઘટક પર અમલ કરવા માટે <code>for</code> લૂપનો ઉપયોગ કરીને એરે પર ઇટરેટ કર્યું હતું. આંતરિક રીતે, આ આપોઆપ એક ઇટરેટર બનાવ્યું અને પછી તેનો ઉપયોગ કર્યો, પરંતુ અત્યાર સુધી અમે તે કેવી રીતે</p>
 <p>કાર્ય કરે છે તેના પર ધ્યાન આપ્યું ન હતું. In the example in Listing 13-11, we separate the creation of the iterator from the use of the iterator in the <code>for</code> loop. When the <code>for</code> loop is called using the iterator in <code>v1_iter</code>, each element in the iterator is used in one iteration of the loop, which prints out each value. લિસ્ટિંગ 13-11 માંના ઉદાહરણમાં, અમે <code>for</code> લૂપમાં ઇટરેટરના ઉપયોગથી ઇટરેટરની રચનાને અલગ કરીએ છીએ. જ્યારે <code>v1_iter</code> માંના ઇટરેટરનો ઉપયોગ કરીને <code>for</code> લૂપ બોલાવવામાં આવે છે, ત્યારે ઇટરેટરના દરેક ઘટકનો ઉપયોગ લૂપના એક પુનરાવર્તનમાં થાય છે, જે દરેક મૂલ્ય છાપે છે.</p>
-<listing number="13-11" file-name="src/main.rs" caption="Using an iterator in a `for` loop">
-```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-11/src/main.rs:here}}
-```
-</listing>
-ભાષાઓમાં જે તેમના પ્રમાણિત પુસ્તકાલયો દ્વારા ઇટરેટર (iterator) પ્રદાન કરતા નથી, તમે સંભવતઃ આ જ કાર્યક્ષમતા લખશો એ માટે એક variable અનુક્રમણિકા 0 થી શરૂ કરીને, તે variable's ઉપયોગ વેક્ટર (vector) માં અનુક્રમિત કરવા માટે મૂલ્ય મેળવવા અને variable's મૂલ્યમાં વધારો કરવો જ્યાં સુધી તે વેક્ટર (vector) માં વસ્તુઓની કુલ સંખ્યા સુધી ન પહોંચે ત્યાં સુધી લૂપ (loop) માં. ઇટરેટર (iterator) તમારા માટે આ તમામ તર્કનું
+<p><strong>Listing 13-11: Using an iterator in a <code>for</code> loop</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch13-functional-features/listing-13-11/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>ભાષાઓમાં જે તેમના પ્રમાણિત પુસ્તકાલયો દ્વારા ઇટરેટર (iterator) પ્રદાન કરતા નથી, તમે સંભવતઃ આ જ કાર્યક્ષમતા લખશો એ માટે એક variable અનુક્રમણિકા 0 થી શરૂ કરીને, તે variable’s ઉપયોગ વેક્ટર (vector) માં અનુક્રમિત કરવા માટે મૂલ્ય મેળવવા અને variable’s મૂલ્યમાં વધારો કરવો જ્યાં સુધી તે વેક્ટર (vector) માં વસ્તુઓની કુલ સંખ્યા સુધી ન પહોંચે ત્યાં સુધી લૂપ (loop) માં. ઇટરેટર (iterator) તમારા માટે આ તમામ તર્કનું</p>
 <p>સંચાલન કરે છે, જે તમને પુનરાવર્તિત કોડને ઘટાડે છે જેને તમે સંભવિતપણે ભૂલ કરી શકો છો. ઇટરેટર (iterator) તમને વધુ લવચીકતા આપે છે જેથી સમાન તર્કનો ઉપયોગ ઘણાં વિવિધ પ્રકારના ક્રમો સાથે કરી શકાય, માત્ર વેક્ટર (vector) જેવા અનુક્રમિત કરી શકાય તેવા ડેટા સ્ટ્રક્ચર (data structure) સાથે જ નહીં. ચાલો જોઈએ કે ઇટરેટર (iterator) તે કેવી રીતે કરે છે.</p>
 <h3 id="the-iterator-trait-and-the-next-method"><a class="header" href="#the-iterator-trait-and-the-next-method">The <code>Iterator</code> Trait and the <code>next</code> Method</a></h3>
 <p>બધી પુનરાવર્તકો એક લક્ષણ (trait) અમલમાં મૂકે છે, જેનું નામ <code>Iterator</code> છે અને તે પ્રમાણિત લાયબ્રેરીમાં વ્યાખ્યાયિત થયેલું છે. લક્ષણની વ્યાખ્યા આ પ્રમાણે દેખાય છે:</p>
@@ -214,54 +214,54 @@
 <p>જુઓ કે આ વ્યાખ્યામાં નવું વાક્યરચના વપરાય છે: <code>type Item</code> અને <code>Self::Item</code>, જે આ ટ્રેઇટ સાથે સંકળાયેલ પ્રકાર (associated type) ને વ્યાખ્યાયિત કરે છે. આપણે પ્રકરણ ૨૦ માં સંકળાયેલા પ્રકારો વિશે વિગતવાર વાત કરીશું. અત્યારે, તમારે માત્ર એટલું જ જાણવાની જરૂર છે કે આ કોડ કહે છે કે <code>Iterator</code> ટ્રેઇટનો અમલ કરવા માટે તમારે એક <code>Item</code> પ્રકાર પણ વ્યાખ્યાયિત કરવો પડશે, અને આ <code>Item</code> પ્રકાર <code>next</code> પદ્ધતિના રીટર્ન પ્રકારમાં વપરાય છે. બીજા શબ્દોમાં કહીએ તો, <code>Item</code> પ્રકાર એ ઇટરેટર પાસેથી પરત કરવામાં આવતો પ્રકાર હશે.</p>
 <p>Iterator લક્ષણ <code>Iterator</code> લક્ષણ માત્ર એક જ પદ્ધતિ (method) વ્યાખ્યાયિત કરવાની આવશ્યકતા રાખે છે: <code>next</code> પદ્ધતિ, જે એક સમયે પુનરાવર્તકની (iterator) એક વસ્તુ આપે છે, જેને <code>Some</code> માં લપેટેલી હોય છે, અને જ્યારે પુનરાવર્તન પૂર્ણ થાય છે, ત્યારે</p>
 <p><code>None</code> આપે છે. આપણે પુનરાવર્તકો પર સીધી રીતે <code>next</code> પદ્ધતિ બોલાવી શકીએ છીએ; યાદી 13-12 દર્શાવે છે કે વેક્ટરથી બનાવેલ પુનરાવર્તક પર <code>next</code> ને વારંવાર બોલાવવાથી કયા મૂલ્યો પાછા મળે છે.</p>
-<listing number="13-12" file-name="src/lib.rs" caption="Calling the `next` method on an iterator">
-```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-12/src/lib.rs:here}}
-```
-</listing>
-એ નોંધ લેવી જરૂરી છે કે આપણે `v1_iter` ને પરિવર્તનશીલ બનાવવું પડ્યું હતું: પુનરાવર્તક (iterator) પર `next` પદ્ધતિને બોલાવવાથી આંતરિક સ્થિતિ બદલાય છે, જેનો પુનરાવર્તક ક્રમમાં પોતાની સ્થિતિ જાળવવા માટે ઉપયોગ કરે છે. બીજા શબ્દોમાં કહીએ તો, આ કોડ પુનરાવર્તકની વપરાશિતા કરે છે, અથવા તેનો ઉપયોગ પૂરો કરે છે. `next` ના દરેક બોલાવવાથી પુનરાવર્તકમાંથી એક ઘટક ખતમ થઈ જાય છે. જ્યારે આપણે `for` લૂપનો ઉપયોગ કર્યો ત્યારે આપણે `v1_iter` ને પરિવર્તનશીલ બનાવવાની જરૂર ન હતી, કારણ કે લૂપે `v1_iter` નું માલિકી સ્વીકાર્યું અને દૃશ્યમાન રીતે તેને પરિવર્તનશીલ બનાવી દીધું.
+<p><strong>Listing 13-12: Calling the <code>next</code> method on an iterator</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch13-functional-features/listing-13-12/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>એ નોંધ લેવી જરૂરી છે કે આપણે <code>v1_iter</code> ને પરિવર્તનશીલ બનાવવું પડ્યું હતું: પુનરાવર્તક (iterator) પર <code>next</code> પદ્ધતિને બોલાવવાથી આંતરિક સ્થિતિ બદલાય છે, જેનો પુનરાવર્તક ક્રમમાં પોતાની સ્થિતિ જાળવવા માટે ઉપયોગ કરે છે. બીજા શબ્દોમાં કહીએ તો, આ કોડ પુનરાવર્તકની વપરાશિતા કરે છે, અથવા તેનો ઉપયોગ પૂરો કરે છે. <code>next</code> ના દરેક બોલાવવાથી પુનરાવર્તકમાંથી એક ઘટક ખતમ થઈ જાય છે. જ્યારે આપણે <code>for</code> લૂપનો ઉપયોગ કર્યો ત્યારે આપણે <code>v1_iter</code> ને પરિવર્તનશીલ બનાવવાની જરૂર ન હતી, કારણ કે લૂપે <code>v1_iter</code> નું માલિકી સ્વીકાર્યું અને દૃશ્યમાન રીતે તેને પરિવર્તનશીલ બનાવી દીધું.</p>
 <p>વળી, <code>next</code> કૉલથી મળતા મૂલ્યો વેક્ટરના મૂલ્યોના અપરિવર્તનશીલ સંદર્ભો (immutable references) છે. <code>iter</code> પદ્ધતિ અપરિવર્તનશીલ સંદર્ભો પર ઇટરેટર ઉત્પન્ન કરે છે. જો આપણે એવો ઇટરેટર બનાવવા માંગતા હોઈએ જે <code>v1</code> નું માલિકી સ્થાનો અને માલિકીવાળા મૂલ્યો (owned values) આપે, તો આપણે <code>iter</code> ને બદલે <code>into_iter</code> કૉલ કરી શકીએ છીએ. એ જ રીતે, જો આપણે પરિવર્તનશીલ સંદર્ભો (mutable references) પર ઇટરેટ કરવા માંગતા હોઈએ, તો આપણે <code>iter</code> ને બદલે <code>iter_mut</code> કૉલ કરી શકીએ છીએ.</p>
 <h3 id="methods-that-consume-the-iterator"><a class="header" href="#methods-that-consume-the-iterator">Methods That Consume the Iterator</a></h3>
 <p><code>Iterator</code> લક્ષણ (trait) માં ઘણાં વિવિધ પદ્ધતિઓ (methods) છે જેમાં સ્ટાન્ડર્ડ લાઈબ્રેરી દ્વારા ડિફોલ્ટ અમલીકરણો (implementations) આપવામાં આવ્યાં છે; તમે આ પદ્ધતિઓ વિશે સ્ટાન્ડર્ડ લાઈબ્રેરી API દસ્તાવેજીકરણમાં <code>Iterator</code> લક્ષણ (trait) માં જોઈ શકો છો. આમાંથી કેટલીક પદ્ધતિઓ <code>next</code> પદ્ધતિને તેમના વ્યાખ્યાનમાં બોલાવે છે, જેના કારણે જ્યારે તમે <code>Iterator</code> લક્ષણ (trait) નો અમલ કરો છો ત્યારે તમારે <code>next</code> પદ્ધતિનો અમલ કરવો જરૂરી છે.</p>
 <p>જે પદ્ધતિઓ <code>next</code> ને બોલાવે છે તેને user આધારિત અનુકૂલકો (consuming adapters) કહેવામાં આવે છે કારણ કે તેમને બોલાવવાથી ઇટરેટર વપરાશ પામે છે. એક ઉદાહરણ <code>sum</code> પદ્ધતિનું છે, જે ઇટરેટરની માલિકી લે છે અને વારંવાર <code>next</code> ને બોલાવીને વસ્તુઓ પર પુનરાવર્તન કરે છે, આમ ઇટરેટરનો વપરાશ કરે છે. જેમ જેમ તે પુનરાવર્તન કરે છે, તેમ તેમ તે દરેક વસ્તુને ચાલુ કુલ (running total) માં ઉમેરે છે અને પુનરાવર્તન પૂર્ણ થાય ત્યારે કુલ રકમ આપે છે. યાદી 13-13 માં <code>sum</code> પદ્ધતિના ઉપયોગનું ઉદાહરણ દર્શાવતું પરીક્ષણ (test) છે.</p>
-<listing number="13-13" file-name="src/lib.rs" caption="Calling the `sum` method to get the total of all items in the iterator">
-```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-13/src/lib.rs:here}}
-```
-</listing>
-આપણે `sum` ફંક્શનને બોલાવ્યા પછી `v1_iter` વાપરવાની અનુમતિ નથી, કારણ કે `sum` તેના પર બોલાવવામાં આવેલ ઇટરેટરનું માલિકી લે છે.
+<p><strong>Listing 13-13: Calling the <code>sum</code> method to get the total of all items in the iterator</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch13-functional-features/listing-13-13/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>આપણે <code>sum</code> ફંક્શનને બોલાવ્યા પછી <code>v1_iter</code> વાપરવાની અનુમતિ નથી, કારણ કે <code>sum</code> તેના પર બોલાવવામાં આવેલ ઇટરેટરનું માલિકી લે છે.</p>
 <h3 id="methods-that-produce-other-iterators"><a class="header" href="#methods-that-produce-other-iterators">Methods That Produce Other Iterators</a></h3>
 <p>ઇટરેટર અનુરૂપક (Iterator adapters) એ <code>Iterator</code> લક્ષણ પર વ્યાખ્યાયિત પદ્ધતિઓ છે જે ઇટરેટરનો ઉપયોગ થતો નથી. તેના બદલે, તે મૂળ ઇટરેટરના કોઈ એક પાસાને બદલીને નવા ઇટરેટર ઉત્પન્ન કરે છે.</p>
 <p>ઉદાહરણ ૧૩-૧૪ માં ઇટરેટર અનુરૂપક પદ્ધતિ <code>map</code> ને બોલાવવાનું ઉદાહરણ દર્શાવવામાં આવ્યું છે, જે દરેક વસ્તુ પર કોલ કરવા માટે ક્લોઝર (closure) લે છે જ્યારે વસ્તુઓનું પુનરાવર્તન કરવામાં આવે છે. <code>map</code> પદ્ધતિ એક નવો ઇટરેટર આપે છે જે સુધારેલી વસ્તુઓ ઉત્પન્ન કરે છે. અહીં, ક્લોઝર એક નવો ઇટરેટર બનાવે છે જેમાં વેક્ટરની દરેક વસ્તુ ૧ થી વધારી દેવામાં આવશે.</p>
-<listing number="13-14" file-name="src/main.rs" caption="Calling the iterator adapter `map` to create a new iterator">
-```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-14/src/main.rs:here}}
-```
-</listing>
-જો કે, આ કોડ એક ચેતવણી ઉત્પન્ન કરે છે:
+<p><strong>Listing 13-14: Calling the iterator adapter <code>map</code> to create a new iterator</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch13-functional-features/listing-13-14/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>જો કે, આ કોડ એક ચેતવણી ઉત્પન્ન કરે છે:</p>
 <pre><code class="language-console">{{#include ../listings/ch13-functional-features/listing-13-14/output.txt}}
 </code></pre>
 <p>Listing 13-14 નો કોડ કંઈ કરતો નથી; આપણો નિર્દિષ્ટ ક્લોઝર ક્યારેય બોલાતો નથી. ચેતવણી આપણને યાદ અપાવે છે કે શા માટે: Iterator adapters આળસુ હોય છે, અને આપણે અહીં iterator વાપરવાની જરૂર છે.</p>
 <p>આ ચેતવણી સુધારવા અને iterator વાપરવા માટે, આપણે <code>collect</code> પદ્ધતિનો ઉપયોગ કરીશું, જેનો આપણે Listing 12-1 માં <code>env::args</code> સાથે ઉપયોગ કર્યો હતો. આ પદ્ધતિ iterator વાપરે છે અને પરિણામી મૂલ્યોને એક સંગ્રહ ડેટા પ્રકારમાં એકત્રિત કરે છે.</p>
 <p>Listing 13-15 માં, આપણે <code>map</code> કૉલથી પરત થતા iterator પર પુનરાવર્તન કરવાના પરિણામોને વેક્ટર (vector) માં એકત્રિત કરીએ છીએ. આ વેક્ટર મૂળ વેક્ટરની દરેક વસ્તુ ધરાવશે, જે 1 થી વધેલી હશે.</p>
-<listing number="13-15" file-name="src/main.rs" caption="Calling the `map` method to create a new iterator, and then calling the `collect` method to consume the new iterator and create a vector">
-```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-15/src/main.rs:here}}
-```
-</listing>
-કારણ કે `map` એક ક્લોઝર લે છે, આપણી પાસે દરેક વસ્તુ પર કરવા માટે ઇચ્છિત કોઈપણ ક્રિયા સ્પષ્ટ કરવાની ક્ષમતા છે. આ એક ઉત્તમ ઉદાહરણ છે કે કેવી રીતે ક્લોઝર તમને વર્તણૂકને કસ્ટમાઇઝ કરવાની મંજૂરી આપે છે જ્યારે `Iterator` ટ્રેઇટ દ્વારા પૂરી પાડવામાં આવતી પુનરાવર્તન વર્તણૂકનો ફરી ઉપયોગ કરે છે.
+<p><strong>Listing 13-15: Calling the <code>map</code> method to create a new iterator, and then calling the <code>collect</code> method to consume the new iterator and create a vector</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch13-functional-features/listing-13-15/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>કારણ કે <code>map</code> એક ક્લોઝર લે છે, આપણી પાસે દરેક વસ્તુ પર કરવા માટે ઇચ્છિત કોઈપણ ક્રિયા સ્પષ્ટ કરવાની ક્ષમતા છે. આ એક ઉત્તમ ઉદાહરણ છે કે કેવી રીતે ક્લોઝર તમને વર્તણૂકને કસ્ટમાઇઝ કરવાની મંજૂરી આપે છે જ્યારે <code>Iterator</code> ટ્રેઇટ દ્વારા પૂરી પાડવામાં આવતી પુનરાવર્તન વર્તણૂકનો ફરી ઉપયોગ કરે છે.</p>
 <p>તમે જટિલ ક્રિયાઓ કરવા માટે વાચકક્ષમ રીતે બહુવિધ ઇટરેટર એડેપ્ટર કૉલ્સને સાંકળી શકો છો. પરંતુ બધા ઇટરેટર આળસુ હોવાથી, તમારે પરિણામો મેળવવા માટે એડેપ્ટર પદ્ધતિઓના કૉલ્સમાંથી એકને બોલાવવો પડશે.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="closures-that-capture-their-environment"><a class="header" href="#closures-that-capture-their-environment">Closures That Capture Their Environment</a></h3>
 <p>ઘણા ઇટરેટર એડેપ્ટર ક્લોઝરને Argument તરીકે લે છે, અને સામાન્ય રીતે ઇટરેટર એડેપ્ટરને આપવા માટે આપણે જે ક્લોઝરનો ઉલ્લેખ કરીશું તે તેમના પર્યાવરણને ગ્રહણ કરે છે.</p>
 <p>આ ઉદાહરણ માટે, આપણે <code>filter</code> પદ્ધતિનો ઉપયોગ કરીશું જે ક્લોઝર લે છે. ક્લોઝર ઇટરેટરથી એક આઇટમ મેળવે છે અને <code>bool</code> આપે છે. જો ક્લોઝર <code>true</code> આપે તો, તે મૂલ્ય <code>filter</code> દ્વારા ઉત્પન્ન થતા ઇટરેશનમાં સામેલ થશે. જો ક્લોઝર <code>false</code> આપે તો, તે મૂલ્ય સામેલ થશે નહીં.</p>
 <p>Listing 13-16 માં, અમે <code>filter</code> નો ઉપયોગ કરીએ છીએ જેમાં એક ક્લોઝર છે જે તેના પર્યાવરણમાંથી <code>shoe_size</code> variable ગ્રહણ કરે છે જેથી <code>Shoe</code> સ્ટ્રક્ચરના સં instances પર પુનરાવર્તન કરી શકાય. તે માત્ર નિર્દિષ્ટ કદનાં જૂતાં જ પરત કરશે.</p>
-<listing number="13-16" file-name="src/lib.rs" caption="Using the `filter` method with a closure that captures `shoe_size`">
-```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-16/src/lib.rs}}
-```
-</listing>
-કાર્ય વેક્ટર (vector) ની જૂતાની અને એક જૂતાના કદને પરિમાણો તરીકે સ્વીકારે છે. તે માત્ર નિર્ધારિત કદના જૂતાઓ ધરાવતું વેક્ટર પરત કરે છે. `shoes_in_size`
+<p><strong>Listing 13-16: Using the <code>filter</code> method with a closure that captures <code>shoe_size</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch13-functional-features/listing-13-16/src/lib.rs}}
+<span class="boring">}</span></code></pre>
+<p>કાર્ય વેક્ટર (vector) ની જૂતાની અને એક જૂતાના કદને પરિમાણો તરીકે સ્વીકારે છે. તે માત્ર નિર્ધારિત કદના જૂતાઓ ધરાવતું વેક્ટર પરત કરે છે. <code>shoes_in_size</code></p>
 <p>ના મુખ્ય ભાગમાં, અમે <code>into_iter</code> ને બોલાવીએ છીએ જેથી કરીને વેક્ટરનું માલિકી લેતો એક ઇટરેટર (iterator) બને. ત્યારબાદ, અમે <code>filter</code> ને બોલાવીએ છીએ જેથી તે ઇટરેટરને નવું રૂપ આપીએ જે માત્ર એવા ઘટકો ધરાવે છે જેના માટે ક્લોઝર (closure) <code>true</code> પરત કરે છે. ક્લોઝર</p>
 <p>વાતાવરણમાંથી <code>shoe_size</code> પરિમાણને મેળવે છે અને દરેક જૂતાના કદ સાથે તેની સરખામણી કરે છે, જેથી નિર્ધારિત કદના જૂતા જ રાખવામાં આવે. અંતે, <code>collect</code> ને બોલાવવાથી અનુકૂળ ઇટરેટર દ્વારા પરત કરવામાં આવતી કિંમતો એક વેક્ટરમાં એકત્રિત થાય છે, જે કાર્ય દ્વારા પરત કરવામાં આવે છે.</p>
 <p>પરીક્ષણ દર્શાવે છે કે જ્યારે આપણે <code>shoes_in_size</code> ને બોલાવીએ છીએ, ત્યારે આપણને માત્ર એવા જ જૂતાં પાછા મળે છે જેની કદ અમે નિર્ધારિત કરેલ મૂલ્ય જેટલું હોય.</p>
@@ -318,6 +318,7 @@
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
 
 
 
