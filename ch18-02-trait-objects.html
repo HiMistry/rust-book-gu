@@ -1,0 +1,447 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Using Trait Objects to Abstract over Shared Behavior - ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-0e4ce700.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <!-- Old headings. Do not remove or links may break. -->
+<h2 id="using-trait-objects-to-abstract-over-shared-behavior"><a class="header" href="#using-trait-objects-to-abstract-over-shared-behavior">Using Trait Objects to Abstract over Shared Behavior</a></h2>
+<p>અગાઉના પ્રકરણ 8 માં, અમે ઉલ્લેખ કર્યો હતો કે વેક્ટરની એક મર્યાદા એ છે કે તે માત્ર એક જ પ્રકારના ઘટકો સંગ્રહ કરી શકે છે. અમે લિસ્ટિંગ 8-9 માં એક ઉપાય બનાવ્યો હતો જ્યાં અમે <code>SpreadsheetCell</code>  એનમ વ્યાખ્યાયિત કર્યું હતું જેમાં પૂર્ણાંકો, ફ્લોટ્સ અને ટેક્સ્ટને સમાવવા માટે વિવિધતાઓ હતી. આનો અર્થ એ થયો કે અમે દરેક સેલમાં જુદા જુદા પ્રકારના ડેટા સંગ્રહ કરી શકતા હતા અને હજી પણ વેક્ટર રાખી શકીએ છીએ જે સેલની હારનું પ્રતિનિધિત્વ કરે છે. જ્યારે આપણી બદલી શકાય તેવી વસ્તુઓ પ્રકારોનો નિશ્ચિત સમૂહ હોય ત્યારે આ એક યોગ્ય ઉકેલ છે, જેના વિશે આપણે આપણા કોડના કમ્પાઇલ થવા સમયે જાણીએ છીએ.</p>
+<p>જોકે, કેટલીક વાર આપણે આપણી લાયબ્રેરીના userને અમુક ચોક્કસ પરિસ્થિતિમાં માન્ય પ્રકારોનો સમૂહ વિસ્તારવાની આવશ્યકતા હોય છે. આ કેવી રીતે પ્રાપ્ત કરી શકાય તે દર્શાવવા માટે, અમે એક ઉદાહરણ ગ્રાફિકલ યુઝર ઇન્ટરફેસ (GUI) સાધન બનાવીશું જે વસ્તુઓની યાદીમાંથી પસાર થાય છે, દરેક પર <code>draw</code> પદ્ધતિને બોલાવીને તેને સ્ક્રીન પર દોરે છે—GUI સાધનો માટેની સામાન્ય તકનીક. અમે <code>gui</code> નામનું લાયબ્રેરી crate બનાવીશું જેમાં GUI લાયબ્રેરીનું માળખું હશે. આ crate માં કેટલાક પ્રકારો હોઈ શકે છે જે લોકો ઉપયોગ કરી શકે, જેમ કે <code>Button</code> અથવા <code>TextField</code>. વધુમાં, <code>gui</code> userઓ તેમના પોતાના પ્રકારો બનાવવા માગશે જેને દોરી શકાય: ઉદાહરણ તરીકે, એક પ્રોગ્રામર <code>Image</code> ઉમેરી શકે છે અને બીજો <code>SelectBox</code> ઉમેરી શકે છે.</p>
+<p>પુસ્તકાલય લખતી વખતે, અમે અન્ય કાર્યકરો કયા પ્રકારો બનાવવા માગે છે તે જાણી અને વ્યાખ્યાયિત કરી શકતા નથી. પરંતુ અમને ખબર છે કે <code>gui</code> ને વિવિધ પ્રકારના ઘણાં મૂલ્યોને ટ્રેક કરવાની જરૂર છે, અને તેણે આ તમામ અલગ-અલગ રીતે વર્ગીકૃત થયેલા મૂલ્યો પર <code>draw</code> પદ્ધતિને બોલાવવાની જરૂર છે. તેને એ જાણવાની જરૂર નથી કે જ્યારે આપણે <code>draw</code> પદ્ધતિને બોલાવીશું ત્યારે શું થશે, માત્ર એટલું જ કે મૂલ્ય આપણને બોલાવવા માટે તે પદ્ધતિ ઉપલબ્ધ કરાવશે.</p>
+<p>વંશાગતતા (inheritance) ધરાવતી ભાષામાં આ કાર્ય કરવા માટે, આપણે <code>Component</code> નામની વર્ગ (class) વ્યાખ્યાયિત કરી શકીએ છીએ જેમાં <code>draw</code> નામની પદ્ધતિ (method) હોય. અન્ય વર્ગો, જેમ કે <code>Button</code>, <code>Image</code>, અને <code>SelectBox</code>, <code>Component</code>માંથી વારસો મેળવશે અને આમ <code>draw</code> પદ્ધતિ પણ વારસામાં મળશે. તેઓ દરેક પોતાની આગવી વર્તણૂક વ્યાખ્યાયિત કરવા માટે <code>draw</code> પદ્ધતિને ઓવરરાઇડ (override) કરી શકે છે, પરંતુ માળખું (framework) તમામ પ્રકારોને જો <code>Component</code>ના ઉદાહરણ તરીકે ગણી શકે છે અને તેના પર <code>draw</code>ને બોલાવી શકે છે. પરંતુ કારણ કે Rustમાં વંશાગતતા નથી, આપણે <code>gui</code> પુસ્તકાલય (library) સાથે સુસંગત નવા પ્રકારો બનાવવા માટે userઓને બીજી રીત પ્રદાન કરવાની જરૂર છે.</p>
+<h3 id="defining-a-trait-for-common-behavior"><a class="header" href="#defining-a-trait-for-common-behavior">Defining a Trait for Common Behavior</a></h3>
+<p>આપણે <code>gui</code> ને જે વર્તન આપવા માંગીએ છીએ, તેને અમલમાં મૂકવા માટે, આપણે એક ટ્રેઇટ વ્યાખ્યાયિત કરીશું જેનું નામ <code>Draw</code> હશે અને જેમાં <code>draw</code> નામની એક પદ્ધતિ હશે. પછી, આપણે એક વેક્ટર વ્યાખ્યાયિત કરી શકીએ જે ટ્રેઇટ ઓબ્જેક્ટ લે છે. એક ટ્રેઇટ ઓબ્જેક્ટ આપણી નિર્દિષ્ટ ટ્રેઇટને અમલમાં મૂકતા પ્રકારના ઉદાહરણ અને રનટાઇમ પર તે પ્રકાર પર ટ્રેઇટ પદ્ધતિઓ શોધવા માટે વપરાતી કોષ્ટક બંને તરફ નિર્દેશ કરે છે. આપણે કોઈ પ્રકારની પોઇન્ટર, જેમ કે રેફરન્સ અથવા <code>Box&lt;T&gt;</code> સ્માર્ટ પોઇન્ટરનો ઉલ્લેખ કરીને, પછી <code>dyn</code> કીવર્ડનો ઉપયોગ કરીને અને સંબંધિત ટ્રેઇટનો ઉલ્લેખ કરીને એક ટ્રેઇટ ઓબ્જેક્ટ બનાવી શકીએ છીએ. (અમે પ્રકરણ 20 માં “ડાયનેમિકલી સાઈઝ્ડ પ્રકારો અને <code>Sized</code> ટ્રેઇટ” માં સમજાવીશું કે શા માટે ટ્રેઇટ ઓબ્જેક્ટ્સને પોઇન્ટરનો ઉપયોગ કરવો આવશ્યક છે.) આપણે જનરિક અથવા કોંક્રિટ પ્રકારના બદલે ટ્રેઇટ ઓબ્જેક્ટનો ઉપયોગ કરી શકીએ છીએ. જ્યાં પણ આપણે ટ્રેઇટ ઓબ્જેક્ટનો ઉપયોગ કરીએ છીએ, ત્યાં Rust નું પ્રકાર સિસ્ટમ ખાતરી કરશે કે તે સંદર્ભમાં વપરાતા કોઈપણ મૂલ્ય ટ્રેઇટ ઓબ્જેક્ટના ટ્રેઇટને અમલમાં મૂકશે. પરિણામે, આપણે કમ્પાઇલ સમયે તમામ સંભવિત પ્રકારો જાણવાની જરૂર નથી.</p>
+<p>અમે ઉલ્લેખ કર્યો છે કે, Rustમાં, અમે struct અને enum ને “objects” તરીકે ઓળખવાનું ટાળીએ છીએ, જેથી તેને અન્ય ભાષાઓના objectsથી અલગ પાડી શકાય. struct અથવા enum માં, struct ક્ષેત્રોમાં રહેલો ડેટા અને <code>impl</code> બ્લોક્સમાં વર્તન વિભાજિત હોય છે, જ્યારે અન્ય ભાષાઓમાં, ડેટા અને વર્તનને એક જ concept તરીકે જોડવામાં આવે છે જેને object કહેવામાં આવે છે. Trait objects અન્ય ભાષાઓના objectsથી અલગ હોય છે કારણ કે અમે trait object માં ડેટા ઉમેરી શકતા નથી. Trait objects અન્ય ભાષાઓના objects જેટલા સામાન્ય રીતે ઉપયોગી નથી: તેમનો ચોક્કસ હેતુ સામાન્ય વર્તન પર abstraction કરવાની મંજૂરી આપવાનો છે.</p>
+<p>Listing 18-3 દર્શાવે છે કેવી રીતે <code>Draw</code> નામનું એક લક્ષણ (trait) વ્યાખ્યાયિત કરવું, જેમાં <code>draw</code> નામની એક પદ્ધતિ (method) છે.</p>
+<p><strong>Listing 18-3: Definition of the <code>Draw</code> trait</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Draw {
+    fn draw(&amp;self);
+}
+<span class="boring">}</span></code></pre>
+<p>આ સિન્ટેક્સ આપણી અગાઉની ચર્ચાથી મળતું આવે છે, જેમાં આપણે ટ્રેઇટ કેવી રીતે વ્યાખ્યાયિત કરવાના છે તે જોયું હતું. ત્યારબાદ નવું સિન્ટેક્સ આવે છે: લિસ્ટિંગ ૧૮-૪ એક સ્ટ્રક્ચર વ્યાખ્યાયિત કરે છે જેનું નામ <code>Screen</code> છે, જે <code>components</code> નામના વેક્ટરને ધરાવે છે. આ વેક્ટરનો પ્રકાર <code>Box&lt;dyn Draw&gt;</code> છે, જે ટ્રેઇટ ઓબ્જેક્ટ છે; તે <code>Box</code> ની અંદરના કોઈપણ પ્રકાર માટે એક વિકલ્પ છે જે <code>Draw</code> ટ્રેઇટનું પાલન કરે છે.</p>
+<p><strong>Listing 18-4: Definition of the <code>Screen</code> struct with a <code>components</code> field holding a vector of trait objects that implement the <code>Draw</code> trait</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub trait Draw {
+</span><span class="boring">    fn draw(&amp;self);
+</span><span class="boring">}
+</span><span class="boring">
+</span>pub struct Screen {
+    pub components: Vec&lt;Box&lt;dyn Draw&gt;&gt;,
+}
+<span class="boring">}</span></code></pre>
+<p><code>Screen</code> રચના પર, અમે <code>run</code> નામની પદ્ધતિ વ્યાખ્યાયિત કરીશું જે તેના દરેક <code>components</code> પર <code>draw</code> પદ્ધતિને બોલાવશે, જેમ કે સૂચિ ૧૮-૫ માં દર્શાવેલ છે.</p>
+<p><strong>Listing 18-5: A <code>run</code> method on <code>Screen</code> that calls the <code>draw</code> method on each component</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub trait Draw {
+</span><span class="boring">    fn draw(&amp;self);
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct Screen {
+</span><span class="boring">    pub components: Vec&lt;Box&lt;dyn Draw&gt;&gt;,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Screen {
+    pub fn run(&amp;self) {
+        for component in self.components.iter() {
+            component.draw();
+        }
+    }
+}
+<span class="boring">}</span></code></pre>
+<p>આ રીતે કાર્ય કરે છે struct વ્યાખ્યાયિત કરવાથી અલગ, જેમાં સામાન્ય પ્રકાર પરિમાણ અને લક્ષણ સીમાઓનો ઉપયોગ થાય છે. એક સામાન્ય પ્રકાર પરિમાણને એક સમયે માત્ર એક જ નક્કર પ્રકાર સાથે બદલી શકાય છે, જ્યારે લક્ષણ વસ્તુઓ રનટાઇમ પર બહુવિધ નક્કર પ્રકારોને ભરવા માટે મંજૂરી આપે છે. ઉદાહરણ તરીકે, આપણે <code>Screen</code> struct ને સામાન્ય પ્રકાર અને લક્ષણ સીમાનો ઉપયોગ કરીને વ્યાખ્યાયિત કરી શકતા હતા, જે યાદી 18-6 માં દર્શાવેલ છે.</p>
+<p><strong>Listing 18-6: An alternate implementation of the <code>Screen</code> struct and its <code>run</code> method using generics and trait bounds</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub trait Draw {
+</span><span class="boring">    fn draw(&amp;self);
+</span><span class="boring">}
+</span><span class="boring">
+</span>pub struct Screen&lt;T: Draw&gt; {
+    pub components: Vec&lt;T&gt;,
+}
+
+impl&lt;T&gt; Screen&lt;T&gt;
+where
+    T: Draw,
+{
+    pub fn run(&amp;self) {
+        for component in self.components.iter() {
+            component.draw();
+        }
+    }
+}
+<span class="boring">}</span></code></pre>
+<p>આમ કરવાથી આપણને એક <code>Screen</code> ઇન્સ્ટન્સ સુધી સીમિત રાખવામાં આવે છે, જેમાં ઘટકોની યાદી હોય જે બધાં <code>Button</code> પ્રકારના અથવા બધાં <code>TextField</code> પ્રકારના હોય. જો તમારી પાસે હંમેશા સમાન પ્રકારના જ કલેક્શન હશે, તો સામાન્યિકરણ (generics) અને લક્ષણ સીમાઓ (trait bounds) વાપરવી વધુ સારી છે,</p>
+<p>કારણ કે વ્યાખ્યાઓ કમ્પાઇલ સમયે ચોક્કસ પ્રકારોનો ઉપયોગ કરવા માટે એકરૂપ કરવામાં આવશે. બીજી બાજુ, લક્ષણ વસ્તુઓ (trait objects) નો ઉપયોગ કરતા પદ્ધતિ સાથે, એક <code>Screen</code> ઇન્સ્ટન્સ <code>Vec&lt;T&gt;</code> ને સમાવી શકે છે જેમાં <code>Box&lt;Button&gt;</code> તેમજ <code>Box&lt;TextField&gt;</code> હોય. ચાલો જોઈએ કે આ કેવી રીતે કાર્ય કરે છે, અને પછી આપણે રનટાઇમ પ્રદર્શનની અસરો વિશે વાત કરીશું.</p>
+<h3 id="implementing-the-trait"><a class="header" href="#implementing-the-trait">Implementing the Trait</a></h3>
+<p>હવે આપણે કેટલાક પ્રકારો ઉમેરીશું જે <code>Draw</code> લક્ષણને અમલમાં મૂકે છે. આપણે <code>Button</code> પ્રકાર પ્રદાન કરીશું. ફરીથી, વાસ્તવમાં GUI પુસ્તકાલયનો અમલ કરવો એ આ પુસ્તકની કાર્યક્ષેત્રની બહાર છે, તેથી <code>draw</code> પદ્ધતિ તેના શરીરમાં કોઈ ઉપયોગી અમલ ધરાવશે નહીં. શું અમલ દેખાઈ શકે છે તેની કલ્પના કરવા માટે, એક <code>Button</code> struct માં <code>width</code>, <code>height</code> અને <code>label</code> જેવા ક્ષેત્રો હોઈ શકે છે, જે Listing 18-7 માં દર્શાવેલ છે.</p>
+<p><strong>Listing 18-7: A <code>Button</code> struct that implements the <code>Draw</code> trait</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub trait Draw {
+</span><span class="boring">    fn draw(&amp;self);
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct Screen {
+</span><span class="boring">    pub components: Vec&lt;Box&lt;dyn Draw&gt;&gt;,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Screen {
+</span><span class="boring">    pub fn run(&amp;self) {
+</span><span class="boring">        for component in self.components.iter() {
+</span><span class="boring">            component.draw();
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>pub struct Button {
+    pub width: u32,
+    pub height: u32,
+    pub label: String,
+}
+
+impl Draw for Button {
+    fn draw(&amp;self) {
+        // code to actually draw a button
+    }
+}
+<span class="boring">}</span></code></pre>
+<p>width, height અને label ક્ષેત્રો Button પર અન્ય ઘટકો (components) ના ક્ષેત્રોથી અલગ હશે; દાખલા તરીકે, TextField પ્રકારમાં તે જ ક્ષેત્રો ઉપરાંત placeholder ક્ષેત્ર પણ હોઈ શકે છે. આપણે સ્ક્રીન પર દોરવા માંગીએ છીએ તે દરેક પ્રકાર Draw trait નો અમલ કરશે પરંતુ તે ચોક્કસ પ્રકારને કેવી રીતે દોરવો તે વ્યાખ્યાયિત કરવા માટે draw પદ્ધતિમાં અલગ કોડનો ઉપયોગ કરશે, જેમ કે Button અહીં કરે છે (વાસ્તવિક GUI કોડ વિના, ઉલ્લેખ કર્યો તેમ). Button પ્રકાર, ઉદાહરણ તરીકે, માં એક વધારાનો <code>impl</code> બ્લોક હોઈ શકે છે જેમાં user બટન પર ક્લિક કરે ત્યારે શું થાય છે તેના સંબંધિત પદ્ધતિઓ હોય છે. આ પ્રકારની પદ્ધતિઓ TextField જેવા પ્રકારો પર લાગુ થશે નહીં.</p>
+<p>જો કોઈ વ્યક્તિ આપણી લાયબ્રેરીનો ઉપયોગ કરીને <code>SelectBox</code> સ્ટ્રક્ચર અમલમાં મૂકવાનું નક્કી કરે છે જેમાં <code>width</code>, <code>height</code>, અને <code>options</code> ક્ષેત્રો હોય, તો તેઓ <code>Draw</code> ટ્રેઇટને <code>SelectBox</code> પ્રકાર પર પણ અમલમાં મૂકશે, જેની જેમ લિસ્ટિંગ 18-8 માં દર્શાવેલું છે.</p>
+<p><strong>Listing 18-8: Another crate using <code>gui</code> and implementing the <code>Draw</code> trait on a <code>SelectBox</code> struct</strong></p>
+<pre class="playground"><code class="language-rust edition2024">use gui::Draw;
+
+struct SelectBox {
+    width: u32,
+    height: u32,
+    options: Vec&lt;String&gt;,
+}
+
+impl Draw for SelectBox {
+    fn draw(&amp;self) {
+        // code to actually draw a select box
+    }
+}
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre>
+<p>અમારા પુસ્તકાલયનો user હવે <code>main</code> વિધેય લખી શકે છે જેથી કરીને <code>Screen</code> ઉદાહરણ બનાવી શકાય. <code>Screen</code> ઉદાહરણમાં, તેઓ <code>SelectBox</code> અને <code>Button</code> ઉમેરી શકે છે, દરેકને <code>Box&lt;T&gt;</code> માં મૂકીને એક trait object બનાવે. ત્યારબાદ તેઓ <code>Screen</code> ઉદાહરણ પર <code>run</code> પદ્ધતિને બોલાવી શકે છે, જે દરેક ઘટકો પર <code>draw</code> ને બોલાવશે. સૂચિ 18-9 આ અમલીકરણ દર્શાવે છે.</p>
+<p><strong>Listing 18-9: Using trait objects to store values of different types that implement the same trait</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use gui::Draw;
+</span><span class="boring">
+</span><span class="boring">struct SelectBox {
+</span><span class="boring">    width: u32,
+</span><span class="boring">    height: u32,
+</span><span class="boring">    options: Vec&lt;String&gt;,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Draw for SelectBox {
+</span><span class="boring">    fn draw(&amp;self) {
+</span><span class="boring">        // code to actually draw a select box
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>use gui::{Button, Screen};
+
+fn main() {
+    let screen = Screen {
+        components: vec![
+            Box::new(SelectBox {
+                width: 75,
+                height: 10,
+                options: vec![
+                    String::from("Yes"),
+                    String::from("Maybe"),
+                    String::from("No"),
+                ],
+            }),
+            Box::new(Button {
+                width: 50,
+                height: 10,
+                label: String::from("OK"),
+            }),
+        ],
+    };
+
+    screen.run();
+}</code></pre>
+<p>જ્યારે અમે આ લાયબ્રેરી લખી હતી, ત્યારે અમને ખબર નહોતી કે કોઈ વ્યક્તિ <code>SelectBox</code> પ્રકાર ઉમેરી શકે છે, પરંતુ અમારા <code>Screen</code> અમલીકરણમાં નવા પ્રકાર પર કાર્ય કરવાની અને તેને દોરવાની ક્ષમતા હતી કારણ કે <code>SelectBox</code>  <code>Draw</code> ટ્રેઇટનો અમલ કરે છે, જેનો અર્થ થાય છે કે તે <code>draw</code> પદ્ધતિનો અમલ કરે છે.</p>
+<p>આ ખ્યાલ—માત્ર એવા સંદેશાઓની ચિંતા કરવી કે જે મૂલ્ય પ્રતિસાદ આપે છે તેનાથી વિરુદ્ધ મૂલ્યના નક્કર પ્રકારની—ડાયનેમિકલી ટાઇપ્ડ ભાષાઓમાં “डक ટાઈપિંગ” ના ખ્યાલ જેવો જ છે: જો તે બતકની જેમ ચાલે અને બતકની જેમ કર્કશ કરે, તો તે બતક હોવું જોઈએ! <code>Listing 18-5</code> માં <code>Screen</code> પર <code>run</code> ના અમલીકરણમાં, <code>run</code> ને દરેક ઘટકના નક્કર પ્રકારની જાણકારી પડતી નથી. તે તપાસતું નથી કે કોઈ ઘટક <code>Button</code> અથવા <code>SelectBox</code> નો ઉદાહરણ છે કે નહીં, તે માત્ર ઘટક પર <code>draw</code> પદ્ધતિને બોલાવે છે. <code>components</code> વેક્ટરના મૂલ્યોના પ્રકાર તરીકે <code>Box&lt;dyn Draw&gt;</code> નિર્દિષ્ટ કરીને, અમે વ્યાખ્યાયિત કર્યા છે કે <code>Screen</code> ને એવા મૂલ્યોની જરૂર છે જેના પર આપણે <code>draw</code> પદ્ધતિને બોલાવી શકીએ છીએ.</p>
+<p>ગુણધર્મોની વસ્તુઓ અને Rust ના પ્રકાર પ્રણાલીનો ઉપયોગ કરીને, એવી કોડ લખવાનો ફાયદો એ છે કે આપણે ક્યારેય ચકાસવું પડતું નથી કે કોઈ મૂલ્ય ચોક્કસ પદ્ધતિને અમલમાં મૂકે છે કે નહીં, અથવા જો કોઈ મૂલ્ય પદ્ધતિને અમલમાં ન મૂકતું હોય તો ભૂલો થવાની ચિંતા કરવાની જરૂર રહેતી નથી અને તેમ છતાં આપણે તેને બોલાવીએ છીએ. Rust આપણી કોડને કમ્પાઇલ કરશે</p>
+<p>નહીં જો મૂલ્યો તે ગુણધર્મોની વસ્તુઓને જરૂરી હોય તેવી વિશેષતાઓ (traits) ને અમલમાં ન મૂકતા હોય. ઉદાહરણ તરીકે, યાદી 18-10 દર્શાવે છે કે શું થાય છે જ્યારે આપણે <code>String</code> ને ઘટક તરીકે લઈને <code>Screen</code> બનાવવાનો પ્રયત્ન કરીએ છીએ.</p>
+<p><strong>Listing 18-10: Attempting to use a type that doesn’t implement the trait object’s trait</strong></p>
+<pre class="playground"><code class="language-rust edition2024">use gui::Screen;
+
+fn main() {
+    let screen = Screen {
+        components: vec![Box::new(String::from("Hi"))],
+    };
+
+    screen.run();
+}</code></pre>
+<p>આ ભૂલ આપણે એ કારણથી મળશે કે <code>String</code>  <code>Draw</code>  traitનું પાલન કરતું નથી:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling gui v0.1.0 (file:///projects/gui)
+error[E0277]: the trait bound `String: Draw` is not satisfied
+  --&gt; src/main.rs:5:26
+   |
+ 5 |         components: vec![Box::new(String::from("Hi"))],
+   |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Draw` is not implemented for `String`
+   |
+help: the trait `Draw` is implemented for `Button`
+  --&gt; src/lib.rs:23:1
+   |
+23 | impl Draw for Button {
+   | ^^^^^^^^^^^^^^^^^^^^
+   = note: required for the cast from `Box&lt;String&gt;` to `Box&lt;dyn Draw&gt;`
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `gui` (bin "gui") due to 1 previous error
+</code></pre>
+<p>આ ભૂલ આપણને જણાવે છે કે કાં તો આપણે <code>Screen</code> ને કંઈક એવું આપી રહ્યા છીએ જે આપણો હેતુ ન હતો અને તેથી આપણે અલગ પ્રકાર આપવો જોઈએ, અથવા આપણે <code>String</code> પર <code>Draw</code> અમલમાં મૂકવો જોઈએ જેથી <code>Screen</code> તેના પર <code>draw</code> બોલાવી શકે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="performing-dynamic-dispatch"><a class="header" href="#performing-dynamic-dispatch">Performing Dynamic Dispatch</a></h3>
+<p>યાદ કરો કે પ્રકરણ ૧૦ માં “જનરિક્સનો ઉપયોગ કરીને કોડની કાર્યક્ષમતા” વિભાગમાં જનરિક્સ પર થયેલ મોનોમોર્ફાઇઝેશન પ્રક્રિયા વિશે આપણો ચર્ચા થઈ હતી: કમ્પાઇલર દરેક નક્કર પ્રકાર માટે જેનો આપણે જનરિક પ્રકાર પરિમાણના સ્થાને ઉપયોગ કરીએ છીએ, તેના માટે બિન-જનરિક અમલીકરણો ઉત્પન્ન કરે છે. મોનોમોર્ફાઇઝેશનથી મળતા કોડમાં સ્થિર ડિસ્પેચ થાય છે, જે ત્યારે થાય છે જ્યારે કમ્પાઇલરને કમ્પાઇલ સમયે તમે કઈ મેથડ બોલાવી રહ્યા છો તે ખબર હોય છે. આ વિરોધાભાસી છે ગતિશીલ ડિસ્પેચ સાથે, જે ત્યારે થાય છે જ્યારે કમ્પાઇલરને કમ્પાઇલ સમયે કઈ મેથડ બોલાવવાની છે તે ખબર ન પડે. ગતિશીલ ડિસ્પેચના કિસ્સાઓમાં, કમ્પાઇલર એવો કોડ ઉત્પન્ન કરે છે કે જે રનટાઇમ પર કઈ મેથડને બોલાવવી તે જાણશે.</p>
+<p>જ્યારે આપણે trait objects નો ઉપયોગ કરીએ છીએ, ત્યારે Rust ને dynamic dispatch (ગતિશીલ વિતરણ) નો ઉપયોગ કરવો પડે છે. compiler (સંકલક) એ ખબર હોતી નથી કે trait objects વાપરતા કોડ સાથે કયા પ્રકારો (types) વપરાઈ શકે છે, તેથી તે જાણતો નથી કે કયા પ્રકાર પર અમલમાં મૂકેલી કઈ પદ્ધતિ (method) બોલાવવી. તેના બદલે, runtime (ચાલુકાળ) દરમિયાન, Rust trait object ની અંદરના pointers (પોઇન્ટર્સ) નો ઉપયોગ કરીને કઈ પદ્ધતિ બોલાવવાની છે તે જાણે છે. આ શોધ (lookup) એક runtime cost (ચાલુકાળ ખર્ચ) લાવે છે જે static dispatch (સ્થિર વિતરણ) સાથે થતો નથી. Dynamic dispatch (ગતિશીલ વિતરણ) compiler (સંકલક) ને પદ્ધતિના કોડને inline (ઇનલાઇન) કરવાનું પસંદ કરવાથી પણ અટકાવે છે, જેના પરિણામે કેટલાક optimizations (ઑપ્ટિમાઇઝેશન) અટકી જાય છે, અને Rust પાસે dynamic dispatch (ગતિશીલ વિતરણ) નો ઉપયોગ ક્યાં કરી શકાય અને ક્યાં ન કરી શકાય તેના નિયમો છે, જેને dyn compatibility (ડાયન સુસંગતતા) કહેવામાં આવે છે. આ નિયમો ચર્ચાના અવકાશની બહાર છે, પરંતુ તમે સંદર્ભમાં વધુ માહિતી મેળવી શકો છો. જો કે, અમને Listing 18-5 માં લખેલા કોડમાં વધારાની લવચીકતા (flexibility) મળી અને Listing 18-9 માં સમર્થન આપવા માટે સક્ષમ હતા, તેથી તે ધ્યાનમાં લેવા જેવો trade-off (વેપાર) છે.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch18-01-what-is-oo.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch18-03-oo-design-patterns.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch18-01-what-is-oo.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch18-03-oo-design-patterns.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

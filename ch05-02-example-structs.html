@@ -1,0 +1,426 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>An Example Program Using Structs - ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-0e4ce700.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h2 id="an-example-program-using-structs"><a class="header" href="#an-example-program-using-structs">An Example Program Using Structs</a></h2>
+<p>જ્યારે આપણે સ્ટ્રક્ચર્સનો ઉપયોગ કરવા માગીએ છીએ તે સમજવા માટે, ચાલો એક એવો કાર્યક્રમ લખીએ જે લંબચોરસનું ક્ષેત્રફળ ગણે છે. આપણે પહેલાં એકલ variable’s ઉપયોગ કરીને શરૂઆત કરીશું અને પછી કાર્યક્રમને એવી રીતે સુધારીશું કે જેથી આપણે સ્ટ્રક્ચર્સનો ઉપયોગ કરીએ.</p>
+<p>ચાલો <code>rectangles</code> નામની નવી બાઈનરી પ્રોજેક્ટ Cargo સાથે બનાવીએ, જે પિક્સેલ્સમાં દર્શાવેલ લંબચોરસની પહોળાઈ અને ઊંચાઈ લેશે અને લંબચોરસનું ક્ષેત્રફળ ગણશે. યાદી 5-8 આપણી પ્રોજેક્ટની <code>src/main.rs</code> માં તે જ રીતે કરવાના એક રીત સાથેનો ટૂંકો કાર્યક્રમ દર્શાવે છે.</p>
+<p><strong>Listing 5-8: Calculating the area of a rectangle specified by separate width and height variables</strong></p>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let width1 = 30;
+    let height1 = 50;
+
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        area(width1, height1)
+    );
+}
+
+fn area(width: u32, height: u32) -&gt; u32 {
+    width * height
+}</code></pre>
+<p>હવે, આ કાર્યક્રમ <code>cargo run</code> વડે ચલાવો:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling rectangles v0.1.0 (file:///projects/rectangles)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.42s
+     Running `target/debug/rectangles`
+The area of the rectangle is 1500 square pixels.
+</code></pre>
+<p>આ કોડ લંબચોરસનું ક્ષેત્રફળ શોધવામાં સફળ થાય છે, દરેક પરિમાણ સાથે <code>area</code> ફંક્શનને બોલાવીને, પરંતુ આ કોડને વધુ સ્પષ્ટ અને વાંચી શકાય તેવો બનાવવા માટે આપણે વધુ</p>
+<p>કરી શકીએ છીએ. આ કોડની સમસ્યા <code>area</code> ના હસ્તાક્ષરમાં સ્પષ્ટપણે દેખાય છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let width1 = 30;
+</span><span class="boring">    let height1 = 50;
+</span><span class="boring">
+</span><span class="boring">    println!(
+</span><span class="boring">        "The area of the rectangle is {} square pixels.",
+</span><span class="boring">        area(width1, height1)
+</span><span class="boring">    );
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn area(width: u32, height: u32) -&gt; u32 {
+<span class="boring">    width * height
+</span><span class="boring">}</span></code></pre>
+<p>area ફંક્શન <code>area</code> ફંક્શન એક લંબચોરસનું ક્ષેત્રફળ ગણવાનું છે, પરંતુ આપણે જે ફંક્શન લખ્યું છે તેમાં બે પરિમાણો (parameters) છે, અને આપણા પ્રોગ્રામમાં ક્યાંય સ્પષ્ટ નથી કે આ પરિમાણો સંબંધિત છે. પહોળાઈ અને ઊંચાઈને એકસાથે જૂથબદ્ધ કરવું વધુ સુવાચ્ય અને વ્યવસ્થિત રહેશે. આપણે પહેલાથી જ ચર્પ્ટર 3 ના “ટ્યૂપલ પ્રકાર” (The Tuple Type) વિભાગમાં એક રીતની ચર્ચા કરી છે: ટ્યૂપલનો ઉપયોગ કરીને.</p>
+<h3 id="refactoring-with-tuples"><a class="header" href="#refactoring-with-tuples">Refactoring with Tuples</a></h3>
+<p>ચિત્રલિપિ ૫-૯ આપણી કાર્યક્રમનું અન્ય એક સ્વરૂપ દર્શાવે છે જે ટ્યૂપલ્સનો ઉપયોગ કરે છે.</p>
+<p><strong>Listing 5-9: Specifying the width and height of the rectangle with a tuple</strong></p>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let rect1 = (30, 50);
+
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        area(rect1)
+    );
+}
+
+fn area(dimensions: (u32, u32)) -&gt; u32 {
+    dimensions.0 * dimensions.1
+}</code></pre>
+<p>એક રીતે, આ કાર્યક્રમ વધુ સારો છે. ટ્યૂપલ્સ આપણને થોડી રચના ઉમેરવા દે છે, અને હવે આપણે માત્ર એક જ Argument પસાર કરી રહ્યા છીએ. પરંતુ બીજા રીતે, આ સંસ્કરણ ઓછું સ્પષ્ટ છે: ટ્યૂપલ્સ તેમના ઘટકોને નામ આપતા નથી, તેથી આપણે ટ્યૂપલના ભાગોમાં અનુક્રમણિકા કરવી પડે છે, જે</p>
+<p>અમારી ગણતરીને ઓછી દેખી ન કરે છે. પહોળાઈ અને ઊંચાઈ ભેગી કરવી ગણતરી માટે મહત્વનું ન હતું, પરંતુ જો આપણે લંબચોરસને સ્ક્રીન પર દોરવા માંગતા હોઈએ, તો તે મહત્વનું હતું! આપણે એ યાદ રાખવું પડ્યું કે <code>width</code> ટ્યૂપલ અનુક્રમણિકા <code>0</code> છે અને <code>height</code> ટ્યૂપલ અનુક્રમણિકા <code>1</code> છે. જો કોઈ અન્ય વ્યક્તિ અમારી કોડનો ઉપયોગ કરે તો તેને સમજવું અને યાદ રાખવું વધુ મુશ્કેલ બની જશે. આપણે આપેલા ડેટાના અર્થને અમારા કોડમાં વ્યક્ત કર્યો નથી, તેથી ભૂલો દાખલ કરવી સરળ બની ગઈ છે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="refactoring-with-structs"><a class="header" href="#refactoring-with-structs">Refactoring with Structs</a></h3>
+<p>આપણે ડેટાને લેબલ કરીને અર્થ ઉમેરવા માટે બંધારણોનો ઉપયોગ કરીએ છીએ. આપણે આપનું ટ્યૂપલને એક નામિત બંધારણમાં રૂપાંતરિત કરી શકીએ છીએ, જે સમગ્ર ભાગ તેમજ ભાગો માટે નામો ધરાવે છે, જે યાદી 5-10 માં દર્શાવેલ છે.</p>
+<p><strong>Listing 5-10: Defining a <code>Rectangle</code> struct</strong></p>
+<pre class="playground"><code class="language-rust edition2024">struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        area(&amp;rect1)
+    );
+}
+
+fn area(rectangle: &amp;Rectangle) -&gt; u32 {
+    rectangle.width * rectangle.height
+}</code></pre>
+<p>અહીં, આપણે એક struct વ્યાખ્યાયિત કર્યો છે અને તેનું નામ <code>Rectangle</code> આપ્યું છે. કદાળી કૌંસની અંદર, આપણે ક્ષેત્રો <code>width</code> અને <code>height</code> તરીકે વ્યાખ્યાયિત કર્યા છે, જે બંનેનો પ્રકાર <code>u32</code> છે. પછી, <code>main</code> માં, આપણે <code>Rectangle</code> ના એક ચોક્કસ ઉદાહરણ બનાવ્યું છે જેની પહોળાઈ <code>30</code> અને ઊંચાઈ <code>50</code> છે.</p>
+<p>આપણો <code>area</code> ફંક્શન હવે એક પરિમાણ સાથે વ્યાખ્યાયિત કરવામાં આવ્યો છે, જેને આપણે <code>rectangle</code> નામ આપ્યું છે, જેનો પ્રકાર struct <code>Rectangle</code> ઉદાહરણની અપરિવર્તનશીલ ઉછીના લીધેલી નકલ (borrow) છે. પ્રકરણ 4 માં જણાવ્યા મુજબ, આપણે struct ની માલિકી લેવાને બદલે તેની નકલ મેળવવી જોઈએ. આ રીતે, <code>main</code> તેની માલિકી જાળવી રાખે છે અને <code>rect1</code> નો ઉપયોગ કરવાનું ચાલુ રાખી શકે છે, જેનું કારણ છે કે આપણે ફંક્શન હસ્તાક્ષરમાં (signature) અને જ્યાં આપણે ફંક્શનને બોલાવીએ છીએ ત્યાં <code>&amp;</code> નો ઉપયોગ કરીએ છીએ.</p>
+<p>area કાર્ય <code>area</code> કાર્ય <code>Rectangle</code> ઉદાહરણના <code>width</code> અને <code>height</code> ક્ષેત્રોને પ્રાપ્ય કરે છે (એ નોંધવું અગત્યનું છે કે ઉછીના લીધેલા struct ઉદાહરણના ક્ષેત્રોને પ્રાપ્ય કરવાથી ક્ષેત્ર મૂલ્યો ખસેડવામાં આવતા નથી, જેના કારણે તમે ઘણીવાર struct ના ઉછીના લીધેલાં ઉદાહરણો જુઓ છો). આપણું <code>area</code> માટેનું કાર્ય હસ્તાક્ષર હવે બરાબર જણાવે છે કે આપણને શું જોઈએ છે: <code>Rectangle</code> નું ક્ષેત્રફળ ગણો, તેના <code>width</code> અને <code>height</code> ક્ષેત્રોનો ઉપયોગ કરીને. આ દર્શાવે છે કે પહોળાઈ અને ઊંચાઈ એકબીજા સાથે સંબંધિત છે, અને તે મૂલ્યોને વર્ણનાત્મક નામો આપે છે, tuple અનુક્રમણિકા મૂલ્યો <code>0</code> અને <code>1</code> નો ઉપયોગ કરવાને બદલે. આ સ્પષ્ટતા માટે એક લાભ છે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="adding-functionality-with-derived-traits"><a class="header" href="#adding-functionality-with-derived-traits">Adding Functionality with Derived Traits</a></h3>
+<p>જ્યારે આપણે આપણી કાર્યક્રમની ભૂલનિવારણ (debugging) કરી રહ્યા હોઈએ, ત્યારે <code>Rectangle</code> નો એક દાખલો છાપવો ઉપયોગી થઈ શકે છે અને તેના તમામ ક્ષેત્રોના મૂલ્યો જોઈ શકાય. યાદી 5-11 પ્રયત્ન કરે છે કે <code>println!</code> મેક્રોનો ઉપયોગ અગાઉના પ્રકરણોમાં આપણે જે રીતે કર્યો હતો, તે જ રીતે કરવો. જોકે, આ કામ નહીં કરે.</p>
+<p><strong>Listing 5-11: Attempting to print a <code>Rectangle</code> instance</strong></p>
+<pre class="playground"><code class="language-rust edition2024">struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    println!("rect1 is {rect1}");
+}</code></pre>
+<p>જ્યારે આપણે આ કોડને કમ્પાઇલ કરીએ છીએ, ત્યારે આપણને આ મુખ્ય સંદેશ સાથેની ભૂલ આવે છે:</p>
+<pre><code class="language-text">error[E0277]: `Rectangle` doesn't implement `std::fmt::Display`
+</code></pre>
+<p>The <code>println!</code> Macro <code>println!</code> મેક્રો ઘણા પ્રકારના ફોર્મેટિંગ કરી શકે છે, અને મૂળભૂત રીતે, કુંદળિત કૌંસ <code>println!</code> ને <code>Display</code> તરીકે ઓળખાતા ફોર્મેટિંગનો ઉપયોગ કરવા માટે કહે છે: અંતિમ user માટે સીધા જ આઉટપુટ. અત્યાર સુધી આપણે જોયેલા પ્રાથમિક પ્રકારો <code>Display</code> ને મૂળભૂત રીતે અમલમાં મૂકે છે કારણ કે <code>1</code> અથવા અન્ય કોઈપણ પ્રાથમિક પ્રકારને userને બતાવવાનો માત્ર એક જ રસ્તો હોય છે. પરંતુ સ્ટ્રક્ચર્સ સાથે, <code>println!</code> એ આઉટપુટને કેવી રીતે ફોર્મેટ કરવું જોઈએ તે ઓછું સ્પષ્ટ છે કારણ કે વધુ ડિસ્પ્લે શક્યતાઓ છે: શું તમે અલ્પવિરામ ઇચ્છો છો કે નહીં? શું તમે કૌંસ છાપવા માંગો છો? શું બધા ક્ષેત્રો દર્શાવવા જોઈએ? આ અસ્પષ્ટતાને કારણે, Rust એ અનુમાન કરવાનો પ્રયાસ કરતો નથી કે આપણે શું ઈચ્છીએ છીએ, અને સ્ટ્રક્ચર્સમાં <code>println!</code> સાથે ઉપયોગ કરવા માટે <code>Display</code> નું પ્રદાન કરેલું અમલીકરણ હોતું નથી અને <code>{}</code> પ્લેસહોલ્ડર.</p>
+<p>જો આપણે ભૂલો વાંચવાનું ચાલુ રાખીએ, તો આપણને આ ઉપયોગી નોંધ મળશે:</p>
+<pre><code class="language-text">help: the trait `std::fmt::Display` is not implemented for `Rectangle`
+  --&gt; src/main.rs:1:1
+</code></pre>
+<p>ચાલો પ્રયત્ન કરીએ! <code>println!</code> મેક્રો કૉલ હવે <code>println!("rect1 is {rect1:?}");</code> જેવો દેખાશે. કુંદળી મૂંઝારમાં <code>:?</code> મૂકવાથી <code>println!</code> ને જણાવવામાં આવે છે કે આપણે <code>Debug</code> નામનું આઉટપુટ ફોર્મેટ વાપરવા માંગીએ છીએ. <code>Debug</code> ટ્રેઇટ આપણને આપણા સ્ટ્રક્ચરમાં એક એવો રસ્તો પૂરો પાડે છે જે વિકાસકર્તાઓ માટે ઉપયોગી હોય, જેથી તેઓ કોડ ડીબગ કરતી વખતે તેની કિંમત જોઈ શકે. આ</p>
+<p>ફેરફાર સાથે કોડને કમ્પાઇલ કરો. અરે! હજી પણ ભૂલ આવે છે:</p>
+<pre><code class="language-text">error[E0277]: `Rectangle` doesn't implement `Debug`
+</code></pre>
+<p>પરંતુ ફરીથી, કમ્પાઇલર આપણને એક મદદરૂપ સૂચન આપે છે:</p>
+<pre><code class="language-text">   |                        required by this formatting parameter
+   |
+</code></pre>
+<p>Rust માં ડીબગીંગ માહિતી છાપવાની કાર્યક્ષમતા પણ સામેલ છે, પરંતુ તે કાર્યક્ષમતા આપણી struct માટે ઉપલબ્ધ કરાવવા માટે આપણે સ્પષ્ટપણે પસંદગી કરવી પડશે. આ કરવા માટે, આપણે <code>#[derive(Debug)]</code> એવું બાહ્ય લક્ષણ struct વ્યાખ્યા પહેલાં ઉમેરીએ છીએ, જે Listing 5-12 માં દર્શાવેલ છે.</p>
+<p><strong>Listing 5-12: Adding the attribute to derive the <code>Debug</code> trait and printing the <code>Rectangle</code> instance using debug formatting</strong></p>
+<pre class="playground"><code class="language-rust edition2024">#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    println!("rect1 is {rect1:?}");
+}</code></pre>
+<p>હવે જ્યારે આપણે આ કાર્યક્રમ ચલાવીશું, ત્યારે આપણને કોઈ ભૂલો નહીં દેખાય અને નીચે મુજબનું પરિણામ મળશે:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling rectangles v0.1.0 (file:///projects/rectangles)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
+     Running `target/debug/rectangles`
+rect1 is Rectangle { width: 30, height: 50 }
+</code></pre>
+<p>ચોક્કસ! આ દેખાવમાં સૌથી સુંદર પરિણામ નથી, પરંતુ તે આ ઉદાહરણ માટે તમામ ક્ષેત્રોના મૂલ્યો દર્શાવે છે, જે ડિબગીંગ દરમિયાન ચોક્કસપણે મદદરૂપ થશે. જ્યારે આપણી પાસે મોટા struct હોય, ત્યારે વાંચવામાં સરળ પરિણામ મેળવવું ઉપયોગી થઈ શકે છે; આવી સ્થિતિમાં, આપણે <code>println!</code> સ્ટ્રિંગમાં <code>{:#?}</code> ને બદલે <code>{:?}</code> નો ઉપયોગ કરી શકીએ છીએ. આ ઉદાહરણમાં, <code>{:#?}</code> શૈલીનો ઉપયોગ કરવાથી નીચે મુજબનું પરિણામ આવશે:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling rectangles v0.1.0 (file:///projects/rectangles)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
+     Running `target/debug/rectangles`
+rect1 is Rectangle {
+    width: 30,
+    height: 50,
+}
+</code></pre>
+<p>બીજો વિકલ્પ એ છે કે <code>Debug</code> ફોર્મેટનો ઉપયોગ કરીને મૂલ્ય છાપવું, જે માટે <code>dbg!</code> મેક્રો વાપરી શકાય છે. આ મેક્રો અભિવ્યક્તિનું માલિકી સ્થાનાંતરણ કરે છે (જેમ કે <code>println!</code> સંદર્ભ લે છે), કોડમાં જ્યાં <code>dbg!</code> મેક્રો બોલાવવામાં આવ્યો હોય તે ફાઇલ અને લાઇન નંબર, અને તે અભિવ્યક્તિના પરિણામી મૂલ્યને છાપે છે, અને પછી મૂલ્યનું માલિકી સ્થાનાંતરણ કરે છે.</p>
+<p>નોંધ: <code>dbg!</code> મેક્રોને બોલાવવાથી પ્રમાણભૂત ભૂલ કન્સોલ પ્રવાહમાં (<code>stderr</code>) છાપવામાં આવે છે, વિરુદ્ધમાં <code>println!</code> પ્રમાણભૂત આઉટપુટ કન્સોલ પ્રવાહમાં (<code>stdout</code>) છાપે છે. આપણે પ્રકરણ ૧૨ માં “ભૂલોને પ્રમાણભૂત ભૂલમાં રીડાયરેક્ટ કરવી” વિભાગમાં <code>stderr</code> અને <code>stdout</code> વિશે વધુ વાત કરીશું.</p>
+<p>અહીં એક ઉદાહરણ છે જેમાં આપણે <code>width</code> ક્ષેત્રને સોંપવામાં આવેલ મૂલ્ય અને <code>rect1</code> માં સમગ્ર struct નું મૂલ્ય બંનેમાં રસ ધરાવીએ છીએ:</p>
+<pre class="playground"><code class="language-rust edition2024">#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let scale = 2;
+    let rect1 = Rectangle {
+        width: dbg!(30 * scale),
+        height: 50,
+    };
+
+    dbg!(&amp;rect1);
+}</code></pre>
+<p>અમે <code>dbg!</code> ને અભિવ્યક્તિ <code>30 * scale</code> ની આસપાસ મૂકી શકીએ છીએ અને, કારણ કે <code>dbg!</code> અભિવ્યક્તિના મૂલ્યની માલિકી લે છે, <code>width</code> ક્ષેત્રને એ જ મૂલ્ય મળશે જેવું જો આપણે <code>dbg!</code> કૉલ ત્યાં ન કર્યો હોત. અમારે નથી જોઈતું કે <code>dbg!</code> <code>rect1</code> ની માલિકી લે, તેથી અમે આગળના કૉલમાં <code>rect1</code> નો સંદર્ભ વાપરીએ છીએ. આ ઉદાહરણનું પરિણામ આ પ્રમાણે દેખાય છે:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling rectangles v0.1.0 (file:///projects/rectangles)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.61s
+     Running `target/debug/rectangles`
+[src/main.rs:10:16] 30 * scale = 60
+[src/main.rs:14:5] &amp;rect1 = Rectangle {
+    width: 60,
+    height: 50,
+}
+</code></pre>
+<p>અમે જોઈ શકીએ છીએ કે પ્રથમ પરિણામ src/main.rs લાઇન ૧૦ માંથી આવ્યું હતું જ્યાં અમે અભિવ્યક્તિ <code>30 * scale</code> ને ડિબગ કરી રહ્યા છીએ, અને તેનું પરિણામી મૂલ્ય <code>60</code> છે (સંખ્યાઓ માટે લાગુ કરાયેલ <code>Debug</code> ફોર્મેટિંગ માત્ર તેમનું મૂલ્ય છાપે છે). src/main.rs લાઇન ૧૪ પર <code>dbg!</code> કૉલ <code>&amp;rect1</code> નું મૂલ્ય આઉટપુટ કરે છે, જે <code>Rectangle</code> સ્ટ્રક્ચર છે. આ આઉટપુટ <code>Rectangle</code> પ્રકારના સુંદર <code>Debug</code> ફોર્મેટિંગનો ઉપયોગ કરે છે. <code>dbg!</code> મેક્રો તમારા કોડ શું કરી રહ્યું છે તે જાણવા માટે ખરેખર મદદરૂપ થઈ શકે છે!</p>
+<p>માં <code>Debug</code> લક્ષણ ઉપરાંત, આપણને <code>derive</code> લક્ષણ સાથે ઉપયોગ કરવા માટે ઘણાં લક્ષણો ઉપલબ્ધ કરાવ્યાં છે, જે આપણાં નિશ્ચિત પ્રકારોમાં ઉપયોગી વર્તન ઉમેરી શકે છે. તે લક્ષણો અને તેમનાં વર્તનો અનુappendix C માં દર્શાવેલ છે. આપણે પ્રકરણ ૧૦ માં આ લક્ષણોને કસ્ટમ વર્તન સાથે કેવી રીતે અમલમાં મૂકવા તેમજ પોતાના લક્ષણો કેવી રીતે બનાવવા તે વિશે પણ જોઈશું. <code>derive</code> સિવાય ઘણાં અન્ય લક્ષણો પણ છે; વધુ માહિતી માટે, Rust Reference ના “Attributes” વિભાગ જુઓ.</p>
+<p>આપણો <code>area</code> વિધેય ખૂબ જ વિશેષ છે: તે માત્ર લંબચોરસનું ક્ષેત્રફળ ગણે છે. અન્ય પ્રકાર સાથે કામ ન કરવાને કારણે, આ વર્તણૂકને આપણા <code>Rectangle</code> રચના સાથે વધુ નજીકથી જોડવું ઉપયોગી થશે. ચાલો જોઈએ કે આપણે કોડને ફરીથી ગોઠવીને <code>area</code> વિધેયને <code>Rectangle</code> પ્રકાર પર વ્યાખ્યાયિત થયેલ <code>area</code> પદ્ધતિમાં કેવી રીતે ફેરવી શકીએ છીએ.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch05-01-defining-structs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch05-03-method-syntax.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch05-01-defining-structs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch05-03-method-syntax.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

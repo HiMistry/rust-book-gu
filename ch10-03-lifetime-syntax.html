@@ -1,0 +1,668 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Validating References with Lifetimes - ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-0e4ce700.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h2 id="validating-references-with-lifetimes"><a class="header" href="#validating-references-with-lifetimes">Validating References with Lifetimes</a></h2>
+<p>જીવનકાળ (Lifetimes) એ એક પ્રકારના સામાન્ય માપદંડ (generic) છે જેનો આપણે પહેલાંથી જ ઉપયોગ કરી રહ્યા છીએ. પ્રકારની વર્તણૂક સુનિશ્ચિત કરવાને બદલે, જીવનકાળ ખાતરી કરે છે કે સંદર્ભો (references) જેટલા સમય સુધી જરૂરી હોય તેટલા સમય સુધી માન્ય રહે.</p>
+<p>અગાઉ પ્રકરણ 4 માં “સંદર્ભો અને ઉધાર લેવું” (References and Borrowing) વિભાગમાં આપણે જે વિગતની ચર્ચા કરી ન હતી તે એ છે કે Rust માં દરેક સંદર્ભનો એક જીવનકાળ હોય છે, જેનો અર્થ થાય છે તે સંદર્ભ માટે માન્ય રહેવાનો અવકાશ. મોટાભાગના સમય, જીવનકાળ ગર્ભિત (implicit) અને અનુમાનિત (inferred) હોય છે, બરાબર જેમ મોટાભાગના સમય પ્રકારો અનુમાનિત હોય છે. આપણે માત્ર ત્યારે જ પ્રકારોને નોંધવાની જરૂર પડે છે જ્યારે બહુવિધ પ્રકારો શક્ય હોય. એ જ રીતે, જ્યારે સંદર્ભોના જીવનકાળ સંબંધિત હોઈ શકે તેવા વિવિધ માર્ગો હોય, ત્યારે આપણે જીવનકાળને નોંધવાની જરૂર પડે છે. Rust આપણને સામાન્ય જીવનકાળ પરિમાણો (generic lifetime parameters) નો ઉપયોગ કરીને આ સંબંધોને નોંધવાની આવશ્યકતા રાખે છે જેથી ખાતરી થાય કે રનટાઇમ પર વપરાતા વાસ્તવિક સંદર્ભો ચોક્કસપણે માન્ય રહેશે.</p>
+<p>Annotating lifetimes જીવનકાળની નોંધણી કરવી એ મોટાભાગની અન્ય પ્રોગ્રામિંગ ભાષાઓમાં પણ એક વિચાર નથી, તેથી આ અજાણ્યું લાગશે. જોકે આપણે આ પ્રકરણમાં જીવનકાળને સંપૂર્ણપણે આવરીશું નહીં, આપણે સામાન્ય રીતે તમે જીવનકાળ સિન્ટેક્સનો સામનો કેવી રીતે કરી શકો છો તે અંગે ચર્ચા કરીશું જેથી કરીને તમે આ ખ્યાલથી પરિચિત થઈ શકો.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="dangling-references"><a class="header" href="#dangling-references">Dangling References</a></h3>
+<p>જીવનકાળનો મુખ્ય હેતુ લટકતા સંદર્ભોને અટકાવવાનો છે, જે જો તેમને અસ્તિત્વમાં રહેવાની મંજૂરી આપવામાં આવે તો, કાર્યક્રમને એવા ડેટાનો સંદર્ભ આપવાનું કારણ બની શકે છે જેનો તે સંદર્ભ રાખવા માટે નથી. સૂચિ 10-16 માં આપેલ કાર્યક્રમનો વિચાર કરો, જેમાં બાહ્ય અવકાશ અને આંતરિક અવકાશ છે.</p>
+<p><strong>Listing 10-16: An attempt to use a reference whose value has gone out of scope</strong></p>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let r;
+
+    {
+        let x = 5;
+        r = &amp;x;
+    }
+
+    println!("r: {r}");
+}</code></pre>
+<p>નોંધ: યાદી ૧૦-૧૬, ૧૦-૧૭ અને ૧૦-૨૩ માં આપેલા ઉદાહરણોમાં variable પ્રારંભિક મૂલ્ય વગર જાહેર કરવામાં આવ્યા છે, તેથી ચલનું નામ બાહ્ય અવકાશમાં અસ્તિત્વ ધરાવે છે. પ્રથમ નજરે, આ Rust માં શૂન્ય મૂલ્યો ન હોવા સાથે સંઘર્ષમાં હોવાનું જણાવી શકે છે. જો કે, જો આપણે variable મૂલ્ય આપ્યા પહેલાં તેનો ઉપયોગ કરવાનો પ્રયાસ કરીએ, તો આપણને કમ્પાઇલ-ટાઇમ ભૂલ મળશે, જે દર્શાવે છે કે Rust ખરેખર શૂન્ય મૂલ્યોને મંજૂરી આપતું નથી.</p>
+<p>બાહ્ય અવકાશ એક variable <code>r</code> જાહેર કરે છે જેમાં કોઈ પ્રારંભિક મૂલ્ય નથી, અને આંતરિક અવકાશ એક variable <code>x</code> જાહેર કરે છે જેનું પ્રારંભિક મૂલ્ય <code>5</code> છે. આંતરિક અવકાશની અંદર, આપણે <code>x</code> ના સંદર્ભ તરીકે <code>r</code> નું મૂલ્ય સેટ કરવાનો પ્રયાસ કરીએ છીએ. પછી, આંતરિક અવકાશ સમાપ્ત થાય છે, અને આપણે <code>r</code> માં મૂલ્ય છાપવાનો પ્રયાસ કરીએ છીએ. આ કોડ કમ્પાઇલ થશે નહીં, કારણ કે <code>r</code> જે મૂલ્યનો સંદર્ભ લઈ રહ્યું છે તે તેનો ઉપયોગ કરવાનો પ્રયાસ કરતા પહેલા અવકાશમાંથી બહાર નીકળી ગયું છે. અહીં ભૂલ સંદેશ છે:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0597]: `x` does not live long enough
+ --&gt; src/main.rs:6:13
+  |
+5 |         let x = 5;
+  |             - binding `x` declared here
+6 |         r = &amp;x;
+  |             ^^ borrowed value does not live long enough
+7 |     }
+  |     - `x` dropped here while still borrowed
+8 |
+9 |     println!("r: {r}");
+  |                   - borrow later used here
+
+For more information about this error, try `rustc --explain E0597`.
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
+</code></pre>
+<p>ભૂલ સંદેશ ભૂલ સંદેશ જણાવે છે કે variable <code>x</code> “પર્યાપ્ત સમય સુધી ટકતું નથી.” તેનું કારણ એ છે કે <code>x</code> અંદરના અવકાશના અંતિમ ભાગમાં ૭મી લાઈનમાં સમાપ્ત થતાં જ અવકાશની બહાર થઈ જશે. પરંતુ <code>r</code> બાહ્ય અવકાશ માટે માન્ય રહે છે; તેના અવકાશનું કદ મોટું હોવાથી, આપણે કહીએ છીએ કે તે “લાંબો સમય જીવે છે.” જો Rust આ કોડને કાર્યરત કરવાની મંજૂરી આપે, તો <code>r</code> એવા મેમરીનો સંદર્ભ લેશે જે <code>x</code> અવકાશમાંથી બહાર નીકળ્યા પછી ફાળવી દેવામાં આવ્યો હતો, અને <code>r</code> સાથે આપણે જે કંઈપણ કરવાનો પ્રયાસ કરીશું તે યોગ્ય રીતે કામ કરશે નહીં. તો, Rust આ કોડ અમાન્ય છે તે કેવી રીતે નક્કી કરે છે? તે એક બોરો ચેકરનો ઉપયોગ કરે છે.</p>
+<h3 id="the-borrow-checker"><a class="header" href="#the-borrow-checker">The Borrow Checker</a></h3>
+<p>Rust કમ્પાઇલર પાસે એક ધન પ્રાપ્તિ ચકાસક (borrow checker) છે, જે અવકાશોની સરખામણી કરે છે કે તમામ ધન પ્રાપ્તિઓ માન્ય છે કે નહીં. પરિબલિષ્ટ 10-17 પરિબલિષ્ટ 10-16 જેટલા જ કોડને દર્શાવે છે, પરંતુ variable’s આયુષ્ય (lifetime) દર્શાવતા નોંધો સાથે.</p>
+<p><strong>Listing 10-17: Annotations of the lifetimes of <code>r</code> and <code>x</code>, named <code>'a</code> and <code>'b</code>, respectively</strong></p>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let r;                // ---------+-- 'a
+                          //          |
+    {                     //          |
+        let x = 5;        // -+-- 'b  |
+        r = &amp;x;           //  |       |
+    }                     // -+       |
+                          //          |
+    println!("r: {r}");   //          |
+}                         // ---------+</code></pre>
+<p>અહીં, અમે <code>r</code> ના આયુષ્યકાળને <code>'a</code> અને <code>x</code> ના આયુષ્યકાળને <code>'b</code> સાથે નોંધ્યા છે. તમે જોઈ શકો છો તેમ, આંતરિક <code>'b</code> બ્લોક બાહ્ય <code>'a</code> આયુષ્યકાળ બ્લોકની તુલનામાં ઘણો નાનો છે. કમ્પાઇલ સમય દરમિયાન, Rust બંને આયુષ્યકાળોના કદની સરખામણી કરે છે અને જુએ છે કે <code>r</code> નું આયુષ્યકાળ <code>'a</code> છે પરંતુ તે મેમરી સાથે સંબંધિત છે જેનું આયુષ્યકાળ <code>'b</code> છે. પ્રોગ્રામ નકારવામાં આવે છે કારણ કે <code>'b</code> <code>'a</code> કરતાં ટૂંકો છે: સંદર્ભનો વિષય સંદર્ભ જેટલો લાંબો જીવતો નથી.</p>
+<p>รายการ 10-18 સુધારે છે કોડ જેથી તે હંગામી સંદર્ભ ધરાવતો નથી અને કોઈપણ ભૂલો વગર કમ્પાઇલ થાય છે.</p>
+<p><strong>Listing 10-18: A valid reference because the data has a longer lifetime than the reference</strong></p>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let x = 5;            // ----------+-- 'b
+                          //           |
+    let r = &amp;x;           // --+-- 'a  |
+                          //   |       |
+    println!("r: {r}");   //   |       |
+                          // --+       |
+}                         // ----------+</code></pre>
+<p>અહીં, <code>x</code> ને જીવનકાળ <code>'b'</code> છે, જે આ કિસ્સામાં <code>'a'</code> કરતાં મોટો છે. આનો અર્થ એ થાય છે કે <code>r</code> , <code>x</code> ને સંદર્ભિત કરી શકે છે કારણ કે Rust જાણે છે કે <code>r</code> માં રહેલો સંદર્ભ <code>x</code> માન્ય હોય ત્યાં સુધી હંમેશાં</p>
+<p>માન્ય રહેશે. હવે તમને સંદર્ભોના જીવનકાળ ક્યાં છે અને Rust કેવી રીતે જીવનકાળનું વિશ્લેષણ કરે છે તે ખબર છે, જેથી સંદર્ભો હંમેશાં માન્ય રહે તેની ખાતરી થાય, તો ચાલો ફંક્શન પરિમાણો અને વળતર મૂલ્યોમાં સામાન્ય જીવનકાળની શોધ કરીએ.</p>
+<h3 id="generic-lifetimes-in-functions"><a class="header" href="#generic-lifetimes-in-functions">Generic Lifetimes in Functions</a></h3>
+<p>આપણે એક કાર્ય લખીશું જે બે સ્ટ્રિંગ સ્લાઇસમાંથી લાંબો હશે તે પાછો આપશે. આ કાર્ય બે સ્ટ્રિંગ સ્લાઇસ લેશે અને એક જ સ્ટ્રિંગ સ્લાઇસ પાછો આપશે. આપણે <code>longest</code> કાર્ય અમલમાં મૂક્યા પછી, યાદી 10-19 માં રહેલો કોડ <code>The longest string is abcd</code> છાપશે.</p>
+<p><strong>Listing 10-19: A <code>main</code> function that calls the <code>longest</code> function to find the longer of two string slices</strong></p>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let string1 = String::from("abcd");
+    let string2 = "xyz";
+
+    let result = longest(string1.as_str(), string2);
+    println!("The longest string is {result}");
+}</code></pre>
+<p>નોંધ આપણે ફંક્શનને String સ્લાઇસ, જે રેફરન્સ છે, લેવા માંગીએ છીએ, સ્ટ્રિંગને બદલે, કારણ કે આપણે નથી ઈચ્છતા કે <code>longest</code> ફંક્શન તેના પરિમાણોનું માલિકીત્વ (ownership) મેળવે. પ્રકરણ 4 માં “સ્ટ્રિંગ સ્લાઇસ તરીકે પરિમાણ” જુઓ વધુ ચર્ચા માટે કે શા માટે લિસ્ટિંગ 10-19 માં વપરાયેલ પરિમાણો એવા છે જે આપણે જોઈએ છીએ. જો આપણે</p>
+<p>લિસ્ટિંગ 10-20 માં દર્શાવ્યા પ્રમાણે <code>longest</code> ફંક્શનનો અમલ કરવાનો પ્રયત્ન કરીએ, તો તે કમ્પાઇલ થશે નહીં.</p>
+<p><strong>Listing 10-20: An implementation of the <code>longest</code> function that returns the longer of two string slices but does not yet compile</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "xyz";
+</span><span class="boring">
+</span><span class="boring">    let result = longest(string1.as_str(), string2);
+</span><span class="boring">    println!("The longest string is {result}");
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str {
+    if x.len() &gt; y.len() { x } else { y }
+}</code></pre>
+<p>અને તેના બદલે, આપણને નીચે મુજબની ભૂલ મળે છે જે લાઈફટાઇમ વિશે વાત કરે છે:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0106]: missing lifetime specifier
+ --&gt; src/main.rs:9:33
+  |
+9 | fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str {
+  |               ----     ----     ^ expected named lifetime parameter
+  |
+  = help: this function's return type contains a borrowed value, but the signature does not say whether it is borrowed from `x` or `y`
+help: consider introducing a named lifetime parameter
+  |
+9 | fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+  |           ++++     ++          ++          ++
+
+For more information about this error, try `rustc --explain E0106`.
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
+</code></pre>
+<p>મદદનો લખાણ દર્શાવે છે કે વળતર પ્રકારને સામાન્ય આયુષ્ય પરિમાણ (generic lifetime parameter) ની જરૂર છે કારણ કે Rust એ જણું શકતું નથી કે કયા સંદર્ભ (<code>reference</code>) પાછો આપવામાં આવી રહ્યો છે તે <code>x</code> ને નિર્દેશ કરે છે કે <code>y</code> ને. હકીકતમાં, અમને પણ ખબર નથી, કારણ કે આ કાર્યમાં શરીરના <code>if</code> બ્લોક <code>x</code> નો સંદર્ભ પાછો આપે છે અને <code>else</code> બ્લોક <code>y</code> નો સંદર્ભ પાછો આપે છે!</p>
+<p>જ્યારે અમે આ કાર્યને વ્યાખ્યાયિત કરીએ છીએ, ત્યારે અમને ખબર નથી હોતું કે કયા નક્કર મૂલ્યો આ કાર્યમાં પસાર કરવામાં આવશે, તેથી અમને ખબર નથી હોતી કે <code>if</code> કેસ અથવા <code>else</code> કેસ ચાલશે. અમને એ પણ ખબર નથી હોતો કે કયા સંદર્ભોના આયુષ્ય (lifetimes) પસાર કરવામાં આવશે, તેથી અમે અવકાશોને જોઈ શકતા નથી જેમણે આપણે યાદી 10-17 અને 10-18 માં કર્યું હતું, તે નક્કી કરવા માટે કે અમે જે સંદર્ભ પાછો આપીએ છીએ તે હંમેશા માન્ય રહેશે. બોરો ચેકર (borrow checker) પણ આ નક્કી કરી શકતો નથી, કારણ કે તેને ખબર નથી હોતી કે <code>x</code> અને <code>y</code> ના આયુષ્ય વળતર મૂલ્યના આયુષ્ય સાથે કેવી રીતે સંબંધિત છે. આ ભૂલને સુધારવા માટે, અમે સામાન્ય આયુષ્ય પરિમાણો ઉમેરીશું જે સંદર્ભો વચ્ચેનો સંબંધ વ્યાખ્યાયિત કરે જેથી બોરો ચેકર તેનું વિશ્લેષણ કરી શકે.</p>
+<h3 id="lifetime-annotation-syntax"><a class="header" href="#lifetime-annotation-syntax">Lifetime Annotation Syntax</a></h3>
+<p>જીવનકાળ નોંધણી વાક્યરચના જીવનકાળ નોંધણીઓ એ સંદર્ભો કેટલા સમય સુધી જીવે છે તેમાં ફેરફાર કરતી નથી. તેના બદલે, તેઓ એકબીજા સાથે અનેક સંદર્ભોના જીવનકાળના સંબંધોનું વર્ણન કરે છે, તેમના જીવનકાળોને અસર કર્યા વિના. જેમ કાર્યો સામાન્ય પ્રકાર પરિમાણ (generic type parameter) સ્પષ્ટ કરીને કોઈપણ પ્રકાર સ્વીકારી શકે છે, તેમ કાર્યો સામાન્ય જીવનકાળ પરિમાણ (generic lifetime parameter) સ્પષ્ટ કરીને કોઈપણ જીવનકાળના સંદર્ભો</p>
+<p>પણ સ્વીકારી શકે છે. જીવનકાળ નોંધણીઓનું વાક્યરચના થોડું અસામાન્ય છે: જીવનકાળ પરિમાણોના નામો એક અવધિ ચિહ્ન ( <code>'</code> ) થી શરૂ થવા જોઈએ અને સામાન્ય રીતે બધા નાના અક્ષરોમાં અને ખૂબ ટૂંકા હોવા જોઈએ, જેમ કે સામાન્ય પ્રકારો. મોટાભાગના લોકો પ્રથમ જીવનકાળ નોંધણી માટે નામ <code>'a</code> વાપરે છે. અમે સંદર્ભના પ્રકારથી વિરુદ્ધ નોંધણીને અલગ કરવા માટે <code>&amp;</code> પછી જીવનકાળ પરિમાણ નોંધણીઓ મૂકીએ છીએ, જેમાં જગ્યાનો ઉપયોગ થાય છે.</p>
+<p>અહીં કેટલાક ઉદાહરણો છે—એક <code>i32</code> નો સંદર્ભ જેlifetime પરિમાણ વગરનો છે, એક <code>i32</code> નો સંદર્ભ જે lifetime પરિમાણ ધરાવે છે જેને <code>'a</code> નામ આપવામાં આવ્યું છે, અને એક mutable સંદર્ભ પણ <code>i32</code> નો જે lifetime <code>'a</code> ધરાવે છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>&amp;i32        // a reference
+&amp;'a i32     // a reference with an explicit lifetime
+&amp;'a mut i32 // a mutable reference with an explicit lifetime
+<span class="boring">}</span></code></pre>
+<p>એક જીવનકાળ સંકેત (lifetime annotation) એકલું હોય તો તેનો વિશેષ અર્થ ન થતો, કારણ કે આ સંકેતો Rustને જણાવવા માટે હોય છે કે બહુવિધ સંદર્ભો (references) ના સામાન્ય જીવનકાળ પરિમાણો (generic lifetime parameters) એકબીજા સાથે કેવી રીતે સંબંધિત છે. ચાલો જોઈએ કે <code>longest</code> કાર્યમાં જીવનકાળ સંકેતો એકબીજા સાથે કેવી રીતે સંબંધિત થાય છે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="in-function-signatures"><a class="header" href="#in-function-signatures">In Function Signatures</a></h3>
+<p>કાર્ય સંકેતોમાં આયુષ્ય નોંધો વાપરવા માટે, આપણે ખૂણાના કૌંસમાં સામાન્ય આયુષ્ય પરિમાણો જાહેર કરવા પડશે, જે કાર્ય નામ અને પરિમાણ સૂચિ વચ્ચે હોય છે, બરાબર જેમ આપણે સામાન્ય પ્રકારના પરિમાણો સાથે કર્યું હતું.</p>
+<p>આપણે સંકેત વ્યક્ત કરવો માંગીએ છીએ કે: પરત કરેલ સંદર્ભ બંને પરિમાણો માન્ય હોય ત્યાં સુધી માન્ય રહેશે. આ પરિમાણોના આયુષ્ય અને વળતર મૂલ્ય વચ્ચેનો સંબંધ છે. આપણે આયુષ્ય <code>'a</code> નામ આપીશું અને પછી તેને દરેક સંદર્ભમાં ઉમેરીશું, જેમ કે સૂચિ 10-21 માં દર્શાવેલ છે.</p>
+<p><strong>Listing 10-21: The <code>longest</code> function definition specifying that all the references in the signature must have the same lifetime <code>'a</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "xyz";
+</span><span class="boring">
+</span><span class="boring">    let result = longest(string1.as_str(), string2);
+</span><span class="boring">    println!("The longest string is {result}");
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+    if x.len() &gt; y.len() { x } else { y }
+}</code></pre>
+<p>આ કોડ સંકલિત થવો જોઈએ અને જ્યારે આપણે તેને યાદી 10-19 માં <code>main</code> વિધેય સાથે વાપરીએ ત્યારે આપણને જોઈતો પરિણામ ઉત્પન્ન કરવું જોઈએ.</p>
+<p>વિધેય હસ્તાક્ષર હવે Rust ને જણાવે છે કે અમુક લાઈફટાઈમ <code>'a</code> માટે, વિધેય બે પરિમાણો લે છે, જે બંને સ્ટ્રિંગ સ્લાઈસ છે અને જે લાઈફટાઈમ <code>'a</code> જેટલા ઓછામાં ઓછા જીવે છે. વિધેય હસ્તાક્ષર એ પણ જણાવે છે કે વિધેયમાંથી પરત કરવામાં આવતી સ્ટ્રિંગ સ્લાઈસ લાઈફટાઈમ <code>'a</code> જેટલી લાંબી જીવશે. વ્યવહારમાં, તેનો અર્થ એ થાય છે કે <code>longest</code> વિધેય દ્વારા પરત કરવામાં આવેલ રેફરન્સનું લાઈફટાઈમ ફંક્શન આર્ગ્યુમેન્ટ્સ દ્વારા દર્શાવવામાં આવતી વેલ્યુના લાઈફટાઈમના નાના જેટલું જ હોય છે. આ સંબંધો એવા છે જેનો ઉપયોગ આપણે Rust ને આ કોડનું વિશ્લેષણ કરતી વખતે કરવો છે.</p>
+<p>જ્યારે આપણે આ ફંક્શન હસ્તાક્ષરમાં જીવનકાળ પરિમાણો (lifetime parameters) નિર્દિષ્ટ કરીએ છીએ, ત્યારે અમે કોઈ પણ પસાર થયેલ અથવા પરત કરેલા મૂલ્યોના જીવનકાળ બદલી રહ્યા નથી. તેના બદલે, અમે સ્પષ્ટ કરી રહ્યા છીએ કે બોરો ચેકર (borrow checker) એવા કોઈપણ મૂલ્યોને નકારી કાઢશે જે આ મર્યાદાઓનું પાલન કરતા નથી. નોંધ કરો કે <code>longest</code> ફંક્શનને ચોક્કસપણે ખબર હોવાની જરૂર નથી કે <code>x</code> અને <code>y</code> કેટલા સમય જીવશે, માત્ર એટલું જ કે <code>'a</code> માટે કોઈ સ્કોપ (scope) બદલી શકાય છે જે આ હસ્તાક્ષર સંતોષે.</p>
+<p>ફંક્શન્સમાં જીવનકાળની નોંધણી કરતી વખતે, નોંધણીઓ ફંક્શન હસ્તાક્ષરમાં જવી જોઈએ, ફંક્શન શરીરમાં નહીં. જીવનકાળની નોંધણીઓ ફંક્શનના કરારનો ભાગ બને છે, જેમ કે હસ્તાક્ષર (signature) માં પ્રકારો (types). ફંક્શન હસ્તાક્ષરોમાં જીવનકાળ કરાર હોવાનો અર્થ એ છે કે Rust કમ્પાઇલર જે વિશ્લેષણ કરે છે તે સરળ બની શકે છે. જો ફંક્શનની નોંધણી અથવા તેને બોલાવવાની રીતમાં કોઈ સમસ્યા હોય, તો કમ્પાઇલરની ભૂલો અમારા કોડના ભાગ અને મર્યાદાઓને વધુ ચોકસાઈથી નિર્દેશ કરી શકે છે. તેના બદલે, જો Rust કમ્પાઇલર જીવનકાળ સંબંધો વિશે વધુ અનુમાન લગાવે, તો તે સમસ્યાના કારણથી ઘણાં પગલાં દૂર અમારા કોડના ઉપયોગ તરફ નિર્દેશ કરી શકશે.</p>
+<p>જ્યારે આપણે <code>longest</code> ને નક્કર સંદર્ભો આપીએ છીએ, ત્યારે <code>'a</code> ની જગ્યાએ જે નક્કર આયુષ્ય (lifetime) મૂકવામાં આવે છે તે <code>x</code> ના અવકાશનો અને <code>y</code> ના અવકાશનો એકમ ભાગ હોય છે. બીજા શબ્દોમાં કહીએ તો, સામાન્ય આયુષ્ય <code>'a</code> એ <code>x</code> અને <code>y</code> ના આયુષ્યના નાના આયુષ્ય જેટલું નક્કર આયુષ્ય મેળવશે. કારણ કે આપણે પરત કરેલા સંદર્ભને સમાન આયુષ્ય પરિમાણ <code>'a</code> સાથે નોંધ્યું છે, તેથી પરત કરેલો સંદર્ભ પણ <code>x</code> અને <code>y</code> ના આયુષ્યના નાના આયુષ્યની લંબાઈ સુધી માન્ય રહેશે.</p>
+<p>ચાલો જોઈએ કે કેવી રીતે આયુષ્ય નિદર્શનો <code>longest</code> કાર્યને વિવિધ નક્કર આયુષ્ય ધરાવતા સંદર્ભો પસાર કરીને નિયંત્રિત કરે છે. સૂચિ ૧૦-૨૨ એક સરળ ઉદાહરણ છે.</p>
+<p><strong>Listing 10-22: Using the <code>longest</code> function with references to <code>String</code> values that have different concrete lifetimes</strong></p>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let string1 = String::from("long string is long");
+
+    {
+        let string2 = String::from("xyz");
+        let result = longest(string1.as_str(), string2.as_str());
+        println!("The longest string is {result}");
+    }
+}
+<span class="boring">
+</span><span class="boring">fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+</span><span class="boring">    if x.len() &gt; y.len() { x } else { y }
+</span><span class="boring">}</span></code></pre>
+<p>In this example, <code>string1</code> એ બાહ્ય અવકાશ (outer scope) ના અંત સુધી માન્ય રહે છે, <code>string2</code> એ આંતરિક અવકાશ (inner scope) ના અંત સુધી માન્ય રહે છે, અને <code>result</code> એક એવી વસ્તુનો સંદર્ભ (reference) આપે છે જે આંતરિક અવકાશના અંત સુધી માન્ય રહે છે. આ કોડ ચલાવો અને તમે જોશો કે બોરો ચેકર મંજૂરી આપે છે; તે કમ્પાઇલ થશે અને <code>The longest string is long string is long</code> છાપશે.</p>
+<p>આગળ, ચાલો એક એવું ઉદાહરણ જોઈએ જે દર્શાવે છે કે <code>result</code> માં સંદર્ભ (reference) નું આયુષ્ય (lifetime) બંને Argumentોના નાના આયુષ્ય જેટલું હોવું જરૂરી છે. આપણે <code>result</code> variable (variable) ની ઘોષણાને આંતરિક અવકાશની બહાર ખસેડીશું, પરંતુ <code>result</code> variable મૂલ્યની સોંપણીને <code>string2</code> સાથેના અવકાશમાં જ રાખીશું. પછી, આપણે <code>result</code> નો ઉપયોગ કરતી <code>println!</code> ને આંતરિક અવકાશ સમાપ્ત થયા પછી, તેની બહાર ખસેડીશું. લિસ્ટિંગ 10-23 માંનો કોડ કમ્પાઇલ થશે નહીં.</p>
+<p><strong>Listing 10-23: Attempting to use <code>result</code> after <code>string2</code> has gone out of scope</strong></p>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let string1 = String::from("long string is long");
+    let result;
+    {
+        let string2 = String::from("xyz");
+        result = longest(string1.as_str(), string2.as_str());
+    }
+    println!("The longest string is {result}");
+}
+<span class="boring">
+</span><span class="boring">fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+</span><span class="boring">    if x.len() &gt; y.len() { x } else { y }
+</span><span class="boring">}</span></code></pre>
+<p>જ્યારે આપણે આ કોડને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ છીએ, ત્યારે આપણને આ ભૂલ પ્રાપ્ત થાય છે:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0597]: `string2` does not live long enough
+ --&gt; src/main.rs:6:44
+  |
+5 |         let string2 = String::from("xyz");
+  |             ------- binding `string2` declared here
+6 |         result = longest(string1.as_str(), string2.as_str());
+  |                                            ^^^^^^^ borrowed value does not live long enough
+7 |     }
+  |     - `string2` dropped here while still borrowed
+8 |     println!("The longest string is {result}");
+  |                                      ------ borrow later used here
+
+For more information about this error, try `rustc --explain E0597`.
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
+</code></pre>
+<p>ભૂલ દર્શાવે છે કે <code>result</code> ને <code>println!</code> વિધાન માટે યોગ્ય બનાવવા માટે, <code>string2</code> બાહ્ય અવકાશના અંત સુધી અમાન્ય ન હોવું જોઈએ. Rust જાણે છે કારણ કે આપણે કાર્ય પરિમાણો અને વળતર મૂલ્યોના આયુષ્યને સમાન આયુષ્ય પરિમાણ <code>'a</code> નો ઉપયોગ કરીને નોંધ્યું હતું.</p>
+<p>મનુષ્ય તરીકે, આપણે આ કોડ જોઈ શકીએ છીએ કે <code>string1</code>, <code>string2</code> કરતાં લાંબો છે, અને તેથી, <code>result</code> માં <code>string1</code> નો સંદર્ભ હશે. કારણ કે <code>string1</code> હજી સુધી અવકાશમાંથી બહાર નીકળી નથી ગયું, <code>string1</code> નો સંદર્ભ <code>println!</code> વિધાન માટે માન્ય રહેશે. જો કે, કમ્પાઇલર જોઈ શકતો નથી કે આ કિસ્સામાં સંદર્ભ માન્ય છે. આપણે Rust ને કહ્યું છે કે <code>longest</code> કાર્ય દ્વારા પરત કરવામાં આવેલ સંદર્ભનું આયુષ્ય દાખલ કરેલા સંદર્ભોના નાના આયુષ્ય જેટલું જ છે. તેથી, બોરો ચેકર યાદી 10-23 માં કોડને અમાન્ય સંદર્ભ ધરાવતો હોઈ શકે છે એવું ગણીને મંજૂર કરતો નથી.</p>
+<p>વધુ પ્રયોગો રચવાનો પ્રયત્ન કરો જે <code>longest</code> વિધેયમાં પાસ થયેલ સંદર્ભો (references) ના મૂલ્યો અને આયુષ્યકાળ (lifetimes) માં વિવિધતા લાવે. પરત કરેલા સંદર્ભનો ઉપયોગ કેવી રીતે થાય છે તેના પર પણ ધ્યાન આપો. કમ્પાઇલ કરતા પહેલાં તમારા પ્રયોગો બોરો ચેકરને પાસ કરશે કે નહીં તે અંગે અનુમાન લગાવો; પછી તપાસો કે તમે સાચા છો કે નહીં!</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="relationships"><a class="header" href="#relationships">Relationships</a></h3>
+<p>તમારે ઉંમરના પરિમાણો કેવી રીતે સ્પષ્ટ કરવા તે તમારા કાર્ય પર આધાર રાખે છે. દાખલા તરીકે, જો આપણે <code>longest</code> કાર્યની અમલપદ્ધતિને સૌથી લાંબો શબ્દ-શ્રેણી (string slice) બદલે પ્રથમ પરિમાણ હંમેશાં આપવા માટે બદલીએ, તો આપણે <code>y</code> પરિમાણ પર ઉંમર સ્પષ્ટ કરવાની જરૂર નથી. નીચેનો કોડ સંપાદિત થશે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "efghijklmnopqrstuvwxyz";
+</span><span class="boring">
+</span><span class="boring">    let result = longest(string1.as_str(), string2);
+</span><span class="boring">    println!("The longest string is {result}");
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;str) -&gt; &amp;'a str {
+    x
+}</code></pre>
+<p>અમે પરિમાણ <code>x</code> અને વળતર પ્રકાર માટે લાઈફટાઈમ પેરામીટર <code>'a</code> નિર્ધારિત કર્યું છે, પરંતુ <code>y</code> માટે નહીં, કારણ કે <code>y</code> નું લાઈફટાઈમ <code>x</code> અથવા વળતર મૂલ્યના લાઈફટાઈમ સાથે સંબંધિત નથી.</p>
+<p>જ્યારે કોઈ ફંક્શનમાંથી રેફરન્સ પાછો આપવામાં આવે છે, ત્યારે વળતર પ્રકાર માટેનો લાઈફટાઈમ પેરામીટર એ એક નાનાં પરિમાણ માટેના લાઈફટાઈમ પેરામીટર સાથે મેળ ખાવું જોઈએ. જો પાછો આપવામાં આવેલો રેફરન્સ કોઈ પણ પરિમાણને નિર્દેશિત ન કરે, તો તેણે આ ફંક્શનની અંદર બનાવેલ મૂલ્યને નિર્દેશિત કરવું આવશ્યક છે. જો કે, તે એક ડેન્ગલિંગ રેફરન્સ હશે કારણ કે મૂલ્ય ફંક્શનના અંતે અવકાશમાંથી બહાર નીકળી જશે. <code>longest</code> ફંક્શનના આ પ્રયત્ન કરેલા અમલીકરણનો વિચાર કરો જે કમ્પાઈલ થશે નહીં:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "xyz";
+</span><span class="boring">
+</span><span class="boring">    let result = longest(string1.as_str(), string2);
+</span><span class="boring">    println!("The longest string is {result}");
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn longest&lt;'a&gt;(x: &amp;str, y: &amp;str) -&gt; &amp;'a str {
+    let result = String::from("really long string");
+    result.as_str()
+}</code></pre>
+<p>અહીં, ભલે આપણે વળતર પ્રકાર માટે જીવનકાળ પરિમાણ <code>'a</code> નિર્દિષ્ટ કર્યું છે, આ અમલીકરણ કમ્પાઇલ કરવામાં નિષ્ફળ જશે કારણ કે વળતરનું જીવનકાળ બિલકુલ પરિમાણોના જીવનકાળ સાથે સંબંધિત નથી. આપણને મળતો ભૂલ સંદેશ આ મુજબ છે:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0515]: cannot return value referencing local variable `result`
+  --&gt; src/main.rs:11:5
+   |
+11 |     result.as_str()
+   |     ------^^^^^^^^^
+   |     |
+   |     returns a value referencing data owned by the current function
+   |     `result` is borrowed here
+
+For more information about this error, try `rustc --explain E0515`.
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
+</code></pre>
+<p>નિર્ણાયક એ છે કે <code>result</code> અવકાશ બહાર જાય છે અને <code>longest</code> વિધેયના અંતે શુદ્ધ થાય છે. અમે વિધેયમાંથી <code>result</code> નો સંદર્ભ પાછો આપવાનો પણ પ્રયત્ન કરી રહ્યા છીએ. એવી કોઈ રીતે આપણે આયુષ્ય પરિમાણો (lifetime parameters) સ્પષ્ટ કરી શકતા નથી કે જે લટકતો સંદર્ભ (dangling reference) બદલી શકે, અને Rust આપણને લટકતો સંદર્ભ બનાવવાની મંજૂરી આપશે નહીં. આ સ્થિતિમાં, શ્રેષ્ઠ ઉપાય એ છે કે સંદર્ભને બદલે માલિકીનો ડેટા પ્રકાર પાછો આપવો જેથી કરીને કૉલિંગ વિધેય મૂલ્યને શુદ્ધ કરવા માટે જવાબદાર બને.</p>
+<p>અંતે, લાઈફટાઈમ સિન્ટેક્સ વિવિધ પરિમાણો અને વિધેયોના વળતર મૂલ્યોના લાઈફટાઈમના જોડાણ વિશે છે. એકવાર તેઓ જોડાયા પછી, Rust પાસે પૂરતી માહિતી હોય છે જેથી કરીને મેમરી-સુરક્ષિત ક્રિયાઓ કરવાની મંજૂરી મળે અને એવી ક્રિયાઓને અટકાવી શકાય જે નહિચેલી પોઇન્ટર્સ (dangling pointers) બનાવે અથવા મેમરી સુરક્ષાનું ઉલ્લંઘન કરે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="in-struct-definitions"><a class="header" href="#in-struct-definitions">In Struct Definitions</a></h3>
+<p>આપણે અત્યાર સુધી જે રચનાઓ (structs) વ્યાખ્યાયિત કરી છે, તે બધી જ માલિકીવાળા પ્રકારો (owned types) ધરાવે છે. આપણે સંદર્ભો (references) ધરાવતી રચનાઓ પણ વ્યાખ્યાયિત કરી શકીએ છીએ, પરંતુ તે સ્થિતિમાં, આપણે રચનાની વ્યાખ્યામાં દરેક સંદર્ભ માટે આયુષ્ય નોંધ (lifetime annotation) ઉમેરવાની જરૂર પડશે. સૂચિ 10-24 માં <code>ImportantExcerpt</code> નામની એક રચના છે જે સ્ટ્રિંગ સ્લાઇસ ધરાવે છે.</p>
+<p><strong>Listing 10-24: A struct that holds a reference, requiring a lifetime annotation</strong></p>
+<pre class="playground"><code class="language-rust edition2024">struct ImportantExcerpt&lt;'a&gt; {
+    part: &amp;'a str,
+}
+
+fn main() {
+    let novel = String::from("Call me Ishmael. Some years ago...");
+    let first_sentence = novel.split('.').next().unwrap();
+    let i = ImportantExcerpt {
+        part: first_sentence,
+    };
+}</code></pre>
+<p>આ struct માં એક જ ક્ષેત્ર <code>part</code> છે જે string slice ધરાવે છે, જે એક reference છે. સામાન્ય data types ની જેમ, આપણે generic lifetime parameter નું નામ struct ના નામ પછી angle brackets અંદર જાહેર કરીએ છીએ જેથી કરીને આપણે struct વ્યાખ્યાના ભાગમાં lifetime parameter નો ઉપયોગ કરી શકીએ. આ annotation સૂચવે છે કે <code>ImportantExcerpt</code> નું instance તેના <code>part</code> ક્ષેત્રમાં રહેલા reference કરતાં વધુ સમય સુધી ટકી શકે નહીં.</p>
+<p><code>main</code> function અહીં <code>ImportantExcerpt</code> struct નું એક instance બનાવે છે જે variable <code>novel</code> દ્વારા માલિકી ધરાવતા String ના પ્રથમ વાક્યનો reference ધરાવે છે. <code>novel</code> માં રહેલો data <code>ImportantExcerpt</code> instance બનાવ્યા પહેલાં અસ્તિત્વમાં હતો. વધુમાં, <code>novel</code> scope માંથી ત્યારે જ બહાર જાય છે જ્યારે <code>ImportantExcerpt</code> scope માંથી બહાર જાય છે, તેથી <code>ImportantExcerpt</code> instance માં રહેલો reference માન્ય છે.</p>
+<h3 id="lifetime-elision"><a class="header" href="#lifetime-elision">Lifetime Elision</a></h3>
+<p>તમે શીખ્યા છો કે દરેક સંદર્ભનું આયુષ્ય હોય છે અને તમારે સંદર્ભોનો ઉપયોગ કરતા વિધેયો અથવા રચનાઓ માટે આયુષ્ય પરિમાણો સ્પષ્ટ કરવાની જરૂર પડે છે. જોકે, આપણને યાદી 4-9 માં એક વિધેય હતું, જે યાદી 10-25 માં ફરીથી દર્શાવવામાં આવ્યું છે, તે આયુષ્ય નોંધણી વગર જ સંપાઈ ગયું હતું.</p>
+<p><strong>Listing 10-25: A function we defined in Listing 4-9 that compiled without lifetime annotations, even though the parameter and return type are references</strong></p>
+<pre class="playground"><code class="language-rust edition2024">fn first_word(s: &amp;str) -&gt; &amp;str {
+    let bytes = s.as_bytes();
+
+    for (i, &amp;item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &amp;s[0..i];
+        }
+    }
+
+    &amp;s[..]
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let my_string = String::from("hello world");
+</span><span class="boring">
+</span><span class="boring">    // first_word works on slices of `String`s
+</span><span class="boring">    let word = first_word(&amp;my_string[..]);
+</span><span class="boring">
+</span><span class="boring">    let my_string_literal = "hello world";
+</span><span class="boring">
+</span><span class="boring">    // first_word works on slices of string literals
+</span><span class="boring">    let word = first_word(&amp;my_string_literal[..]);
+</span><span class="boring">
+</span><span class="boring">    // Because string literals *are* string slices already,
+</span><span class="boring">    // this works too, without the slice syntax!
+</span><span class="boring">    let word = first_word(my_string_literal);
+</span><span class="boring">}</span></code></pre>
+<p>આ કાર્ય સંકલન પામે છે કારણ કે આ એક ઐતિહાસિક બાબત છે: Rust ના પ્રારંભિક આવૃત્તિઓમાં (1.0 પહેલાં), આ કોડ સંકલન ન પામતો, કારણ કે દરેક સંદર્ભ માટે સ્પષ્ટ સમયગાળો જરૂરી હતો. તે સમયે, કાર્ય હસ્તાક્ષર <code>like this</code> જેવું લખાયું હોત:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn first_word&lt;'a&gt;(s: &amp;'a str) -&gt; &amp;'a str {
+<span class="boring">}</span></code></pre>
+<p>ઘણી Rust કોડ લખ્યા પછી, Rust ટીમ એ શોધ્યું કે Rust કાર્યકર્તાઓ ચોક્કસ પરિસ્થિતિઓમાં વારંવાર લાઈફટાઈમ નોંધણીઓ દાખલ કરી રહ્યા હતા. આ પરિસ્થિતિઓ અનુમાનિત હતી અને થોડા નિશ્ચિત પ્રકારના નિયમોનું પાલન કરતી હતી. વિકાસકર્તાઓએ આ નિયમોને કમ્પાઇલરના કોડમાં પ્રોગ્રામ કર્યા જેથી કરીને ઉધાર તપાસનાર (borrow checker) આ પરિસ્થિતિઓમાં લાઈફટાઈમનો અંદાજ લગાવી શકે અને તેને સ્પષ્ટ નોંધણીઓની જરૂર ન પડે.</p>
+<p>Rust ના આ ઇતિહાસનો એક ભાગ મહત્વપૂર્ણ છે કારણ કે વધુ નિશ્ચિત પ્રકારના નિયમો બહાર આવી શકે છે અને કમ્પાઇલરમાં ઉમેરાઈ શકે છે. ભવિષ્યમાં, ઓછા લાઈફટાઈમ નોંધણીઓની જરૂર પડી શકે છે.</p>
+<p>ના સંદર્ભોના વિશ્લેષણમાં પ્રોગ્રામ કરેલા નિયમોને આયુષ્ય નિવારણ નિયમો કહેવામાં આવે છે. આ પ્રોગ્રામરો અનુસરવા માટેના નિયમો નથી; તે ચોક્કસ કેસોનો સમૂહ છે જે કમ્પાઇલર ધ્યાનમાં લેશે, અને જો તમારો કોડ આ કેસોમાં બંધબેસે</p>
+<p>છે, તો તમારે આયુષ્ય સ્પષ્ટપણે લખવાની જરૂર નથી. આયુષ્ય નિવારણ નિયમો સંપૂર્ણ અનુમાનિત નથી. જો Rustના નિયમો લાગુ કર્યા પછી સંદર્ભોની આયુષ્ય વિશે હજુ પણ અસ્પષ્ટતા હોય, તો કમ્પાઇલર બાકી રહેલા સંદર્ભોની આયુષ્ય શું હોવી જોઈએ તે અંગે અનુમાન કરશે નહીં. અનુમાન કરવાને બદલે, કમ્પાઇલર તમને એક ભૂલ આપશે જેને તમે આયુષ્ય નોંધણીઓ ઉમેરીને ઉકેલી શકો છો.</p>
+<p>વિધેય અથવા પદ્ધતિ પરિમાણો</p>
+<p>પરના આયુષ્યકાળને ઇનપુટ આયુષ્યકાળ કહેવામાં આવે છે, અને વળતર મૂલ્યો પરના આયુષ્યકાળને આઉટપુટ આયુષ્યકાળ કહેવામાં આવે છે. કમ્પાઇલર ત્રણ નિયમોનો ઉપયોગ સંદર્ભોના આયુષ્યકાળ નક્કી કરવા માટે કરે છે જ્યારે સ્પષ્ટ નિદર્શકો (annotations) ન હોય. પ્રથમ નિયમ ઇનપુટ આયુષ્યકાળ લાગુ પડે છે, અને બીજો અને ત્રીજો નિયમ આઉટપુટ આયુષ્યકાળ લાગુ પડે છે. જો કમ્પાઇલર ત્રણેય નિયમોના અંત સુધી પહોંચે છે અને હજુ પણ એવા સંદર્ભો માટે જેમના આયુષ્યકાળ તે નક્કી કરી શકતો નથી, તો કમ્પાઇલર ભૂલ સાથે બંધ થઈ જશે. આ નિયમો <code>fn</code> વ્યાખ્યાઓ તેમજ <code>impl</code> બ્લોક્સ પર પણ લાગુ પડે છે.</p>
+<p>પહેલો નિયમ એ છે કે કમ્પાઇલર દરેક સંદર્ભ પરિમાણ માટે એક આયુષ્ય પરિમાણ (lifetime parameter) સોંપે છે. બીજા શબ્દોમાં કહીએ તો, એક પરિમાણ ધરાવતું વિધેય એક આયુષ્ય પરિમાણ મેળવે છે: <code>fn foo&lt;'a&gt;(x: &amp;'a i32)</code> ; બે પરિમાણો ધરાવતું વિધેય બે અલગ આયુષ્ય પરિમાણો મેળવે છે: <code>fn foo&lt;'a, 'b&gt;(x: &amp;'a i32, y: &amp;'b i32)</code> ; અને એ જ રીતે આગળ વધે છે.</p>
+<p>બીજો નિયમ એ છે કે, જો માત્ર એક ઇનપુટ આયુષ્ય પરિમાણ હોય, તો તે આયુષ્ય તમામ આઉટપુટ આયુષ્ય પરિમાણોને સોંપવામાં આવે છે: <code>fn foo&lt;'a&gt;(x: &amp;'a i32) -&gt; &amp;'a i32</code> .</p>
+<p>ત્રીજું નિયમ ત્રીજું નિયમ એ છે કે, જો અનેક ઇનપુટ લાઈફટાઈમ પરિમાણો હોય, પરંતુ તેમાંથી એક <code>&amp;self</code> અથવા <code>&amp;mut self</code> હોય, કારણ કે આ એક પદ્ધતિ (method) છે, તો <code>self</code> નું લાઈફટાઈમ બધા આઉટપુટ લાઈફટાઈમ પરિમાણોને સોંપવામાં આવે છે. આ ત્રીજું નિયમ પદ્ધતિઓને વધુ સરળતાથી વાંચવા અને લખવામાં મદદ કરે છે કારણ કે ઓછા પ્રતીકો (symbols) જરૂરી છે. ચાલો</p>
+<p>આપણે કલ્પના કરીએ કે આપણે કમ્પાઈલર છીએ. અમે આ નિયમો લાગુ કરીને <code>first_word</code> ફંક્શનની હસ્તાક્ષરમાં (signature) રહેલા સંદર્ભો (references) ના લાઈફટાઈમ નક્કી કરીશું, જે Listing 10-25 માં દર્શાવેલ છે. હસ્તાક્ષર કોઈપણ લાઈફટાઈમ વગર શરૂ થાય છે જે સંદર્ભો સાથે સંકળાયેલા છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn first_word(s: &amp;str) -&gt; &amp;str {
+<span class="boring">}</span></code></pre>
+<p>પછી, કમ્પાઇલર પ્રથમ નિયમ લાગુ કરે છે, જે જણાવે છે કે દરેક પરિમાણ (parameter) પોતાનું આયુષ્ય (lifetime) ધરાવે છે. આપણે તેને સામાન્ય રીતે `‘a’ નામ આપીશું, તેથી હવે હસ્તાક્ષર (signature) આ પ્રમાણે છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn first_word&lt;'a&gt;(s: &amp;'a str) -&gt; &amp;str {
+<span class="boring">}</span></code></pre>
+<p>બીજો નિયમ લાગુ થાય છે કારણ કે માત્ર એક જ ઇનપુટ લાઈફટાઈમ છે. બીજો નિયમ જણાવે છે કે એક ઇનપુટ પેરામીટરનું લાઈફટાઈમ આઉટપુટ લાઈફટાઈમને સોંપવામાં આવે છે, તેથી હસ્તાક્ષર હવે આ પ્રમાણે છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn first_word&lt;'a&gt;(s: &amp;'a str) -&gt; &amp;'a str {
+<span class="boring">}</span></code></pre>
+<p>હવે આ કાર્ય હસ્તાક્ષર (function signature) માં રહેલાં તમામ સંદર્ભોમાં આયુષ્યકાળ (lifetimes) છે, અને કમ્પાઇલર તેના વિશ્લેષણ ચાલુ રાખી શકે છે પ્રોગ્રામરે આ કાર્ય હસ્તાક્ષરમાં આયુષ્યકાળ દર્શાવવાની જરૂર વગર.</p>
+<p>ચાલો બીજા ઉદાહરણ જોઈએ, આ વખતે <code>longest</code> કાર્યનો ઉપયોગ કરીને જેનાં શરૂઆતમાં કોઈ આયુષ્યકાળ પરિમાણો (lifetime parameters) ન હતાં, જ્યારે આપણે તેને સૂચિ 10-20 માં કામ કરવાનું શરૂ કર્યું હતું:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str {
+<span class="boring">}</span></code></pre>
+<p>ચાલો પ્રથમ નિયમ લાગુ કરીએ: દરેક પરિમાણનું પોતાનું આયુષ્ય છે. આ વખતે આપણી પાસે એકને બદલે બે પરિમાણો છે, તેથી આપણી પાસે બે આયુષ્ય છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn longest&lt;'a, 'b&gt;(x: &amp;'a str, y: &amp;'b str) -&gt; &amp;str {
+<span class="boring">}</span></code></pre>
+<p>તમે જોઈ શકો છો કે બીજું નિયમ લાગુ પડતો નથી, કારણ કે એક કરતાં વધારે ઇનપુટ લાઈફટાઈમ છે. ત્રીજો નિયમ પણ લાગુ પડતો નથી, કારણ કે <code>longest</code> એ મેથડને બદલે ફંક્શન છે, તેથી કોઈ પણ પેરામીટર <code>self</code> નથી. ત્રણેય નિયમોમાંથી પસાર થયા પછી પણ, અમને હજી ખબર પડી નથી કે રીટર્ન પ્રકારનું લાઈફટાઈમ શું છે. આ જ કારણ છે કે અમે લિસ્ટિંગ 10-20 માં કોડને કમ્પાઇલ કરવાનો પ્રયાસ કરતી વખતે ભૂલ મેળવી હતી: કમ્પાઈલર લાઈફટાઈમ ઇલિશન નિયમોમાંથી પસાર થયો, પરંતુ હજી પણ સિગ્નેચરના તમામ લાઈફટાઈમને નક્કી કરી શક્યો ન હતો.</p>
+<p>કારણ કે ત્રીજું નિયમ માત્ર પદ્ધતિ હસ્તાક્ષરોમાં જ લાગુ પડે છે, આપણે આગલામાં પદ્ધતિ હસ્તાક્ષરોમાં આયુષ્યકાળ (lifetimes) જોઈએ જેથી સમજાય કે શા માટે ત્રીજા નિયમનો અર્થ એ થાય છે કે આપણે ઘણીવાર પદ્ધતિ હસ્તાક્ષરોમાં આયુષ્યકાળ દર્શાવવાની જરૂર નથી.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="in-method-definitions"><a class="header" href="#in-method-definitions">In Method Definitions</a></h3>
+<p>જ્યારે આપણે લાઈફટાઇમ સાથે સ્ટ્રક્ચરમાં પદ્ધતિઓનો અમલ કરીએ છીએ, ત્યારે આપણે સામાન્ય પ્રકારના પરિમાણોની જેમ જ વાક્યરચનાનો ઉપયોગ કરીએ છીએ, જે યાદી 10-11 માં દર્શાવેલ છે. જ્યાં આપણે લાઈફટાઇમ પરિમાણો જાહેર કરીએ છીએ અને તેનો ઉપયોગ કરીએ છીએ તે આ નિર્ભર કરે છે કે તેઓ સ્ટ્રક્ચરના ક્ષેત્રો સાથે સંબંધિત છે કે પદ્ધતિના પરિમાણો અને રીટર્ન વેલ્યુ સાથે.</p>
+<p>સ્ટ્રક્ચર ક્ષેત્રો માટે લાઈફટાઇમ નામોને હંમેશાં <code>impl</code> કીવર્ડ પછી જાહેર કરવાની જરૂર પડે છે અને પછી સ્ટ્રક્ચરના નામ પછી તેનો ઉપયોગ કરવો જોઈએ કારણ કે તે લાઈફટાઇમ સ્ટ્રક્ચરના પ્રકારનો ભાગ છે.</p>
+<p><code>impl</code> બ્લોકમાં પદ્ધતિ હસ્તાક્ષરોમાં, સંદર્ભો સ્ટ્રક્ચરના ક્ષેત્રોમાં રહેલા સંદર્ભોની આયુષ્ય સાથે જોડાયેલા હોઈ શકે છે, અથવા તેઓ સ્વતંત્ર હોઈ શકે છે. વિશેષતા, આયુષ્ય નિવારણ નિયમો ઘણીવાર એવા પરિસ્થિતિઓ બનાવે છે કે જેમાં પદ્ધતિ હસ્તાક્ષરોમાં આયુષ્ય નોંધણીઓની જરૂર નથી. ચાલો કેટલાક ઉદાહરણો જોઈએ જે <code>ImportantExcerpt</code> નામના સ્ટ્રક્ચરનો ઉપયોગ કરે છે જેને આપણે સૂચિ 10-24 માં વ્યાખ્યાયિત કર્યું હતું.</p>
+<p>સૌ પ્રથમ, આપણે <code>level</code> નામની પદ્ધતિનો ઉપયોગ કરીશું જેનું માત્ર એક જ પરિમાણ છે - તે <code>self</code> નો સંદર્ભ છે અને જેનું વળતર મૂલ્ય <code>i32</code> છે, જે કોઈપણ વસ્તુનો સંદર્ભ નથી:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">struct ImportantExcerpt&lt;'a&gt; {
+</span><span class="boring">    part: &amp;'a str,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
+    fn level(&amp;self) -&gt; i32 {
+        3
+    }
+}
+<span class="boring">
+</span><span class="boring">impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
+</span><span class="boring">    fn announce_and_return_part(&amp;self, announcement: &amp;str) -&gt; &amp;str {
+</span><span class="boring">        println!("Attention please: {announcement}");
+</span><span class="boring">        self.part
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let novel = String::from("Call me Ishmael. Some years ago...");
+</span><span class="boring">    let first_sentence = novel.split('.').next().unwrap();
+</span><span class="boring">    let i = ImportantExcerpt {
+</span><span class="boring">        part: first_sentence,
+</span><span class="boring">    };
+</span><span class="boring">}</span></code></pre>
+<p>આયુષ્ય પરિમાણ ઘોષણા <code>impl</code> પછી અને પ્રકાર નામના ઉપયોગ પછી જરૂરી છે, પરંતુ પ્રથમ નિષ્કર્ષ નિયમનાં કારણે, આપણે <code>self</code> ના સંદર્ભની આયુષ્ય નોંધવાની આવશ્યકતા નથી.</p>
+<p>અહીં એક ઉદાહરણ છે જ્યાં ત્રીજો આયુષ્ય નિષ્કર્ષ નિયમ લાગુ પડે છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">struct ImportantExcerpt&lt;'a&gt; {
+</span><span class="boring">    part: &amp;'a str,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
+</span><span class="boring">    fn level(&amp;self) -&gt; i32 {
+</span><span class="boring">        3
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
+    fn announce_and_return_part(&amp;self, announcement: &amp;str) -&gt; &amp;str {
+        println!("Attention please: {announcement}");
+        self.part
+    }
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let novel = String::from("Call me Ishmael. Some years ago...");
+</span><span class="boring">    let first_sentence = novel.split('.').next().unwrap();
+</span><span class="boring">    let i = ImportantExcerpt {
+</span><span class="boring">        part: first_sentence,
+</span><span class="boring">    };
+</span><span class="boring">}</span></code></pre>
+<p>બે ઇનપુટ લાઈફટાઈમ હોવાથી, Rust પ્રથમ લાઈફટાઈમ ઈલિશન નિયમ લાગુ કરે છે અને <code>&amp;self</code> અને <code>announcement</code> બંનેને પોતાના લાઈફટાઈમ આપે છે. ત્યારબાદ, કારણ કે પરિમાણોમાંનું એક <code>&amp;self</code> છે, વળતર પ્રકારને <code>&amp;self</code> ના લાઈફટાઈમ મળે છે, અને બધા જ લાઈફટાઈમ ધ્યાનમાં લેવામાં આવ્યા છે.</p>
+<h3 id="the-static-lifetime"><a class="header" href="#the-static-lifetime">The Static Lifetime</a></h3>
+<p>એક વિશેષ આયુષ્ય જેના વિશે આપણે ચર્ચા કરવી જોઈએ તે <code>'static</code> છે, જે દર્શાવે છે કે અસરગ્રસ્ત સંદર્ભ પ્રોગ્રામના સમગ્ર કાળ સુધી જીવંત રહી શકે છે. તમામ શબ્દ સાહિત્યોમાં <code>'static</code> આયુષ્ય હોય છે, જેને આપણે નીચે મુજબ નોંધાવી શકીએ છીએ:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s: &amp;'static str = "I have a static lifetime.";
+<span class="boring">}</span></code></pre>
+<p>આ પંક્તિનો લખાણ કાર્યક્રમની બાઈનરીમાં સીધો સંગ્રહિત થયેલો હોય છે, જે હંમેશા ઉપલબ્ધ રહે છે. આથી, તમામ પંક્તિ સાક્ષરતા (string literals) નું આયુષ્ય <code>'static</code> હોય</p>
+<p>છે. તમે ભૂલ સંદેશાઓમાં <code>'static</code> આયુષ્યનો ઉપયોગ કરવાની સૂચનાઓ જોઈ શકો છો. પરંતુ, સંદર્ભ માટે <code>'static</code> આયુષ્ય નિર્દિષ્ટ કરતા પહેલાં, એ વિશે વિચારો કે તમારી પાસે જે સંદર્ભ છે તે ખરેખર તમારા કાર્યક્રમના સમગ્ર આયુષ્ય સુધી જીવે છે કે નહીં, અને શું તમે તેને આમ કરવા માંગો છો કે નહીં. મોટાભાગના સમયે, <code>'static</code> આયુષ્ય સૂચવતું ભૂલ સંદેશું લટકતા (dangling) સંદર્ભ અથવા ઉપલબ્ધ આયુષ્યમાં મેળ ખાતો ન હોય તેવા પરિસ્થિતિનું પરિણામ છે. આવી સ્થિતિમાં, ઉકેલ એ સમસ્યાઓને સુધારવાનો છે, <code>'static</code> આયુષ્ય નિર્દિષ્ટ કરવાનો નહીં.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h2 id="generic-type-parameters-trait-bounds-and-lifetimes"><a class="header" href="#generic-type-parameters-trait-bounds-and-lifetimes">Generic Type Parameters, Trait Bounds, and Lifetimes</a></h2>
+<p>ચાલો આપણે સંક્ષિપ્તમાં એક જunction માં સામાન્ય પ્રકારના પરિમાણો, લક્ષણ સીમાઓ અને આયુષ્યકાળનો ઉલ્લેખ કરવાની સિન્ટેક્સ જોઈએ!</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "xyz";
+</span><span class="boring">
+</span><span class="boring">    let result = longest_with_an_announcement(
+</span><span class="boring">        string1.as_str(),
+</span><span class="boring">        string2,
+</span><span class="boring">        "Today is someone's birthday!",
+</span><span class="boring">    );
+</span><span class="boring">    println!("The longest string is {result}");
+</span><span class="boring">}
+</span><span class="boring">
+</span>use std::fmt::Display;
+
+fn longest_with_an_announcement&lt;'a, T&gt;(
+    x: &amp;'a str,
+    y: &amp;'a str,
+    ann: T,
+) -&gt; &amp;'a str
+where
+    T: Display,
+{
+    println!("Announcement! {ann}");
+    if x.len() &gt; y.len() { x } else { y }
+}</code></pre>
+<p>આ ફંક્શન સૌથી લાંબુ છે Listing 10-21 માંથી જે બે સ્ટ્રિંગ સ્લાઇસમાંથી લાંબી સ્લાઇસ આપે છે. પરંતુ હવે તેમાં <code>ann</code> નામનો એક વધારાનો પરિમાણ છે, જેનો પ્રકાર <code>T</code> છે, જેને <code>where</code> કલમમાં દર્શાવ્યા પ્રમાણે કોઈપણ પ્રકારથી ભરી શકાય છે જે <code>Display</code> ટ્રેઇટનું પાલન કરે છે. આ વધારાના પરિમાણને <code>{}</code> નો ઉપયોગ કરીને છાપવામાં આવશે, જેના કારણે <code>Display</code> ટ્રેઇટ બાઉન્ડ જરૂરી છે. કારણ કે લાઇફટાઇમ એક સામાન્ય પ્રકારનો હોય છે, તેથી લાઇફટાઇમ પરિમાણ <code>'a</code> અને સામાન્ય પ્રકારના પરિમાણ <code>T</code> બંનેને ફંક્શનના નામ પછી એંગલ કૌંસમાં (angle brackets) જ યાદીમાં મૂકવામાં આવે છે.</p>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>આ પ્રકરણમાં આપણે ઘણું શીખ્યા! હવે તમે સામાન્ય પ્રકારના પરિમાણો (generic type parameters), લક્ષણો (traits) અને લક્ષણ સીમાઓ (trait bounds), અને સામાન્ય જીવનકાળના પરિમાણો (generic lifetime parameters) વિશે જાણો છો, તેથી તમે ઘણાં વિવિધ સંજોગોમાં કામ કરતા પુનરાવર્તન વગરનો કોડ લખવા માટે તૈયાર છો. સામાન્ય પ્રકારના પરિમાણો તમને અલગ-અલગ પ્રકારો પર કોડ લાગુ કરવા દે છે. લક્ષણો અને લક્ષણ સીમાઓ સુનિશ્ચિત કરે છે કે પ્રકારો સામાન્ય હોવા છતાં, તેમની પાસે કોડને જરૂરી વર્તન હશે. તમે શીખ્યા કે કેવી રીતે જીવનકાળની નોંધ (lifetime annotations) નો ઉપયોગ કરવો જેથી આ લવચીક કોડમાં કોઈ લટકતા સંદર્ભો (dangling references) ન હોય. અને આ બધો વિશ્લેષણ કમ્પાઇલ સમયે થાય છે, જે રનટાઇમ પ્રદર્શનને અસર કરતો નથી!</p>
+<p>વફાતભરી વાત છે કે, આપણે આ પ્રકરણમાં ચર્ચા કરેલા વિષયો પર શીખવા માટે ઘણું વધારે છે: પ્રકરણ ૧૮ ટ્રેઇટ ઓબ્જેક્ટ્સની ચર્ચા કરે છે, જે ટ્રેઇટ્સનો ઉપયોગ કરવાની બીજી રીત છે. જીવનકાળ નોંધણીઓ (lifetime annotations) સાથે સંકળાયેલી વધુ જટિલ પરિસ્થિતિઓ પણ છે, જે તમારે અત્યંત અદ્યતન પરિસ્થિતિઓમાં જ જોઈશે; તેના માટે, તમારે <a href="../reference/trait-bounds.html">Rust Reference</a> વાંચવું જોઈએ. પરંતુ હવે પછી, તમે Rust માં પરીક્ષણો કેવી રીતે લખવા તે શીખી શકશો જેથી તમારો કોડ ધાર્યા પ્રમાણે કાર્ય કરે છે કે નહીં તેની ખાતરી કરી શકાય.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch10-02-traits.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch11-00-testing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch10-02-traits.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch11-00-testing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+        <script src="english-link-22ed2842.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
