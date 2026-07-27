@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -186,17 +186,31 @@
 <p>આ વિભાગમાં, આપણે તમામ વાક્યરચનાઓ એકત્રિત કરીએ છીએ જે પેટર્નમાં માન્ય છે અને દરેકનો ઉપયોગ ક્યારે અને શા માટે કરવો તે અંગે ચર્ચા કરીએ છીએ.</p>
 <h3 id="matching-literals"><a class="header" href="#matching-literals">Matching Literals</a></h3>
 <p>જેમ તમે પ્રકરણ ૬ માં જોયું, તમે સીધા જ શાબ્દિક બાબતો સામે પેટર્ન મેચ કરી શકો છો. નીચે આપેલ કોડ કેટલાક ઉદાહરણો આપે છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/no-listing-01-literals/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let x = 1;
+
+    match x {
+        1 =&gt; println!("one"),
+        2 =&gt; println!("two"),
+        3 =&gt; println!("three"),
+        _ =&gt; println!("anything"),
+    }
 <span class="boring">}</span></code></pre>
 <p>આ કોડ <code>one</code> છાપે છે કારણ કે <code>x</code> માં રહેલું મૂલ્ય <code>1</code> છે. આ સિન્ટેક્સ એવા સમયે ઉપયોગી છે જ્યારે તમે ઇચ્છો છો કે તમારો કોડ કોઈ ચોક્કસ નક્કર મૂલ્ય મળવા પર કોઈ કાર્ય કરે.</p>
 <h3 id="matching-named-variables"><a class="header" href="#matching-named-variables">Matching Named Variables</a></h3>
 <p>નામિત variables એ અચળ પેટર્ન છે જે કોઈપણ મૂલ્ય સાથે જોડાય છે, અને અમે આ પુસ્તકમાં ઘણી વખત તેનો ઉપયોગ કર્યો છે. જો કે, જ્યારે તમે <code>match</code>, <code>if let</code> અથવા <code>while let</code> અભિવ્યક્તિઓમાં નામિત variable’s ઉપયોગ કરો છો ત્યારે એક ગૂંચવણ ઊભી થાય છે. કારણ કે આ પ્રકારની દરેક અભિવ્યક્તિ નવી અવકાશ શરૂ કરે છે, પેટર્નના ભાગ રૂપે જાહેર કરાયેલા variables બાહ્ય રચનાઓ (constructs) ની બહાર સમાન નામના variable છાંકી દેશે, જે અન્ય તમામ variables સાથે થાય છે. લિસ્ટિંગ 19-11 માં, અમે <code>x</code> નામનો એક variable <code>Some(5)</code> મૂલ્ય સાથે અને <code>y</code> નામનો variable <code>10</code> મૂલ્ય સાથે જાહેર કરીએ છીએ. પછી અમે <code>x</code> ના મૂલ્ય પર એક <code>match</code> અભિવ્યક્તિ બનાવીએ છીએ. મેચ આર્મના પેટર્ન અને અંતમાં <code>println!</code> જુઓ, અને આ કોડ ચલાવતા પહેલા અથવા આગળ વાંચતા પહેલા કોડ શું છાપશે તે સમજવાનો પ્રયાસ કરો.</p>
 <p><strong>Listing 19-11: A <code>match</code> expression with an arm that introduces a new variable which shadows an existing variable <code>y</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-11/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let x = Some(5);
+    let y = 10;
+
+    match x {
+        Some(50) =&gt; println!("Got 50"),
+        Some(y) =&gt; println!("Matched, y = {y}"),
+        _ =&gt; println!("Default case, x = {x:?}"),
+    }
+
+    println!("at the end: x = {x:?}, y = {y}");
 <span class="boring">}</span></code></pre>
 <p>ચાલો જોઈએ કે જ્યારે <code>match</code> અભિવ્યક્તિ ચાલે છે ત્યારે શું થાય છે. પ્રથમ મેચ આર્મમાં રહેલી પેટર્ન <code>x</code> ની વ્યાખ્યાયિત કિંમત સાથે મેળ ખાતી નથી, તેથી કોડ</p>
 <p>આગળ વધે છે. બીજા મેચ આર્મમાં રહેલી પેટર્ન એક નવું variable નામ <code>y</code> રજૂ કરે છે જે <code>Some</code> ની અંદરની કોઈપણ કિંમત સાથે મેળ ખાય છે. કારણ કે આપણે <code>match</code> અભિવ્યક્તિની અંદર એક નવા અવકાશમાં છીએ, તે એક નવું <code>y</code> variable છે, જે શરૂઆતમાં <code>10</code> મૂલ્ય સાથે જાહેર કરાયેલ <code>y</code> નથી. આ નવી <code>y</code> જોડાણ <code>Some</code> ની અંદરની કોઈપણ કિંમત સાથે મેળ ખાય છે, જે <code>x</code> માં આપેલું છે. તેથી, આ નવી <code>y</code> <code>Some</code> ના આંતરિક મૂલ્ય સાથે જોડાય છે. તે મૂલ્ય <code>5</code> છે, તેથી તે આર્મ માટેનું અભિવ્યક્તિ ચલાવવામાં આવે છે અને <code>Matched, y = 5</code> છાપવામાં આવે છે.</p>
@@ -206,23 +220,37 @@
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="matching-multiple-patterns"><a class="header" href="#matching-multiple-patterns">Matching Multiple Patterns</a></h3>
 <p><code>match</code> અભિવ્યક્તિઓમાં, તમે <code>|</code> વાક્યરચનાનો ઉપયોગ કરીને અનેક પ્રકારો સાથે મેળવી શકો છો, જે ‘અથવા’ પ્રકાર છે. ઉદાહરણ તરીકે, નીચેના કોડમાં, અમે <code>x</code> ના મૂલ્યને મેળ ખાતા ભાગો સામે તપાસીએ છીએ, જેમાંનો પહેલો ભાગ ‘અથવા’ વિકલ્પ ધરાવે છે, એટલે કે જો <code>x</code> નું મૂલ્ય તે ભાગમાં આપેલાં કોઈપણ મૂલ્યો સાથે મેળ ખાય તો તે ભાગનો કોડ ચાલશે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/no-listing-02-multiple-patterns/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let x = 1;
+
+    match x {
+        1 | 2 =&gt; println!("one or two"),
+        3 =&gt; println!("three"),
+        _ =&gt; println!("anything"),
+    }
 <span class="boring">}</span></code></pre>
 <p>આ કોડ <code>એક અથવા બે</code> છાપે છે.</p>
 <h3 id="matching-ranges-of-values-with-"><a class="header" href="#matching-ranges-of-values-with-">Matching Ranges of Values with <code>..=</code></a></h3>
 <p><code>..=</code>  સિન્ટેક્સ આપણને સમાવિષ્ટ મૂલ્યોની શ્રેણી સાથે મેળવવાની મંજૂરી આપે છે. નીચેના કોડમાં, જ્યારે કોઈ પેટર્ન નિર્ધારિત શ્રેણીમાંના કોઈપણ મૂલ્ય સાથે મેળ ખાય છે, ત્યારે તે આર્મ અમલમાં આવશે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/no-listing-03-ranges/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let x = 5;
+
+    match x {
+        1..=5 =&gt; println!("one through five"),
+        _ =&gt; println!("something else"),
+    }
 <span class="boring">}</span></code></pre>
 <p>જો <code>x</code> એ <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code>, અથવા <code>5</code> હોય તો, પ્રથમ શાખા મેળ ખાય છે. આ સિન્ટેક્સ બહુવિધ મેચ મૂલ્યો માટે <code>|</code> ઓપરેટરનો ઉપયોગ કરવા કરતાં વધુ અનુકૂળ છે; જો આપણે <code>|</code> નો ઉપયોગ કરીએ, તો આપણે <code>1 | 2 | 3 | 4 | 5</code> સ્પષ્ટ કરવું પડત. શ્રેણી નિર્ધારિત કરવી ઘણી ટૂંકી છે, વિશેષ કરીને જો આપણે ૧ થી ૧,૦૦૦ સુધીની કોઈપણ સંખ્યાને મેચ કરવા માંગતા હોઈએ!</p>
 <p>કમ્પાઇલર ચકાસે છે કે શ્રેણી ખાલી નથી તે કમ્પાઇલ સમયે, અને કારણ કે Rust ને ખબર હોય છે કે કઈ પ્રકારની શ્રેણી ખાલી છે કે નહીં તે માત્ર <code>char</code> અને આંકડાકીય મૂલ્યો માટે જ, શ્રેણી માત્ર આંકડાકીય અથવા <code>char</code> મૂલ્યો સાથે જ મંજૂર થાય છે.</p>
 <p>અહીં <code>char</code> મૂલ્યોની શ્રેણીઓનો ઉપયોગ કરીને એક ઉદાહરણ છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/no-listing-04-ranges-of-char/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let x = 'c';
+
+    match x {
+        'a'..='j' =&gt; println!("early ASCII letter"),
+        'k'..='z' =&gt; println!("late ASCII letter"),
+        _ =&gt; println!("something else"),
+    }
 <span class="boring">}</span></code></pre>
 <p>Rust જાણી શકે છે કે <code>'c'</code> પ્રથમ પ્રકારની શ્રેણીમાં આવેલું છે અને <code>early ASCII letter</code> છાપે છે.</p>
 <h3 id="destructuring-to-break-apart-values"><a class="header" href="#destructuring-to-break-apart-values">Destructuring to Break Apart Values</a></h3>
@@ -231,24 +259,52 @@
 <h4 id="structs"><a class="header" href="#structs">Structs</a></h4>
 <p>ચિત્રાંક ૧૯-૧૨ દર્શાવે છે કે એક <code>Point</code> struct જેમાં બે ક્ષેત્રો, <code>x</code> અને <code>y</code>, છે, જેને આપણે <code>let</code> વિધાન સાથે પેટર્નનો ઉપયોગ કરીને વિભાજિત કરી શકીએ છીએ.</p>
 <p><strong>Listing 19-12: Destructuring a struct’s fields into separate variables</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-12/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let p = Point { x: 0, y: 7 };
+
+    let Point { x: a, y: b } = p;
+    assert_eq!(0, a);
+    assert_eq!(7, b);
+}</code></pre>
 <p>આ કોડ <code>a</code> અને <code>b</code> નાં variable બનાવે છે જે <code>p</code> સ્ટ્રક્ચરના <code>x</code> અને <code>y</code> ક્ષેત્રોના મૂલ્યો સાથે મેળ ખાય છે. આ ઉદાહરણ દર્શાવે છે કે પેટર્નમાં variable’sં નામ સ્ટ્રક્ચરના ક્ષેત્રનાં નામો સાથે મેળ ખાતા હોવા જરૂરી નથી. જોકે, કયો variable કયા ક્ષેત્રમાંથી આવ્યો છે તે યાદ રાખવામાં સરળતા રહે તે માટે ઘણીવાર variable’sં નામોને ક્ષેત્રોનાં નામો સાથે મેળવવામાં આવે છે. આ સામાન્ય પ્રયોગને લીધે અને <code>let Point { x: x, y: y } = p;</code> લખવાથી ઘણો પુનરાવર્તન થાય છે, Rust પેટર્ન માટે એક ટૂંકું રૂપ ધરાવે છે જે સ્ટ્રક્ચર ક્ષેત્રો સાથે મેળ ખાય છે: તમારે માત્ર સ્ટ્રક્ચર ક્ષેત્રનું નામ સૂચિબદ્ધ કરવાની જરૂર છે, અને પેટર્નમાંથી બનાવેલા variable’sં નામો સમાન હશે. યાદી 19-13 યાદી 19-12 માં રહેલા કોડની જેમ જ વર્તે છે, પરંતુ <code>let</code> પેટર્નમાં બનાવેલા variable <code>x</code> અને <code>y</code> છે, <code>a</code> અને <code>b</code> નહીં.</p>
 <p><strong>Listing 19-13: Destructuring struct fields using struct field shorthand</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-13/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let p = Point { x: 0, y: 7 };
+
+    let Point { x, y } = p;
+    assert_eq!(0, x);
+    assert_eq!(7, y);
+}</code></pre>
 <p>આ કોડ <code>x</code> અને <code>y</code> નામના variable બનાવે છે જે <code>p</code> variable’s <code>x</code> અને <code>y</code> ક્ષેત્રો સાથે મેળ ખાય છે. પરિણામ એ આવે છે કે <code>x</code> અને <code>y</code> variable <code>p</code> સ્ટ્રક્ચરની કિંમતો હોય છે.</p>
 <p>આપણે સાહિત્યિક મૂલ્યો સાથે પણ વિઘટન કરી શકીએ છીએ સ્ટ્રક્ચર પેટર્નના ભાગ રૂપે તમામ ક્ષેત્રો માટે variable બનાવ્યા વિના. આમ કરવાથી આપણને અમુક ક્ષેત્રોને ચોક્કસ મૂલ્યો માટે ચકાસવાની મંજૂરી મળે છે જ્યારે અન્ય ક્ષેત્રોને વિઘટન કરવા માટે variable બનાવવામાં આવે છે.</p>
 <p>લિસ્ટિંગ 19-14 માં, આપણી પાસે એક <code>match</code> અભિવ્યક્તિ છે જે <code>Point</code> મૂલ્યોને ત્રણ કેસોમાં વિભાજિત કરે છે: એવા બિંદુઓ જે સીધા જ <code>x</code> અક્ષ પર આવેલા હોય (જે સાચું હોય છે જ્યારે <code>y = 0</code>), <code>y</code> અક્ષ પર (<code>x = 0</code>), અથવા કોઈ પણ અક્ષ પર નહીં.</p>
 <p><strong>Listing 19-14: Destructuring and matching literal values in one pattern</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-14/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">struct Point {
+</span><span class="boring">    x: i32,
+</span><span class="boring">    y: i32,
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn main() {
+    let p = Point { x: 0, y: 7 };
+
+    match p {
+        Point { x, y: 0 } =&gt; println!("On the x axis at {x}"),
+        Point { x: 0, y } =&gt; println!("On the y axis at {y}"),
+        Point { x, y } =&gt; {
+            println!("On neither axis: ({x}, {y})");
+        }
+    }
+}</code></pre>
 <p>પહેલો ભાગ કોઈપણ બિંદુ સાથે મેળ ખાય છે જે <code>x</code> અક્ષ પર આવેલું હોય, જો <code>y</code> ક્ષેત્રનું મૂલ્ય શાબ્દિક <code>0</code> સાથે મેળ ખાતું હોય તો. પેટર્ન હજી પણ એક <code>x</code> variable બનાવે છે જેનો ઉપયોગ આપણે આ ભાગ માટે કોડમાં કરી શકીએ છીએ. એ</p>
 <p>જ રીતે, બીજો ભાગ <code>y</code> અક્ષ પરના કોઈપણ બિંદુ સાથે મેળ ખાય છે જો <code>x</code> ક્ષેત્રનું મૂલ્ય <code>0</code> હોય અને <code>y</code> ક્ષેત્રના મૂલ્ય માટે એક variable <code>y</code> બનાવે છે. ત્રીજો ભાગ કોઈ પણ શાબ્દિક સ્પષ્ટીકરણ કરતો નથી, તેથી તે કોઈપણ અન્ય <code>Point</code> સાથે મેળ ખાય છે અને બંને <code>x</code> અને <code>y</code> ક્ષેત્રો માટે variables બનાવે છે.</p>
 <p>આ ઉદાહરણમાં, મૂલ્ય <code>p</code> બીજા ભાગ સાથે મેળ ખાય છે કારણ કે <code>x</code> માં <code>0</code> આવેલું છે, તેથી આ કોડ <code>y અક્ષ પર 7</code> છાપશે. યાદ</p>
@@ -257,10 +313,31 @@
 <h4 id="enums"><a class="header" href="#enums">Enums</a></h4>
 <p>આ પુસ્તકમાં આપણે એનુમ્સને તોડ્યા છે (ઉદાહરણ તરીકે, પ્રકરણ ૬ માં યાદી ૬-૫), પરંતુ આપણે સ્પષ્ટપણે ચર્ચા કરી નથી કે એનુમને તોડવાનો દાખલો એ ડેટાની રીત સાથે સુસંગત છે જે એનુમમાં સંગ્રહિત છે. ઉદાહરણ તરીકે, યાદી ૧૯-૧૫ માં, આપણે <code>Message</code> એનુમનો ઉપયોગ કરીએ છીએ યાદી ૬-૨ માંથી અને પેટર્ન સાથે એક <code>match</code> લખીએ છીએ જે દરેક આંતરિક મૂલ્યને તોડશે.</p>
 <p><strong>Listing 19-15: Destructuring enum variants that hold different kinds of values</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-15/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+fn main() {
+    let msg = Message::ChangeColor(0, 160, 255);
+
+    match msg {
+        Message::Quit =&gt; {
+            println!("The Quit variant has no data to destructure.");
+        }
+        Message::Move { x, y } =&gt; {
+            println!("Move in the x direction {x} and in the y direction {y}");
+        }
+        Message::Write(text) =&gt; {
+            println!("Text message: {text}");
+        }
+        Message::ChangeColor(r, g, b) =&gt; {
+            println!("Change color to red {r}, green {g}, and blue {b}");
+        }
+    }
+}</code></pre>
 <p>આ કોડ <code>Change color to red 0, green 160, and blue 255</code> પ્રિન્ટ કરશે. જુદા જુદા આર્મ્સના કોડને ચલાવવા માટે <code>msg</code> નું મૂલ્ય બદલીને પ્રયત્ન કરો. ડેટા વગરના enum variants માટે, જેમ કે <code>Message::Quit</code>, અમે મૂલ્યને વધુ વિઘટિત કરી શકતા નથી. અમે માત્ર સાચું <code>Message::Quit</code> મૂલ્ય મેળવી શકીએ છીએ, અને તે પેટર્નમાં કોઈ variable નથી.</p>
 <p>struct-like enum variants માટે, જેમ કે <code>Message::Move</code>, અમે struct સાથે મેળ ખાવા માટે સ્પષ્ટ કરેલા પેટર્ન જેવું જ પેટર્ન વાપરી શકીએ છીએ. variant નામના પછી, અમે કૌંસ મૂકીને પછી ક્ષેત્રોની યાદી variable સાથે કરીએ છીએ જેથી આ આર્મ માટે કોડમાં ભાગો તોડી શકાય. અહીં અમે Listing 19-13 માં કર્યા મુજબ ટૂંકાવીને ફોર્મ વાપરીએ છીએ.</p>
 <p>ટ્યૂપલ-જેવા એનમ ભિન્નતા માટેનું રૂપરેખાંકન ટ્યૂપલ-જેવી એનમ ભિન્નતાઓ માટે, જેમ કે <code>Message::Write</code> જે એક ઘટક સાથે ટ્યૂપલ ધરાવે છે અને <code>Message::ChangeColor</code> જે ત્રણ ઘટકો સાથે ટ્યૂપલ ધરાવે છે, તેનુ રૂપરેખાંકન ટ્યૂપલને મેચ કરવા માટે આપણે જે રૂપરેખાંકન સ્પષ્ટ કરીએ છીએ તેના જેવું જ હોય છે. રૂપરેખાંકનમાં રહેલા variable’s સંખ્યા એ ભિન્નતામાં રહેલા ઘટકોની સંખ્યા સાથે મળવી જોઈએ.</p>
@@ -268,17 +345,42 @@
 <h4 id="nested-structs-and-enums"><a class="header" href="#nested-structs-and-enums">Nested Structs and Enums</a></h4>
 <p>આ અત્યાર સુધીના ઉદાહરણોમાં, આપણે માત્ર એક સ્તર ઊંડા struct અથવા enum સાથે મેળવ્યા છે, પરંતુ નેસ્ટેડ વસ્તુઓ સાથે પણ મેળવી શકાય છે! દાખલા તરીકે, આપણે Listing 19-16 માં દર્શાવેલ <code>ChangeColor</code> સંદેશમાં RGB અને HSV રંગોને ટેકો આપવા માટે Listing 19-15 માં રહેલા કોડને સુધારી શકીએ છીએ.</p>
 <p><strong>Listing 19-16: Matching on nested enums</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-16/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">enum Color {
+    Rgb(i32, i32, i32),
+    Hsv(i32, i32, i32),
+}
+
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(Color),
+}
+
+fn main() {
+    let msg = Message::ChangeColor(Color::Hsv(0, 160, 255));
+
+    match msg {
+        Message::ChangeColor(Color::Rgb(r, g, b)) =&gt; {
+            println!("Change color to red {r}, green {g}, and blue {b}");
+        }
+        Message::ChangeColor(Color::Hsv(h, s, v)) =&gt; {
+            println!("Change color to hue {h}, saturation {s}, value {v}");
+        }
+        _ =&gt; (),
+    }
+}</code></pre>
 <p>પહેલા ભાગનું પેટર્ન <code>match</code> અભિવ્યક્તિમાં <code>Message::ChangeColor</code> એnum પ્રકારના વિકલ્પ સાથે મેળ ખાય છે જેમાં <code>Color::Rgb</code> પ્રકારનો વિકલ્પ સમાયેલો છે; ત્યારબાદ, પેટર્ન ત્રણ આંતરિક <code>i32</code> મૂલ્યોને જોડે છે. બીજા ભાગનું પેટર્ન પણ <code>Message::ChangeColor</code> એnum પ્રકારના વિકલ્પ સાથે મેળ ખાય છે, પરંતુ આંતરિક એnum <code>Color::Hsv</code> સાથે મેળ ખાય છે. આપણે આ જટિલ શરતોને એક જ <code>match</code> અભિવ્યક્તિમાં દર્શાવી શકીએ છીએ, ભલે બે એnums સામેલ હોય.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h4 id="structs-and-tuples"><a class="header" href="#structs-and-tuples">Structs and Tuples</a></h4>
 <p>આપણે વધુ જટિલ રીતે, મિશ્ર કરી, મેળવીને અને નેસ્ટ કરીને ડિસ્ટ્રક્ચરિંગ પેટર્નનો ઉપયોગ કરી શકીએ છીએ. નીચેનું ઉદાહરણ એક જટિલ ડિસ્ટ્રક્ચર દર્શાવે છે જેમાં આપણે ટ્યૂપલની અંદર struct અને ટ્યૂપલ્સને નેસ્ટ કરીએ છીએ અને તમામ પ્રિમિટિવ મૂલ્યોને બહાર કાઢીએ છીએ:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/no-listing-05-destructuring-structs-and-tuples/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    struct Point {
+</span><span class="boring">        x: i32,
+</span><span class="boring">        y: i32,
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    let ((feet, inches), Point { x, y }) = ((3, 10), Point { x: 3, y: -10 });
 <span class="boring">}</span></code></pre>
 <p>આ કોડ આપણને જટિલ પ્રકારોને તેમના ઘટક ભાગોમાં વિભાજીત કરવાની મંજૂરી આપે છે જેથી આપણે રસ ધરાવતા મૂલ્યોનો અલગથી ઉપયોગ</p>
 <p>કરી શકીએ. દાખલાઓ સાથે ડિસ્ટ્રક્ચરિંગ એ મૂલ્યના ટુકડાઓનો ઉપયોગ કરવાનો એક અનુકૂળ માર્ગ છે, જેમ કે struct માં દરેક ક્ષેત્રનું મૂલ્ય, એકબીજાથી અલગ રીતે.</p>
@@ -288,74 +390,132 @@
 <h4 id="an-entire-value-with-_"><a class="header" href="#an-entire-value-with-_">An Entire Value with <code>_</code></a></h4>
 <p>અમે અન્ડરસ્કોરનો ઉપયોગ એક વાઇલ્ડકાર્ડ પેટર્ન તરીકે કર્યો છે જે કોઈપણ મૂલ્યને મેળવશે પરંતુ તે મૂલ્ય સાથે જોડાશે નહીં. આ વિશેષ કરીને <code>match</code> અભિવ્યક્તિના છેલ્લા ભાગમાં ઉપયોગી છે, પરંતુ અમે તેને કોઈપણ પેટર્નમાં પણ વાપરી શકીએ છીએ, જેમાં ફંક્શન પરિમાણોનો સમાવેશ થાય છે, જે લિસ્ટિંગ 19-17 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 19-17: Using <code>_</code> in a function signature</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-17/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn foo(_: i32, y: i32) {
+    println!("This code only uses the y parameter: {y}");
+}
+
+fn main() {
+    foo(3, 4);
+}</code></pre>
 <p>આ કોડ <code>3</code> મૂલ્યને પ્રથમ Argument તરીકે સંપૂર્ણપણે અવગણશે અને <code>This code only uses the y parameter: 4</code> છાપશે. મોટાભાગના કિસ્સાઓમાં જ્યારે તમારે</p>
 <p>કોઈ ચોક્કસ ફંક્શન પરિમાણની હવે જરૂર ન હોય, ત્યારે તમે હસ્તાક્ષર બદલો છો જેથી તેમાં વપરાયેલ પરિમાણ સામેલ ન હોય. ફંક્શન પરિમાણને અવગણવું એ વિશેષ કરીને તેવા કિસ્સાઓમાં ઉપયોગી થઈ શકે છે જ્યારે, ઉદાહરણ તરીકે, તમે એક ટ્રેઇટનો અમલ કરી રહ્યા હોવ અને તમને ચોક્કસ પ્રકારનું હસ્તાક્ષરની જરૂર હોય પરંતુ તમારા અમલીકરણમાં ફંક્શન બોડીને એક પણ પરિમાણની જરૂર ન હોય. પછી તમે નામનો ઉપયોગ કરવાથી મળતા બિનજરૂરી ફંક્શન પરિમાણો વિશે કમ્પાઇલર ચેતવણી ટાળો છો.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h4 id="parts-of-a-value-with-a-nested-_"><a class="header" href="#parts-of-a-value-with-a-nested-_">Parts of a Value with a Nested <code>_</code></a></h4>
 <p>આપણે પેટર્નની અંદર પણ <code>_</code> નો ઉપયોગ કરી શકીએ છીએ જેથી કરીને માત્ર મૂલ્યનો અમુક ભાગ અવગણવામાં આવે, દાખલા તરીકે, જ્યારે આપણે માત્ર મૂલ્યના અમુક ભાગ માટે ચકાસણી કરવા માંગીએ છીએ પરંતુ અનુરૂપ કોડમાં અન્ય ભાગોની જરૂર ન હોય. સૂચિ 19-18 એ કોડ દર્શાવે છે જે સેટિંગના મૂલ્યનું સંચાલન કરે છે. વ્યવસાયિક આવશ્યકતાઓ એવી છે કે userને હાલના સેટિંગના કસ્ટમાઇઝેશનને ફરીથી લખવાની મંજૂરી ન હોવી જોઈએ પરંતુ જો તે હાલમાં સેટ ન હોય તો સેટિંગને દૂર કરી શકે છે અને તેને મૂલ્ય આપી શકે છે.</p>
 <p><strong>Listing 19-18: Using an underscore within patterns that match <code>Some</code> variants when we don’t need to use the value inside the <code>Some</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-18/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let mut setting_value = Some(5);
+    let new_setting_value = Some(10);
+
+    match (setting_value, new_setting_value) {
+        (Some(_), Some(_)) =&gt; {
+            println!("Can't overwrite an existing customized value");
+        }
+        _ =&gt; {
+            setting_value = new_setting_value;
+        }
+    }
+
+    println!("setting is {setting_value:?}");
 <span class="boring">}</span></code></pre>
 <p>આ કોડ <code>Can't overwrite an existing customized value</code> અને ત્યારબાદ <code>setting is Some(5)</code> પ્રિન્ટ કરશે. પ્રથમ <code>match</code> શસ્ત્રમાં, આપણે <code>Some</code> પ્રકારના મૂલ્યો સાથે મેળ કરવાની કે તેનો ઉપયોગ કરવાની જરૂર નથી, પરંતુ આપણે એ સ્થિતિ માટે પરીક્ષણ કરવું જરૂરી છે જ્યારે <code>setting_value</code> અને <code>new_setting_value</code> બંને <code>Some</code> પ્રકારના હોય. તે સ્થિતિમાં, આપણે <code>setting_value</code> બદલવાનું શા માટે શક્ય નથી તેનું કારણ પ્રિન્ટ કરીએ છીએ, અને તે બદલાતું નથી.</p>
 <p>અન્ય તમામ સ્થિતિઓમાં (જો <code>setting_value</code> અથવા <code>new_setting_value</code> બંને <code>None</code> હોય), જે બીજા શસ્ત્રમાં <code>_</code> પેટર્ન દ્વારા દર્શાવવામાં આવ્યું છે, આપણે <code>new_setting_value</code> ને <code>setting_value</code> બનવાની મંજૂરી આપવા માંગીએ છીએ.</p>
 <p>આપણે એક જ પેટર્નમાં અન્ડરસ્કોરનો ઉપયોગ અનેક સ્થળોએ કરીને અમુક ચોક્કસ મૂલ્યોને અવગણી શકીએ છીએ. પરિશિષ્ટ ૧૯-૧૯ એવા ઉદાહરણ દર્શાવે છે જેમાં પાંચ વસ્તુઓના ટ્યૂપલમાં બીજા અને ચોથા મૂલ્યોને અવગણવામાં આવે છે.</p>
 <p><strong>Listing 19-19: Ignoring multiple parts of a tuple</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-19/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let numbers = (2, 4, 8, 16, 32);
+
+    match numbers {
+        (first, _, third, _, fifth) =&gt; {
+            println!("Some numbers: {first}, {third}, {fifth}");
+        }
+    }
 <span class="boring">}</span></code></pre>
 <p>આ કોડ <code>Some numbers: 2, 8, 32</code> છાપશે, અને મૂલ્યો <code>4</code> અને <code>16</code> અવગણવામાં આવશે.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h4 id="an-unused-variable-by-starting-its-name-with-_"><a class="header" href="#an-unused-variable-by-starting-its-name-with-_">An Unused Variable by Starting Its Name with <code>_</code></a></h4>
 <p>જો તમે variable બનાવો છો પણ તેનો ઉપયોગ ક્યાંય નથી કરતા, તો Rust સામાન્ય રીતે ચેતવણી જારી કરશે કારણ કે ન વપરાયેલ variable ભૂલ હોઈ શકે છે. જોકે, કેટલીકવાર એવું કરવું ઉપયોગી થઈ શકે છે કે તમે હજી સુધી variable’s ઉપયોગ નહીં કરો, જેમ કે જ્યારે તમે પ્રોટોટાઇપિંગ કરી રહ્યા હોવ અથવા કોઈ project શરૂ કરી રહ્યા હોવ. આ સ્થિતિમાં, તમે Rust ને variable’s નામની શરૂઆત અન્ડરસ્કોરથી કરીને ન વપરાયેલ variable વિશે ચેતવણી ન આપવાનું કહી શકો છો. Listing 19-20 માં, અમે બે ન વપરાયેલા variable બનાવીએ છીએ, પરંતુ જ્યારે આપણે આ કોડને compile કરીએ છીએ, ત્યારે અમને તેમાંથી માત્ર એક જ ચેતવણી મળવી જોઈએ.</p>
 <p><strong>Listing 19-20: Starting a variable name with an underscore to avoid getting unused variable warnings</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-20/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let _x = 5;
+    let y = 10;
+}</code></pre>
 <p>અહીં, આપણને ચિંતાજનક સંદેશો મળે છે કે variable <code>y</code> નો ઉપયોગ કરવામાં આવ્યો નથી, પરંતુ આપણને <code>_x</code> ના ઉપયોગ ન થવા અંગે</p>
 <p>કોઈ ચિંતાજનક સંદેશો મળતો નથી. એ નોંધવું અગત્યનું છે કે માત્ર <code>_</code> વાપરવા અને એક નામ વાપરવા વચ્ચે થોડો તફાવત હોય છે જે અક્ષરથી શરૂ થાય છે. <code>_x</code> હજી પણ મૂલ્યને variable જોડે છે, જ્યારે <code>_</code> કંઈપણ જોડે નહીં. આ ભેદ મહત્વપૂર્ણ હોવાનું દર્શાવવા માટે, યાદી 19-21 આપણને ભૂલ પ્રદાન કરશે.</p>
 <p><strong>Listing 19-21: An unused variable starting with an underscore still binds the value, which might take ownership of the value.</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-21/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let s = Some(String::from("Hello!"));
+
+    if let Some(_s) = s {
+        println!("found a string");
+    }
+
+    println!("{s:?}");
 <span class="boring">}</span></code></pre>
 <p>આપણે એક ભૂલ મેળવીશું કારણ કે <code>s</code> મૂલ્ય હજી પણ <code>_s</code> માં ખસેડવામાં આવશે, જે આપણને <code>s</code> ફરીથી વાપરતા અટકાવશે. જોકે, માત્ર અન્ડરસ્કોરનો ઉપયોગ કરવાથી ક્યારેય કોઈ મૂલ્ય સાથે જોડાતું નથી. સૂચિ ૧૯-૨૨ કોઈપણ ભૂલો વગર સંકલિત થશે કારણ કે <code>s</code>  <code>_</code> માં ખસેડવામાં આવતું નથી.</p>
 <p><strong>Listing 19-22: Using an underscore does not bind the value.</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-22/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let s = Some(String::from("Hello!"));
+
+    if let Some(_) = s {
+        println!("found a string");
+    }
+
+    println!("{s:?}");
 <span class="boring">}</span></code></pre>
 <p>આ કોડ યોગ્ય રીતે કાર્ય કરે છે કારણ કે આપણે <code>s</code> ને કશું સાથે જોડીએ છીએ નહીં; તે ખસેડવામાં આવતું નથી.</p>
 <h4 id="remaining-parts-of-a-value-with-"><a class="header" href="#remaining-parts-of-a-value-with-">Remaining Parts of a Value with <code>..</code></a></h4>
 <p>ઘણા ભાગો ધરાવતા મૂલ્યો માટે, અમે <code>..</code> સિન્ટેક્સનો ઉપયોગ કરીને ચોક્કસ ભાગોનો ઉપયોગ કરી શકીએ છીએ અને બાકીનાને અવગણી શકીએ છીએ, જેનાથી દરેક અવગણિત મૂલ્ય માટે અન્ડરસ્કોરની યાદી બનાવવાની જરૂરિયાત ટાળી શકાય છે. <code>..</code> પેટર્ન એવા મૂલ્યના ભાગોને અવગણે છે જે પેટર્નના બાકીના ભાગમાં સ્પષ્ટ રીતે મેળવવામાં આવ્યાં નથી. લિસ્ટિંગ 19-23 માં, આપણી પાસે એક <code>Point</code> સ્ટ્રક્ચર છે જે ત્રિ-પરિમાણીય અવકાશમાં કોઓર્ડિનેટ ધરાવે છે. <code>match</code> અભિવ્યક્તિમાં, અમે માત્ર <code>x</code> કોઓર્ડિનેટ પર કાર્ય કરવા અને <code>y</code> અને <code>z</code> ક્ષેત્રોમાં રહેલા મૂલ્યોને અવગણવા માંગીએ છીએ.</p>
 <p><strong>Listing 19-23: Ignoring all fields of a <code>Point</code> except for <code>x</code> by using <code>..</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-23/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    struct Point {
+        x: i32,
+        y: i32,
+        z: i32,
+    }
+
+    let origin = Point { x: 0, y: 0, z: 0 };
+
+    match origin {
+        Point { x, .. } =&gt; println!("x is {x}"),
+    }
 <span class="boring">}</span></code></pre>
 <p>આપણે <code>x</code> મૂલ્ય દર્શાવેલું અને પછી માત્ર <code>..</code> પેટર્ન ઉમેર્યું છે. આ <code>y: _</code> અને <code>z: _</code> સૂચિબદ્ધ કરવાની જરૂરિયાત કરતાં વધુ ઝડપી છે, વિશેષ કરીને જ્યારે આપણે એવા structures સાથે કામ કરી રહ્યા હોઈએ જેમાં ઘણા ક્ષેત્રો હોય અને માત્ર એક કે બે જ ક્ષેત્રો</p>
 <p>સંબંધિત હોય. The syntax <code>..</code> will expand to as many values as it needs to be. Listing 19-24 shows how to use <code>..</code> with a tuple. <code>..</code> સિન્ટેક્સ જેટલા જરૂરી હોય તેટલા મૂલ્યોમાં વિસ્તરણ પામશે. સૂચિ ૧૯-૨૪ દર્શાવે છે કે tuple સાથે <code>..</code> નો ઉપયોગ કેવી રીતે કરવો.</p>
 <p><strong>Listing 19-24: Matching only the first and last values in a tuple and ignoring all other values</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-24/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let numbers = (2, 4, 8, 16, 32);
+
+    match numbers {
+        (first, .., last) =&gt; {
+            println!("Some numbers: {first}, {last}");
+        }
+    }
+}</code></pre>
 <p>આ કોડમાં, પ્રથમ અને અંતિમ મૂલ્યોને <code>first</code> અને <code>last</code> સાથે મેળવવામાં આવે છે. <code>..</code> મધ્યમાંની બધી વસ્તુઓને મેળવીને અવગણશે. જો કે, <code>..</code> નો ઉપયોગ</p>
 <p>અસ્પષ્ટ ન હોવો જોઈએ. જો કયા મૂલ્યોને મેળવવાના છે અને કયાને અવગણવાના છે તે સ્પષ્ટ ન હોય, તો Rust આપણને ભૂલ આપશે. સૂચિ ૧૯-૨૫ માં <code>..</code> નો અસ્પષ્ટ રીતે ઉપયોગ કરવાનું ઉદાહરણ દર્શાવવામાં આવ્યું છે, તેથી તે સંપાઈ શકશે નહીં.</p>
 <p><strong>Listing 19-25: An attempt to use <code>..</code> in an ambiguous way</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-25/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let numbers = (2, 4, 8, 16, 32);
+
+    match numbers {
+        (.., second, ..) =&gt; {
+            println!("Some numbers: {second}")
+        },
+    }
+}</code></pre>
 <p>જ્યારે આપણે આ ઉદાહરણને કમ્પાઇલ કરીએ છીએ, ત્યારે આપણને આ ભૂલ પ્રાપ્ત થાય છે:</p>
-<pre><code class="language-console">{{#include ../listings/ch19-patterns-and-matching/listing-19-25/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling patterns v0.1.0 (file:///projects/patterns)
+error: `..` can only be used once per tuple pattern
+ --&gt; src/main.rs:5:22
+  |
+5 |         (.., second, ..) =&gt; {
+  |          --          ^^ can only be used once per tuple pattern
+  |          |
+  |          previously used here
+
+error: could not compile `patterns` (bin "patterns") due to 1 previous error
 </code></pre>
 <p>Rust માટે એ અશક્ય છે કે ટ્યૂપલમાં કેટલા મૂલ્યોને <code>second</code> સાથે મેળવતા પહેલા અવગણવા અને ત્યારબાદ કેટલા વધુ મૂલ્યોને અવગણવા તે નક્કી કરવું. આ કોડનો અર્થ એ થઈ શકે કે આપણે <code>2</code> અવગણવા, <code>second</code> ને <code>4</code> સાથે જોડવું, અને પછી <code>8</code>, <code>16</code>, અને <code>32</code> અવગણવા; અથવા આપણે <code>2</code> અને <code>4</code> અવગણવા, <code>second</code> ને <code>8</code> સાથે જોડવું, અને પછી <code>16</code> અને <code>32</code> અવગણવા; અને એ જ રીતે આગળ વધતું રહેવું. ચલનું નામ <code>second</code> Rust માટે કોઈ વિશેષ અર્થ ધરાવતું નથી, તેથી આ રીતે બે જગ્યાએ <code>..</code> નો ઉપયોગ કરવાથી સંદિગ્ધતા સર્જાય છે, જેના કારણે કમ્પાઇલર ભૂલ આપે છે.</p>
 <!-- Old headings. Do not remove or links may break. -->
@@ -363,26 +523,44 @@
 <p>એક મેચ ગાર્ડ એ વધારાની <code>if</code> શરત છે, જે <code>match</code> આર્મમાં પેટર્ન પછી ઉલ્લેખિત થાય છે, અને તે આર્મ પસંદ કરવા માટે તે શરત પણ સાચી હોવી જોઈએ. મેચ ગાર્ડ્સ વધુ જટિલ વિચારો વ્યક્ત કરવા માટે ઉપયોગી છે જે માત્ર એક પેટર્નથી શક્ય નથી. જો કે, નોંધ કરો કે તેઓ માત્ર <code>match</code> અભિવ્યક્તિઓમાં ઉપલબ્ધ છે, <code>if let</code> અથવા <code>while let</code> અભિવ્યક્તિઓમાં નહીં.</p>
 <p>શરત પેટર્નમાં બનાવેલા variable’s ઉપયોગ કરી શકે છે. લિસ્ટિંગ 19-26 એક <code>match</code> દર્શાવે છે જ્યાં પ્રથમ આર્મમાં <code>Some(x)</code> પેટર્ન છે અને તેમાં <code>if x % 2 == 0</code> મેચ ગાર્ડ પણ છે (જે સંખ્યા બે વડે વિભાજ્ય હોય ત્યારે <code>true</code> થશે).</p>
 <p><strong>Listing 19-26: Adding a match guard to a pattern</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-26/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let num = Some(4);
+
+    match num {
+        Some(x) if x % 2 == 0 =&gt; println!("The number {x} is even"),
+        Some(x) =&gt; println!("The number {x} is odd"),
+        None =&gt; (),
+    }
 <span class="boring">}</span></code></pre>
 <p>આ ઉદાહરણ <code>The number 4 is even</code> છાપશે. જ્યારે <code>num</code> ને પ્રથમ શૃંગમાં (arm) રહેલા દાખલા સાથે સરખાવવામાં આવે છે, ત્યારે તે મેળ ખાય છે કારણ કે <code>Some(4)</code> એ <code>Some(x)</code> સાથે મેળ ખાય છે. ત્યારબાદ, મેચ ગાર્ડ તપાસે છે કે <code>x</code> ને 2 વડે ભાગવાથી મળતી શેષ 0 બરાબર છે કે નહીં, અને તે હોવાથી, પ્રથમ શૃંગ પસંદ થાય છે.</p>
 <p>જો <code>num</code> ને બદલે <code>Some(5)</code> હોય, તો પ્રથમ શૃંગમાં રહેલો મેચ ગાર્ડ <code>false</code> થયો હોત કારણ કે 5 ને 2 વડે ભાગવાથી મળતી શેષ 1 છે, જે 0 બરાબર નથી. ત્યારબાદ Rust બીજા શૃંગ પર જશે, જે મેળ ખાશે કારણ કે બીજા શૃંગમાં મેચ ગાર્ડ નથી અને તેથી તે કોઈપણ <code>Some</code> પ્રકારને મેળ ખાય છે.</p>
 <p>ચોક્કસ પેટર્નમાં <code>if x % 2 == 0</code> પ્રકારની શરત દર્શાવવાનો કોઈ માર્ગ નથી, તેથી મેચ ગાર્ડ આપણને આ તર્ક વ્યક્ત કરવાની ક્ષમતા આપે છે. આ વધારાની અભિવ્યક્તિનું નુકસાન એ છે કે કમ્પાઇલર મેચ ગાર્ડ અભિવ્યક્તિઓ સામેલ હોય ત્યારે સંપૂર્ણતા માટે તપાસ કરવાનો પ્રયાસ કરતો નથી. When discussing Listing 19-11, we mentioned that</p>
 <p>જ્યારે આપણે લિસ્ટિંગ ૧૯-૧૧ની ચર્ચા કરી રહ્યા હતા, ત્યારે અમે ઉલ્લેખ કર્યો હતો કે અમે પેટર્ન-શેડોઇંગ સમસ્યાને ઉકેલવા માટે મેચ ગાર્ડનો ઉપયોગ કરી શકીએ છીએ. યાદ કરો કે અમે <code>match</code> અભિવ્યક્તિમાં પેટર્નની અંદર એક નવું variable બનાવ્યું હતું, બહારના variable’s ઉપયોગ કરવાને બદલે. તે નવા variable’s અર્થ એ થયો કે અમે બાહ્ય variable’s કિંમત સામે પરીક્ષણ કરી શકતા નથી. લિસ્ટિંગ ૧૯-૨૭ દર્શાવે છે કે આ સમસ્યાને ઠીક કરવા માટે અમે મેચ ગાર્ડનો ઉપયોગ કેવી રીતે કરી શકીએ છીએ.</p>
 <p><strong>Listing 19-27: Using a match guard to test for equality with an outer variable</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-27/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let x = Some(5);
+    let y = 10;
+
+    match x {
+        Some(50) =&gt; println!("Got 50"),
+        Some(n) if n == y =&gt; println!("Matched, n = {n}"),
+        _ =&gt; println!("Default case, x = {x:?}"),
+    }
+
+    println!("at the end: x = {x:?}, y = {y}");
+}</code></pre>
 <p>આ કોડ હવે <code>Default case, x = Some(5)</code> પ્રિન્ટ કરશે. બીજા <code>match</code> આર્મમાં રહેલી પેટર્ન બહારના <code>y</code> ને છાયા નહિ કરે, એનો અર્થ એ થાય છે કે આપણે મેચ ગાર્ડમાં બહારના <code>y</code> નો ઉપયોગ કરી શકીએ છીએ. <code>Some(y)</code> જેવી પેટર્નનો ઉલ્લેખ કરવાને બદલે, જેણે બહારના <code>y</code> ને છાયા કર્યા હોત, આપણે <code>Some(n)</code> નો ઉલ્લેખ કરીએ છીએ. આ એક નવું variable <code>n</code> બનાવે છે, જે કોઈ પણ વસ્તુને છાયા કરતું નથી, કારણ કે <code>match</code> ની બહાર <code>n</code> નામનું કોઈ variable નથી.</p>
 <p>આ મેચ ગાર્ડ <code>if n == y</code> પેટર્ન નથી અને તેથી નવા variable (variable) રજૂ કરતું નથી. આ <code>y</code> એ બાહ્ય <code>y</code> છે, નવું <code>y</code> જે તેને છાયા કરે છે તે નહીં, અને આપણે એક એવું મૂલ્ય શોધી શકીએ છીએ</p>
 <p>જે બાહ્ય <code>y</code> જેટલું જ હોય, <code>n</code> ને <code>y</code> સાથે સરખાવીને. તમે મેચ ગાર્ડમાં <code>|</code> ઓપરેટરનો પણ ઉપયોગ કરી શકો છો જેથી બહુવિધ પેટર્ન (patterns) નિર્દિષ્ટ કરી શકાય; મેચ ગાર્ડ શરત તમામ પેટર્ન પર લાગુ થશે. યાદી ૧૯-૨૮ માં <code>|</code> નો ઉપયોગ કરતી પેટર્નને મેચ ગાર્ડ સાથે જોડતી વખતે અગ્રતા દર્શાવવામાં આવી છે. આ ઉદાહરણનો મહત્વપૂર્ણ ભાગ એ છે કે <code>if y</code> મેચ ગાર્ડ <code>4</code>, <code>5</code> અને <code>6</code> પર લાગુ થાય છે, ભલે તેવું લાગે કે <code>if y</code> માત્ર <code>6</code> પર જ લાગુ પડે છે.</p>
 <p><strong>Listing 19-28: Combining multiple patterns with a match guard</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-28/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let x = 4;
+    let y = false;
+
+    match x {
+        4 | 5 | 6 if y =&gt; println!("yes"),
+        _ =&gt; println!("no"),
+    }
 <span class="boring">}</span></code></pre>
 <p>મેચ શરત જણાવે છે કે આર્મ માત્ર ત્યારે જ મેળ ખાય છે જ્યારે <code>x</code> ની કિંમત <code>4</code>, <code>5</code>, અથવા <code>6</code> બરાબર હોય અને <code>y</code> <code>true</code> હોય. જ્યારે આ કોડ ચાલે છે, ત્યારે પ્રથમ આર્મની પેટર્ન મેળ ખાય છે કારણ કે <code>x</code> એ <code>4</code> છે, પરંતુ મેચ ગાર્ડ <code>if y</code> એ <code>false</code> છે, તેથી પહેલી આર્મ પસંદ થતી નથી. કોડ બીજી આર્મ પર આગળ વધે છે, જે મેળ ખાય છે, અને આ પ્રોગ્રામ <code>no</code> છાપે છે. તેનું કારણ એ છે કે <code>if</code> શરત સમગ્ર પેટર્ન <code>4 | 5 | 6</code> ને લાગુ પડે છે, માત્ર છેલ્લી કિંમત <code>6</code> ને નહીં. બીજા શબ્દોમાં કહીએ તો, પેટર્ન સંબંધિત મેચ ગાર્ડની અગ્રતા આ પ્રમાણે વર્તે છે:</p>
 <pre><code class="language-text">(4 | 5 | 6) if y =&gt; ...
@@ -395,9 +573,22 @@
 <h3 id="using--bindings"><a class="header" href="#using--bindings">Using <code>@</code> Bindings</a></h3>
 <p>એટ ઓપરેટર <code>@</code> આપણને એક variable બનાવવાની મંજૂરી આપે છે જે એક જ સમયે મૂલ્ય ધરાવે છે અને તે મૂલ્યને પેટર્ન મેચ માટે ચકાસે છે. લિસ્ટિંગ ૧૯-૨૯ માં, આપણે તપાસવું છે કે <code>Message::Hello</code> નું <code>id</code> ક્ષેત્ર <code>3..=7</code> શ્રેણીમાં છે કે નહીં. આપણે તે મૂલ્યને <code>id</code> variable પણ બાંધવા માંગીએ છીએ જેથી કરીને આપણે શસ્ત્ર સાથે સંકળાયેલ કોડમાં તેનો ઉપયોગ કરી શકીએ.</p>
 <p><strong>Listing 19-29: Using <code>@</code> to bind to a value in a pattern while also testing it</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-29/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    enum Message {
+        Hello { id: i32 },
+    }
+
+    let msg = Message::Hello { id: 5 };
+
+    match msg {
+        Message::Hello { id: id @ 3..=7 } =&gt; {
+            println!("Found an id in range: {id}")
+        }
+        Message::Hello { id: 10..=12 } =&gt; {
+            println!("Found an id in another range")
+        }
+        Message::Hello { id } =&gt; println!("Found some other id: {id}"),
+    }
 <span class="boring">}</span></code></pre>
 <p>આ ઉદાહરણ <code>Found an id in range: 5</code> છાપશે. <code>id @</code> નો ઉપયોગ કરીને રેન્જ <code>3..=7</code> પહેલાં દર્શાવવાથી, જે પણ મૂલ્ય રેન્જ સાથે મેળ ખાય છે તે <code>id</code> નામના ચલણમાં સંગ્રહિત થાય છે, અને તે જ સમયે ખાતરી કરવામાં</p>
 <p>આવે છે કે મૂલ્ય રેન્જ પેટર્ન સાથે મેળ ખાય છે. બીજા ભાગમાં, જ્યાં આપણે માત્ર એક રેન્જ દર્શાવી છે, ત્યાં તે ભાગ સાથે સંકળાયેલ કોડમાં <code>id</code> ક્ષેત્રનું વાસ્તવિક મૂલ્ય ધરાવતું ચલણ હોતું નથી. <code>id</code> ક્ષેત્રનું મૂલ્ય 10, 11 અથવા 12 હોઈ શકે છે, પરંતુ તે પેટર્ન સાથે સંકળાયેલ કોડને ખબર હોતી નથી કે તે કયું છે. પેટર્ન કોડ <code>id</code> ક્ષેત્રમાંથી મૂલ્યનો ઉપયોગ કરી શકતું નથી કારણ કે આપણે <code>id</code> મૂલ્યને ચલણમાં સંગ્રહિત કર્યું નથી.</p>

@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -199,11 +199,7 @@
 <h3 id="the-difference-between-macros-and-functions"><a class="header" href="#the-difference-between-macros-and-functions">The Difference Between Macros and Functions</a></h3>
 <p>મૂળભૂત રીતે, મેક્રો એ કોડ લખવાની એક રીત છે જે અન્ય કોડ લખે છે, જેને મેટાપ્રોગ્રામિંગ કહેવામાં આવે છે. પૂર્તિ C માં, અમે <code>derive</code> લક્ષણની ચર્ચા કરીએ છીએ, જે તમારા માટે વિવિધ traits નું અમલીકરણ ઉત્પન્ન કરે છે. અમે સમગ્ર પુસ્તકમાં <code>println!</code> અને <code>vec!</code> મેક્રોનો પણ ઉપયોગ કર્યો છે. આ બધા મેક્રો તમે જાતે લખેલા કોડ કરતાં વધુ કોડ ઉત્પન્ન કરે છે.</p>
 <p>મેટાપ્રોગ્રામિંગ એ તમારે લખવા અને જાળવવો પડતા કોડની માત્રા ઘટાડવા માટે ઉપયોગી છે, જે ફંક્શન્સની ભૂમિકાઓમાં પણ એક છે. જો કે, મેક્રો પાસે કેટલીક વધારાની શક્તિઓ છે જે ફંક્શન પાસે નથી.</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>ફંક્શન હસ્તાક્ષરની ઘોષણા ફંક્શન હસ્તાક્ષર (function signature) એ ફંક્શનના પરિમાણોની સંખ્યા અને પ્રકાર જાહેર કરે છે. મેક્રોઝ, બીજી બાજુ, variable સંખ્યામાં પરિમાણો લઈ શકે છે: આપણે `println!("hello")` ને એક Argument સાથે અથવા `println!("hello {}", name)` ને બે Argumentો સાથે બોલાવી શકીએ છીએ. ઉપરાંત, મેક્રોઝ કમ્પાઇલર કોડનો અર્થ સમજાવતા પહેલા વિસ્તૃત થાય છે, તેથી મેક્રો કોઈ આપેલ પ્રકાર પર લક્ષણ (trait) લાગુ કરી શકે છે. ફંક્શન આમ કરી શકતું નથી, કારણ કે તે રનટાઇમ (runtime) પર બોલાવવામાં આવે છે અને લક્ષણ કમ્પાઇલ ટાઇમ (compile time) પર અમલમાં મૂકવાની જરૂર હોય છે.
-
-<span class="boring">}</span></code></pre>
+<p>ફંક્શન હસ્તાક્ષરની ઘોષણા ફંક્શન હસ્તાક્ષર (function signature) એ ફંક્શનના પરિમાણોની સંખ્યા અને પ્રકાર જાહેર કરે છે. મેક્રોઝ, બીજી બાજુ, variable સંખ્યામાં પરિમાણો લઈ શકે છે: આપણે <code>println!("hello")</code> ને એક Argument સાથે અથવા <code>println!("hello {}", name)</code> ને બે Argumentો સાથે બોલાવી શકીએ છીએ. ઉપરાંત, મેક્રોઝ કમ્પાઇલર કોડનો અર્થ સમજાવતા પહેલા વિસ્તૃત થાય છે, તેથી મેક્રો કોઈ આપેલ પ્રકાર પર લક્ષણ (trait) લાગુ કરી શકે છે. ફંક્શન આમ કરી શકતું નથી, કારણ કે તે રનટાઇમ (runtime) પર બોલાવવામાં આવે છે અને લક્ષણ કમ્પાઇલ ટાઇમ (compile time) પર અમલમાં મૂકવાની જરૂર હોય છે.</p>
 <p>મેક્રોને કાર્યની જગ્યાએ અમલમાં મૂકવાનો ગેરવિરોધ એ છે કે મેક્રો વ્યાખ્યાઓ કાર્યોની વ્યાખ્યાઓ કરતાં વધુ જટિલ હોય છે કારણ કે તમે <code>Rust</code> કોડ લખી રહ્યા છો જે <code>Rust</code> કોડ લખે છે. આ પરોક્ષતાને લીધે, મેક્રો વ્યાખ્યાઓ સામાન્ય રીતે કાર્યોની વ્યાખ્યાઓ કરતાં વાંચવા, સમજવા અને જાળવવા માટે વધુ મુશ્કેલ હોય છે.</p>
 <p>મેક્રો અને કાર્ય વચ્ચે બીજો મહત્વપૂર્ણ તફાવત એ છે કે તમારે ફાઈલમાં તેમને બોલાવતા પહેલા મેક્રો વ્યાખ્યાયિત કરવા અથવા તેમની અવકાશમાં લાવવા આવશ્યક છે, વિરુદ્ધમાં તમે કોઈપણ જગ્યાએ કાર્યોને વ્યાખ્યાયિત કરી શકો છો અને ગમે ત્યાંથી બોલાવી શકો છો.</p>
 <!-- Old headings. Do not remove or links may break. -->
@@ -219,7 +215,18 @@
 <p><strong>Listing 20-35: A simplified version of the <code>vec!</code> macro definition</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-35/src/lib.rs}}
+</span>#[macro_export]
+macro_rules! vec {
+    ( $( $x:expr ),* ) =&gt; {
+        {
+            let mut temp_vec = Vec::new();
+            $(
+                temp_vec.push($x);
+            )*
+            temp_vec
+        }
+    };
+}
 <span class="boring">}</span></code></pre>
 <p>નોંધ: <code>vec!</code> મેક્રોની પ્રમાણભૂત લાયબ્રેરીમાં વ્યાખ્યામાં શરૂઆતમાં યોગ્ય માત્રામાં મેમરી ફાળવવાનું કોડ સમાવિષ્ટ છે. આ કોડ એક ઓપ્ટિમાઇઝેશન છે જે અમે ઉદાહરણને સરળ બનાવવા માટે અહીં સામેલ કરતા નથી. <code>#[macro_export]</code> એનોટેશન સૂચવે છે</p>
 <p>કે આ મેક્રો વ્યાખ્યાયિત થયેલ ક્રેટમાં જ્યાં સુધી મેક્રો વ્યાપકમાં ન આવે ત્યાં સુધી ઉપલબ્ધ કરાવવો જોઈએ. આ એનોટેશન વિના, મેક્રોને વ્યાપકમાં લાવી શકાય તેમ નથી. અમે પછી મેક્રો વ્યાખ્યા</p>
@@ -257,10 +264,15 @@ pub fn some_name(input: TokenStream) -&gt; TokenStream {
 <h3 id="custom-derive-macros"><a class="header" href="#custom-derive-macros">Custom <code>derive</code> Macros</a></h3>
 <p>ચાલો એક <code>hello_macro</code> નામનું ક્રેટ બનાવીએ જે <code>HelloMacro</code> નામનું ટ્રેઇટ વ્યાખ્યાયિત કરે છે, જેમાં એક સંલગ્ન ફંક્શન <code>hello_macro</code> નામનું હોય. આપણા userઓને દરેક પ્રકાર માટે <code>HelloMacro</code> ટ્રેઇટનો અમલ કરાવવાને બદલે, અમે એક પ્રોસિજરલ મેક્રો પ્રદાન કરીશું જેથી કરીને userઓ તેમના પ્રકારને <code>#[derive(HelloMacro)]</code> સાથે નોંધણી કરાવી શકે અને <code>hello_macro</code> ફંક્શનના ડિફોલ્ટ અમલ મેળવી શકે. ડિફોલ્ટ અમલમાં <code>Hello, Macro! My name is TypeName!</code> પ્રિન્ટ થશે, જ્યાં <code>TypeName</code> એ તે પ્રકારનું નામ છે જેના પર આ ટ્રેઇટ વ્યાખ્યાયિત કરવામાં આવ્યું છે. બીજા શબ્દોમાં કહીએ તો, અમે એક એવું ક્રેટ લખીશું જે અન્ય પ્રોગ્રામરને આપણી ક્રેટનો ઉપયોગ કરીને લિસ્ટિંગ 20-37 જેવું કોડ લખવા માટે સક્ષમ કરે.</p>
 <p><strong>Listing 20-37: The code a user of our crate will be able to write when using our procedural macro</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-37/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use hello_macro::HelloMacro;
+use hello_macro_derive::HelloMacro;
+
+#[derive(HelloMacro)]
+struct Pancakes;
+
+fn main() {
+    Pancakes::hello_macro();
+}</code></pre>
 <p>આ કોડ <code>Hello, Macro! My name is Pancakes!</code> છાપશે જ્યારે આપણે પૂર્ણ કરીશું. પ્રથમ પગલું એ નવું લાયબ્રેરી ક્રેટ બનાવવાનું છે, આ પ્રમાણે:</p>
 <pre><code class="language-console">$ cargo new hello_macro --lib
 </code></pre>
@@ -268,14 +280,25 @@ pub fn some_name(input: TokenStream) -&gt; TokenStream {
 <p><strong>Listing 20-38: A simple trait that we will use with the <code>derive</code> macro</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-38/hello_macro/src/lib.rs}}
+</span>pub trait HelloMacro {
+    fn hello_macro();
+}
 <span class="boring">}</span></code></pre>
 <p>આપણી પાસે એક trait અને તેનું કાર્ય છે. આ સમયે, આપણાં crate ના user Listing 20-39 માં દર્શાવ્યા પ્રમાણે ઇચ્છિત કાર્યક્ષમતા પ્રાપ્ત કરવા માટે trait ને અમલમાં મૂકી શકે છે.</p>
 <p><strong>Listing 20-39: How it would look if users wrote a manual implementation of the <code>HelloMacro</code> trait</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-39/pancakes/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use hello_macro::HelloMacro;
+
+struct Pancakes;
+
+impl HelloMacro for Pancakes {
+    fn hello_macro() {
+        println!("Hello, Macro! My name is Pancakes!");
+    }
+}
+
+fn main() {
+    Pancakes::hello_macro();
+}</code></pre>
 <p>જો કે, તેઓએ દરેક પ્રકાર માટે અમલીકરણ બ્લોક લખવાની જરૂર પડે, જેનો ઉપયોગ તેઓ <code>hello_macro</code> સાથે કરવા ઇચ્છતા હોય; અમે તેમને આ કાર્ય કરવાની જરૂરિયાતથી મુક્ત કરવા માંગીએ છીએ.</p>
 <p>વધુમાં, હજી અમે <code>hello_macro</code> ફંક્શનને ડિફોલ્ટ અમલીકરણ આપી શકતા નથી, જે ટ્રેઇટના પ્રકારનું નામ છાપશે: Rust પાસે રીફ્લેક્શન ક્ષમતાઓ નથી, તેથી તે રનટાઇમ પર પ્રકારનું નામ શોધી શકતું નથી. કોડ જનરેટ કરવા માટે અમારે એક મેક્રોની જરૂર છે કમ્પાઇલ સમયે.</p>
 <p>આગળનો તબક્કો એ પ્રોસિજરલ મેક્રોને વ્યાખ્યાયિત કરવાનો છે. આ લખતી વખતે, પ્રોસિજરલ મેક્રોઝ પોતાની અલગ crate માં હોવા જોઈએ. ભવિષ્યમાં, આ નિયંત્રણ હટાવી શકાય છે. crates અને macro crates ની રચના માટેની પરંપરા નીચે મુજબ છે: <code>foo</code> નામની crate માટે, કસ્ટમ <code>derive</code> પ્રોસિજરલ મેક્રો crate ને <code>foo_derive</code> કહેવામાં આવે છે. ચાલો <code>hello_macro_derive</code> નામની નવી crate શરૂ કરીએ અમારી <code>hello_macro</code> project ની અંદર:</p>
@@ -283,13 +306,29 @@ pub fn some_name(input: TokenStream) -&gt; TokenStream {
 </code></pre>
 <p>આપણી બે ક્રેટે એકબીજા સાથે ગાઢ રીતે સંકળાયેલી છે, તેથી આપણે <code>hello_macro</code> ક્રેટેની ડિરેક્ટરીમાં પ્રોસિજરલ મેક્રો ક્રેટે બનાવીએ છીએ. જો આપણે <code>hello_macro</code> માં ટ્રેઇટ વ્યાખ્યા બદલીએ, તો આપણે <code>hello_macro_derive</code> માં પ્રોસિજરલ મેક્રોના અમલીકરણને પણ બદલવું પડશે. આ બે ક્રેટે અલગથી પ્રકાશિત કરવાની જરૂર પડશે, અને આ ક્રેટેનો ઉપયોગ કરતા પ્રોગ્રામરે બંનેને આધાર તરીકે ઉમેરવાની અને બંનેને કાર્યક્ષેત્રમાં લાવવાની જરૂર પડશે. વૈકલ્પિક રીતે, આપણે <code>hello_macro</code> ક્રેટે <code>hello_macro_derive</code> ને આધાર તરીકે વાપરી શકે અને પ્રોસિજરલ મેક્રો કોડને ફરીથી નિકાસ કરી શકે. જો કે, આપણે જે રીતે આ પ્રોજેક્ટનું માળખું બનાવ્યું છે, તેનાથી પ્રોગ્રામરે <code>hello_macro</code> નો ઉપયોગ કરી શકે છે, ભલે તેઓ <code>derive</code> કાર્યક્ષમતા ઇચ્છતા ન હોય.</p>
 <p>આપણે <code>hello_macro_derive</code> ક્રેટને પ્રોસિજરલ મેક્રો ક્રેટ તરીકે જાહેર કરવાની જરૂર છે. આપણે <a href="https://crates.io/crates/syn"><code>syn</code></a> અને <code>quote</code> ક્રેટ્સની કાર્યક્ષમતા પણ જોઈશું, થોડીવારમાં તમે તે જોશો, તેથી આપણે તેમને આધારભૂત વસ્તુઓ (dependency) તરીકે ઉમેરવાની જરૂર છે. <code>hello_macro_derive</code> માટે Cargo.toml ફાઈલમાં નીચે મુજબ ઉમેરો:</p>
-<pre><code class="language-toml">{{#include ../listings/ch20-advanced-features/listing-20-40/hello_macro/hello_macro_derive/Cargo.toml:6:12}}
+<pre><code class="language-toml">[lib]
+proc-macro = true
+
+[dependencies]
+syn = "2.0"
+quote = "1.0"
 </code></pre>
 <p>પ્રક્રિયાત્મક મેક્રો (procedural macro) વ્યાખ્યાયિત કરવાનું શરૂ કરવા માટે, કોડને તમારી <code>src/lib.rs</code> ફાઈલમાં <code>hello_macro_derive</code> ક્રેટમાં મૂકો. નોંધ કરો કે જ્યાં સુધી આપણે <code>impl_hello_macro</code> ફંક્શનની વ્યાખ્યા ઉમેરતા નથી ત્યાં સુધી આ કોડ સંપાદિત થશે નહીં.</p>
 <p><strong>Listing 20-40: Code that most procedural macro crates will require in order to process Rust code</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-40/hello_macro/hello_macro_derive/src/lib.rs}}
+</span>use proc_macro::TokenStream;
+use quote::quote;
+
+#[proc_macro_derive(HelloMacro)]
+pub fn hello_macro_derive(input: TokenStream) -&gt; TokenStream {
+    // Construct a representation of Rust code as a syntax tree
+    // that we can manipulate.
+    let ast = syn::parse(input).unwrap();
+
+    // Build the trait implementation.
+    impl_hello_macro(&amp;ast)
+}
 <span class="boring">}</span></code></pre>
 <p>જુઓ કે કોડને <code>hello_macro_derive</code> વિધેયમાં અને <code>impl_hello_macro</code> વિધેયમાં વિભાજિત કરવામાં આવ્યો છે, જે અનુક્રમે <code>TokenStream</code>નું વિશ્લેષણ કરવા અને સિન્ટેક્સ ટ્રીનું રૂપાંતર કરવા માટે જવાબદાર છે: આ રીતે પ્રક્રિયાત્મક મેક્રો લખવાનું વધુ અનુકૂળ બને છે. બાહ્ય વિધેયમાં (આ કિસ્સામાં <code>hello_macro_derive</code>) રહેલો કોડ લગભગ દરેક પ્રક્રિયાત્મક મેક્રો crate માટે સમાન હશે જે તમે જુઓ છો અથવા બનાવો છો. તમે આંતરિક વિધેય (<code>impl_hello_macro</code> આ કિસ્સામાં)ના શરીરમાં સ્પષ્ટ કરેલો કોડ તમારા પ્રક્રિયાત્મક મેક્રોના હેતુને આધારે અલગ હશે.</p>
 <p>આપણે ત્રણ નવા ક્રેટ પરિચય આપ્યા છે: <code>proc_macro</code> , <code>syn</code> , અને <a href="https://crates.io/crates/quote"><code>quote</code></a> . <code>proc_macro</code> ક્રેટ Rust સાથે આવે છે, તેથી આપણે તેને Cargo.toml માં આધારક (dependency) ઉમેરવાની જરૂર નહોતી. <code>proc_macro</code> ક્રેટ એ compiler નું API છે જે આપણને આપણા કોડમાંથી Rust કોડ વાંચવા અને સંશોધિત કરવાની મંજૂરી આપે છે. The <code>syn</code> crate parses</p>
@@ -324,7 +363,30 @@ pub fn some_name(input: TokenStream) -&gt; TokenStream {
 <p><strong>Listing 20-42: Implementing the <code>HelloMacro</code> trait using the parsed Rust code</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-42/hello_macro/hello_macro_derive/src/lib.rs:here}}
+</span><span class="boring">use proc_macro::TokenStream;
+</span><span class="boring">use quote::quote;
+</span><span class="boring">
+</span><span class="boring">#[proc_macro_derive(HelloMacro)]
+</span><span class="boring">pub fn hello_macro_derive(input: TokenStream) -&gt; TokenStream {
+</span><span class="boring">    // Construct a representation of Rust code as a syntax tree
+</span><span class="boring">    // that we can manipulate
+</span><span class="boring">    let ast = syn::parse(input).unwrap();
+</span><span class="boring">
+</span><span class="boring">    // Build the trait implementation
+</span><span class="boring">    impl_hello_macro(&amp;ast)
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn impl_hello_macro(ast: &amp;syn::DeriveInput) -&gt; TokenStream {
+    let name = &amp;ast.ident;
+    let generated = quote! {
+        impl HelloMacro for #name {
+            fn hello_macro() {
+                println!("Hello, Macro! My name is {}!", stringify!(#name));
+            }
+        }
+    };
+    generated.into()
+}
 <span class="boring">}</span></code></pre>
 <p>અમે <code>Ident</code> સ્ટ્રક્ચર ઇન્સ્ટન્સ મેળવીએ છીએ જેમાં નામ (ઉપાધિ) હોય છે જે નોંધાયેલ પ્રકારનું છે, જે <code>ast.ident</code> નો ઉપયોગ કરીને પ્રાપ્ત થાય છે. યાદી 20-41 માં દર્શાવેલ સ્ટ્રક્ચરમાં બતાવે છે કે જ્યારે અમે <code>impl_hello_macro</code> ફંક્શનને યાદી 20-37 માંના કોડ પર ચલાવીએ છીએ, ત્યારે મળતું <code>ident</code>  ફિલ્ડ <code>“Pancakes”</code> મૂલ્ય ધરાવશે. આમ, યાદી 20-42 માંનું <code>name</code> variable <code>Ident</code> સ્ટ્રક્ચર ઇન્સ્ટન્સ ધરાવશે જે છાપવામાં આવે ત્યારે <code>"Pancakes"</code> શબ્દમાળા હશે, જે યાદી 20-37 માંના સ્ટ્રક્ચરનું નામ છે.</p>
 <p>The <code>quote!</code> Macro The <code>quote!</code> macro permits us to define the Rust code that we desire to return. The compiler expects something different from the direct result of the <code>quote!</code> macro’s execution, so we need to convert it to a <code>TokenStream</code>. We accomplish this by calling the <code>into</code> method, which consumes this intermediate representation and returns a value of the required</p>
@@ -332,7 +394,9 @@ pub fn some_name(input: TokenStream) -&gt; TokenStream {
 <p>આપણે આપણી પ્રોસિજરલ મેક્રોને userએ જે પ્રકાર (type) નોંધાવ્યો છે તેના માટે આપણું <code>HelloMacro</code> ટ્રેઇટનો અમલ (implementation) જનરેટ કરવો છે, જે આપણે <code>#name</code> નો ઉપયોગ કરીને મેળવી શકીએ છીએ. ટ્રેઇટ અમલમાં એક ફંક્શન <code>hello_macro</code> હોય છે, જેના શરીરમાં તે કાર્યક્ષમતા (functionality) હોય છે જે આપણને પ્રદાન કરવી છે: <code>Hello, Macro! My name is</code> છાપવું અને પછી નોંધાયેલા પ્રકારનું નામ છાપવું.</p>
 <p>અહીં વપરાયેલું <code>stringify!</code> મેક્રો Rust માં બનેલું છે. તે Rust અભિવ્યક્તિ (expression), જેમ કે <code>1 + 2</code>, લે છે અને કમ્પાઇલ સમયે તેને સ્ટ્રિંગ લિટરલ, જેમ કે <code>"1 + 2"</code> માં ફેરવે છે. આ <code>format!</code> અથવા <code>println!</code> થી અલગ છે, જે એવા મેક્રો છે જે અભિવ્યક્તિનું મૂલ્યાંકન કરે છે અને પછી પરિણામને <code>String</code> માં ફેરવે છે. શક્યતા છે કે <code>#name</code> ઇનપુટને શાબ્દિક રીતે છાપવા માટેની અભિવ્યક્તિ હોઈ શકે છે, તેથી આપણે <code>stringify!</code> નો ઉપયોગ કરીએ છીએ. <code>stringify!</code> નો ઉપયોગ કરવાથી કમ્પાઇલ સમયે <code>#name</code> ને સ્ટ્રિંગ લિટરલમાં રૂપાંતરિત કરીને એક ફાળવણી (allocation) પણ બચે છે.</p>
 <p>At this point હવે, <code>cargo build</code> બંને <code>hello_macro</code> અને <code>hello_macro_derive</code> માં સફળતાપૂર્વક પૂર્ણ થવું જોઈએ. ચાલો આ ક્રેટ્સને લિસ્ટિંગ ૨૦-૩૭ ના કોડ સાથે જોડીએ જેથી પ્રક્રિયાત્મક મેક્રો કાર્યમાં આવે! તમારા પ્રોજેક્ટ્સ ડિરેક્ટરીમાં <code>cargo new pancakes</code> નો ઉપયોગ કરીને એક નવો બાઈનરી પ્રોજેક્ટ બનાવો. આપણે <code>hello_macro</code> અને <code>hello_macro_derive</code> ને <code>pancakes</code> ક્રેટના Cargo.toml માં આધાર તરીકે ઉમેરવાની જરૂર છે. જો તમે તમારા <code>hello_macro</code> અને <code>hello_macro_derive</code> ના વર્ઝનને crates.io પર પ્રકાશિત કરી રહ્યા છો, તો તે નિયમિત આધાર હશે; નહિંતર, તમે તેમને <code>path</code> આધાર તરીકે નીચે મુજબ સ્પષ્ટ કરી શકો છો:</p>
-<pre><code class="language-toml">{{#include ../listings/ch20-advanced-features/no-listing-21-pancakes/pancakes/Cargo.toml:6:8}}
+<pre><code class="language-toml">[dependencies]
+hello_macro = { path = "../hello_macro" }
+hello_macro_derive = { path = "../hello_macro/hello_macro_derive" }
 </code></pre>
 <p>Listing 20-37 ને src/main.rs માં મૂકો, અને <code>cargo run</code> ચલાવો: એ <code>Hello, Macro! My name is Pancakes!</code> છાપવું જોઈએ. પ્રક્રિયાત્મક મેક્રોમાંથી <code>HelloMacro</code> ટ્રેઇટનું અમલીકરણ <code>pancakes</code> ક્રેટે તેને અમલમાં મૂક્યા વિના જ ઉમેરવામાં આવ્યું હતું; <code>#[derive(HelloMacro)]</code> એ ટ્રેઇટ અમલીકરણ ઉમેર્યું હતું.</p>
 <p>આગળ, ચાલો જોઈએ કે અન્ય પ્રકારના પ્રક્રિયાત્મક મેક્રો કસ્ટમ <code>derive</code> મેક્રોથી કેવી રીતે અલગ પડે છે.</p>

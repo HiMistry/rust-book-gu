@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -194,10 +194,17 @@ $ cd hello
 </code></pre>
 <p>હવે src/main.rs માં લિસ્ટિંગ 21-1 નો કોડ દાખલ કરો આરંભ કરવા માટે. આ કોડ સ્થાનિક સરનામું <code>127.0.0.1:7878</code> પર આવતા TCP પ્રવાહોની રાહ જોશે. જ્યારે તેને આવતો પ્રવાહ મળશે, ત્યારે તે <code>Connection established!</code> છાપશે.</p>
 <p><strong>Listing 21-1: Listening for incoming streams and printing a message when we receive a stream</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-01/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use std::net::TcpListener;
+
+fn main() {
+    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+
+    for stream in listener.incoming() {
+        let stream = stream.unwrap();
+
+        println!("Connection established!");
+    }
+}</code></pre>
 <p><code>TcpListener</code>નો ઉપયોગ કરીને, આપણે <code>127.0.0.1:7878</code> સરનામાં પર TCP જોડાણો સાંભળી શકીએ છીએ. સરનામાંમાં, કોલન પહેલાંનો ભાગ એક IP સરનામું છે જે તમારા કમ્પ્યુટરનું પ્રતિનિધિત્વ કરે છે (આ દરેક કમ્પ્યુટર પર સમાન હોય છે અને લેખકોના કમ્પ્યુટરને વિશેષ કરીને દર્શાવતું નથી), અને <code>7878</code> એ પોર્ટ છે. આપણે આ પોર્ટ બે કારણોસર પસંદ કર્યો છે: સામાન્ય રીતે HTTP આ પોર્ટ પર સ્વીકારવામાં આવતું નથી, તેથી આપણો સર્વર તમારા મશીન પર ચાલી રહેલા અન્ય વેબ સર્વર સાથે સંઘર્ષ કરી શકે તેવી શક્યતા ઓછી છે, અને <code>7878</code> એ ટેલિફોન પર rust ટાઈપ કરેલું છે.</p>
 <p>The <code>bind</code> Function આ પરિસ્થિતિમાં <code>bind</code> ફંક્શન <code>new</code> ફંક્શનની જેમ જ કાર્ય કરે છે કે તે નવું <code>TcpListener</code> ઇન્સ્ટન્સ પાછું આપશે. આ ફંક્શનને <code>bind</code> કહેવામાં આવે છે કારણ કે, નેટવર્કિંગમાં, પોર્ટ સાથે જોડાઈને સાંભળવાનું “પોર્ટ સાથે જોડાણ” તરીકે ઓળખાય છે. <code>bind</code> ફંક્શન એક `Result&lt;T,</p>
 <p>E&gt;<code>પાછું આપે છે, જે દર્શાવે છે કે જોડાણ નિષ્ફળ થઈ શકે છે, ઉદાહરણ તરીકે, જો આપણે આપણી પ્રોગ્રામની બે ઇન્સ્ટન્સ ચલાવીએ અને તેથી જ બે પ્રોગ્રામ એક જ પોર્ટ પર સાંભળી રહ્યા હોય. કારણ કે આપણે માત્ર શીખવાના હેતુ માટે એક સરળ સર્વર લખી રહ્યા છીએ, અમે આ પ્રકારની ભૂલોને નિયંત્રિત કરવા અંગે ચિંતા કરીશું નહીં; તેના બદલે, જો ભૂલો થાય તો પ્રોગ્રામને રોકવા માટે</code>unwrap` નો ઉપયોગ કરીએ છીએ.</p>
@@ -217,10 +224,31 @@ Connection established!
 <h3 id="reading-the-request"><a class="header" href="#reading-the-request">Reading the Request</a></h3>
 <p>ચાલો બ્રાઉઝરથી વિનંતી વાંચવાની કાર્યક્ષમતા અમલમાં મૂકીએ! પ્રથમ જોડાણ મેળવવાની અને પછી જોડાણ સાથે કોઈ ક્રિયા કરવાની ચિંતાઓનું વિભાજન કરવા માટે, આપણે જોડાણોની પ્રક્રિયા માટે એક નવું વિધેય શરૂ કરીશું. આ નવા <code>handle_connection</code> વિધેયમાં, આપણે TCP સ્ટ્રીમમાંથી ડેટા વાંચીશું અને તેને છાપીશું જેથી કરીને બ્રાઉઝરથી મોકલવામાં આવેલ ડેટા જોઈ શકાય. કોડને લિસ્ટિંગ 21-2 જેવો દેખાવ આપો.</p>
 <p><strong>Listing 21-2: Reading from the <code>TcpStream</code> and printing the data</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-02/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use std::{
+    io::{BufReader, prelude::*},
+    net::{TcpListener, TcpStream},
+};
+
+fn main() {
+    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+
+    for stream in listener.incoming() {
+        let stream = stream.unwrap();
+
+        handle_connection(stream);
+    }
+}
+
+fn handle_connection(mut stream: TcpStream) {
+    let buf_reader = BufReader::new(&amp;stream);
+    let http_request: Vec&lt;_&gt; = buf_reader
+        .lines()
+        .map(|result| result.unwrap())
+        .take_while(|line| !line.is_empty())
+        .collect();
+
+    println!("Request: {http_request:#?}");
+}</code></pre>
 <p>અમે <code>std::io::BufReader</code> અને <code>std::io::prelude</code> ને કાર્યક્ષેત્રમાં લાવીએ છીએ જેથી કરીને આપણને એવા લક્ષણો (traits) અને પ્રકારો (types) મેળવવામાં મદદ મળે, જે પ્રવાહમાંથી વાંચવા અને લખવા માટે પરવાનગી આપે છે. <code>main</code> ફંક્શનમાં <code>for</code> લૂપમાં, અમે સંદેશ છાપવાને બદલે કે આપણે જોડાણ કર્યું છે, હવે નવા <code>handle_connection</code> ફંક્શનને બોલાવીએ છીએ અને તેને <code>stream</code> પસાર કરીએ છીએ.</p>
 <p><code>handle_connection</code> ફંક્શનમાં, અમે એક નવું <code>BufReader</code> ઉદાહરણ બનાવીએ છીએ જે <code>stream</code> ના સંદર્ભને આવરી લે છે. <code>BufReader</code> આપણી માટે <code>std::io::Read</code> લક્ષણની પદ્ધતિઓને સંચાલિત કરીને બફરિંગ ઉમેરે છે.</p>
 <p>આપણે <code>http_request</code> નામનું variable બનાવીએ છીએ જે વિનંતીની લીટીઓ એકત્રિત કરે છે, જે બ્રાઉઝર આપણા સર્વરને મોકલે છે. આપણે આ લીટીઓને વેક્ટર (vector) માં એકત્રિત કરવા માંગીએ છીએ તે દર્શાવવા માટે <code>Vec&lt;_&gt;</code> પ્રકારનું ઉલ્લેખ ઉમેરીએ છીએ.</p>
@@ -282,23 +310,86 @@ message-body
 </code></pre>
 <p>સ્થિતિ કોડ ૨૦૦ પ્રમાણિત સફળ પ્રતિભાવ છે. આ લખાણ એક નાનકડો સફળ HTTP પ્રતિભાવ છે. ચાલો આને પ્રવાહમાં લખીએ જેવો આપણો સફળ વિનંતીનો પ્રતિભાવ! <code>handle_connection</code> કાર્યમાંથી, <code>println!</code> દૂર કરો જે વિનંતી માહિતી છાપી રહ્યું હતું અને તેને Listing 21-3 માં રહેલા કોડ સાથે બદલો.</p>
 <p><strong>Listing 21-3: Writing a tiny successful HTTP response to the stream</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::{
+</span><span class="boring">    io::{BufReader, prelude::*},
+</span><span class="boring">    net::{TcpListener, TcpStream},
+</span><span class="boring">};
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-03/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+</span><span class="boring">
+</span><span class="boring">    for stream in listener.incoming() {
+</span><span class="boring">        let stream = stream.unwrap();
+</span><span class="boring">
+</span><span class="boring">        handle_connection(stream);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn handle_connection(mut stream: TcpStream) {
+    let buf_reader = BufReader::new(&amp;stream);
+    let http_request: Vec&lt;_&gt; = buf_reader
+        .lines()
+        .map(|result| result.unwrap())
+        .take_while(|line| !line.is_empty())
+        .collect();
+
+    let response = "HTTP/1.1 200 OK\r\n\r\n";
+
+    stream.write_all(response.as_bytes()).unwrap();
+}</code></pre>
 <p>પ્રથમ નવી રેખા <code>response</code> variable વ્યાખ્યાયિત કરે છે જે સફળ સંદેશના ડેટાને ધરાવે છે. પછી, અમે અમારા <code>response</code> પર <code>as_bytes</code> ને બોલાવીએ છીએ જેથી સ્ટ્રિંગ ડેટાને બાઇટ્સમાં રૂપાંતરિત કરી શકાય. <code>stream</code> પરની <code>write_all</code> પદ્ધતિ <code>&amp;[u8]</code> લે છે અને તે બાઇટ્સને સીધા જ જોડાણમાં મોકલે છે. કારણ કે <code>write_all</code> ઓપરેશન નિષ્ફળ થઈ શકે છે, અમે અગાઉની જેમ કોઈપણ ભૂલ પરિણામ પર <code>unwrap</code> નો ઉપયોગ કરીએ છીએ. ફરીથી, વાસ્તવિક એપ્લિકેશનમાં, તમે અહીં</p>
 <p>ભૂલ હેન્ડલિંગ ઉમેરશો. આ ફેરફારો સાથે, ચાલો અમારો કોડ ચલાવીએ અને વિનંતી કરીએ. અમે હવે ટર્મિનલમાં કોઈ ડેટા પ્રિન્ટ કરી રહ્યા નથી, તેથી અમને કાર્ગોનું આઉટપુટ સિવાય કંઈપણ દેખાશે નહીં. જ્યારે તમે વેબ બ્રાઉઝરમાં 127.0.0.1:7878 લોડ કરો છો, ત્યારે તમને ભૂલને બદલે એક ખાલી પૃષ્ઠ મળવું જોઈએ. તમે માત્ર HTTP વિનંતી પ્રાપ્ત કરવાનું અને પ્રતિસાદ મોકલવાનું જાતે જ કોડ કર્યું છે!</p>
 <h3 id="returning-real-html"><a class="header" href="#returning-real-html">Returning Real HTML</a></h3>
 <p>ચાલો આપણે એક ખાલી પાનાં કરતાં વધુ પરત કરવાની કાર્યક્ષમતા અમલમાં મૂકીએ. તમારા પ્રોજેક્ટ ડિરેક્ટરીના મૂળમાં, <code>src</code> ડિરેક્ટરીમાં નહીં, નવી ફાઈલ <code>hello.html</code> બનાવો. તમે કોઈપણ HTML દાખલ કરી શકો છો; સૂચિ 21-4 એક શક્યતા દર્શાવે છે.</p>
 <p><strong>Listing 21-4: A sample HTML file to return in a response</strong></p>
-<pre><code class="language-html">{{#include ../listings/ch21-web-server/listing-21-05/hello.html}}
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Hello!&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello!&lt;/h1&gt;
+    &lt;p&gt;Hi from Rust&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
 <p>આ એક લઘુત્તમ HTML5 દસ્તાવેજ છે જેમાં એક શીર્ષક અને થોડો લખાણ છે. જ્યારે વિનંતી પ્રાપ્ત થાય ત્યારે આ સર્વર પરથી પાછું મોકલવા માટે, આપણે <code>handle_connection</code> ને સૂચિ 21-5 માં દર્શાવ્યા પ્રમાણે સુધારીશું જેથી HTML ફાઈલ વાંચી શકાય, તેને પ્રતિભાવના ભાગ રૂપે ઉમેરી શકાય અને તે મોકલી શકાય.</p>
 <p><strong>Listing 21-5: Sending the contents of <em>hello.html</em> as the body of the response</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-05/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use std::{
+    fs,
+    io::{BufReader, prelude::*},
+    net::{TcpListener, TcpStream},
+};
+// --snip--
+
+<span class="boring">fn main() {
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+</span><span class="boring">
+</span><span class="boring">    for stream in listener.incoming() {
+</span><span class="boring">        let stream = stream.unwrap();
+</span><span class="boring">
+</span><span class="boring">        handle_connection(stream);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn handle_connection(mut stream: TcpStream) {
+    let buf_reader = BufReader::new(&amp;stream);
+    let http_request: Vec&lt;_&gt; = buf_reader
+        .lines()
+        .map(|result| result.unwrap())
+        .take_while(|line| !line.is_empty())
+        .collect();
+
+    let status_line = "HTTP/1.1 200 OK";
+    let contents = fs::read_to_string("hello.html").unwrap();
+    let length = contents.len();
+
+    let response =
+        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+
+    stream.write_all(response.as_bytes()).unwrap();
+}</code></pre>
 <p>અમે પ્રમાણભૂત લાયબ્રેરીના ફાઇલસિસ્ટમ મોડ્યુલને કાર્યક્ષેત્રમાં લાવવા માટે <code>use</code> વિધાનમાં <code>fs</code> ઉમેર્યું છે. ફાઈલની સામગ્રીને સ્ટ્રિંગમાં વાંચવા માટેનો કોડ પરિચિત લાગશે; અમે તેનો ઉપયોગ Listing 12-4 માં ફાઇલની સામગ્રી વાંચવા</p>
 <p>માટે કર્યો હતો. આગળ, અમે સફળ પ્રતિભાવના શરીર તરીકે ફાઇલની સામગ્રી ઉમેરવા માટે <code>format!</code> નો ઉપયોગ કરીએ છીએ. માન્ય HTTP પ્રતિભાવ સુનિશ્ચિત કરવા માટે, અમે <code>Content-Length</code> હેડર ઉમેરીએ છીએ, જે અમારા પ્રતિભાવ શરીરના કદ પર સેટ છે—આ કિસ્સામાં, <code>hello.html</code> નું કદ.</p>
 <p>આ કોડને <code>cargo run</code> સાથે</p>
@@ -306,33 +397,145 @@ message-body
 <h3 id="validating-the-request-and-selectively-responding"><a class="header" href="#validating-the-request-and-selectively-responding">Validating the Request and Selectively Responding</a></h3>
 <p>હાલમાં, આપણો વેબ સર્વર ફાઈલમાં રહેલા HTML ને ગ્રાહક જે પણ વિનંતી કરે તેની પરવાયા વગર પાછો મોકલશે. ચાલો આપણે કાર્યક્ષમતા ઉમેરીએ જેથી બ્રાઉઝર / માટે વિનંતી કરી રહ્યું છે કે નહીં તે ચકાસી શકાય અને જો બ્રાઉઝર અન્ય કંઈપણ માટે વિનંતી કરે તો ભૂલ પાછી મોકલી શકાય. આ માટે આપણે <code>handle_connection</code> માં ફેરફાર કરવાની જરૂર છે, જે યાદી 21-6 માં દર્શાવેલ છે. આ નવા કોડમાં મળેલ વિનંતીની સામગ્રીને / માટેની વિનંતી જેવી દેખાય છે તેની સામે તપાસ કરવામાં આવે છે અને <code>if</code> અને <code>else</code> બ્લોક્સ ઉમેરવામાં આવ્યા છે જેથી વિનંતીઓને અલગ રીતે ગણી શકાય.</p>
 <p><strong>Listing 21-6: Handling requests to <em>/</em> differently from other requests</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::{
+</span><span class="boring">    fs,
+</span><span class="boring">    io::{BufReader, prelude::*},
+</span><span class="boring">    net::{TcpListener, TcpStream},
+</span><span class="boring">};
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-06/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+</span><span class="boring">
+</span><span class="boring">    for stream in listener.incoming() {
+</span><span class="boring">        let stream = stream.unwrap();
+</span><span class="boring">
+</span><span class="boring">        handle_connection(stream);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span>// --snip--
+
+fn handle_connection(mut stream: TcpStream) {
+    let buf_reader = BufReader::new(&amp;stream);
+    let request_line = buf_reader.lines().next().unwrap().unwrap();
+
+    if request_line == "GET / HTTP/1.1" {
+        let status_line = "HTTP/1.1 200 OK";
+        let contents = fs::read_to_string("hello.html").unwrap();
+        let length = contents.len();
+
+        let response = format!(
+            "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
+        );
+
+        stream.write_all(response.as_bytes()).unwrap();
+    } else {
+        // some other request
+    }
+}</code></pre>
 <p>આપણે માત્ર HTTP વિનંતીની પ્રથમ રેખાને જ તપાસવાના છીએ, તેથી સમગ્ર વિનંતીને વેક્ટર (vector) માં વાંચવાને બદલે, આપણે પુનરાવર્તક (iterator) માંથી પ્રથમ ઘટક મેળવવા માટે <code>next</code> ને બોલાવીએ છીએ. પહેલું <code>unwrap</code> <code>Option</code> ની સંભાળ લે છે અને જો પુનરાવર્તકમાં કોઈ ઘટકો ન હોય તો કાર્યક્રમ બંધ કરે છે. બીજું <code>unwrap</code> <code>Result</code> ને હેન્ડલ કરે છે અને Listing 21-2 માં ઉમેરવામાં આવેલ <code>map</code> માં રહેલા <code>unwrap</code> જેવો જ પ્રભાવ ધરાવે છે.</p>
 <p>ત્યારબાદ, આપણે <code>request_line</code> તપાસીએ છીએ કે તે / પાથ (path) પર GET વિનંતીની વિનંતી રેખા બરાબર છે કે નહીં. જો એમ હોય, તો <code>if</code> બ્લોક આપણી HTML ફાઇલની સામગ્રી આપે છે.</p>
 <p>જો <code>request_line</code> <code>/</code> પાથ માટેની GET વિનંતી બરાબર ન હોય, તો એનો અર્થ એ થાય છે કે આપણને અન્ય કોઈ વિનંતી મળી છે. થોડીવારમાં આપણે <code>else</code> બ્લોકમાં કોડ ઉમેરીશું જેથી અન્ય તમામ વિનંતીઓને પ્રતિસાદ આપી</p>
 <p>શકાય. આ કોડ અત્યારે ચલાવો અને 127.0.0.1:7878 પર વિનંતી મોકલો; તમને hello.html માં HTML મળશે. જો તમે કોઈ અન્ય વિનંતી કરો છો, જેમ કે 127.0.0.1:7878/something-else, તો તમને એવા કનેક્શનની ભૂલ મળશે જેવી તમે Listing 21-1 અને Listing 21-2 માં કોડ ચલાવતી વખતે જોઈ હતી.</p>
 <p>હવે ચાલો Listing 21-7 માં રહેલા કોડને <code>else</code> બ્લોકમાં ઉમેરીએ જેથી 404 સ્થિતિ કોડ સાથે પ્રતિભાવ પાઠવવામાં આવે, જે દર્શાવે છે કે વિનંતી માટેની સામગ્રી મળતી નથી. આપણે બ્રાઉઝરમાં પ્રદર્શિત કરવા માટે એક પૃષ્ઠ માટે HTML પણ પાછું આપીશું, જે અંતિમ userને પ્રતિભાવ સૂચવે છે.</p>
 <p><strong>Listing 21-7: Responding with status code 404 and an error page if anything other than <em>/</em> was requested</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::{
+</span><span class="boring">    fs,
+</span><span class="boring">    io::{BufReader, prelude::*},
+</span><span class="boring">    net::{TcpListener, TcpStream},
+</span><span class="boring">};
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-07/src/main.rs:here}}
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+</span><span class="boring">
+</span><span class="boring">    for stream in listener.incoming() {
+</span><span class="boring">        let stream = stream.unwrap();
+</span><span class="boring">
+</span><span class="boring">        handle_connection(stream);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn handle_connection(mut stream: TcpStream) {
+</span><span class="boring">    let buf_reader = BufReader::new(&amp;stream);
+</span><span class="boring">    let request_line = buf_reader.lines().next().unwrap().unwrap();
+</span><span class="boring">
+</span><span class="boring">    if request_line == "GET / HTTP/1.1" {
+</span><span class="boring">        let status_line = "HTTP/1.1 200 OK";
+</span><span class="boring">        let contents = fs::read_to_string("hello.html").unwrap();
+</span><span class="boring">        let length = contents.len();
+</span><span class="boring">
+</span><span class="boring">        let response = format!(
+</span><span class="boring">            "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
+</span><span class="boring">        );
+</span><span class="boring">
+</span><span class="boring">        stream.write_all(response.as_bytes()).unwrap();
+</span>    // --snip--
+    } else {
+        let status_line = "HTTP/1.1 404 NOT FOUND";
+        let contents = fs::read_to_string("404.html").unwrap();
+        let length = contents.len();
+
+        let response = format!(
+            "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
+        );
+
+        stream.write_all(response.as_bytes()).unwrap();
+    }
 <span class="boring">}</span></code></pre>
 <p>અહીં, આપણી પ્રતિભાવમાં સ્થિતિ કોડ 404 અને કારણ પદ <code>NOT FOUND</code> સાથે એક સ્થિતિ રેખા છે. પ્રતિભાવનું શરીર ફાઈલ 404.html માં HTML હશે. તમારે ભૂલ પાના માટે 404.html ફાઈલ hello.html ની બાજુમાં બનાવવાની જરૂર પડશે; ફરીથી, તમે કોઈપણ HTML નો ઉપયોગ કરી શકો છો, અથવા Listing 21-8 માં આપેલ ઉદાહરણ HTML નો ઉપયોગ કરી શકો છો.</p>
 <p><strong>Listing 21-8: Sample content for the page to send back with any 404 response</strong></p>
-<pre><code class="language-html">{{#include ../listings/ch21-web-server/listing-21-07/404.html}}
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Hello!&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Oops!&lt;/h1&gt;
+    &lt;p&gt;Sorry, I don't know what you're asking for.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
 <p>આ ફેરફારો સાથે, તમારું સર્વર ફરીથી ચલાવો. 127.0.0.1:7878 પર વિનંતી કરવાથી hello.html ની સામગ્રી પાછી મળવી જોઈએ, અને અન્ય કોઈપણ વિનંતી, જેમ કે 127.0.0.1:7878/foo , એ 404.html માંથી ભૂલ HTML પાછું આપવું જોઈએ.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="refactoring"><a class="header" href="#refactoring">Refactoring</a></h3>
 <p>વર્તમાન સમયમાં, <code>if</code> અને <code>else</code> બ્લોક્સમાં ઘણી બધી પુનરાવૃત્તિ છે: બંને ફાઇલો વાંચી રહ્યા છે અને ફાઇલોની સામગ્રીને સ્ટ્રીમમાં લખી રહ્યા છે. એકમાત્ર તફાવત સ્થિતિ લાઇન (status line) અને ફાઇલનું નામ છે. ચાલો કોડને વધુ સંક્ષિપ્ત બનાવીએ, તે તફાવતોને અલગ <code>if</code> અને <code>else</code> લીટીઓમાં ખેંચીને, જે સ્થિતિ લાઇન અને ફાઇલના નામને variable (variable) ને સોંપશે; પછી આપણે તે variable’s ઉપયોગ શરત વગર જ ફાઇલ વાંચવા અને પ્રતિસાદ લખવા માટે કરી શકીશું. સૂચિ 21-9 માં મોટા <code>if</code> અને <code>else</code> બ્લોક્સને બદલ્યા પછી મળતો કોડ દર્શાવવામાં આવ્યો છે.</p>
 <p><strong>Listing 21-9: Refactoring the <code>if</code> and <code>else</code> blocks to contain only the code that differs between the two cases</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::{
+</span><span class="boring">    fs,
+</span><span class="boring">    io::{BufReader, prelude::*},
+</span><span class="boring">    net::{TcpListener, TcpStream},
+</span><span class="boring">};
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch21-web-server/listing-21-09/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+</span><span class="boring">
+</span><span class="boring">    for stream in listener.incoming() {
+</span><span class="boring">        let stream = stream.unwrap();
+</span><span class="boring">
+</span><span class="boring">        handle_connection(stream);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span>// --snip--
+
+fn handle_connection(mut stream: TcpStream) {
+    // --snip--
+<span class="boring">    let buf_reader = BufReader::new(&amp;stream);
+</span><span class="boring">    let request_line = buf_reader.lines().next().unwrap().unwrap();
+</span>
+    let (status_line, filename) = if request_line == "GET / HTTP/1.1" {
+        ("HTTP/1.1 200 OK", "hello.html")
+    } else {
+        ("HTTP/1.1 404 NOT FOUND", "404.html")
+    };
+
+    let contents = fs::read_to_string(filename).unwrap();
+    let length = contents.len();
+
+    let response =
+        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+
+    stream.write_all(response.as_bytes()).unwrap();
+}</code></pre>
 <p>હવે <code>if</code> અને <code>else</code> બ્લોક્સ માત્ર યોગ્ય મૂલ્યો સ્ટેટસ લાઇન અને ફાઇલનામ માટે ટ્યૂપલમાં આપે છે; ત્યારબાદ આપણે ડિસ્ટ્રક્ચરિંગનો ઉપયોગ કરીને <code>let</code> વિધાનમાં પેટર્ન દ્વારા <code>status_line</code> અને <code>filename</code> નાં બે variable સોંપીએ છીએ, જેની ચર્ચા પ્રકરણ 19 માં થયેલી છે.</p>
 <p>અગાઉ ડુપ્લિકેટ કરેલો કોડ હવે <code>if</code> અને <code>else</code> બ્લોક્સની બહાર છે અને <code>status_line</code> અને <code>filename</code> variable’s ઉપયોગ કરે છે. આનાથી બે કેસો વચ્ચેનો તફાવત જોવાનું સરળ બને છે, અને તેનો અર્થ એ થાય છે કે જો આપણે ફાઇલ વાંચવા અને પ્રતિસાદ લખવાની રીત બદલવા માંગતા હોઈએ તો આપણી પાસે કોડને અપડેટ કરવા માટે માત્ર એક જ સ્થાન છે. લિસ્ટિંગ 21-9 માંના કોડનું વર્તન લિસ્ટિંગ 21-7 માં જેવું જ રહેશે.</p>
 <p>ખૂબ સરસ! હવે આપણી પાસે એક સરળ વેબ સર્વર છે જે આશરે 40 લીટીના Rust કોડમાં બનાવવામાં આવ્યો છે અને તે એક વિનંતીને પ્રતિભાવ આપે છે જેમાં સામગ્રીથી ભરેલો પૃષ્ઠ હોય છે અને અન્ય તમામ વિનંતીઓને 404 પ્રતિભાવ સાથે આવકારે છે.</p>

@@ -46,36 +46,6 @@ def get_link_defs(filepath):
     return defs, usages
 
 
-def find_gu_text_line(gu_lines, text, start=0):
-    """Find a line in GU content that contains the given text.
-    
-    Returns the line index or -1.
-    """
-    for i in range(start, len(gu_lines)):
-        line = gu_lines[i].rstrip()
-        if re.search(r'\]\[', line):
-            continue
-        if line.startswith('```') or line.startswith('#') or line.startswith('>') or line.startswith('{{#'):
-            continue
-        if text in line:
-            return i
-    
-    # Fuzzy: try matching by significant words (numbers, uppercase terms)
-    # Extract words that are likely preserved in translation (numbers, code terms)
-    words = re.findall(r'[A-Z][a-z]+ \d+|\d+|\b[A-Z][a-z]+\b', text)
-    for i in range(start, len(gu_lines)):
-        line = gu_lines[i].rstrip()
-        if re.search(r'\]\[', line):
-            continue
-        if line.startswith('```') or line.startswith('#') or line.startswith('>') or line.startswith('{{#'):
-            continue
-        for w in words:
-            if len(w) > 2 and w in line and not re.search(r'\]\[' + re.escape(w), line):
-                return i
-    
-    return -1
-
-
 def fix_file(fname):
     en_path = os.path.join(EN_SRC, fname)
     gu_path = os.path.join(GU_SRC, fname)
@@ -102,14 +72,19 @@ def fix_file(fname):
                 changed = True
     
     for text, ref_id in en_usages:
-        line_idx = find_gu_text_line(gu_lines, text)
-        if line_idx >= 0:
+        for line_idx in range(len(gu_lines)):
+            stripped = gu_lines[line_idx].rstrip()
+            if re.search(r'\]\[', stripped):
+                continue
+            if stripped.startswith('```') or stripped.startswith('#') or stripped.startswith('>') or stripped.startswith('{{#'):
+                continue
+            if text not in stripped:
+                continue
             old_line = gu_lines[line_idx]
-            # Use word-boundary replacement to avoid partial matches (e.g., "Cargo" in "Cargo.toml")
             if '`' in text:
                 new_line = old_line.replace(text, f'[{text}][{ref_id}]', 1)
             else:
-                new_line = re.sub(r'(?<!\w)' + re.escape(text) + r'(?!(?:\w|\.(?:toml|lock|rs)))', f'[{text}][{ref_id}]', old_line, count=1)
+                new_line = re.sub(r'(?<![-\w])' + re.escape(text) + r'(?!(?:\w|\.(?:toml|lock|rs)))', f'[{text}][{ref_id}]', old_line, count=1)
             if new_line != old_line:
                 gu_lines[line_idx] = new_line
                 changed = True

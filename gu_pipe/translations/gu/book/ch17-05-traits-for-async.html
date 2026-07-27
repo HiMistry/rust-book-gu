@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -210,7 +210,7 @@ pub trait Future {
 <span class="boring">}</span></code></pre>
 <p>આ <code>Poll</code> પ્રકાર <code>Option</code> જેવો જ છે. તેની એક વિવિધતામાં મૂલ્ય હોય છે, <code>Ready(T)</code>, અને બીજીમાં ન હોય છે, <code>Pending</code>. <code>Poll</code> નો અર્થ <code>Option</code> કરતા ઘણો અલગ છે! <code>Pending</code> વિવિધતા દર્શાવે છે કે ભવિષ્યને (future) હજી કાર્ય કરવાનું બાકી છે, તેથી કૉલરને પાછળથી ફરીથી તપાસવાની જરૂર પડશે. <code>Ready</code> વિવિધતા દર્શાવે છે કે <code>Future</code> એ તેનું કાર્ય પૂર્ણ કરી લીધું છે અને <code>T</code></p>
 <p>મૂલ્ય ઉપલબ્ધ છે. નોંધ: સીધા <code>poll</code> ને બોલાવવું કદાચિત જરૂરી નથી, પરંતુ જો તમારે તે કરવાની જરૂર હોય, તો યાદ રાખો કે મોટા ભાગના ભવિષ્ય માટે, કૉલરને <code>Ready</code> પરત થયા પછી <code>poll</code> ફરીથી બોલાવો જોઈએ નહીં. ઘણા ભવિષ્ય તૈયાર થયા પછી ગભરાટ (panic) કરી શકે છે. જે ભવિષ્યને ફરીથી પોલિંગ કરવું સલામત હોય તે તેમના દસ્તાવેજોમાં સ્પષ્ટપણે જણાવશે. આ વર્તન <code>Iterator::next</code> જેવું જ છે.</p>
-<p>જ્યારે તમે <code>await</code> વાપરતા કોડ જુઓ છો, ત્યારે Rust તેને <code>poll</code> કૉલ કરતો કોડમાં રૂપાંતરિત કરે છે. જો તમે યાદ કરો Listing 17-<a href="https://rust-lang.github.io/async-book/04_pinning/01_chapter.html">4</a>, જ્યાં આપણે એક URL માટે પૃષ્ઠનું શીર્ષક છપાવ્યું હતું જ્યારે તે ઉકેલાઈ ગયું, તો Rust તેને કંઈક એવું (જો કે બરાબર નહીં) માં ફેરવે છે:</p>
+<p>જ્યારે તમે <code>await</code> વાપરતા કોડ જુઓ છો, ત્યારે Rust તેને <code>poll</code> કૉલ કરતો કોડમાં રૂપાંતરિત કરે છે. જો તમે યાદ કરો Listing 17-4, જ્યાં આપણે એક URL માટે પૃષ્ઠનું શીર્ષક છપાવ્યું હતું જ્યારે તે ઉકેલાઈ ગયું, તો Rust તેને કંઈક એવું (જો કે બરાબર નહીં) માં ફેરવે છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>match page_title(url).poll() {
@@ -245,34 +245,80 @@ loop {
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="the-pin-type-and-the-unpin-trait"><a class="header" href="#the-pin-type-and-the-unpin-trait">The <code>Pin</code> Type and the <code>Unpin</code> Trait</a></h3>
 <p>પાછલા યાદી ૧૭-૧૩ માં, અમે ત્રણ futures ની રાહ જોવા માટે <code>trpl::join!</code> macro નો ઉપયોગ કર્યો હતો. જો કે, ઘણીવાર એવી કલેક્શન (collection) હોય છે, જેમ કે વેક્ટર (vector), જેમાં અમુક સંખ્યાના futures હોય છે જે રનટાઇમ (runtime) સુધી જાણીતા હોતા નથી. ચાલો યાદી ૧૭-૧૩ ને યાદી ૧૭-૨૩ માં બદલીએ, જે ત્રણ futures ને વેક્ટરમાં મૂકે છે અને <code>trpl::join_all</code> ફંક્શનને બોલાવે છે, જે હજી કમ્પાઇલ (compile) થશે નહીં.</p>
-<p><strong>Listing 17-<a href="https://rust-lang.github.io/async-book/02_execution/01_chapter.html">2</a>3: Awaiting futures in a collection</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<p><strong>Listing 17-23: Awaiting futures in a collection</strong></p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
+</span><span class="boring">
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-[2][under-the-hood]3/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    trpl::block_on(async {
+</span><span class="boring">        let (tx, mut rx) = trpl::channel();
+</span><span class="boring">
+</span><span class="boring">        let tx1 = tx.clone();
+</span><span class="boring">        let tx1_fut = async move {
+</span><span class="boring">            let vals = vec![
+</span><span class="boring">                String::from("hi"),
+</span><span class="boring">                String::from("from"),
+</span><span class="boring">                String::from("the"),
+</span><span class="boring">                String::from("future"),
+</span><span class="boring">            ];
+</span><span class="boring">
+</span><span class="boring">            for val in vals {
+</span><span class="boring">                tx1.send(val).unwrap();
+</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
+</span><span class="boring">            }
+</span><span class="boring">        };
+</span><span class="boring">
+</span><span class="boring">        let rx_fut = async {
+</span><span class="boring">            while let Some(value) = rx.recv().await {
+</span><span class="boring">                println!("received '{value}'");
+</span><span class="boring">            }
+</span><span class="boring">        };
+</span><span class="boring">
+</span>        let tx_fut = async move {
+            // --snip--
+<span class="boring">            let vals = vec![
+</span><span class="boring">                String::from("more"),
+</span><span class="boring">                String::from("messages"),
+</span><span class="boring">                String::from("for"),
+</span><span class="boring">                String::from("you"),
+</span><span class="boring">            ];
+</span><span class="boring">
+</span><span class="boring">            for val in vals {
+</span><span class="boring">                tx.send(val).unwrap();
+</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
+</span><span class="boring">            }
+</span>        };
+
+        let futures: Vec&lt;Box&lt;dyn Future&lt;Output = ()&gt;&gt;&gt; =
+            vec![Box::new(tx1_fut), Box::new(rx_fut), Box::new(tx_fut)];
+
+        trpl::join_all(futures).await;
+<span class="boring">    });
+</span><span class="boring">}</span></code></pre>
 <p>આપણે દરેક ભવિષ્યને <code>Box</code> માં મૂકીએ છીએ જેથી તે trait object બને, જેમ કે આપણે પ્રકરણ ૧૨ ના “Returning Errors from <code>run</code>” વિભાગમાં કર્યું હતું. (આપણે પ્રકરણ ૧૮ માં trait objects વિશે વિગતવાર વાત કરીશું.) trait objects નો ઉપયોગ કરવાથી, આપણે આ પ્રકારો દ્વારા ઉત્પાદિત અનામી ભવિષ્યને સમાન પ્રકાર તરીકે ગણી શકીએ છીએ, કારણ કે તે બધા <code>Future</code> trait ને અમલમાં મૂકે છે. This might be surprising.</p>
 <p>આ આશ્ચર્યજનક હોઈ શકે છે. અંતે તો, દરેક async બ્લોક કંઈપણ પરત કરતું નથી, તેથી તે બધા <code>Future&lt;Output = ()&gt;</code> ઉત્પન્ન કરે છે. યાદ રાખો કે <code>Future</code> એ trait છે, અને કમ્પાઇલર દરેક async બ્લોક માટે એક અનન્ય enum બનાવે છે, ભલે તેમની આઉટપુટ પ્રકારો સમાન હોય. જેમ તમે બે અલગ-અલગ handwritten structs ને <code>Vec</code> માં મૂકી શકતા નથી, તેમ તમે કમ્પાઇલર દ્વારા જનરેટ કરેલા enums ને પણ મિક્સ કરી શકતા નથી.</p>
 <p>પછી આપણે ભવિષ્યનો સમૂહ <code>trpl::join_all</code> વિધેયને આપીએ છીએ અને પરિણામની રાહ જોઈએ છીએ. જો કે, આ કમ્પાઇલ થતું નથી; અહીં ભૂલ સંદેશાઓનો સંબંધિત ભાગ છે.</p>
 <!-- manual-regeneration
-cd listings/ch17-async-await/listing-17-[2][under-the-hood]3
+cd listings/ch17-async-await/listing-17-23
 cargo build
 copy *only* the final `error` block from the errors
 -->
-<pre><code class="language-text">error[E0[2][under-the-hood]77]: `dyn Future&lt;Output = ()&gt;` cannot be unpinned
-  --&gt; src/main.rs:[4][pinning]8:33
+<pre><code class="language-text">error[E0277]: `dyn Future&lt;Output = ()&gt;` cannot be unpinned
+  --&gt; src/main.rs:48:33
    |
-[4][pinning]8 |         trpl::join_all(futures).await;
+48 |         trpl::join_all(futures).await;
    |                                 ^^^^^ the trait `Unpin` is not implemented for `dyn Future&lt;Output = ()&gt;`
    |
    = note: consider using the `pin!` macro
            consider using `Box::pin` if you need to access the pinned value outside of the current scope
    = note: required for `Box&lt;dyn Future&lt;Output = ()&gt;&gt;` to implement `Future`
 note: required by a bound in `futures_util::future::join_all::JoinAll`
-  --&gt; file:///home/.cargo/registry/src/index.crates.io-19[4][pinning]9cf8c6b5b557f/futures-util-0.3.30/src/future/join_all.rs:29:8
+  --&gt; file:///home/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/futures-util-0.3.30/src/future/join_all.rs:29:8
    |
-[2][under-the-hood]7 | pub struct JoinAll&lt;F&gt;
+27 | pub struct JoinAll&lt;F&gt;
    |            ------- required by a bound in this struct
-[2][under-the-hood]8 | where
+28 | where
 29 |     F: Future,
    |        ^^^^^^ required by this bound in `JoinAll`
 </code></pre>
@@ -302,9 +348,9 @@ pub trait Future {
 <p>યાદ રાખો કે <code>await</code> ને <code>poll</code> કૉલ્સના સંદર્ભમાં અમલમાં મૂકવામાં આવે છે, તે અગાઉ આપણે જોયેલ ભૂલ સંદેશ સમજાવવાનું શરૂ કરે છે, પરંતુ તે <code>Unpin</code> ના સંદર્ભમાં હતું, <code>Pin</code> નો નહીં. તો <code>Pin</code> અને <code>Unpin</code> વચ્ચેનો સંબંધ શું છે, અને શા</p>
 <p>માટે <code>Future</code> ને <code>poll</code> કૉલ કરવા માટે <code>self</code> ને <code>Pin</code> પ્રકારમાં હોવું જરૂરી છે? યાદ રાખો કે આ પ્રકરણમાં અગાઉ, ભવિષ્યના અવેઇટ પોઈન્ટ્સની શ્રેણીને સ્ટેટ મશીનમાં કમ્પાઇલ કરવામાં આવે છે, અને કમ્પાઈલર ખાતરી કરે છે કે તે સ્ટેટ મશીન Rust ના સામાન્ય સલામતી નિયમોનું પાલન કરે છે, જેમાં બોરોઇંગ અને ઓવ્નરશિપનો સમાવેશ થાય છે. આ કાર્ય કરવા માટે, Rust એક અવેઇટ પોઈન્ટથી બીજા અવેઇટ પોઈન્ટ અથવા એસિંક બ્લોકના અંત સુધી જરૂરી ડેટા શું છે તે જુએ છે. પછી તે કમ્પાઈલ કરેલા સ્ટેટ મશીનમાં અનુરૂપ વેરિઅન્ટ બનાવે છે. દરેક વેરિઅન્ટને સ્રોત કોડના તે વિભાગમાં વપરાયેલા ડેટાની ઍક્સેસ મળે છે, કાં તો તે ડેટાનું ઓવ્નરશિપ લઈને અથવા તેને મ્યુટેબલ અથવા ઇમ્યુટેબલ રેફરન્સ મેળવીને.</p>
 <p>આપણે ત્યાં સુધી બધું સારું છે: જો આપણે કોઈ પણ <code>ownership</code> અથવા <code>reference</code> વિશે ભૂલ કરીએ છીએ, તો <code>borrow checker</code> આપણને જણાવશે. જ્યારે આપણે તે બ્લોકને અનુરૂપ ભવિષ્યને ખસેડવા માંગીએ છીએ—જેમ કે તેને</p>
-<p><code>Vec</code> માં ખસેડીને <code>join_all</code> ને પસાર કરવા—તો બાબતો વધુ જટિલ બની જાય છે. જ્યારે આપણે કોઈ ભવિષ્યને ખસેડીએ છીએ—ભલે તે ડેટા સ્ટ્રક્ચરમાં ધકેલીને <code>join_all</code> સાથે ઇટરેટર તરીકે ઉપયોગ કરવા માટે હોય અથવા ફંક્શનમાંથી તેને પરત કરીને—તો તેનો અર્થ એ થાય છે કે આપણે <code>Rust</code> આપણી માટે બનાવેલ સ્ટેટ મશીનને ખસેડીએ છીએ. અને <code>Rust</code> માં મોટાભાગના અન્ય પ્રકારોથી વિપરીત, <code>async</code> બ્લોક્સ માટે <code>Rust</code> બનાવેલા ભવિષ્યમાં કોઈપણ આપેલ વિવિધતાના ક્ષેત્રોમાં પોતાની જાતનાં સંદર્ભો હોઈ શકે છે, જે આકૃતિ 17-<a href="https://rust-lang.github.io/async-book/04_pinning/01_chapter.html">4</a> માં દર્શાવેલ સરળ ચિત્રમાં બતાવ્યા પ્રમાણે છે.</p>
+<p><code>Vec</code> માં ખસેડીને <code>join_all</code> ને પસાર કરવા—તો બાબતો વધુ જટિલ બની જાય છે. જ્યારે આપણે કોઈ ભવિષ્યને ખસેડીએ છીએ—ભલે તે ડેટા સ્ટ્રક્ચરમાં ધકેલીને <code>join_all</code> સાથે ઇટરેટર તરીકે ઉપયોગ કરવા માટે હોય અથવા ફંક્શનમાંથી તેને પરત કરીને—તો તેનો અર્થ એ થાય છે કે આપણે <code>Rust</code> આપણી માટે બનાવેલ સ્ટેટ મશીનને ખસેડીએ છીએ. અને <code>Rust</code> માં મોટાભાગના અન્ય પ્રકારોથી વિપરીત, <code>async</code> બ્લોક્સ માટે <code>Rust</code> બનાવેલા ભવિષ્યમાં કોઈપણ આપેલ વિવિધતાના ક્ષેત્રોમાં પોતાની જાતનાં સંદર્ભો હોઈ શકે છે, જે આકૃતિ 17-4 માં દર્શાવેલ સરળ ચિત્રમાં બતાવ્યા પ્રમાણે છે.</p>
 <figure>
-<img alt="A single-column, three-row table representing a future, fut1, which has data values 0 and 1 in the first two rows and an arrow pointing from the third row back to the second row, representing an internal reference within the future." src="img/trpl17-0[4][pinning].svg" class="center" />
+<img alt="A single-column, three-row table representing a future, fut1, which has data values 0 and 1 in the first two rows and an arrow pointing from the third row back to the second row, representing an internal reference within the future." src="img/trpl17-04.svg" class="center" />
 <figcaption>Figure 17-4: A self-referential data type</figcaption>
 </figure>
 સામાન્ય રીતે, જો કે, પોતાની જાતને નિર્દેશ કરતા કોઈપણ વસ્તુને ખસેડવી અસુરક્ષિત છે, કારણ કે સંદર્ભ હંમેશાં જેની તરફ તે નિર્દેશ કરે છે તે સ્મૃતિ સરનામા (memory address) પર નિર્દેશ કરે છે (આકૃતિ ૧૭-૫ જુઓ). જો તમે ડેટા સ્ટ્રક્ચરને ખસેડો છો, તો તે આંતરિક સંદર્ભો જૂના સ્થાન તરફ નિર્દેશ કરતા રહેશે. જો કે, તે સ્મૃતિ સ્થાન હવે અમાન્ય છે. એક વાત એ છે કે, જ્યારે તમે ડેટા સ્ટ્રક્ચરમાં ફેરફાર કરો છો, ત્યારે તેની કિંમત અપડેટ થશે નહીં. બીજી—વધુ મહત્વની—વાત એ છે કે, કમ્પ્યુટર હવે તે સ્મૃતિને અન્ય હેતુઓ માટે વાપરવા માટે મુક્ત છે! તમે પાછળથી સંપૂર્ણપણે અસંબંધિત ડેટા વાંચી શકો છો.
@@ -344,15 +390,67 @@ pub trait Future {
 </figure>
 હવે આપણને પૂરતું જ્ઞાન છે કે Listing 17-23 માં પાછળના `join_all` કૉલ માટે રિપોર્ટ થયેલી ભૂલોને સમજવા માટે. આપણે મૂળરૂપે async બ્લોક્સ દ્વારા ઉત્પાદિત ભવિષ્યને `Vec<box<dyn future<output="()">&gt;&gt;` માં ખસેડવાનો પ્રયત્ન કર્યો હતો, પરંતુ આપણે જોયું છે તેમ, તે ભવિષ્યમાં આંતરિક સંદર્ભો હોઈ શકે છે, તેથી તેઓ આપમેળે `Unpin` લાગુ કરતા નથી. એકવાર આપણે તેમને પિન કરીએ, પછી આપણે પરિણામી `Pin` પ્રકારને `Vec` માં આપી શકીએ છીએ, એ વાતનો વિશ્વાસ રાખીને કે ભવિષ્યમાં રહેલાં અંતર્ગત ડેટા ખસેડવામાં આવશે નહીં. Listing 17-24 બતાવે છે કે દરેક ત્રણ ભવિષ્ય વ્યાખ્યાયિત કરવામાં આવે ત્યારે `pin!` મેક્રો કૉલ કરીને અને ટ્રેઇટ ઓબ્જેક્ટ પ્રકારને સમાયોજિત કરીને કોડને કેવી રીતે સુધારવો.
 <p><strong>Listing 17-24: Pinning the futures to enable moving them into the vector</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
+</span><span class="boring">
+</span>use std::pin::{Pin, pin};
+
+// --snip--
+
+<span class="boring">use std::time::Duration;
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-24/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    trpl::block_on(async {
+</span><span class="boring">        let (tx, mut rx) = trpl::channel();
+</span><span class="boring">
+</span><span class="boring">        let tx1 = tx.clone();
+</span>        let tx1_fut = pin!(async move {
+            // --snip--
+<span class="boring">            let vals = vec![
+</span><span class="boring">                String::from("hi"),
+</span><span class="boring">                String::from("from"),
+</span><span class="boring">                String::from("the"),
+</span><span class="boring">                String::from("future"),
+</span><span class="boring">            ];
+</span><span class="boring">
+</span><span class="boring">            for val in vals {
+</span><span class="boring">                tx1.send(val).unwrap();
+</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
+</span><span class="boring">            }
+</span>        });
+
+        let rx_fut = pin!(async {
+            // --snip--
+<span class="boring">            while let Some(value) = rx.recv().await {
+</span><span class="boring">                println!("received '{value}'");
+</span><span class="boring">            }
+</span>        });
+
+        let tx_fut = pin!(async move {
+            // --snip--
+<span class="boring">            let vals = vec![
+</span><span class="boring">                String::from("more"),
+</span><span class="boring">                String::from("messages"),
+</span><span class="boring">                String::from("for"),
+</span><span class="boring">                String::from("you"),
+</span><span class="boring">            ];
+</span><span class="boring">
+</span><span class="boring">            for val in vals {
+</span><span class="boring">                tx.send(val).unwrap();
+</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
+</span><span class="boring">            }
+</span>        });
+
+        let futures: Vec&lt;Pin&lt;&amp;mut dyn Future&lt;Output = ()&gt;&gt;&gt; =
+            vec![tx1_fut, rx_fut, tx_fut];
+<span class="boring">
+</span><span class="boring">        trpl::join_all(futures).await;
+</span><span class="boring">    });
+</span><span class="boring">}</span></code></pre>
 <p>આ ઉદાહરણ હવે સંપાઈ જાય છે અને ચાલે છે, અને અમે ચલિતકાળમાં વેક્ટર માંથી ભવિષ્ય ઉમેરી અથવા દૂર કરી શકીએ છીએ અને બધાને જોડી શકીએ છીએ.</p>
 <p><code>Pin</code> અને <code>Unpin</code> મોટા ભાગે નીચલા સ્તરના લાયબ્રેરીઓ બનાવવા માટે મહત્વપૂર્ણ છે, અથવા જ્યારે તમે ચલિતકાળ જાતે બનાવી રહ્યા હોવ, દૈનિક Rust કોડ માટે નહીં. પરંતુ, જ્યારે તમને ભૂલ સંદેશાઓમાં આ traits દેખાય છે, તો હવે તમને તમારા કોડને સુધારવાનો વધુ સારો ખ્યાલ આવશે!</p>
 <p>નોંધ: <code>Pin</code> અને <code>Unpin</code> નું આ સંયોજન એ શક્ય બનાવે છે કે Rust માં જટિલ પ્રકારોની એક સંપૂર્ણ શ્રેણી સુરક્ષિત રીતે અમલમાં મૂકી શકાય છે જે અન્યથા મુશ્કેલ સાબિત થશે કારણ કે તે સ્વ-સંદર્ભિત છે. <code>Pin</code> જરૂરી હોય તેવા પ્રકારો આજે async Rust માં સૌથી સામાન્ય રીતે દેખાય છે, પરંતુ ક્યારેક-ક્યારેક તમે તેને અન્ય સંદર્ભોમાં પણ જોઈ શકો છો.</p>
 <p><code>Pin</code> અને <code>Unpin</code> કેવી રીતે કાર્ય કરે છે તેની વિગતો, અને તેઓ જે નિયમોનું પાલન કરવા માટે બંધાયેલા છે તે વિશેની માહિતી, <code>std::pin</code> ના API દસ્તાવેજોમાં વિસ્તૃતપણે વર્ણવવામાં આવી છે, તેથી જો તમને વધુ જાણવામાં રસ હોય, તો તે શરૂ કરવા માટે</p>
-<p>એક ઉત્તમ સ્થળ છે. If you want to understand how things work under the hood in even more detail, see Chapters 2 and 4 of Asynchronous Programming in Rust . જો તમે વધુ વિગતવાર જાણવા માંગતા હોવ કે વસ્તુઓ કેવી રીતે કાર્ય કરે છે, તો Rust માં અસિંક્રોનસ પ્રોગ્રામિંગના પ્રકરણો ૨ અને ૪ જુઓ.</p>
+<p>એક ઉત્તમ સ્થળ છે. If you want to understand how things work under the hood in even more detail, see Chapters <a href="https://rust-lang.github.io/async-book/02_execution/01_chapter.html">2</a> and <a href="https://rust-lang.github.io/async-book/04_pinning/01_chapter.html">4</a> of Asynchronous Programming in Rust . જો તમે વધુ વિગતવાર જાણવા માંગતા હોવ કે વસ્તુઓ કેવી રીતે કાર્ય કરે છે, તો Rust માં અસિંક્રોનસ પ્રોગ્રામિંગના પ્રકરણો ૨ અને ૪ જુઓ.</p>
 <h3 id="the-stream-trait"><a class="header" href="#the-stream-trait">The <code>Stream</code> Trait</a></h3>
 <p>હવે જ્યારે તમને <code>Future</code>, <code>Pin</code>, અને <code>Unpin</code> લક્ષણો વિશે ઊંડી સમજણ આવી ગઈ છે, ત્યારે આપણે <code>Stream</code> લક્ષણ તરફ ધ્યાન આપી શકીએ છીએ. તમે અગાઉ આ પ્રકરણમાં શીખ્યા મુજબ, સ્ટ્રીમ્સ એસમિંક્રોનસ ઇટરેટર્સ જેવા જ હોય છે. જો કે, <code>Iterator</code> અને <code>Future</code> ની જેમ, <code>Stream</code> નું સ્ટાન્ડર્ડ લાઈબ્રેરીમાં કોઈ વ્યાખ્યા નથી, પરંતુ <code>futures</code> ક્રેઇટમાંથી એક સામાન્ય વ્યાખ્યા છે જે સમગ્ર ઇકોસિસ્ટમમાં વપરાય છે.</p>
 <p>ચાલો આપણે <code>Iterator</code> અને <code>Future</code> લક્ષણોની વ્યાખ્યાઓ પર નજર કરીએ, તે પહેલાં જોઈએ કે <code>Stream</code> લક્ષણ કેવી રીતે તેમને જોડી શકે છે. <code>Iterator</code> માંથી, આપણને ક્રમનો ખ્યાલ મળે છે: તેની <code>next</code> પદ્ધતિ <code>Option&lt;Self::Item&gt;</code> પ્રદાન કરે છે. <code>Future</code> માંથી, આપણને સમય જતાં તૈયારીનો ખ્યાલ મળે છે: તેની <code>poll</code> પદ્ધતિ <code>Poll&lt;Self::Output&gt;</code> પ્રદાન કરે છે. સમય જતાં તૈયાર થતી વસ્તુઓની શ્રેણીનું પ્રતિનિધિત્વ કરવા માટે, અમે એક <code>Stream</code> લક્ષણ વ્યાખ્યાયિત કરીએ છીએ જે આ બંને લક્ષણોને જોડે છે:</p>
@@ -376,15 +474,34 @@ trait Stream {
 <p>જો કે, આપણે “સ્ટ્રીમ્સ: ફ્યુચર્સ ઇન સિક્વન્સ” વિભાગમાં જોયેલી ઉદાહરણોમાં, આપણે <code>poll_next</code> અથવા <code>Stream</code> નો ઉપયોગ કર્યો ન હતો, પરંતુ તેના બદલે <code>next</code> અને <code>StreamExt</code> નો ઉપયોગ કર્યો હતો. અલબત્ત, આપણે જાતે <code>Stream</code> સ્ટેટ મશીનો લખીને <code>poll_next</code> API સાથે સીધા જ કામ કરી શકીએ છીએ, જેમ કે આપણે તેમના <code>poll</code> પદ્ધતિ દ્વારા ફ્યુચર્સ સાથે સીધા જ કામ કરી શકીએ છીએ. જો કે, <code>await</code> નો ઉપયોગ કરવો ઘણો સારો છે, અને <code>StreamExt</code> ટ્રેઇટ <code>next</code> પદ્ધતિ પૂરી પાડે છે જેથી આપણે તેવું કરી શકીએ:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch17-async-await/no-listing-stream-ext/src/lib.rs:here}}
+</span><span class="boring">use std::pin::Pin;
+</span><span class="boring">use std::task::{Context, Poll};
+</span><span class="boring">
+</span><span class="boring">trait Stream {
+</span><span class="boring">    type Item;
+</span><span class="boring">    fn poll_next(
+</span><span class="boring">        self: Pin&lt;&amp;mut Self&gt;,
+</span><span class="boring">        cx: &amp;mut Context&lt;'_&gt;,
+</span><span class="boring">    ) -&gt; Poll&lt;Option&lt;Self::Item&gt;&gt;;
+</span><span class="boring">}
+</span><span class="boring">
+</span>trait StreamExt: Stream {
+    async fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt;
+    where
+        Self: Unpin;
+
+    // other methods...
+}
 <span class="boring">}</span></code></pre>
 <!--
 TODO: update this if/when tokio/etc. update their MSRV and switch to using async functions
 in traits, since the lack thereof is the reason they do not yet have this.
 -->
+<blockquote>
 <p>નોંધ: અગાઉના પ્રકરણમાં આપેલ વ્યાખ્યા આથી થોડી અલગ દેખાય છે, કારણ કે તે Rust ના એવા વર્ઝન માટે સપોર્ટ કરે છે જેણે હજી સુધી ટ્રેઇટમાં async ફંક્શન વાપરવાનું સપોર્ટ નહોતું કર્યું. તેથી, તે આ પ્રમાણે દેખાય છે:</p>
-<p>fn next(&amp;mut self) -&gt; Next&lt;’_, Self&gt; where Self: Unpin;
-તે <code>Next</code> પ્રકાર એક <code>struct</code> છે જે <code>Future</code> અમલમાં મૂકે છે અને આપણને <code>self</code> ના સંદર્ભના આયુષ્યને <code>Next&lt;'_, Self&gt;</code> સાથે નામ આપવા દે છે, જેથી <code>await</code> આ પદ્ધતિ સાથે કાર્ય કરી શકે. The</p>
+<pre><code class="language-rust ignore">fn next(&amp;mut self) -&gt; Next&lt;'_, Self&gt; where Self: Unpin;</code></pre>
+</blockquote>
+<p>તે <code>Next</code> પ્રકાર એક <code>struct</code> છે જે <code>Future</code> અમલમાં મૂકે છે અને આપણને <code>self</code> ના સંદર્ભના આયુષ્યને <code>Next&lt;'_, Self&gt;</code> સાથે નામ આપવા દે છે, જેથી <code>await</code> આ પદ્ધતિ સાથે કાર્ય કરી શકે. The</p>
 <p>લક્ષણ તમામ રસપ્રદ પદ્ધતિઓનું ઘર પણ છે જે પ્રવાહો સાથે ઉપયોગ માટે ઉપલબ્ધ છે. <code>StreamExt</code> આપોઆપ દરેક પ્રકાર માટે અમલમાં મૂકાય છે જે <code>Stream</code> અમલમાં મૂકે છે, પરંતુ આ લક્ષણો અલગથી વ્યાખ્યાયિત કરવામાં આવે છે જેથી સમુદાય મૂળભૂત લક્ષણ પર અસર કર્યા વિના સુવિધા API પર પુનરાવર્તન કરી શકે.</p>
 <p><code>trpl</code> ક્રેટમાં વપરાયેલ <code>StreamExt</code> ના સંસ્કરણમાં, આ ટ્રેઇટ માત્ર <code>next</code> પદ્ધતિને વ્યાખ્યાયિત જ નથી કરતું, પરંતુ <code>Stream::poll_next</code> બોલાવવાની વિગતોને યોગ્ય રીતે નિયંત્રિત કરતા <code>next</code> ના ડિફોલ્ટ અમલીકરણ (implementation) પણ પૂરા પાડે છે. આનો અર્થ એ થાય છે કે જ્યારે તમારે તમારી પોતાની સ્ટ્રીમિંગ ડેટા પ્રકાર લખવાની જરૂર હોય, ત્યારે તમારે માત્ર <code>Stream</code> નો અમલ કરવો પડે છે, અને પછી કોઈપણ વ્યક્તિ જે તમારા ડેટા પ્રકારનો ઉપયોગ કરે છે તે આપોઆપ <code>StreamExt</code> અને તેની પદ્ધતિઓનો ઉપયોગ કરી શકે છે. That’s all we’re going to cover for the</p>
 <p>આ ટ્રેઇટ્સની નીચલા સ્તરની વિગતો માટે આટલું જ પૂરતું છે. સમાપક તરીકે, ચાલો જોઈએ કે ફ્યુચર્સ (સ્ટ્રીમ્સ સહિત), કાર્યો અને થ્રેડ્સ કેવી રીતે એકસાથે બંધાયેલા છે!</p>

@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -189,25 +189,33 @@
 <p><strong>Listing 7-21: Declaring the <code>front_of_house</code> module whose body will be in <em>src/front_of_house.rs</em></strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/lib.rs}}
+</span>mod front_of_house;
+
+pub use crate::front_of_house::hosting;
+
+pub fn eat_at_restaurant() {
+    hosting::add_to_waitlist();
+}
 <span class="boring">}</span></code></pre>
 <p>આગળ, કૌંસમાં રહેલો કોડ <code>src/front_of_house.rs</code> નામની નવી ફાઈલમાં મૂકો, જેવો કે સૂચિ 7-22 માં દર્શાવેલ છે. કમ્પાઇલરને આ ફાઈલ શોધવાની જાણ થાય છે કારણ કે તેને ક્રેટના મૂળમાં <code>front_of_house</code> નામના મોડ્યુલ ઘોષણા (declaration) સામે આવી હતી.</p>
 <p><strong>Listing 7-22: Definitions inside the <code>front_of_house</code> module in <em>src/front_of_house.rs</em></strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/front_of_house.rs}}
+</span>pub mod hosting {
+    pub fn add_to_waitlist() {}
+}
 <span class="boring">}</span></code></pre>
 <p>નોંધ એક <code>mod</code> ઘોષણા તમારા મોડ્યુલ વૃક્ષમાં એકવાર જ લોડ કરવી જોઈએ. એકવાર કમ્પાઇલરને ખબર પડે કે ફાઈલ પ્રોજેક્ટનો ભાગ છે (અને તમે <code>mod</code> વિધાન ક્યાં મૂક્યું છે તેના કારણે મોડ્યુલ વૃક્ષમાં કોડ ક્યાં રહેલો છે તે પણ જાણે છે), તો તમારા પ્રોજેક્ટની અન્ય ફાઇલોએ લોડ કરેલી ફાઇલના કોડનો સંદર્ભ લેવા માટે, જ્યાં તે જાહેર કરવામાં આવી હતી ત્યાંનો પાથ વાપરવો જોઈએ, જે “મોડ્યુલ વૃક્ષમાં વસ્તુનો સંદર્ભ લેવા માટેના પાથ” વિભાગમાં સમજાવવામાં આવ્યું છે. બીજા શબ્દોમાં કહીએ તો, <code>mod</code> એ “સમાવેશ” ક્રિયા નથી કે જે તમે અન્ય પ્રોગ્રામિંગ ભાષાઓમાં જોઈ હશે.</p>
 <p>પછી, આપણે <code>hosting</code> મોડ્યુલને તેના પોતાના ફાઈલમાં સ્થાનાંતરિત કરીશું. પ્રક્રિયા થોડી અલગ છે કારણ કે <code>hosting</code> એ <code>front_of_house</code> નું પેટા મોડ્યુલ છે, મૂળ મોડ્યુલનું નહીં. આપણે <code>hosting</code> માટેની ફાઈલ એક નવી ડિરેક્ટરીમાં મૂકીશું જે મોડ્યુલ વૃક્ષમાં તેના પૂર્વજોના નામ પરથી નામિત કરવામાં આવશે, આ કિસ્સામાં</p>
 <p>src/front_of_house. <code>hosting</code> ને ખસેડવાનું શરૂ કરવા માટે, આપણે src/front_of_house.rs ને માત્ર <code>hosting</code> મોડ્યુલની ઘોષણા ધરાવવા માટે બદલીશું:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house.rs}}
+</span>pub mod hosting;
 <span class="boring">}</span></code></pre>
 <p>પછી, આપણે src/front_of_house ડિરેક્ટરી અને hosting.rs ફાઈલ બનાવીએ છીએ જેમાં <code>hosting</code> મોડ્યુલમાં કરેલાં વ્યાખ્યાઓ સમાવવામાં આવશે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house/hosting.rs}}
+</span>pub fn add_to_waitlist() {}
 <span class="boring">}</span></code></pre>
 <p>જો આપણે તેના બદલે hosting.rs ને src ડિરેક્ટરીમાં મૂકીએ, તો કમ્પાઇલર અપેક્ષા રાખશે કે hosting.rs કોડ <code>hosting</code> મોડ્યુલમાં જાહેર થયેલ હોય, જે crate મૂળમાં છે અને <code>front_of_house</code> મોડ્યુલના બાળ તરીકે નહીં જાહેર થયેલ હોય. ડિરેક્ટરીઓ અને ફાઇલો મોડ્યુલ વૃક્ષ સાથે વધુ સુસંગત હોય તે માટે કમ્પાઇલરના નિયમો નક્કી કરે છે કે કયા મોડ્યુલ્સના કોડ માટે કઈ ફાઇલો તપાસવી.</p>
 <blockquote>

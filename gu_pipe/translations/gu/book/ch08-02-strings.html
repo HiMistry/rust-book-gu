@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -192,29 +192,40 @@
 <h3 id="creating-a-new-string"><a class="header" href="#creating-a-new-string">Creating a New String</a></h3>
 <p>ઘણાં એવા જ કાર્યક્રમો ઉપલબ્ધ છે જે <code>Vec&lt;T&gt;</code> સાથે ઉપલબ્ધ છે, તે <code>String</code> સાથે પણ ઉપલબ્ધ છે, કારણ કે <code>String</code> ખરેખર બાઇટ્સના વેક્ટર (vector) ની આસપાસ એક આવરણ તરીકે અમલમાં મૂકવામાં આવે છે, જેમાં કેટલીક વધારાની ખાતરીઓ, નિયંત્રણો અને ક્ષમતાઓ છે. Listing 8-11 માં દર્શાવેલ <code>new</code> કાર્યક્રમનું ઉદાહરણ છે જે <code>Vec&lt;T&gt;</code> અને <code>String</code> બંને સાથે સમાન રીતે કાર્ય કરે છે.</p>
 <p><strong>Listing 8-11: Creating a new, empty <code>String</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-11/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let mut s = String::new();
 <span class="boring">}</span></code></pre>
 <p>આ લીટી એક નવું, ખાલી String નામનું <code>s</code> બનાવે છે, જેમાં આપણે પછીથી ડેટા ભરી શકીએ છીએ. ઘણી વાર આપણી પાસે પ્રારંભિક ડેટા હોય છે જેનો ઉપયોગ આપણે String શરૂ કરવા માટે કરવો હોય છે. તે માટે, આપણે <code>to_string</code> પદ્ધતિનો ઉપયોગ કરીએ છીએ, જે કોઈપણ Type પર ઉપલબ્ધ છે જે <code>Display</code> trait લાગુ કરે છે, જેમ કે string literals કરે છે. યાદી 8-12 બે ઉદાહરણો દર્શાવે છે.</p>
 <p><strong>Listing 8-12: Using the <code>to_string</code> method to create a <code>String</code> from a string literal</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-12/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let data = "initial contents";
+
+    let s = data.to_string();
+
+    // The method also works on a literal directly:
+    let s = "initial contents".to_string();
 <span class="boring">}</span></code></pre>
 <p>આ કોડ <code>initial contents</code> ધરાવતું String બનાવે છે.</p>
 <p>અમે <code>String::from</code> ફંક્શનનો ઉપયોગ કરીને પણ string literal પરથી <code>String</code> બનાવી શકીએ છીએ. લિસ્ટિંગ 8-13 માં રહેલો કોડ લિસ્ટિંગ 8-12 માં રહેલા કોડ સમાન છે જે <code>to_string</code> વાપરે છે.</p>
 <p><strong>Listing 8-13: Using the <code>String::from</code> function to create a <code>String</code> from a string literal</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-13/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let s = String::from("initial contents");
 <span class="boring">}</span></code></pre>
 <p>કારણ કે String નો ઉપયોગ ઘણાં કાર્યો માટે થાય છે, આપણને Strings માટે વિવિધ સામાન્ય APIs વાપરી શકાય છે, જે આપણને ઘણા વિકલ્પો પૂરા પાડે છે. તેમાંથી કેટલાક અતિરેકિત લાગે શકે છે, પરંતુ દરેકનું પોતાનું મહત્વ છે! આ કિસ્સામાં, <code>String::from</code> અને <code>to_string</code> બંને એક જ કાર્ય કરે છે, તેથી કયો પસંદ કરો એ શૈલી અને વાંચનક્ષમતાનો વિષય છે.</p>
 <p>યાદ રાખો કે Strings UTF-8 એન્કોડેડ હોય છે, તેથી આપણે તેમાં કોઈપણ યોગ્ય રીતે એન્કોડેડ ડેટા સમાવિષ્ટ કરી શકીએ છીએ, જે Listing 8-14 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 8-14: Storing greetings in different languages in strings</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let hello = String::from("السلام عليكم");
+    let hello = String::from("Dobrý den");
+    let hello = String::from("Hello");
+    let hello = String::from("שלום");
+    let hello = String::from("नमस्ते");
+    let hello = String::from("こんにちは");
+    let hello = String::from("안녕하세요");
+    let hello = String::from("你好");
+    let hello = String::from("Olá");
+    let hello = String::from("Здравствуйте");
+    let hello = String::from("Hola");
 <span class="boring">}</span></code></pre>
 <p>આ બધાં યોગ્ય <code>String</code> મૂલ્યો છે.</p>
 <h3 id="updating-a-string"><a class="header" href="#updating-a-string">Updating a String</a></h3>
@@ -223,31 +234,34 @@
 <h4 id="appending-with-push_str-or-push"><a class="header" href="#appending-with-push_str-or-push">Appending with <code>push_str</code> or <code>push</code></a></h4>
 <p>આપણે <code>String</code> ને <code>push_str</code> પદ્ધતિનો ઉપયોગ કરીને સ્ટ્રિંગ સ્લાઇસ જોડીને વધારી શકીએ છીએ, જે યાદી 8-15 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 8-15: Appending a string slice to a <code>String</code> using the <code>push_str</code> method</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-15/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let mut s = String::from("foo");
+    s.push_str("bar");
 <span class="boring">}</span></code></pre>
 <p><code>foobar</code> <code>push_str</code> પદ્ધતિ એક સ્ટ્રિંગ સ્લાઇસ લે છે કારણ કે આપણને જરૂરી નથી કે પરિમાણનું માલિકી સ્થાનો. ઉદાહરણ તરીકે, લિસ્ટિંગ 8-16 માંના કોડમાં, આપણે <code>s2</code> નું વિધેય <code>s1</code> માં ઉમેર્યા પછી વાપરી શકીએ છીએ.</p>
 <p><strong>Listing 8-16: Using a string slice after appending its contents to a <code>String</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-16/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let mut s1 = String::from("foo");
+    let s2 = "bar";
+    s1.push_str(s2);
+    println!("s2 is {s2}");
 <span class="boring">}</span></code></pre>
 <p>જો <code>push_str</code> પદ્ધતિ <code>s2</code> નું માલિકી સ્થાનાંતરિત કરે, તો અમે છેલ્લી લીટી પર તેની કિંમત છાપી શકી ન હોત. જો કે, આ કોડ અપેક્ષા મુજબ કાર્ય કરે છે!</p>
 <p><code>push</code> પદ્ધતિ એક અક્ષરને પરિમાણ તરીકે લે છે અને તેને <code>String</code> માં ઉમેરે છે. યાદી 8-17 <code>push</code> પદ્ધતિનો ઉપયોગ કરીને એક <code>String</code> માં અક્ષર ‘l’ ઉમેરે છે.</p>
 <p><strong>Listing 8-17: Adding one character to a <code>String</code> value using <code>push</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-17/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let mut s = String::from("lo");
+    s.push('l');
 <span class="boring">}</span></code></pre>
 <p>પરિણામ સ્વરૂપે, <code>s</code> માં <code>lol</code> સમાવિષ્ટ થશે.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h4 id="concatenating-with--or-format"><a class="header" href="#concatenating-with--or-format">Concatenating with <code>+</code> or <code>format!</code></a></h4>
 <p>ઘણીવાર, તમે બે અસ્તિત્વમાં રહેલા સ્ટ્રિંગને જોડવા માંગો છો. એક રીત એ છે કે <code>+</code> ઓપરેટરનો ઉપયોગ કરવો, જે લિસ્ટિંગ 8-18 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 8-18: Using the <code>+</code> operator to combine two <code>String</code> values into a new <code>String</code> value</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-18/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let s1 = String::from("Hello, ");
+    let s2 = String::from("world!");
+    let s3 = s1 + &amp;s2; // note s1 has been moved here and can no longer be used
 <span class="boring">}</span></code></pre>
 <p>શૃંખલા <code>s3</code> માં <code>Hello, world!</code> સમાવિષ્ટ થશે. <code>s1</code> એ જોડાણ પછી માન્ય રહેવાનું કારણ અને આપણે <code>s2</code> માટે સંદર્ભનો ઉપયોગ કરવાનું કારણ એ પદ્ધતિના હસ્તાક્ષર સાથે સંબંધિત છે જે જ્યારે આપણે <code>+</code> ચિહ્નનો ઉપયોગ કરીએ છીએ ત્યારે બોલાવવામાં આવે છે. <code>+</code> ચિહ્ન <code>add</code> પદ્ધતિનો ઉપયોગ કરે છે, જેના હસ્તાક્ષર આના જેવા દેખાય છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -259,49 +273,90 @@
 <p>કારણ કે આપણે <code>&amp;s2</code> ને <code>add</code> કૉલમાં વાપરી શકીએ છીએ એનું કારણ એ છે કે કમ્પાઇલર <code>&amp;String</code> આર્ગ્યુમેન્ટને <code>&amp;str</code> માં પરિવર્તિત કરી શકે છે. જ્યારે આપણે <code>add</code> મેથડને કૉલ કરીએ છીએ, ત્યારે Rust એક ડેરફ કોર્ઝનનો ઉપયોગ કરે છે, જે અહીં <code>&amp;s2</code> ને <code>&amp;s2[..]</code> માં ફેરવે છે. આપણે પ્રકરણ ૧૫માં ડેરફ કોર્ઝન વિશે વધુ ચર્ચા કરીશું. કારણ કે <code>add</code> પરિમાણ <code>s</code> નું માલિકી લેતું નથી, તેથી આ ક્રિયા પછી પણ <code>s2</code> એક માન્ય <code>String</code></p>
 <p>રહેશે. બીજું, આપણે હસ્તાક્ષરમાં જોઈ શકીએ છીએ કે <code>add</code> <code>self</code> ની માલિકી લે છે કારણ કે <code>self</code> માં <code>&amp;</code> નથી. આનો અર્થ એ થાય છે કે લિસ્ટિંગ 8-18 માં <code>s1</code> ને <code>add</code> કૉલમાં ખસેડવામાં આવશે અને તે પછી માન્ય રહેશે નહીં. તેથી, જોકે <code>let s3 = s1 + &amp;s2;</code> એવું લાગે છે કે તે બંને સ્ટ્રિંગ્સને કોપી કરશે અને એક નવી બનાવશે, આ વિધાન વાસ્તવમાં <code>s1</code> ની માલિકી લે છે, <code>s2</code> ની સામગ્રીની નકલ જોડે છે, અને પછી પરિણામની માલિકી પરત કરે છે. બીજા શબ્દોમાં કહીએ તો, તે એવું લાગે છે કે તે ઘણી બધી નકલો કરી રહ્યું છે, પરંતુ તે નથી; અમલીકરણ કોપી કરવા કરતાં વધુ કાર્યક્ષમ છે.</p>
 <p>જો આપણે અનેક String ને જોડાવા હોય, તો <code>+</code> ચિહ્નનું વર્તન અપ્રમાણિત થઈ જાય છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch08-common-collections/no-listing-01-concat-multiple-strings/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let s1 = String::from("tic");
+    let s2 = String::from("tac");
+    let s3 = String::from("toe");
+
+    let s = s1 + "-" + &amp;s2 + "-" + &amp;s3;
 <span class="boring">}</span></code></pre>
 <p>આ સમયે, <code>s</code> એ <code>tic-tac-toe</code> થશે. બધા <code>+</code> અને <code>"</code> અક્ષરો સાથે, શું થઈ રહ્યું છે તે જોવું મુશ્કેલ છે. વધુ જટિલ રીતે સ્ટ્રિંગ્સ જોડવા માટે, આપણે તેના બદલે <code>format!</code> મેક્રોનો ઉપયોગ કરી શકીએ છીએ:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch08-common-collections/no-listing-02-format/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let s1 = String::from("tic");
+    let s2 = String::from("tac");
+    let s3 = String::from("toe");
+
+    let s = format!("{s1}-{s2}-{s3}");
 <span class="boring">}</span></code></pre>
 <p>આ કોડ <code>s</code> ને <code>tic-tac-toe</code> પર પણ સેટ કરે છે. <code>format!</code> મેક્રો <code>println!</code> જેવું જ કાર્ય કરે છે, પરંતુ તે સ્ક્રીન પર આઉટપુટ છાપવાને બદલે, તેની સામગ્રી સાથે એક <code>String</code> આપે છે. <code>format!</code> નો ઉપયોગ કરતા કોડને વાંચવામાં વધુ સરળતા રહે છે, અને <code>format!</code> મેક્રો દ્વારા ઉત્પન્ન થતો કોડ સંદર્ભો (references) વાપરે છે જેથી આ કૉલ તેના પરિમાણોમાંથી કોઈનું પણ માલિકી (ownership) ન લે.</p>
 <h3 id="indexing-into-strings"><a class="header" href="#indexing-into-strings">Indexing into Strings</a></h3>
 <p>ઘણી અન્ય પ્રોગ્રામિંગ ભાષાઓમાં, સ્ટ્રિંગમાં વ્યક્તિગત અક્ષરોને અનુક્રમણિકા દ્વારા સંદર્ભિત કરીને મેળવવાનું એક માન્ય અને સામાન્ય કાર્ય છે. જો કે, જો તમે Rust માં <code>String</code> ના ભાગોને અનુક્રમણિકા સિન્ટેક્સનો ઉપયોગ કરીને મેળવવાનો પ્રયત્ન કરો છો, તો તમને ભૂલ મળશે. લિસ્ટિંગ 8-19 માં દર્શાવેલ અમાન્ય કોડને ધ્યાનમાં લો.</p>
 <p><strong>Listing 8-19: Attempting to use indexing syntax with a <code>String</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-19/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let s1 = String::from("hi");
+    let h = s1[0];
 <span class="boring">}</span></code></pre>
 <p>આ કોડથી નીચેની ભૂલ ઉત્પન્ન થશે:</p>
-<pre><code class="language-console">{{#include ../listings/ch08-common-collections/listing-08-19/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling collections v0.1.0 (file:///projects/collections)
+error[E0277]: the type `str` cannot be indexed by `{integer}`
+ --&gt; src/main.rs:3:16
+  |
+3 |     let h = s1[0];
+  |                ^ string indices are ranges of `usize`
+  |
+  = help: the trait `SliceIndex&lt;str&gt;` is not implemented for `{integer}`
+  = note: you can use `.chars().nth()` or `.bytes().nth()`
+          for more information, see chapter 8 in The Book: &lt;https://doc.rust-lang.org/book/ch08-02-strings.html#indexing-into-strings&gt;
+help: `usize` implements trait `SliceIndex&lt;T&gt;`
+ --&gt; /rustc/2d8144b7880597b6e6d3dfd63a9a9efae3f533d3/library/core/src/slice/index.rs:214:0
+  |
+  = note: `SliceIndex&lt;[T]&gt;`
+ --&gt; /rustc/2d8144b7880597b6e6d3dfd63a9a9efae3f533d3/library/core/src/bstr/traits.rs:197:0
+  |
+  = note: `SliceIndex&lt;ByteStr&gt;`
+  = note: required for `String` to implement `Index&lt;{integer}&gt;`
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `collections` (bin "collections") due to 1 previous error
 </code></pre>
 <p>ભૂલ વાર્તા કહે છે: Rust String ઇન્ડેક્સિંગને ટેકો આપતું નથી. પરંતુ કેમ? આ પ્રશ્નનો ઉત્તર આપવા માટે, આપણે ચકાસવું પડશે કે Rust Strings મેમરીમાં કેવી રીતે સંગ્રહિત થાય છે.</p>
 <h4 id="internal-representation"><a class="header" href="#internal-representation">Internal Representation</a></h4>
 <p>એક <code>String</code> એ <code>Vec&lt;u8&gt;</code> ઉપરનું આવરણ છે. ચાલો આપણે યાદી 8-14 માંથી કેટલાક યોગ્ય રીતે એન્કોડેડ UTF-8 ઉદાહરણ શબ્દો જોઈએ. સૌપ્રથમ, આ એક:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:spanish}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let hello = String::from("السلام عليكم");
+</span><span class="boring">    let hello = String::from("Dobrý den");
+</span><span class="boring">    let hello = String::from("Hello");
+</span><span class="boring">    let hello = String::from("שלום");
+</span><span class="boring">    let hello = String::from("नमस्ते");
+</span><span class="boring">    let hello = String::from("こんにちは");
+</span><span class="boring">    let hello = String::from("안녕하세요");
+</span><span class="boring">    let hello = String::from("你好");
+</span><span class="boring">    let hello = String::from("Olá");
+</span><span class="boring">    let hello = String::from("Здравствуйте");
+</span>    let hello = String::from("Hola");
 <span class="boring">}</span></code></pre>
 <p>આ કિસ્સામાં, <code>len</code> એ <code>4</code> થશે, જેનો અર્થ થાય છે કે <code>"Hola"</code> શબ્દ સંગ્રહિત વેક્ટર 4 બાઇટ્સ લાંબુ છે. આ દરેક અક્ષરો UTF-8 માં એન્કોડ કરવામાં આવે ત્યારે 1 બાઇટ લે છે. જોકે, આગલી લીટી તમને આશ્ચર્યચકિત કરી શકે છે (નોંધ કરો કે આ શબ્દ મૂડી સાયરિક અક્ષર Ze થી શરૂ થાય છે, સંખ્યા 3 નહીં).</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:russian}}
-<span class="boring">}</span></code></pre>
-<pre><code class="language-text">જો તમને પૂછવામાં આવે કે સ્ટ્રિંગ કેટલી લાંબી છે, તો તમે કદાચ ૧૨ કહી શકો છો. હકીકતમાં, Rust નું ઉત્તર ૨૪ હશે: તે UTF-8 માં “Здравствуйте” એન્કોડ કરવા માટે જરૂરી બાઇટ્સની સંખ્યા છે, કારણ કે તે સ્ટ્રિંગમાં દરેક યુનિકોડ સ્કેલર મૂલ્યને સંગ્રહિત કરવા માટે ૨ બાઇટ્સની જરૂર પડે છે. તેથી, સ્ટ્રિંગના બાઇટ્સમાં ઇન્ડેક્સ હંમેશાં માન્ય યુનિકોડ સ્કેલર મૂલ્ય સાથે સુસંગત રહેશે નહીં. સમજાવવા માટે, આ અમાન્ય Rust કોડ ધ્યાનમાં લો:
-
-</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let hello = String::from("السلام عليكم");
+</span><span class="boring">    let hello = String::from("Dobrý den");
+</span><span class="boring">    let hello = String::from("Hello");
+</span><span class="boring">    let hello = String::from("שלום");
+</span><span class="boring">    let hello = String::from("नमस्ते");
+</span><span class="boring">    let hello = String::from("こんにちは");
+</span><span class="boring">    let hello = String::from("안녕하세요");
+</span><span class="boring">    let hello = String::from("你好");
+</span><span class="boring">    let hello = String::from("Olá");
+</span>    let hello = String::from("Здравствуйте");
+<span class="boring">    let hello = String::from("Hola");
+</span><span class="boring">}</span></code></pre>
+<p>જો તમને પૂછવામાં આવે કે સ્ટ્રિંગ કેટલી લાંબી છે, તો તમે કદાચ ૧૨ કહી શકો છો. હકીકતમાં, Rust નું ઉત્તર ૨૪ હશે: તે UTF-8 માં “Здравствуйте” એન્કોડ કરવા માટે જરૂરી બાઇટ્સની સંખ્યા છે, કારણ કે તે સ્ટ્રિંગમાં દરેક યુનિકોડ સ્કેલર મૂલ્યને સંગ્રહિત કરવા માટે ૨ બાઇટ્સની જરૂર પડે છે. તેથી, સ્ટ્રિંગના બાઇટ્સમાં ઇન્ડેક્સ હંમેશાં માન્ય યુનિકોડ સ્કેલર મૂલ્ય સાથે સુસંગત રહેશે નહીં. સમજાવવા માટે, આ અમાન્ય Rust કોડ ધ્યાનમાં લો:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let hello = "Здравствуйте";
 let answer = &amp;hello[0];
 <span class="boring">}</span></code></pre>
-<pre><code class="language-text">તમે જાણો છો કે `ઉત્તર`  `З` નહીં હોય, પહેલો અક્ષર. UTF-8 માં એન્કોડ કરવામાં આવે ત્યારે `З` ના પ્રથમ બાઇટ `208` અને બીજા બાઇટ `151` છે, તેથી એવું લાગે છે કે `ઉત્તર` ખરેખર `208` હોવું જોઈએ, પરંતુ `208` જાતે જ માન્ય અક્ષર નથી. `208` પરત કરવું એ સંભવિતપણે user ઇચ્છશે નહીં જો તેઓ આ શબ્દનો પહેલો અક્ષર મેળવવા માટે પૂછે; તેમ છતાં, તે બાઇટ ઇન્ડેક્સ 0 પર Rust પાસે રહેલું એકમાત્ર ડેટા છે. સામાન્ય રીતે userઓ બાઇટ મૂલ્ય પાછું મેળવવા માંગતા નથી, ભલે શબ્દમાં માત્ર લેટિન અક્ષરો હોય: જો `&amp;"hi"[0]` એવા માન્ય કોડ હોત જે બાઇટ મૂલ્ય પરત કરે, તો તે `104` પરત કરશે, `h` નહીં.
-
-</code></pre>
+<p>તમે જાણો છો કે <code>ઉત્તર</code>  <code>З</code> નહીં હોય, પહેલો અક્ષર. UTF-8 માં એન્કોડ કરવામાં આવે ત્યારે <code>З</code> ના પ્રથમ બાઇટ <code>208</code> અને બીજા બાઇટ <code>151</code> છે, તેથી એવું લાગે છે કે <code>ઉત્તર</code> ખરેખર <code>208</code> હોવું જોઈએ, પરંતુ <code>208</code> જાતે જ માન્ય અક્ષર નથી. <code>208</code> પરત કરવું એ સંભવિતપણે user ઇચ્છશે નહીં જો તેઓ આ શબ્દનો પહેલો અક્ષર મેળવવા માટે પૂછે; તેમ છતાં, તે બાઇટ ઇન્ડેક્સ 0 પર Rust પાસે રહેલું એકમાત્ર ડેટા છે. સામાન્ય રીતે userઓ બાઇટ મૂલ્ય પાછું મેળવવા માંગતા નથી, ભલે શબ્દમાં માત્ર લેટિન અક્ષરો હોય: જો <code>&amp;"hi"[0]</code> એવા માન્ય કોડ હોત જે બાઇટ મૂલ્ય પરત કરે, તો તે <code>104</code> પરત કરશે, <code>h</code> નહીં.</p>
 <p>ઉત્તર એ છે કે અણધાર્યું મૂલ્ય પાછું આપવાનું ટાળવા અને એવી ભૂલોનું કારણ બનવાનું જે તાત્કાલિક રીતે જણાય નહીં, Rust આ કોડને બિલકુલ કમ્પાઇલ કરતું નથી અને વિકાસ પ્રક્રિયાના શરૂઆતના તબક્કામાં જ ગેરસમજણો અટકાવે છે.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h4 id="bytes-scalar-values-and-grapheme-clusters"><a class="header" href="#bytes-scalar-values-and-grapheme-clusters">Bytes, Scalar Values, and Grapheme Clusters</a></h4>
@@ -329,7 +384,14 @@ let s = &amp;hello[0..4];
 <span class="boring">}</span></code></pre>
 <p>અહીં, <code>s</code> એ <code>&amp;str</code> હશે જે સ્ટ્રિંગના પ્રથમ 4 બાઇટ્સ ધરાવે છે. અગાઉ, અમે ઉલ્લેખ કર્યો હતો કે આ દરેક અક્ષર 2 બાઇટ્સનો હતો, જેનો અર્થ થાય છે કે <code>s</code> એ <code>Зд</code> હશે.</p>
 <p>જો આપણે કોઈ અક્ષરના બાઇટ્સને માત્ર ભાગ્યે જ કાપવાનો પ્રયત્ન કરીએ, જેમ કે <code>&amp;hello[0..1]</code> , તો Rust રનટાઈમ પર વેક્ટરની અમાન્ય અનુક્રમણિકા (index) ને ઍક્સેસ કરવા જેવી જ રીતે ગભરાઈ જશે:</p>
-<pre><code class="language-console">{{#include ../listings/ch08-common-collections/output-only-01-not-char-boundary/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling collections v0.1.0 (file:///projects/collections)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
+     Running `target/debug/collections`
+
+thread 'main' (6017738) panicked at src/main.rs:4:19:
+end byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2 of string)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>તમે રેન્જ સાથે સ્ટ્રિંગ સ્લાઇસ બનાવતી વખતે સાવચેતી રાખવી જોઈએ, કારણ કે તેનાથી તમારું કાર્યક્રમ અટકી શકે છે.</p>
 <!-- Old headings. Do not remove or links may break. -->

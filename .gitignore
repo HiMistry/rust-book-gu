@@ -4,3 +4,5 @@ target/
 /book
 .DS_Store
 /gu_pipe/translate/target/
+gu_pipe/translations/gu/book/
+gu_pipe/translations/gu/listings/

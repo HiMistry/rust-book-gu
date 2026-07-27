@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -192,25 +192,39 @@
 panic = ‘abort’
 ચાલો <code>panic!</code> ને એક સરળ કાર્યક્રમમાં બોલાવીને જોઈએ:</p>
 </blockquote>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch09-error-handling/no-listing-01-panic/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    panic!("crash and burn");
+}</code></pre>
 <p>જ્યારે તમે આ કાર્યક્રમ ચલાવો છો, ત્યારે તમને કંઈક એવું દેખાશે:</p>
-<pre><code class="language-console">{{#include ../listings/ch09-error-handling/no-listing-01-panic/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling panic v0.1.0 (file:///projects/panic)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.25s
+     Running `target/debug/panic`
+
+thread 'main' (6018279) panicked at src/main.rs:2:5:
+crash and burn
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>આ <code>panic!</code> કૉલ છેલ્લા બે લીટીઓમાં રહેલો ભૂલ સંદેશ ઉત્પન્ન કરે છે. પ્રથમ લીટી આપણો પેનિક સંદેશ</p>
 <p>દર્શાવે છે અને આપણી સ્ત્રોત કોડમાં તે ક્યાં થયો હતો તે સ્થાન બતાવે છે: src/main.rs:2:5 સૂચવે છે કે તે આપણી src/main.rs ફાઇલની બીજી લીટી, પાંચમું અક્ષર છે. આ કિસ્સામાં, દર્શાવેલી લીટી આપણા કોડનો ભાગ છે, અને જો આપણે તે લીટી પર જઈએ, તો આપણે <code>panic!</code> મેક્રો કૉલ જોઈ શકીએ છીએ. અન્ય કિસ્સાઓમાં, <code>panic!</code> કૉલ એવા કોડમાં હોઈ શકે છે જેને આપણો કોડ કૉલ કરે છે, અને ભૂલ સંદેશ દ્વારા નોંધાયેલ ફાઇલનું નામ અને લીટી નંબર કોઈ બીજાના કોડનું હશે જ્યાં <code>panic!</code> મેક્રોને કૉલ કરવામાં આવે છે, જે આપણા કોડની તે લીટી તરફ દોરી જાય છે જ્યાં <code>panic!</code> કૉલ થયો હતો.</p>
 <p>આપણે <code>panic!</code> કૉલ આવે તેવા વિધેયોના બેકટ્રેસનો ઉપયોગ કરીને જાણી શકીએ છીએ કે આપણી કોડની કઈ ભાગ સમસ્યાનું કારણ બની રહી છે. <code>panic!</code> બેકટ્રેસનો ઉપયોગ કેવી રીતે કરવો તે સમજવા માટે, ચાલો બીજા ઉદાહરણ જોઈએ અને જોઈએ કે જ્યારે <code>panic!</code> કૉલ આપણી કોડ દ્વારા મેક્રોને સીધો બોલાવ્યા વિના કોઈ લાયબ્રેરીમાંથી આવે ત્યારે તે કેવું હોય છે. યાદી 9-1 માં અમુક કોડ છે જે વેક્ટર (Vec)માં માન્ય અનુક્રમણિકાની રેન્જથી આગળ અનુક્રમણિકાને મેળવવાનો પ્રયત્ન કરે છે.</p>
 <p><strong>Listing 9-1: Attempting to access an element beyond the end of a vector, which will cause a call to <code>panic!</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-01/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let v = vec![1, 2, 3];
+
+    v[99];
+}</code></pre>
 <p>અહીં, અમે અમારા વેક્ટરનો ૧૦૦મો ઘટક મેળવવાનો પ્રયત્ન કરી રહ્યા છીએ (જે ઇન્ડેક્સ ૯૯ પર છે કારણ કે ઇન્ડેક્સિંગ શૂન્યથી શરૂ થાય છે), પરંતુ વેક્ટરમાં માત્ર ત્રણ જ ઘટકો છે. આ પરિસ્થિતિમાં, Rust ગભરાટ અનુભવેશે (panic). <code>[]</code> નો ઉપયોગ કોઈ ઘટક મેળવવા માટે થવો જોઈએ, પરંતુ જો તમે અમાન્ય ઇન્ડેક્સ આપો, તો એવો કોઈ ઘટક નથી કે જે Rust</p>
 <p>અહીં યોગ્ય રીતે પાછો આપી શકે. C માં, ડેટા સ્ટ્રક્ચરના અંતની બહાર વાંચવાનો પ્રયાસ કરવો એ અવ્યાખ્યાયિત વર્તન છે. તમને તે સ્થાન પર રહેલું કંઈપણ મળી શકે છે જે ડેટા સ્ટ્રક્ચરમાં તે ઘટકને અનુરૂપ હોય, ભલે તે મેમરી તે સ્ટ્રક્ચરની ન હોય. આને બફર ઓવરરીડ (buffer overread) કહેવામાં આવે છે અને જો હુમલાખોર ઇન્ડેક્સમાં એવી રીતે ચેડાં કરી શકે કે જે તેમને મંજૂરી ન હોય તેવા ડેટાને વાંચવાની ફરજ પાડે, તો સુરક્ષા નબળાઈઓ થઈ શકે છે, જે ડેટા સ્ટ્રક્ચર પછી સંગ્રહિત હોય.</p>
 <p>તમારા કાર્યક્રમને આ પ્રકારની નબળાઈથી બચાવવા માટે, જો તમે એવા ક્રમણક પર ઘટક વાંચવાનો પ્રયત્ન કરો છો જે અસ્તિત્વમાં નથી, તો Rust અમલ બંધ કરી દેશે અને ચાલુ રાખવાનો ઇનકાર કરશે. ચાલો તે જોઈએ:</p>
-<pre><code class="language-console">{{#include ../listings/ch09-error-handling/listing-09-01/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling panic v0.1.0 (file:///projects/panic)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.27s
+     Running `target/debug/panic`
+
+thread 'main' (6017887) panicked at src/main.rs:4:6:
+index out of bounds: the len is 3 but the index is 99
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>આ ભૂલ આપણી main.rs ફાઈલની ચોથી લાઇન પર નિર્દેશ કરે છે, જ્યાં અમે <code>v</code> વેક્ટરના ઇન્ડેક્સ 99 ને મેળવવાનો પ્રયાસ કરીએ છીએ.</p>
 <p><code>note:</code> લાઇન જણાવે છે કે ભૂલનું કારણ બનેલા ઘટનાક્રમનો વિષદ દર્શાવવા માટે <code>RUST_BACKTRACE</code> પર્યાવરણ variable (environment variable) સેટ કરી શકાય છે. બેકટ્રેસ એ તમામ ફંક્શનની યાદી છે જે આ બિંદુ સુધી પહોંચવા માટે બોલાવામાં આવ્યા હતા. Rust માં બેકટ્રેસ અન્ય ભાષાઓમાં હોય તે રીતે કાર્ય કરે છે: બેકટ્રેસને વાંચવાની ચાવી એ ટોચથી શરૂ કરીને વાંચવી છે જ્યાં સુધી તમને તમે લખેલી ફાઇલો ન દેખાય. તે સ્થાન સમસ્યાનું મૂળ છે. તે સ્થાનની ઉપરની લીટીઓ તમારો કોડ દ્વારા બોલાવવામાં આવેલ કોડ છે; નીચેની લીટીઓ તમારા કોડને બોલાવનાર કોડ છે. આ પહેલાં અને પછીની લીટીઓમાં મુખ્ય Rust કોડ, સ્ટાન્ડર્ડ લાઈબ્રેરી કોડ અથવા તમે ઉપયોગ કરી રહ્યાં છો તે ક્રેટ્સ સમાવિષ્ટ હોઈ શકે છે. ચાલો <code>RUST_BACKTRACE</code> પર્યાવરણ variable 0 સિવાયના કોઈપણ મૂલ્ય પર સેટ કરીને બેકટ્રેસ મેળવવાનો પ્રયાસ કરીએ. યાદી 9-2 તમને જોવા મળનારા આઉટપુટ જેવું જ દર્શાવે છે.</p>

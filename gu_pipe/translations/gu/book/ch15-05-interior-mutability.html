@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -218,12 +218,26 @@
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="using-interior-mutability"><a class="header" href="#using-interior-mutability">Using Interior Mutability</a></h3>
 <p>ઉધાર લેવાના નિયમોનું એક પરિણામ એ છે કે જ્યારે તમારી પાસે અપરિવર્તનશીલ મૂલ્ય હોય, ત્યારે તમે તેને પરિવર્તનશીલ રીતે ઉછીના લઈ શકતા નથી. દાખલા તરીકે, આ કોડ કમ્પાઇલ થશે નહીં:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch15-smart-pointers/no-listing-01-cant-borrow-immutable-as-mutable/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let x = 5;
+    let y = &amp;mut x;
+}</code></pre>
 <p>જો તમે આ કોડ કમ્પાઇલ કરવાનો પ્રયત્ન કર્યો હોય, તો તમને નીચેની ભૂલ પ્રાપ્ત થશે:</p>
-<pre><code class="language-console">{{#include ../listings/ch15-smart-pointers/no-listing-01-cant-borrow-immutable-as-mutable/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling borrowing v0.1.0 (file:///projects/borrowing)
+error[E0596]: cannot borrow `x` as mutable, as it is not declared as mutable
+ --&gt; src/main.rs:3:13
+  |
+3 |     let y = &amp;mut x;
+  |             ^^^^^^ cannot borrow as mutable
+  |
+help: consider changing this to be mutable
+  |
+2 |     let mut x = 5;
+  |         +++
+
+For more information about this error, try `rustc --explain E0596`.
+error: could not compile `borrowing` (bin "borrowing") due to 1 previous error
 </code></pre>
 <p>જોકે, એવી પરિસ્થિતિઓ હોય છે જેમાં કોઈ મૂલ્ય પોતાના જ પદ્ધતિઓમાં પોતાને બદલી શકતું હોવા છતાં અન્ય કોડ માટે અપરિવર્તનશીલ દેખાવાનું ઉપયોગી થઈ શકે છે. મૂલ્યની પદ્ધતિઓ બહારનો કોડ મૂલ્યને બદલી શકતો નથી. <code>RefCell&lt;T&gt;</code> નો ઉપયોગ આંતરિક પરિવર્તનશીલતા મેળવવાનો એક માર્ગ છે, પરંતુ <code>RefCell&lt;T&gt;</code> સંપૂર્ણપણે ઉધાર લેવાના નિયમોને ટાળતું નથી: કમ્પાઇલરના બોરો ચેકર આ આંતરિક પરિવર્તનશીલતાને મંજૂરી આપે છે, અને ઉધાર લેવાના નિયમો રનટાઇમ પર તપાસવામાં આવે છે. જો તમે નિયમોનું ઉલ્લંઘન કરો છો, તો તમને <code>panic!</code> મળશે, કમ્પાઇલરની ભૂલ નહીં.</p>
 <p>ચાલો એક વ્યવહારુ ઉદાહરણ દ્વારા પસાર થઈએ જ્યાં આપણે <code>RefCell&lt;T&gt;</code> નો ઉપયોગ કરીને અપરિવર્તનશીલ મૂલ્યમાં પરિવર્તન કરી શકીએ અને તે શા માટે ઉપયોગી છે તે જોઈ શકીએ.</p>
@@ -236,26 +250,223 @@
 <p><strong>Listing 15-20: A library to keep track of how close a value is to a maximum value and warn when the value is at certain levels</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-20/src/lib.rs}}
+</span>pub trait Messenger {
+    fn send(&amp;self, msg: &amp;str);
+}
+
+pub struct LimitTracker&lt;'a, T: Messenger&gt; {
+    messenger: &amp;'a T,
+    value: usize,
+    max: usize,
+}
+
+impl&lt;'a, T&gt; LimitTracker&lt;'a, T&gt;
+where
+    T: Messenger,
+{
+    pub fn new(messenger: &amp;'a T, max: usize) -&gt; LimitTracker&lt;'a, T&gt; {
+        LimitTracker {
+            messenger,
+            value: 0,
+            max,
+        }
+    }
+
+    pub fn set_value(&amp;mut self, value: usize) {
+        self.value = value;
+
+        let percentage_of_max = self.value as f64 / self.max as f64;
+
+        if percentage_of_max &gt;= 1.0 {
+            self.messenger.send("Error: You are over your quota!");
+        } else if percentage_of_max &gt;= 0.9 {
+            self.messenger
+                .send("Urgent warning: You've used up over 90% of your quota!");
+        } else if percentage_of_max &gt;= 0.75 {
+            self.messenger
+                .send("Warning: You've used up over 75% of your quota!");
+        }
+    }
+}
 <span class="boring">}</span></code></pre>
 <p>એક મહત્ત્વનો ભાગ એ છે કે <code>Messenger</code> ટ્રેઇટમાં એક પદ્ધતિ છે જેને <code>send</code> કહેવાય છે, જે <code>self</code> નો અમૂર્ત સંદર્ભ અને સંદેશનું લખાણ સ્વીકારે છે. આ ટ્રેઇટ એ ઇન્ટરફેસ છે જેને આપણી મોક ઑબ્જેક્ટને અમલમાં મૂકવાની જરૂર છે જેથી મોક વાસ્તવિક ઑબ્જેક્ટની જેમ જ વાપરી શકાય. બીજો મહત્ત્વનો ભાગ એ છે કે આપણે <code>set_value</code> પદ્ધતિના વર્તનની ચકાસણી કરવા માંગીએ છીએ, જે <code>LimitTracker</code> પર આવેલું છે. આપણે <code>value</code> પરિમાણ માટે જે પસાર કરીએ છીએ તે બદલી શકીએ છીએ, પરંતુ <code>set_value</code> આપણને દાવાઓ કરવા માટે કંઈપણ પાછું આપતું નથી. આપણે એવું કહેવા માગીએ છીએ કે જો આપણે <code>Messenger</code> ટ્રેઇટ અને <code>max</code> માટે એક ચોક્કસ મૂલ્ય સાથે <code>LimitTracker</code> બનાવીએ, તો જ્યારે આપણે <code>value</code> માટે અલગ-અલગ સંખ્યાઓ પસાર કરીએ ત્યારે મેસેન્જરને યોગ્ય સંદેશો મોકલવાનું કહેવામાં આવે છે.</p>
 <p>આપણે એક મોક ઓબ્જેક્ટની જરૂર છે જે <code>send</code> બોલાવવામાં આવે ત્યારે ઇમેઇલ અથવા ટેક્સ્ટ સંદેશ મોકલવાને બદલે, માત્ર તે સંદેશાઓનો હિસ્સો જ રાખે. આપણે મોક ઓબ્જેક્ટનું નવું ઉદાહરણ બનાવી શકીએ છીએ, એક <code>LimitTracker</code> બનાવી શકીએ જે મોક ઓબ્જેક્ટનો ઉપયોગ કરે છે, <code>LimitTracker</code> પર <code>set_value</code> પદ્ધતિને બોલાવીએ અને પછી ચકાસીએ કે મોક ઓબ્જેક્ટમાં આપણને અપેક્ષિત સંદેશાઓ છે. યાદી 15-21 એવું મોક ઓબ્જેક્ટ બનાવવાના પ્રયાસને દર્શાવે છે જે આ જ કાર્ય કરે, પરંતુ ધિરાણ તપાસકર્તા (borrow checker) તેને મંજૂરી આપશે નહીં.</p>
 <p><strong>Listing 15-21: An attempt to implement a <code>MockMessenger</code> that isn’t allowed by the borrow checker</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-21/src/lib.rs:here}}
+</span><span class="boring">pub trait Messenger {
+</span><span class="boring">    fn send(&amp;self, msg: &amp;str);
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct LimitTracker&lt;'a, T: Messenger&gt; {
+</span><span class="boring">    messenger: &amp;'a T,
+</span><span class="boring">    value: usize,
+</span><span class="boring">    max: usize,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl&lt;'a, T&gt; LimitTracker&lt;'a, T&gt;
+</span><span class="boring">where
+</span><span class="boring">    T: Messenger,
+</span><span class="boring">{
+</span><span class="boring">    pub fn new(messenger: &amp;'a T, max: usize) -&gt; LimitTracker&lt;'a, T&gt; {
+</span><span class="boring">        LimitTracker {
+</span><span class="boring">            messenger,
+</span><span class="boring">            value: 0,
+</span><span class="boring">            max,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    pub fn set_value(&amp;mut self, value: usize) {
+</span><span class="boring">        self.value = value;
+</span><span class="boring">
+</span><span class="boring">        let percentage_of_max = self.value as f64 / self.max as f64;
+</span><span class="boring">
+</span><span class="boring">        if percentage_of_max &gt;= 1.0 {
+</span><span class="boring">            self.messenger.send("Error: You are over your quota!");
+</span><span class="boring">        } else if percentage_of_max &gt;= 0.9 {
+</span><span class="boring">            self.messenger
+</span><span class="boring">                .send("Urgent warning: You've used up over 90% of your quota!");
+</span><span class="boring">        } else if percentage_of_max &gt;= 0.75 {
+</span><span class="boring">            self.messenger
+</span><span class="boring">                .send("Warning: You've used up over 75% of your quota!");
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>#[cfg(test)]
+mod tests {
+    use super::*;
+
+    struct MockMessenger {
+        sent_messages: Vec&lt;String&gt;,
+    }
+
+    impl MockMessenger {
+        fn new() -&gt; MockMessenger {
+            MockMessenger {
+                sent_messages: vec![],
+            }
+        }
+    }
+
+    impl Messenger for MockMessenger {
+        fn send(&amp;self, message: &amp;str) {
+            self.sent_messages.push(String::from(message));
+        }
+    }
+
+    #[test]
+    fn it_sends_an_over_75_percent_warning_message() {
+        let mock_messenger = MockMessenger::new();
+        let mut limit_tracker = LimitTracker::new(&amp;mock_messenger, 100);
+
+        limit_tracker.set_value(80);
+
+        assert_eq!(mock_messenger.sent_messages.len(), 1);
+    }
+}
 <span class="boring">}</span></code></pre>
 <p>આ પરીક્ષણ કોડ એક <code>MockMessenger</code> struct વ્યાખ્યાયિત કરે છે જેમાં <code>sent_messages</code> ક્ષેત્ર છે, જે <code>String</code> મૂલ્યોના <code>Vec</code> સાથે સંદેશાઓને ટ્રેક રાખવા માટે વપરાય છે. આપણે એક સંકળાયેલ ફંક્શન <code>new</code> પણ વ્યાખ્યાયિત કરીએ છીએ જેથી નવા <code>MockMessenger</code> મૂલ્યો બનાવવાનું સરળ બને, જે ખાલી સંદેશાઓની યાદીથી શરૂ થાય છે. પછી આપણે <code>MockMessenger</code> માટે <code>Messenger</code> trait નું અમલીકરણ કરીએ છીએ જેથી આપણે <code>LimitTracker</code> ને <code>MockMessenger</code> આપી શકીએ. <code>send</code> પદ્ધતિની વ્યાખ્યામાં, અમે પાસ કરેલા સંદેશને પરિમાણ તરીકે લઈએ છીએ અને તેને <code>sent_messages</code> ની <code>MockMessenger</code> યાદીમાં સંગ્રહિત કરીએ છીએ.</p>
 <p>પરીક્ષણમાં, અમે ચકાસીએ છીએ કે શું થાય છે જ્યારે <code>LimitTracker</code> ને <code>value</code> એવી વસ્તુ પર સેટ કરવાનું કહેવામાં આવે છે જે <code>max</code> મૂલ્યના 75 ટકા કરતાં વધારે હોય. પ્રથમ, અમે એક નવું <code>MockMessenger</code> બનાવીએ છીએ, જે સંદેશાઓની ખાલી યાદીથી શરૂ થશે. પછી, અમે એક નવું <code>LimitTracker</code> બનાવીએ છીએ અને તેને નવા <code>MockMessenger</code> નો સંદર્ભ અને <code>max</code> મૂલ્ય 100 આપીએ છીએ. અમે <code>set_value</code> પદ્ધતિને 80 ના મૂલ્ય સાથે બોલાવીએ છીએ, જે 100 ના 75 ટકા કરતાં વધારે છે. પછી, અમે ખાતરી કરીએ છીએ કે <code>MockMessenger</code> દ્વારા જાળવવામાં આવતી સંદેશાઓની યાદીમાં હવે એક સંદેશ હોવો જોઈએ.</p>
 <p>જો કે, આ પરીક્ષણમાં એક મુશ્કેલી છે, જે અહીં દર્શાવેલ છે:</p>
-<pre><code class="language-console">{{#include ../listings/ch15-smart-pointers/listing-15-21/output.txt}}
+<pre><code class="language-console">$ cargo test
+   Compiling limit-tracker v0.1.0 (file:///projects/limit-tracker)
+error[E0596]: cannot borrow `self.sent_messages` as mutable, as it is behind a `&amp;` reference
+  --&gt; src/lib.rs:58:13
+   |
+58 |             self.sent_messages.push(String::from(message));
+   |             ^^^^^^^^^^^^^^^^^^ `self` is a `&amp;` reference, so it cannot be borrowed as mutable
+   |
+help: consider changing this to be a mutable reference in the `impl` method and the `trait` definition
+   |
+ 2 ~     fn send(&amp;mut self, msg: &amp;str);
+ 3 | }
+...
+56 |     impl Messenger for MockMessenger {
+57 ~         fn send(&amp;mut self, message: &amp;str) {
+   |
+
+For more information about this error, try `rustc --explain E0596`.
+error: could not compile `limit-tracker` (lib test) due to 1 previous error
 </code></pre>
 <p>આપણે <code>MockMessenger</code> ને સંદેશાઓની નોંધ રાખવા માટે બદલી શકતા નથી, કારણ કે <code>send</code> પદ્ધતિ <code>self</code> નો અમૂટ સંદર્ભ લે છે. આપણે ભૂલના લખાણમાંથી મળેલી સલાહને અનુસરીને <code>impl</code> પદ્ધતિ અને લક્ષણ (trait) વ્યાખ્યા બંનેમાં <code>&amp;mut self</code> વાપરવાનું પણ યોગ્ય નથી. આપણે માત્ર પરીક્ષણ માટે <code>Messenger</code> લક્ષણને બદલવા માંગતા નથી. તેના બદલે, આપણે આપણી પરીક્ષણ કોડને આપણી વર્તમાન રચના સાથે યોગ્ય રીતે કાર્યરત કરવાની રીત શોધવી પડશે. આ એક</p>
 <p>એવી પરિસ્થિતિ છે જેમાં આંતરિક પરિવર્તનશીલતા (interior mutability) મદદ કરી શકે છે! આપણે <code>sent_messages</code> ને <code>RefCell&lt;T&gt;</code> માં સંગ્રહિત કરીશું, અને પછી <code>send</code> પદ્ધતિ <code>sent_messages</code> ને સંશોધિત કરી શકશે જેથી આપણે જે સંદેશાઓ જોયા છે તેને સંગ્રહિત કરી શકાય. યાદી 15-22 તે કેવું દેખાય છે તે દર્શાવે છે.</p>
 <p>` to mutate an inner value while the outer value is considered immutable“&gt;</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-22/src/lib.rs:here}}
+</span><span class="boring">pub trait Messenger {
+</span><span class="boring">    fn send(&amp;self, msg: &amp;str);
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct LimitTracker&lt;'a, T: Messenger&gt; {
+</span><span class="boring">    messenger: &amp;'a T,
+</span><span class="boring">    value: usize,
+</span><span class="boring">    max: usize,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl&lt;'a, T&gt; LimitTracker&lt;'a, T&gt;
+</span><span class="boring">where
+</span><span class="boring">    T: Messenger,
+</span><span class="boring">{
+</span><span class="boring">    pub fn new(messenger: &amp;'a T, max: usize) -&gt; LimitTracker&lt;'a, T&gt; {
+</span><span class="boring">        LimitTracker {
+</span><span class="boring">            messenger,
+</span><span class="boring">            value: 0,
+</span><span class="boring">            max,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    pub fn set_value(&amp;mut self, value: usize) {
+</span><span class="boring">        self.value = value;
+</span><span class="boring">
+</span><span class="boring">        let percentage_of_max = self.value as f64 / self.max as f64;
+</span><span class="boring">
+</span><span class="boring">        if percentage_of_max &gt;= 1.0 {
+</span><span class="boring">            self.messenger.send("Error: You are over your quota!");
+</span><span class="boring">        } else if percentage_of_max &gt;= 0.9 {
+</span><span class="boring">            self.messenger
+</span><span class="boring">                .send("Urgent warning: You've used up over 90% of your quota!");
+</span><span class="boring">        } else if percentage_of_max &gt;= 0.75 {
+</span><span class="boring">            self.messenger
+</span><span class="boring">                .send("Warning: You've used up over 75% of your quota!");
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::cell::RefCell;
+
+    struct MockMessenger {
+        sent_messages: RefCell&lt;Vec&lt;String&gt;&gt;,
+    }
+
+    impl MockMessenger {
+        fn new() -&gt; MockMessenger {
+            MockMessenger {
+                sent_messages: RefCell::new(vec![]),
+            }
+        }
+    }
+
+    impl Messenger for MockMessenger {
+        fn send(&amp;self, message: &amp;str) {
+            self.sent_messages.borrow_mut().push(String::from(message));
+        }
+    }
+
+    #[test]
+    fn it_sends_an_over_75_percent_warning_message() {
+        // --snip--
+<span class="boring">        let mock_messenger = MockMessenger::new();
+</span><span class="boring">        let mut limit_tracker = LimitTracker::new(&amp;mock_messenger, 100);
+</span><span class="boring">
+</span><span class="boring">        limit_tracker.set_value(80);
+</span>
+        assert_eq!(mock_messenger.sent_messages.borrow().len(), 1);
+    }
+}
 <span class="boring">}</span></code></pre>
 <p><code>sent_messages</code> ક્ષેત્ર હવે <code>RefCell&lt;Vec&lt;String&gt;&gt;</code> પ્રકારનું છે, <code>Vec&lt;String&gt;</code> ને બદલે. <code>new</code> વિધનમાં, આપણે ખાલી વેક્ટરની આસપાસ એક નવું <code>RefCell&lt;Vec&lt;String&gt;&gt;</code> ઉદાહરણ બનાવીએ છીએ.</p>
 <p><code>send</code> પદ્ધતિના અમલીકરણ માટે, પહેલો પરિમાણ હજી પણ <code>self</code> નો અપરિવર્તનશીલ ઉછીનું લેવો છે, જે ટ્રેઇટ વ્યાખ્યા સાથે મેળ ખાય છે. આપણે <code>borrow_mut</code> ને <code>self.sent_messages</code> માં રહેલા <code>RefCell&lt;Vec&lt;String&gt;&gt;</code> પર બોલાવીએ છીએ, જેથી <code>RefCell&lt;Vec&lt;String&gt;&gt;</code> ની અંદરના મૂલ્ય એટલે કે વેક્ટરનો પરિવર્તનશીલ સંદર્ભ મેળવી શકાય. પછી, આપણે વેક્ટરના પરિવર્તનશીલ સંદર્ભ પર <code>push</code> ને બોલાવી શકીએ છીએ, જેથી પરીક્ષણ દરમિયાન મોકલવામાં આવેલા સંદેશાઓની નોંધ રાખી શકાય.</p>
@@ -269,10 +480,107 @@
 <p>` will panic“&gt;</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-23/src/lib.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">pub trait Messenger {
+</span><span class="boring">    fn send(&amp;self, msg: &amp;str);
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct LimitTracker&lt;'a, T: Messenger&gt; {
+</span><span class="boring">    messenger: &amp;'a T,
+</span><span class="boring">    value: usize,
+</span><span class="boring">    max: usize,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl&lt;'a, T&gt; LimitTracker&lt;'a, T&gt;
+</span><span class="boring">where
+</span><span class="boring">    T: Messenger,
+</span><span class="boring">{
+</span><span class="boring">    pub fn new(messenger: &amp;'a T, max: usize) -&gt; LimitTracker&lt;'a, T&gt; {
+</span><span class="boring">        LimitTracker {
+</span><span class="boring">            messenger,
+</span><span class="boring">            value: 0,
+</span><span class="boring">            max,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    pub fn set_value(&amp;mut self, value: usize) {
+</span><span class="boring">        self.value = value;
+</span><span class="boring">
+</span><span class="boring">        let percentage_of_max = self.value as f64 / self.max as f64;
+</span><span class="boring">
+</span><span class="boring">        if percentage_of_max &gt;= 1.0 {
+</span><span class="boring">            self.messenger.send("Error: You are over your quota!");
+</span><span class="boring">        } else if percentage_of_max &gt;= 0.9 {
+</span><span class="boring">            self.messenger
+</span><span class="boring">                .send("Urgent warning: You've used up over 90% of your quota!");
+</span><span class="boring">        } else if percentage_of_max &gt;= 0.75 {
+</span><span class="boring">            self.messenger
+</span><span class="boring">                .send("Warning: You've used up over 75% of your quota!");
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[cfg(test)]
+</span><span class="boring">mod tests {
+</span><span class="boring">    use super::*;
+</span><span class="boring">    use std::cell::RefCell;
+</span><span class="boring">
+</span><span class="boring">    struct MockMessenger {
+</span><span class="boring">        sent_messages: RefCell&lt;Vec&lt;String&gt;&gt;,
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    impl MockMessenger {
+</span><span class="boring">        fn new() -&gt; MockMessenger {
+</span><span class="boring">            MockMessenger {
+</span><span class="boring">                sent_messages: RefCell::new(vec![]),
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    impl Messenger for MockMessenger {
+        fn send(&amp;self, message: &amp;str) {
+            let mut one_borrow = self.sent_messages.borrow_mut();
+            let mut two_borrow = self.sent_messages.borrow_mut();
+
+            one_borrow.push(String::from(message));
+            two_borrow.push(String::from(message));
+        }
+    }
+<span class="boring">
+</span><span class="boring">    #[test]
+</span><span class="boring">    fn it_sends_an_over_75_percent_warning_message() {
+</span><span class="boring">        let mock_messenger = MockMessenger::new();
+</span><span class="boring">        let mut limit_tracker = LimitTracker::new(&amp;mock_messenger, 100);
+</span><span class="boring">
+</span><span class="boring">        limit_tracker.set_value(80);
+</span><span class="boring">
+</span><span class="boring">        assert_eq!(mock_messenger.sent_messages.borrow().len(), 1);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">}</span></code></pre>
 <p>આપણે એક variable <code>one_borrow</code> બનાવીએ છીએ જે <code>RefMut&lt;T&gt;</code> સ્માર્ટ પોઇન્ટર છે, જે <code>borrow_mut</code> દ્વારા પરત કરવામાં આવે છે. પછી, આપણે <code>two_borrow</code> variable એ જ રીતે બીજો પરિવર્તનશીલ ઉધાર (borrow) બનાવીએ છીએ. આનાથી સમાન અવકાશમાં બે પરિવર્તનશીલ સંદર્ભો (references) બને છે, જે મંજૂર નથી. જ્યારે આપણે આપણી લાયબ્રેરી માટે પરીક્ષણો ચલાવીએ છીએ, ત્યારે યાદી 15-23 નો કોડ કોઈપણ ભૂલો વિના કમ્પાઇલ થશે, પરંતુ પરીક્ષણ નિષ્ફળ જશે:</p>
-<pre><code class="language-console">{{#include ../listings/ch15-smart-pointers/listing-15-23/output.txt}}
+<pre><code class="language-console">$ cargo test
+   Compiling limit-tracker v0.1.0 (file:///projects/limit-tracker)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.91s
+     Running unittests src/lib.rs (target/debug/deps/limit_tracker-e599811fa246dbde)
+
+running 1 test
+test tests::it_sends_an_over_75_percent_warning_message ... FAILED
+
+failures:
+
+---- tests::it_sends_an_over_75_percent_warning_message stdout ----
+
+thread 'tests::it_sends_an_over_75_percent_warning_message' (6028024) panicked at src/lib.rs:60:53:
+RefCell already borrowed
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    tests::it_sends_an_over_75_percent_warning_message
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>ચોક્કસ, અહીં અનુવાદ છે: સૂચના આપો કે કોડ <code>already borrowed: BorrowMutError</code> સંદેશ સાથે ગભરાયો હતો. આ રીતે <code>RefCell&lt;T&gt;</code> રનટાઇમ પર ઉધાર લેવાના નિયમોના ઉલ્લંઘનોને</p>
 <p>સંભાળે છે. અહીં આપણે જે કર્યું છે, તેના બદલે કમ્પાઇલ સમયે ઉધાર લેવાની ભૂલોને પકડવાનું પસંદ કરવાથી, તમે તમારી કોડમાં પાછળથી ભૂલો શોધી શકો છો - સંભવતઃ તમારા કોડ પ્રોડક્શન પર જમા કરવામાં આવે ત્યાં સુધી. વળી, રનટાઇમ પર ઉધાર લેવાનો ટ્રેક રાખવાથી કમ્પાઇલ સમયે ન હોવાને કારણે તમારા કોડને થોડો રનટાઇમ પર્ફોર્મન્સ પેનલ્ટી લાગશે. જો કે, <code>RefCell&lt;T&gt;</code> નો ઉપયોગ કરીને તમે એક મોક ઓબ્જેક્ટ લખી શકો છો જે પોતાની જાતને સંશોધિત કરી શકે છે જેથી તે સંદેશાઓનો ટ્રેક રાખી શકે જ્યારે તમે તેનો ઉપયોગ એવા સંદર્ભમાં કરો છો જ્યાં માત્ર અમૂર્ત મૂલ્યોની મંજૂરી હોય. તમે <code>RefCell&lt;T&gt;</code> નો ઉપયોગ તેના ગેરફાયદા હોવા છતાં નિયમિત રેફરન્સ કરતાં વધુ કાર્યક્ષમતા મેળવવા માટે કરી શકો છો.</p>
@@ -283,15 +591,41 @@
 <blockquote>
 <p><code>to create a</code>List` that we can mutate“&gt;</p>
 </blockquote>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-24/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">#[derive(Debug)]
+enum List {
+    Cons(Rc&lt;RefCell&lt;i32&gt;&gt;, Rc&lt;List&gt;),
+    Nil,
+}
+
+use crate::List::{Cons, Nil};
+use std::cell::RefCell;
+use std::rc::Rc;
+
+fn main() {
+    let value = Rc::new(RefCell::new(5));
+
+    let a = Rc::new(Cons(Rc::clone(&amp;value), Rc::new(Nil)));
+
+    let b = Cons(Rc::new(RefCell::new(3)), Rc::clone(&amp;a));
+    let c = Cons(Rc::new(RefCell::new(4)), Rc::clone(&amp;a));
+
+    *value.borrow_mut() += 10;
+
+    println!("a after = {a:?}");
+    println!("b after = {b:?}");
+    println!("c after = {c:?}");
+}</code></pre>
 <p><code>5</code> અમે <code>Rc&lt;RefCell&lt;i32&gt;&gt;</code> ના ઉદાહરણરૂપ એક મૂલ્ય બનાવીએ છીએ અને તેને <code>value</code> નામનાં ચલણમાં સંગ્રહિત કરીએ છીએ જેથી કરીને અમે પાછળથી સીધા જ એને મેળવી શકીએ. પછી, અમે <code>a</code> માં એક <code>List</code> બનાવીએ છીએ જેમાં <code>Cons</code> પ્રકાર છે જે <code>value</code> ધરાવે છે. અમારે <code>value</code> ની નકલ કરવી પડશે જેથી કરીને <code>a</code></p>
 <p>અને <code>value</code> બંને આંતરિક <code>5</code> મૂલ્યની માલિકી ધરાવતા હોય, તેના બદલે <code>value</code> થી <code>a</code> માં માલિકી સ્થાનાંતરિત થાય અથવા <code>a</code>, <code>value</code> પાસેથી ઉછીનું લે. અમે યાદી <code>a</code> ને <code>Rc&lt;T&gt;</code> માં લપેટીએ છીએ જેથી જ્યારે અમે યાદીઓ <code>b</code> અને <code>c</code> બનાવીએ, ત્યારે તેઓ બંને <code>a</code> નો સંદર્ભ લઈ શકે, જે આપણે સૂચિ 15-18 માં કર્યું હતું.</p>
 <p>અમે <code>a</code>, <code>b</code>, અને <code>c</code> માં યાદીઓ બનાવ્યા પછી, અમે <code>value</code> માં 10 ઉમેરવા માંગીએ છીએ. અમે <code>borrow_mut</code> ને બોલાવીને આ કરીએ છીએ, જે પ્રકરણ 5 માં “Where’s the -&gt; Operator?” માં ચર્ચા કરવામાં આવેલી આપોઆપ ડિરેફરન્સિંગ સુવિધાનો ઉપયોગ કરે છે જેથી <code>Rc&lt;T&gt;</code> ને અંદરના <code>RefCell&lt;T&gt;</code> મૂલ્યમાં ડિરેફરન્સ કરી શકાય. <code>borrow_mut</code> પદ્ધતિ એક <code>RefMut&lt;T&gt;</code> સ્માર્ટ પોઇન્ટર પરત કરે છે, અને અમે તેના પર ડિરેફરન્સ ઓપરેટરનો ઉપયોગ કરીને અંદરનું મૂલ્ય બદલીએ છીએ.</p>
 <p>જ્યારે અમે <code>a</code>, <code>b</code>, અને <code>c</code> ને છાપીએ છીએ, ત્યારે આપણે જોઈ શકીએ છીએ કે તેઓ બધાં <code>15</code> ના સુધારેલા મૂલ્યને દર્શાવે છે, <code>5</code> ને નહીં:</p>
-<pre><code class="language-console">{{#include ../listings/ch15-smart-pointers/listing-15-24/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling cons-list v0.1.0 (file:///projects/cons-list)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.63s
+     Running `target/debug/cons-list`
+a after = Cons(RefCell { value: 15 }, Nil)
+b after = Cons(RefCell { value: 3 }, Cons(RefCell { value: 15 }, Nil))
+c after = Cons(RefCell { value: 4 }, Cons(RefCell { value: 15 }, Nil))
 </code></pre>
 <p>આ પદ્ધતિ ઘણી સરસ છે! <code>RefCell&lt;T&gt;</code> નો ઉપયોગ કરીને, આપણી પાસે બહારથી અપરિવર્તનશીલ <code>List</code> મૂલ્ય હોય છે. પરંતુ આપણે <code>RefCell&lt;T&gt;</code> પરની પદ્ધતિઓનો ઉપયોગ કરી શકીએ છીએ જે તેના આંતરિક પરિવર્તનક્ષમતાને સુલભ કરાવે છે જેથી આપણે આપણાં ડેટામાં જરૂર પડે ત્યારે ફેરફાર કરી શકીએ. લોન લેવાના નિયમોના રન્‍ટાઇમ તપાસો આપણને ડેટા રેસથી સુરક્ષિત કરે છે, અને આપણાં ડેટા માળખામાં આ લવચીકતા માટે થોડી ઝડપ ઓછી કરવી ક્યારેક મૂલ્યવાન હોઈ શકે છે. નોંધ કરો કે <code>RefCell&lt;T&gt;</code> મલ્‍ટિથ્રેડેડ કોડ માટે કામ કરતું નથી! <code>Mutex&lt;T&gt;</code> એ <code>RefCell&lt;T&gt;</code> નું થ્રેડ-સુરક્ષિત વર્ઝન છે, અને આપણે પ્રકરણ 16 માં <code>Mutex&lt;T&gt;</code> વિશે ચર્ચા કરીશું.</p>
 

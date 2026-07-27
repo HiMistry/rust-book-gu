@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -190,7 +190,22 @@
 </span>let guess: u32 = "42".parse().expect("Not a number!");
 <span class="boring">}</span></code></pre>
 <p>જો આપણે <code> : u32</code> પ્રકારનું નિદર્શન અગાઉના કોડમાં દર્શાવેલ નથી, તો Rust નીચેની ભૂલ પ્રદર્શિત કરશે, જેનો અર્થ થાય છે કે કમ્પાઇલરને ખબર હોવા માટે આપણી પાસેથી વધુ માહિતીની જરૂર છે કે અમે કયા પ્રકારનો ઉપયોગ કરવા માંગીએ છીએ:</p>
-<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/output-only-01-no-type-annotations/output.txt}}
+<pre><code class="language-console">$ cargo build
+   Compiling no_type_annotations v0.1.0 (file:///projects/no_type_annotations)
+error[E0284]: type annotations needed
+ --&gt; src/main.rs:2:9
+  |
+2 |     let guess = "42".parse().expect("Not a number!");
+  |         ^^^^^        ----- type must be known at this point
+  |
+  = note: cannot satisfy `&lt;_ as FromStr&gt;::Err == _`
+help: consider giving `guess` an explicit type
+  |
+2 |     let guess: /* Type */ = "42".parse().expect("Not a number!");
+  |              ++++++++++++
+
+For more information about this error, try `rustc --explain E0284`.
+error: could not compile `no_type_annotations` (bin "no_type_annotations") due to 1 previous error
 </code></pre>
 <p>તમે અન્ય પ્રકારના ડેટા માટે વિવિધ પ્રકારની નોંધણીઓ જોશો.</p>
 <h3 id="scalar-types"><a class="header" href="#scalar-types">Scalar Types</a></h3>
@@ -224,10 +239,11 @@
 <h5 id="integer-overflow-4"><a class="header" href="#integer-overflow-4">Integer Overflow</a></h5>
 <pre><code class="language-rust"></code></pre>
 </blockquote>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>&gt; {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-06-floating-point/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">&gt; fn main() {
+    let x = 2.0; // f64
+
+    let y: f32 = 3.0; // f32
+}</code></pre>
 <blockquote>
 <pre><code>ફ્લોટિંગ-પોઇન્ટ સંખ્યાઓ IEEE-754 ધોરણ અનુસાર દર્શાવવામાં આવે છે.
 
@@ -238,10 +254,23 @@ Rust તમામ સંખ્યા પ્રકારો માટે અપ�
 ```rust
 </code></pre>
 </blockquote>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>&gt; {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-07-numeric-operations/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">&gt; fn main() {
+    // addition
+    let sum = 5 + 10;
+
+    // subtraction
+    let difference = 95.5 - 4.3;
+
+    // multiplication
+    let product = 4 * 30;
+
+    // division
+    let quotient = 56.7 / 32.2;
+    let truncated = -5 / 3; // Results in -1
+
+    // remainder
+    let remainder = 43 % 5;
+}</code></pre>
 <blockquote>
 <pre><code>દરેક અભિવ્યક્તિ ગાણિતિક ક્રિયાચરણનો ઉપયોગ કરે છે અને એક જ મૂલ્યનું પરિણામ આપે છે, જે પછી એક variable સાથે જોડી દેવામાં આવે છે. ખંડ B માં Rust દ્વારા પૂરા પાડવામાં આવતા તમામ ક્રિયાચરણોની યાદી છે.
 
@@ -254,10 +283,11 @@ Rust તમામ સંખ્યા પ્રકારો માટે અપ�
 ```rust
 </code></pre>
 </blockquote>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>&gt; {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-08-boolean/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">&gt; fn main() {
+    let t = true;
+
+    let f: bool = false; // with explicit type annotation
+}</code></pre>
 <blockquote>
 <pre><code>મુખ્ય બુલિયન મૂલ્યોનો ઉપયોગ કરવાની રીત શરતી વિધાનો દ્વારા છે, જેમ કે `if` અભિવ્યક્તિ. અમે "નિયંત્રણ પ્રવાહ" વિભાગમાં `if` અભિવ્યક્તિઓ કેવી રીતે કાર્ય કરે છે તે આવરી લઈશું.
 
@@ -270,10 +300,11 @@ Rust નું `char` પ્રકાર ભાષાનો સૌથી પ્�
 ```rust
 </code></pre>
 </blockquote>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>&gt; {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-09-char/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">&gt; fn main() {
+    let c = 'z';
+    let z: char = 'ℤ'; // with explicit type annotation
+    let heart_eyed_cat = '😻';
+}</code></pre>
 <blockquote>
 <pre><code>નોંધ કરો કે અમે એકલ ઉદ્ગરીત નિશાનો (single quotation marks) સાથે `char` અક્ષર સાહિત્ય સ્પષ્ટ કરીએ છીએ, વિરુદ્ધ દ્વિઉદ્ગરીત નિશાનો (double quotation marks) નો ઉપયોગ કરીને સ્ટ્રિંગ સાહિત્યના. Rust નું `char` પ્રકાર 4 બાઇટ્સનું કદ ધરાવે છે અને તે યુનિકોડ સ્કેલર મૂલ્ય રજૂ કરે છે, જેનો અર્થ થાય છે કે તે માત્ર ASCII કરતાં ઘણું વધારે રજૂ કરી શકે છે. ભારિત અક્ષરો; ચીની, જાપાનીઝ અને કોરીયન અક્ષરો; ઇમોજીસ; અને શૂન્ય-પહોળાઈવાળી જગ્યાઓ બધી જ `char` મૂલ્યોમાં Rust માં માન્ય છે. યુનિકોડ સ્કેલર મૂલ્યો `U+0000` થી `U+D7FF` અને `U+E000` થી `U+10FFFF` સુધીના હોય છે. જો કે, એક "અક્ષર" ખરેખર યુનિકોડમાં એક વિભાવના નથી, તેથી તમારા માનવ અંતર્જ્ઞાન (human intuition) એ શું "અક્ષર" છે તે Rust માં `char` શું છે તેની સાથે મેળ ખાતું નથી. અમે પ્રકરણ 8 માં “UTF-8 એન્કોડેડ ટેક્સ્ટને સ્ટ્રિંગ્સ સાથે સંગ્રહિત કરવું” માં આ વિષયની વિગતવાર ચર્ચા કરીશું.
 
@@ -285,15 +316,17 @@ Rust નું `char` પ્રકાર ભાષાનો સૌથી પ્�
 
 આપણે કમાસૂત્રથી અલગ કરેલી મૂલ્યોની યાદીને કૌંસમાં લખીને ટ્યૂપલ બનાવીએ છીએ. ટ્યૂપલમાં દરેક સ્થાનનો પ્રકાર હોય છે, અને ટ્યૂપલમાં રહેલા જુદા-જુદા મૂલ્યોના પ્રકારો સમાન હોવા જરૂરી નથી. આપણે આ ઉદાહરણમાં વૈકલ્પિક પ્રકારની નોંધણીઓ ઉમેરી છે:
 
-ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે "Hello, world!" છાપે છે. ```rust fn main() { println!("Hello, world!"); } ``` આ કાર્યક્રમ `main` નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે `main` કાર્ય પ્રથમ ચલાવવામાં આવે છે. `println!` એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે "Hello, world!" છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે `cargo run` command વાપરી શકો છો.
-
-```rust
+ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે "Hello, world!" છાપે છે.
 </code></pre>
 </blockquote>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>&gt; {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-10-tuples/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() { println!("Hello, world!"); }</code></pre>
+<p>આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
+<blockquote>
+<pre><code class="language-rust"></code></pre>
+</blockquote>
+<pre class="playground"><code class="language-rust edition2024">&gt; fn main() {
+    let tup: (i32, f64, u8) = (500, 6.4, 1);
+}</code></pre>
 <blockquote>
 <pre><code>ફાઈલનામ: src/main.rs variable `tup` સમગ્ર ટ્યૂપલ સાથે જોડાયેલું છે કારણ કે ટ્યૂપલને એક જ સંયુક્ત ઘટક માનવામાં આવે છે. ટ્યૂપલની વ્યક્તિગત કિંમતો મેળવવા માટે, આપણે પેટર્ન મેચિંગનો ઉપયોગ કરીને ટ્યૂપલ મૂલ્યને વિઘટિત કરી શકીએ છીએ,
 
@@ -302,26 +335,35 @@ Rust નું `char` પ્રકાર ભાષાનો સૌથી પ્�
 </code></pre>
 </blockquote>
 <h4 id="floating-point-types"><a class="header" href="#floating-point-types">Floating-Point Types</a></h4>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-11-destructuring-tuples/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let tup = (500, 6.4, 1);
+
+    let (x, y, z) = tup;
+
+    println!("The value of y is: {y}");
+}</code></pre>
 <p>આ કાર્યક્રમ સૌપ્રથમ એક ટ્યૂપલ બનાવે છે અને તેને variable <code>tup</code> સાથે જોડે છે. ત્યારબાદ તે <code>let</code> સાથે પેટર્નનો ઉપયોગ કરીને <code>tup</code> ને ત્રણ અલગ-અલગ variable, <code>x</code>, <code>y</code> અને <code>z</code> માં રૂપાંતરિત કરે છે. આને ડિસ્ટ્રક્ચરિંગ કહેવામાં આવે છે કારણ કે તે એક ટ્યૂપલને ત્રણ ભાગોમાં તોડે છે. અંતે, કાર્યક્રમ <code>y</code> નું મૂલ્ય છાપે છે, જે <code>6.4</code> છે.</p>
 <p>અમે ટ્યૂપલ ઘટકને સીધો જ અવધિ (period) (<code>.</code>) નો ઉપયોગ કરીને અને આપણે જે મૂલ્ય મેળવવા માંગીએ છીએ તેની અનુક્રમણિકા (index) દર્શાવીને પણ મેળવી શકીએ છીએ. ઉદાહરણ તરીકે:</p>
-<p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે. <code>rust fn main() { println!("Hello, world!"); } </code> આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-12-tuple-indexing/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે.</p>
+<pre class="playground"><code class="language-rust edition2024">fn main() { println!("Hello, world!"); }</code></pre>
+<p>આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let x: (i32, f64, u8) = (500, 6.4, 1);
+
+    let five_hundred = x.0;
+
+    let six_point_four = x.1;
+
+    let one = x.2;
+}</code></pre>
 <p>આ કાર્યક્રમ <code>x</code> નામનું ટ્યૂપલ બનાવે છે અને પછી તેના દરેક ઘટકને તેમના અનુરૂપ ક્રમાંકનો ઉપયોગ કરીને મેળવે છે. મોટાભાગની પ્રોગ્રામિંગ ભાષાઓની જેમ, ટ્યૂપલમાં પ્રથમ ક્રમાંક 0 હોય છે. કોઈ પણ મૂલ્ય વગરનું</p>
 <p>ટ્યૂપલ એક વિશેષ નામ ધરાવે છે, યુનિટ (unit). આ મૂલ્ય અને તેનું અનુરૂપ પ્રકાર બંને <code>()</code> તરીકે લખવામાં આવે છે અને તે ખાલી મૂલ્ય અથવા ખાલી રીટર્ન પ્રકાર દર્શાવે છે. જો કોઈ અભિવ્યક્તિ અન્ય કોઈ મૂલ્ય રીટર્ન ન કરે તો તે આપોઆપ યુનિટ મૂલ્ય રીટર્ન કરે છે.</p>
 <p>વિવિધ મૂલ્યોનો સમૂહ રાખવાનો બીજો માર્ગ એ એરે (array) છે. ટ્યૂપલ (tuple)ની જેમ, એરેના દરેક ઘટકને સમાન પ્રકારનો હોવો જરૂરી છે. કેટલીક અન્ય ભાષાઓમાં રહેલા એરેથી વિપરીત, Rustમાં એરેની લંબાઈ નિશ્ચિત હોય છે.</p>
 <p>એરેમાં મૂલ્યોને અલ્પવિરામથી અલગ કરેલી યાદી તરીકે ચોરસ કૌંસ <code>[ ]</code> ની અંદર લખવામાં આવે છે:</p>
 <p>ફાઇલનું નામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-13-arrays/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let a = [1, 2, 3, 4, 5];
+}</code></pre>
 <p>Arrays એરે (Array) ઉપયોગી છે જ્યારે તમે ઇચ્છો છો કે તમારો ડેટા સ્ટેક (stack) પર ફાળવવામાં આવે, જેમ કે અત્યાર સુધી આપણે જોયેલા અન્ય પ્રકારો, હીપ (heap) પર નહીં (આપણે પ્રકરણ 4 માં સ્ટેક અને હીપ વિશે વધુ ચર્ચા કરીશું) અથવા જ્યારે તમે ખાતરી કરવા માંગતા હો કે તમારી પાસે હંમેશા ઘટકોની નિશ્ચિત સંખ્યા હોય. જોકે, એરે વેક્ટર (vector) પ્રકાર જેટલું લવચીક નથી. વેક્ટર એ પ્રમાણભૂત લાઇબ્રેરી દ્વારા પૂરો પાડવામાં આવતો સમાન કલેક્શન (collection) પ્રકાર છે જેનું કદ વધારી અથવા ઘટાડી શકાય છે કારણ કે તેની સામગ્રી હીપ પર રહે છે. જો તમને ખાતરી ન હોય કે એરે કે વેક્ટરનો ઉપયોગ કરવો, તો સંભવ છે કે તમારે વેક્ટરનો ઉપયોગ કરવો જોઈએ. પ્રકરણ 8 વેક્ટર્સ વિશે વધુ વિગતવાર ચર્ચા કરે છે.</p>
 <p>જો કે, એરે વધુ ઉપયોગી છે જ્યારે તમને ઘટકોની સંખ્યા બદલવાની જરૂર ન હોય. ઉદાહરણ તરીકે, જો તમે કોઈ કાર્યક્રમમાં મહિનાના નામનો ઉપયોગ કરી રહ્યા હો, તો તમે વેક્ટરને બદલે એરેનો ઉપયોગ કરવાનું પસંદ કરશો કારણ કે તે હંમેશાં 12 ઘટકો ધરાવશે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -343,18 +385,38 @@ Rust નું `char` પ્રકાર ભાષાનો સૌથી પ્�
 <p><code>a</code> નામનું શ્રેણી <code>5</code> ઘટકો ધરાવશે જે તમામની શરૂઆતિક કિંમત <code>3</code> રાખવામાં આવશે. આ <code>let a = [3, 3, 3, 3, 3];</code> લખવા સમાન છે પરંતુ વધુ સંક્ષિપ્ત રીતે.</p>
 <p>એક એરે સ્તરીય મેમરીનો એક નિશ્ચિત કદનો ભાગ છે, જે સ્ટૅક પર ફાળવણી કરી શકાય છે. તમે ઇન્ડેક્સિંગનો ઉપયોગ કરીને એરેના ઘટકોને મેળવી શકો છો, જેમ કે:</p>
 <p>ફાઇલનું નામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-14-array-indexing/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let a = [1, 2, 3, 4, 5];
+
+    let first = a[0];
+    let second = a[1];
+}</code></pre>
 <p>આ ઉદાહરણમાં, <code>first</code> નામનું variable <code>1</code> મૂલ્ય મેળવશે, કારણ કે તે એરેમાં અનુક્રમણિકા <code>[0]</code> પરની કિંમત છે. <code>second</code> નામનું variable એરેમાં અનુક્રમણિકા <code>[1]</code> પરથી <code>2</code> મૂલ્ય મેળવશે.</p>
 <h4 id="numeric-operations"><a class="header" href="#numeric-operations">Numeric Operations</a></h4>
 <p>જો તમે એરેના અંતની બહારના તત્વને મેળવવાનો પ્રયત્ન કરો તો શું થાય છે તે જોઈએ. ધારો કે તમે આ કોડ ચલાવો છો, જે પ્રકરણ ૨ ના અનુમાન લગાવવાના રમતમાં વપરાયેલ કોડ જેવો જ છે, જેથી user પાસેથી એરે ઇન્ડેક્સ મેળવી શકાય:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use std::io;
+
+fn main() {
+    let a = [1, 2, 3, 4, 5];
+
+    println!("Please enter an array index.");
+
+    let mut index = String::new();
+
+    io::stdin()
+        .read_line(&amp;mut index)
+        .expect("Failed to read line");
+
+    let index: usize = index
+        .trim()
+        .parse()
+        .expect("Index entered was not a number");
+
+    let element = a[index];
+
+    println!("The value of the element at index {index} is: {element}");
+}</code></pre>
 <p>આ કોડ સફળતાપૂર્વક સંકલિત થાય છે. જો તમે આ કોડ <code>cargo run</code> વડે ચલાવો અને <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code>, અથવા <code>4</code> દાખલ કરો, તો કાર્યક્રમ એરેમાં તે અનુક્રમણિકા (index) પરનું મૂલ્ય છાપશે. જો તમે એરેના અંત પછીની સંખ્યા દાખલ કરો, જેમ કે <code>10</code>, તો તમને આ પ્રકારનું પરિણામ દેખાશે:</p>
 <p>cd listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access
 cargo run
@@ -369,7 +431,27 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 <h4 id="the-boolean-type"><a class="header" href="#the-boolean-type">The Boolean Type</a></h4>
 <p>જો તમે એરેના અંતની બહારના તત્વને મેળવવાનો પ્રયત્ન કરો તો શું થાય છે તે જોઈએ. ધારો કે તમે આ કોડ ચલાવો છો, જે પ્રકરણ ૨ ના અનુમાન લગાવવાના રમતમાં વપરાયેલ કોડ જેવો જ છે, જેથી user પાસેથી એરે ઇન્ડેક્સ મેળવી શકાય:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<p>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access/src/main.rs}}
+<p>use std::io;</p>
+<p>fn main() {
+let a = [1, 2, 3, 4, 5];</p>
+<pre><code>println!("Please enter an array index.");
+
+let mut index = String::new();
+
+io::stdin()
+    .read_line(&amp;mut index)
+    .expect("Failed to read line");
+
+let index: usize = index
+    .trim()
+    .parse()
+    .expect("Index entered was not a number");
+
+let element = a[index];
+
+println!("The value of the element at index {index} is: {element}");
+</code></pre>
+<p>}
 આ કોડ સફળતાપૂર્વક સંકલિત થાય છે. જો તમે આ કોડ <code>cargo run</code> વડે ચલાવો અને <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code>, અથવા <code>4</code> દાખલ કરો, તો કાર્યક્રમ એરેમાં તે અનુક્રમણિકા (index) પરનું મૂલ્ય છાપશે. જો તમે એરેના અંત પછીની સંખ્યા દાખલ કરો, જેમ કે <code>10</code>, તો તમને આ પ્રકારનું પરિણામ દેખાશે:</p>
 <p>cd listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access
 cargo run
@@ -383,7 +465,27 @@ note: run with <code>RUST_BACKTRACE=1</code> environment variable to display a b
 <h4 id="the-character-type"><a class="header" href="#the-character-type">The Character Type</a></h4>
 <p>જો તમે એરેના અંતની બહારના તત્વને મેળવવાનો પ્રયત્ન કરો તો શું થાય છે તે જોઈએ. ધારો કે તમે આ કોડ ચલાવો છો, જે પ્રકરણ ૨ ના અનુમાન લગાવવાના રમતમાં વપરાયેલ કોડ જેવો જ છે, જેથી user પાસેથી એરે ઇન્ડેક્સ મેળવી શકાય:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<p>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access/src/main.rs}}
+<p>use std::io;</p>
+<p>fn main() {
+let a = [1, 2, 3, 4, 5];</p>
+<pre><code>println!("Please enter an array index.");
+
+let mut index = String::new();
+
+io::stdin()
+    .read_line(&amp;mut index)
+    .expect("Failed to read line");
+
+let index: usize = index
+    .trim()
+    .parse()
+    .expect("Index entered was not a number");
+
+let element = a[index];
+
+println!("The value of the element at index {index} is: {element}");
+</code></pre>
+<p>}
 આ કોડ સફળતાપૂર્વક સંકલિત થાય છે. જો તમે આ કોડ <code>cargo run</code> વડે ચલાવો અને <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code>, અથવા <code>4</code> દાખલ કરો, તો કાર્યક્રમ એરેમાં તે અનુક્રમણિકા (index) પરનું મૂલ્ય છાપશે. જો તમે એરેના અંત પછીની સંખ્યા દાખલ કરો, જેમ કે <code>10</code>, તો તમને આ પ્રકારનું પરિણામ દેખાશે:</p>
 <p>cd listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access
 cargo run
@@ -397,7 +499,27 @@ note: run with <code>RUST_BACKTRACE=1</code> environment variable to display a b
 <h3 id="compound-types"><a class="header" href="#compound-types">Compound Types</a></h3>
 <p>જો તમે એરેના અંતની બહારના તત્વને મેળવવાનો પ્રયત્ન કરો તો શું થાય છે તે જોઈએ. ધારો કે તમે આ કોડ ચલાવો છો, જે પ્રકરણ ૨ ના અનુમાન લગાવવાના રમતમાં વપરાયેલ કોડ જેવો જ છે, જેથી user પાસેથી એરે ઇન્ડેક્સ મેળવી શકાય:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<p>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access/src/main.rs}}
+<p>use std::io;</p>
+<p>fn main() {
+let a = [1, 2, 3, 4, 5];</p>
+<pre><code>println!("Please enter an array index.");
+
+let mut index = String::new();
+
+io::stdin()
+    .read_line(&amp;mut index)
+    .expect("Failed to read line");
+
+let index: usize = index
+    .trim()
+    .parse()
+    .expect("Index entered was not a number");
+
+let element = a[index];
+
+println!("The value of the element at index {index} is: {element}");
+</code></pre>
+<p>}
 આ કોડ સફળતાપૂર્વક સંકલિત થાય છે. જો તમે આ કોડ <code>cargo run</code> વડે ચલાવો અને <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code>, અથવા <code>4</code> દાખલ કરો, તો કાર્યક્રમ એરેમાં તે અનુક્રમણિકા (index) પરનું મૂલ્ય છાપશે. જો તમે એરેના અંત પછીની સંખ્યા દાખલ કરો, જેમ કે <code>10</code>, તો તમને આ પ્રકારનું પરિણામ દેખાશે:</p>
 <p>cd listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access
 cargo run
@@ -411,7 +533,27 @@ note: run with <code>RUST_BACKTRACE=1</code> environment variable to display a b
 <h4 id="the-tuple-type"><a class="header" href="#the-tuple-type">The Tuple Type</a></h4>
 <p>જો તમે એરેના અંતની બહારના તત્વને મેળવવાનો પ્રયત્ન કરો તો શું થાય છે તે જોઈએ. ધારો કે તમે આ કોડ ચલાવો છો, જે પ્રકરણ ૨ ના અનુમાન લગાવવાના રમતમાં વપરાયેલ કોડ જેવો જ છે, જેથી user પાસેથી એરે ઇન્ડેક્સ મેળવી શકાય:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<p>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access/src/main.rs}}
+<p>use std::io;</p>
+<p>fn main() {
+let a = [1, 2, 3, 4, 5];</p>
+<pre><code>println!("Please enter an array index.");
+
+let mut index = String::new();
+
+io::stdin()
+    .read_line(&amp;mut index)
+    .expect("Failed to read line");
+
+let index: usize = index
+    .trim()
+    .parse()
+    .expect("Index entered was not a number");
+
+let element = a[index];
+
+println!("The value of the element at index {index} is: {element}");
+</code></pre>
+<p>}
 આ કોડ સફળતાપૂર્વક સંકલિત થાય છે. જો તમે આ કોડ <code>cargo run</code> વડે ચલાવો અને <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code>, અથવા <code>4</code> દાખલ કરો, તો કાર્યક્રમ એરેમાં તે અનુક્રમણિકા (index) પરનું મૂલ્ય છાપશે. જો તમે એરેના અંત પછીની સંખ્યા દાખલ કરો, જેમ કે <code>10</code>, તો તમને આ પ્રકારનું પરિણામ દેખાશે:</p>
 <p>cd listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access
 cargo run
@@ -425,7 +567,27 @@ note: run with <code>RUST_BACKTRACE=1</code> environment variable to display a b
 <h4 id="the-array-type"><a class="header" href="#the-array-type">The Array Type</a></h4>
 <p>જો તમે એરેના અંતની બહારના તત્વને મેળવવાનો પ્રયત્ન કરો તો શું થાય છે તે જોઈએ. ધારો કે તમે આ કોડ ચલાવો છો, જે પ્રકરણ ૨ ના અનુમાન લગાવવાના રમતમાં વપરાયેલ કોડ જેવો જ છે, જેથી user પાસેથી એરે ઇન્ડેક્સ મેળવી શકાય:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<p>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access/src/main.rs}}
+<p>use std::io;</p>
+<p>fn main() {
+let a = [1, 2, 3, 4, 5];</p>
+<pre><code>println!("Please enter an array index.");
+
+let mut index = String::new();
+
+io::stdin()
+    .read_line(&amp;mut index)
+    .expect("Failed to read line");
+
+let index: usize = index
+    .trim()
+    .parse()
+    .expect("Index entered was not a number");
+
+let element = a[index];
+
+println!("The value of the element at index {index} is: {element}");
+</code></pre>
+<p>}
 આ કોડ સફળતાપૂર્વક સંકલિત થાય છે. જો તમે આ કોડ <code>cargo run</code> વડે ચલાવો અને <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code>, અથવા <code>4</code> દાખલ કરો, તો કાર્યક્રમ એરેમાં તે અનુક્રમણિકા (index) પરનું મૂલ્ય છાપશે. જો તમે એરેના અંત પછીની સંખ્યા દાખલ કરો, જેમ કે <code>10</code>, તો તમને આ પ્રકારનું પરિણામ દેખાશે:</p>
 <p>cd listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access
 cargo run
@@ -439,7 +601,27 @@ note: run with <code>RUST_BACKTRACE=1</code> environment variable to display a b
 <h4 id="array-element-access"><a class="header" href="#array-element-access">Array Element Access</a></h4>
 <p>જો તમે એરેના અંતની બહારના તત્વને મેળવવાનો પ્રયત્ન કરો તો શું થાય છે તે જોઈએ. ધારો કે તમે આ કોડ ચલાવો છો, જે પ્રકરણ ૨ ના અનુમાન લગાવવાના રમતમાં વપરાયેલ કોડ જેવો જ છે, જેથી user પાસેથી એરે ઇન્ડેક્સ મેળવી શકાય:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<p>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access/src/main.rs}}
+<p>use std::io;</p>
+<p>fn main() {
+let a = [1, 2, 3, 4, 5];</p>
+<pre><code>println!("Please enter an array index.");
+
+let mut index = String::new();
+
+io::stdin()
+    .read_line(&amp;mut index)
+    .expect("Failed to read line");
+
+let index: usize = index
+    .trim()
+    .parse()
+    .expect("Index entered was not a number");
+
+let element = a[index];
+
+println!("The value of the element at index {index} is: {element}");
+</code></pre>
+<p>}
 આ કોડ સફળતાપૂર્વક સંકલિત થાય છે. જો તમે આ કોડ <code>cargo run</code> વડે ચલાવો અને <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code>, અથવા <code>4</code> દાખલ કરો, તો કાર્યક્રમ એરેમાં તે અનુક્રમણિકા (index) પરનું મૂલ્ય છાપશે. જો તમે એરેના અંત પછીની સંખ્યા દાખલ કરો, જેમ કે <code>10</code>, તો તમને આ પ્રકારનું પરિણામ દેખાશે:</p>
 <p>cd listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access
 cargo run
@@ -453,7 +635,27 @@ note: run with <code>RUST_BACKTRACE=1</code> environment variable to display a b
 <h4 id="invalid-array-element-access"><a class="header" href="#invalid-array-element-access">Invalid Array Element Access</a></h4>
 <p>જો તમે એરેના અંતની બહારના તત્વને મેળવવાનો પ્રયત્ન કરો તો શું થાય છે તે જોઈએ. ધારો કે તમે આ કોડ ચલાવો છો, જે પ્રકરણ ૨ ના અનુમાન લગાવવાના રમતમાં વપરાયેલ કોડ જેવો જ છે, જેથી user પાસેથી એરે ઇન્ડેક્સ મેળવી શકાય:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<p>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access/src/main.rs}}
+<p>use std::io;</p>
+<p>fn main() {
+let a = [1, 2, 3, 4, 5];</p>
+<pre><code>println!("Please enter an array index.");
+
+let mut index = String::new();
+
+io::stdin()
+    .read_line(&amp;mut index)
+    .expect("Failed to read line");
+
+let index: usize = index
+    .trim()
+    .parse()
+    .expect("Index entered was not a number");
+
+let element = a[index];
+
+println!("The value of the element at index {index} is: {element}");
+</code></pre>
+<p>}
 આ કોડ સફળતાપૂર્વક સંકલિત થાય છે. જો તમે આ કોડ <code>cargo run</code> વડે ચલાવો અને <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code>, અથવા <code>4</code> દાખલ કરો, તો કાર્યક્રમ એરેમાં તે અનુક્રમણિકા (index) પરનું મૂલ્ય છાપશે. જો તમે એરેના અંત પછીની સંખ્યા દાખલ કરો, જેમ કે <code>10</code>, તો તમને આ પ્રકારનું પરિણામ દેખાશે:</p>
 <p>cd listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access
 cargo run

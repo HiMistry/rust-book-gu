@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -188,33 +188,48 @@
 <p>અમે ક્લોઝરને ફંક્શનમાં કેવી રીતે પસાર કરવા તેની ચર્ચા કરી છે; તમે નિયમિત ફંક્શનને પણ ફંક્શનમાં પસાર કરી શકો છો! આ તકનીક ત્યારે ઉપયોગી છે જ્યારે તમે નવું ક્લોઝર વ્યાખ્યાયિત કરવાને બદલે, પહેલાથી વ્યાખ્યાયિત કરેલા ફંક્શનને પસાર કરવા માંગો છો. ફંક્શન <code>fn</code> પ્રકારમાં રૂપાંતર પામે છે (નાની ‘f’ સાથે), જેને <code>Fn</code> ક્લોઝર ટ્રેઇટ સાથે મૂંઝવવું જોઈએ નહીં. <code>fn</code> પ્રકારને ફંક્શન પોઈન્ટર કહેવામાં આવે છે. ફંક્શન પોઈન્ટર વડે ફંક્શન પસાર કરવાથી તમે ફંક્શનને અન્ય ફંક્શનના આર્ગ્યુમેન્ટ તરીકે વાપરી શકશો.</p>
 <p>કારણ નિર્ધારિત કરવા માટેનું વાક્યરચના, ક્લોઝર્સ (closures) જેવું જ છે, જે યાદી 20-28 માં દર્શાવેલ છે, જ્યાં અમે એક વિધેય <code>add_one</code> વ્યાખ્યાયિત કર્યું છે જે તેના પરિમાણમાં 1 ઉમેરે છે. વિધેય <code>do_twice</code> બે પરિમાણો લે છે: કોઈપણ વિધેયનો ફંક્શન પોઇન્ટર જે <code>i32</code> પરિમાણ લે છે અને <code>i32</code> પરત કરે છે, અને એક <code>i32</code> મૂલ્ય. <code>do_twice</code> વિધેય <code>f</code> વિધેયને બે વાર બોલાવે છે, તેને <code>arg</code> મૂલ્ય પાસ કરે છે, પછી બંને ફંક્શન કૉલ પરિણામોને એકસાથે ઉમેરે છે. <code>main</code> વિધેય <code>do_twice</code> ને Argumentો <code>add_one</code> અને <code>5</code> સાથે બોલાવે છે.</p>
 <p><strong>Listing 20-28: Using the <code>fn</code> type to accept a function pointer as an argument</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-28/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn add_one(x: i32) -&gt; i32 {
+    x + 1
+}
+
+fn do_twice(f: fn(i32) -&gt; i32, arg: i32) -&gt; i32 {
+    f(arg) + f(arg)
+}
+
+fn main() {
+    let answer = do_twice(add_one, 5);
+
+    println!("The answer is: {answer}");
+}</code></pre>
 <p>આ કોડ <code>The answer is: 12</code> છાપે છે. અમે ઉલ્લેખ કરીએ છીએ કે <code>do_twice</code> માં પરિમાણ <code>f</code> એ એક <code>fn</code> છે જે એક <code>i32</code> પ્રકારનું પરિમાણ લે છે અને <code>i32</code> પરત કરે છે. અમે પછી <code>do_twice</code> ના શરીરમાં <code>f</code> ને બોલાવી શકીએ છીએ. <code>main</code> માં, અમે <code>add_one</code> નામનું કાર્ય પ્રથમ Argument તરીકે <code>do_twice</code> ને આપી શકીએ છીએ.</p>
 <p>ક્લોઝરથી વિપરીત, <code>fn</code> એક લક્ષણ નથી પરંતુ એક પ્રકાર છે, તેથી અમે સીધા જ પરિમાણ પ્રકાર તરીકે <code>fn</code> નો ઉલ્લેખ કરીએ છીએ, જેની સાથે <code>Fn</code> લક્ષણોમાંથી એકને લઈને સામાન્ય પ્રકારના પરિમાણને જાહેર કરતા નથી.</p>
 <p>વિધેય pointerો ત્રણેય ક્લોઝર લક્ષણોનો અમલ કરે છે ( <code>Fn</code> , <code>FnMut</code> , અને <code>FnOnce</code> ), જેનો અર્થ થાય છે કે તમે હંમેશાં વિધેય pointerને ક્લોઝરની અપેક્ષા રાખતા વિધેયના Argument તરીકે આપી શકો છો. તમારા વિધેયો જનરીક પ્રકાર અને એક ક્લોઝર લક્ષણનો ઉપયોગ કરીને લખવાનું શ્રેષ્ઠ છે જેથી તમારા વિધેયો</p>
 <p>કાર્યો અથવા ક્લોઝરો બંને સ્વીકારી શકે. એવું કહેવા છતાં, જ્યાં તમે માત્ર <code>fn</code> સ્વીકારવા માંગતા હોવ તેવો એક દાખલો બાહ્ય કોડ સાથે જોડાણ કરતી વખતે છે જે ક્લોઝર ધરાવતો નથી: C વિધેયો કાર્યોને Argument તરીકે સ્વીકારી શકે છે, પરંતુ C માં ક્લોઝર નથી.</p>
 <p>એક બંધન (ક્લોઝર) વ્યાખ્યાયિત કરેલું કે નામવાળું વિધેય ક્યાં વાપરી શકાય તેનું ઉદાહરણ આપવા માટે, ચાલો પ્રમાણભૂત લાયબ્રેરીમાં <code>Iterator</code> ટ્રેઇટ દ્વારા પૂરા પાડવામાં આવેલ <code>map</code> પદ્ધતિના ઉપયોગને જોઈએ. સંખ્યાઓનું વેક્ટરને શબ્દોના વેક્ટરમાં રૂપાંતરિત કરવા માટે <code>map</code> પદ્ધતિનો ઉપયોગ કરવા માટે, આપણે એક બંધન વાપરી શકીએ છીએ, જે યાદી 20-29 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 20-29: Using a closure with the <code>map</code> method to convert numbers to strings</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-29/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let list_of_numbers = vec![1, 2, 3];
+    let list_of_strings: Vec&lt;String&gt; =
+        list_of_numbers.iter().map(|i| i.to_string()).collect();
 <span class="boring">}</span></code></pre>
 <p>અથવા, આપણે <code>map</code> ના આર્ગ્યુમેન્ટ તરીકે ક્લોઝરને બદલે કોઈ ફંક્શનનું નામ આપી શકીએ છીએ. સૂચિ ૨૦-૩૦ દર્શાવે છે કે તે કેવું દેખાશે.</p>
 <p><strong>Listing 20-30: Using the <code>String::to_string</code> function with the <code>map</code> method to convert numbers to strings</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-30/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let list_of_numbers = vec![1, 2, 3];
+    let list_of_strings: Vec&lt;String&gt; =
+        list_of_numbers.iter().map(ToString::to_string).collect();
 <span class="boring">}</span></code></pre>
 <p>નોંધ અહીં આપણે “ઉન્નત લક્ષણો” વિભાગમાં ઉલ્લેખિત સંપૂર્ણ લાયકાતવાળા સિન્ટેક્સનો ઉપયોગ કરવો જોઈએ કારણ કે <code>to_string</code> નામનું બહુવિધ વિધેય ઉપલબ્ધ છે. અહીં, આપણે <code>ToString</code> લક્ષણમાં વ્યાખ્યાયિત કરેલા <code>to_string</code></p>
 <p>વિધેયનો ઉપયોગ કરી રહ્યા છીએ, જે ધોરણ પુસ્તકાલય દ્વારા કોઈપણ પ્રકાર માટે લાગુ કરવામાં આવ્યો છે જે <code>Display</code> લાગુ કરે છે. પ્રકરણ 6 માં “એનમ</p>
 <p>મૂલ્યો” વિભાગને યાદ કરો કે આપણે વ્યાખ્યાયિત કરેલા દરેક એનમ ભિન્નતાનું નામ પણ એક પ્રારંભિક વિધેય બને છે. આપણે આ પ્રારંભિક વિધેયોને ફંક્શન પોઇન્ટર તરીકે ઉપયોગ કરી શકીએ છીએ જે ક્લોઝર લક્ષણોનો અમલ કરે છે, જેનો અર્થ થાય છે કે આપણે ક્લોઝર લેતા પદ્ધતિઓ માટે આ પ્રારંભિક વિધેયોને Argumentો તરીકે સ્પષ્ટ કરી શકીએ છીએ, જેમ કે યાદી 20-31 માં જોયું છે.</p>
 <p><strong>Listing 20-31: Using an enum initializer with the <code>map</code> method to create a <code>Status</code> instance from numbers</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-31/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    enum Status {
+        Value(u32),
+        Stop,
+    }
+
+    let list_of_statuses: Vec&lt;Status&gt; = (0u32..20).map(Status::Value).collect();
 <span class="boring">}</span></code></pre>
 <p>અહીં, આપણે <code>Status::Value</code> ઉદાહરણો દરેક <code>u32</code> મૂલ્યની શ્રેણીમાં બનાવીએ છીએ જેના પર <code>map</code> કાર્ય બોલાવવામાં આવે છે, <code>Status::Value</code> ના પ્રારંભિકા વિધેયનો ઉપયોગ કરીને. કેટલાક લોકોને આ શૈલી પસંદ હોય છે અને કેટલાક લોકોને ક્લોઝરનો ઉપયોગ કરવાનું પસંદ હોય છે. તે સમાન કોડમાં કમ્પાઇલ થાય છે, તેથી જે શૈલી તમને વધુ સ્પષ્ટ લાગે તેનો ઉપયોગ કરો.</p>
 <h3 id="returning-closures"><a class="header" href="#returning-closures">Returning Closures</a></h3>
@@ -223,23 +238,66 @@
 <p><strong>Listing 20-32: Returning a closure from a function using the <code>impl Trait</code> syntax</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-32/src/lib.rs}}
+</span>fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
+    |x| x + 1
+}
 <span class="boring">}</span></code></pre>
 <p>જો કે, જેમ આપણે પ્રકરણ ૧૩ માં “ક્લોઝર પ્રકારો અનુમાનિત અને નોંધણી” વિભાગમાં નોંધ્યું હતું તેમ, દરેક ક્લોઝર પોતાનો એક અલગ પ્રકાર પણ છે. જો તમારે બહુવિધ ફંક્શન્સ સાથે કામ કરવાની જરૂર હોય જે સમાન હસ્તાક્ષર પરંતુ જુદા જુદા અમલીકરણો ધરાવે છે, તો તમારે તેમના માટે ટ્રેઇટ ઑબ્જેક્ટનો ઉપયોગ કરવો પડશે. ધ્યાનમાં લો કે જો તમે Listing 20-33 માં દર્શાવેલ જેવું કોડ લખો છો તો શું થાય છે.</p>
 <p><code>of closures defined by functions that return</code>impl Fn` types“&gt;</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-33/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let handlers = vec![returns_closure(), returns_initialized_closure(123)];
+    for handler in handlers {
+        let output = handler(5);
+        println!("{output}");
+    }
+}
+
+fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
+    |x| x + 1
+}
+
+fn returns_initialized_closure(init: i32) -&gt; impl Fn(i32) -&gt; i32 {
+    move |x| x + init
+}</code></pre>
 <p>અહીં બે વિધેયો છે, <code>returns_closure</code> અને <code>returns_initialized_closure</code>, જે બંને <code>impl Fn(i32) -&gt; i32</code> પરત કરે છે. નોંધ કરો કે તેઓ જે ક્લોઝર પરત કરે છે તે અલગ છે, ભલે તેઓ સમાન પ્રકારનું અમલીકરણ કરે. જો આપણે આને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ, તો Rust આપણને જણાવે છે કે તે કામ કરશે નહીં:</p>
-<pre><code class="language-text">{{#include ../listings/ch20-advanced-features/listing-20-33/output.txt}}
+<pre><code class="language-text">$ cargo build
+   Compiling functions-example v0.1.0 (file:///projects/functions-example)
+error[E0308]: mismatched types
+  --&gt; src/main.rs:2:44
+   |
+ 2 |     let handlers = vec![returns_closure(), returns_initialized_closure(123)];
+   |                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected opaque type, found a different opaque type
+...
+ 9 | fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
+   |                         ------------------- the expected opaque type
+...
+13 | fn returns_initialized_closure(init: i32) -&gt; impl Fn(i32) -&gt; i32 {
+   |                                              ------------------- the found opaque type
+   |
+   = note: expected opaque type `impl Fn(i32) -&gt; i32`
+              found opaque type `impl Fn(i32) -&gt; i32`
+   = note: distinct uses of `impl Trait` result in different opaque types
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `functions-example` (bin "functions-example") due to 1 previous error
 </code></pre>
 <p>ભૂલ સંદેશ જણાવે છે કે જ્યારે પણ આપણે <code>impl Trait</code> પરત કરીએ છીએ, ત્યારે Rust એક અનોખી અસ્પષ્ટ પ્રકાર (opaque type) બનાવે છે; એવો પ્રકાર જેમાં આપણે Rust આપણી માટે જે બનાવે છે તેની વિગતો જોઈ શકતા નથી, અને ન તો આપણે અનુમાન લગાવી શકીએ કે Rust કયો પ્રકાર ઉત્પન્ન કરશે. તેથી, ભલે આ કાર્યો સમાન ટ્રેઇટ લાગુ કરતા ક્લોઝર (closure) પરત કરે છે, <code>Fn(i32) -&gt; i32</code> , પણ Rust દરેક માટે બનાવેલા અસ્પષ્ટ પ્રકારો અલગ હોય છે. (આ એ જ રીતે મળતું આવે છે કે જે રીતે Rust જુદા જુદા async બ્લોક્સ માટે અલગ-અલગ કોંક્રિટ પ્રકારો ઉત્પન્ન કરે છે, ભલે તેમનો આઉટપુટ પ્રકાર સમાન હોય, જે આપણે પ્રકરણ 17 માં <a href="ch17-03-more-futures.html">“The <code>Pin</code> Type and the <code>Unpin</code> Trait”</a> માં જોયું હતું.) આપણને હવે આ સમસ્યાનો ઉકેલ ઘણી વાર જોવા મળ્યો છે: આપણે ટ્રેઇટ ઓબ્જેક્ટ (trait object) નો ઉપયોગ કરી શકીએ છીએ, જેમ કે Listing 20-34 માં દર્શાવેલ છે.</p>
 <p><code>of closures defined by functions that return</code>Box<dyn fn="">` so that they have the same type“&gt;</dyn></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-34/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let handlers = vec![returns_closure(), returns_initialized_closure(123)];
+</span><span class="boring">    for handler in handlers {
+</span><span class="boring">        let output = handler(5);
+</span><span class="boring">        println!("{output}");
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn returns_closure() -&gt; Box&lt;dyn Fn(i32) -&gt; i32&gt; {
+    Box::new(|x| x + 1)
+}
+
+fn returns_initialized_closure(init: i32) -&gt; Box&lt;dyn Fn(i32) -&gt; i32&gt; {
+    Box::new(move |x| x + init)
+}</code></pre>
 <p>આ કોડ યોગ્ય રીતે સંપાદિત થશે. ટ્રેઇટ ઓબ્જેક્ટ વિશે વધુ માહિતી માટે, પ્રકરણ ૧૮ માં “વહેંચાયેલ વર્તન પર અમૂર્ત કરવા માટે ટ્રેઇટ ઓબ્જેક્ટનો ઉપયોગ” વિભાગ</p>
 <p>જુઓ. હવે, આપણે મેક્રો જોઈએ!</p>
 

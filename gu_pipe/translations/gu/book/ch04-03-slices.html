@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -193,33 +193,87 @@
 <span class="boring">}</span></code></pre>
 <p><code>first_word</code> કાર્યમાં <code>&amp;String</code> પ્રકારનો પરિમાણ છે. આપણને માલિકીની જરૂર નથી, તેથી આ યોગ્ય છે. (વડેસર Rust કોડમાં, કાર્યો તેમના Argumentોની માલિકી લેતા નથી સિવાય કે તેમને જરૂર હોય, અને તેના કારણો આગળ વધતાં સ્પષ્ટ થશે.) પરંતુ આપણે શું પરત કરવું જોઈએ? વાસ્તવમાં આપણી પાસે શબ્દનો ભાગ વિશે વાત કરવાનો કોઈ રસ્તો નથી. જોકે, આપણે જગ્યા દ્વારા દર્શાવવામાં આવે છે તે શબ્દના અંતની અનુક્રમણિકા (index) પરત કરી શકીએ છીએ. ચાલો પ્રયત્ન કરીએ, જેમ કે સૂચિ 4-7 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 4-7: The <code>first_word</code> function that returns a byte index value into the <code>String</code> parameter</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn first_word(s: &amp;String) -&gt; usize {
+    let bytes = s.as_bytes();
+
+    for (i, &amp;item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return i;
+        }
+    }
+
+    s.len()
+}
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre>
 <p>કારણ કે આપણે <code>String</code> ઘટક દ્વારા ઘટક તપાસવું પડે છે કે કોઈ મૂલ્ય ખાલી જગ્યા છે કે નહીં, તેથી આપણે <code>as_bytes</code> પદ્ધતિનો ઉપયોગ કરીને આપણી <code>String</code> ને બાઇટ્સની શ્રેણીમાં રૂપાંતરિત કરીશું.</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:as_bytes}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
+</span>    let bytes = s.as_bytes();
+<span class="boring">
+</span><span class="boring">    for (i, &amp;item) in bytes.iter().enumerate() {
+</span><span class="boring">        if item == b' ' {
+</span><span class="boring">            return i;
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    s.len()
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre>
 <p>આગળ, આપણે બાઇટ્સની શ્રેણી પર એક પુનરાવર્તક (iterator) <code>iter</code> પદ્ધતિનો ઉપયોગ કરીને બનાવીએ છીએ:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:iter}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
+</span><span class="boring">    let bytes = s.as_bytes();
+</span><span class="boring">
+</span>    for (i, &amp;item) in bytes.iter().enumerate() {
+<span class="boring">        if item == b' ' {
+</span><span class="boring">            return i;
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    s.len()
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre>
 <p>અમે પ્રકરણ ૧૩ માં વધુ વિગતવાર પુનરાવર્તકો (iterators) વિશે ચર્ચા કરીશું. હાલ માટે, જાણો કે <code>iter</code> એ એક પદ્ધતિ છે જે સંગ્રહમાં દરેક તત્વ આપે છે અને <code>enumerate</code> એ <code>iter</code> ના પરિણામને આવરી લે છે અને દરેક તત્વને ટ્યૂપલના ભાગ રૂપે આપે છે. <code>enumerate</code> દ્વારા પરત કરવામાં આવેલ ટ્યૂપલનું પ્રથમ તત્વ અનુક્રમણિકા (index) છે, અને બીજું તત્વ તત્વનો સંદર્ભ (reference) છે. આ પોતાથી અનુક્રમણિકાની ગણતરી કરવા કરતાં થોડું વધુ અનુકૂળ છે.</p>
 <p>કારણ કે <code>enumerate</code> પદ્ધતિ ટ્યૂપલ આપે છે, અમે દાખલાઓ (patterns) નો ઉપયોગ કરીને તે ટ્યૂપલને વિઘટિત કરી શકીએ છીએ. અમે પ્રકરણ ૬ માં વધુ દાખલાઓ વિશે ચર્ચા કરીશું. <code>for</code> લૂપમાં, અમે એક દાખલો ઉલ્લેખિત કરીએ છીએ જેમાં ટ્યૂપલમાં અનુક્રમણિકા માટે <code>i</code> અને ટ્યૂપલમાંના એકલ બાઇટ માટે <code>&amp;item</code> છે. કારણ કે અમે <code>.iter().enumerate()</code> માંથી તત્વનો સંદર્ભ મેળવીએ છીએ, તેથી અમે દાખલામાં <code>&amp;</code> નો ઉપયોગ કરીએ છીએ.</p>
 <p><code>for</code> લૂપની અંદર, અમે જગ્યા દર્શાવતા બાઇટને શોધવા માટે બાઇટ સાહિત્ય વાક્યરચનાનો ઉપયોગ કરીએ છીએ. જો અમને જગ્યા મળે, તો અમે સ્થાન પરત કરીએ છીએ. અન્યથા, અમે <code>s.len()</code> નો ઉપયોગ કરીને સ્ટ્રિંગની લંબાઈ પરત કરીએ છીએ.</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:inside_for}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
+</span><span class="boring">    let bytes = s.as_bytes();
+</span><span class="boring">
+</span><span class="boring">    for (i, &amp;item) in bytes.iter().enumerate() {
+</span>        if item == b' ' {
+            return i;
+        }
+    }
+
+    s.len()
+<span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre>
 <p>હવે આપણી પાસે સ્ટ્રિંગમાં પ્રથમ શબ્દના અંતિમ અનુક્રમણિકા (index) શોધવાનો એક માર્ગ છે, પરંતુ એક સમસ્યા છે. આપણે <code>usize</code> સ્વરૂપે પરિણામ આપી રહ્યા છીએ, પરંતુ તે માત્ર <code>&amp;String</code> ના સંદર્ભમાં જ અર્થપૂર્ણ સંખ્યા છે. બીજા શબ્દોમાં કહીએ તો, તે <code>String</code> થી અલગ મૂલ્ય હોવાથી, ભવિષ્યમાં તે માન્ય રહેશે તેની કોઈ ખાતરી નથી. યાદી 4-8 માં આપેલા પ્રોગ્રામને ધ્યાનમાં લો જે યાદી 4-7 માંથી <code>first_word</code> ફંક્શનનો ઉપયોગ કરે છે.</p>
 <p><strong>Listing 4-8: Storing the result from calling the <code>first_word</code> function and then changing the <code>String</code> contents</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-08/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
+</span><span class="boring">    let bytes = s.as_bytes();
+</span><span class="boring">
+</span><span class="boring">    for (i, &amp;item) in bytes.iter().enumerate() {
+</span><span class="boring">        if item == b' ' {
+</span><span class="boring">            return i;
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    s.len()
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn main() {
+    let mut s = String::from("hello world");
+
+    let word = first_word(&amp;s); // word will get the value 5
+
+    s.clear(); // this empties the String, making it equal to ""
+
+    // word still has the value 5 here, but s no longer has any content that we
+    // could meaningfully use with the value 5, so word is now totally invalid!
+}</code></pre>
 <p>આ કાર્યક્રમ કોઈપણ ભૂલો વગર સંપાઈ જાય છે અને જો આપણે <code>s.clear()</code> બોલાવ્યા પછી <code>word</code> વાપર્યું હોત તો પણ તેવું જ થાય. કારણ કે <code>word</code> એ <code>s</code> ની સ્થિતિ સાથે જોડાયેલું નથી, <code>word</code> માં હજી પણ મૂલ્ય <code>5</code> રહેલું છે. આપણે <code>s</code> variable સાથે આ મૂલ્ય <code>5</code> નો ઉપયોગ કરીને પ્રથમ શબ્દ બહાર કાઢવાનો પ્રયત્ન કરી શકીએ છીએ, પરંતુ તે એક ભૂલ હશે કારણ કે <code>s</code> ની સામગ્રીમાં ફેરફાર થયો છે ત્યારથી આપણે</p>
 <p><code>word</code> માં <code>5</code> સાચવ્યું હતું. <code>word</code> માં અનુક્રમણિકા (index) ડેટા સાથે સુસંગત ન થવાની ચિંતા કરવી એ કંટાળાજનક અને ભૂલભરેલું છે! આ અનુક્રમણિકાઓનું સંચાલન વધુ નાજુક બની જાય છે જો આપણે <code>second_word</code> નામનું કાર્ય લખીએ. તેનું સ્વરૂપ આ પ્રમાણે હોવું જોઈએ:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -230,9 +284,11 @@
 <p>ખુદાના આશીર્વાદથી, Rust પાસે આ સમસ્યાનો ઉકેલ છે: સ્ટ્રિંગ સ્લાઇસ (string slices).</p>
 <h3 id="string-slices"><a class="header" href="#string-slices">String Slices</a></h3>
 <p>એક સ્ટ્રિંગ સ્લાઇસ એ <code>String</code> ના તત્વોની એક સતત ક્રમનો સંદર્ભ છે, અને તે આ પ્રમાણે દેખાય છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-17-slice/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let s = String::from("hello world");
+
+    let hello = &amp;s[0..5];
+    let world = &amp;s[6..11];
 <span class="boring">}</span></code></pre>
 <p>બંને <code>String</code> નો સંદર્ભ કરવાને બદલે, <code>hello</code> એ <code>String</code> ના ભાગનો સંદર્ભ છે, જે વધારાના <code>[0..5]</code> ભાગમાં દર્શાવેલ છે. આપણે ચોક્કસ કૌંસમાં શ્રેણીનો ઉપયોગ કરીને સ્લાઇસ બનાવીએ છીએ <code>[starting_index..ending_index]</code>, જ્યાં <code>starting_index</code> એ સ્લાઇસમાં પ્રથમ સ્થાન છે અને <code>ending_index</code> એ સ્લાઇસમાં છેલ્લા સ્થાન કરતાં એક વધારે છે. આંતરિક રીતે, સ્લાઇસ ડેટા સ્ટ્રક્ચર શરૂઆતનું સ્થાન અને સ્લાઇસની લંબાઈ સંગ્રહિત કરે છે, જે <code>ending_index</code> માંથી <code>starting_index</code> ને બાદ કરીને મેળવે છે. તેથી, <code>let world = &amp;s[6..11];</code> ના કિસ્સામાં, <code>world</code> એ એક સ્લાઇસ હશે જેમાં <code>s</code> ના ઇન્ડેક્સ 6 પરના બાઇટનો પોઇન્ટર અને <code>5</code> ની લંબાઈ મૂલ્ય હશે.</p>
 <p>ચિત્ર 4-7 આને આકૃતિમાં દર્શાવે છે.</p>
@@ -267,10 +323,19 @@ let slice = &amp;s[..];
 <span class="boring">}</span></code></pre>
 <p>નોંધ: સ્ટ્રિંગ સ્લાઇસ રેન્જ ઇન્ડેક્સિસ માન્ય UTF-8 અક્ષર સીમાઓ પર આવવી જોઈએ. જો તમે મલ્ટિબાઇટ અક્ષરની વચ્ચે સ્ટ્રિંગ સ્લાઇસ બનાવવાનો પ્રયાસ કરો છો, તો તમારો પ્રોગ્રામ ભૂલ સાથે સમાપ્ત થશે. આ</p>
 <p>બધી માહિતી ધ્યાનમાં રાખીને, ચાલો <code>first_word</code> ને સ્લાઇસ પરત કરવા માટે ફરીથી લખીએ. “સ્ટ્રિંગ સ્લાઇસ” દર્શાવતો પ્રકાર <code>&amp;str</code> તરીકે લખવામાં આવે છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-18-first-word-slice/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn first_word(s: &amp;String) -&gt; &amp;str {
+    let bytes = s.as_bytes();
+
+    for (i, &amp;item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &amp;s[0..i];
+        }
+    }
+
+    &amp;s[..]
+}
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre>
 <p>આપણે Listing 4-7 માં કર્યા હતો તે જ રીતે, શબ્દના અંત માટે અનુક્રમણિકા મેળવીએ છીએ, એક ખાલી જગ્યાના પ્રથમ ઉદ્ભવને શોધીને. જ્યારે આપણે ખાલી જગ્યા શોધીએ છીએ, ત્યારે આપણે શરૂઆતની સ્થિતિ અને ખાલી જગ્યાના અનુક્રમણિકાને પ્રારંભિક અને અંતિમ અનુક્રમણિકા તરીકે ઉપયોગ કરીને સ્ટ્રિંગ સ્લાઇસ પરત કરીએ છીએ.</p>
 <p>હવે જ્યારે આપણે <code>first_word</code> ને બોલાવીએ છીએ, ત્યારે આપણને એક જ મૂલ્ય પાછું મળે છે જે મૂળ ડેટા સાથે જોડાયેલું છે. આ મૂલ્ય સ્લાઇસના પ્રારંભિક બિંદુનો સંદર્ભ અને સ્લાઇસમાં રહેલા ઘટકોની સંખ્યાથી બનેલું હોય છે.</p>
 <p>ચોક્કસ ભાગ પાછો આપવો એ પણ <code>second_word</code> કાર્ય માટે યોગ્ય રહેશે:</p>
@@ -279,12 +344,44 @@ let slice = &amp;s[..];
 </span>fn second_word(s: &amp;String) -&gt; &amp;str {
 <span class="boring">}</span></code></pre>
 <p>હવે આપણી પાસે એક સરળ API છે જે ભૂલ કરવી ઘણી મુશ્કેલ છે, કારણ કે કમ્પાઇલર ખાતરી કરશે કે <code>String</code> માંના રેફરન્સો માન્ય રહે. યાદ કરો, લિસ્ટિંગ 4-8 માં પ્રોગ્રામમાં શું ભૂલ હતી, જ્યારે આપણે પ્રથમ શબ્દના અંત સુધી ઇન્ડેક્સ મેળવ્યો હતો પરંતુ પછી સ્ટ્રિંગ સાફ કરી દીધી, જેથી આપણો ઇન્ડેક્સ અમાન્ય થઈ ગયો? તે કોડ તાર્કિક રીતે ખોટો હતો પણ તેમાં કોઈ તાત્કાલિક ભૂલો દેખાતી ન હતી. સમસ્યાઓ પાછળથી ઊભી થાત જો આપણે ખાલી સ્ટ્રિંગ સાથે પ્રથમ શબ્દના ઇન્ડેક્સનો ઉપયોગ કરવાનું ચાલુ રાખ્યું હોત. સ્લાઇસ આ ભૂલને અશક્ય બનાવે છે અને આપણને ઘણો જલ્દી જણાવે છે કે અમારી કોડમાં સમસ્યા છે. <code>first_word</code> ના સ્લાઇસ વર્ઝનનો ઉપયોગ કરવાથી કમ્પાઇલ-ટાઇમ એરર આવશે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-19-slice-error/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn first_word(s: &amp;String) -&gt; &amp;str {
+</span><span class="boring">    let bytes = s.as_bytes();
+</span><span class="boring">
+</span><span class="boring">    for (i, &amp;item) in bytes.iter().enumerate() {
+</span><span class="boring">        if item == b' ' {
+</span><span class="boring">            return &amp;s[0..i];
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    &amp;s[..]
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn main() {
+    let mut s = String::from("hello world");
+
+    let word = first_word(&amp;s);
+
+    s.clear(); // error!
+
+    println!("the first word is: {word}");
+}</code></pre>
 <p>અહીંયા કમ્પાઇલરની ભૂલ છે:</p>
-<pre><code class="language-console">{{#include ../listings/ch04-understanding-ownership/no-listing-19-slice-error/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling ownership v0.1.0 (file:///projects/ownership)
+error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
+  --&gt; src/main.rs:18:5
+   |
+16 |     let word = first_word(&amp;s);
+   |                           -- immutable borrow occurs here
+17 |
+18 |     s.clear(); // error!
+   |     ^^^^^^^^^ mutable borrow occurs here
+19 |
+20 |     println!("the first word is: {word}");
+   |                                   ---- immutable borrow later used here
+
+For more information about this error, try `rustc --explain E0502`.
+error: could not compile `ownership` (bin "ownership") due to 1 previous error
 </code></pre>
 <p>ઉધાર લેવાના નિયમો યાદ કરો કે જો આપણી કોઈ વસ્તુની અમૂટ સંદર્ભ (reference) હોય, તો આપણે પરિવર્તનશીલ સંદર્ભ (mutable reference) પણ લઈ શકતા નથી. કારણ કે <code>clear</code> ને <code>String</code> ને ટૂંકાવવાની જરૂર છે, તેથી તેને પરિવર્તનશીલ સંદર્ભ મેળવવો પડે છે. <code>clear</code> બોલાવ્યા પછી <code>println!</code> માં <code>word</code> માં રહેલો સંદર્ભ વપરાય છે, તેથી તે સમયે અમૂટ સંદર્ભ હજી પણ કાર્યરત હોવો જોઈએ. Rust <code>clear</code> માં પરિવર્તનશીલ સંદર્ભ અને <code>word</code> માં અમૂટ સંદર્ભ એકસાથે અસ્તિત્વમાં ન હોય એવું નિયંત્રણ કરે છે, અને પરિણામે કમ્પાઇલેશન નિષ્ફળ જાય છે. માત્ર Rust એ આપણું API વાપરવામાં સરળ બનાવ્યું નથી, પરંતુ તે સમયના સંકલન (compile time) દરમિયાન ભૂલોની એક સંપૂર્ણ શ્રેણીને પણ દૂર કરી દીધી છે!</p>
 <!-- Old headings. Do not remove or links may break. -->
@@ -303,16 +400,74 @@ let slice = &amp;s[..];
 <span class="boring">}</span></code></pre>
 <p>એક વધુ અનુભવી Rustacean લિસ્ટિંગ 4-9 માં દર્શાવેલ હસ્તાક્ષરનો ઉપયોગ કરશે, કારણ કે તે આપણને <code>&amp;String</code> અને <code>&amp;str</code> બંને મૂલ્યો પર સમાન કાર્યનો ઉપયોગ કરવાની મંજૂરી આપે છે.</p>
 <p><strong>Listing 4-9: Improving the <code>first_word</code> function by using a string slice for the type of the <code>s</code> parameter</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024">fn first_word(s: &amp;str) -&gt; &amp;str {
+<span class="boring">    let bytes = s.as_bytes();
+</span><span class="boring">
+</span><span class="boring">    for (i, &amp;item) in bytes.iter().enumerate() {
+</span><span class="boring">        if item == b' ' {
+</span><span class="boring">            return &amp;s[0..i];
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    &amp;s[..]
+</span><span class="boring">}
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-09/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    let my_string = String::from("hello world");
+</span><span class="boring">
+</span><span class="boring">    // `first_word` works on slices of `String`s, whether partial or whole.
+</span><span class="boring">    let word = first_word(&amp;my_string[0..6]);
+</span><span class="boring">    let word = first_word(&amp;my_string[..]);
+</span><span class="boring">    // `first_word` also works on references to `String`s, which are equivalent
+</span><span class="boring">    // to whole slices of `String`s.
+</span><span class="boring">    let word = first_word(&amp;my_string);
+</span><span class="boring">
+</span><span class="boring">    let my_string_literal = "hello world";
+</span><span class="boring">
+</span><span class="boring">    // `first_word` works on slices of string literals, whether partial or
+</span><span class="boring">    // whole.
+</span><span class="boring">    let word = first_word(&amp;my_string_literal[0..6]);
+</span><span class="boring">    let word = first_word(&amp;my_string_literal[..]);
+</span><span class="boring">
+</span><span class="boring">    // Because string literals *are* string slices already,
+</span><span class="boring">    // this works too, without the slice syntax!
+</span><span class="boring">    let word = first_word(my_string_literal);
+</span><span class="boring">}</span></code></pre>
 <p>જો આપણી પાસે સ્ટ્રિંગ સ્લાઇસ હોય, તો આપણે તેને સીધો જ આપી શકીએ છીએ. જો આપણી પાસે <code>String</code> હોય, તો આપણે <code>String</code> નો સ્લાઇસ અથવા <code>String</code> નો સંદર્ભ આપી શકીએ છીએ. આ લવચીકતા ડિરેફ કોર્શન્સનો લાભ લે છે, જે વિશેષતાને આપણે પ્રકરણ ૧૫ ના “કાર્યો અને પદ્ધતિઓમાં ડિરેફ કોર્શન્સનો ઉપયોગ” વિભાગમાં આવરી</p>
 <p>લઈશું. <code>String</code> ના સંદર્ભને બદલે સ્ટ્રિંગ સ્લાઇસ લઈને કાર્ય વ્યાખ્યાયિત કરવાથી આપણી API વધુ સામાન્ય અને ઉપયોગી બને છે, કોઈપણ કાર્યક્ષમતા ગુમાવ્યા વિના:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-09/src/main.rs:usage}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn first_word(s: &amp;str) -&gt; &amp;str {
+</span><span class="boring">    let bytes = s.as_bytes();
+</span><span class="boring">
+</span><span class="boring">    for (i, &amp;item) in bytes.iter().enumerate() {
+</span><span class="boring">        if item == b' ' {
+</span><span class="boring">            return &amp;s[0..i];
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    &amp;s[..]
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn main() {
+    let my_string = String::from("hello world");
+
+    // `first_word` works on slices of `String`s, whether partial or whole.
+    let word = first_word(&amp;my_string[0..6]);
+    let word = first_word(&amp;my_string[..]);
+    // `first_word` also works on references to `String`s, which are equivalent
+    // to whole slices of `String`s.
+    let word = first_word(&amp;my_string);
+
+    let my_string_literal = "hello world";
+
+    // `first_word` works on slices of string literals, whether partial or
+    // whole.
+    let word = first_word(&amp;my_string_literal[0..6]);
+    let word = first_word(&amp;my_string_literal[..]);
+
+    // Because string literals *are* string slices already,
+    // this works too, without the slice syntax!
+    let word = first_word(my_string_literal);
+}</code></pre>
 <h3 id="other-slices"><a class="header" href="#other-slices">Other Slices</a></h3>
 <p>સ્ટ્રિંગ ભાગો, તમે કદાચ ધારી શકો તેમ, સ્ટ્રિંગ્સ માટે વિશિષ્ટ છે. પરંતુ એક વધુ સામાન્ય ભાગ પ્રકાર પણ છે. આ શૃંખલાને ધ્યાનમાં લો:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]

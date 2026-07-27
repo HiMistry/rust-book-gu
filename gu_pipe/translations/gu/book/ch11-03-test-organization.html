@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -189,13 +189,24 @@
 <p>એકમ પરીક્ષણોનો હેતુ કોડના દરેક એકમને અન્ય કોડથી અલગ કરીને ચકાસવાનો છે, જેથી ખામીયુક્ત કોડને ઝડપથી શોધી શકાય. તમે <code>src</code> ડિરેક્ટરીમાં દરેક ફાઈલમાં એકમ પરીક્ષણો મૂકશો જે કોડનું પરીક્ષણ કરે છે. સંમેલન મુજબ, દરેક ફાઈલમાં <code>tests</code> નામનું મોડ્યુલ બનાવવું અને તેને <code>cfg(test)</code> સાથે નોંધવું.</p>
 <h4 id="the-tests-module-and-cfgtest"><a class="header" href="#the-tests-module-and-cfgtest">The <code>tests</code> Module and <code>#[cfg(test)]</code></a></h4>
 <p><code>#[cfg(test)]</code> એનોટેશન <code>tests</code> મોડ્યુલ પર જણાવે છે કે Rust માત્ર ત્યારે જ પરીક્ષણ કોડને કમ્પાઇલ કરે અને ચલાવે જ્યારે તમે <code>cargo test</code> કરો છો, પરંતુ <code>cargo build</code> કરતી વખતે નહીં. આનાથી કમ્પાઈલ સમય બચે છે જ્યારે તમે માત્ર લાયબ્રેરી બનાવવા માંગતા હોવ અને પરિણામી કમ્પાઈલ્ડ આર્ટિફેક્ટમાં જગ્યા પણ બચે છે કારણ કે પરીક્ષણો સમાવિષ્ટ નથી. તમને ખ્યાલ આવશે કે એકીકરણ પરીક્ષણો અલગ ડિરેક્ટરીમાં જાય છે, તેથી તેમને <code>#[cfg(test)]</code> એનોટેશનની જરૂર નથી. જો કે, યુનિટ પરીક્ષણો કોડની સાથે જ ફાઇલોમાં હોવાથી, તમે <code>#[cfg(test)]</code> નો ઉપયોગ કરીને સ્પષ્ટ કરશો કે તેને કમ્પાઈલ્ડ પરિણામમાં સમાવિષ્ટ ન કરવું જોઈએ.</p>
-<pre><code class="language-text">યાદ રાખો કે જ્યારે આપણે આ પ્રકરણના પ્રથમ વિભાગમાં નવું `adder` પ્રોજેક્ટ બનાવ્યો હતો, ત્યારે કાર્ગોએ આપણી માટે આ કોડ ઉત્પન્ન કર્યો હતો:
-
-</code></pre>
+<p>યાદ રાખો કે જ્યારે આપણે આ પ્રકરણના પ્રથમ વિભાગમાં નવું <code>adder</code> પ્રોજેક્ટ બનાવ્યો હતો, ત્યારે કાર્ગોએ આપણી માટે આ કોડ ઉત્પન્ન કર્યો હતો:</p>
 <p>ફાઈલનું નામ: src/lib.rs</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-01/src/lib.rs}}
+</span>pub fn add(left: u64, right: u64) -&gt; u64 {
+    left + right
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_works() {
+        let result = add(2, 2);
+        assert_eq!(result, 4);
+    }
+}
 <span class="boring">}</span></code></pre>
 <p>સ્વયંસંચાલિત રીતે જનરેટ થયેલ <code>tests</code> મોડ્યુલમાં, એટ્રીબ્યૂટ <code>cfg</code> એટલે રૂપરેખાંકન (configuration) અને તે Rustને જણાવે છે કે ત્યારબાદની વસ્તુ કોઈ ચોક્કસ રૂપરેખાંકન વિકલ્પના આધારે જ સામેલ કરવી જોઈએ. આ કિસ્સામાં, રૂપરેખાંકન વિકલ્પ <code>test</code> છે, જે Rust દ્વારા પરીક્ષણો (tests) કમ્પાઇલ કરવા અને ચલાવવા માટે આપવામાં આવે છે. <code>cfg</code> એટ્રીબ્યૂટનો ઉપયોગ કરીને, Cargo અમારા પરીક્ષણ કોડને માત્ર ત્યારે જ કમ્પાઇલ કરે છે જ્યારે અમે સક્રિયપણે <code>cargo test</code> સાથે પરીક્ષણો ચલાવીએ છીએ. આમાં આ મોડ્યુલમાં રહેલી સહાયક ક્રિયાઓ (helper functions) પણ સમાવિષ્ટ છે, તેમજ <code>#[test]</code> થી નોંધાયેલ ક્રિયાઓ પણ.</p>
 <!-- Old headings. Do not remove or links may break. -->
@@ -204,7 +215,24 @@
 <p><strong>Listing 11-12: Testing a private function</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-12/src/lib.rs}}
+</span>pub fn add_two(a: u64) -&gt; u64 {
+    internal_adder(a, 2)
+}
+
+fn internal_adder(left: u64, right: u64) -&gt; u64 {
+    left + right
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn internal() {
+        let result = internal_adder(2, 2);
+        assert_eq!(result, 4);
+    }
+}
 <span class="boring">}</span></code></pre>
 <p>દર્શાવ્યું છે કે <code>internal_adder</code> કાર્યને <code>pub</code> તરીકે નિશ્ચિત કરવામાં આવ્યું નથી. પરીક્ષણો માત્ર Rust કોડ છે, અને <code>tests</code> મોડ્યુલ એ અન્ય મોડ્યુલ છે. આપણે “મોડ્યુલ વૃક્ષમાં વસ્તુનો ઉલ્લેખ કરવા માટેના માર્ગો” માં ચર્ચા કરી હતી તેમ, બાળ મોડ્યુલોની વસ્તુઓ તેમના પિતૃ મોડ્યુલોની વસ્તુઓનો ઉપયોગ કરી શકે છે. આ પરીક્ષણમાં, અમે <code>use super::*</code> સાથે <code>tests</code> મોડ્યુલના પિતાની તમામ વસ્તુઓને અવકાશમાં લાવીએ છીએ, અને પછી પરીક્ષણ <code>internal_adder</code> ને બોલાવી શકે છે. જો તમને ન લાગે કે ખાનગી કાર્યોનું પરીક્ષણ થવું જોઈએ, તો Rust તમને આવું કરવા માટે દબાણ કરશે નહીં.</p>
 <h3 id="integration-tests"><a class="header" href="#integration-tests">Integration Tests</a></h3>
@@ -225,18 +253,55 @@
 <p><strong>Listing 11-13: An integration test of a function in the <code>adder</code> crate</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-13/tests/integration_test.rs}}
+</span>use adder::add_two;
+
+#[test]
+fn it_adds_two() {
+    let result = add_two(2);
+    assert_eq!(result, 4);
+}
 <span class="boring">}</span></code></pre>
 <p>દરેક ફાઈલ tests ડિરેક્ટરીમાં એક અલગ crate છે, તેથી આપણે આપણી library ને દરેક પરીક્ષણ crate ના scope માં લાવવાની જરૂર છે. એ કારણસર, આપણે કોડની શરૂઆતમાં <code>use adder::add_two;</code> ઉમેરીએ છીએ, જે યુનિટ પરીક્ષણોમાં જરૂરી ન હતું.</p>
 <p>આપણે tests/integration_test.rs માં રહેલા કોઈપણ કોડને <code>#[cfg(test)]</code> સાથે નોંધવાની જરૂર નથી. Cargo tests ડિરેક્ટરીને વિશેષ રીતે ગણે છે અને આ ડિરેક્ટરીમાં રહેલી ફાઈલોને માત્ર ત્યારે જ compile કરે છે જ્યારે આપણે <code>cargo test</code> ચલાવીએ છીએ. હવે <code>cargo test</code> ચલાવો:</p>
-<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/listing-11-13/output.txt}}
+<pre><code class="language-console">$ cargo test
+   Compiling adder v0.1.0 (file:///projects/adder)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.31s
+     Running unittests src/lib.rs (target/debug/deps/adder-1082c4b063a8fbe6)
+
+running 1 test
+test tests::internal ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/integration_test.rs (target/debug/deps/integration_test-1082c4b063a8fbe6)
+
+running 1 test
+test it_adds_two ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests adder
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
 </code></pre>
 <p>ત્રણ વિભાગોમાં પરિણામો સમાવિષ્ટ છે: એકમ પરીક્ષણો, સંકલન પરીક્ષણ અને દસ્તાવેજ પરીક્ષણો. નોંધ કરો કે જો કોઈ વિભાગમાંની કોઈપણ પરીક્ષણ નિષ્ફળ જાય, તો પછીના વિભાગો ચલાવવામાં આવશે નહીં. ઉદાહરણ તરીકે, જો એકમ પરીક્ષણ નિષ્ફળ જાય, તો સંકલન અને દસ્તાવેજ પરીક્ષણો માટે કોઈ પરિણામ નહીં હોય, કારણ કે તે પરીક્ષણો માત્ર ત્યારે જ ચલાવવામાં આવશે જ્યારે તમામ એકમ પરીક્ષણો સફળ થાય.</p>
 <p>એકમ પરીક્ષણો માટેનો પ્રથમ વિભાગ એ જ છે જે આપણે અત્યાર સુધી જોયું છે: દરેક એકમ પરીક્ષણ માટે એક લીટી અને પછી એકમ પરીક્ષણો માટે સારાંશ લીટી.</p>
 <p>ચકાસણી એકીકરણ પરીક્ષણો વિભાગ ચકાસણી એકીકરણ પરીક્ષણો વિભાગ <code>Running tests/integration_test.rs</code> લાઇનથી આરંભ થાય છે. ત્યારબાદ, તે એકીકરણ પરીક્ષણમાં દરેક પરીક્ષણ કાર્ય માટેની એક લાઇન અને એકીકરણ પરીક્ષણના પરિણામોનો સારાંશ હોય છે, જે <code>Doc-tests adder</code> વિભાગ શરૂ થાય તે</p>
 <p>પહેલાં આવે છે. દરેક એકીકરણ પરીક્ષણ ફાઇલનું પોતાનું વિભાગ હોય છે, તેથી જો આપણે <code>tests</code> ડિરેક્ટરીમાં વધુ ફાઇલો ઉમેરીએ, તો વધુ એકીકરણ પરીક્ષણ</p>
 <p>વિભાગો હશે. આપણે હજી પણ <code>cargo test</code> ને Argument તરીકે પરીક્ષણ કાર્યનું નામ સ્પષ્ટ કરીને કોઈ ચોક્કસ એકીકરણ પરીક્ષણ કાર્ય ચલાવી શકીએ છીએ. કોઈ ચોક્કસ એકીકરણ પરીક્ષણ ફાઇલમાંના બધા પરીક્ષણો ચલાવવા માટે, <code>cargo test</code> ના <code>--test</code> Argumentનો ઉપયોગ કરો ત્યારબાદ ફાઇલનું નામ:</p>
-<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/output-only-05-single-integration/output.txt}}
+<pre><code class="language-console">$ cargo test --test integration_test
+   Compiling adder v0.1.0 (file:///projects/adder)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.64s
+     Running tests/integration_test.rs (target/debug/deps/integration_test-82e7799c1bc62298)
+
+running 1 test
+test it_adds_two ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
 </code></pre>
 <p>આ આદેશ માત્ર tests/integration_test.rs ફાઈલમાં રહેલા પરીક્ષણો ચલાવે છે.</p>
 <h4 id="submodules-in-integration-tests"><a class="header" href="#submodules-in-integration-tests">Submodules in Integration Tests</a></h4>
@@ -245,10 +310,40 @@
 <p>સામાન્ય પરીક્ષણો આ ફાઈલ સામાન્ય ઉપયોગી પરીક્ષણો ધરાવે છે જે અન્યત્ર વપરાય છે. ચકાસણીઓ ચકાસણીઓ એ કાર્યો છે જે મૂલ્યની અપેક્ષિતતાને ચકાસે છે. જો ચકાસણી નિષ્ફળ જાય, તો પરીક્ષણ નિષ્ફળ ગણાય છે. ઉદાહરણો આ વિભાગમાં કેટલાક ઉદાહરણો આપ્યા છે જે દર્શાવે છે કે વિવિધ કાર્યોનો ઉપયોગ કેવી રીતે કરવો. મદદરૂપ કાર્યો કેટલાક કાર્યો અહીં આપ્યા છે જે પરીક્ષણો લખવામાં મદદરૂપ થઈ શકે છે: * <code>assert_eq!</code> - બે મૂલ્યો સમાન છે કે નહીં તે ચકાસે છે. * <code>assert_ne!</code> - બે મૂલ્યો અલગ છે કે નહીં તે ચકાસે છે. * <code>assert!</code> - એક શરત સાચી છે કે નહીં તે ચકાસે છે. પરીક્ષણ ડેટા પરીક્ષણો માટે જરૂરી ડેટા અહીં સંગ્રહિત છે. આ ડેટાનો ઉપયોગ વિવિધ પરીક્ષણોમાં થઈ શકે છે. ભૂલોનું સંચાલન આ વિભાગ ભૂલોને કેવી રીતે હેન્ડલ કરવી તે દર્શાવે છે. ભૂલોને યોગ્ય રીતે હેન્ડલ કરવી મહત્વપૂર્ણ છે જેથી કરીને પ્રોગ્રામ ક્રેશ ન થાય. આંતરિક વિગતો આ વિભાગમાં અમલીકરણની કેટલીક આંતરિક વિગતો સમાવિષ્ટ છે. આ માહિતી સામાન્ય રીતે userઓ માટે જરૂરી નથી હોતી.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-12-shared-test-code-problem/tests/common.rs}}
+</span>pub fn setup() {
+    // setup code specific to your library's tests would go here
+}
 <span class="boring">}</span></code></pre>
 <p>જ્યારે આપણે ફરીથી પરીક્ષણો ચલાવીશું, ત્યારે આપણને સામાન્ય.આયર્스 ફાઈલ માટે પરીક્ષણ આઉટપુટમાં એક નવું વિભાગ દેખાશે, ભલે આ ફાઈલમાં કોઈ પરીક્ષણ વિધેયો નથી અને આપણે ક્યાંયથી <code>setup</code> વિધેયને બોલાવ્યું નથી:</p>
-<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/no-listing-12-shared-test-code-problem/output.txt}}
+<pre><code class="language-console">$ cargo test
+   Compiling adder v0.1.0 (file:///projects/adder)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.89s
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
+
+running 1 test
+test tests::internal ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/common.rs (target/debug/deps/common-92948b65e88960b4)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/integration_test.rs (target/debug/deps/integration_test-92948b65e88960b4)
+
+running 1 test
+test it_adds_two ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests adder
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
 </code></pre>
 <p>પરીક્ષણ પરિણામોમાં દેખાય એવું થવું અને તેના માટે <code>running 0 tests</code> પ્રદર્શિત થવું એ આપણે ધાર્યું નહોતું. આપણે માત્ર અન્ય એકીકરણ પરીક્ષણ ફાઇલો સાથે કોડ વહેંચવા માંગતા હતા. <code>common</code> પરીક્ષણ આઉટપુટમાં દેખાવાનું ટાળવા માટે, <code>tests/common.rs</code> બનાવવાની જગ્યાએ, આપણે <code>tests/common/mod.rs</code> બનાવીશું. પ્રોજેક્ટ ડિરેક્ટરી હવે આ પ્રમાણે દેખાય છે:</p>
 <p>├── Cargo.lock
@@ -264,7 +359,17 @@
 <p>છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-13-fix-shared-test-code-problem/tests/integration_test.rs}}
+</span>use adder::add_two;
+
+mod common;
+
+#[test]
+fn it_adds_two() {
+    common::setup();
+
+    let result = add_two(2);
+    assert_eq!(result, 4);
+}
 <span class="boring">}</span></code></pre>
 <p>નોંધ કરો કે <code>mod common;</code> ઘોષણા એ મોડ્યુલ ઘોષણા સમાન છે જે આપણે યાદી 7-21 માં દર્શાવ્યું હતું. પછી, પરીક્ષણ કાર્યમાં, આપણે <code>common::setup()</code> વિધેયને બોલાવી શકીએ છીએ.</p>
 <h4 id="integration-tests-for-binary-crates"><a class="header" href="#integration-tests-for-binary-crates">Integration Tests for Binary Crates</a></h4>

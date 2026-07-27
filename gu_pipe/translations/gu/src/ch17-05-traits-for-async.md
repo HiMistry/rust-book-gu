@@ -32,7 +32,7 @@ pub enum Poll<T> {
 
 મૂલ્ય ઉપલબ્ધ છે. નોંધ: સીધા `poll` ને બોલાવવું કદાચિત જરૂરી નથી, પરંતુ જો તમારે તે કરવાની જરૂર હોય, તો યાદ રાખો કે મોટા ભાગના ભવિષ્ય માટે, કૉલરને `Ready` પરત થયા પછી `poll` ફરીથી બોલાવો જોઈએ નહીં. ઘણા ભવિષ્ય તૈયાર થયા પછી ગભરાટ (panic) કરી શકે છે. જે ભવિષ્યને ફરીથી પોલિંગ કરવું સલામત હોય તે તેમના દસ્તાવેજોમાં સ્પષ્ટપણે જણાવશે. આ વર્તન `Iterator::next` જેવું જ છે.
 
-જ્યારે તમે `await` વાપરતા કોડ જુઓ છો, ત્યારે Rust તેને `poll` કૉલ કરતો કોડમાં રૂપાંતરિત કરે છે. જો તમે યાદ કરો Listing 17-[4][pinning], જ્યાં આપણે એક URL માટે પૃષ્ઠનું શીર્ષક છપાવ્યું હતું જ્યારે તે ઉકેલાઈ ગયું, તો Rust તેને કંઈક એવું (જો કે બરાબર નહીં) માં ફેરવે છે:
+જ્યારે તમે `await` વાપરતા કોડ જુઓ છો, ત્યારે Rust તેને `poll` કૉલ કરતો કોડમાં રૂપાંતરિત કરે છે. જો તમે યાદ કરો Listing 17-4, જ્યાં આપણે એક URL માટે પૃષ્ઠનું શીર્ષક છપાવ્યું હતું જ્યારે તે ઉકેલાઈ ગયું, તો Rust તેને કંઈક એવું (જો કે બરાબર નહીં) માં ફેરવે છે:
 
 ```rust
 match page_title(url).poll() {
@@ -72,10 +72,10 @@ loop {
 
 પાછલા યાદી ૧૭-૧૩ માં, અમે ત્રણ futures ની રાહ જોવા માટે `trpl::join!` macro નો ઉપયોગ કર્યો હતો. જો કે, ઘણીવાર એવી કલેક્શન (collection) હોય છે, જેમ કે વેક્ટર (vector), જેમાં અમુક સંખ્યાના futures હોય છે જે રનટાઇમ (runtime) સુધી જાણીતા હોતા નથી. ચાલો યાદી ૧૭-૧૩ ને યાદી ૧૭-૨૩ માં બદલીએ, જે ત્રણ futures ને વેક્ટરમાં મૂકે છે અને `trpl::join_all` ફંક્શનને બોલાવે છે, જે હજી કમ્પાઇલ (compile) થશે નહીં.
 
-**Listing 17-[2][under-the-hood]3: Awaiting futures in a collection**
+**Listing 17-23: Awaiting futures in a collection**
 
 ```rust
-{{#rustdoc_include ../listings/ch17-async-await/listing-17-[2][under-the-hood]3/src/main.rs:here}}
+{{#rustdoc_include ../listings/ch17-async-await/listing-17-23/src/main.rs:here}}
 ```
 
 આપણે દરેક ભવિષ્યને `Box` માં મૂકીએ છીએ જેથી તે trait object બને, જેમ કે આપણે પ્રકરણ ૧૨ ના “Returning Errors from `run`” વિભાગમાં કર્યું હતું. (આપણે પ્રકરણ ૧૮ માં trait objects વિશે વિગતવાર વાત કરીશું.) trait objects નો ઉપયોગ કરવાથી, આપણે આ પ્રકારો દ્વારા ઉત્પાદિત અનામી ભવિષ્યને સમાન પ્રકાર તરીકે ગણી શકીએ છીએ, કારણ કે તે બધા `Future` trait ને અમલમાં મૂકે છે. This might be surprising.
@@ -85,27 +85,27 @@ loop {
 પછી આપણે ભવિષ્યનો સમૂહ `trpl::join_all` વિધેયને આપીએ છીએ અને પરિણામની રાહ જોઈએ છીએ. જો કે, આ કમ્પાઇલ થતું નથી; અહીં ભૂલ સંદેશાઓનો સંબંધિત ભાગ છે.
 
 <!-- manual-regeneration
-cd listings/ch17-async-await/listing-17-[2][under-the-hood]3
+cd listings/ch17-async-await/listing-17-23
 cargo build
 copy *only* the final `error` block from the errors
 -->
 ```text
-error[E0[2][under-the-hood]77]: `dyn Future<Output = ()>` cannot be unpinned
-  --> src/main.rs:[4][pinning]8:33
+error[E0277]: `dyn Future<Output = ()>` cannot be unpinned
+  --> src/main.rs:48:33
    |
-[4][pinning]8 |         trpl::join_all(futures).await;
+48 |         trpl::join_all(futures).await;
    |                                 ^^^^^ the trait `Unpin` is not implemented for `dyn Future<Output = ()>`
    |
    = note: consider using the `pin!` macro
            consider using `Box::pin` if you need to access the pinned value outside of the current scope
    = note: required for `Box<dyn Future<Output = ()>>` to implement `Future`
 note: required by a bound in `futures_util::future::join_all::JoinAll`
-  --> file:///home/.cargo/registry/src/index.crates.io-19[4][pinning]9cf8c6b5b557f/futures-util-0.3.30/src/future/join_all.rs:29:8
+  --> file:///home/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/futures-util-0.3.30/src/future/join_all.rs:29:8
    |
-[2][under-the-hood]7 | pub struct JoinAll<F>
+27 | pub struct JoinAll<F>
    |            ------- required by a bound in this struct
-[2][under-the-hood]8 | where
-[2][under-the-hood]9 |     F: Future,
+28 | where
+29 |     F: Future,
    |        ^^^^^^ required by this bound in `JoinAll`
 ```
 આ ભૂલ સંદેશમાં આપેલ નોંધ જણાવે છે કે આપણે `pin!` મેક્રોનો ઉપયોગ કરીને મૂલ્યોને પિન કરવા જોઈએ, જેનો અર્થ થાય છે તેમને `Pin` પ્રકારની અંદર મૂકવા, જે ખાતરી આપે છે કે મૂલ્યો સ્મૃતિમાં ખસેડવામાં આવશે નહીં. ભૂલ સંદેશ જણાવે છે કે પિનિંગ જરૂરી છે કારણ કે `dyn Future<Output = ()>` ને `Unpin` લક્ષણ લાગુ કરવાની જરૂર છે અને હાલમાં તે નથી.
@@ -143,16 +143,16 @@ pub trait Future {
 
 આપણે ત્યાં સુધી બધું સારું છે: જો આપણે કોઈ પણ `ownership` અથવા `reference` વિશે ભૂલ કરીએ છીએ, તો `borrow checker` આપણને જણાવશે. જ્યારે આપણે તે બ્લોકને અનુરૂપ ભવિષ્યને ખસેડવા માંગીએ છીએ—જેમ કે તેને
 
-`Vec` માં ખસેડીને `join_all` ને પસાર કરવા—તો બાબતો વધુ જટિલ બની જાય છે. જ્યારે આપણે કોઈ ભવિષ્યને ખસેડીએ છીએ—ભલે તે ડેટા સ્ટ્રક્ચરમાં ધકેલીને `join_all` સાથે ઇટરેટર તરીકે ઉપયોગ કરવા માટે હોય અથવા ફંક્શનમાંથી તેને પરત કરીને—તો તેનો અર્થ એ થાય છે કે આપણે `Rust` આપણી માટે બનાવેલ સ્ટેટ મશીનને ખસેડીએ છીએ. અને `Rust` માં મોટાભાગના અન્ય પ્રકારોથી વિપરીત, `async` બ્લોક્સ માટે `Rust` બનાવેલા ભવિષ્યમાં કોઈપણ આપેલ વિવિધતાના ક્ષેત્રોમાં પોતાની જાતનાં સંદર્ભો હોઈ શકે છે, જે આકૃતિ 17-[4][pinning] માં દર્શાવેલ સરળ ચિત્રમાં બતાવ્યા પ્રમાણે છે.
+`Vec` માં ખસેડીને `join_all` ને પસાર કરવા—તો બાબતો વધુ જટિલ બની જાય છે. જ્યારે આપણે કોઈ ભવિષ્યને ખસેડીએ છીએ—ભલે તે ડેટા સ્ટ્રક્ચરમાં ધકેલીને `join_all` સાથે ઇટરેટર તરીકે ઉપયોગ કરવા માટે હોય અથવા ફંક્શનમાંથી તેને પરત કરીને—તો તેનો અર્થ એ થાય છે કે આપણે `Rust` આપણી માટે બનાવેલ સ્ટેટ મશીનને ખસેડીએ છીએ. અને `Rust` માં મોટાભાગના અન્ય પ્રકારોથી વિપરીત, `async` બ્લોક્સ માટે `Rust` બનાવેલા ભવિષ્યમાં કોઈપણ આપેલ વિવિધતાના ક્ષેત્રોમાં પોતાની જાતનાં સંદર્ભો હોઈ શકે છે, જે આકૃતિ 17-4 માં દર્શાવેલ સરળ ચિત્રમાં બતાવ્યા પ્રમાણે છે.
 
 <figure>
-<img alt="A single-column, three-row table representing a future, fut1, which has data values 0 and 1 in the first two rows and an arrow pointing from the third row back to the second row, representing an internal reference within the future." src="img/trpl17-0[4][pinning].svg" class="center" />
-<figcaption>Figure 17-[4][pinning]: A self-referential data type</figcaption>
+<img alt="A single-column, three-row table representing a future, fut1, which has data values 0 and 1 in the first two rows and an arrow pointing from the third row back to the second row, representing an internal reference within the future." src="img/trpl17-04.svg" class="center" />
+<figcaption>Figure 17-4: A self-referential data type</figcaption>
 </figure>
 સામાન્ય રીતે, જો કે, પોતાની જાતને નિર્દેશ કરતા કોઈપણ વસ્તુને ખસેડવી અસુરક્ષિત છે, કારણ કે સંદર્ભ હંમેશાં જેની તરફ તે નિર્દેશ કરે છે તે સ્મૃતિ સરનામા (memory address) પર નિર્દેશ કરે છે (આકૃતિ ૧૭-૫ જુઓ). જો તમે ડેટા સ્ટ્રક્ચરને ખસેડો છો, તો તે આંતરિક સંદર્ભો જૂના સ્થાન તરફ નિર્દેશ કરતા રહેશે. જો કે, તે સ્મૃતિ સ્થાન હવે અમાન્ય છે. એક વાત એ છે કે, જ્યારે તમે ડેટા સ્ટ્રક્ચરમાં ફેરફાર કરો છો, ત્યારે તેની કિંમત અપડેટ થશે નહીં. બીજી—વધુ મહત્વની—વાત એ છે કે, કમ્પ્યુટર હવે તે સ્મૃતિને અન્ય હેતુઓ માટે વાપરવા માટે મુક્ત છે! તમે પાછળથી સંપૂર્ણપણે અસંબંધિત ડેટા વાંચી શકો છો.
 
 <figure>
-<img alt="Two tables, depicting two futures, fut1 and fut[2][under-the-hood], each of which has one column and three rows, representing the result of having moved a future out of fut1 into fut2. The first, fut1, is grayed out, with a question mark in each index, representing unknown memory. The second, fut2, has 0 and 1 in the first and second rows and an arrow pointing from its third row back to the second row of fut1, representing a pointer that is referencing the old location in memory of the future before it was moved." src="img/trpl17-05.svg" class="center" />
+<img alt="Two tables, depicting two futures, fut1 and fut2, each of which has one column and three rows, representing the result of having moved a future out of fut1 into fut2. The first, fut1, is grayed out, with a question mark in each index, representing unknown memory. The second, fut2, has 0 and 1 in the first and second rows and an arrow pointing from its third row back to the second row of fut1, representing a pointer that is referencing the old location in memory of the future before it was moved." src="img/trpl17-05.svg" class="center" />
 <figcaption>Figure 17-5: The unsafe result of moving a self-referential data type</figcaption>
 </figure>
 સૈદ્ધાંતિક રીતે, Rust compiler દરેક સંદર્ભને કોઈ વસ્તુ તરફ ખસેડતી વખતે અપડેટ કરવાનો પ્રયત્ન કરી શકે છે, પરંતુ તેનાથી ઘણું કામગીરી ભાર વધી શકે છે, વિશેષ કરીને જો સંદર્ભોનું જાળું અપડેટ કરવાની જરૂર હોય તો. જો આપણે ખાતરી કરી શકીએ કે પ્રશ્નમાં રહેલી માહિતી રચના સ્થાનાંતરિત થતી નથી, તો આપણે કોઈ પણ સંદર્ભને અપડેટ કરવાની જરૂર રહેશે નહીં. આ જ Rust ના borrow checker નું કાર્ય છે: સુરક્ષિત કોડમાં, તે તમને કોઈપણ વસ્તુને ખસેડતા અટકાવે છે જેના માટે સક્રિય સંદર્ભ છે.
@@ -166,7 +166,7 @@ pub trait Future {
 અસલમાં, `Box` પોઇન્ટર હજી પણ સ્વતંત્ર રીતે ખસી શકે છે. યાદ રાખો: આપણે એ સુનિશ્ચિત કરવા પર ધ્યાન કેન્દ્રિત કરીએ છીએ કે અંતિમ રીતે જે ડેટાનો સંદર્ભ લેવામાં આવે છે તે તેની જગ્યાએ રહે. જો કોઈ પોઇન્ટર ખસે છે, પરંતુ તે જે ડેટા તરફ નિર્દેશ કરે છે તે સમાન જગ્યાએ હોય, જેમ કે આકૃતિ 17-7 માં દર્શાવેલ છે, તો કોઈ સંભવિત સમસ્યા નથી. (સ્વતંત્ર કવાયતના ભાગ રૂપે, પ્રકારો માટેના દસ્તાવેજો તેમજ `std::pin` મોડ્યુલ જુઓ અને પ્રયત્ન કરો કે તમે `Pin` વડે `Box` ને લપેટીને આ કેવી રીતે કરી શકો.) મહત્વની વાત એ છે કે સ્વ-સંદર્ભિત પ્રકાર પોતે જ ખસી શકતો નથી, કારણ કે તે હજી પણ પિન કરેલો છે.
 
 <figure>
-<img alt="Four boxes laid out in three rough columns, identical to the previous diagram with a change to the second column. Now there are two boxes in the second column, labeled “b1” and “b[2][under-the-hood]”, “b1” is grayed out, and the arrow from “Pin” goes through “b2” instead of “b1”, indicating that the pointer has moved from “b1” to “b2”, but the data in “pinned” has not moved." src="img/trpl17-07.svg" class="center" />
+<img alt="Four boxes laid out in three rough columns, identical to the previous diagram with a change to the second column. Now there are two boxes in the second column, labeled “b1” and “b2”, “b1” is grayed out, and the arrow from “Pin” goes through “b2” instead of “b1”, indicating that the pointer has moved from “b1” to “b2”, but the data in “pinned” has not moved." src="img/trpl17-07.svg" class="center" />
 <figcaption>Figure 17-7: Moving a `Box` which points to a self-referential future type</figcaption>
 </figure>
 જો કે, મોટાભાગના પ્રકારોને ખસેડવા માટે સંપૂર્ણપણે સુરક્ષિત છે, ભલે તે `Pin` પોઇન્ટર પાછળ હોય. આપણે માત્ર પિનિંગ વિશે વિચારવાની જરૂર છે જ્યારે આઇટમ્સમાં આંતરિક સંદર્ભો હોય. સંખ્યાઓ અને બુલિયન જેવી પ્રાથમિક કિંમતો સુરક્ષિત છે કારણ કે તેમાં કોઈ આંતરિક સંદર્ભો નથી. મોટાભાગના પ્રકારો જેની સાથે તમે સામાન્ય રીતે Rust માં કામ કરો છો તે પણ સુરક્ષિત છે. ઉદાહરણ તરીકે, તમે `Vec` ને ખસેડી શકો છો, ચિંતા કર્યા વિના. અત્યાર સુધી આપણે જે જોયું છે, જો તમારી પાસે `Pin<Vec<String>>` હોય, તો તમારે `Pin` દ્વારા પૂરા પાડવામાં આવેલા સુરક્ષિત પરંતુ પ્રતિબંધક API નો ઉપયોગ કરવો પડશે, ભલે `Vec<String>` હંમેશાં સુરક્ષિત હોય જો તેના પર અન્ય કોઈ સંદર્ભો ન હોય. આપણે કમ્પાઇલરને જણાવવાની એક રીત જોઈએ કે આ પ્રકારના કિસ્સાઓમાં આઇટમ્સને ખસેડવું ઠીક છે—અને તે જ જગ્યાએ `Unpin` આવે છે.
@@ -191,15 +191,15 @@ pub trait Future {
 પરિણામ સ્વરૂપે, આપણે એવી ક્રિયાઓ કરી શકીએ છીએ જે `String` દ્વારા `!Unpin` અમલમાં મૂકવામાં આવે તો ગેરકાયદેસર ગણાત. જેમ કે આકૃતિ ૧૭-૯ માં દર્શાવ્યા પ્રમાણે, એક જ સ્થાને મેમરીમાં સ્ટ્રિંગને બદલવી. આ `Pin` સંધિનું ઉલ્લંઘન કરતું નથી, કારણ કે `String` પાસે કોઈ આંતરિક સંદર્ભો નથી જે તેને ખસેડવામાં અસુરક્ષિત બનાવે છે. એ જ કારણે તે `Unpin` અમલમાં મૂકે છે, `!Unpin` નહીં.
 
 <figure>
-<img alt="The same “hello” string data from the previous example, now labeled “s1” and grayed out. The “Pin” box from the previous example now points to a different String instance, one that is labeled “s[2][under-the-hood]”, is valid, has a length of 7usize, and contains the characters of the string “goodbye”. s2 is surrounded by a dotted rectangle because it, too, implements the Unpin trait." src="img/trpl17-09.svg" class="center" />
+<img alt="The same “hello” string data from the previous example, now labeled “s1” and grayed out. The “Pin” box from the previous example now points to a different String instance, one that is labeled “s2”, is valid, has a length of 7usize, and contains the characters of the string “goodbye”. s2 is surrounded by a dotted rectangle because it, too, implements the Unpin trait." src="img/trpl17-09.svg" class="center" />
 <figcaption>Figure 17-9: Replacing the `String` with an entirely different `String` in memory</figcaption>
 </figure>
-હવે આપણને પૂરતું જ્ઞાન છે કે Listing 17-23 માં પાછળના `join_all` કૉલ માટે રિપોર્ટ થયેલી ભૂલોને સમજવા માટે. આપણે મૂળરૂપે async બ્લોક્સ દ્વારા ઉત્પાદિત ભવિષ્યને `Vec<Box<dyn Future<Output = ()>>>` માં ખસેડવાનો પ્રયત્ન કર્યો હતો, પરંતુ આપણે જોયું છે તેમ, તે ભવિષ્યમાં આંતરિક સંદર્ભો હોઈ શકે છે, તેથી તેઓ આપમેળે `Unpin` લાગુ કરતા નથી. એકવાર આપણે તેમને પિન કરીએ, પછી આપણે પરિણામી `Pin` પ્રકારને `Vec` માં આપી શકીએ છીએ, એ વાતનો વિશ્વાસ રાખીને કે ભવિષ્યમાં રહેલાં અંતર્ગત ડેટા ખસેડવામાં આવશે નહીં. Listing 17-2[4][pinning] બતાવે છે કે દરેક ત્રણ ભવિષ્ય વ્યાખ્યાયિત કરવામાં આવે ત્યારે `pin!` મેક્રો કૉલ કરીને અને ટ્રેઇટ ઓબ્જેક્ટ પ્રકારને સમાયોજિત કરીને કોડને કેવી રીતે સુધારવો.
+હવે આપણને પૂરતું જ્ઞાન છે કે Listing 17-23 માં પાછળના `join_all` કૉલ માટે રિપોર્ટ થયેલી ભૂલોને સમજવા માટે. આપણે મૂળરૂપે async બ્લોક્સ દ્વારા ઉત્પાદિત ભવિષ્યને `Vec<Box<dyn Future<Output = ()>>>` માં ખસેડવાનો પ્રયત્ન કર્યો હતો, પરંતુ આપણે જોયું છે તેમ, તે ભવિષ્યમાં આંતરિક સંદર્ભો હોઈ શકે છે, તેથી તેઓ આપમેળે `Unpin` લાગુ કરતા નથી. એકવાર આપણે તેમને પિન કરીએ, પછી આપણે પરિણામી `Pin` પ્રકારને `Vec` માં આપી શકીએ છીએ, એ વાતનો વિશ્વાસ રાખીને કે ભવિષ્યમાં રહેલાં અંતર્ગત ડેટા ખસેડવામાં આવશે નહીં. Listing 17-24 બતાવે છે કે દરેક ત્રણ ભવિષ્ય વ્યાખ્યાયિત કરવામાં આવે ત્યારે `pin!` મેક્રો કૉલ કરીને અને ટ્રેઇટ ઓબ્જેક્ટ પ્રકારને સમાયોજિત કરીને કોડને કેવી રીતે સુધારવો.
 
-**Listing 17-2[4][pinning]: Pinning the futures to enable moving them into the vector**
+**Listing 17-24: Pinning the futures to enable moving them into the vector**
 
 ```rust
-{{#rustdoc_include ../listings/ch17-async-await/listing-17-2[4][pinning]/src/main.rs:here}}
+{{#rustdoc_include ../listings/ch17-async-await/listing-17-24/src/main.rs:here}}
 ```
 
 આ ઉદાહરણ હવે સંપાઈ જાય છે અને ચાલે છે, અને અમે ચલિતકાળમાં વેક્ટર માંથી ભવિષ્ય ઉમેરી અથવા દૂર કરી શકીએ છીએ અને બધાને જોડી શકીએ છીએ.
@@ -210,7 +210,7 @@ pub trait Future {
 
 `Pin` અને `Unpin` કેવી રીતે કાર્ય કરે છે તેની વિગતો, અને તેઓ જે નિયમોનું પાલન કરવા માટે બંધાયેલા છે તે વિશેની માહિતી, `std::pin` ના API દસ્તાવેજોમાં વિસ્તૃતપણે વર્ણવવામાં આવી છે, તેથી જો તમને વધુ જાણવામાં રસ હોય, તો તે શરૂ કરવા માટે
 
-એક ઉત્તમ સ્થળ છે. If you want to understand how things work under the hood in even more detail, see Chapters [2][under-the-hood] and 4 of Asynchronous Programming in Rust . જો તમે વધુ વિગતવાર જાણવા માંગતા હોવ કે વસ્તુઓ કેવી રીતે કાર્ય કરે છે, તો Rust માં અસિંક્રોનસ પ્રોગ્રામિંગના પ્રકરણો ૨ અને ૪ જુઓ.
+એક ઉત્તમ સ્થળ છે. If you want to understand how things work under the hood in even more detail, see Chapters [2][under-the-hood] and [4][pinning] of Asynchronous Programming in Rust . જો તમે વધુ વિગતવાર જાણવા માંગતા હોવ કે વસ્તુઓ કેવી રીતે કાર્ય કરે છે, તો Rust માં અસિંક્રોનસ પ્રોગ્રામિંગના પ્રકરણો ૨ અને ૪ જુઓ.
 
 ### The `Stream` Trait
 
@@ -246,9 +246,12 @@ Stream લક્ષણ વ્યાખ્યાયિત કરે છે એક
 TODO: update this if/when tokio/etc. update their MSRV and switch to using async functions
 in traits, since the lack thereof is the reason they do not yet have this.
 -->
-નોંધ: અગાઉના પ્રકરણમાં આપેલ વ્યાખ્યા આથી થોડી અલગ દેખાય છે, કારણ કે તે Rust ના એવા વર્ઝન માટે સપોર્ટ કરે છે જેણે હજી સુધી ટ્રેઇટમાં async ફંક્શન વાપરવાનું સપોર્ટ નહોતું કર્યું. તેથી, તે આ પ્રમાણે દેખાય છે:
-
-fn next(&mut self) -> Next<'_, Self> where Self: Unpin;
+> નોંધ: અગાઉના પ્રકરણમાં આપેલ વ્યાખ્યા આથી થોડી અલગ દેખાય છે, કારણ કે તે Rust ના એવા વર્ઝન માટે સપોર્ટ કરે છે જેણે હજી સુધી ટ્રેઇટમાં async ફંક્શન વાપરવાનું સપોર્ટ નહોતું કર્યું. તેથી, તે આ પ્રમાણે દેખાય છે:
+>
+> ```rust,ignore
+> fn next(&mut self) -> Next<'_, Self> where Self: Unpin;
+> ```
+>
 તે `Next` પ્રકાર એક `struct` છે જે `Future` અમલમાં મૂકે છે અને આપણને `self` ના સંદર્ભના આયુષ્યને `Next<'_, Self>` સાથે નામ આપવા દે છે, જેથી `await` આ પદ્ધતિ સાથે કાર્ય કરી શકે. The
 
 લક્ષણ તમામ રસપ્રદ પદ્ધતિઓનું ઘર પણ છે જે પ્રવાહો સાથે ઉપયોગ માટે ઉપલબ્ધ છે. `StreamExt` આપોઆપ દરેક પ્રકાર માટે અમલમાં મૂકાય છે જે `Stream` અમલમાં મૂકે છે, પરંતુ આ લક્ષણો અલગથી વ્યાખ્યાયિત કરવામાં આવે છે જેથી સમુદાય મૂળભૂત લક્ષણ પર અસર કર્યા વિના સુવિધા API પર પુનરાવર્તન કરી શકે.
@@ -259,9 +262,9 @@ fn next(&mut self) -> Next<'_, Self> where Self: Unpin;
 
 
 
-[message-passing]: ch17-0[2][under-the-hood]-concurrency-with-async.md#sending-data-between-two-tasks-using-message-passing
+[message-passing]: ch17-02-concurrency-with-async.md#sending-data-between-two-tasks-using-message-passing
 [ch-18]: ch18-00-oop.html
 [under-the-hood]: https://rust-lang.github.io/async-book/02_execution/01_chapter.html
-[pinning]: https://rust-lang.github.io/async-book/0[4][pinning]_pinning/01_chapter.html
+[pinning]: https://rust-lang.github.io/async-book/04_pinning/01_chapter.html
 [async-book]: https://rust-lang.github.io/async-book/
-[streams]: ch17-0[4][pinning]-streams.html
+[streams]: ch17-04-streams.html

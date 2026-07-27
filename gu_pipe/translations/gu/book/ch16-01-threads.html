@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ec56e225.js";
+            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -201,10 +201,22 @@
 <h3 id="creating-a-new-thread-with-spawn"><a class="header" href="#creating-a-new-thread-with-spawn">Creating a New Thread with <code>spawn</code></a></h3>
 <p>નવું થ્રેડ બનાવવા માટે, આપણે <code>thread::spawn</code> ફંક્શનને બોલાવીએ છીએ અને તેને એક ક્લોઝર (આપણે પ્રકરણ ૧૩ માં ક્લોઝર વિશે વાત કરી હતી) પસાર કરીએ છીએ જેમાં આપણે નવા થ્રેડમાં ચલાવવા માંગીએ છીએ તે કોડ હોય છે. લિસ્ટિંગ ૧૬-૧ નું ઉદાહરણ મુખ્ય થ્રેડમાંથી થોડો ટેક્સ્ટ અને બીજા થ્રેડમાંથી થોડો ટેક્સ્ટ છાપે છે.</p>
 <p><strong>Listing 16-1: Creating a new thread to print one thing while the main thread prints something else</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-01/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use std::thread;
+use std::time::Duration;
+
+fn main() {
+    thread::spawn(|| {
+        for i in 1..10 {
+            println!("hi number {i} from the spawned thread!");
+            thread::sleep(Duration::from_millis(1));
+        }
+    });
+
+    for i in 1..5 {
+        println!("hi number {i} from the main thread!");
+        thread::sleep(Duration::from_millis(1));
+    }
+}</code></pre>
 <p>નોંધ જ્યારે Rust કાર્યક્રમના મુખ્ય થ્રેડનું કાર્ય પૂર્ણ થાય છે, ત્યારે બનાવેલા તમામ થ્રેડો બંધ થઈ જાય છે, પછી ભલે તે ચાલુ હોય કે પૂર્ણ થયેલ હોય. આ કાર્યક્રમનું પરિણામ દરેક વખતે થોડું અલગ હોઈ શકે છે, પરંતુ તે નીચેના જેવું દેખાશે:</p>
 <!-- Not extracting output because changes to this output aren't significant;
 the changes are likely to be due to the threads running differently rather than
@@ -226,10 +238,24 @@ hi number 5 from the spawned thread!
 <p>લિસ્ટિંગ ૧૬-૧ માં રહેલો કોડ મોટાભાગના સમયમાં થ્રેડને વહેલાસર બંધ કરી દે છે, કારણ કે મુખ્ય થ્રેડ સમાપ્ત થઈ જાય છે, અને થ્રેડો ચાલવાની ક્રમમાં કોઈ ચોક્કસતા ન હોવાથી, આપણે ખાતરીપૂર્વક કહી શકતા નથી કે સ્પોન થયેલ થ્રેડ ચાલે જશે!</p>
 <p>આપણે <code>thread::spawn</code> નું રીટર્ન વેલ્યુ એક વેરિયેબલમાં સાચવીને સ્પોન થયેલ થ્રેડ ન ચાલવાની અથવા વહેલાસર સમાપ્ત થવાની સમસ્યાનું નિવારણ કરી શકીએ છીએ. <code>thread::spawn</code> નો રીટર્ન પ્રકાર <code>JoinHandle&lt;T&gt;</code> છે. <code>JoinHandle&lt;T&gt;</code> એ એક ઓન કરેલું વેલ્યુ છે, જેના પર આપણે <code>join</code> મેથડ કૉલ કરીએ ત્યારે તે તેના થ્રેડને પૂર્ણ થાય ત્યાં સુધી રાહ જુએ છીએ. લિસ્ટિંગ ૧૬-૨ દર્શાવે છે કે લિસ્ટિંગ ૧૬-૧ માં બનાવેલા થ્રેડના <code>JoinHandle&lt;T&gt;</code> નો ઉપયોગ કેવી રીતે કરવો અને <code>join</code> ને કૉલ કરીને <code>main</code> બહાર નીકળતા પહેલા સ્પોન થયેલ થ્રેડ પૂર્ણ થાય તેની ખાતરી કેવી રીતે કરવી.</p>
 <p><code>from</code>thread::spawn` to guarantee the thread is run to completion“&gt;</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-02/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use std::thread;
+use std::time::Duration;
+
+fn main() {
+    let handle = thread::spawn(|| {
+        for i in 1..10 {
+            println!("hi number {i} from the spawned thread!");
+            thread::sleep(Duration::from_millis(1));
+        }
+    });
+
+    for i in 1..5 {
+        println!("hi number {i} from the main thread!");
+        thread::sleep(Duration::from_millis(1));
+    }
+
+    handle.join().unwrap();
+}</code></pre>
 <p>Calling <code>join</code> <code>join</code> ને બોલાવવાથી હેન્ડલ સાથે સંકળાયેલ થ્રેડ પૂર્ણ થાય ત્યાં સુધી વર્તમાન થ્રેડ અવરોધિત થઈ જાય છે. થ્રેડને અવરોધિત કરવાનો અર્થ એ થાય છે કે તે થ્રેડ કાર્ય કરવા અથવા બહાર નીકળતા અટકી જાય છે. આપણે <code>join</code> ને મુખ્ય થ્રેડના <code>for</code> લૂપ પછી મૂક્યું હોવાથી, યાદી 16-2 ચલાવવાથી આ પ્રકારનું પરિણામ ઉત્પન્ન થવું જોઈએ:</p>
 <!-- Not extracting output because changes to this output aren't significant;
 the changes are likely to be due to the threads running differently rather than
@@ -250,10 +276,24 @@ hi number 9 from the spawned thread!
 </code></pre>
 <p>બે થ્રેડ્સ આગળ ફેરવટ કરતા રહે છે, પરંતુ મુખ્ય થ્રેડ <code>handle.join()</code> ના આહ્વાનને કારણે રાહ જુએ છે અને ઉત્પન્ન થયેલ થ્રેડ પૂર્ણ ન થાય ત્યાં સુધી સમાપ્ત થતો નથી.</p>
 <p>પરંતુ ચાલો જોઈએ કે જ્યારે આપણે <code>handle.join()</code> ને <code>main</code> માં <code>for</code> લૂપ પહેલાં ખસેડીએ ત્યારે શું થાય છે, આ પ્રમાણે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch16-fearless-concurrency/no-listing-01-join-too-early/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use std::thread;
+use std::time::Duration;
+
+fn main() {
+    let handle = thread::spawn(|| {
+        for i in 1..10 {
+            println!("hi number {i} from the spawned thread!");
+            thread::sleep(Duration::from_millis(1));
+        }
+    });
+
+    handle.join().unwrap();
+
+    for i in 1..5 {
+        println!("hi number {i} from the main thread!");
+        thread::sleep(Duration::from_millis(1));
+    }
+}</code></pre>
 <p>મુખ્ય થ્રેડ ઉત્પન્ન થયેલ થ્રેડ પૂર્ણ થાય ત્યાં સુધી રાહ જોશે અને પછી તેનું <code>for</code> લૂપ ચલાવશે, જેથી આઉટપુટ હવે ભળી નહિ જાય, જે અહીં દર્શાવેલ છે:</p>
 <!-- Not extracting output because changes to this output aren't significant;
 the changes are likely to be due to the threads running differently rather than
@@ -277,20 +317,60 @@ hi number 4 from the main thread!
 <p>આપણે વારંવાર <code>thread::spawn</code> માં પાસ કરવામાં આવતા ક્લોઝર સાથે <code>move</code> કીવર્ડનો ઉપયોગ કરીએ છીએ કારણ કે તેનાથી ક્લોઝર userની પર્યાવરણમાંથી તે જે મૂલ્યો વાપરે છે તેનો હસ્તગતિકાર કરે છે, આમ તે મૂલ્યોનું માલિકી એક થ્રેડથી બીજા થ્રેડમાં સ્થાનાંતરિત થાય છે. પ્રકરણ ૧૩ માં “સંદર્ભો મેળવવું અથવા હસ્તગતિકાર કરવું” માં, આપણે ક્લોઝરના સંદર્ભમાં <code>move</code> વિશે ચર્ચા કરી હતી. હવે આપણે <code>move</code> અને <code>thread::spawn</code> વચ્ચેની ક્રિયાપ્રતિક્રિયા પર વધુ ધ્યાન કેન્દ્રિત કરીશું.</p>
 <p>કૃતિ ૧૬-૧ માં નોંધ કરો કે આપણે <code>thread::spawn</code> માં પાસ કરેલો ક્લોઝર કોઈ Argumentો લેતો નથી: આપણે સ્પોન્ડ થ્રેડના કોડમાં મુખ્ય થ્રેડમાંથી કોઈ ડેટા વાપરતા નથી. સ્પોન્ડ થ્રેડમાં ડેટાનો ઉપયોગ કરવા માટે, સ્પોન્ડ થ્રેડના ક્લોઝરે તેને જરૂરી મૂલ્યો મેળવવા જોઈએ. યાદી ૧૬-૩ એક વેક્ટરને મુખ્ય થ્રેડમાં બનાવવાનો અને તેનો ઉપયોગ સ્પોન્ડ થ્રેડમાં કરવાનો પ્રયાસ દર્શાવે છે. જો કે, થોડીવાર પછી તમે જોશો કે તે કામ કરશે નહીં.</p>
 <p><strong>Listing 16-3: Attempting to use a vector created by the main thread in another thread</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-03/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use std::thread;
+
+fn main() {
+    let v = vec![1, 2, 3];
+
+    let handle = thread::spawn(|| {
+        println!("Here's a vector: {v:?}");
+    });
+
+    handle.join().unwrap();
+}</code></pre>
 <p>ક્લોઝર <code>v</code> નો ઉપયોગ કરે છે, તેથી તે <code>v</code> ને કેપ્ચર કરશે અને તેને ક્લોઝરના પર્યાવરણનો ભાગ બનાવશે. કારણ કે <code>thread::spawn</code> આ ક્લોઝરને નવા થ્રેડમાં ચલાવે છે, આપણે <code>v</code> ને તે નવા થ્રેડની અંદરથી મેળવી શકીએ છીએ. પરંતુ જ્યારે આપણે આ ઉદાહરણને કમ્પાઇલ કરીએ છીએ, ત્યારે આપણને નીચેની ભૂલ મળે છે:</p>
-<pre><code class="language-console">{{#include ../listings/ch16-fearless-concurrency/listing-16-03/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling threads v0.1.0 (file:///projects/threads)
+error[E0373]: closure may outlive the current function, but it borrows `v`, which is owned by the current function
+ --&gt; src/main.rs:6:32
+  |
+6 |     let handle = thread::spawn(|| {
+  |                                ^^ may outlive borrowed value `v`
+7 |         println!("Here's a vector: {v:?}");
+  |                                     - `v` is borrowed here
+  |
+note: function requires argument type to outlive `'static`
+ --&gt; src/main.rs:6:18
+  |
+6 |       let handle = thread::spawn(|| {
+  |  __________________^
+7 | |         println!("Here's a vector: {v:?}");
+8 | |     });
+  | |______^
+help: to force the closure to take ownership of `v` (and any other referenced variables), use the `move` keyword
+  |
+6 |     let handle = thread::spawn(move || {
+  |                                ++++
+
+For more information about this error, try `rustc --explain E0373`.
+error: could not compile `threads` (bin "threads") due to 1 previous error
 </code></pre>
 <p>Rust અનુમાન કરે છે કે <code>v</code> ને કેવી રીતે ગ્રહણ કરવું, અને કારણ કે <code>println!</code> ને માત્ર <code>v</code> ના સંદર્ભની જરૂર હોય છે, ક્લોઝર <code>v</code> ઉછીના લેવાનો પ્રયત્ન કરે છે. જોકે, એક સમસ્યા છે: Rust એ જણાવી શકતું નથી કે ઉત્પન્ન થયેલ થ્રેડ કેટલો સમય ચાલશે, તેથી તે જાણતું નથી કે <code>v</code> ના સંદર્ભ હંમેશાં માન્ય રહેશે કે નહીં.</p>
 <p>ઉપશીષ્ટ ૧૬-૪ એક એવી પરિસ્થિતિ દર્શાવે છે જેમાં <code>v</code> નો સંદર્ભ અમાન્ય થવાની શક્યતા વધુ છે.</p>
 <p><strong>Listing 16-4: A thread with a closure that attempts to capture a reference to <code>v</code> from a main thread that drops <code>v</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-04/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use std::thread;
+
+fn main() {
+    let v = vec![1, 2, 3];
+
+    let handle = thread::spawn(|| {
+        println!("Here's a vector: {v:?}");
+    });
+
+    drop(v); // oh no!
+
+    handle.join().unwrap();
+}</code></pre>
 <p>If Rust allowed us to run this code જો Rust આપણને આ કોડ ચલાવવા દેત, તો સંભવ છે કે શરૂ થયેલ થ્રેડ તરત જ પૃષ્ઠભૂમિમાં મૂકવામાં આવે અને બિલકુલ ચાલે નહીં. શરૂ થયેલ થ્રેડની અંદર <code>v</code> નો સંદર્ભ છે, પરંતુ મુખ્ય થ્રેડ તરત જ <code>v</code> ને છોડી દે છે, જે આપણે પ્રકરણ 15 માં ચર્ચા કરેલા <code>drop</code> ફંક્શનનો ઉપયોગ કરીને થાય છે. પછી, જ્યારે શરૂ થયેલ થ્રેડ અમલ કરવાનું શરૂ કરે છે, ત્યારે <code>v</code> હવે માન્ય નથી, તેથી તેનો સંદર્ભ પણ અમાન્ય છે. ઓહ</p>
 <p>નો! Compiler ની ભૂલને સુધારવા માટે Listing 16-3 માં, આપણે ભૂલ સંદેશની સલાહનો ઉપયોગ કરી શકીએ છીએ:</p>
 <!-- manual-regeneration
@@ -303,12 +383,43 @@ after automatic regeneration, look at listings/ch16-fearless-concurrency/listing
 </code></pre>
 <p><code>move</code> કીવર્ડનો ઉપયોગ ક્લોઝર પહેલાં કરવાથી, અમે ક્લોઝરને તે વાપરતા મૂલ્યોની માલિકી લેવાની ફરજ પાડીએ છીએ, તેના બદલે Rust ને અનુમાનિત કરવાની મંજૂરી આપીએ છીએ કે તેણે મૂલ્યો ઉછીના લેવા જોઈએ. લિસ્ટિંગ 16-3 માં કરેલો ફેરફાર લિસ્ટિંગ 16-5 માં દર્શાવ્યા મુજબ કમ્પાઇલ થશે અને આપણી ધાર્યા પ્રમાણે ચાલશે.</p>
 <p><strong>Listing 16-5: Using the <code>move</code> keyword to force a closure to take ownership of the values it uses</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-05/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use std::thread;
+
+fn main() {
+    let v = vec![1, 2, 3];
+
+    let handle = thread::spawn(move || {
+        println!("Here's a vector: {v:?}");
+    });
+
+    handle.join().unwrap();
+}</code></pre>
 <p>આપણે એ જ વસ્તુ કરવાનો પ્રયત્ન કરવા પ્રેરાઈ શકીએ Listing 16-4 માં કોડ સુધારવા માટે જ્યાં મુખ્ય થ્રેડે <code>drop</code> ને <code>move</code> ક્લોઝર દ્વારા બોલાવ્યો હતો. જો કે, આ ઉપાય કામ નહીં કરે કારણ કે Listing 16-4 જે કરવાનો પ્રયત્ન કરી રહ્યું છે તે અન્ય કારણોસર પ્રતિબંધિત છે. જો આપણે ક્લોઝરમાં <code>move</code> ઉમેર્યું હોત, તો આપણે <code>v</code> ને ક્લોઝરના પર્યાવરણમાં ખસેડી શક્યા હોત, અને અમે મુખ્ય થ્રેડમાં તેના પર <code>drop</code> બોલાવી શક્યા ન હોત. તેના બદલે આપણને આ કમ્પાઇલર ભૂલ મળશે:</p>
-<pre><code class="language-console">{{#include ../listings/ch16-fearless-concurrency/output-only-01-move-drop/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling threads v0.1.0 (file:///projects/threads)
+error[E0382]: use of moved value: `v`
+  --&gt; src/main.rs:10:10
+   |
+ 4 |     let v = vec![1, 2, 3];
+   |         - move occurs because `v` has type `Vec&lt;i32&gt;`, which does not implement the `Copy` trait
+ 5 |
+ 6 |     let handle = thread::spawn(move || {
+   |                                ------- value moved into closure here
+ 7 |         println!("Here's a vector: {v:?}");
+   |                                     - variable moved due to use in closure
+...
+10 |     drop(v); // oh no!
+   |          ^ value used here after move
+   |
+help: consider cloning the value before moving it into the closure
+   |
+ 6 ~     let value = v.clone();
+ 7 ~     let handle = thread::spawn(move || {
+ 8 ~         println!("Here's a vector: {value:?}");
+   |
+
+For more information about this error, try `rustc --explain E0382`.
+error: could not compile `threads` (bin "threads") due to 1 previous error
 </code></pre>
 <p>Rustની માલિકીના નિયમોએ ફરી એકવાર આપણને બચાવ્યા છે! Rust રૂઢિચુસ્ત રહીને માત્ર <code>v</code> ને મુખ્ય થ્રેડ માટે ઉછીના આપતું હોવાથી, યાદી 16-3 માં રહેલા કોડમાં આપણને ભૂલ મળી, જેના કારણે સ્પોન કરેલા થ્રેડનો સંદર્ભ (reference) સૈદ્ધાંતિક રીતે અમાન્ય થઈ શકે છે. <code>v</code> ની માલિકીને સ્પોન કરેલા થ્રેડને સોંપવા માટે Rust ને જણાવવાથી, અમે Rustને ખાતરી આપીએ છીએ કે મુખ્ય થ્રેડ હવે <code>v</code> નો ઉપયોગ કરશે નહીં. જો આપણે યાદી 16-4 માં પણ એ જ રીતે ફેરફાર કરીએ, તો જ્યારે આપણે મુખ્ય થ્રેડમાં <code>v</code> નો ઉપયોગ કરવાનો પ્રયાસ કરીએ ત્યારે આપણે માલિકીના નિયમોનું ઉલ્લંઘન કરીશું. <code>move</code> કીવર્ડ Rustની રૂઢિચુસ્ત ઉછીના લેવાની ડિફોલ્ટને વટાવી જાય છે; તે આપણને માલિકીના નિયમો તોડવા દેતું નથી.</p>
 <p>હવે આપણે ધાઘાઓ શું છે અને થ્રેડ API દ્વારા પૂરા પાડવામાં આવેલ પદ્ધતિઓ વિશે વાત કરી લીધી છે, તો ચાલો કેટલાક એવા સંજોગો જોઈએ જેમાં આપણે ધાઘાઓનો ઉપયોગ કરી શકીએ છીએ.</p>
