@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
+            window.path_to_searchindex_js = "searchindex-4bc072ff.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -204,51 +204,114 @@ cd ../../..
 <pre><code class="language-toml">[package] name = "my_project" version = "0.1.0" authors = ["Your Name &lt;your.email@example.com&gt;"] edition = "2021" [dependencies] rand = "0.8.4" serde = { version = "1.0", features = ["derive"] }
 </code></pre>
 <p><code>[package]</code> વિભાગ પ્રોજેક્ટ વિશેની મૂળભૂત માહિતી આપે છે. * <code>name</code>: પ્રોજેક્ટનું નામ. * <code>version</code>: પ્રોજેક્ટનું સંસ્કરણ. * <code>authors</code>: લેખકોની યાદી. * <code>edition</code>: Rust નું આવૃત્તિ (edition). <code>[dependencies]</code> વિભાગ અન્ય <code>crate</code> પર નિર્ભરતા (dependency) દર્શાવે છે. દરેક નિર્ભરતા માટે, તમે સંસ્કરણ અને વિશેષતાઓ (features) સ્પષ્ટ કરી શકો છો. ઉદાહરણ તરીકે, <code>rand = "0.8.4"</code> <code>rand</code> ના સંસ્કરણ 0.8.4 પર નિર્ભરતા દર્શાવે છે, અને <code>serde = { version = "1.0", features = ["derive"] }</code> <code>serde</code> ના સંસ્કરણ 1.0 પર નિર્ભરતા દર્શાવે છે અને <code>derive</code> વિશેષતાનો ઉપયોગ કરે છે. આ ફાઈલને સંપાદિત (edit) કરવા માટે, તમે કોઈપણ ટેક્સ્ટ એડિટરનો ઉપયોગ કરી શકો છો. પરંતુ ખાતરી કરો કે ફાઈલ TOML ફોર્મેટમાં છે.</p>
-<pre><code class="language-toml">{{#include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/Cargo.toml}}
+<pre><code class="language-toml">[package]
+name = "guessing_game"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
 </code></pre>
 <p>જેમ તમે પ્રકરણ ૧ માં જોયું, <code>cargo new</code> તમારા માટે “હેલો, વર્લ્ડ!” કાર્યક્રમ બનાવે છે. src/main.rs ફાઈલ તપાસો:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    println!("Hello, world!");
+}</code></pre>
 <p>હવે ચાલો આ “Hello, world!” કાર્યક્રમ સંકલિત કરીએ અને એ જ પગલામાં <code>cargo run</code> આદેશનો ઉપયોગ કરીને ચલાવીએ:</p>
-<pre><code class="language-console">{{#include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.08s
+     Running `target/debug/guessing_game`
+Hello, world!
 </code></pre>
 <p>The <code>run</code> Command <code>run</code> આદેશ પ્રોજેક્ટ પર ઝડપથી પુનરાવર્તન કરવા માટે ઉપયોગી છે, જેમ કે આપણે આ રમતમાં કરીશું, દરેક પુનરાવર્તનની ચકાસણી કર્યા પછી આગળ વધતા</p>
 <p>પહેલાં. src/main.rs ફાઈલ ફરી ખોલો. તમે આ ફાઈલમાં બધો કોડ લખશો.</p>
 <h2 id="processing-a-guess"><a class="header" href="#processing-a-guess">Processing a Guess</a></h2>
 <p>અનુમાન લગાવવાની રમત કાર્યક્રમના પ્રથમ ભાગમાં user પાસેથી ઇનપુટ માંગવામાં આવશે, તે ઇનપુટની પ્રક્રિયા કરવામાં આવશે અને ખાતરી કરવામાં આવશે કે ઇનપુટ અપેક્ષિત સ્વરૂપમાં છે. શરૂ કરવા માટે, આપણે ખેલાડીને અનુમાન દાખલ કરવાની મંજૂરી આપીશું. Listing 2-1 નો કોડ src/main.rs માં દાખલ કરો.</p>
 <p><strong>Listing 2-1: Code that gets a guess from the user and prints it</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:all}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use std::io;
+
+fn main() {
+    println!("Guess the number!");
+
+    println!("Please input your guess.");
+
+    let mut guess = String::new();
+
+    io::stdin()
+        .read_line(&amp;mut guess)
+        .expect("Failed to read line");
+
+    println!("You guessed: {guess}");
+}</code></pre>
 <p>આ કોડમાં ઘણી માહિતી છે, તેથી ચાલો તેને લીટી દર લીટી જોઈએ. user પાસેથી ઇનપુટ મેળવવા અને પછી પરિણામને આઉટપુટ તરીકે છાપવા માટે, આપણે <code>io</code> ઇનપુટ/આઉટપુટ લાયબ્રેરીને કાર્યક્ષેત્રમાં લાવવાની જરૂર છે. <code>io</code> લાયબ્રેરી પ્રમાણિત લાયબ્રેરીમાંથી આવે છે, જેને <code>std</code> કહેવામાં આવે છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024">use std::io;
+<span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:io}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">    let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">    io::stdin()
+</span><span class="boring">        .read_line(&amp;mut guess)
+</span><span class="boring">        .expect("Failed to read line");
+</span><span class="boring">
+</span><span class="boring">    println!("You guessed: {guess}");
+</span><span class="boring">}</span></code></pre>
 <p>સામાન્ય રીતે, Rust પાસે પ્રમાણિત લાયબ્રેરીમાં વ્યાખ્યાયિત વસ્તુઓનો સમૂહ હોય છે જે દરેક કાર્યક્રમના ક્ષેત્રમાં લાવવામાં આવે છે. આ સમૂહને પ્રલુડ (prelude) કહેવામાં આવે છે, અને</p>
 <p>તમે તેમાં બધું જ પ્રમાણિત લાયબ્રેરી દસ્તાવેજીકરણમાં જોઈ શકો છો. જો તમે જે પ્રકાર વાપરવા માંગો છો તે પ્રલુડમાં નથી, તો તમારે <code>use</code> વિધાન સાથે સ્પષ્ટપણે તે પ્રકારને ક્ષેત્રમાં લાવવો પડશે. <code>std::io</code> લાયબ્રેરીનો ઉપયોગ કરવાથી તમને ઘણી ઉપયોગી સુવિધાઓ મળે છે, જેમાં user પાસેથી ઇનપુટ સ્વીકારવાની ક્ષમતાનો સમાવેશ થાય છે.</p>
 <p>જેમ તમે પ્રકરણ ૧ માં જોયું, <code>main</code> કાર્યક્રમમાં પ્રવેશનું પ્રવેશદ્વાર છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:main}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::io;
+</span><span class="boring">
+</span>fn main() {
+<span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">    let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">    io::stdin()
+</span><span class="boring">        .read_line(&amp;mut guess)
+</span><span class="boring">        .expect("Failed to read line");
+</span><span class="boring">
+</span><span class="boring">    println!("You guessed: {guess}");
+</span><span class="boring">}</span></code></pre>
 <p>ફંક્શન ઘોષણા <code>fn</code> વાક્યરચના નવું ફંક્શન જાહેર કરે છે; કૌંસ, <code>()</code> , સૂચવે છે કે કોઈ પરિમાણો નથી; અને કુંજી કળશ, <code>{</code> , ફંક્શનના પદનો પ્રારંભ કરે</p>
 <p>છે. જેમ તમે પ્રથમ પ્રકરણમાં પણ શીખ્યા તેમ, <code>println!</code> એક મેક્રો છે જે સ્ક્રીન પર સ્ટ્રિંગ છાપે છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::io;
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:print}}
-<span class="boring">}</span></code></pre>
+</span>    println!("Guess the number!");
+
+    println!("Please input your guess.");
+<span class="boring">
+</span><span class="boring">    let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">    io::stdin()
+</span><span class="boring">        .read_line(&amp;mut guess)
+</span><span class="boring">        .expect("Failed to read line");
+</span><span class="boring">
+</span><span class="boring">    println!("You guessed: {guess}");
+</span><span class="boring">}</span></code></pre>
 <p>આ કોડ એક પ્રશ્ન દર્શાવે છે કે આ રમત શું છે અને user પાસેથી ઇનપુટ માંગે છે.</p>
 <h3 id="storing-values-with-variables"><a class="header" href="#storing-values-with-variables">Storing Values with Variables</a></h3>
 <p>પછી, આપણે userના ઇનપુટને સંગ્રહ કરવા માટે એક variable બનાવશું, આ પ્રમાણે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::io;
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:string}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    println!("Please input your guess.");
+</span><span class="boring">
+</span>    let mut guess = String::new();
+<span class="boring">
+</span><span class="boring">    io::stdin()
+</span><span class="boring">        .read_line(&amp;mut guess)
+</span><span class="boring">        .expect("Failed to read line");
+</span><span class="boring">
+</span><span class="boring">    println!("You guessed: {guess}");
+</span><span class="boring">}</span></code></pre>
 <p>હવે આ કાર્યક્રમ રસપ્રદ બની રહ્યો છે! આ નાની લીટીમાં ઘણું બધું થઈ રહ્યું છે. આપણે <code>let</code> વિધાનનો ઉપયોગ variable બનાવવા માટે કરીએ છીએ. અહીં બીજું ઉદાહરણ છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -270,20 +333,42 @@ let mut bananas = 5; // mutable
 <p>સંપૂર્ણ રીતે કહીએ તો, <code>let mut guess = String::new();</code> લાઈને એક પરિવર્તનશીલ (mutable) variable બનાવ્યો છે જે હાલમાં <a href="../std/string/struct.String.html"><code>String</code></a> ના નવો, ખાલી ઉદાહરણ સાથે જોડાયેલો છે. હા!</p>
 <h3 id="receiving-user-input"><a class="header" href="#receiving-user-input">Receiving User Input</a></h3>
 <p>યાદ રાખો કે આપણે <code>use std::io;</code> દ્વારા પ્રમાણિત લાયબ્રેરીમાંથી ઇનપુટ/આઉટપુટ કાર્યક્ષમતાનો સમાવેશ કર્યો હતો. હવે આપણે <code>io</code> મોડ્યુલમાંથી <code>stdin</code> વિધેયને બોલાવીશું, જે આપણને user ઇનપુટને નિયંત્રિત કરવાની મંજૂરી આપશે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::io;
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:read}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">    let mut guess = String::new();
+</span><span class="boring">
+</span>    io::stdin()
+        .read_line(&amp;mut guess)
+<span class="boring">        .expect("Failed to read line");
+</span><span class="boring">
+</span><span class="boring">    println!("You guessed: {guess}");
+</span><span class="boring">}</span></code></pre>
 <p>જો આપણે કાર્યક્રમના આરંભે <code>use std::io;</code> સાથે <code>io</code> મોડ્યુલ આયાત ન કર્યું હોત, તો પણ આપણે તે ફંક્શનને <code>std::io::stdin</code> તરીકે લખીને વાપરી શક્યા હોત. <code>stdin</code> ફંક્શન <a href="../std/io/struct.Stdin.html"><code>std::io::Stdin</code></a> નો એક દાખલો આપે છે, જે પ્રકાર એ તમારા ટર્મિનલ માટે પ્રમાણભૂત ઇનપુટનું સંચાલન કરે છે.</p>
 <p>આગળ, <code>.read_line(&amp;mut guess)</code> લાઇન પ્રમાણભૂત ઇનપુટ સંચાલન પર <a href="../std/io/struct.Stdin.html#method.read_line"><code>read_line</code></a> પદ્ધતિને બોલાવે છે જેથી user પાસેથી ઇનપુટ મેળવી શકાય. આપણે <code>&amp;mut guess</code> ને પણ <code>read_line</code> માટે Argument તરીકે પસાર કરીએ છીએ, જેથી તે કયા સ્ટ્રિંગમાં userનું ઇનપુટ સંગ્રહિત કરવું તે જણાવે. <code>read_line</code> નું સંપૂર્ણ કાર્ય એ છે કે user પ્રમાણભૂત ઇનપુટમાં જે ટાઈપ કરે છે તેને એક સ્ટ્રિંગમાં ઉમેરવું (તેની સામગ્રીને ફરીથી લખ્યા વિના), તેથી આપણે તે સ્ટ્રિંગને Argument તરીકે પસાર કરીએ છીએ. સ્ટ્રિંગ Argument બદલી શકાય તેવી હોવી જોઈએ જેથી પદ્ધતિ સ્ટ્રિંગની સામગ્રીને બદલી શકે.</p>
 <p><code>&amp;</code> સંકેત કરે છે કે આ Argument એક સંદર્ભ (reference) છે, જે તમને કોડના અનેક ભાગોને મેમરીમાં ડેટાની એક નકલ કર્યા વિના એક્સેસ કરવાની રીત આપે છે. સંદર્ભો એક જટિલ લક્ષણ છે, અને Rustનું એક મોટું લાભ એ છે કે સુરક્ષિત રીતે અને સરળતાથી તેનો ઉપયોગ કરવો કેટલું સરળ છે. આ કાર્યક્રમ પૂર્ણ કરવા માટે તમારે તે વિગતો જાણવાની જરૂર નથી. હાલમાં, તમારે માત્ર એટલું જ જાણવું જોઈએ કે variable’s જેમ, સંદર્ભો પણ મૂળભૂત રીતે અમૂર્ત (immutable) હોય છે. તેથી, તેને પરિવર્તનશીલ (mutable) બનાવવા માટે તમારે <code>&amp;mut guess</code> લખવું પડશે, <code>&amp;guess</code> નહીં. (પ્રકરણ 4 સંદર્ભોને વધુ વિગતવાર સમજાવશે.)</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="handling-potential-failure-with-result"><a class="header" href="#handling-potential-failure-with-result">Handling Potential Failure with <code>Result</code></a></h3>
 <p>આ કોડની હારિકા પર અમે હજી કાર્યરત છીએ. હવે અમે ત્રીજી રેખા અંગે ચર્ચા કરી રહ્યા છીએ, પરંતુ નોંધ કરો કે તે એક જ તાર્કિક રેખાનો ભાગ છે. આગળનો ભાગ આ પદ્ધતિ છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::io;
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:expect}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">    let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">    io::stdin()
+</span><span class="boring">        .read_line(&amp;mut guess)
+</span>        .expect("Failed to read line");
+<span class="boring">
+</span><span class="boring">    println!("You guessed: {guess}");
+</span><span class="boring">}</span></code></pre>
 <p>આ કોડ આ રીતે લખી શક્યો હોત:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -294,15 +379,42 @@ let mut bananas = 5; // mutable
 <p>પ્રકરણ ૬ <code>enums</code> વિશે વધુ વિગતવાર માહિતી આપશે. આ <a href="../std/result/enum.Result.html"><code>Result</code></a> પ્રકારોનો હેતુ ભૂલ વ્યવસ્થાપન (error-handling) માહિતીને એન્કોડ કરવાનો છે. <code>Result</code> ના પ્રકારો <code>Ok</code> અને <code>Err</code> છે. <code>Ok</code> પ્રકાર સૂચવે છે કે ક્રિયા સફળ રહી, અને તે સફળતાપૂર્વક જનરેટ થયેલ મૂલ્ય ધરાવે છે. <code>Err</code> પ્રકારનો અર્થ થાય છે કે ક્રિયા નિષ્ફળ ગઈ, અને તેમાં ક્રિયા શા માટે અથવા કેવી રીતે નિષ્ફળ થઈ તે વિશેની માહિતી હોય છે.</p>
 <p><code>Result</code> પ્રકારના મૂલ્યો, કોઈપણ પ્રકારના મૂલ્યોની જેમ, તેમના પર વ્યાખ્યાયિત પદ્ધતિઓ (methods) ધરાવે છે. <code>Result</code> નું ઉદાહરણ <code>expect</code> નામની એક પદ્ધતિને બોલાવી શકે છે. જો આ <code>Result</code> નું ઉદાહરણ <code>Err</code> મૂલ્ય હોય, તો <code>expect</code> પ્રોગ્રામને ક્રેશ કરશે અને તમે <code>expect</code> ને પાસ કરેલા Argument (argument) તરીકે સંદેશ પ્રદર્શિત કરશે. જો <a href="../std/io/struct.Stdin.html#method.read_line"><code>read_line</code></a> પદ્ધતિ <code>Err</code> પરત કરે છે, તો તે સંભવિતપણે અંતર્ગત ઓપરેટિંગ સિસ્ટમમાંથી આવતા ભૂલનું પરિણામ હશે. જો આ <code>Result</code> નું ઉદાહરણ <code>Ok</code> મૂલ્ય હોય, તો <code>expect</code> <code>Ok</code> દ્વારા રાખવામાં આવેલ રીટર્ન મૂલ્ય લેશે અને તે જ મૂલ્ય તમને પરત કરશે જેથી તમે તેનો ઉપયોગ કરી શકો. આ કિસ્સામાં, તે મૂલ્ય userના ઇનપુટમાં બાઇટ્સની સંખ્યા છે.</p>
 <p>જો તમે <code>expect</code> ને બોલાવશો નહીં, તો પ્રોગ્રામ કમ્પાઇલ થશે, પરંતુ તમને એક ચેતવણી મળશે:</p>
-<pre><code class="language-console">{{#include ../listings/ch02-guessing-game-tutorial/no-listing-02-without-expect/output.txt}}
+<pre><code class="language-console">$ cargo build
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+warning: unused `Result` that must be used
+  --&gt; src/main.rs:10:5
+   |
+10 |     io::stdin().read_line(&amp;mut guess);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: this `Result` may be an `Err` variant, which should be handled
+   = note: `#[warn(unused_must_use)]` (part of `#[warn(unused)]`) on by default
+help: use `let _ = ...` to ignore the resulting value
+   |
+10 |     let _ = io::stdin().read_line(&amp;mut guess);
+   |     +++++++
+
+warning: `guessing_game` (bin "guessing_game") generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.59s
 </code></pre>
 <p>Rust ચેતવણી આપે છે કે તમે <a href="../std/io/struct.Stdin.html#method.read_line"><code>read_line</code></a> થી મળેલ <code>Result</code> મૂલ્યનો ઉપયોગ કર્યો નથી, જે દર્શાવે છે કે કાર્યક્રમે સંભવિત ભૂલને નિયંત્રિત</p>
 <p>કરી નથી. ચેતવણી દબાવવાનો યોગ્ય માર્ગ એ ભૂલ-હાલનવારી કોડ લખવાનો છે, પરંતુ અમારા કિસ્સામાં અમે માત્ર એક સમસ્યા થાય ત્યારે આ કાર્યક્રમને ક્રેશ કરવા માંગીએ છીએ, તેથી અમે <code>expect</code> નો ઉપયોગ કરી શકીએ છીએ. પ્રકરણ 9 માં તમે ભૂલોમાંથી પુનઃપ્રાપ્તિ વિશે શીખી શકશો.</p>
 <h3 id="printing-values-with-println-placeholders"><a class="header" href="#printing-values-with-println-placeholders">Printing Values with <code>println!</code> Placeholders</a></h3>
 <p>બંધ કૌંસ સિવાય, અત્યાર સુધીના કોડમાં ચર્ચા કરવા માટે માત્ર એક જ લાઇન બાકી છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::io;
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:print_guess}}
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">    let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">    io::stdin()
+</span><span class="boring">        .read_line(&amp;mut guess)
+</span><span class="boring">        .expect("Failed to read line");
+</span><span class="boring">
+</span>    println!("You guessed: {guess}");
 <span class="boring">}</span></code></pre>
 <p>આ લીટી userના ઇનપુટને હવે સમાવતું String છાપે છે. <code>{}</code> એ એક અસ્થાનિક જગ્યા છે: <code>{}</code> ને નાના કીડીના પંજા તરીકે વિચારો જે મૂલ્યને જગાડે છે. જ્યારે ચલનું મૂલ્ય છાપવામાં આવે, ત્યારે ચલનું નામ કુંચકાંસની અંદર જઈ શકે છે. જ્યારે અભિવ્યક્તિનું પરિણામ છાપવું હોય, ત્યારે ફોર્મેટ સ્ટ્રિંગમાં ખાલી કુંચકાંસ મૂકો, અને પછી દરેક ખાલી કુંચકાંસના સ્થાને છાપવા માટે અલ્પવિરામથી અલગ કરેલી અભિવ્યક્તિઓની યાદી ઉમેરો. <code>println!</code> ને એક જ કોલમાં variable અને અભિવ્યક્તિનું પરિણામ છાપવું એ આ પ્રમાણે દેખાશે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -345,7 +457,8 @@ You guessed: 6
 <pre><code class="language-toml">[package] name = "my_project" version = "0.1.0" authors = ["Your Name &lt;your.email@example.com&gt;"] edition = "2021" [dependencies] rand = "0.8.4" serde = { version = "1.0", features = ["derive"] }
 </code></pre>
 <p><code>[package]</code> વિભાગ પ્રોજેક્ટ વિશેની મૂળભૂત માહિતી આપે છે. * <code>name</code>: પ્રોજેક્ટનું નામ. * <code>version</code>: પ્રોજેક્ટનું સંસ્કરણ. * <code>authors</code>: લેખકોની યાદી. * <code>edition</code>: Rust નું આવૃત્તિ (edition). <code>[dependencies]</code> વિભાગ અન્ય <code>crate</code> પર નિર્ભરતા (dependency) દર્શાવે છે. દરેક નિર્ભરતા માટે, તમે સંસ્કરણ અને વિશેષતાઓ (features) સ્પષ્ટ કરી શકો છો. ઉદાહરણ તરીકે, <code>rand = "0.8.4"</code> <code>rand</code> ના સંસ્કરણ 0.8.4 પર નિર્ભરતા દર્શાવે છે, અને <code>serde = { version = "1.0", features = ["derive"] }</code> <code>serde</code> ના સંસ્કરણ 1.0 પર નિર્ભરતા દર્શાવે છે અને <code>derive</code> વિશેષતાનો ઉપયોગ કરે છે. આ ફાઈલને સંપાદિત (edit) કરવા માટે, તમે કોઈપણ ટેક્સ્ટ એડિટરનો ઉપયોગ કરી શકો છો. પરંતુ ખાતરી કરો કે ફાઈલ TOML ફોર્મેટમાં છે.</p>
-<pre><code class="language-toml">{{#include ../listings/ch02-guessing-game-tutorial/listing-02-02/Cargo.toml:8:}}
+<pre><code class="language-toml">[dependencies]
+rand = "0.10.1"
 </code></pre>
 <p>Cargo.toml ફાઈલમાં, હેડર પછી આવતો ભાગ તે વિભાગનો જ એક ભાગ છે જે બીજા વિભાગની શરૂઆત સુધી ચાલુ રહે છે. <code>[dependencies]</code> માં, તમે કાર્ગોને કયા બાહ્ય ક્રેટ્સ તમારી યોજના પર આધારિત છે અને તે ક્રેટ્સના કયા વર્ઝન જરૂરી છે તે જણાવો છો. આ કિસ્સામાં, અમે <code>rand</code> ક્રેટને સેમેન્ટીક વર્ઝન સ્પેશિફાયર <code>0.8.5</code> સાથે ઉલ્લેખિત કરીએ છીએ. કાર્ગો સેમેન્ટીક વર્ઝનિંગ (ઘણીવાર SemVer તરીકે ઓળખાય છે) સમજે છે, જે વર્ઝન નંબરો લખવા માટેનું એક ધોરણ છે. સ્પેશિફાયર <code>0.8.5</code> એ વાસ્તવમાં <code>^0.8.5</code> નું સંક્ષેપ છે, જેનો અર્થ થાય છે 0.8.5 અથવા તેનાથી ઉપરનું કોઈપણ વર્ઝન પરંતુ 0.9.0 થી નીચેનું વર્ઝન.</p>
 <p><a href="https://doc.rust-lang.org/cargo/">Cargo</a> આ 版本ને જાહેર API સાથે સુસંગત માને છે version 0.8.5, અને આ વિશિષ્ટતા ખાતરી કરે છે કે તમને નવીનતમ પેચ રીલીઝ મળશે જે આ પ્રકરણમાં આપેલા કોડ સાથે સંકલિત થશે. કોઈપણ version 0.9.0 અથવા તેનાથી વધારે નું API એ પહેલાંના ઉદાહરણોમાં વપરાયેલ API જેવું જ હશે તેની કોઈ ખાતરી નથી.</p>
@@ -415,10 +528,27 @@ rand = “0.999.0”
 <h3 id="generating-a-random-number"><a class="header" href="#generating-a-random-number">Generating a Random Number</a></h3>
 <p>ચાલો <code>rand</code> નો ઉપયોગ કરીને અનુમાન કરવા માટે એક સંખ્યા જનરેટ કરવાનું શરૂ કરીએ. આગામી પગલું src/main.rs ને અપડેટ કરવું છે, જે યાદી 2-3 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 2-3: Adding code to generate a random number</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-03/src/main.rs:all}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use std::io;
+
+use rand::prelude::*;
+
+fn main() {
+    println!("Guess the number!");
+
+    let secret_number = rand::rng().random_range(1..=100);
+
+    println!("The secret number is: {secret_number}");
+
+    println!("Please input your guess.");
+
+    let mut guess = String::new();
+
+    io::stdin()
+        .read_line(&amp;mut guess)
+        .expect("Failed to read line");
+
+    println!("You guessed: {guess}");
+}</code></pre>
 <p>પ્રથમ, અમે લાઈન <code>use rand::Rng;</code> ઉમેરીએ છીએ. <code>Rng</code> ટ્રેઇટ એ પદ્ધતિઓ વ્યાખ્યાયિત કરે છે જે રેન્ડમ નંબર જનરેટર અમલમાં મૂકે છે, અને તે પદ્ધતિઓનો ઉપયોગ કરવા માટે આ ટ્રેઇટ અવકાશમાં હોવી આવશ્યક છે. પ્રકરણ ૧૦ વિગતવાર ટ્રેઇટ્સને આવરી લેશે.</p>
 <p>આગળ, અમે વચ્ચે બે લાઈનો ઉમેરી રહ્યા છીએ. પ્રથમ લાઈનમાં, અમે <code>rand::thread_rng</code> ફંક્શનને બોલાવીએ છીએ જે આપણને ચોક્કસ રેન્ડમ નંબર જનરેટર આપે છે: એક જે વર્તમાન થ્રેડ સ્થાનિક છે અને ઓપરેટિંગ સિસ્ટમ દ્વારા બીજિત છે. પછી, અમે રેન્ડમ નંબર જનરેટર પર <code>gen_range</code> પદ્ધતિને બોલાવીએ છીએ. આ પદ્ધતિ <code>Rng</code> ટ્રેઇટ દ્વારા વ્યાખ્યાયિત કરવામાં આવી છે જેનો ઉપયોગ કરીને અમે <code>use rand::Rng;</code> નિવેદન સાથે અવકાશમાં લાવ્યા છીએ. <code>gen_range</code> પદ્ધતિ એક રેન્જ અભિવ્યક્તિને Argument તરીકે લે છે અને શ્રેણીમાં રેન્ડમ નંબર જનરેટ કરે છે. અહીં આપણે જે રેન્જ અભિવ્યક્તિનો ઉપયોગ કરી રહ્યા છીએ તે <code>start..=end</code> સ્વરૂપ ધરાવે છે અને નીચલા અને ઉપલા બંને સરહદો પર સમાવિષ્ટ છે, તેથી આપણને ૧ થી ૧૦૦ વચ્ચેની સંખ્યા મેળવવા માટે <code>1..=100</code> સ્પષ્ટ કરવાની જરૂર છે.</p>
 <p>નોંધ: તમારે કઈ traits વાપરવી અને કયા methods તથા functions બોલાવવા તે પહેલાં ખબર નહિ હોય, માટે દરેક crate મા તેના ઉપયોગ માટે સૂચનાઓ સાથે documentation હોય છે. Cargo ની એક બીજી ઉપયોગી વિશેષતા એ છે કે <code>cargo doc --open</code> આ command ચલાવવાથી તમારા બધા dependencies દ્વારા આપવામાં આવેલું documentation સ્થાનિક રીતે બને છે અને તમારા browser માં ખુલે છે. જો તમે <code>rand</code> crate ના અન્ય કાર્યક્ષમતામાં રસ ધરાવો છો, ઉદાહરણ તરીકે, તો <code>cargo doc --open</code> ચલાવો અને ડાબી બાજુના sidebar માં <code>rand</code> પર ક્લિક કરો.</p>
@@ -454,10 +584,35 @@ You guessed: 5
 <h2 id="comparing-the-guess-to-the-secret-number"><a class="header" href="#comparing-the-guess-to-the-secret-number">Comparing the Guess to the Secret Number</a></h2>
 <p>હવે આપણી પાસે userનો ઇનપુટ અને એક યાદ્ચ્છિક સંખ્યા છે, તો આપણે તેમની સરખામણી કરી શકીએ છીએ. આ ક્રિયા સૂચિ 2-4 માં દર્શાવેલ છે. નોંધ કરો કે આ કોડ હજી કમ્પાઇલ થશે નહીં, જે અમે સમજાવીશું.</p>
 <p><strong>Listing 2-4: Handling the possible return values of comparing two numbers</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-04/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use std::cmp::Ordering;
+use std::io;
+
+use rand::prelude::*;
+
+fn main() {
+    // --snip--
+<span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
+</span><span class="boring">
+</span><span class="boring">    println!("The secret number is: {secret_number}");
+</span><span class="boring">
+</span><span class="boring">    println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">    let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">    io::stdin()
+</span><span class="boring">        .read_line(&amp;mut guess)
+</span><span class="boring">        .expect("Failed to read line");
+</span>
+    println!("You guessed: {guess}");
+
+    match guess.cmp(&amp;secret_number) {
+        Ordering::Less =&gt; println!("Too small!"),
+        Ordering::Greater =&gt; println!("Too big!"),
+        Ordering::Equal =&gt; println!("You win!"),
+    }
+}</code></pre>
 <p>સૌ પ્રથમ, આપણે બીજું <code>use</code> વિધાન ઉમેરીએ છીએ, જે <code>std::cmp::Ordering</code> પ્રકારને પ્રમાણિત પુસ્તકાલયમાંથી અવકાશમાં લાવે છે. <code>Ordering</code> પ્રકાર એ અન્ય enum છે અને તેમાં <code>Less</code>, <code>Greater</code>, અને <code>Equal</code> વિવિધતાઓ છે. આ ત્રણ પરિણામો છે જે બે મૂલ્યોની સરખામણી કરતી વખતે શક્ય છે.</p>
 <p>પછી, આપણે નીચેના ભાગમાં પાંચ નવી લીટીઓ ઉમેરીએ છીએ જે <code>Ordering</code> પ્રકારનો ઉપયોગ કરે છે. <code>cmp</code> પદ્ધતિ બે મૂલ્યોની સરખામણી કરે છે અને તેની કોઈપણ વસ્તુ પર બોલાવી શકાય છે જેની સરખામણી કરી શકાય છે. તે તમે જેની સાથે સરખામણી કરવા માંગો છો તેના સંદર્ભ લે છે: અહીં, તે <code>guess</code> ની <code>secret_number</code> સાથે સરખામણી કરે છે. પછી, તે <code>use</code> વિધાન સાથે અવકાશમાં લાવવામાં આવેલા <code>Ordering</code> enum ની એક વિવિધતા પરત કરે છે. અમે <a href="ch06-02-match.html"><code>match</code></a> અભિવ્યક્તિનો ઉપયોગ કરીએ છીએ કે <code>cmp</code> કૉલમાંથી પરત કરવામાં આવેલી <code>Ordering</code> ની કઈ વિવિધતા હતી તેના આધારે આગળ શું કરવું તે નક્કી કરવા માટે, જે મૂલ્યો <code>guess</code> અને <code>secret_number</code> માં છે.</p>
 <p>A <a href="ch06-02-match.html"><code>match</code></a> અભિવ્યક્તિ આર્મ્ઝથી બનેલી હોય છે. એક આર્મમાં એક દાખલો (pattern) હોય છે જેની સાથે સરખામણી કરવામાં આવે છે, અને જો <code>match</code> ને આપેલું મૂલ્ય તે આર્મના દાખલા સાથે બંધબેસે તો કયો કોડ ચલાવવો જોઈએ. Rust આપેલા મૂલ્યને લે છે અને દરેક આર્મના દાખલાને વારાફરતી તપાસે છે. દાખલાઓ અને <code>match</code> રચના શક્તિશાળી Rust વિશેષતાઓ છે: તે તમને વિવિધ પરિસ્થિતિઓને વ્યક્ત કરવાની મંજૂરી આપે છે જે તમારા કોડને મળી શકે છે, અને ખાતરી કરે છે કે તમે બધાને હેન્ડલ કરો છો. આ વિશેષતાઓની વિગતવાર ચર્ચા પ્રકરણ ૬ અને પ્રકરણ ૧૯ માં કરવામાં આવશે.</p>
@@ -468,14 +623,64 @@ You guessed: 5
 The error numbers in this output should be that of the code **WITHOUT** the
 anchor or snip comments
 -->
-<pre><code class="language-console">{{#include ../listings/ch02-guessing-game-tutorial/listing-02-04/output.txt}}
+<pre><code class="language-console">$ cargo build
+   Compiling libc v0.2.186
+   Compiling rand_core v0.10.1
+   Compiling getrandom v0.4.3
+   Compiling cfg-if v1.0.0
+   Compiling chacha20 v0.10.1
+   Compiling rand v0.10.1
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+error[E0308]: mismatched types
+  --&gt; src/main.rs:23:21
+   |
+23 |     match guess.cmp(&amp;secret_number) {
+   |                 --- ^^^^^^^^^^^^^^ expected `&amp;String`, found `&amp;{integer}`
+   |                 |
+   |                 arguments to this method are incorrect
+   |
+   = note: expected reference `&amp;String`
+              found reference `&amp;{integer}`
+note: method defined here
+  --&gt; /rustc/2d8144b7880597b6e6d3dfd63a9a9efae3f533d3/library/core/src/cmp.rs:1000:7
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `guessing_game` (bin "guessing_game") due to 1 previous error
 </code></pre>
 <p>ભૂલનું મૂળ એ જણાવે છે કે પ્રકારો મેળ ખાતા નથી. Rust પાસે મજબૂત, સ્થિર પ્રકારની સિસ્ટમ છે. જોકે, તેની પાસે પ્રકાર અનુમાન પણ છે. જ્યારે આપણે <code>let mut guess = String::new()</code> લખ્યું, ત્યારે Rust એ અનુમાન લગાવી શક્યું કે <code>guess</code> એક <a href="../std/string/struct.String.html"><code>String</code></a> હોવું જોઈએ અને આપણને પ્રકાર લખવાની જરૂર ન પડી. <code>secret_number</code>, બીજી તરફ, એક સંખ્યા પ્રકાર છે. Rust ના કેટલાક સંખ્યા પ્રકારોમાં 1 અને 100 ની વચ્ચે મૂલ્ય હોઈ શકે છે: <code>i32</code>, ૩૨-બીટની સંખ્યા; <code>u32</code>, અનસાઈન્ડ ૩૨-બીટની સંખ્યા; <code>i64</code>, ૬૪-બીટની સંખ્યા; તેમજ અન્ય. અન્યથા ઉલ્લેખિત ન હોય તો, Rust ડિફૉલ્ટ રૂપે <code>i32</code> પર આવે છે, જે <code>secret_number</code> નો પ્રકાર છે સિવાય કે તમે અન્યત્ર પ્રકારની માહિતી ઉમેરો કે જેના કારણે Rust કોઈ અલગ સંખ્યાત્મક પ્રકારનું અનુમાન કરે. ભૂલનું કારણ એ છે કે Rust સ્ટ્રિંગ અને સંખ્યા પ્રકારની સરખામણી કરી શકતું નથી.</p>
 <p>આખરે, અમારો ધ્યેય એ <a href="../std/string/struct.String.html"><code>String</code></a> ને અંક પ્રકારમાં રૂપાંતરિત કરવાનો છે જે પ્રોગ્રામ ઇનપુટ તરીકે વાંચે છે, જેથી અમે તેને ગુપ્ત સંખ્યા સાથે સંખ્યાત્મક રીતે સરખાવી શકીએ. અમે આ કાર્ય <code>main</code> ફંક્શનના મુખ્ય ભાગમાં આ લીટી ઉમેરીને કરીએ છીએ:</p>
 <p>ફાઈલનું નામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::cmp::Ordering;
+</span><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">use rand::prelude::*;
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-03-convert-string-to-number/src/main.rs:here}}
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
+</span><span class="boring">
+</span><span class="boring">    println!("The secret number is: {secret_number}");
+</span><span class="boring">
+</span><span class="boring">    println!("Please input your guess.");
+</span><span class="boring">
+</span>    // --snip--
+
+    let mut guess = String::new();
+
+    io::stdin()
+        .read_line(&amp;mut guess)
+        .expect("Failed to read line");
+
+    let guess: u32 = guess.trim().parse().expect("Please type a number!");
+
+    println!("You guessed: {guess}");
+
+    match guess.cmp(&amp;secret_number) {
+        Ordering::Less =&gt; println!("Too small!"),
+        Ordering::Greater =&gt; println!("Too big!"),
+        Ordering::Equal =&gt; println!("You win!"),
+    }
 <span class="boring">}</span></code></pre>
 <p>Please provide the text you want me to translate. I am ready when you are!</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -510,10 +715,43 @@ Too big!
 <h2 id="allowing-multiple-guesses-with-looping"><a class="header" href="#allowing-multiple-guesses-with-looping">Allowing Multiple Guesses with Looping</a></h2>
 <p><code>loop</code> કીવર્ડ અનંત લૂપ બનાવે છે. આપણે userઓને સંખ્યાનું અનુમાન કરવાની વધુ તકો આપવા માટે એક લૂપ ઉમેરીશું:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::cmp::Ordering;
+</span><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">use rand::prelude::*;
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-04-looping/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
+</span><span class="boring">
+</span>    // --snip--
+
+    println!("The secret number is: {secret_number}");
+
+    loop {
+        println!("Please input your guess.");
+
+        // --snip--
+
+<span class="boring">
+</span><span class="boring">        let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">        io::stdin()
+</span><span class="boring">            .read_line(&amp;mut guess)
+</span><span class="boring">            .expect("Failed to read line");
+</span><span class="boring">
+</span><span class="boring">        let guess: u32 = guess.trim().parse().expect("Please type a number!");
+</span><span class="boring">
+</span><span class="boring">        println!("You guessed: {guess}");
+</span><span class="boring">
+</span>        match guess.cmp(&amp;secret_number) {
+            Ordering::Less =&gt; println!("Too small!"),
+            Ordering::Greater =&gt; println!("Too big!"),
+            Ordering::Equal =&gt; println!("You win!"),
+        }
+    }
+}</code></pre>
 <p>જેમ કે તમે જોઈ શકો છો, અમે અનુમાન ઇનપુટ પ્રોમ્પ્ટથી આગળ બધું જ એક લૂપમાં ખસેડ્યું છે. લૂપની અંદરની લીટીઓને વધુ ચાર જગ્યાઓથી ખાલી કરો અને પ્રોગ્રામ ફરીથી ચલાવો. પ્રોગ્રામ હવે કાયમ માટે બીજું અનુમાન માંગશે, જે વાસ્તવમાં એક નવી સમસ્યા ઊભી કરે છે. એવું લાગે તેમ નથી કે user બહાર નીકળી શકે!</p>
 <p>user હંમેશાં કીબોર્ડ શૉર્ટકટ ctrl - C નો ઉપયોગ કરીને પ્રોગ્રામને વિક્ષેપિત કરી શકે છે. પરંતુ આ અસંતોષજનક રાક્ષસમાંથી છૂટવાની બીજી રીત છે, જે <code>parse</code> ચર્ચામાં “ગુપ્ત સંખ્યા સાથે અનુમાનની સરખામણી” માં ઉલ્લેખ કર્યો હતો: જો user બિન-સંખ્યાત્મક જવાબ દાખલ કરે તો પ્રોગ્રામ ક્રેશ થઈ જશે. અમે userને બહાર નીકળવા દેવા માટે તેનો લાભ લઈ શકીએ છીએ, જે અહીં દર્શાવેલ છે:</p>
 <!-- manual-regeneration
@@ -554,18 +792,89 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 <h3 id="quitting-after-a-correct-guess"><a class="header" href="#quitting-after-a-correct-guess">Quitting After a Correct Guess</a></h3>
 <p>ચાલો, user વિજયી થાય ત્યારે રમતને સમાપ્ત કરવા માટે <code>break</code> નિવેદક ઉમેરીને પ્રોગ્રામ કરીએ:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::cmp::Ordering;
+</span><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">use rand::prelude::*;
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-05-quitting/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
+</span><span class="boring">
+</span><span class="boring">    println!("The secret number is: {secret_number}");
+</span><span class="boring">
+</span><span class="boring">    loop {
+</span><span class="boring">        println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">        let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">        io::stdin()
+</span><span class="boring">            .read_line(&amp;mut guess)
+</span><span class="boring">            .expect("Failed to read line");
+</span><span class="boring">
+</span><span class="boring">        let guess: u32 = guess.trim().parse().expect("Please type a number!");
+</span><span class="boring">
+</span><span class="boring">        println!("You guessed: {guess}");
+</span><span class="boring">
+</span>        // --snip--
+
+        match guess.cmp(&amp;secret_number) {
+            Ordering::Less =&gt; println!("Too small!"),
+            Ordering::Greater =&gt; println!("Too big!"),
+            Ordering::Equal =&gt; {
+                println!("You win!");
+                break;
+            }
+        }
+    }
+}</code></pre>
 <p><code>break</code> લીટી <code>You win!</code> પછી ઉમેરવાથી પ્રોગ્રામ લૂપમાંથી બહાર નીકળી જાય છે જ્યારે user ગુપ્ત સંખ્યા યોગ્ય રીતે અનુમાન કરે છે. લૂપમાંથી બહાર નીકળવાનો અર્થ એ પણ થાય છે કે પ્રોગ્રામમાંથી બહાર નીકળવું, કારણ કે લૂપ <code>main</code> નો અંતિમ ભાગ છે.</p>
 <h3 id="handling-invalid-input"><a class="header" href="#handling-invalid-input">Handling Invalid Input</a></h3>
 <p>રમતની વર્તણૂકને વધુ સુધારવા માટે, જ્યારે user અંક સિવાયનો ઇનપુટ આપે ત્યારે પ્રોગ્રામ ક્રેશ થવાને બદલે, ચાલો રમતને તે ઇનપુટને અવગણવા દે જેથી કરીને user અનુમાન લગાવવાનું ચાલુ રાખી શકે. આપણે લિસ્ટિંગ 2-5 માં દર્શાવ્યા પ્રમાણે <code>guess</code> ને <a href="../std/string/struct.String.html"><code>String</code></a> થી <code>u32</code> માં રૂપાંતરિત કરતી લીટીમાં ફેરફાર કરીને આ કરી શકીએ છીએ.</p>
 <p><strong>Listing 2-5: Ignoring a non-number guess and asking for another guess instead of crashing the program</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::cmp::Ordering;
+</span><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">use rand::prelude::*;
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-05/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
+</span><span class="boring">
+</span><span class="boring">    println!("The secret number is: {secret_number}");
+</span><span class="boring">
+</span><span class="boring">    loop {
+</span><span class="boring">        println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">        let mut guess = String::new();
+</span><span class="boring">
+</span>        // --snip--
+
+        io::stdin()
+            .read_line(&amp;mut guess)
+            .expect("Failed to read line");
+
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) =&gt; num,
+            Err(_) =&gt; continue,
+        };
+
+        println!("You guessed: {guess}");
+
+        // --snip--
+<span class="boring">
+</span><span class="boring">        match guess.cmp(&amp;secret_number) {
+</span><span class="boring">            Ordering::Less =&gt; println!("Too small!"),
+</span><span class="boring">            Ordering::Greater =&gt; println!("Too big!"),
+</span><span class="boring">            Ordering::Equal =&gt; {
+</span><span class="boring">                println!("You win!");
+</span><span class="boring">                break;
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
 <p>જો <code>parse</code> ભૂલ પર ક્રેશ થવાનું ટાળીને ભૂલનું સંચાલન કરવા માટે, અમે <code>expect</code> કૉલથી <code>match</code> અભિવ્યક્તિમાં જઈએ છીએ. યાદ રાખો કે <code>parse</code> એક <a href="../std/result/enum.Result.html"><code>Result</code></a> પ્રકાર આપે છે અને <code>Result</code> એ એક enum છે જેમાં <code>Ok</code> અને <code>Err</code> પ્રકારો આવેલાં છે. અમે અહીં <code>match</code> અભિવ્યક્તિનો ઉપયોગ કરી રહ્યા છીએ, જેવી રીતે અમે <code>cmp</code> પદ્ધતિના <code>Ordering</code> પરિણામ સાથે</p>
 <p>કર્યું હતું. If <code>parse</code> is able to successfully turn the string into a number, it will return an <code>Ok</code> value that contains the resultant number. That <code>Ok</code> value will match the first arm’s pattern, and the <a href="ch06-02-match.html"><code>match</code></a> expression will just return the <code>num</code> value that <code>parse</code> produced and put inside the <code>Ok</code> value. That number will end up right where we want it in the new <code>guess</code> variable we’re creating. જો <code>parse</code> સક્ષમ હોય તો સ્ટ્રિંગને સંખ્યામાં ફેરવી શકે છે, તો તે એક <code>Ok</code> મૂલ્ય આપશે જેમાં પરિણામી સંખ્યા સમાવિષ્ટ હશે. તે <code>Ok</code> મૂલ્ય પ્રથમ આર્મની પેટર્ન સાથે મેળ ખાય છે, અને <code>match</code> અભિવ્યક્તિ માત્ર <code>num</code> મૂલ્ય પરત કરશે જે <code>parse</code> ઉત્પન્ન કરે છે અને તેને <code>Ok</code> મૂલ્યમાં મૂકે છે. તે સંખ્યા અમારા દ્વારા નિર્માણ પામતા નવા <code>guess</code> ચલકમાં યોગ્ય જગ્યાએ આવી જશે.</p>
 <p>જો <code>parse</code> શબ્દમાળાને સંખ્યામાં પરિવર્તિત કરી શકતું નથી, તો તે એક <code>Err</code> મૂલ્ય પાછું લાવશે જેમાં ભૂલ વિશે વધુ માહિતી હશે. આ <code>Err</code> મૂલ્ય પ્રથમ <a href="ch06-02-match.html"><code>match</code></a> શસ્ત્રના <code>Ok(num)</code> પેટર્ન સાથે મેળ ખાતું નથી, પરંતુ તે બીજા શસ્ત્રના <code>Err(_)</code> પેટર્ન સાથે મેળ ખાય છે. અન્ડરસ્કોર, <code>_</code>, એક સર્વસામાન્ય મૂલ્ય છે; આ ઉદાહરણમાં, અમે કહી રહ્યા છીએ કે અમે તમામ <code>Err</code> મૂલ્યોને મેળ કરવા માંગીએ છીએ, ભલે તેમની અંદરની માહિતી ગમે તે હોય. તેથી, પ્રોગ્રામ બીજા શસ્ત્રના કોડ, <code>continue</code>, ને ચલાવશે, જે પ્રોગ્રામને <code>loop</code> ના આગલા પુનરાવર્તન પર લઈ જાય છે અને બીજો પ્રયાસ કરવા માટે કહે છે. આમ, અસરકારક રીતે, પ્રોગ્રામ <code>parse</code> દ્વારા આવી શકે તેવી તમામ ભૂલોને અવગણે છે!</p>
@@ -601,10 +910,42 @@ You win!
 </code></pre>
 <p>શાનદાર! એક નાનકડા અંતિમ સુધારણા સાથે, આપણે અનુમાન લગાવવાની રમત પૂરી કરીશું. યાદ કરો કે આ કાર્યક્રમ હજી સુધી ગુપ્ત સંખ્યા છાપી રહ્યો છે. પરીક્ષણ માટે તે સારું કામ કર્યું હતું, પરંતુ તેનાથી રમત બગડે છે. ચાલો <code>println!</code> ને દૂર કરીએ જે ગુપ્ત સંખ્યા દર્શાવે છે. સૂચિ 2-6 અંતિમ કોડ દર્શાવે છે.</p>
 <p><strong>Listing 2-6: Complete guessing game code</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-06/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use std::cmp::Ordering;
+use std::io;
+
+use rand::prelude::*;
+
+fn main() {
+    println!("Guess the number!");
+
+    let secret_number = rand::rng().random_range(1..=100);
+
+    loop {
+        println!("Please input your guess.");
+
+        let mut guess = String::new();
+
+        io::stdin()
+            .read_line(&amp;mut guess)
+            .expect("Failed to read line");
+
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) =&gt; num,
+            Err(_) =&gt; continue,
+        };
+
+        println!("You guessed: {guess}");
+
+        match guess.cmp(&amp;secret_number) {
+            Ordering::Less =&gt; println!("Too small!"),
+            Ordering::Greater =&gt; println!("Too big!"),
+            Ordering::Equal =&gt; {
+                println!("You win!");
+                break;
+            }
+        }
+    }
+}</code></pre>
 <p>હવે, તમે અનુમાન લગાવવાની રમત સફળતાપૂર્વક બનાવેલી છે. અભિનંદન!</p>
 <h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
 <p>આ પ્રોજેક્ટ એ ઘણાં નવા Rust ખ્યાલોથી પરિચય કરાવવાનો એક વ્યવહારુ માર્ગ હતો: <code>let</code>, <a href="ch06-02-match.html"><code>match</code></a>, વિધેયો, બાહ્ય ક્રેટોનો ઉપયોગ અને બીજા ઘણા. આગામી થોડા પ્રકરણોમાં, તમે આ ખ્યાલો વિશે વધુ વિગતવાર શીખી શકશો. પ્રકરણ ૩ સામાન્ય રીતે મોટાભાગની પ્રોગ્રામિંગ ભાષાઓમાં જોવા મળતા variable, ડેટા પ્રકારો અને વિધેયો જેવા ખ્યાલોને આવરી લે છે, અને Rust માં તેનો ઉપયોગ કેવી રીતે કરવો તે દર્શાવે છે. પ્રકરણ ૪ માલિકી (ownership) વિશે વાત કરે છે, જે Rust ને અન્ય ભાષાઓથી અલગ પાડે છે. પ્રકરણ ૫ સ્ટ્રક્ચર્સ અને મેથડ સિન્ટેક્સની ચર્ચા કરે છે, અને પ્રકરણ ૬ એનુમ્સ કેવી રીતે કાર્ય કરે છે તે સમજાવે છે.</p>

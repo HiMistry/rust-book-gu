@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
+            window.path_to_searchindex_js = "searchindex-4bc072ff.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -195,24 +195,38 @@
 <p><code>T</code> અને <code>E</code> સામાન્ય પ્રકારના પરિમાણો છે: આપણે જનરિક્સ વિશે પ્રકરણ ૧૦ માં વધુ વિગતવાર ચર્ચા કરીશું. અત્યારે તમારે જે જાણવાની જરૂર છે તે એ છે કે <code>T</code> એ સફળતાની સ્થિતિમાં <code>Ok</code> વિવિધતા (variant) માં પાછો આપવામાં આવનાર મૂલ્યનો પ્રકાર દર્શાવે છે, અને <code>E</code> એ નિષ્ફળતાની સ્થિતિમાં <code>Err</code> વિવિધતામાં પાછો આપવામાં આવનાર ભૂલનો પ્રકાર દર્શાવે છે. કારણ કે <code>Result</code> પાસે આ સામાન્ય પ્રકારના પરિમાણો છે, અમે <code>Result</code> પ્રકાર અને તેના પર વ્યાખ્યાયિત કાર્યોનો ઉપયોગ ઘણી અલગ-અલગ પરિસ્થિતિઓમાં કરી શકીએ છીએ જ્યાં અમે પાછો આપવા માંગીએ છીએ તે સફળ મૂલ્ય અને ભૂલ મૂલ્ય અલગ હોઈ શકે છે.</p>
 <p>ચાલો આપણે એવા વિધેય (function) ને કહીએ જે <code>Result</code> મૂલ્ય આપે છે, કારણ કે તે નિષ્ફળ થઈ શકે છે. યાદી 9-3 માં, આપણે એક ફાઈલ ખોલવાનો પ્રયત્ન કરીએ છીએ.</p>
 <listing number="9-3" file-name="src/main.rs" caption="Opening a file">
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-03/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use std::fs::File;
+
+fn main() {
+    let greeting_file_result = File::open("hello.txt");
+}</code></pre>
 </listing>
 <p><code>File::open</code> નું વળતર પ્રકાર <code>Result&lt;T, E&gt;</code> છે. સામાન્ય પરિમાણ <code>T</code> ને <code>File::open</code> ના અમલીકરણ દ્વારા સફળ મૂલ્યનો પ્રકાર, <code>std::fs::File</code>, સાથે ભરાયેલું છે, જે એક ફાઇલ હેન્ડલ છે. ભૂલ મૂલ્યમાં વપરાતો <code>E</code> નો પ્રકાર <code>std::io::Error</code> છે. આ વળતર પ્રકાર સૂચવે છે કે <code>File::open</code> ની કૉલ સફળ થઈ શકે છે અને આપણને વાંચવા અથવા લખવાની મંજૂરી હોય તેવા ફાઇલ હેન્ડલને પરત કરી શકે છે. ફંક્શન કૉલમાં નિષ્ફળતા પણ આવી શકે છે: ઉદાહરણ તરીકે, ફાઈલ અસ્તિત્વમાં ન હોઈ શકે, અથવા આપણી પાસે ફાઇલને ઍક્સેસ કરવાની પરવાનગી ન હોઈ શકે. <code>File::open</code> ફંક્શનને જણાવવાની રીતની જરૂર છે કે તે સફળ થયું કે નિષ્ફળ ગયું અને તે જ સમયે આપણને કાં તો ફાઇલ હેન્ડલ અથવા ભૂલ માહિતી આપવી જોઈએ. આ માહિતી બરાબર <code>Result</code> એનમ દ્વારા આપવામાં આવે છે.</p>
 <p>જ્યારે <code>File::open</code> સફળ થાય છે, ત્યારે variable <code>greeting_file_result</code> માં રહેલું મૂલ્ય <code>Ok</code> નું ઉદાહરણ હશે જેમાં ફાઇલ હેન્ડલ સમાવિષ્ટ હશે. જ્યારે તે નિષ્ફળ જાય છે, ત્યારે <code>greeting_file_result</code> માં રહેલું મૂલ્ય <code>Err</code> નું ઉદાહરણ હશે જેમાં કયા પ્રકારની ભૂલ આવી હતી તેની વધુ માહિતી હશે. We need to add to</p>
 <p>આપણે લિસ્ટિંગ 9-3 માં રહેલા કોડમાં ફેરફાર કરવો પડશે જેથી <code>File::open</code> જે મૂલ્ય આપે છે તેના આધારે અલગ-અલગ ક્રિયાઓ કરી શકાય. લિસ્ટિંગ 9-4 દર્શાવે છે કે <code>Result</code> ને નિયંત્રિત કરવાનો એક માર્ગ મૂળભૂત સાધન, <code>match</code> અભિવ્યક્તિનો ઉપયોગ કરવો છે જેની ચર્ચા આપણે પ્રકરણ 6 માં કરી હતી.</p>
 <listing number="9-4" file-name="src/main.rs" caption="Using a `match` expression to handle the `Result` variants that might be returned">
-<pre class="playground"><code class="language-rust should_panic edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-04/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust should_panic edition2024">use std::fs::File;
+
+fn main() {
+    let greeting_file_result = File::open("hello.txt");
+
+    let greeting_file = match greeting_file_result {
+        Ok(file) =&gt; file,
+        Err(error) =&gt; panic!("Problem opening the file: {error:?}"),
+    };
+}</code></pre>
 </listing>
 <p>Note that, like the <code>Option</code> enum, the <code>Result</code> enum and its variants have been brought into scope by the prelude, so we don’t need to specify <code>Result::</code> before the <code>Ok</code> and <code>Err</code> variants in the <code>match</code> arms.</p>
 <p>જ્યારે પરિણામ <code>Ok</code> હોય છે, ત્યારે આ કોડ <code>Ok</code> પ્રકારની અંદર રહેલા <code>file</code> મૂલ્યને પાછું આપશે, અને પછી તે ફાઇલ હેન્ડલ મૂલ્યને <code>greeting_file</code> variable સોંપવામાં આવશે. <code>match</code> પછી, આપણે વાંચવા અથવા લખવા માટે ફાઇલ હેન્ડલનો ઉપયોગ કરી શકીએ છીએ.</p>
 <p>અન્ય <code>match</code> ભાગ <code>match</code> ના અન્ય ભાગમાં, આપણે <code>File::open</code> માંથી <code>Err</code> મૂલ્ય મેળવવાની સ્થિતિને હેન્ડલ કરીએ છીએ. આ ઉદાહરણમાં, આપણે <code>panic!</code> મેક્રોને બોલાવવાનું પસંદ કર્યું છે. જો આપણી વર્તમાન ડિરેક્ટરીમાં hello.txt નામની કોઈ ફાઈલ ન હોય અને આપણે આ કોડ ચલાવીએ, તો આપણે <code>panic!</code> મેક્રોમાંથી નીચે મુજબનું પરિણામ જોઈશું:</p>
-<pre><code class="language-console">{{#include ../listings/ch09-error-handling/listing-09-04/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling error-handling v0.1.0 (file:///projects/error-handling)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.73s
+     Running `target/debug/error-handling`
+
+thread 'main' (6018048) panicked at src/main.rs:8:23:
+Problem opening the file: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>સામાન્ય રીતે, આ નિષ્કર્ષ આપણને બરાબર શું ખોટું થયું તે જણાવે છે.</p>
 <h3 id="matching-on-different-errors"><a class="header" href="#matching-on-different-errors">Matching on Different Errors</a></h3>
@@ -220,7 +234,25 @@
 <listing number="9-5" file-name="src/main.rs" caption="Handling different kinds of errors in different ways">
 <!-- ignore this test because otherwise it creates hello.txt which causes other
 tests to fail lol -->
-<pre><code class="language-rust ignore">{{#rustdoc_include ../listings/ch09-error-handling/listing-09-05/src/main.rs}}</code></pre>
+<pre><code class="language-rust ignore">use std::fs::File;
+use std::io::ErrorKind;
+
+fn main() {
+    let greeting_file_result = File::open("hello.txt");
+
+    let greeting_file = match greeting_file_result {
+        Ok(file) =&gt; file,
+        Err(error) =&gt; match error.kind() {
+            ErrorKind::NotFound =&gt; match File::create("hello.txt") {
+                Ok(fc) =&gt; fc,
+                Err(e) =&gt; panic!("Problem creating the file: {e:?}"),
+            },
+            _ =&gt; {
+                panic!("Problem opening the file: {error:?}");
+            }
+        },
+    };
+}</code></pre>
 </listing>
 <p>The type of the value that <code>File::open</code> returns inside the <code>Err</code> variant is <code>io::Error</code>, which is a struct provided by the standard library. This struct has a method, <code>kind</code>, that we can call to get an <code>io::ErrorKind</code> value. The enum <code>io::ErrorKind</code> is provided by the standard library and has variants representing the different kinds of errors that might result from an <code>io</code> operation. The variant we want to use is <code>ErrorKind::NotFound</code>, which indicates the file we’re trying to open doesn’t exist yet. So, we match on <code>greeting_file_result</code>, but we also have an inner match on <code>error.kind()</code>.</p>
 <p>આપણે આંતરિક <code>match</code> માં જે શરત ચકાસવા માંગીએ છીએ તે એ છે કે <code>error.kind()</code> દ્વારા પરત કરેલ મૂલ્ય <code>ErrorKind</code> enum ના <code>NotFound</code> પ્રકારનું છે કે નહીં. જો એમ હોય, તો આપણે <code>File::create</code> વડે ફાઈલ બનાવવાનો પ્રયત્ન કરીએ છીએ. પરંતુ, કારણ કે <code>File::create</code> પણ નિષ્ફળ થઈ શકે છે, આપણને આંતરિક <code>match</code> અભિવ્યક્તિમાં બીજો ભાગ જોઈએ છે. જ્યારે ફાઈલ બનાવી શકાતી નથી, ત્યારે એક અલગ ભૂલ સંદેશ છાપવામાં આવે છે. બાહ્ય <code>match</code> નો બીજો ભાગ એ જ રહે છે, તેથી ખૂટતી ફાઈલ સિવાયની કોઈપણ ભૂલ પર પ્રોગ્રામ ગભરાઈ જાય છે.</p>
@@ -250,10 +282,11 @@ fn main() {
 <h4 id="shortcuts-for-panic-on-error"><a class="header" href="#shortcuts-for-panic-on-error">Shortcuts for Panic on Error</a></h4>
 <p><code>match</code> નો ઉપયોગ પૂરતો સારો છે, પરંતુ તે થોડો લાંબો હોઈ શકે છે અને હંમેશા હેતુને સ્પષ્ટ કરતો નથી. <code>Result&lt;T, E&gt;</code> પ્રકારમાં ઘણા સહાયક વિધિઓ વ્યાખ્યાયિત થયેલ છે જે વિવિધ, વધુ ચોક્કસ કાર્યો કરવા માટે છે. <code>unwrap</code> વિધિ એ એક સંક્ષિપ્ત વિધિ છે જે <code>match</code> અભિવ્યક્તિની જેમ જ અમલમાં મૂકવામાં આવી છે જે આપણે યાદી 9-4 માં લખ્યું હતું. જો <code>Result</code> નું મૂલ્ય <code>Ok</code> પ્રકારનું હોય, તો <code>unwrap</code> અંદરના મૂલ્યને પરત કરશે. જો <code>Result</code> <code>Err</code> પ્રકારનું હોય, તો <code>unwrap</code> આપમેળે <code>panic!</code> મેક્રોને બોલાવશે. અહીં <code>unwrap</code> ના ઉપયોગનું ઉદાહરણ છે:</p>
 <listing file-name="src/main.rs">
-<pre class="playground"><code class="language-rust should_panic edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch09-error-handling/no-listing-04-unwrap/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust should_panic edition2024">use std::fs::File;
+
+fn main() {
+    let greeting_file = File::open("hello.txt").unwrap();
+}</code></pre>
 </listing>
 <p>જો આપણે આ કોડ <code>hello.txt</code> ફાઈલ વગર ચલાવીએ, તો આપણને <code>panic!</code> કૉલ દ્વારા એક ભૂલ સંદેશ દેખાશે જે <code>unwrap</code> પદ્ધતિ ઉત્પન્ન કરે છે:</p>
 <!-- manual-regeneration
@@ -266,10 +299,12 @@ called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, messa
 </code></pre>
 <p>એ જ રીતે, <code>expect</code> પદ્ધતિ આપણને <code>panic!</code> ભૂલ સંદેશ પણ પસંદ કરવાની પરવાનગી આપે છે. <code>unwrap</code> ને બદલે <code>expect</code> વાપરવું અને સારા ભૂલ સંદેશો આપવાથી તમારા ઇરાદાને વ્યક્ત કરી શકાય છે અને ગભરાટનું મૂળ શોધવાનું સરળ બનાવી શકાય છે. <code>expect</code> નું વાક્યરચના આ પ્રમાણે દેખાય છે:</p>
 <listing file-name="src/main.rs">
-<pre class="playground"><code class="language-rust should_panic edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch09-error-handling/no-listing-05-expect/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust should_panic edition2024">use std::fs::File;
+
+fn main() {
+    let greeting_file = File::open("hello.txt")
+        .expect("hello.txt should be included in this project");
+}</code></pre>
 </listing>
 <p>આપણે <code>expect</code> નો ઉપયોગ <code>unwrap</code> ની જેમ જ કરીએ છીએ: ફાઈલ હેન્ડલ પરત કરવા અથવા <code>panic!</code> મેક્રોને બોલાવવા માટે. <code>expect</code> દ્વારા <code>panic!</code> માં વપરાતો ભૂલ સંદેશ એ પરિમાણ હશે જે આપણે <code>expect</code> ને આપીએ છીએ, ડિફોલ્ટ <code>panic!</code> સંદેશ જે <code>unwrap</code> વાપરે છે તેના બદલે. આ તેવું દેખાય છે:</p>
 <!-- manual-regeneration
@@ -290,7 +325,24 @@ file panics. We do want to include it for reader experimentation purposes, but
 don't want to include it for rustdoc testing purposes. -->
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#include ../listings/ch09-error-handling/listing-09-06/src/main.rs:here}}
+</span>use std::fs::File;
+use std::io::{self, Read};
+
+fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
+    let username_file_result = File::open("hello.txt");
+
+    let mut username_file = match username_file_result {
+        Ok(file) =&gt; file,
+        Err(e) =&gt; return Err(e),
+    };
+
+    let mut username = String::new();
+
+    match username_file.read_to_string(&amp;mut username) {
+        Ok(_) =&gt; Ok(username),
+        Err(e) =&gt; Err(e),
+    }
+}
 <span class="boring">}</span></code></pre>
 </listing>
 <p>આ કાર્યને ઘણો ટૂંકો રીતે લખી શકાય છે, પરંતુ આપણે ભૂલ વ્યવસ્થાપન (error handling) સમજવા માટે પહેલાં તેને જાતે જ કરીએ છીએ; અંતે, આપણે ટૂંકા માર્ગ બતાવીશું. ચાલો પ્રથમ કાર્યના વળતર પ્રકાર (return type) જોઈએ: <code>Result&lt;String, io::Error&gt;</code>. આનો અર્થ એ થાય છે કે કાર્ય <code>Result&lt;T, E&gt;</code> પ્રકારનું મૂલ્ય આપી રહ્યું છે, જ્યાં સામાન્ય પરિમાણ <code>T</code> ને <code>String</code> ના નક્કર પ્રકારથી અને સામાન્ય પ્રકાર <code>E</code> ને <code>io::Error</code> ના નક્કર પ્રકારથી ભરવામાં આવ્યું છે.</p>
@@ -309,7 +361,15 @@ file panics. We do want to include it for reader experimentation purposes, but
 don't want to include it for rustdoc testing purposes. -->
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#include ../listings/ch09-error-handling/listing-09-07/src/main.rs:here}}
+</span>use std::fs::File;
+use std::io::{self, Read};
+
+fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
+    let mut username_file = File::open("hello.txt")?;
+    let mut username = String::new();
+    username_file.read_to_string(&amp;mut username)?;
+    Ok(username)
+}
 <span class="boring">}</span></code></pre>
 </listing>
 <p>? ચિહ્નનું વિવરણ <code>Result</code> મૂલ્ય પછી મૂકવામાં આવેલું <code>?</code> ચિહ્ન, Listing 9-6 માં આપણે <code>Result</code> મૂલ્યોને નિયંત્રિત કરવા માટે વ્યાખ્યાયિત કરેલા <code>match</code> અભિવ્યક્તિની જેમ જ કાર્ય કરે છે. જો <code>Result</code> નું મૂલ્ય <code>Ok</code> હોય, તો <code>Ok</code> ની અંદરનું મૂલ્ય આ અભિવ્યક્તિમાંથી પાછું આવે છે અને પ્રોગ્રામ ચાલુ રહે છે. જો મૂલ્ય <code>Err</code> હોય, તો <code>Err</code> સમગ્ર ફંક્શનમાંથી પાછું આવે છે, જાણે કે આપણે <code>return</code> કીવર્ડનો ઉપયોગ કર્યો હોય, જેથી ભૂલનું મૂલ્ય કોલિંગ કોડમાં પ્રસારિત થાય.</p>
@@ -323,7 +383,16 @@ file panics. We do want to include it for reader experimentation purposes, but
 don't want to include it for rustdoc testing purposes. -->
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#include ../listings/ch09-error-handling/listing-09-08/src/main.rs:here}}
+</span>use std::fs::File;
+use std::io::{self, Read};
+
+fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
+    let mut username = String::new();
+
+    File::open("hello.txt")?.read_to_string(&amp;mut username)?;
+
+    Ok(username)
+}
 <span class="boring">}</span></code></pre>
 </listing>
 <p>અમે નવું <code>String</code>  <code>username</code> માં બનાવવાની ક્રિયાને ફંક્શનની શરૂઆતમાં ખસેડી છે; તે ભાગ બદલાયો નથી. <code>username_file</code> નામનું variable (variable) બનાવવાને બદલે, અમે <code>read_to_string</code> કૉલને સીધું જ <code>File::open("hello.txt")?</code> ના પરિણામ પર જોડી દીધું છે. હજી પણ <code>read_to_string</code> કૉલના અંતે  <code>?</code>  હાલ્યા કરે છે, અને જ્યારે <code>File::open</code> અને <code>read_to_string</code> બંને સફળ થાય ત્યારે અમે હજી પણ <code>Ok</code> મૂલ્ય ધરાવતા <code>username</code> ને પરત કરીએ છીએ, નહિ કે ભૂલોને. કાર્યક્ષમતા ફરીથી યાદી 9-6 અને યાદી 9-7 જેવી જ છે; આ માત્ર તેને લખવાની એક અલગ, વધુ સુગમ (ergonomic) રીત છે.</p>
@@ -334,7 +403,12 @@ file panics. We do want to include it for reader experimentation purposes, but
 don't want to include it for rustdoc testing purposes. -->
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#include ../listings/ch09-error-handling/listing-09-09/src/main.rs:here}}
+</span>use std::fs;
+use std::io;
+
+fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
+    fs::read_to_string("hello.txt")
+}
 <span class="boring">}</span></code></pre>
 </listing>
 <p>ફાઈલને સ્ટ્રિંગમાં વાંચવી એ એક સામાન્ય કાર્ય છે, તેથી સ્ટાન્ડર્ડ લાયબ્રેરી અનુકૂળ <code>fs::read_to_string</code> વિધેય પ્રદાન કરે છે જે ફાઈલ ખોલે છે, નવું <code>String</code> બનાવે છે, ફાઈલની સામગ્રી વાંચે છે, તે સામગ્રીને તે <code>String</code> માં મૂકે છે અને તેને પરત કરે છે. અલબત્ત, <code>fs::read_to_string</code> વાપરવાથી આપણને તમામ ભૂલ નિયંત્રણ સમજાવવાની તક મળતી નથી, તેથી અમે પહેલા લાંબો રસ્તો અપનાવ્યો.</p>
@@ -344,19 +418,50 @@ don't want to include it for rustdoc testing purposes. -->
 <p><code>?</code> ચિહ્ન માત્ર એવા જ વિધેયોમાં વાપરી શકાય છે જેમના વળતર પ્રકાર (return type) તે મૂલ્ય સાથે સુસંગત હોય જેના પર <code>?</code> વપરાય છે. આ એટલા માટે છે કારણ કે <code>?</code> ચિહ્ન વ્યાખ્યા પ્રમાણે કાર્યમાંથી એક પ્રારંભિક વળતર (early return) કરવા માટે નિર્ધારિત થયેલું છે, જે રીતે આપણે યાદી 9-6 માં  <code>match</code> અભિવ્યક્તિનો ઉપયોગ કર્યો હતો. યાદી 9-6 માં, <code>match</code> એક <code>Result</code> મૂલ્યનો ઉપયોગ કરી રહ્યું હતું, અને પ્રારંભિક વળતર શાખા (arm) એક <code>Err(e)</code> મૂલ્ય પરત કરે છે. વિધેયનો વળતર પ્રકાર <code>Result</code> હોવો જરૂરી છે જેથી તે આ <code>return</code> સાથે સુસંગત રહે.</p>
 <p>યાદી 9-10 માં, આપણે એ ભૂલ જોઈએ તે જોઇએ કે જે આપણને મળે જો આપણે <code>?</code> ઓપરેટરનો ઉપયોગ <code>main</code> ફંક્શનમાં કરીએ જેમાં વળતર પ્રકાર (return type) એવો હોય જે મૂલ્યના પ્રકાર સાથે સુસંગત ન હોય જેના પર આપણે <code>?</code> વાપરીએ છીએ.</p>
 <listing number="9-10" file-name="src/main.rs" caption="Attempting to use the `?` in the `main` function that returns `()` won’t compile.">
-<pre><code class="language-rust ignore does_not_compile">{{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}</code></pre>
+<pre><code class="language-rust ignore does_not_compile">use std::fs::File;
+
+fn main() {
+    let greeting_file = File::open("hello.txt")?;
+}</code></pre>
 </listing>
 <p>આ કોડ એક ફાઈલ ખોલે છે, જે નિષ્ફળ થઈ શકે છે. <code>?</code> ઓપરેટર <code>File::open</code> દ્વારા પરત કરવામાં આવેલ <code>Result</code> મૂલ્યને અનુસરે છે, પરંતુ આ <code>main</code> કાર્યનો રીટર્ન પ્રકાર <code>()</code> છે, <code>Result</code> નથી. જ્યારે આપણે આ કોડને કમ્પાઈલ કરીએ છીએ, ત્યારે આપણને નીચેનો ભૂલ સંદેશ મળે છે:</p>
-<pre><code class="language-console">{{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling error-handling v0.1.0 (file:///projects/error-handling)
+error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
+ --&gt; src/main.rs:4:48
+  |
+3 | fn main() {
+  | --------- this function should return `Result` or `Option` to accept `?`
+4 |     let greeting_file = File::open("hello.txt")?;
+  |                                                ^ cannot use the `?` operator in a function that returns `()`
+  |
+help: consider adding return type
+  |
+3 ~ fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+4 |     let greeting_file = File::open("hello.txt")?;
+5 +     Ok(())
+  |
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `error-handling` (bin "error-handling") due to 1 previous error
 </code></pre>
 <p>આ ભૂલ દર્શાવે છે કે આપણે <code>?</code> ઓપરેટરનો ઉપયોગ માત્ર એવા જ ફંક્શનમાં કરી શકીએ છીએ જે <code>Result</code>, <code>Option</code>, અથવા અન્ય પ્રકાર પરત કરે છે જે <code>FromResidual</code> લાગુ કરે છે.</p>
 <p>આ ભૂલ સુધારવા માટે, તમારી પાસે બે વિકલ્પો છે. એક વિકલ્પ એ છે કે તમારા ફંક્શનનો રીટર્ન પ્રકાર બદલો જેથી તે તમે <code>?</code> ઓપરેટર સાથે ઉપયોગ કરી રહ્યાં છો તે મૂલ્ય સાથે સુસંગત હોય, જ્યાં સુધી તમને કોઈ પ્રતિબંધ ન હોય. બીજો વિકલ્પ એ છે કે <code>match</code> અથવા <code>Result&lt;T, E&gt;</code> નાં એક પદ્ધતિનો ઉપયોગ કરવો જેથી <code>Result&lt;T, E&gt;</code> ને યોગ્ય રીતે હેન્ડલ કરી શકાય.</p>
 <p>અવ્યવસ્થાપન સંદેશમાં એ પણ ઉલ્લેખ હતો કે <code>?</code> નો ઉપયોગ <code>Option&lt;T&gt;</code> મૂલ્યો સાથે પણ થઈ શકે છે. <code>Result</code> પર <code>?</code> વાપરવા જેવું જ, તમે <code>Option</code> પર <code>?</code> માત્ર એવા જ કાર્યમાં વાપરી શકો છો જે <code>Option</code> આપે છે. <code>Option&lt;T&gt;</code> પર <code>?</code> ઓપરેટરનું વર્તન <code>Result&lt;T, E&gt;</code> પર તેના વર્તન જેવું જ હોય છે: જો મૂલ્ય <code>None</code> હોય, તો તે કાર્યમાંથી તરત જ <code>None</code> પાછું આપવામાં આવશે. જો મૂલ્ય <code>Some</code> હોય, તો <code>Some</code> ની અંદરનું મૂલ્ય અભિવ્યક્તિનું પરિણામી મૂલ્ય હોય છે, અને કાર્ય ચાલુ રહે છે. યાદી 9-11 માં એક એવા કાર્યનું ઉદાહરણ છે જે આપેલ લખાણની પ્રથમ લીટીનો અંતિમ અક્ષર શોધે છે.</p>
 <listing number="9-11" caption="Using the `?` operator on an `Option&lt;T&gt;` value">
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024">fn last_char_of_first_line(text: &amp;str) -&gt; Option&lt;char&gt; {
+    text.lines().next()?.chars().last()
+}
+<span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    assert_eq!(
+</span><span class="boring">        last_char_of_first_line("Hello, world\nHow are you today?"),
+</span><span class="boring">        Some('d')
+</span><span class="boring">    );
+</span><span class="boring">
+</span><span class="boring">    assert_eq!(last_char_of_first_line(""), None);
+</span><span class="boring">    assert_eq!(last_char_of_first_line("\nhi"), None);
+</span><span class="boring">}</span></code></pre>
 </listing>
 <p>આ કાર્ય <code>Option&lt;char&gt;</code> પરત કરે છે કારણ કે ત્યાં અક્ષર હોઈ શકે છે, પરંતુ તે ન પણ હોઈ શકે. આ કોડ <code>text</code> સ્ટ્રિંગ સ્લાઇસ Argument લે છે અને તેના પર <code>lines</code> પદ્ધતિને બોલાવે છે, જે સ્ટ્રિંગમાંની લીટીઓ પર ઇટરેટર પરત કરે છે. કારણ કે આ કાર્ય પ્રથમ લીટીનું નિરીક્ષણ કરવા માંગે છે, તે ઇટરેટર પર <code>next</code> ને બોલાવે છે જેથી ઇટરેટરથી પહેલું મૂલ્ય મેળવી શકાય. જો <code>text</code> ખાલી સ્ટ્રિંગ હોય, તો <code>next</code> ની આ કૉલ <code>None</code> પરત કરશે, જેના પરિણામે આપણે <code>?</code> નો ઉપયોગ કરીને <code>last_char_of_first_line</code> માંથી <code>None</code> પરત કરીએ છીએ. જો <code>text</code> ખાલી સ્ટ્રિંગ ન હોય, તો <code>next</code> એક <code>Some</code> મૂલ્ય પરત કરશે જેમાં <code>text</code> માં પ્રથમ લીટીનો સ્ટ્રિંગ સ્લાઇસ હશે.</p>
 <p><code>?</code> નિશાની સ્ટ્રિંગ સ્લાઇસ કાઢે છે, અને અમે તે સ્ટ્રિંગ સ્લાઇસ પર <code>chars</code> કૉલ કરી શકીએ છીએ જેથી તેના અક્ષરોનો ઇટરેટર મેળવી શકાય. આપણને આ પ્રથમ લાઇનના છેલ્લા અક્ષરમાં રસ છે, તેથી અમે <code>last</code> કૉલ કરીએ છીએ જેથી ઇટરેટરની છેલ્લી વસ્તુ પાછી મળે. આ એક <code>Option</code> છે કારણ કે શક્ય છે કે પહેલી લાઇન ખાલી સ્ટ્રિંગ હોય; ઉદાહરણ તરીકે, જો <code>text</code> ખાલી લાઇનથી શરૂ થાય પરંતુ અન્ય લાઇન પર અક્ષરો હોય, જેમ કે <code>"\nhi"</code> . જો કે, જો પહેલી લાઇન પર છેલ્લો અક્ષર હોય, તો તે <code>Some</code> પ્રકારમાં પાછો આવશે. વચ્ચેનું <code>?</code> ઓપરેટર આ તર્ક વ્યક્ત કરવાનો સંક્ષિપ્ત માર્ગ આપે છે, જેનાથી અમે ફંક્શનને એક જ લાઈનમાં અમલમાં મૂકી શકીએ છીએ. જો અમે <code>Option</code> પર <code>?</code> ઓપરેટરનો ઉપયોગ ન કરી શક્યા હોત, તો આપણે વધુ મેથડ કૉલ્સ અથવા <code>match</code> અભિવ્યક્તિનો ઉપયોગ કરીને આ તર્ક અમલમાં મૂકવો પડ્યો હોત.</p>
@@ -364,7 +469,14 @@ don't want to include it for rustdoc testing purposes. -->
 <p><code>main</code> ફંક્શનનો ઉપયોગ કર્યો છે તે બધા <code>()</code> રિટર્ન કરે છે. <code>main</code> ફંક્શન વિશેષ છે કારણ કે તે એક્ઝિક્યુટેબલ પ્રોગ્રામનો પ્રવેશ બિંદુ અને બહાર નીકળવાનો બિંદુ છે, અને પ્રોગ્રામની અપેક્ષા મુજબ વર્તવા માટે તેના રિટર્ન પ્રકાર પર નિયંત્રણો હોય છે.</p>
 <p>સદનસીબે, <code>main</code> એક <code>Result&lt;(), E&gt;</code> પણ પાછું આપી શકે છે. યાદી 9-12 માં યાદી 9-10 નો કોડ છે, પરંતુ અમે <code>main</code> ના વળતર પ્રકારને <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> માં બદલ્યા છે અને અંતમાં <code>Ok(())</code> નું વળતર ઉમેર્યું છે. આ કોડ હવે કમ્પાઇલ થશે.</p>
 <listing number="9-12" file-name="src/main.rs" caption="Changing `main` to return `Result&lt;(), E&gt;` allows the use of the `?` operator on `Result` values.">
-<pre><code class="language-rust ignore">{{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}</code></pre>
+<pre><code class="language-rust ignore">use std::error::Error;
+use std::fs::File;
+
+fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+    let greeting_file = File::open("hello.txt")?;
+
+    Ok(())
+}</code></pre>
 </listing>
 <p><code>Box&lt;dyn Error&gt;</code> પ્રકાર એક trait object છે, જેની ચર્ચા આપણે “Using Trait Objects to Abstract over Shared Behavior” અષ્ટાધ્યાય ૧૮ માં કરીશું. હાલ માટે, તમે <code>Box&lt;dyn Error&gt;</code> ને “કોઈ પણ પ્રકારની ભૂલ” તરીકે વાંચી શકો છો. <code>main</code> ફંક્શનમાં  <code>Result</code> મૂલ્ય પર <code>?</code> નો ઉપયોગ  <code>Box&lt;dyn Error&gt;</code> ભૂલ પ્રકાર સાથે કરવાની મંજૂરી છે, કારણ કે તે કોઈપણ <code>Err</code> મૂલ્યને વહેલા પાછા ફરવાની મંજૂરી આપે છે. ભલે આ <code>main</code> ફંક્શનનો ભાગ માત્ર <code>std::io::Error</code> પ્રકારની ભૂલો જ પાછી આપે, તેમ છતાં <code>Box&lt;dyn Error]</code> નો ઉલ્લેખ કરીને, આ હસ્તાક્ષર <code>main</code> ના ભાગમાં અન્ય ભૂલો પાછા આપતા કોડ ઉમેરવામાં આવે તો પણ સાચું રહેશે.</p>
 <p>જ્યારે એક <code>main</code> ફંક્શન <code>Result&lt;(), E&gt;</code> પરત કરે છે, ત્યારે એક્ઝિક્યુટેબલ <code>Ok(())</code> સાથે <code>main</code> પાછું આપે તો શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે અને જો <code>main</code> કોઈ <code>Err</code> મૂલ્ય પાછું આપે તો બિન-શૂન્ય મૂલ્ય સાથે બહાર નીકળી જશે. C માં લખાયેલા પ્રોગ્રામ્સ બહાર નીકળતી વખતે પૂર્ણાંક સંખ્યાઓ પરત કરે છે: સફળતાપૂર્વક બહાર નીકળતા પ્રોગ્રામ્સ <code>0</code> પૂર્ણાંક સંખ્યા પરત કરે છે, અને ભૂલ આપતા પ્રોગ્રામ્સ <code>0</code> સિવાયની કોઈ પૂર્ણાંક સંખ્યા પરત કરે છે. Rust પણ આ સંમેલન સાથે સુસંગત રહેવા માટે એક્ઝિક્યુટેબલ્સમાંથી પૂર્ણાંક સંખ્યાઓ પરત કરે છે.</p>

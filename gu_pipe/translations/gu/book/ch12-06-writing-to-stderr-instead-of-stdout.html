@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
+            window.path_to_searchindex_js = "searchindex-4bc072ff.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -199,10 +199,67 @@
 <h3 id="printing-errors-to-standard-error"><a class="header" href="#printing-errors-to-standard-error">Printing Errors to Standard Error</a></h3>
 <p>આપણે લિસ્ટિંગ ૧૨-૨૪ માં રહેલા કોડનો ઉપયોગ કરીશું જેથી ભૂલ સંદેશાઓ છાપવાની રીત બદલી શકાય. અગાઉના ભાગમાં કરેલા સુધારણાને કારણે, આ પ્રકરણમાં ભૂલ સંદેશાઓ છાપતો તમામ કોડ એક જ ફંક્શન <code>main</code> માં છે. પ્રમાણિત પુસ્તકાલય <code>eprintln!</code> નામનું મેક્રો પ્રદાન કરે છે જે પ્રમાણિત ભૂલ પ્રવાહમાં છાપે છે, તેથી આપણે <code>println!</code> ને બોલાવવાની બે જગ્યાએ <code>eprintln!</code> નો ઉપયોગ કરીશું.</p>
 <p><strong>Listing 12-24: Writing error messages to standard error instead of standard output using <code>eprintln!</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-24/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
+</span><span class="boring">use std::error::Error;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::process;
+</span><span class="boring">
+</span><span class="boring">use minigrep::{search, search_case_insensitive};
+</span><span class="boring">
+</span>fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    let config = Config::build(&amp;args).unwrap_or_else(|err| {
+        eprintln!("Problem parsing arguments: {err}");
+        process::exit(1);
+    });
+
+    if let Err(e) = run(config) {
+        eprintln!("Application error: {e}");
+        process::exit(1);
+    }
+}
+<span class="boring">
+</span><span class="boring">pub struct Config {
+</span><span class="boring">    pub query: String,
+</span><span class="boring">    pub file_path: String,
+</span><span class="boring">    pub ignore_case: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Config {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">        if args.len() &lt; 3 {
+</span><span class="boring">            return Err("not enough arguments");
+</span><span class="boring">        }
+</span><span class="boring">
+</span><span class="boring">        let query = args[1].clone();
+</span><span class="boring">        let file_path = args[2].clone();
+</span><span class="boring">
+</span><span class="boring">        let ignore_case = env::var("IGNORE_CASE").is_ok();
+</span><span class="boring">
+</span><span class="boring">        Ok(Config {
+</span><span class="boring">            query,
+</span><span class="boring">            file_path,
+</span><span class="boring">            ignore_case,
+</span><span class="boring">        })
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+</span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
+</span><span class="boring">
+</span><span class="boring">    let results = if config.ignore_case {
+</span><span class="boring">        search_case_insensitive(&amp;config.query, &amp;contents)
+</span><span class="boring">    } else {
+</span><span class="boring">        search(&amp;config.query, &amp;contents)
+</span><span class="boring">    };
+</span><span class="boring">
+</span><span class="boring">    for line in results {
+</span><span class="boring">        println!("{line}");
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    Ok(())
+</span><span class="boring">}</span></code></pre>
 <p>હવે ચાલો આપણે આ જ રીતે પ્રોગ્રામ ફરીથી ચલાવીએ, કોઈપણ Argumentો વિના અને <code>&gt;</code> સાથે પ્રમાણિત આઉટપુટને રીડાયરેક્ટ કરીને:</p>
 <pre><code class="language-console">$ cargo run &gt; output.txt
 Problem parsing arguments: not enough arguments

@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
+            window.path_to_searchindex_js = "searchindex-4bc072ff.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -190,47 +190,104 @@
 <h3 id="dangling-references"><a class="header" href="#dangling-references">Dangling References</a></h3>
 <p>જીવનકાળનો મુખ્ય હેતુ લટકતા સંદર્ભોને અટકાવવાનો છે, જે જો તેમને અસ્તિત્વમાં રહેવાની મંજૂરી આપવામાં આવે તો, કાર્યક્રમને એવા ડેટાનો સંદર્ભ આપવાનું કારણ બની શકે છે જેનો તે સંદર્ભ રાખવા માટે નથી. સૂચિ 10-16 માં આપેલ કાર્યક્રમનો વિચાર કરો, જેમાં બાહ્ય અવકાશ અને આંતરિક અવકાશ છે.</p>
 <p><strong>Listing 10-16: An attempt to use a reference whose value has gone out of scope</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-16/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let r;
+
+    {
+        let x = 5;
+        r = &amp;x;
+    }
+
+    println!("r: {r}");
+}</code></pre>
 <p>નોંધ: યાદી ૧૦-૧૬, ૧૦-૧૭ અને ૧૦-૨૩ માં આપેલા ઉદાહરણોમાં variable પ્રારંભિક મૂલ્ય વગર જાહેર કરવામાં આવ્યા છે, તેથી ચલનું નામ બાહ્ય અવકાશમાં અસ્તિત્વ ધરાવે છે. પ્રથમ નજરે, આ Rust માં શૂન્ય મૂલ્યો ન હોવા સાથે સંઘર્ષમાં હોવાનું જણાવી શકે છે. જો કે, જો આપણે variable મૂલ્ય આપ્યા પહેલાં તેનો ઉપયોગ કરવાનો પ્રયાસ કરીએ, તો આપણને કમ્પાઇલ-ટાઇમ ભૂલ મળશે, જે દર્શાવે છે કે Rust ખરેખર શૂન્ય મૂલ્યોને મંજૂરી આપતું નથી.</p>
 <p>બાહ્ય અવકાશ એક variable <code>r</code> જાહેર કરે છે જેમાં કોઈ પ્રારંભિક મૂલ્ય નથી, અને આંતરિક અવકાશ એક variable <code>x</code> જાહેર કરે છે જેનું પ્રારંભિક મૂલ્ય <code>5</code> છે. આંતરિક અવકાશની અંદર, આપણે <code>x</code> ના સંદર્ભ તરીકે <code>r</code> નું મૂલ્ય સેટ કરવાનો પ્રયાસ કરીએ છીએ. પછી, આંતરિક અવકાશ સમાપ્ત થાય છે, અને આપણે <code>r</code> માં મૂલ્ય છાપવાનો પ્રયાસ કરીએ છીએ. આ કોડ કમ્પાઇલ થશે નહીં, કારણ કે <code>r</code> જે મૂલ્યનો સંદર્ભ લઈ રહ્યું છે તે તેનો ઉપયોગ કરવાનો પ્રયાસ કરતા પહેલા અવકાશમાંથી બહાર નીકળી ગયું છે. અહીં ભૂલ સંદેશ છે:</p>
-<pre><code class="language-console">{{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-16/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0597]: `x` does not live long enough
+ --&gt; src/main.rs:6:13
+  |
+5 |         let x = 5;
+  |             - binding `x` declared here
+6 |         r = &amp;x;
+  |             ^^ borrowed value does not live long enough
+7 |     }
+  |     - `x` dropped here while still borrowed
+8 |
+9 |     println!("r: {r}");
+  |                   - borrow later used here
+
+For more information about this error, try `rustc --explain E0597`.
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>ભૂલ સંદેશ ભૂલ સંદેશ જણાવે છે કે variable <code>x</code> “પર્યાપ્ત સમય સુધી ટકતું નથી.” તેનું કારણ એ છે કે <code>x</code> અંદરના અવકાશના અંતિમ ભાગમાં ૭મી લાઈનમાં સમાપ્ત થતાં જ અવકાશની બહાર થઈ જશે. પરંતુ <code>r</code> બાહ્ય અવકાશ માટે માન્ય રહે છે; તેના અવકાશનું કદ મોટું હોવાથી, આપણે કહીએ છીએ કે તે “લાંબો સમય જીવે છે.” જો Rust આ કોડને કાર્યરત કરવાની મંજૂરી આપે, તો <code>r</code> એવા મેમરીનો સંદર્ભ લેશે જે <code>x</code> અવકાશમાંથી બહાર નીકળ્યા પછી ફાળવી દેવામાં આવ્યો હતો, અને <code>r</code> સાથે આપણે જે કંઈપણ કરવાનો પ્રયાસ કરીશું તે યોગ્ય રીતે કામ કરશે નહીં. તો, Rust આ કોડ અમાન્ય છે તે કેવી રીતે નક્કી કરે છે? તે એક બોરો ચેકરનો ઉપયોગ કરે છે.</p>
 <h3 id="the-borrow-checker"><a class="header" href="#the-borrow-checker">The Borrow Checker</a></h3>
 <p>Rust કમ્પાઇલર પાસે એક ધન પ્રાપ્તિ ચકાસક (borrow checker) છે, જે અવકાશોની સરખામણી કરે છે કે તમામ ધન પ્રાપ્તિઓ માન્ય છે કે નહીં. પરિબલિષ્ટ 10-17 પરિબલિષ્ટ 10-16 જેટલા જ કોડને દર્શાવે છે, પરંતુ variable’s આયુષ્ય (lifetime) દર્શાવતા નોંધો સાથે.</p>
 <p><strong>Listing 10-17: Annotations of the lifetimes of <code>r</code> and <code>x</code>, named <code>'a</code> and <code>'b</code>, respectively</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-17/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let r;                // ---------+-- 'a
+                          //          |
+    {                     //          |
+        let x = 5;        // -+-- 'b  |
+        r = &amp;x;           //  |       |
+    }                     // -+       |
+                          //          |
+    println!("r: {r}");   //          |
+}                         // ---------+</code></pre>
 <p>અહીં, અમે <code>r</code> ના આયુષ્યકાળને <code>'a</code> અને <code>x</code> ના આયુષ્યકાળને <code>'b</code> સાથે નોંધ્યા છે. તમે જોઈ શકો છો તેમ, આંતરિક <code>'b</code> બ્લોક બાહ્ય <code>'a</code> આયુષ્યકાળ બ્લોકની તુલનામાં ઘણો નાનો છે. કમ્પાઇલ સમય દરમિયાન, Rust બંને આયુષ્યકાળોના કદની સરખામણી કરે છે અને જુએ છે કે <code>r</code> નું આયુષ્યકાળ <code>'a</code> છે પરંતુ તે મેમરી સાથે સંબંધિત છે જેનું આયુષ્યકાળ <code>'b</code> છે. પ્રોગ્રામ નકારવામાં આવે છે કારણ કે <code>'b</code> <code>'a</code> કરતાં ટૂંકો છે: સંદર્ભનો વિષય સંદર્ભ જેટલો લાંબો જીવતો નથી.</p>
 <p>รายการ 10-18 સુધારે છે કોડ જેથી તે હંગામી સંદર્ભ ધરાવતો નથી અને કોઈપણ ભૂલો વગર કમ્પાઇલ થાય છે.</p>
 <p><strong>Listing 10-18: A valid reference because the data has a longer lifetime than the reference</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-18/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let x = 5;            // ----------+-- 'b
+                          //           |
+    let r = &amp;x;           // --+-- 'a  |
+                          //   |       |
+    println!("r: {r}");   //   |       |
+                          // --+       |
+}                         // ----------+</code></pre>
 <p>અહીં, <code>x</code> ને જીવનકાળ <code>'b'</code> છે, જે આ કિસ્સામાં <code>'a'</code> કરતાં મોટો છે. આનો અર્થ એ થાય છે કે <code>r</code> , <code>x</code> ને સંદર્ભિત કરી શકે છે કારણ કે Rust જાણે છે કે <code>r</code> માં રહેલો સંદર્ભ <code>x</code> માન્ય હોય ત્યાં સુધી હંમેશાં</p>
 <p>માન્ય રહેશે. હવે તમને સંદર્ભોના જીવનકાળ ક્યાં છે અને Rust કેવી રીતે જીવનકાળનું વિશ્લેષણ કરે છે તે ખબર છે, જેથી સંદર્ભો હંમેશાં માન્ય રહે તેની ખાતરી થાય, તો ચાલો ફંક્શન પરિમાણો અને વળતર મૂલ્યોમાં સામાન્ય જીવનકાળની શોધ કરીએ.</p>
 <h3 id="generic-lifetimes-in-functions"><a class="header" href="#generic-lifetimes-in-functions">Generic Lifetimes in Functions</a></h3>
 <p>આપણે એક કાર્ય લખીશું જે બે સ્ટ્રિંગ સ્લાઇસમાંથી લાંબો હશે તે પાછો આપશે. આ કાર્ય બે સ્ટ્રિંગ સ્લાઇસ લેશે અને એક જ સ્ટ્રિંગ સ્લાઇસ પાછો આપશે. આપણે <code>longest</code> કાર્ય અમલમાં મૂક્યા પછી, યાદી 10-19 માં રહેલો કોડ <code>The longest string is abcd</code> છાપશે.</p>
 <p><strong>Listing 10-19: A <code>main</code> function that calls the <code>longest</code> function to find the longer of two string slices</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-19/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let string1 = String::from("abcd");
+    let string2 = "xyz";
+
+    let result = longest(string1.as_str(), string2);
+    println!("The longest string is {result}");
+}</code></pre>
 <p>નોંધ આપણે ફંક્શનને String સ્લાઇસ, જે રેફરન્સ છે, લેવા માંગીએ છીએ, સ્ટ્રિંગને બદલે, કારણ કે આપણે નથી ઈચ્છતા કે <code>longest</code> ફંક્શન તેના પરિમાણોનું માલિકીત્વ (ownership) મેળવે. પ્રકરણ 4 માં “સ્ટ્રિંગ સ્લાઇસ તરીકે પરિમાણ” જુઓ વધુ ચર્ચા માટે કે શા માટે લિસ્ટિંગ 10-19 માં વપરાયેલ પરિમાણો એવા છે જે આપણે જોઈએ છીએ. જો આપણે</p>
 <p>લિસ્ટિંગ 10-20 માં દર્શાવ્યા પ્રમાણે <code>longest</code> ફંક્શનનો અમલ કરવાનો પ્રયત્ન કરીએ, તો તે કમ્પાઇલ થશે નહીં.</p>
 <p><strong>Listing 10-20: An implementation of the <code>longest</code> function that returns the longer of two string slices but does not yet compile</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-20/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "xyz";
+</span><span class="boring">
+</span><span class="boring">    let result = longest(string1.as_str(), string2);
+</span><span class="boring">    println!("The longest string is {result}");
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str {
+    if x.len() &gt; y.len() { x } else { y }
+}</code></pre>
 <p>અને તેના બદલે, આપણને નીચે મુજબની ભૂલ મળે છે જે લાઈફટાઇમ વિશે વાત કરે છે:</p>
-<pre><code class="language-console">{{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-20/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0106]: missing lifetime specifier
+ --&gt; src/main.rs:9:33
+  |
+9 | fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str {
+  |               ----     ----     ^ expected named lifetime parameter
+  |
+  = help: this function's return type contains a borrowed value, but the signature does not say whether it is borrowed from `x` or `y`
+help: consider introducing a named lifetime parameter
+  |
+9 | fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+  |           ++++     ++          ++          ++
+
+For more information about this error, try `rustc --explain E0106`.
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>મદદનો લખાણ દર્શાવે છે કે વળતર પ્રકારને સામાન્ય આયુષ્ય પરિમાણ (generic lifetime parameter) ની જરૂર છે કારણ કે Rust એ જણું શકતું નથી કે કયા સંદર્ભ (<code>reference</code>) પાછો આપવામાં આવી રહ્યો છે તે <code>x</code> ને નિર્દેશ કરે છે કે <code>y</code> ને. હકીકતમાં, અમને પણ ખબર નથી, કારણ કે આ કાર્યમાં શરીરના <code>if</code> બ્લોક <code>x</code> નો સંદર્ભ પાછો આપે છે અને <code>else</code> બ્લોક <code>y</code> નો સંદર્ભ પાછો આપે છે!</p>
 <p>જ્યારે અમે આ કાર્યને વ્યાખ્યાયિત કરીએ છીએ, ત્યારે અમને ખબર નથી હોતું કે કયા નક્કર મૂલ્યો આ કાર્યમાં પસાર કરવામાં આવશે, તેથી અમને ખબર નથી હોતી કે <code>if</code> કેસ અથવા <code>else</code> કેસ ચાલશે. અમને એ પણ ખબર નથી હોતો કે કયા સંદર્ભોના આયુષ્ય (lifetimes) પસાર કરવામાં આવશે, તેથી અમે અવકાશોને જોઈ શકતા નથી જેમણે આપણે યાદી 10-17 અને 10-18 માં કર્યું હતું, તે નક્કી કરવા માટે કે અમે જે સંદર્ભ પાછો આપીએ છીએ તે હંમેશા માન્ય રહેશે. બોરો ચેકર (borrow checker) પણ આ નક્કી કરી શકતો નથી, કારણ કે તેને ખબર નથી હોતી કે <code>x</code> અને <code>y</code> ના આયુષ્ય વળતર મૂલ્યના આયુષ્ય સાથે કેવી રીતે સંબંધિત છે. આ ભૂલને સુધારવા માટે, અમે સામાન્ય આયુષ્ય પરિમાણો ઉમેરીશું જે સંદર્ભો વચ્ચેનો સંબંધ વ્યાખ્યાયિત કરે જેથી બોરો ચેકર તેનું વિશ્લેષણ કરી શકે.</p>
@@ -250,10 +307,17 @@
 <p>કાર્ય સંકેતોમાં આયુષ્ય નોંધો વાપરવા માટે, આપણે ખૂણાના કૌંસમાં સામાન્ય આયુષ્ય પરિમાણો જાહેર કરવા પડશે, જે કાર્ય નામ અને પરિમાણ સૂચિ વચ્ચે હોય છે, બરાબર જેમ આપણે સામાન્ય પ્રકારના પરિમાણો સાથે કર્યું હતું.</p>
 <p>આપણે સંકેત વ્યક્ત કરવો માંગીએ છીએ કે: પરત કરેલ સંદર્ભ બંને પરિમાણો માન્ય હોય ત્યાં સુધી માન્ય રહેશે. આ પરિમાણોના આયુષ્ય અને વળતર મૂલ્ય વચ્ચેનો સંબંધ છે. આપણે આયુષ્ય <code>'a</code> નામ આપીશું અને પછી તેને દરેક સંદર્ભમાં ઉમેરીશું, જેમ કે સૂચિ 10-21 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 10-21: The <code>longest</code> function definition specifying that all the references in the signature must have the same lifetime <code>'a</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-21/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "xyz";
+</span><span class="boring">
+</span><span class="boring">    let result = longest(string1.as_str(), string2);
+</span><span class="boring">    println!("The longest string is {result}");
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+    if x.len() &gt; y.len() { x } else { y }
+}</code></pre>
 <p>આ કોડ સંકલિત થવો જોઈએ અને જ્યારે આપણે તેને યાદી 10-19 માં <code>main</code> વિધેય સાથે વાપરીએ ત્યારે આપણને જોઈતો પરિણામ ઉત્પન્ન કરવું જોઈએ.</p>
 <p>વિધેય હસ્તાક્ષર હવે Rust ને જણાવે છે કે અમુક લાઈફટાઈમ <code>'a</code> માટે, વિધેય બે પરિમાણો લે છે, જે બંને સ્ટ્રિંગ સ્લાઈસ છે અને જે લાઈફટાઈમ <code>'a</code> જેટલા ઓછામાં ઓછા જીવે છે. વિધેય હસ્તાક્ષર એ પણ જણાવે છે કે વિધેયમાંથી પરત કરવામાં આવતી સ્ટ્રિંગ સ્લાઈસ લાઈફટાઈમ <code>'a</code> જેટલી લાંબી જીવશે. વ્યવહારમાં, તેનો અર્થ એ થાય છે કે <code>longest</code> વિધેય દ્વારા પરત કરવામાં આવેલ રેફરન્સનું લાઈફટાઈમ ફંક્શન આર્ગ્યુમેન્ટ્સ દ્વારા દર્શાવવામાં આવતી વેલ્યુના લાઈફટાઈમના નાના જેટલું જ હોય છે. આ સંબંધો એવા છે જેનો ઉપયોગ આપણે Rust ને આ કોડનું વિશ્લેષણ કરતી વખતે કરવો છે.</p>
 <p>જ્યારે આપણે આ ફંક્શન હસ્તાક્ષરમાં જીવનકાળ પરિમાણો (lifetime parameters) નિર્દિષ્ટ કરીએ છીએ, ત્યારે અમે કોઈ પણ પસાર થયેલ અથવા પરત કરેલા મૂલ્યોના જીવનકાળ બદલી રહ્યા નથી. તેના બદલે, અમે સ્પષ્ટ કરી રહ્યા છીએ કે બોરો ચેકર (borrow checker) એવા કોઈપણ મૂલ્યોને નકારી કાઢશે જે આ મર્યાદાઓનું પાલન કરતા નથી. નોંધ કરો કે <code>longest</code> ફંક્શનને ચોક્કસપણે ખબર હોવાની જરૂર નથી કે <code>x</code> અને <code>y</code> કેટલા સમય જીવશે, માત્ર એટલું જ કે <code>'a</code> માટે કોઈ સ્કોપ (scope) બદલી શકાય છે જે આ હસ્તાક્ષર સંતોષે.</p>
@@ -261,19 +325,52 @@
 <p>જ્યારે આપણે <code>longest</code> ને નક્કર સંદર્ભો આપીએ છીએ, ત્યારે <code>'a</code> ની જગ્યાએ જે નક્કર આયુષ્ય (lifetime) મૂકવામાં આવે છે તે <code>x</code> ના અવકાશનો અને <code>y</code> ના અવકાશનો એકમ ભાગ હોય છે. બીજા શબ્દોમાં કહીએ તો, સામાન્ય આયુષ્ય <code>'a</code> એ <code>x</code> અને <code>y</code> ના આયુષ્યના નાના આયુષ્ય જેટલું નક્કર આયુષ્ય મેળવશે. કારણ કે આપણે પરત કરેલા સંદર્ભને સમાન આયુષ્ય પરિમાણ <code>'a</code> સાથે નોંધ્યું છે, તેથી પરત કરેલો સંદર્ભ પણ <code>x</code> અને <code>y</code> ના આયુષ્યના નાના આયુષ્યની લંબાઈ સુધી માન્ય રહેશે.</p>
 <p>ચાલો જોઈએ કે કેવી રીતે આયુષ્ય નિદર્શનો <code>longest</code> કાર્યને વિવિધ નક્કર આયુષ્ય ધરાવતા સંદર્ભો પસાર કરીને નિયંત્રિત કરે છે. સૂચિ ૧૦-૨૨ એક સરળ ઉદાહરણ છે.</p>
 <p><strong>Listing 10-22: Using the <code>longest</code> function with references to <code>String</code> values that have different concrete lifetimes</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-22/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let string1 = String::from("long string is long");
+
+    {
+        let string2 = String::from("xyz");
+        let result = longest(string1.as_str(), string2.as_str());
+        println!("The longest string is {result}");
+    }
+}
+<span class="boring">
+</span><span class="boring">fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+</span><span class="boring">    if x.len() &gt; y.len() { x } else { y }
+</span><span class="boring">}</span></code></pre>
 <p>In this example, <code>string1</code> એ બાહ્ય અવકાશ (outer scope) ના અંત સુધી માન્ય રહે છે, <code>string2</code> એ આંતરિક અવકાશ (inner scope) ના અંત સુધી માન્ય રહે છે, અને <code>result</code> એક એવી વસ્તુનો સંદર્ભ (reference) આપે છે જે આંતરિક અવકાશના અંત સુધી માન્ય રહે છે. આ કોડ ચલાવો અને તમે જોશો કે બોરો ચેકર મંજૂરી આપે છે; તે કમ્પાઇલ થશે અને <code>The longest string is long string is long</code> છાપશે.</p>
 <p>આગળ, ચાલો એક એવું ઉદાહરણ જોઈએ જે દર્શાવે છે કે <code>result</code> માં સંદર્ભ (reference) નું આયુષ્ય (lifetime) બંને Argumentોના નાના આયુષ્ય જેટલું હોવું જરૂરી છે. આપણે <code>result</code> variable (variable) ની ઘોષણાને આંતરિક અવકાશની બહાર ખસેડીશું, પરંતુ <code>result</code> variable મૂલ્યની સોંપણીને <code>string2</code> સાથેના અવકાશમાં જ રાખીશું. પછી, આપણે <code>result</code> નો ઉપયોગ કરતી <code>println!</code> ને આંતરિક અવકાશ સમાપ્ત થયા પછી, તેની બહાર ખસેડીશું. લિસ્ટિંગ 10-23 માંનો કોડ કમ્પાઇલ થશે નહીં.</p>
 <p><strong>Listing 10-23: Attempting to use <code>result</code> after <code>string2</code> has gone out of scope</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-23/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let string1 = String::from("long string is long");
+    let result;
+    {
+        let string2 = String::from("xyz");
+        result = longest(string1.as_str(), string2.as_str());
+    }
+    println!("The longest string is {result}");
+}
+<span class="boring">
+</span><span class="boring">fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+</span><span class="boring">    if x.len() &gt; y.len() { x } else { y }
+</span><span class="boring">}</span></code></pre>
 <p>જ્યારે આપણે આ કોડને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ છીએ, ત્યારે આપણને આ ભૂલ પ્રાપ્ત થાય છે:</p>
-<pre><code class="language-console">{{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-23/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0597]: `string2` does not live long enough
+ --&gt; src/main.rs:6:44
+  |
+5 |         let string2 = String::from("xyz");
+  |             ------- binding `string2` declared here
+6 |         result = longest(string1.as_str(), string2.as_str());
+  |                                            ^^^^^^^ borrowed value does not live long enough
+7 |     }
+  |     - `string2` dropped here while still borrowed
+8 |     println!("The longest string is {result}");
+  |                                      ------ borrow later used here
+
+For more information about this error, try `rustc --explain E0597`.
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>ભૂલ દર્શાવે છે કે <code>result</code> ને <code>println!</code> વિધાન માટે યોગ્ય બનાવવા માટે, <code>string2</code> બાહ્ય અવકાશના અંત સુધી અમાન્ય ન હોવું જોઈએ. Rust જાણે છે કારણ કે આપણે કાર્ય પરિમાણો અને વળતર મૂલ્યોના આયુષ્યને સમાન આયુષ્ય પરિમાણ <code>'a</code> નો ઉપયોગ કરીને નોંધ્યું હતું.</p>
 <p>મનુષ્ય તરીકે, આપણે આ કોડ જોઈ શકીએ છીએ કે <code>string1</code>, <code>string2</code> કરતાં લાંબો છે, અને તેથી, <code>result</code> માં <code>string1</code> નો સંદર્ભ હશે. કારણ કે <code>string1</code> હજી સુધી અવકાશમાંથી બહાર નીકળી નથી ગયું, <code>string1</code> નો સંદર્ભ <code>println!</code> વિધાન માટે માન્ય રહેશે. જો કે, કમ્પાઇલર જોઈ શકતો નથી કે આ કિસ્સામાં સંદર્ભ માન્ય છે. આપણે Rust ને કહ્યું છે કે <code>longest</code> કાર્ય દ્વારા પરત કરવામાં આવેલ સંદર્ભનું આયુષ્ય દાખલ કરેલા સંદર્ભોના નાના આયુષ્ય જેટલું જ છે. તેથી, બોરો ચેકર યાદી 10-23 માં કોડને અમાન્ય સંદર્ભ ધરાવતો હોઈ શકે છે એવું ગણીને મંજૂર કરતો નથી.</p>
@@ -281,18 +378,45 @@
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="relationships"><a class="header" href="#relationships">Relationships</a></h3>
 <p>તમારે ઉંમરના પરિમાણો કેવી રીતે સ્પષ્ટ કરવા તે તમારા કાર્ય પર આધાર રાખે છે. દાખલા તરીકે, જો આપણે <code>longest</code> કાર્યની અમલપદ્ધતિને સૌથી લાંબો શબ્દ-શ્રેણી (string slice) બદલે પ્રથમ પરિમાણ હંમેશાં આપવા માટે બદલીએ, તો આપણે <code>y</code> પરિમાણ પર ઉંમર સ્પષ્ટ કરવાની જરૂર નથી. નીચેનો કોડ સંપાદિત થશે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-08-only-one-reference-with-lifetime/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "efghijklmnopqrstuvwxyz";
+</span><span class="boring">
+</span><span class="boring">    let result = longest(string1.as_str(), string2);
+</span><span class="boring">    println!("The longest string is {result}");
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;str) -&gt; &amp;'a str {
+    x
+}</code></pre>
 <p>અમે પરિમાણ <code>x</code> અને વળતર પ્રકાર માટે લાઈફટાઈમ પેરામીટર <code>'a</code> નિર્ધારિત કર્યું છે, પરંતુ <code>y</code> માટે નહીં, કારણ કે <code>y</code> નું લાઈફટાઈમ <code>x</code> અથવા વળતર મૂલ્યના લાઈફટાઈમ સાથે સંબંધિત નથી.</p>
 <p>જ્યારે કોઈ ફંક્શનમાંથી રેફરન્સ પાછો આપવામાં આવે છે, ત્યારે વળતર પ્રકાર માટેનો લાઈફટાઈમ પેરામીટર એ એક નાનાં પરિમાણ માટેના લાઈફટાઈમ પેરામીટર સાથે મેળ ખાવું જોઈએ. જો પાછો આપવામાં આવેલો રેફરન્સ કોઈ પણ પરિમાણને નિર્દેશિત ન કરે, તો તેણે આ ફંક્શનની અંદર બનાવેલ મૂલ્યને નિર્દેશિત કરવું આવશ્યક છે. જો કે, તે એક ડેન્ગલિંગ રેફરન્સ હશે કારણ કે મૂલ્ય ફંક્શનના અંતે અવકાશમાંથી બહાર નીકળી જશે. <code>longest</code> ફંક્શનના આ પ્રયત્ન કરેલા અમલીકરણનો વિચાર કરો જે કમ્પાઈલ થશે નહીં:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-09-unrelated-lifetime/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "xyz";
+</span><span class="boring">
+</span><span class="boring">    let result = longest(string1.as_str(), string2);
+</span><span class="boring">    println!("The longest string is {result}");
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn longest&lt;'a&gt;(x: &amp;str, y: &amp;str) -&gt; &amp;'a str {
+    let result = String::from("really long string");
+    result.as_str()
+}</code></pre>
 <p>અહીં, ભલે આપણે વળતર પ્રકાર માટે જીવનકાળ પરિમાણ <code>'a</code> નિર્દિષ્ટ કર્યું છે, આ અમલીકરણ કમ્પાઇલ કરવામાં નિષ્ફળ જશે કારણ કે વળતરનું જીવનકાળ બિલકુલ પરિમાણોના જીવનકાળ સાથે સંબંધિત નથી. આપણને મળતો ભૂલ સંદેશ આ મુજબ છે:</p>
-<pre><code class="language-console">{{#include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-09-unrelated-lifetime/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0515]: cannot return value referencing local variable `result`
+  --&gt; src/main.rs:11:5
+   |
+11 |     result.as_str()
+   |     ------^^^^^^^^^
+   |     |
+   |     returns a value referencing data owned by the current function
+   |     `result` is borrowed here
+
+For more information about this error, try `rustc --explain E0515`.
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>નિર્ણાયક એ છે કે <code>result</code> અવકાશ બહાર જાય છે અને <code>longest</code> વિધેયના અંતે શુદ્ધ થાય છે. અમે વિધેયમાંથી <code>result</code> નો સંદર્ભ પાછો આપવાનો પણ પ્રયત્ન કરી રહ્યા છીએ. એવી કોઈ રીતે આપણે આયુષ્ય પરિમાણો (lifetime parameters) સ્પષ્ટ કરી શકતા નથી કે જે લટકતો સંદર્ભ (dangling reference) બદલી શકે, અને Rust આપણને લટકતો સંદર્ભ બનાવવાની મંજૂરી આપશે નહીં. આ સ્થિતિમાં, શ્રેષ્ઠ ઉપાય એ છે કે સંદર્ભને બદલે માલિકીનો ડેટા પ્રકાર પાછો આપવો જેથી કરીને કૉલિંગ વિધેય મૂલ્યને શુદ્ધ કરવા માટે જવાબદાર બને.</p>
 <p>અંતે, લાઈફટાઈમ સિન્ટેક્સ વિવિધ પરિમાણો અને વિધેયોના વળતર મૂલ્યોના લાઈફટાઈમના જોડાણ વિશે છે. એકવાર તેઓ જોડાયા પછી, Rust પાસે પૂરતી માહિતી હોય છે જેથી કરીને મેમરી-સુરક્ષિત ક્રિયાઓ કરવાની મંજૂરી મળે અને એવી ક્રિયાઓને અટકાવી શકાય જે નહિચેલી પોઇન્ટર્સ (dangling pointers) બનાવે અથવા મેમરી સુરક્ષાનું ઉલ્લંઘન કરે.</p>
@@ -300,19 +424,49 @@
 <h3 id="in-struct-definitions"><a class="header" href="#in-struct-definitions">In Struct Definitions</a></h3>
 <p>આપણે અત્યાર સુધી જે રચનાઓ (structs) વ્યાખ્યાયિત કરી છે, તે બધી જ માલિકીવાળા પ્રકારો (owned types) ધરાવે છે. આપણે સંદર્ભો (references) ધરાવતી રચનાઓ પણ વ્યાખ્યાયિત કરી શકીએ છીએ, પરંતુ તે સ્થિતિમાં, આપણે રચનાની વ્યાખ્યામાં દરેક સંદર્ભ માટે આયુષ્ય નોંધ (lifetime annotation) ઉમેરવાની જરૂર પડશે. સૂચિ 10-24 માં <code>ImportantExcerpt</code> નામની એક રચના છે જે સ્ટ્રિંગ સ્લાઇસ ધરાવે છે.</p>
 <p><strong>Listing 10-24: A struct that holds a reference, requiring a lifetime annotation</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-24/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">struct ImportantExcerpt&lt;'a&gt; {
+    part: &amp;'a str,
+}
+
+fn main() {
+    let novel = String::from("Call me Ishmael. Some years ago...");
+    let first_sentence = novel.split('.').next().unwrap();
+    let i = ImportantExcerpt {
+        part: first_sentence,
+    };
+}</code></pre>
 <p>આ struct માં એક જ ક્ષેત્ર <code>part</code> છે જે string slice ધરાવે છે, જે એક reference છે. સામાન્ય data types ની જેમ, આપણે generic lifetime parameter નું નામ struct ના નામ પછી angle brackets અંદર જાહેર કરીએ છીએ જેથી કરીને આપણે struct વ્યાખ્યાના ભાગમાં lifetime parameter નો ઉપયોગ કરી શકીએ. આ annotation સૂચવે છે કે <code>ImportantExcerpt</code> નું instance તેના <code>part</code> ક્ષેત્રમાં રહેલા reference કરતાં વધુ સમય સુધી ટકી શકે નહીં.</p>
 <p><code>main</code> function અહીં <code>ImportantExcerpt</code> struct નું એક instance બનાવે છે જે variable <code>novel</code> દ્વારા માલિકી ધરાવતા String ના પ્રથમ વાક્યનો reference ધરાવે છે. <code>novel</code> માં રહેલો data <code>ImportantExcerpt</code> instance બનાવ્યા પહેલાં અસ્તિત્વમાં હતો. વધુમાં, <code>novel</code> scope માંથી ત્યારે જ બહાર જાય છે જ્યારે <code>ImportantExcerpt</code> scope માંથી બહાર જાય છે, તેથી <code>ImportantExcerpt</code> instance માં રહેલો reference માન્ય છે.</p>
 <h3 id="lifetime-elision"><a class="header" href="#lifetime-elision">Lifetime Elision</a></h3>
 <p>તમે શીખ્યા છો કે દરેક સંદર્ભનું આયુષ્ય હોય છે અને તમારે સંદર્ભોનો ઉપયોગ કરતા વિધેયો અથવા રચનાઓ માટે આયુષ્ય પરિમાણો સ્પષ્ટ કરવાની જરૂર પડે છે. જોકે, આપણને યાદી 4-9 માં એક વિધેય હતું, જે યાદી 10-25 માં ફરીથી દર્શાવવામાં આવ્યું છે, તે આયુષ્ય નોંધણી વગર જ સંપાઈ ગયું હતું.</p>
 <p><strong>Listing 10-25: A function we defined in Listing 4-9 that compiled without lifetime annotations, even though the parameter and return type are references</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024">fn first_word(s: &amp;str) -&gt; &amp;str {
+    let bytes = s.as_bytes();
+
+    for (i, &amp;item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &amp;s[0..i];
+        }
+    }
+
+    &amp;s[..]
+}
+<span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-25/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    let my_string = String::from("hello world");
+</span><span class="boring">
+</span><span class="boring">    // first_word works on slices of `String`s
+</span><span class="boring">    let word = first_word(&amp;my_string[..]);
+</span><span class="boring">
+</span><span class="boring">    let my_string_literal = "hello world";
+</span><span class="boring">
+</span><span class="boring">    // first_word works on slices of string literals
+</span><span class="boring">    let word = first_word(&amp;my_string_literal[..]);
+</span><span class="boring">
+</span><span class="boring">    // Because string literals *are* string slices already,
+</span><span class="boring">    // this works too, without the slice syntax!
+</span><span class="boring">    let word = first_word(my_string_literal);
+</span><span class="boring">}</span></code></pre>
 <p>આ કાર્ય સંકલન પામે છે કારણ કે આ એક ઐતિહાસિક બાબત છે: Rust ના પ્રારંભિક આવૃત્તિઓમાં (1.0 પહેલાં), આ કોડ સંકલન ન પામતો, કારણ કે દરેક સંદર્ભ માટે સ્પષ્ટ સમયગાળો જરૂરી હતો. તે સમયે, કાર્ય હસ્તાક્ષર <code>like this</code> જેવું લખાયું હોત:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -361,16 +515,56 @@
 <p>સ્ટ્રક્ચર ક્ષેત્રો માટે લાઈફટાઇમ નામોને હંમેશાં <code>impl</code> કીવર્ડ પછી જાહેર કરવાની જરૂર પડે છે અને પછી સ્ટ્રક્ચરના નામ પછી તેનો ઉપયોગ કરવો જોઈએ કારણ કે તે લાઈફટાઇમ સ્ટ્રક્ચરના પ્રકારનો ભાગ છે.</p>
 <p><code>impl</code> બ્લોકમાં પદ્ધતિ હસ્તાક્ષરોમાં, સંદર્ભો સ્ટ્રક્ચરના ક્ષેત્રોમાં રહેલા સંદર્ભોની આયુષ્ય સાથે જોડાયેલા હોઈ શકે છે, અથવા તેઓ સ્વતંત્ર હોઈ શકે છે. વિશેષતા, આયુષ્ય નિવારણ નિયમો ઘણીવાર એવા પરિસ્થિતિઓ બનાવે છે કે જેમાં પદ્ધતિ હસ્તાક્ષરોમાં આયુષ્ય નોંધણીઓની જરૂર નથી. ચાલો કેટલાક ઉદાહરણો જોઈએ જે <code>ImportantExcerpt</code> નામના સ્ટ્રક્ચરનો ઉપયોગ કરે છે જેને આપણે સૂચિ 10-24 માં વ્યાખ્યાયિત કર્યું હતું.</p>
 <p>સૌ પ્રથમ, આપણે <code>level</code> નામની પદ્ધતિનો ઉપયોગ કરીશું જેનું માત્ર એક જ પરિમાણ છે - તે <code>self</code> નો સંદર્ભ છે અને જેનું વળતર મૂલ્ય <code>i32</code> છે, જે કોઈપણ વસ્તુનો સંદર્ભ નથી:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">struct ImportantExcerpt&lt;'a&gt; {
+</span><span class="boring">    part: &amp;'a str,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
+    fn level(&amp;self) -&gt; i32 {
+        3
+    }
+}
+<span class="boring">
+</span><span class="boring">impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
+</span><span class="boring">    fn announce_and_return_part(&amp;self, announcement: &amp;str) -&gt; &amp;str {
+</span><span class="boring">        println!("Attention please: {announcement}");
+</span><span class="boring">        self.part
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-10-lifetimes-on-methods/src/main.rs:1st}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    let novel = String::from("Call me Ishmael. Some years ago...");
+</span><span class="boring">    let first_sentence = novel.split('.').next().unwrap();
+</span><span class="boring">    let i = ImportantExcerpt {
+</span><span class="boring">        part: first_sentence,
+</span><span class="boring">    };
+</span><span class="boring">}</span></code></pre>
 <p>આયુષ્ય પરિમાણ ઘોષણા <code>impl</code> પછી અને પ્રકાર નામના ઉપયોગ પછી જરૂરી છે, પરંતુ પ્રથમ નિષ્કર્ષ નિયમનાં કારણે, આપણે <code>self</code> ના સંદર્ભની આયુષ્ય નોંધવાની આવશ્યકતા નથી.</p>
 <p>અહીં એક ઉદાહરણ છે જ્યાં ત્રીજો આયુષ્ય નિષ્કર્ષ નિયમ લાગુ પડે છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">struct ImportantExcerpt&lt;'a&gt; {
+</span><span class="boring">    part: &amp;'a str,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
+</span><span class="boring">    fn level(&amp;self) -&gt; i32 {
+</span><span class="boring">        3
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
+    fn announce_and_return_part(&amp;self, announcement: &amp;str) -&gt; &amp;str {
+        println!("Attention please: {announcement}");
+        self.part
+    }
+}
+<span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-10-lifetimes-on-methods/src/main.rs:3rd}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    let novel = String::from("Call me Ishmael. Some years ago...");
+</span><span class="boring">    let first_sentence = novel.split('.').next().unwrap();
+</span><span class="boring">    let i = ImportantExcerpt {
+</span><span class="boring">        part: first_sentence,
+</span><span class="boring">    };
+</span><span class="boring">}</span></code></pre>
 <p>બે ઇનપુટ લાઈફટાઈમ હોવાથી, Rust પ્રથમ લાઈફટાઈમ ઈલિશન નિયમ લાગુ કરે છે અને <code>&amp;self</code> અને <code>announcement</code> બંનેને પોતાના લાઈફટાઈમ આપે છે. ત્યારબાદ, કારણ કે પરિમાણોમાંનું એક <code>&amp;self</code> છે, વળતર પ્રકારને <code>&amp;self</code> ના લાઈફટાઈમ મળે છે, અને બધા જ લાઈફટાઈમ ધ્યાનમાં લેવામાં આવ્યા છે.</p>
 <h3 id="the-static-lifetime"><a class="header" href="#the-static-lifetime">The Static Lifetime</a></h3>
 <p>એક વિશેષ આયુષ્ય જેના વિશે આપણે ચર્ચા કરવી જોઈએ તે <code>'static</code> છે, જે દર્શાવે છે કે અસરગ્રસ્ત સંદર્ભ પ્રોગ્રામના સમગ્ર કાળ સુધી જીવંત રહી શકે છે. તમામ શબ્દ સાહિત્યોમાં <code>'static</code> આયુષ્ય હોય છે, જેને આપણે નીચે મુજબ નોંધાવી શકીએ છીએ:</p>
@@ -383,10 +577,31 @@
 <!-- Old headings. Do not remove or links may break. -->
 <h2 id="generic-type-parameters-trait-bounds-and-lifetimes"><a class="header" href="#generic-type-parameters-trait-bounds-and-lifetimes">Generic Type Parameters, Trait Bounds, and Lifetimes</a></h2>
 <p>ચાલો આપણે સંક્ષિપ્તમાં એક જunction માં સામાન્ય પ્રકારના પરિમાણો, લક્ષણ સીમાઓ અને આયુષ્યકાળનો ઉલ્લેખ કરવાની સિન્ટેક્સ જોઈએ!</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-11-generics-traits-and-lifetimes/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "xyz";
+</span><span class="boring">
+</span><span class="boring">    let result = longest_with_an_announcement(
+</span><span class="boring">        string1.as_str(),
+</span><span class="boring">        string2,
+</span><span class="boring">        "Today is someone's birthday!",
+</span><span class="boring">    );
+</span><span class="boring">    println!("The longest string is {result}");
+</span><span class="boring">}
+</span><span class="boring">
+</span>use std::fmt::Display;
+
+fn longest_with_an_announcement&lt;'a, T&gt;(
+    x: &amp;'a str,
+    y: &amp;'a str,
+    ann: T,
+) -&gt; &amp;'a str
+where
+    T: Display,
+{
+    println!("Announcement! {ann}");
+    if x.len() &gt; y.len() { x } else { y }
+}</code></pre>
 <p>આ ફંક્શન સૌથી લાંબુ છે Listing 10-21 માંથી જે બે સ્ટ્રિંગ સ્લાઇસમાંથી લાંબી સ્લાઇસ આપે છે. પરંતુ હવે તેમાં <code>ann</code> નામનો એક વધારાનો પરિમાણ છે, જેનો પ્રકાર <code>T</code> છે, જેને <code>where</code> કલમમાં દર્શાવ્યા પ્રમાણે કોઈપણ પ્રકારથી ભરી શકાય છે જે <code>Display</code> ટ્રેઇટનું પાલન કરે છે. આ વધારાના પરિમાણને <code>{}</code> નો ઉપયોગ કરીને છાપવામાં આવશે, જેના કારણે <code>Display</code> ટ્રેઇટ બાઉન્ડ જરૂરી છે. કારણ કે લાઇફટાઇમ એક સામાન્ય પ્રકારનો હોય છે, તેથી લાઇફટાઇમ પરિમાણ <code>'a</code> અને સામાન્ય પ્રકારના પરિમાણ <code>T</code> બંનેને ફંક્શનના નામ પછી એંગલ કૌંસમાં (angle brackets) જ યાદીમાં મૂકવામાં આવે છે.</p>
 <h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
 <p>આ પ્રકરણમાં આપણે ઘણું શીખ્યા! હવે તમે સામાન્ય પ્રકારના પરિમાણો (generic type parameters), લક્ષણો (traits) અને લક્ષણ સીમાઓ (trait bounds), અને સામાન્ય જીવનકાળના પરિમાણો (generic lifetime parameters) વિશે જાણો છો, તેથી તમે ઘણાં વિવિધ સંજોગોમાં કામ કરતા પુનરાવર્તન વગરનો કોડ લખવા માટે તૈયાર છો. સામાન્ય પ્રકારના પરિમાણો તમને અલગ-અલગ પ્રકારો પર કોડ લાગુ કરવા દે છે. લક્ષણો અને લક્ષણ સીમાઓ સુનિશ્ચિત કરે છે કે પ્રકારો સામાન્ય હોવા છતાં, તેમની પાસે કોડને જરૂરી વર્તન હશે. તમે શીખ્યા કે કેવી રીતે જીવનકાળની નોંધ (lifetime annotations) નો ઉપયોગ કરવો જેથી આ લવચીક કોડમાં કોઈ લટકતા સંદર્ભો (dangling references) ન હોય. અને આ બધો વિશ્લેષણ કમ્પાઇલ સમયે થાય છે, જે રનટાઇમ પ્રદર્શનને અસર કરતો નથી!</p>

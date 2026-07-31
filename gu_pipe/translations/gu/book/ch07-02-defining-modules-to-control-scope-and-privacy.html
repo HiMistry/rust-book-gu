@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
+            window.path_to_searchindex_js = "searchindex-4bc072ff.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -221,19 +221,24 @@
 ├── garden.rs
 └── main.rs
 આ કિસ્સામાં, ક્રેટ રૂટ ફાઈલ src/main.rs છે, અને તેમાં આ બાબતો સમાવિષ્ટ છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use crate::garden::vegetables::Asparagus;
+
+pub mod garden;
+
+fn main() {
+    let plant = Asparagus {};
+    println!("I'm growing {plant:?}!");
+}</code></pre>
 <p><code>pub mod garden;</code> લાઇન કમ્પાઇલરને જણાવે છે કે તે src/garden.rs માં મળેલ કોડનો સમાવેશ કરે, જે આ પ્રમાણે છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/garden.rs}}
+</span>pub mod vegetables;
 <span class="boring">}</span></code></pre>
 <p>અહીં, <code>pub mod vegetables;</code> એનો અર્થ થાય છે કે src/garden/vegetables.rs માં રહેલો કોડ પણ સામેલ કરવામાં આવ્યો છે. તે કોડ આ પ્રમાણે છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/garden/vegetables.rs}}
+</span>#[derive(Debug)]
+pub struct Asparagus {}
 <span class="boring">}</span></code></pre>
 <p>હવે ચાલો આ નિયમોની વિગતોમાં જઈએ અને તેમને ક્રિયામાં દર્શાવીએ!</p>
 <h3 id="grouping-related-code-in-modules"><a class="header" href="#grouping-related-code-in-modules">Grouping Related Code in Modules</a></h3>
@@ -244,7 +249,21 @@
 <p><strong>Listing 7-1: A <code>front_of_house</code> module containing other modules that then contain functions</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-01/src/lib.rs}}
+</span>mod front_of_house {
+    mod hosting {
+        fn add_to_waitlist() {}
+
+        fn seat_at_table() {}
+    }
+
+    mod serving {
+        fn take_order() {}
+
+        fn serve_order() {}
+
+        fn take_payment() {}
+    }
+}
 <span class="boring">}</span></code></pre>
 <p>આપણે એક મોડ્યુલ વ્યાખ્યાયિત કરીએ છીએ જેમાં <code>mod</code> કીવર્ડ ત્યારબાદ મોડ્યુલનું નામ આવે છે (આ કિસ્સામાં, <code>front_of_house</code>). મોડ્યુલનો ભાગ પછી કુંડાકી અક્ષરો (<code>curly brackets</code>) ની અંદર જાય છે. મોડ્યુલોની અંદર, આપણે અન્ય મોડ્યુલો પણ મૂકી શકીએ છીએ, જેમ કે આ કિસ્સામાં <code>hosting</code> અને <code>serving</code> મોડ્યુલો છે. મોડ્યુલો અન્ય વસ્તુઓ માટે વ્યાખ્યાઓ પણ રાખી શકે છે, જેમ કે structs, enums, constants, traits અને Listing 7-1 માં દર્શાવેલ functions.</p>
 <p>મોડ્યુલોનો ઉપયોગ કરીને, આપણે સંબંધિત વ્યાખ્યાઓને એકસાથે જૂથબદ્ધ કરી શકીએ છીએ અને નામ આપી શકીએ છીએ કે તેઓ શા માટે સંબંધિત છે. આ કોડનો ઉપયોગ કરતા પ્રોગ્રામરો વ્યાખ્યાઓ વાંચવાને બદલે જૂથોના આધારે કોડ નેવિગેટ કરી શકે છે, જેનાથી તેમના માટે સુસંગત વ્યાખ્યાઓ શોધવાનું સરળ બને છે. આ કોડમાં નવી કાર્યક્ષમતા ઉમેરતા પ્રોગ્રામરોને પ્રોગ્રામને વ્યવસ્થિત રાખવા માટે કોડ ક્યાં મૂકવો તે ખબર પડશે.</p>

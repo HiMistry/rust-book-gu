@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
+            window.path_to_searchindex_js = "searchindex-4bc072ff.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -212,9 +212,12 @@
 <span class="boring">}</span></code></pre>
 <p>variable <code>s</code> એક સ્ટ્રિંગ લિટરલનો ઉલ્લેખ કરે છે, જેમાં સ્ટ્રિંગનું મૂલ્ય આપણા પ્રોગ્રામના લખાણમાં કાયમી રીતે કોડ થયેલું હોય છે. variable જ્યાં સુધી તે જાહેર કરવામાં આવે ત્યાં સુધી વર્તમાન અવકાશ (scope) ના અંત સુધી માન્ય રહે છે. યાદી 4-1 એક એવા પ્રોગ્રામને દર્શાવે છે જેમાં ટિપ્પણીઓ દ્વારા સમજાવવામાં આવ્યું છે કે variable <code>s</code> ક્યાં માન્ય રહેશે.</p>
 <listing number="4-1" caption="A variable and the scope in which it is valid">
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-01/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    {                      // s is not valid here, since it's not yet declared
+        let s = "hello";   // s is valid from this point forward
+
+        // do stuff with s
+    }                      // this scope is now over, and s is no longer valid
 <span class="boring">}</span></code></pre>
 </listing>
 <p>અર્થાત, અહીં બે મહત્વના કાળખંડ છે:</p>
@@ -232,9 +235,12 @@
 </span>let s = String::from("hello");
 <span class="boring">}</span></code></pre>
 <p>આ ડબલ કોલોન <code>::</code> ઓપરેટર આપણને આ ચોક્કસ <code>from</code> ફંક્શનને <code>String</code> પ્રકાર હેઠળ નામ આપવાની મંજૂરી આપે છે, તેના બદલે <code>string_from</code> જેવું કોઈ નામ વાપરવાને બદલે. અમે પ્રકરણ 5 ના “Methods” વિભાગમાં અને પ્રકરણ 7 માં “Module Tree માં વસ્તુનો ઉલ્લેખ કરવા માટેના માર્ગો” માં મોડ્યુલો સાથે નેમસ્પેસિંગની વાત કરતી વખતે આ સિન્ટેક્સ વિશે વધુ ચર્ચા કરીશું. આ પ્રકારની સ્ટ્રિંગને બદલી શકાય છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-01-can-mutate-string/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let mut s = String::from("hello");
+
+    s.push_str(", world!"); // push_str() appends a literal to a String
+
+    println!("{s}"); // this will print `hello, world!`
 <span class="boring">}</span></code></pre>
 <p>તો, અહીં તફાવત શું છે? શા માટે <code>String</code> માં પરિવર્તન કરી શકાય છે પણ સાદી લીખિત વસ્તુઓમાં નથી કરી શકાતું? આ તફાવત એ છે કે આ બંને પ્રકારો સ્મૃતિ (memory) સાથે કેવી રીતે વ્યવહાર કરે છે.</p>
 <h3 id="memory-and-allocation"><a class="header" href="#memory-and-allocation">Memory and Allocation</a></h3>
@@ -247,9 +253,13 @@
 <p>તે પ્રથમ ભાગ આપણી દ્વારા પૂર્ણ થયેલો છે: જ્યારે આપણે <code>String::from</code> ને બોલાવીએ છીએ, ત્યારે તેની અમલીકરણ જરૂરી સ્મૃતિની વિનંતી કરે છે. આ પ્રોગ્રામિંગ ભાષાઓમાં લગભગ સાર્વત્રિક છે.</p>
 <p>જો કે, બીજો ભાગ અલગ છે. કચરો એકત્રીકરનાર (GC) વાળી ભાષાઓમાં, GC વપરાશમાં ન હોય તેવી સ્મૃતિને ટ્રેક કરે છે અને સાફ કરે છે, અને આપણે તેના વિશે વિચારવાની જરૂર નથી. મોટાભાગની GC વગરની ભાષાઓમાં, તે આપણી જવાબદારી છે કે ક્યારે સ્મૃતિનો ઉપયોગ થતો નથી તે ઓળખવું અને તેને મુક્ત કરવા માટે કોડને સ્પષ્ટપણે બોલાવવો, જેમ આપણે તેની વિનંતી કરી હતી. આ યોગ્ય રીતે કરવું ઐતિહાસિક રીતે એક મુશ્કેલ પ્રોગ્રામિંગ સમસ્યા રહી છે. જો આપણે ભૂલી જઈએ, તો આપણે સ્મૃતિનો વ્યય કરીશું. જો આપણે તે ખૂબ વહેલો કરીએ, તો આપણી પાસે અમાન્ય variable હશે. જો આપણે તેને બે વાર કરીએ, તો તે પણ એક ખામી છે. આપણે બરાબર એક <code>allocate</code> સાથે બરાબર એક <code>free</code> જોડવાની જરૂર છે.</p>
 <p>Rust એક અલગ માર્ગ અપનાવે છે: સ્મૃતિ આપોઆપ પરત થઈ જાય છે જ્યારે તે variable (variable) જેની માલિકી ધરાવે છે, તે અવકાશમાંથી બહાર નીકળી જાય છે. અહીંયા આપણા અવકાશના ઉદાહરણનું એક વર્ઝન યાદી 4-1 માંથી લેવામાં આવ્યું છે, જેમાં <code>String</code> નો ઉપયોગ સાદી શબ્દશઃ વેલ્યુને બદલે કરવામાં આવ્યો છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-02-string-scope/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    {
+        let s = String::from("hello"); // s is valid from this point forward
+
+        // do stuff with s
+    }                                  // this scope is now over, and s is no
+                                       // longer valid
 <span class="boring">}</span></code></pre>
 <p>અહીં એક સ્વાભાવિક બિંદુ છે જ્યાં અમે અમારા <code>String</code> માટે જરૂરી સ્મૃતિને ફાળવણીકાર પાસે પાછી આપી શકીએ છીએ: જ્યારે <code>s</code> અવકાશમાંથી બહાર જાય છે. જ્યારે કોઈ variable અવકાશમાંથી બહાર જાય છે, ત્યારે Rust આપણી વતી એક વિશેષ કાર્ય કરે છે. આ કાર્યને <code>drop</code> કહેવામાં આવે છે, અને તે <code>String</code> ના લેખક માટે સ્મૃતિ પાછી આપવા માટેનો કોડ મૂકવાની જગ્યા છે. Rust આપોઆપ ક્લોઝિંગ કર્લી બ્રેકેટ પર <code>drop</code> ને બોલાવે છે.</p>
 <blockquote>
@@ -261,16 +271,16 @@
 <h4 id="variables-and-data-interacting-with-move"><a class="header" href="#variables-and-data-interacting-with-move">Variables and Data Interacting with Move</a></h4>
 <p>Rust માં, એક કરતાં વધુ variable સમાન માહિતી સાથે જુદી જુદી રીતે ક્રિયાપ્રતિક્રિયા કરી શકે છે. સૂચિ 4-2 એક ઉદાહરણ દર્શાવે છે જેમાં પૂર્ણાંકનો ઉપયોગ થયો છે.</p>
 <listing number="4-2" caption="Assigning the integer value of variable `x` to `y`">
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-02/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let x = 5;
+    let y = x;
 <span class="boring">}</span></code></pre>
 </listing>
 <p>આપણે કદાચ અનુમાન લગાવી શકીએ કે આ શું કરી રહ્યું છે: “મૂલ્ય <code>5</code> ને <code>x</code> સાથે જોડો; પછી, <code>x</code> માં રહેલા મૂલ્યની નકલ કરો અને તેને <code>y</code> સાથે જોડો.” હવે આપણી પાસે બે variable, <code>x</code> અને <code>y</code>, છે અને બંને <code>5</code> બરાબર છે. આ ખરેખર થઈ રહ્યું છે, કારણ કે પૂર્ણાંક સરળ મૂલ્યો છે જેનું જાણીતું, નિશ્ચિત કદ હોય છે, અને આ બે <code>5</code> મૂલ્યોને સ્ટેક પર ધકેલવામાં આવે છે.</p>
 <p>હવે ચાલો <code>String</code> સંસ્કરણ જોઈએ:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-03-string-move/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let s1 = String::from("hello");
+    let s2 = s1;
 <span class="boring">}</span></code></pre>
 <p>આ ખૂબ જ સમાન લાગે છે, તેથી આપણે ધારી શકીએ કે કાર્ય કરવાની રીત પણ સમાન હશે: એટલે કે, બીજી લીટી <code>s1</code> માં રહેલા મૂલ્યની નકલ કરશે અને તેને <code>s2</code> સાથે જોડી દેશે. પરંતુ આ બરાબર નથી થતું. જુઓ આકૃતિ 4-1, જ્યાં <code>String</code> ની અંદર શું થઈ રહ્યું છે તે જોવા માટે. એક <code>String</code> ત્રણ ભાગોથી બનેલું હોય છે, જે ડાબી બાજુ દર્શાવેલ છે: સ્ટ્રિંગની સામગ્રી ધરાવતા મેમરી તરફનો pointer, લંબાઈ અને ક્ષમતા. આ માહિતીનો સમૂહ સ્ટેક પર સંગ્રહિત થાય છે. જમણી બાજુએ હીપમાં રહેલી મેમરી છે જે સામગ્રી ધરાવે છે.</p>
 <p>આકૃતિ 4-1: <code>String</code> ના સ્મૃતિમાં નિરૂપણ, જે મૂલ્ય <code>"hello"</code> ધરાવે છે અને <code>s1</code> સાથે જોડાયેલું છે</p>
@@ -281,18 +291,44 @@
 <p>આકૃતિ 4-3: બીજી શક્યતા છે કે <code>s2 = s1</code> શું કરી શકે છે જો Rust એ ઢગલા પરના ડેટાની પણ નકલ કરી હોત.</p>
 <p>અગાઉ, અમે કહ્યું હતું કે જ્યારે કોઈ variable (variable) અવકાશમાંથી બહાર જાય છે, ત્યારે Rust આપોઆપ <code>drop</code> કાર્યને બોલાવે છે અને તે variable માટે હીપ મેમરી સાફ કરે છે. પરંતુ આકૃતિ 4-2 બતાવે છે કે બંને ડેટા પોઇન્ટર્સ એક જ સ્થાન તરફ નિર્દેશ કરે છે. આ એક સમસ્યા છે: જ્યારે <code>s2</code> અને <code>s1</code> અવકાશમાંથી બહાર જાય છે, ત્યારે તેઓ બંને સમાન મેમરીને મુક્ત કરવાનો પ્રયાસ કરશે. આને ડબલ ફ્રી ભૂલ તરીકે ઓળખવામાં આવે છે અને તે મેમરી સુરક્ષા ભૂલોમાંની એક છે જેનો ઉલ્લેખ આપણે અગાઉ કર્યો હતો. બે વાર મેમરી મુક્ત કરવાથી મેમરી ભ્રષ્ટાચાર થઈ શકે છે, જેના કારણે સંભવિતપણે સુરક્ષા નબળાઈઓ આવી શકે છે.</p>
 <p>યાદી ક્ષતિ સુરક્ષા સુનિશ્ચિત કરવા માટે, <code>let s2 = s1;</code> લાઇન પછી, Rust <code>s1</code> ને હવે માન્ય ગણે છે. આથી, જ્યારે <code>s1</code> અવકાશમાંથી બહાર જાય ત્યારે Rustને કંઈપણ મુક્ત કરવાની જરૂર નથી. જુઓ કે તમે <code>s2</code> બનાવ્યા પછી <code>s1</code> નો ઉપયોગ કરવાનો પ્રયત્ન કરો છો; તે કામ કરશે નહીં:</p>
-<pre><code class="language-rust ignore does_not_compile">{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-04-cant-use-after-move/src/main.rs:here}}</code></pre>
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">fn main() {
+</span>    let s1 = String::from("hello");
+    let s2 = s1;
+
+    println!("{s1}, world!");
+<span class="boring">}</span></code></pre>
 <p>તમે આવી ભૂલ મેળવશો કારણ કે Rust અમાન્ય સંદર્ભનો ઉપયોગ કરવાથી રોકે છે:</p>
-<pre><code class="language-console">{{#include ../listings/ch04-understanding-ownership/no-listing-04-cant-use-after-move/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling ownership v0.1.0 (file:///projects/ownership)
+error[E0382]: borrow of moved value: `s1`
+ --&gt; src/main.rs:5:16
+  |
+2 |     let s1 = String::from("hello");
+  |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
+3 |     let s2 = s1;
+  |              -- value moved here
+4 |
+5 |     println!("{s1}, world!");
+  |                ^^ value borrowed here after move
+  |
+help: consider cloning the value if the performance cost is acceptable
+  |
+3 |     let s2 = s1.clone();
+  |                ++++++++
+
+For more information about this error, try `rustc --explain E0382`.
+error: could not compile `ownership` (bin "ownership") due to 1 previous error
 </code></pre>
 <p>જો તમે અન્ય ભાષાઓમાં <code>shallow copy</code> અને <code>deep copy</code> જેવા શબ્દો સાંભળ્યા હશે, તો માત્ર pointer, length અને capacity ની નકલ કરવાની પ્રક્રિયાને <code>shallow copy</code> કહી શકાય એવું લાગે છે. પરંતુ Rust માં પ્રથમ variable પણ અમાન્ય (invalidate) કરવામાં આવે છે, તેથી તેને <code>shallow copy</code> કહેવાને બદલે <code>move</code> તરીકે ઓળખવામાં આવે છે. આ ઉદાહરણમાં, આપણે કહીશું કે <code>s1</code> ને <code>s2</code> માં <code>move</code> કરવામાં આવ્યું હતું. આથી, ખરેખર શું થાય છે તે આકૃતિ 4-4 માં દર્શાવેલ છે.</p>
 <p>આકૃતિ 4-4: <code>s1</code> અમાન્ય થયા પછી સ્મૃતિમાં (memory) નિરૂપણ.</p>
 <p>એ સમસ્યાનું નિરાકરણ થઈ ગયું! માત્ર <code>s2</code> માન્ય હોવાથી, જ્યારે તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે એકલું જ સ્મૃતિ મુક્ત કરશે, અને અમારું કાર્ય પૂર્ણ થશે. વધુમાં, અહીં એક ડિઝાઇન પસંદગી સૂચિત છે: Rust તમારા ડેટાની “ઊંડી” નકલો ક્યારેય આપમેળે બનાવશે નહીં. તેથી, કોઈપણ આપોઆપ નકલને રનટાઇમ પ્રદર્શનના સંદર્ભમાં સસ્તી ગણી શકાય.</p>
 <h4 id="scope-and-assignment"><a class="header" href="#scope-and-assignment">Scope and Assignment</a></h4>
 <p>આ સંબંધનું વિરુદ્ધ પણ સાચું છે, જે સ્કોપિંગ (scoping), માલિકી (ownership) અને <code>drop</code> ફંક્શન દ્વારા મેમરી મુક્ત થવા વચ્ચેના સંબંધને લાગુ પડે છે. જ્યારે તમે કોઈ અસ્તિત્વમાં રહેલા variable (variable) ને સંપૂર્ણપણે નવી કિંમત આપો છો, ત્યારે Rust <code>drop</code> ને બોલાવશે અને મૂળ કિંમતની મેમરી તરત જ મુક્ત કરશે. ઉદાહરણ તરીકે આ કોડને ધ્યાનમાં લો:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-04b-replacement-drop/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let mut s = String::from("hello");
+    s = String::from("ahoy");
+
+    println!("{s}, world!");
 <span class="boring">}</span></code></pre>
 <p>અમે સૌપ્રથમ એક variable <code>s</code> જાહેર કરીએ છીએ અને તેને <code>"hello"</code> મૂલ્ય સાથેના <code>String</code> સાથે જોડીએ છીએ. ત્યારબાદ, અમે તરત જ <code>"ahoy"</code> મૂલ્ય સાથે નવું <code>String</code> બનાવીએ છીએ અને તેને <code>s</code> ને સોંપીએ છીએ. આ સમયે, મૂળ મૂલ્યને હીપ પર કોઈ પણ દર્શાવતું નથી. આકૃતિ 4-5 વર્તમાન સ્ટેક અને હીપ ડેટા દર્શાવે છે:</p>
 <p>આકૃતિ 4-5: પ્રારંભિક મૂલ્ય સંપૂર્ણપણે બદલાયા પછી મેમરીમાં નિરૂપણ</p>
@@ -302,16 +338,20 @@
 <h4 id="variables-and-data-interacting-with-clone"><a class="header" href="#variables-and-data-interacting-with-clone">Variables and Data Interacting with Clone</a></h4>
 <p>જો આપણે <code>String</code> ના હીપ (heap) માહિતીને માત્ર સ્ટેક (stack) માહિતીની નકલ કરવાને બદલે ઊંડી નકલ કરવી હોય, તો આપણે <code>clone</code> નામની સામાન્ય પદ્ધતિનો ઉપયોગ કરી શકીએ છીએ. આપણે પ્રકરણ 5 માં પદ્ધતિ વાક્યરચના વિશે ચર્ચા કરીશું, પરંતુ કારણ કે પદ્ધતિઓ ઘણી પ્રોગ્રામિંગ ભાષાઓમાં એક સામાન્ય લક્ષણ છે, તમે કદાચ અગાઉ જોયા હશે.</p>
 <p>અહીં <code>clone</code> પદ્ધતિ કાર્યમાં છે તેનું ઉદાહરણ છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-05-clone/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let s1 = String::from("hello");
+    let s2 = s1.clone();
+
+    println!("s1 = {s1}, s2 = {s2}");
 <span class="boring">}</span></code></pre>
 <p>આ બરાબર કાર્ય કરે છે અને આકૃતિ 4-3 માં દર્શાવેલ વર્તણૂક સ્પષ્ટપણે ઉત્પન્ન કરે છે, જ્યાં હીપ ડેટા નકલ થાય છે. જ્યારે તમે <code>clone</code> કૉલ જુઓ છો, ત્યારે તમને ખબર પડે છે કે અમુક રેન્ડમ કોડ ચલાવવામાં આવી રહ્યો છે અને તે કોડ મોંઘો હોઈ શકે છે. તે એક દૃશ્ય સંકેત છે કે કંઈક અલગ થઈ રહ્યું છે.</p>
 <h4 id="stack-only-data-copy"><a class="header" href="#stack-only-data-copy">Stack-Only Data: Copy</a></h4>
 <p>હજુ એક વિશિષ્ટતા છે જેની ચર્ચા થઈ નથી. આ કોડ, જે પૂર્ણાંકોનો ઉપયોગ કરે છે—જેનો ભાગ લિસ્ટિંગ 4-2 માં દર્શાવવામાં આવ્યો હતો—કામે આવે છે અને માન્ય છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-06-copy/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let x = 5;
+    let y = x;
+
+    println!("x = {x}, y = {y}");
 <span class="boring">}</span></code></pre>
 <p>પણ આ કોડ એ શીખવ્યું કે જે આપણે હમણાં જ મેળવ્યું છે તેની વિરુદ્ધ જણાય છે: આપણી પાસે <code>clone</code> માટે કોઈ આહ્વાન નથી, છતાં <code>x</code> માન્ય છે અને તે <code>y</code> માં ખસેડવામાં આવ્યું નથી.</p>
 <p>તેનું કારણ એ છે કે પૂર્ણાંક જેવા પ્રકારો, જેની સાઈઝ કમ્પાઈલ સમયે જાણીતી હોય છે, તે સંપૂર્ણપણે સ્ટેક પર સંગ્રહિત થાય છે, તેથી વાસ્તવિક મૂલ્યોની નકલ કરવી સરળ છે. એનો અર્થ એ થાય છે કે આપણને <code>y</code> variable બનાવ્યા પછી પણ <code>x</code> માન્ય રહે તે રોકવા માટે કોઈ કારણ નથી. બીજા શબ્દોમાં કહીએ તો, અહીં ઊંડા અને છીછરા નકલ વચ્ચે કોઈ તફાવત નથી, તેથી <code>clone</code> બોલાવવાથી સામાન્ય છીછરી નકલ સિવાય કંઈપણ અલગ પરિણામ નહીં મળે, અને આપણે તેને છોડી શકીએ છીએ.</p>
@@ -327,27 +367,81 @@
 <h3 id="ownership-and-functions"><a class="header" href="#ownership-and-functions">Ownership and Functions</a></h3>
 <p>વિધેયને મૂલ્ય પહોંચાડવાની પદ્ધતિઓ variable મૂલ્ય સોંપવા જેવી જ છે. વિધેયને variable પહોંચાડવાથી સ્થળાંતર અથવા નકલ થશે, જેમ સોંપણીમાં થાય છે. સૂચિ 4-3 માં કેટલીક નોંધો સાથેનું ઉદાહરણ છે, જે દર્શાવે છે કે variables ક્યાં પ્રવેશ કરે છે અને અવકાશમાંથી બહાર નીકળે છે.</p>
 <listing number="4-3" file-name="src/main.rs" caption="Functions with ownership and scope annotated">
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-03/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let s = String::from("hello");  // s comes into scope
+
+    takes_ownership(s);             // s's value moves into the function...
+                                    // ... and so is no longer valid here
+
+    let x = 5;                      // x comes into scope
+
+    makes_copy(x);                  // Because i32 implements the Copy trait,
+                                    // x does NOT move into the function,
+                                    // so it's okay to use x afterward.
+
+} // Here, x goes out of scope, then s. However, because s's value was moved,
+  // nothing special happens.
+
+fn takes_ownership(some_string: String) { // some_string comes into scope
+    println!("{some_string}");
+} // Here, some_string goes out of scope and `drop` is called. The backing
+  // memory is freed.
+
+fn makes_copy(some_integer: i32) { // some_integer comes into scope
+    println!("{some_integer}");
+} // Here, some_integer goes out of scope. Nothing special happens.</code></pre>
 </listing>
 <p>જો આપણે <code>takes_ownership</code> કૉલ પછી <code>s</code> વાપરવાનો પ્રયત્ન કરીએ, તો Rust એક કમ્પાઇલ-ટાઇમ ભૂલ આપશે. આ સ્થિર તપાસો આપણને ભૂલોથી સુરક્ષિત કરે છે. જુઓ કે તમે <code>main</code> માં કોડ ઉમેરી શકો છો જે <code>s</code> અને <code>x</code> નો ઉપયોગ કરે છે જેથી તમે જોઈ શકો કે તમે તેનો ઉપયોગ ક્યાં કરી શકો છો અને માલિકીના નિયમો તમને ક્યાં કરવા દેતા નથી.</p>
 <h3 id="return-values-and-scope"><a class="header" href="#return-values-and-scope">Return Values and Scope</a></h3>
 <p>વળતર મૂલ્યો માલિકીનું સ્થાનાંતરણ પણ કરી શકે છે. સૂચિ 4-4 એક ફંક્શનનું ઉદાહરણ દર્શાવે છે જે અમુક મૂલ્ય પાછું આપે છે, જેમાં સૂચિ 4-3 માં દર્શાવેલ એનોટેશન્સ જેવા જ હોય છે.</p>
 <listing number="4-4" file-name="src/main.rs" caption="Transferring ownership of return values">
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let s1 = gives_ownership();        // gives_ownership moves its return
+                                       // value into s1
+
+    let s2 = String::from("hello");    // s2 comes into scope
+
+    let s3 = takes_and_gives_back(s2); // s2 is moved into
+                                       // takes_and_gives_back, which also
+                                       // moves its return value into s3
+} // Here, s3 goes out of scope and is dropped. s2 was moved, so nothing
+  // happens. s1 goes out of scope and is dropped.
+
+fn gives_ownership() -&gt; String {       // gives_ownership will move its
+                                       // return value into the function
+                                       // that calls it
+
+    let some_string = String::from("yours"); // some_string comes into scope
+
+    some_string                        // some_string is returned and
+                                       // moves out to the calling
+                                       // function
+}
+
+// This function takes a String and returns a String.
+fn takes_and_gives_back(a_string: String) -&gt; String {
+    // a_string comes into
+    // scope
+
+    a_string  // a_string is returned and moves out to the calling function
+}</code></pre>
 </listing>
 <p>ચલનું માલિકી એક જ પ્રકારની રીતને અનુસરે છે: એક variable મૂલ્ય બીજા variable સોંપવાથી તે સ્થાનાંતરિત થાય છે. જ્યારે કોઈ variable જેમાં ઢગલા (heap) પર ડેટા હોય, તે અવકાશમાંથી બહાર જાય છે, ત્યારે તે મૂલ્ય <code>drop</code> દ્વારા સાફ કરવામાં આવશે સિવાય કે ડેટાનું માલિકી બીજા variable સ્થાનાંતરિત થયું હોય. જ્યારે આ કામ કરે છે, ત્યારે માલિકી લેવી અને પછી દરેક કાર્ય (function) સાથે માલિકી પાછી આપવી થોડી કંટાળાજનક છે. જો આપણે કોઈ કાર્યને મૂલ્યનો ઉપયોગ કરવા દેવા માંગતા હોઈએ પરંતુ માલિકી ન લેવા માંગતા હોય તો શું કરવું? એવું બહુ હેરાન કરે તેવું છે કે જે કંઈપણ આપણે અંદર મોકલીએ, તેને ફરીથી વાપરવા માટે પાછું મોકલવાની જરૂર પડે છે, ઉપરાંત કાર્યના ભાગરૂપે પરિણામી ડેટાને પણ આપણને પાછો મેળવવો પડે છે.</p>
 <p>Rust આપણને ટ્યૂપલનો ઉપયોગ કરીને બહુવિધ મૂલ્યો પરત કરવાની છૂટ આપે છે, જે યાદી 4-5 માં દર્શાવેલ છે.</p>
 <listing number="4-5" file-name="src/main.rs" caption="Returning ownership of parameters">
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let s1 = String::from("hello");
+
+    let (s2, len) = calculate_length(s1);
+
+    println!("The length of '{s2}' is {len}.");
+}
+
+fn calculate_length(s: String) -&gt; (String, usize) {
+    let length = s.len(); // len() returns the length of a String
+
+    (s, length)
+}</code></pre>
 </listing>
 <p>પરંતુ આ ઘણો વિધિ-વિધાન અને એક સામાન્ય ખ્યાલ માટે ઘણી મહેનત છે. સદભાગ્યે, Rustમાં એક એવી વિશેષતા છે જે મૂલ્ય ટ્રાન્સફર કર્યા વિના તેનો ઉપયોગ કરવાની સુવિધા આપે છે: સંદર્ભો (references).</p>
 
