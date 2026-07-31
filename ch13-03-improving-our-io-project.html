@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -187,67 +187,10 @@
 <h3 id="removing-a-clone-using-an-iterator"><a class="header" href="#removing-a-clone-using-an-iterator">Removing a <code>clone</code> Using an Iterator</a></h3>
 <p>યાદી ૧૨-૬ માં, અમે કોડ ઉમેર્યો હતો જે <code>String</code> મૂલ્યોની સ્લાઈસ લીધી અને ઇન્ડેક્સિંગ દ્વારા <code>Config</code> સ્ટ્રક્ચરનું ઉદાહરણ બનાવ્યું હતું અને મૂલ્યોને ક્લોન કર્યા હતા, જેથી <code>Config</code> સ્ટ્રક્ચરે તે મૂલ્યોના માલિકી મેળવી શકે. યાદી ૧૩-૧૭ માં, અમે <code>Config::build</code> ફંક્શનનો અમલ ફરીથી પ્રસ્તુત કર્યો છે જે રીતે તે યાદી ૧૨-૨૩ માં હતો.</p>
 <p><strong>Listing 13-17: Reproduction of the <code>Config::build</code> function from Listing 12-23</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
-</span><span class="boring">use std::error::Error;
-</span><span class="boring">use std::fs;
-</span><span class="boring">use std::process;
-</span><span class="boring">
-</span><span class="boring">use minigrep::{search, search_case_insensitive};
-</span><span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
-</span><span class="boring">
-</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
-</span><span class="boring">        println!("Problem parsing arguments: {err}");
-</span><span class="boring">        process::exit(1);
-</span><span class="boring">    });
-</span><span class="boring">
-</span><span class="boring">    if let Err(e) = run(config) {
-</span><span class="boring">        println!("Application error: {e}");
-</span><span class="boring">        process::exit(1);
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub struct Config {
-</span><span class="boring">    pub query: String,
-</span><span class="boring">    pub file_path: String,
-</span><span class="boring">    pub ignore_case: bool,
-</span><span class="boring">}
-</span><span class="boring">
-</span>impl Config {
-    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
-        if args.len() &lt; 3 {
-            return Err("not enough arguments");
-        }
-
-        let query = args[1].clone();
-        let file_path = args[2].clone();
-
-        let ignore_case = env::var("IGNORE_CASE").is_ok();
-
-        Ok(Config {
-            query,
-            file_path,
-            ignore_case,
-        })
-    }
-}
-<span class="boring">
-</span><span class="boring">fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-</span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
-</span><span class="boring">
-</span><span class="boring">    let results = if config.ignore_case {
-</span><span class="boring">        search_case_insensitive(&amp;config.query, &amp;contents)
-</span><span class="boring">    } else {
-</span><span class="boring">        search(&amp;config.query, &amp;contents)
-</span><span class="boring">    };
-</span><span class="boring">
-</span><span class="boring">    for line in results {
-</span><span class="boring">        println!("{line}");
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    Ok(())
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch13-functional-features/listing-12-23-reproduced/src/main.rs:ch13}}
+<span class="boring">}</span></code></pre>
 <p><code>clone</code> તે સમયે, અમે કહ્યું હતું કે બિનકાર્યક્ષમ</p>
 <p><code>clone</code> કૉલ્સની ચિંતા ન કરવી, કારણ કે ભવિષ્યમાં તે દૂર કરી દેવામાં આવશે. સારું, તે સમય હવે આવી ગયો છે! અમને અહીં <code>clone</code> ની જરૂર હતી કારણ કે અમારી પાસે <code>String</code> તત્વો ધરાવતી સ્લાઇસ છે જે <code>args</code> પરિમાણમાં છે, પરંતુ <code>build</code> કાર્ય <code>args</code> નું માલિકી ધારણ કરતું નથી. <code>Config</code> ઇન્સ્ટન્સની માલિકી પાછી આપવા માટે, આપણે <code>query</code> અને <code>file_path</code> ક્ષેત્રોના મૂલ્યોને ક્લોન કરવા પડ્યા, જેથી <code>Config</code> ઇન્સ્ટન્સ તેના મૂલ્યોની માલિકી મેળવી શકે.</p>
 <p>અમારા નવીન ઇટરેટર (iterator) વિશેના નવા જ્ઞાન સાથે, અમે <code>build</code> કાર્યને સ્લાઇસ (slice) ઉછીના લેવાને બદલે ઇટરેટરનું માલિકી સ્વીકારવાનું સુધારી શકીએ છીએ. અમે સ્લાઇસની લંબાઈ ચકાસી અને ચોક્કસ સ્થળોએ અનુક્રમણિકાનો ઉપયોગ કરેલા કોડને બદલે ઇટરેટર કાર્યક્ષમતાનો ઉપયોગ કરીશું. આ <code>Config::build</code> કાર્ય શું કરે છે તે સ્પષ્ટ કરશે કારણ કે ઇટરેટર મૂલ્યોને ઍક્સેસ કરશે. Once <code>Config::build</code> takes ownership of the iterator and stops using indexing operations that borrow, we</p>
@@ -255,197 +198,23 @@
 <h4 id="using-the-returned-iterator-directly"><a class="header" href="#using-the-returned-iterator-directly">Using the Returned Iterator Directly</a></h4>
 <p>તમારા I/O પ્રોજેક્ટની <code>src/main.rs</code> ફાઈલ ખોલો, જે આ પ્રમાણે દેખાતી હોવી જોઈએ:</p>
 <p>ફાઈલનું નામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
-</span><span class="boring">use std::error::Error;
-</span><span class="boring">use std::fs;
-</span><span class="boring">use std::process;
-</span><span class="boring">
-</span><span class="boring">use minigrep::{search, search_case_insensitive};
-</span><span class="boring">
-</span>fn main() {
-    let args: Vec&lt;String&gt; = env::args().collect();
-
-    let config = Config::build(&amp;args).unwrap_or_else(|err| {
-        eprintln!("Problem parsing arguments: {err}");
-        process::exit(1);
-    });
-
-    // --snip--
-<span class="boring">
-</span><span class="boring">    if let Err(e) = run(config) {
-</span><span class="boring">        eprintln!("Application error: {e}");
-</span><span class="boring">        process::exit(1);
-</span><span class="boring">    }
-</span>}
-<span class="boring">
-</span><span class="boring">pub struct Config {
-</span><span class="boring">    pub query: String,
-</span><span class="boring">    pub file_path: String,
-</span><span class="boring">    pub ignore_case: bool,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Config {
-</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
-</span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err("not enough arguments");
-</span><span class="boring">        }
-</span><span class="boring">
-</span><span class="boring">        let query = args[1].clone();
-</span><span class="boring">        let file_path = args[2].clone();
-</span><span class="boring">
-</span><span class="boring">        let ignore_case = env::var("IGNORE_CASE").is_ok();
-</span><span class="boring">
-</span><span class="boring">        Ok(Config {
-</span><span class="boring">            query,
-</span><span class="boring">            file_path,
-</span><span class="boring">            ignore_case,
-</span><span class="boring">        })
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-</span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
-</span><span class="boring">
-</span><span class="boring">    let results = if config.ignore_case {
-</span><span class="boring">        search_case_insensitive(&amp;config.query, &amp;contents)
-</span><span class="boring">    } else {
-</span><span class="boring">        search(&amp;config.query, &amp;contents)
-</span><span class="boring">    };
-</span><span class="boring">
-</span><span class="boring">    for line in results {
-</span><span class="boring">        println!("{line}");
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    Ok(())
-</span><span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch13-functional-features/listing-12-24-reproduced/src/main.rs:ch13}}
+<span class="boring">}</span></code></pre>
 <p>અમે પ્રથમ <code>main</code> વિધેયની શરૂઆત બદલીશું જે આપણી પાસે લિસ્ટિંગ ૧૨-૨૪ માં હતી, તેને લિસ્ટિંગ ૧૩-૧૮ ના કોડમાં, જે આ વખતે એક પુનરાવર્તક (iterator) વાપરે છે. જ્યાં સુધી અમે <code>Config::build</code> ને પણ અપડેટ નહીં કરીએ ત્યાં સુધી આ કમ્પાઇલ થશે નહીં.</p>
 <p><strong>Listing 13-18: Passing the return value of <code>env::args</code> to <code>Config::build</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
-</span><span class="boring">use std::error::Error;
-</span><span class="boring">use std::fs;
-</span><span class="boring">use std::process;
-</span><span class="boring">
-</span><span class="boring">use minigrep::{search, search_case_insensitive};
-</span><span class="boring">
-</span>fn main() {
-    let config = Config::build(env::args()).unwrap_or_else(|err| {
-        eprintln!("Problem parsing arguments: {err}");
-        process::exit(1);
-    });
-
-    // --snip--
-<span class="boring">
-</span><span class="boring">    if let Err(e) = run(config) {
-</span><span class="boring">        eprintln!("Application error: {e}");
-</span><span class="boring">        process::exit(1);
-</span><span class="boring">    }
-</span>}
-<span class="boring">
-</span><span class="boring">pub struct Config {
-</span><span class="boring">    pub query: String,
-</span><span class="boring">    pub file_path: String,
-</span><span class="boring">    pub ignore_case: bool,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Config {
-</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
-</span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err("not enough arguments");
-</span><span class="boring">        }
-</span><span class="boring">
-</span><span class="boring">        let query = args[1].clone();
-</span><span class="boring">        let file_path = args[2].clone();
-</span><span class="boring">
-</span><span class="boring">        let ignore_case = env::var("IGNORE_CASE").is_ok();
-</span><span class="boring">
-</span><span class="boring">        Ok(Config {
-</span><span class="boring">            query,
-</span><span class="boring">            file_path,
-</span><span class="boring">            ignore_case,
-</span><span class="boring">        })
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-</span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
-</span><span class="boring">
-</span><span class="boring">    let results = if config.ignore_case {
-</span><span class="boring">        search_case_insensitive(&amp;config.query, &amp;contents)
-</span><span class="boring">    } else {
-</span><span class="boring">        search(&amp;config.query, &amp;contents)
-</span><span class="boring">    };
-</span><span class="boring">
-</span><span class="boring">    for line in results {
-</span><span class="boring">        println!("{line}");
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    Ok(())
-</span><span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch13-functional-features/listing-13-18/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>The <code>env::args</code> Function <code>env::args</code> વિધેય એક iterator આપે છે! હવે આપણે iterator ના મૂલ્યોને vector માં ભેગા કરીને પછી <code>Config::build</code> ને slice મોકલવાને બદલે, સીધાં જ <code>env::args</code> દ્વારા મળેલા iterator નું ownership <code>Config::build</code> ને આપી રહ્યા છીએ.</p>
 <p>આગળ, આપણે <code>Config::build</code> ની વ્યાખ્યા અપડેટ કરવાની જરૂર છે. ચાલો <code>Config::build</code> ના signature ને Listing 13-19 જેવું કરીએ. આ હજી સુધી compile થશે નહીં, કારણ કે આપણે function body ને અપડેટ કરવાની જરૂર છે.</p>
 <p><strong>Listing 13-19: Updating the signature of <code>Config::build</code> to expect an iterator</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
-</span><span class="boring">use std::error::Error;
-</span><span class="boring">use std::fs;
-</span><span class="boring">use std::process;
-</span><span class="boring">
-</span><span class="boring">use minigrep::{search, search_case_insensitive};
-</span><span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">    let config = Config::build(env::args()).unwrap_or_else(|err| {
-</span><span class="boring">        eprintln!("Problem parsing arguments: {err}");
-</span><span class="boring">        process::exit(1);
-</span><span class="boring">    });
-</span><span class="boring">
-</span><span class="boring">    if let Err(e) = run(config) {
-</span><span class="boring">        eprintln!("Application error: {e}");
-</span><span class="boring">        process::exit(1);
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub struct Config {
-</span><span class="boring">    pub query: String,
-</span><span class="boring">    pub file_path: String,
-</span><span class="boring">    pub ignore_case: bool,
-</span><span class="boring">}
-</span><span class="boring">
-</span>impl Config {
-    fn build(
-        mut args: impl Iterator&lt;Item = String&gt;,
-    ) -&gt; Result&lt;Config, &amp;'static str&gt; {
-        // --snip--
-<span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err("not enough arguments");
-</span><span class="boring">        }
-</span><span class="boring">
-</span><span class="boring">        let query = args[1].clone();
-</span><span class="boring">        let file_path = args[2].clone();
-</span><span class="boring">
-</span><span class="boring">        let ignore_case = env::var("IGNORE_CASE").is_ok();
-</span><span class="boring">
-</span><span class="boring">        Ok(Config {
-</span><span class="boring">            query,
-</span><span class="boring">            file_path,
-</span><span class="boring">            ignore_case,
-</span><span class="boring">        })
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-</span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
-</span><span class="boring">
-</span><span class="boring">    let results = if config.ignore_case {
-</span><span class="boring">        search_case_insensitive(&amp;config.query, &amp;contents)
-</span><span class="boring">    } else {
-</span><span class="boring">        search(&amp;config.query, &amp;contents)
-</span><span class="boring">    };
-</span><span class="boring">
-</span><span class="boring">    for line in results {
-</span><span class="boring">        println!("{line}");
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    Ok(())
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch13-functional-features/listing-13-19/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>The standard library documentation for the <code>env::args</code> function shows that the type of the iterator it returns is <code>std::env::Args</code>, and that type implements the <code>Iterator</code> trait and returns <code>String</code> values.</p>
 <p>અમે <code>Config::build</code> ફંક્શનની નિશાનીને અપડેટ કર્યું છે જેથી પરિમાણ <code>args</code> પાસે સામાન્ય પ્રકાર (generic type) હોય, જેનાં લક્ષણો (trait bounds) <code>impl Iterator&lt;Item = String&gt;</code> છે, તેના બદલે <code>&amp;[String]</code> હોય. આ <code>impl Trait</code> વાક્યરચનાનો ઉપયોગ અમે પ્રકરણ ૧૦ ના <a href="ch10-02-traits.html#traits-as-parameters">“Using Traits as Parameters”</a> વિભાગમાં ચર્ચા કરી હતી, એનો અર્થ થાય છે કે <code>args</code> કોઈપણ પ્રકારનું હોઈ શકે છે જે <code>Iterator</code> લક્ષણો ધરાવે છે અને <code>String</code> વસ્તુઓ આપે છે.</p>
 <p>કારણ કે અમે <code>args</code> નું માલિકી સ્વીકારી રહ્યા છીએ અને અમે તેના પર પુનરાવર્તન કરીને <code>args</code> ને બદલીશું, તેથી અમે <code>args</code> પરિમાણની વિશિષ્ટતામાં <code>mut</code> કીવર્ડ ઉમેરી શકીએ છીએ જેથી તે બદલી શકાય.</p>
@@ -453,72 +222,10 @@
 <h4 id="using-iterator-trait-methods"><a class="header" href="#using-iterator-trait-methods">Using <code>Iterator</code> Trait Methods</a></h4>
 <p>આગળ, આપણે <code>Config::build</code> ના ભાગને સુધારીશું. કારણ કે <code>args</code> <code>Iterator</code> લક્ષણને અમલમાં મૂકે છે, આપણને ખબર છે કે આપણે તેના પર <code>next</code> પદ્ધતિને બોલાવી શકીએ છીએ! સૂચિ 13-20, સૂચિ 12-23 માંથી કોડને અપડેટ કરે છે જેથી <code>next</code> પદ્ધતિનો ઉપયોગ કરી શકાય.</p>
 <p><strong>Listing 13-20: Changing the body of <code>Config::build</code> to use iterator methods</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
-</span><span class="boring">use std::error::Error;
-</span><span class="boring">use std::fs;
-</span><span class="boring">use std::process;
-</span><span class="boring">
-</span><span class="boring">use minigrep::{search, search_case_insensitive};
-</span><span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">    let config = Config::build(env::args()).unwrap_or_else(|err| {
-</span><span class="boring">        eprintln!("Problem parsing arguments: {err}");
-</span><span class="boring">        process::exit(1);
-</span><span class="boring">    });
-</span><span class="boring">
-</span><span class="boring">    if let Err(e) = run(config) {
-</span><span class="boring">        eprintln!("Application error: {e}");
-</span><span class="boring">        process::exit(1);
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub struct Config {
-</span><span class="boring">    pub query: String,
-</span><span class="boring">    pub file_path: String,
-</span><span class="boring">    pub ignore_case: bool,
-</span><span class="boring">}
-</span><span class="boring">
-</span>impl Config {
-    fn build(
-        mut args: impl Iterator&lt;Item = String&gt;,
-    ) -&gt; Result&lt;Config, &amp;'static str&gt; {
-        args.next();
-
-        let query = match args.next() {
-            Some(arg) =&gt; arg,
-            None =&gt; return Err("Didn't get a query string"),
-        };
-
-        let file_path = match args.next() {
-            Some(arg) =&gt; arg,
-            None =&gt; return Err("Didn't get a file path"),
-        };
-
-        let ignore_case = env::var("IGNORE_CASE").is_ok();
-
-        Ok(Config {
-            query,
-            file_path,
-            ignore_case,
-        })
-    }
-}
-<span class="boring">
-</span><span class="boring">fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-</span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
-</span><span class="boring">
-</span><span class="boring">    let results = if config.ignore_case {
-</span><span class="boring">        search_case_insensitive(&amp;config.query, &amp;contents)
-</span><span class="boring">    } else {
-</span><span class="boring">        search(&amp;config.query, &amp;contents)
-</span><span class="boring">    };
-</span><span class="boring">
-</span><span class="boring">    for line in results {
-</span><span class="boring">        println!("{line}");
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    Ok(())
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch13-functional-features/listing-13-20/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>યાદ રાખો કે <code>env::args</code> ના પરિણામમાં પહેલું મૂલ્ય કાર્યક્રમનું નામ હોય છે. આપણે તેને અવગણવું અને આગળના મૂલ્ય પર જવું છે, તેથી પ્રથમ આપણે <code>next</code> ને બોલાવીએ છીએ અને વળતર મૂલ્ય સાથે કંઈક કરતા નથી. પછી, આપણે <code>query</code> ક્ષેત્રમાં મૂકવા માટે જોઈતું મૂલ્ય મેળવવા માટે <code>next</code> ને ફરીથી બોલાવીએ છીએ. જો <code>next</code> <code>Some</code> પરત કરે છે, તો આપણે મૂલ્ય કાઢવા માટે <code>match</code> નો ઉપયોગ કરીએ છીએ. જો તે <code>None</code> પરત કરે છે, તો તેનો અર્થ એ થાય છે કે પૂરતા Argumentો આપવામાં આવી નથી, અને આપણે વહેલા <code>Err</code> મૂલ્ય સાથે પાછા ફરો. આપણે <code>file_path</code> મૂલ્ય માટે પણ એ જ કરીએ છીએ.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="clarifying-code-with-iterator-adapters"><a class="header" href="#clarifying-code-with-iterator-adapters">Clarifying Code with Iterator Adapters</a></h3>
@@ -526,93 +233,14 @@
 <p><strong>Listing 13-21: The implementation of the <code>search</code> function from Listing 12-19</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
-    let mut results = Vec::new();
-
-    for line in contents.lines() {
-        if line.contains(query) {
-            results.push(line);
-        }
-    }
-
-    results
-}
-<span class="boring">
-</span><span class="boring">#[cfg(test)]
-</span><span class="boring">mod tests {
-</span><span class="boring">    use super::*;
-</span><span class="boring">
-</span><span class="boring">    #[test]
-</span><span class="boring">    fn one_result() {
-</span><span class="boring">        let query = "duct";
-</span><span class="boring">        let contents = "\
-</span><span class="boring">Rust:
-</span><span class="boring">safe, fast, productive.
-</span><span class="boring">Pick three.";
-</span><span class="boring">
-</span><span class="boring">        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-19/src/lib.rs:ch13}}
+<span class="boring">}</span></code></pre>
 <p>આ કોડને પુનરાવર્તિત અનુરૂપ પદ્ધતિઓનો ઉપયોગ કરીને વધુ સંક્ષિપ્ત રીતે લખી શકાય છે. આમ કરવાથી આપણને પરિવર્તનશીલ મધ્યવર્તી <code>results</code> વેક્ટરની જરૂરિયાત ટાળવામાં પણ મદદ મળશે. કાર્યાત્મક પ્રોગ્રામિંગ શૈલી કોડને સ્પષ્ટ બનાવવા માટે પરિવર્તનશીલ સ્થિતિની માત્રા ઘટાડવાનું પસંદ કરે છે. પરિવર્તનશીલ સ્થિતિ દૂર કરવાથી ભવિષ્યમાં એક સુધારો શક્ય બની શકે છે, જેનાથી શોધ સમાંતર રીતે થઈ શકશે, કારણ કે આપણને <code>results</code> વેક્ટરની સમવર્તી ઍક્સેસનું સંચાલન કરવાની જરૂર નહીં પડે. સૂચિ 13-22 આ ફેરફાર દર્શાવે છે.</p>
 <p><strong>Listing 13-22: Using iterator adapter methods in the implementation of the <code>search</code> function</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
-    contents
-        .lines()
-        .filter(|line| line.contains(query))
-        .collect()
-}
-<span class="boring">
-</span><span class="boring">pub fn search_case_insensitive&lt;'a&gt;(
-</span><span class="boring">    query: &amp;str,
-</span><span class="boring">    contents: &amp;'a str,
-</span><span class="boring">) -&gt; Vec&lt;&amp;'a str&gt; {
-</span><span class="boring">    let query = query.to_lowercase();
-</span><span class="boring">    let mut results = Vec::new();
-</span><span class="boring">
-</span><span class="boring">    for line in contents.lines() {
-</span><span class="boring">        if line.to_lowercase().contains(&amp;query) {
-</span><span class="boring">            results.push(line);
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    results
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">#[cfg(test)]
-</span><span class="boring">mod tests {
-</span><span class="boring">    use super::*;
-</span><span class="boring">
-</span><span class="boring">    #[test]
-</span><span class="boring">    fn case_sensitive() {
-</span><span class="boring">        let query = "duct";
-</span><span class="boring">        let contents = "\
-</span><span class="boring">Rust:
-</span><span class="boring">safe, fast, productive.
-</span><span class="boring">Pick three.
-</span><span class="boring">Duct tape.";
-</span><span class="boring">
-</span><span class="boring">        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    #[test]
-</span><span class="boring">    fn case_insensitive() {
-</span><span class="boring">        let query = "rUsT";
-</span><span class="boring">        let contents = "\
-</span><span class="boring">Rust:
-</span><span class="boring">safe, fast, productive.
-</span><span class="boring">Pick three.
-</span><span class="boring">Trust me.";
-</span><span class="boring">
-</span><span class="boring">        assert_eq!(
-</span><span class="boring">            vec!["Rust:", "Trust me."],
-</span><span class="boring">            search_case_insensitive(query, contents)
-</span><span class="boring">        );
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch13-functional-features/listing-13-22/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>યાદ રાખવું કે <code>search</code> વિધેયનો હેતુ <code>contents</code> માં રહેલી તમામ લીટીઓ પરત કરવાનો છે જેમાં <code>query</code> હોય છે. લિસ્ટિંગ ૧૩-૧૬ ના <code>filter</code> ઉદાહરણની જેમ, આ કોડ માત્ર એવાં લીટીઓને જ રાખવા માટે <code>filter</code> અનુકૂલનનો ઉપયોગ કરે છે જેના માટે <code>line.contains(query)</code> <code>true</code> પરત કરે છે. પછી આપણે મેળ ખાતી લીટીઓને બીજા વેક્ટર માં <code>collect</code> વડે એકત્રિત કરીએ છીએ. ઘણું સરળ! <code>search_case_insensitive</code> વિધેયમાં પણ પુનરાવર્તન પદ્ધતિઓનો ઉપયોગ કરવા માટે આ જ ફેરફાર કરવાની સ્વતંત્રતા રાખો.</p>
 <p>વધુ સુધારણા માટે, <code>search</code> વિધેયમાંથી એક પુનરાવર્તક પરત કરો <code>collect</code> કૉલને દૂર કરીને અને પાછા ફરતો પ્રકાર <code>impl Iterator&lt;Item = &amp;'a str&gt;</code> માં બદલીને જેથી વિધેય એક પુનરાવર્તક અનુકૂલન બને. નોંધ કરો કે તમારે પરીક્ષણોને પણ અપડેટ કરવાની જરૂર પડશે! તમારા <code>minigrep</code> સાધન વડે મોટી ફાઈલ શોધો આ ફેરફાર કરતા પહેલાં અને પછી વર્તનનો તફાવત જોવા માટે. આ ફેરફાર પહેલાં, પ્રોગ્રામ કોઈપણ પરિણામો છાપશે નહીં જ્યાં સુધી તે બધા પરિણામો એકત્રિત ન કરે, પરંતુ ફેરફાર પછી, પરિણામો દરેક મેળ ખાતી લીટી મળતાં જ છાપવામાં આવશે કારણ કે <code>run</code> વિધેયમાં <code>for</code> લૂપ પુનરાવર્તકની આળસનો લાભ લઈ શકે છે.</p>
 <!-- Old headings. Do not remove or links may break. -->
@@ -672,7 +300,7 @@
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 

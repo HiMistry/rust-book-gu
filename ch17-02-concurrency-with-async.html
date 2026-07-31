@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -190,25 +190,10 @@
 <h3 id="creating-a-new-task-with-spawn_task"><a class="header" href="#creating-a-new-task-with-spawn_task">Creating a New Task with <code>spawn_task</code></a></h3>
 <p>અગાઉના “એક નવું થ્રેડ બનાવવું <code>spawn</code> સાથે” વિભાગમાં અમે બે અલગ થ્રેડ પર ગણતરી કરી હતી. ચાલો એ જ કાર્ય async નો ઉપયોગ કરીને કરીએ. <code>trpl</code> ક્રેટ <code>spawn_task</code> નામનું એક વિધેય (function) પૂરો પાડે છે જે <code>thread::spawn</code> API જેવું જ દેખાય છે, અને <code>sleep</code> નામનું વિધેય પણ આપે છે જે <code>thread::sleep</code> API નું async સંસ્કરણ છે. અમે આ બંનેનો ઉપયોગ કરીને ગણતરીનું ઉદાહરણ અમલમાં મૂકી શકીએ છીએ, જે યાદી 17-6 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 17-6: Creating a new task to print one thing while the main task prints something else</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
-</span><span class="boring">
-</span>use std::time::Duration;
-
-fn main() {
-    trpl::block_on(async {
-        trpl::spawn_task(async {
-            for i in 1..10 {
-                println!("hi number {i} from the first task!");
-                trpl::sleep(Duration::from_millis(500)).await;
-            }
-        });
-
-        for i in 1..5 {
-            println!("hi number {i} from the second task!");
-            trpl::sleep(Duration::from_millis(500)).await;
-        }
-    });
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-06/src/main.rs:all}}
+<span class="boring">}</span></code></pre>
 <p>As our starting point, we set up our <code>main</code> function with <code>trpl::block_on</code> so that our top-level function can be async. શરૂઆત તરીકે,</p>
 <p>આપણે આપણું <code>main</code> વિધેય <code>trpl::block_on</code> સાથે ગોઠવીએ છીએ જેથી આપણું ઉચ્ચ સ્તરનું વિધેય અસિંક (async) બની શકે. નોંધ: આ પ્રકરણમાં હવેથી દરેક ઉદાહરણમાં આ ચોક્કસ આવરણ કોડ <code>trpl::block_on</code> સાથે <code>main</code> માં સમાવિષ્ટ હશે, તેથી આપણે ઘણીવાર તેને છોડી દઈશું જેમ કે આપણે <code>main</code> સાથે</p>
 <p>કરીએ છીએ. તમારા કોડમાં તેને ઉમેરવાનું યાદ રાખો! પછી આપણે તે બ્લોકમાં બે લૂપ્સ લખીએ છીએ, જેમાં દરેક <code>trpl::sleep</code> કૉલ હોય છે, જે આગામી સંદેશ મોકલતા પહેલા અડધો સેકન્ડ (500 મિલીસેકન્ડ) રાહ જુએ છે. આપણે એક લૂપને <code>trpl::spawn_task</code> ના શરીરમાં મૂકીએ છીએ અને બીજાને ટોપ-લેવલ <code>for</code> લૂપમાં મૂકીએ છીએ. આપણે <code>sleep</code> કૉલ્સ પછી <code>await</code> પણ ઉમેરીએ છીએ.</p>
@@ -228,27 +213,10 @@ hi number 5 from the first task!
 </code></pre>
 <p>આ આવૃત્તિ મુખ્ય અસિંક બ્લોકના શરીરમાં <code>for</code> લૂપ પૂર્ણ થતાં જ બંધ થઈ જાય છે, કારણ કે <code>spawn_task</code> દ્વારા શરૂ કરાયેલ કાર્ય <code>main</code> ફંક્શનના અંતિમ ભાગમાં સમાપ્ત થાય છે. જો તમે ઇચ્છો છો કે તે કાર્ય પૂર્ણ થાય ત્યાં સુધી ચાલુ રહે, તો તમારે પ્રથમ કાર્ય પૂર્ણ થવાની રાહ જોવા માટે જોઇન હેન્ડલનો ઉપયોગ કરવો પડશે. થ્રેડો સાથે, આપણે થ્રેડ પૂર્ણ ન થાય ત્યાં સુધી “બ્લોક” કરવા માટે <code>join</code> પદ્ધતિનો ઉપયોગ કર્યો હતો. લિસ્ટિંગ 17-7 માં, આપણે સમાન કાર્ય કરવા માટે <code>await</code> નો ઉપયોગ કરી શકીએ છીએ, કારણ કે ટાસ્ક હેન્ડલ પોતે જ ફ્યુચર છે. તેનું <code>Output</code> પ્રકાર એક <code>Result</code> છે, તેથી આપણે તેની રાહ જોયા પછી તેને અનવ્રેપ પણ કરીએ છીએ.</p>
 <p><strong>Listing 17-7: Using <code>await</code> with a join handle to run a task to completion</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
-</span><span class="boring">
-</span><span class="boring">use std::time::Duration;
-</span><span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">    trpl::block_on(async {
-</span>        let handle = trpl::spawn_task(async {
-            for i in 1..10 {
-                println!("hi number {i} from the first task!");
-                trpl::sleep(Duration::from_millis(500)).await;
-            }
-        });
-
-        for i in 1..5 {
-            println!("hi number {i} from the second task!");
-            trpl::sleep(Duration::from_millis(500)).await;
-        }
-
-        handle.await.unwrap();
-<span class="boring">    });
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-07/src/main.rs:handle}}
+<span class="boring">}</span></code></pre>
 <p>આ સુધારેલું સંસ્કરણ બંને ચક્ર પૂર્ણ થાય ત્યાં સુધી ચાલે છે:</p>
 <!-- Not extracting output because changes to this output aren't significant;
 the changes are likely to be due to the threads running differently rather than
@@ -271,29 +239,10 @@ hi number 9 from the first task!
 <p>મોટો તફાવત એ છે કે આ કરવા માટે આપણે બીજા ઓપરેટિંગ સિસ્ટમ થ્રેડ બનાવવાની જરૂર નહોતી. હકીકતમાં, આપણને અહીં કોઈ કાર્ય શરૂ કરવાની પણ જરૂર નથી. કારણ કે <code>async</code> બ્લોક્સ અનામી ફ્યુચર્સમાં કમ્પાઇલ થાય છે, આપણે દરેક લૂપને <code>async</code> બ્લોકમાં મૂકી શકીએ છીએ અને રનટાઇમ બંનેને <code>trpl::join</code> ફંક્શનનો ઉપયોગ કરીને પૂર્ણ કરી શકે છે.</p>
 <p>Waiting for All Threads to Finish અગાઉ પ્રકરણ ૧૬ નાં “સૂચિઓ પૂર્ણ થવાની રાહ” વિભાગમાં, અમે <code>JoinHandle</code> પ્રકાર પર <code>join</code> પદ્ધતિનો ઉપયોગ કેવી રીતે કરવો તે દર્શાવ્યું હતું, જે તમે <code>std::thread::spawn</code> કૉલ કરતી વખતે મેળવો છો. <code>trpl::join</code> કાર્ય સમાન છે, પરંતુ ભવિષ્ય માટે છે. જ્યારે તમે તેને બે ભવિષ્ય આપો છો, ત્યારે તે એક નવું ભવિષ્ય ઉત્પન્ન કરે છે જેનું પરિણામ એક ટ્યૂપલ હોય છે જેમાં દરેક ભવિષ્યના પરિણામો હોય છે, જે બંને પૂર્ણ થાય ત્યારે. આમ, સૂચિ ૧૭-૮ માં, અમે <code>trpl::join</code> નો ઉપયોગ <code>fut1</code> અને <code>fut2</code> બંને પૂર્ણ થાય તેની રાહ જોવા માટે કરીએ છીએ. અમે <code>fut1</code> અને <code>fut2</code> ની રાહ જોતા નથી, પરંતુ તેના બદલે <code>trpl::join</code> દ્વારા ઉત્પન્ન થયેલ નવા ભવિષ્યની રાહ જોઈએ છીએ. અમે આઉટપુટ અવગણીએ છીએ, કારણ કે તે માત્ર એક ટ્યૂપલ છે જેમાં બે એકમ મૂલ્યો હોય છે.</p>
 <p><strong>Listing 17-8: Using <code>trpl::join</code> to await two anonymous futures</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
-</span><span class="boring">
-</span><span class="boring">use std::time::Duration;
-</span><span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">    trpl::block_on(async {
-</span>        let fut1 = async {
-            for i in 1..10 {
-                println!("hi number {i} from the first task!");
-                trpl::sleep(Duration::from_millis(500)).await;
-            }
-        };
-
-        let fut2 = async {
-            for i in 1..5 {
-                println!("hi number {i} from the second task!");
-                trpl::sleep(Duration::from_millis(500)).await;
-            }
-        };
-
-        trpl::join(fut1, fut2).await;
-<span class="boring">    });
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-08/src/main.rs:join}}
+<span class="boring">}</span></code></pre>
 <p>જ્યારે આપણે આ ચલાવીએ છીએ, ત્યારે આપણે જોઈએ છીએ કે બંને ફ્યુચર્સ પૂર્ણ થાય છે:</p>
 <!-- Not extracting output because changes to this output aren't significant;
 the changes are likely to be due to the threads running differently rather than
@@ -328,19 +277,10 @@ hi number 9 from the first task!
 <h3 id="sending-data-between-two-tasks-using-message-passing"><a class="header" href="#sending-data-between-two-tasks-using-message-passing">Sending Data Between Two Tasks Using Message Passing</a></h3>
 <p>ભવિષ્ય વચ્ચે માહિતી વહેંચવી એ પણ પરિચિત હશે: આપણે ફરીથી સંદેશા મોકલવાની પદ્ધતિનો ઉપયોગ કરીશું, પરંતુ આ વખતે પ્રકારો (types) અને વિધેયો (functions) ના અસમકાલીન (async) સંસ્કરણો સાથે. આપણે “થ્રેડ્સ વચ્ચે સંદેશા મોકલીને ડેટા ટ્રાન્સફર કરવો” પ્રકરણ ૧૬ ના વિભાગમાં જેટલો અલગ માર્ગ લીધો હતો, તેનાથી થોડો અલગ માર્ગ લઈશું, જેથી થ્રેડ-આધારિત અને ફ્યુચર્સ-આધારિત એકરૂપતા (concurrency) વચ્ચેના મુખ્ય તફાવતો દર્શાવી શકાય. લિસ્ટિંગ ૧૭-૯ માં, આપણે માત્ર એક જ અસમકાલીન બ્લોકથી શરૂઆત કરીશું— અલગ કાર્ય (task) શરૂ કર્યા વિના, જેમ કે આપણે પહેલાં એક અલગ થ્રેડ શરૂ કર્યો હતો.</p>
 <p><strong>Listing 17-9: Creating an async channel and assigning the two halves to <code>tx</code> and <code>rx</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
-</span><span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">    trpl::block_on(async {
-</span>        let (tx, mut rx) = trpl::channel();
-
-        let val = String::from("hi");
-        tx.send(val).unwrap();
-
-        let received = rx.recv().await.unwrap();
-        println!("received '{received}'");
-<span class="boring">    });
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-09/src/main.rs:channel}}
+<span class="boring">}</span></code></pre>
 <p>અહીં, આપણે <code>trpl::channel</code> નો ઉપયોગ કરીએ છીએ, જે બહુવિધ ઉત્પાદક અને એકલ ગ્રાહક ચેનલ API નું અસિંક્રૉનસ સંસ્કરણ છે જેનો આપણે પ્રકરણ ૧૬ માં થ્રેડો સાથે ઉપયોગ કર્યો હતો. API નું અસિંક્રૉનસ સંસ્કરણ થ્રેડ-આધારિત સંસ્કરણ કરતાં થોડું અલગ છે: તે અમૂટ (mutable) રીસીવર <code>rx</code> નો ઉપયોગ કરે છે, બદલે અવિભાજ્ય (immutable) રીસીવરનો, અને તેની <code>recv</code> પદ્ધતિ સીધી કિંમત ઉત્પન્ન કરવાને બદલે એક ફ્યુચર ઉત્પન્ન કરે છે જેને આપણે રાહ જોવાની જરૂર છે. હવે આપણે પ્રેષકથી ગ્રાહક સુધી સંદેશાઓ મોકલી શકીએ છીએ. નોંધ કરો કે આપણે અલગ થ્રેડ અથવા કાર્ય શરૂ કરવાની જરૂર નથી; આપણે માત્ર <code>rx.recv</code> કૉલની રાહ જોવાની જરૂર છે.</p>
 <p>The synchronous <code>Receiver::recv</code> method in <code>std::mpsc::channel</code> blocks until it receives a message. The <code>trpl::Receiver::recv</code> method does not, because it is async. Instead of blocking, it hands control back to the runtime until either a message is received or the send side of the channel closes. By contrast, we don’t await the <code>send</code> call, because it doesn’t block. It doesn’t need to, because the channel we’re sending it into is unbounded.</p>
 <p>Note: Because all of this async code runs in an async block in a <code>trpl::block_on</code> call, everything within it can avoid blocking. However, the code outside it will block on the <code>block_on</code> function returning. That’s the whole point of the <code>trpl::block_on</code> function: it lets you choose where to block on some set of async code, and thus where to transition between sync and async code.</p>
@@ -348,31 +288,10 @@ hi number 9 from the first task!
 <p>યાદીમાં બધું ક્રમશઃ જ બનશે, જેમ કે જો futures સામેલ ન હોય તો થાત. ચાલો પ્રથમ ભાગને સંબોધિત કરીએ સંદેશોની શ્રેણી મોકલીને અને તેમની વચ્ચે થોડો સમય આરામ કરીને, જે Listing 17-10 માં દર્શાવેલ છે.</p>
 <!-- We cannot test this one because it never stops! -->
 <p><strong>Listing 17-10: Sending and receiving multiple messages over the async channel and sleeping with an <code>await</code> between each message</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
-</span><span class="boring">
-</span><span class="boring">use std::time::Duration;
-</span><span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">    trpl::block_on(async {
-</span>        let (tx, mut rx) = trpl::channel();
-
-        let vals = vec![
-            String::from("hi"),
-            String::from("from"),
-            String::from("the"),
-            String::from("future"),
-        ];
-
-        for val in vals {
-            tx.send(val).unwrap();
-            trpl::sleep(Duration::from_millis(500)).await;
-        }
-
-        while let Some(value) = rx.recv().await {
-            println!("received '{value}'");
-        }
-<span class="boring">    });
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-10/src/main.rs:many-messages}}
+<span class="boring">}</span></code></pre>
 <p>આ સંદેશાઓ મોકલવાની સાથે, આપણને તે પ્રાપ્ત કરવાની પણ જરૂર છે. આ કિસ્સામાં, કારણ કે આપણે જાણીએ છીએ કે કેટલા સંદેશાઓ આવી રહ્યા છે, તો આપણે <code>rx.recv().await</code> ને ચાર વખત બોલાવીને જાતે જ એ કરી શકીએ છીએ. વાસ્તવિક દુનિયામાં, જોકે, આપણે સામાન્ય રીતે અજ્ઞાત સંખ્યાના સંદેશાઓની રાહ જોઈશું, તેથી જ્યાં સુધી આપણને ખાતરી ન થાય કે કોઈ સંદેશો બાકી નથી, ત્યાં સુધી આપણે રાહ</p>
 <p>જોતા રહેવું પડશે. Listing 16-10 લિસ્ટિંગ ૧૬-૧૦ માં, આપણે એક <code>for</code> લૂપનો ઉપયોગ કર્યો હતો જે સિંક્રોનસ ચેનલમાંથી મળેલા તમામ આઇટમ્સને પ્રોસેસ કરે છે. Rust પાસે હજી સુધી <code>for</code> લૂપનો ઉપયોગ કરીને એસિન્ક્રોનસ રીતે જનરેટ થયેલ આઇટમ્સની શ્રેણી સાથે કામ કરવાની રીત નથી, તેથી આપણે એક એવો લૂપ વાપરવાની જરૂર છે જે આપણે પહેલાં જોયો નથી: <code>while let</code> શરતી લૂપ. આ <code>if let</code> કન્સ્ટ્રક્ટનું લૂપ વર્ઝન છે જે આપણે પ્રકરણ ૬ માં “Concise Control Flow with <code>if let</code> and <code>let...else</code>” વિભાગમાં જોયો હતો. જ્યાં સુધી તે ઉલ્લેખિત કરેલ પેટર્ન મૂલ્ય સાથે મેળ ખાતો રહે ત્યાં સુધી લૂપ ચાલ્યા કરશે.</p>
 <p>The <code>rx.recv</code> Call <code>rx.recv</code> આદેશ એક ફ્યુચર ઉત્પન્ન કરે છે, જેની આપણે રાહ જોઈએ છીએ. રનટાઈમ ફ્યુચરને તૈયાર થાય ત્યાં સુધી સ્થગિત કરશે. જ્યારે સંદેશો આવે છે, ત્યારે ફ્યુચર <code>Some(message)</code> સાથે જેટલી વાર સંદેશો આવશે તેટલી વાર ઉકેલાશે. જ્યારે ચેનલ બંધ થાય છે, ત્યારે કોઈપણ સંદેશો આવ્યો હોય કે ન હોય, ફ્યુચર <code>None</code> સાથે ઉકેલાશે, જે દર્શાવે છે કે હવે કોઈ મૂલ્યો નથી અને તેથી આપણે પોલિંગ બંધ કરવું જોઈએ—એટલે કે રાહ જોવાનું બંધ કરવું જોઈએ. The</p>
@@ -384,37 +303,10 @@ hi number 9 from the first task!
 <p>આપણે જે વર્તન જોઈએ છે, જ્યાં દરેક સંદેશ વચ્ચે વિરામ આવે છે, તેના માટે આપણે <code>tx</code> અને <code>rx</code> ક્રિયાઓ તેમના પોતાના async બ્લોક્સમાં મૂકવાની જરૂર છે, જે Listing 17-11 માં દર્શાવેલ છે. પછી રનટાઈમ <code>trpl::join</code> નો ઉપયોગ કરીને દરેકને અલગથી ચલાવી શકે છે, બરાબર જેમ Listing 17-8 માં હતું. ફરીથી, આપણે <code>trpl::join</code> બોલાવવાનો પરિણામ આતુરતાથી જોવાની જરૂર છે, વ્યક્તિગત ફ્યુચર્સ નહીં. જો આપણે વ્યક્તિગત ફ્યુચર્સ ક્રમમાં આતુરતાથી જોયું તો આપણે માત્ર સિક્વન્સિયલ પ્રવાહમાં પાછા આવી જઈશું—બરાબર જે કરવાનું આપણે નથી ઈચ્છતા.</p>
 <!-- We cannot test this one because it never stops! -->
 <p><strong>Listing 17-11: Separating <code>send</code> and <code>recv</code> into their own <code>async</code> blocks and awaiting the futures for those blocks</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
-</span><span class="boring">
-</span><span class="boring">use std::time::Duration;
-</span><span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">    trpl::block_on(async {
-</span><span class="boring">        let (tx, mut rx) = trpl::channel();
-</span><span class="boring">
-</span>        let tx_fut = async {
-            let vals = vec![
-                String::from("hi"),
-                String::from("from"),
-                String::from("the"),
-                String::from("future"),
-            ];
-
-            for val in vals {
-                tx.send(val).unwrap();
-                trpl::sleep(Duration::from_millis(500)).await;
-            }
-        };
-
-        let rx_fut = async {
-            while let Some(value) = rx.recv().await {
-                println!("received '{value}'");
-            }
-        };
-
-        trpl::join(tx_fut, rx_fut).await;
-<span class="boring">    });
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-11/src/main.rs:futures}}
+<span class="boring">}</span></code></pre>
 <p>ફેરફાર કરેલા કોડ સાથે યાદી ૧૭-૧૧ માં, સંદેશાઓ ૨ સેકન્ડ પછી એકસાથે છાપવાને બદલે, ૫૦૦ મિલિસેકન્ડના અંતરાલ પર છાપાય છે.</p>
 <h4 id="moving-ownership-into-an-async-block"><a class="header" href="#moving-ownership-into-an-async-block">Moving Ownership Into an Async Block</a></h4>
 <p>જોકે, કાર્યક્રમ હજી પણ સમાપ્ત થતો નથી, કારણ કે <code>while let</code> લૂપ <code>trpl::join</code> સાથે કેવી રીતે ક્રિયાપ્રતિક્રિયા કરે છે.</p>
@@ -437,38 +329,10 @@ hi number 9 from the first task!
 <p><strong>Listing 17-12: A revision of the code from Listing 17-11 that correctly shuts down when complete</strong></p>
 </li>
 </ul>
-<pre class="playground"><code class="language-rust edition2024">- # extern crate trpl; // required for mdbook test
-<span class="boring">
-</span><span class="boring">use std::time::Duration;
-</span><span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">    trpl::block_on(async {
-</span>        let (tx, mut rx) = trpl::channel();
-
-        let tx_fut = async move {
-            // --snip--
-<span class="boring">            let vals = vec![
-</span><span class="boring">                String::from("hi"),
-</span><span class="boring">                String::from("from"),
-</span><span class="boring">                String::from("the"),
-</span><span class="boring">                String::from("future"),
-</span><span class="boring">            ];
-</span><span class="boring">
-</span><span class="boring">            for val in vals {
-</span><span class="boring">                tx.send(val).unwrap();
-</span><span class="boring">                trpl::sleep(Duration::from_millis(500)).await;
-</span><span class="boring">            }
-</span><span class="boring">        };
-</span><span class="boring">
-</span><span class="boring">        let rx_fut = async {
-</span><span class="boring">            while let Some(value) = rx.recv().await {
-</span><span class="boring">                println!("received '{value}'");
-</span><span class="boring">            }
-</span><span class="boring">        };
-</span><span class="boring">
-</span><span class="boring">        trpl::join(tx_fut, rx_fut).await;
-</span><span class="boring">    });
-</span><span class="boring">}</span></code></pre>
+</span>- {{#rustdoc_include ../listings/ch17-async-await/listing-17-12/src/main.rs:with-move}}
+<span class="boring">}</span></code></pre>
 <ul>
 <li>જ્યારે આપણે આ કોડના સંસ્કરણને ચલાવીએ છીએ, ત્યારે તે અંતિમ સંદેશ મોકલ્યા અને પ્રાપ્ત થયા પછી શાંતિથી બંધ થઈ જાય છે. હવે, ચાલો જોઈએ કે એક કરતાં વધુ ભવિષ્યમાંથી ડેટા મોકલવા માટે શું ફેરફાર કરવો જરૂરી છે.</li>
 </ul>
@@ -481,52 +345,10 @@ hi number 9 from the first task!
 <p><strong>Listing 17-13: Using multiple producers with async blocks</strong></p>
 </li>
 </ul>
-<pre class="playground"><code class="language-rust edition2024">- # extern crate trpl; // required for mdbook test
-<span class="boring">
-</span><span class="boring">use std::time::Duration;
-</span><span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">    trpl::block_on(async {
-</span>        let (tx, mut rx) = trpl::channel();
-
-        let tx1 = tx.clone();
-        let tx1_fut = async move {
-            let vals = vec![
-                String::from("hi"),
-                String::from("from"),
-                String::from("the"),
-                String::from("future"),
-            ];
-
-            for val in vals {
-                tx1.send(val).unwrap();
-                trpl::sleep(Duration::from_millis(500)).await;
-            }
-        };
-
-        let rx_fut = async {
-            while let Some(value) = rx.recv().await {
-                println!("received '{value}'");
-            }
-        };
-
-        let tx_fut = async move {
-            let vals = vec![
-                String::from("more"),
-                String::from("messages"),
-                String::from("for"),
-                String::from("you"),
-            ];
-
-            for val in vals {
-                tx.send(val).unwrap();
-                trpl::sleep(Duration::from_millis(1500)).await;
-            }
-        };
-
-        trpl::join!(tx1_fut, tx_fut, rx_fut);
-<span class="boring">    });
-</span><span class="boring">}</span></code></pre>
+</span>- {{#rustdoc_include ../listings/ch17-async-await/listing-17-13/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>સૌ પ્રથમ, આપણે <code>tx</code> નકલ કરીએ છીએ, જેનાથી <code>tx1</code> પ્રથમ અસમન્વય બ્લોક બહાર બને છે. પછી, આપણે પહેલાની જેમ જ <code>tx1</code> ને તે બ્લોકમાં ખસેડીએ છીએ. ત્યારબાદ, આપણે મૂળ <code>tx</code> ને એક નવા અસમન્વય બ્લોકમાં ખસેડીએ છીએ, જ્યાં અમે થોડી ધીમી વિલંબ સાથે વધુ સંદેશાઓ મોકલીએ છીએ. આ નવો અસમન્વય બ્લોક સંદેશો મેળવવાના અસમન્વય બ્લોકની પછી મૂકવામાં આવ્યો છે, પરંતુ તે પહેલા પણ હોઈ શકતો હતો. મહત્વનું એ છે કે ભવિષ્યની રાહ ક્યાં જોવાઇ રહી છે, નહીં કે તેઓ ક્યારે બનાવવામાં આવ્યા હતા.</p>
 <p>બંને અસિંક બ્લોક્સ સંદેશો મોકલવા માટે <code>async move</code> બ્લોક્સ હોવા જોઈએ જેથી <code>tx</code> અને <code>tx1</code> બંને તે બ્લોક્સ પૂર્ણ થતાં જ નાશ પામે. નહિંતર, આપણે એ જ અનંત ચક્રમાં પાછા આવીશું જે શરૂ થયું હતું.</p>
 <p>અંતે, આપણે <code>trpl::join</code> થી <code>trpl::join!</code> માં બદલાઈએ છીએ જેથી વધારાના ફ્યુચરને સંભાળી શકાય: <code>join!</code> મેક્રો અસંખ્ય ફ્યુચર્સની રાહ જુએ છે જ્યાં આપણે કમ્પાઇલ સમયે ફ્યુચર્સની સંખ્યા જાણીએ છીએ. આપણે આ પ્રકરણમાં પછીથી અજ્ઞાત સંખ્યાના ફ્યુચર્સના સંગ્રહની રાહ જોવા વિશે ચર્ચા કરીશું.</p>
@@ -597,7 +419,7 @@ received 'you'
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 

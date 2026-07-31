@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -187,31 +187,12 @@
 <p>જ્યારે કોઈ variable અપરિવર્તનક્ષમ હોય, ત્યારે એકવાર મૂલ્ય નામ સાથે જોડાઈ જાય પછી, તમે તે મૂલ્ય બદલી શકતા નથી. આ સમજાવવા માટે, તમારા પ્રોજેક્ટ્સ ડિરેક્ટરીમાં <code>cargo new variables</code> નો ઉપયોગ કરીને “variables” નામનો નવો પ્રોજેક્ટ બનાવો.</p>
 <p>પછી, તમારા નવા variable (variable) ડિરેક્ટરીમાં, <code>src/main.rs</code> ખોલો અને તેની કોડને નીચેના કોડ સાથે બદલો, જે હજી કમ્પાઇલ થશે નહીં:</p>
 <p>ફાઈલનું નામ: <code>src/main.rs</code></p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let x = 5;
-    println!("The value of x is: {x}");
-    x = 6;
-    println!("The value of x is: {x}");
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-01-variables-are-immutable/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>ચોક્કસ આદેશ ચલાવીને કાર્યક્રમ સાચવો અને ચલાવો: <code>cargo run</code>. તમને અપરિવર્તનશીલતાની ભૂલ (immutability error) સંબંધિત સંદેશ મળવો જોઈએ, જે આ પરિણામમાં દર્શાવેલ છે:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling variables v0.1.0 (file:///projects/variables)
-error[E0384]: cannot assign twice to immutable variable `x`
- --&gt; src/main.rs:4:5
-  |
-2 |     let x = 5;
-  |         - first assignment to `x`
-3 |     println!("The value of x is: {x}");
-4 |     x = 6;
-  |     ^^^^^ cannot assign twice to immutable variable
-  |
-help: consider making this binding mutable
-  |
-2 |     let mut x = 5;
-  |         +++
-
-For more information about this error, try `rustc --explain E0384`.
-error: could not compile `variables` (bin "variables") due to 1 previous error
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/no-listing-01-variables-are-immutable/output.txt}}
 </code></pre>
 <p>આ ઉદાહરણ દર્શાવે છે કે કમ્પાઇલર તમને તમારા કાર્યક્રમોમાં ભૂલો શોધવામાં કેવી રીતે મદદ કરે છે. કમ્પાઇલરની ભૂલો નિરાશાજનક હોઈ શકે છે, પરંતુ હકીકતમાં તે માત્ર એટલું જ સૂચવે છે કે તમારો કાર્યક્રમ હજી સુરક્ષિત રીતે તમે જે ઇચ્છો છો તે કરી રહ્યો નથી; તેનો અર્થ એ નથી કે તમે સારા પ્રોગ્રામર નથી! અનુભવી Rustaceans પણ કમ્પાઇલરની ભૂલો મેળવે છે.</p>
 <p>તમને <code>cannot assign twice to immutable variable \</code>x`<code> એવો ભૂલ સંદેશ મળ્યો કારણ કે તમે અપરિવર્તનશીલ</code>x` variable બીજી કિંમત સોંપવાનો પ્રયાસ કર્યો હતો.</p>
@@ -219,19 +200,12 @@ error: could not compile `variables` (bin "variables") due to 1 previous error
 <p>પરંતુ પરિવર્તનક્ષમતા ઘણી ઉપયોગી થઈ શકે છે અને કોડ લખવામાં વધુ અનુકૂળ બનાવી શકે છે. ભલે variable (variable) મૂળભૂત રીતે અપરિવર્તનશીલ હોય, તમે તેને <code>mut</code> ઉમેરીને પરિવર્તનશીલ બનાવી શકો છો જેવું તમે પ્રકરણ ૨ માં કર્યું હતું. <code>mut</code> ઉમેરવાથી કોડના ભાવિ વાચકોને પણ ઈરાદો વ્યક્ત થાય છે કે કોડનો અન્ય ભાગ આ ચલનું મૂલ્ય બદલશે.</p>
 <p>ઉદાહરણ તરીકે, ચાલો src/main.rs ને નીચે મુજબ બદલીએ:</p>
 <p>ફાઈલ નામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let mut x = 5;
-    println!("The value of x is: {x}");
-    x = 6;
-    println!("The value of x is: {x}");
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-02-adding-mut/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>હવે જ્યારે આપણે આ કાર્યક્રમ ચલાવીએ છીએ, ત્યારે આપણને આ પરિણામ મળે છે:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling variables v0.1.0 (file:///projects/variables)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.30s
-     Running `target/debug/variables`
-The value of x is: 5
-The value of x is: 6
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/no-listing-02-adding-mut/output.txt}}
 </code></pre>
 <p>આપણે <code>x</code> સાથે સંકળાયેલ મૂલ્યને <code>5</code> થી <code>6</code> માં બદલી શકીએ છીએ જ્યારે <code>mut</code> વપરાય છે. આખરે, પરિવર્તનશીલતા (mutability) વાપરવી કે નહીં તે નક્કી કરવાનું તમારા પર નિર્ભર છે અને તે વિશેષ પરિસ્થિતિમાં શું સ્પષ્ટ લાગે છે તેના પર આધાર રાખે છે.</p>
 <!-- Old headings. Do not remove or links may break. -->
@@ -253,50 +227,26 @@ The value of x is: 6
 <p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે.</p>
 <pre class="playground"><code class="language-rust edition2024">fn main() { println!("Hello, world!"); }</code></pre>
 <p>આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let x = 5;
-
-    let x = x + 1;
-
-    {
-        let x = x * 2;
-        println!("The value of x in the inner scope is: {x}");
-    }
-
-    println!("The value of x is: {x}");
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-03-shadowing/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>આ કાર્યક્રમ સૌપ્રથમ <code>x</code> ને <code>5</code> ની કિંમત આપે છે. ત્યારબાદ, તે <code>let x =</code> નો ઉપયોગ કરીને એક નવું variable <code>x</code> બનાવે છે, અગાઉની કિંમત લઈને તેમાં <code>1</code> ઉમેરે છે જેથી <code>x</code> ની કિંમત <code>6</code> થાય. પછી, કદબદ્ધ કૌંસ <code>{}</code> વડે નિર્માણ પામેલા આંતરિક અવકાશમાં, ત્રીજું <code>let</code> વિધાન પણ <code>x</code> ને છાયા કરે છે અને એક નવું variable બનાવે છે, અગાઉની કિંમતને <code>2</code> વડે ગુણાકાર કરીને <code>x</code> ને <code>12</code> ની કિંમત આપે છે. જ્યારે તે અવકાશ પૂર્ણ થાય છે, ત્યારે આંતરિક છાયા સમાપ્ત થાય છે અને <code>x</code> તેની મૂળ કિંમત <code>6</code> પર પાછું ફરે છે. જ્યારે આપણે આ કાર્યક્રમ ચલાવીશું, ત્યારે તે નીચે મુજબનું પરિણામ આપશે:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling variables v0.1.0 (file:///projects/variables)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
-     Running `target/debug/variables`
-The value of x in the inner scope is: 12
-The value of x is: 6
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/no-listing-03-shadowing/output.txt}}
 </code></pre>
 <p>છાયા પાડવું એ variable <code>mut</code> તરીકે નિશ્ચિત કરવાથી અલગ છે, કારણ કે જો આપણે અજાણતાન ફરીથી કોઈ મૂલ્ય સોચવાનો પ્રયત્ન કરીએ તો આપણને કમ્પાઇલ-સમયની ભૂલ મળશે. <code>let</code> નો ઉપયોગ કરીને, અમે એક મૂલ્ય પર થોડા રૂપાંતરણો કરી શકીએ છીએ પરંતુ તે રૂપાંતરણો પૂર્ણ થયા પછી variable અપરિવર્તનશીલ રહે છે.</p>
 <p>અન્ય તફાવત એ છે કે <code>mut</code> અને છાયા પાડવા વચ્ચે, કારણ કે આપણે <code>let</code> કીવર્ડનો ફરીથી ઉપયોગ કરતી વખતે અસરકારક રીતે એક નવું variable બનાવી રહ્યા છીએ, અમે મૂલ્યનો પ્રકાર બદલી શકીએ છીએ પરંતુ સમાન નામનો પુનઃઉપયોગ કરી શકીએ છીએ. ઉદાહરણ તરીકે, ધારો કે આપણું કાર્ય userને અમુક લખાણ વચ્ચે કેટલી જગ્યાઓ જોઈએ છે તે દર્શાવવા માટે કહે છે, જે જગ્યાના અક્ષરો ઇનપુટ કરીને, અને પછી અમે તે ઇનપુટને સંખ્યા તરીકે સંગ્રહ કરવા માંગીએ છીએ:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span>    let spaces = "   ";
-    let spaces = spaces.len();
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-04-shadowing-can-change-types/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>પહેલું <code>spaces</code> variable એક સ્ટ્રિંગ પ્રકારનું છે, અને બીજું <code>spaces</code> variable એક સંખ્યા પ્રકારનું છે. શૅડોઇંગથી આપણને અલગ નામો શોધવાની જરૂર પડતી નથી, જેમ કે <code>spaces_str</code> અને <code>spaces_num</code>; તેના બદલે આપણે સરળ <code>spaces</code> નામનો ફરી ઉપયોગ કરી શકીએ છીએ. જો કે, જો આપણે અહીં દર્શાવ્યા પ્રમાણે <code>mut</code> વાપરવાનો પ્રયત્ન કરીએ, તો આપણને કમ્પાઇલ-ટાઇમ ભૂલ મળશે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span>    let mut spaces = "   ";
-    spaces = spaces.len();
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-05-mut-cant-change-types/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>ભૂલ દર્શાવે છે કે આપણે ચલનું પ્રકાર બદલવાની અનુમતિ નથી.</p>
-<pre><code class="language-console">$ cargo run
-   Compiling variables v0.1.0 (file:///projects/variables)
-error[E0308]: mismatched types
- --&gt; src/main.rs:3:14
-  |
-2 |     let mut spaces = "   ";
-  |                      ----- expected due to this value
-3 |     spaces = spaces.len();
-  |              ^^^^^^^^^^^^ expected `&amp;str`, found `usize`
-
-For more information about this error, try `rustc --explain E0308`.
-error: could not compile `variables` (bin "variables") due to 1 previous error
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/no-listing-05-mut-cant-change-types/output.txt}}
 </code></pre>
 <p>હવે કે આપણે variable કેવી રીતે કાર્ય કરે છે તે તપાસ્યું છે, ચાલો આપણે જોઈએ કે તેઓ કયા વધુ પ્રકારના ડેટા ધરાવી શકે છે.</p>
 
@@ -352,7 +302,7 @@ error: could not compile `variables` (bin "variables") due to 1 previous error
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 

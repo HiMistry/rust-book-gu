@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -191,19 +191,7 @@
 <p><strong>Listing 14-1: A documentation comment for a function</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>/// Adds one to the number given.
-///
-/// # Examples
-///
-/// ```
-/// let arg = 5;
-/// let answer = my_crate::add_one(arg);
-///
-/// assert_eq!(6, answer);
-/// ```
-pub fn add_one(x: i32) -&gt; i32 {
-    x + 1
-}
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-01/src/lib.rs}}
 <span class="boring">}</span></code></pre>
 <p>અહીં, અમે <code>add_one</code> ફંક્શન શું કરે છે તેનું વર્ણન આપીએ છીએ, <code>ઉદાહરણો</code> શીર્ષક સાથે એક વિભાગ શરૂ કરીએ છીએ અને પછી કોડ પ્રદાન કરીએ છીએ જે દર્શાવે છે કે <code>add_one</code> ફંક્શનનો ઉપયોગ કેવી રીતે કરવો. અમે આ દસ્તાવેજીકરણ ટિપ્પણીમાંથી HTML દસ્તાવેજીકરણ <code>cargo doc</code> ચલાવીને જનરેટ કરી શકીએ છીએ. આ આદેશ Rust સાથે વિતરિત <code>rustdoc</code> સાધન ચલાવે છે અને જનરેટ થયેલ HTML દસ્તાવેજીકરણને target/doc</p>
 <p>ડિરેક્ટરીમાં મૂકે છે. સુવિધા માટે, <code>cargo doc --open</code> ચલાવવાથી તમારા વર્તમાન crate ના દસ્તાવેજીકરણ (અને તમારા બધા crate ના નિર્ભરતાઓના દસ્તાવેજીકરણ) માટે HTML બનાવવામાં આવશે અને પરિણામ વેબ બ્રાઉઝરમાં ખુલ્લું થશે. <code>add_one</code> ફંક્શન પર નેવિગેટ કરો અને તમે જોશો કે દસ્તાવેજીકરણ ટિપ્પણીઓમાંનો ટેક્સ્ટ કેવી રીતે રેન્ડર થાય છે, જે આકૃતિ 14-1 માં દર્શાવેલ છે. ઉદાહરણો</p>
@@ -245,26 +233,8 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <p><strong>Listing 14-2: The documentation for the <code>my_crate</code> crate as a whole</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>//! # My Crate
-//!
-//! `my_crate` is a collection of utilities to make performing certain
-//! calculations more convenient.
-
-/// Adds one to the number given.
-// --snip--
-<span class="boring">///
-</span><span class="boring">/// # Examples
-</span><span class="boring">///
-</span><span class="boring">/// ```
-</span><span class="boring">/// let arg = 5;
-</span><span class="boring">/// let answer = my_crate::add_one(arg);
-</span><span class="boring">///
-</span><span class="boring">/// assert_eq!(6, answer);
-</span><span class="boring">/// ```
-</span><span class="boring">pub fn add_one(x: i32) -&gt; i32 {
-</span><span class="boring">    x + 1
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-02/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>માહિતી અહીં છેલ્લા લીટી પછી કોડ નથી જે <code>//!</code> થી શરૂ થાય છે. કારણ કે આપણે ટિપ્પણીઓ <code>//!</code> થી શરૂ કરી હતી <code>///</code> ને બદલે, અમે આ ટિપ્પણી ધરાવતી વસ્તુને દસ્તાવેજીકૃત કરી રહ્યા છીએ, ત્યારબાદની વસ્તુને નહીં. આ કિસ્સામાં, તે વસ્તુ src/lib.rs ફાઇલ છે, જે ક્રેટ રૂટ છે. આ ટિપ્પણીઓ સમગ્ર ક્રેટનું વર્ણન</p>
 <p>કરે છે. જ્યારે આપણે <code>cargo doc --open</code> ચલાવીએ છીએ, ત્યારે આ ટિપ્પણીઓ <code>my_crate</code> ના દસ્તાવેજીકરણના પ્રથમ પૃષ્ઠ પર જાહેર વસ્તુઓની યાદી ઉપર પ્રદર્શિત થશે, જે આકૃતિ 14-2 માં દર્શાવેલ છે.</p>
 <p>વસ્તુઓ વચ્ચેના દસ્તાવેજીય ટીકાઓ ક્રેટે અને મોડ્યુલોનું વર્ણન કરવા માટે ઉપયોગી છે, વિશેષ કરીને. કન્ટેનરનો મુખ્ય હેતુ સમજાવવા માટે તેનો ઉપયોગ કરો જેથી તમારા userઓ ક્રેટેની વ્યવસ્થાને સમજી શકે.</p>
@@ -279,36 +249,7 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <p><strong>Listing 14-3: An <code>art</code> library with items organized into <code>kinds</code> and <code>utils</code> modules</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>//! # Art
-//!
-//! A library for modeling artistic concepts.
-
-pub mod kinds {
-    /// The primary colors according to the RYB color model.
-    pub enum PrimaryColor {
-        Red,
-        Yellow,
-        Blue,
-    }
-
-    /// The secondary colors according to the RYB color model.
-    pub enum SecondaryColor {
-        Orange,
-        Green,
-        Purple,
-    }
-}
-
-pub mod utils {
-    use crate::kinds::*;
-
-    /// Combines two primary colors in equal amounts to create
-    /// a secondary color.
-    pub fn mix(c1: PrimaryColor, c2: PrimaryColor) -&gt; SecondaryColor {
-        // --snip--
-<span class="boring">        unimplemented!();
-</span>    }
-}
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-03/src/lib.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>આકૃતિ ૧૪-૩ દર્શાવે છે કે આ ક્રેટ માટે <code>cargo doc</code> દ્વારા જનરેટ થયેલ દસ્તાવેજીકરણના મુખ્ય પૃષ્ઠનું સ્વરૂપ કેવું હશે.</p>
 <img alt="Rendered documentation for the `art` crate that lists the `kinds` and `utils` modules" src="img/trpl14-03.png" class="center" />
@@ -316,69 +257,26 @@ Figure 14-3: `art` દસ્તાવેજીકરણનું પ્રથમ
 <p>નોંધ કરો કે <code>PrimaryColor</code> અને <code>SecondaryColor</code> પ્રકારો પ્રથમ પૃષ્ઠ પર સૂચિબદ્ધ નથી, તેમજ <code>mix</code> ફંક્શન પણ નથી. તેમને જોવા માટે આપણે <code>kinds</code> અને <code>utils</code> પર ક્લિક કરવું પડશે.</p>
 <p>બીજી ક્રેટ (crate) જે આ લાયબ્રેરી પર આધારિત છે, તેને <code>use</code> વિધાનની જરૂર પડશે, જે <code>art</code> માંથી વસ્તુઓને કાર્યક્ષેત્રમાં લાવશે, વર્તમાન રીતે વ્યાખ્યાયિત મોડ્યુલ માળખું સ્પષ્ટ કરીને. લિસ્ટિંગ 14-4 એ ક્રેટનું ઉદાહરણ દર્શાવે છે જે <code>PrimaryColor</code> અને <code>mix</code> વસ્તુઓનો ઉપયોગ કરે છે, જે <code>art</code> ક્રેટમાંથી આવે છે.</p>
 <p><strong>Listing 14-4: A crate using the <code>art</code> crate’s items with its internal structure exported</strong></p>
-<pre class="playground"><code class="language-rust edition2024">use art::kinds::PrimaryColor;
-use art::utils::mix;
-
-fn main() {
-    let red = PrimaryColor::Red;
-    let yellow = PrimaryColor::Yellow;
-    mix(red, yellow);
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-04/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>Listing 14-4 નો લેખક, જે <code>art</code> ક્રેટનો ઉપયોગ કરે છે, તેણે શોધવું પડ્યું કે <code>PrimaryColor</code> <code>kinds</code> મોડ્યુલમાં છે અને <code>mix</code> <code>utils</code> મોડ્યુલમાં છે. <code>art</code> ક્રેટનું મોડ્યુલ માળખું એ <code>art</code> ક્રેટ પર કામ કરતા વિકાસકર્તાઓ માટે વધુ સુસંગત છે, જે તેનો ઉપયોગ કરનારાઓ કરતાં. આંતરિક માળખું તેમાં <code>art</code> ક્રેટનો ઉપયોગ કેવી રીતે કરવો તે સમજવાનો પ્રયાસ કરી રહેલા વ્યક્તિ માટે કોઈ ઉપયોગી માહિતી ધરાવતું નથી, પરંતુ મૂંઝવણ ઊભી કરે છે કારણ કે તેનો ઉપયોગ કરતા વિકાસકર્તાઓએ શોધવું પડે છે કે ક્યાં જોવાનું છે, અને તેમણે <code>use</code> વિધાનોમાં મોડ્યુલ નામો સ્પષ્ટ કરવા પડે છે.</p>
 <p>જાહેર API માંથી આંતરિક વ્યવસ્થા દૂર કરવા માટે, આપણે લિસ્ટિંગ 14-3 માં <code>art</code> ક્રેટ કોડમાં ફેરફાર કરી શકીએ છીએ અને ટોચના સ્તર પરની વસ્તુઓને ફરીથી નિકાસ કરવા માટે <code>pub use</code> વિધાન ઉમેરી શકીએ છીએ, જે લિસ્ટિંગ 14-5 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 14-5: Adding <code>pub use</code> statements to re-export items</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>//! # Art
-//!
-//! A library for modeling artistic concepts.
-
-pub use self::kinds::PrimaryColor;
-pub use self::kinds::SecondaryColor;
-pub use self::utils::mix;
-
-pub mod kinds {
-    // --snip--
-<span class="boring">    /// The primary colors according to the RYB color model.
-</span><span class="boring">    pub enum PrimaryColor {
-</span><span class="boring">        Red,
-</span><span class="boring">        Yellow,
-</span><span class="boring">        Blue,
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    /// The secondary colors according to the RYB color model.
-</span><span class="boring">    pub enum SecondaryColor {
-</span><span class="boring">        Orange,
-</span><span class="boring">        Green,
-</span><span class="boring">        Purple,
-</span><span class="boring">    }
-</span>}
-
-pub mod utils {
-    // --snip--
-<span class="boring">    use crate::kinds::*;
-</span><span class="boring">
-</span><span class="boring">    /// Combines two primary colors in equal amounts to create
-</span><span class="boring">    /// a secondary color.
-</span><span class="boring">    pub fn mix(c1: PrimaryColor, c2: PrimaryColor) -&gt; SecondaryColor {
-</span><span class="boring">        SecondaryColor::Orange
-</span><span class="boring">    }
-</span>}
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-05/src/lib.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>આ ક્રેઇટ માટે <code>cargo doc</code> દ્વારા ઉત્પન્ન થતું API દસ્તાવેજીકરણ હવે મુખ્ય પૃષ્ઠ પર ફરીથી નિકાસ થયેલ વસ્તુઓને સૂચિબદ્ધ કરશે અને લિંક કરશે, જે આકૃતિ 14-4 માં દર્શાવ્યા મુજબ છે, જેનાથી <code>PrimaryColor</code> અને <code>SecondaryColor</code> પ્રકારો અને <code>mix</code> કાર્ય શોધવાનું સરળ બનશે.</p>
 <img alt="Rendered documentation for the `art` crate with the re-exports on the front page" src="img/trpl14-04.png" class="center" />
 Figure 14-4: `art` દસ્તાવેજીકરણનું પ્રથમ પાનું જે પુનઃનિકાસની યાદી દર્શાવે છે. `art` ક્રેટ userઓ
 <p>હજી પણ લિસ્ટિંગ 14-3 માંથી આંતરિક રચના જોઈ અને ઉપયોગ કરી શકે છે, જે લિસ્ટિંગ 14-4 માં દર્શાવેલ છે, અથવા તેઓ લિસ્ટિંગ 14-5 માં વધુ અનુકૂળ રચનાનો ઉપયોગ કરી શકે છે, જે લિસ્ટિંગ 14-6 માં બતાવ્યું છે.</p>
 <p><strong>Listing 14-6: A program using the re-exported items from the <code>art</code> crate</strong></p>
-<pre class="playground"><code class="language-rust edition2024">use art::PrimaryColor;
-use art::mix;
-
-fn main() {
-    // --snip--
-<span class="boring">    let red = PrimaryColor::Red;
-</span><span class="boring">    let yellow = PrimaryColor::Yellow;
-</span><span class="boring">    mix(red, yellow);
-</span>}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-06/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>જ્યારે ઘણાં સંકલિત મોડ્યુલો હોય છે, ત્યારે ટોચના સ્તર પર પ્રકારોને <code>pub use</code> સાથે ફરીથી નિકાસ કરવાથી ક્રેટનો ઉપયોગ કરનારા લોકોના અનુભવમાં નોંધપાત્ર ફેરફાર થઈ શકે છે. Another common use of <code>pub use</code> is to re-export definitions of a dependency in the current crate to make that crate’s definitions part of your crate’s public API. <code>pub use</code> નો બીજો સામાન્ય ઉપયોગ એ છે કે વર્તમાન ક્રેટમાં એક નિર્ભરતાની વ્યાખ્યાઓને ફરીથી નિકાસ કરવી જેથી તે ક્રેટની વ્યાખ્યાઓ તમારા ક્રેટના જાહેર API નો ભાગ બને. Creating a useful public API structure</p>
 <p>ઉપયોગી જાહેર API માળખું બનાવવું એ વિજ્ઞાન કરતાં કળા છે, અને તમારા userઓ માટે શ્રેષ્ઠ કામ કરે તેવા API શોધવા માટે તમે પુનરાવર્તન કરી શકો છો. Choosing <code>pub use</code> gives you flexibility in how you structure your crate internally and decouples that internal structure from what you present to your users. <code>pub use</code> પસંદ કરવાથી તમને તમારા ક્રેટને આંતરિક રીતે કેવી રીતે માળખું આપવું તે અંગે લવચીકતા મળે છે અને તે આંતરિક માળખાને તમે userઓ સમક્ષ શું રજૂ કરો છો તેનાથી અલગ કરે છે. Look at some of the code of crates you’ve installed to see if their internal structure differs from their public API. તમે ઇન્સ્ટોલ કરેલા ક્રેટના કેટલાક કોડને જુઓ, જેથી તેમના આંતરિક માળખા તેમની જાહેર API થી અલગ છે કે નહીં તે જાણી શકાય.</p>
 <h3 id="setting-up-a-cratesio-account"><a class="header" href="#setting-up-a-cratesio-account">Setting Up a Crates.io Account</a></h3>
@@ -532,7 +430,7 @@ cargo yank carol-test --version 2.1.0 --undo
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 

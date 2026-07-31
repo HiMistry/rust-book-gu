@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -193,9 +193,7 @@
 <p><strong>Listing 10-12: A <code>Summary</code> trait that consists of the behavior provided by a <code>summarize</code> method</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub trait Summary {
-    fn summarize(&amp;self) -&gt; String;
-}
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-12/src/lib.rs}}
 <span class="boring">}</span></code></pre>
 <p>અહીં, આપણે <code>trait</code> કીવર્ડનો ઉપયોગ કરીને એક લક્ષણ જાહેર કરીએ છીએ અને પછી લક્ષણનું નામ, જે આ કિસ્સામાં <code>Summary</code> છે. આપણે લક્ષણને <code>pub</code> તરીકે પણ જાહેર કરીએ છીએ જેથી અન્ય ક્રેટે (crates) આ ક્રેટે પર આધારિત રહીને આ લક્ષણનો ઉપયોગ કરી શકે, જે આપણે થોડા ઉદાહરણોમાં જોઈશું. કુંજી કૌંસની અંદર, આપણે પદ્ધતિ હસ્તાક્ષરો (method signatures) જાહેર કરીએ છીએ જે તે પ્રકારોના વર્તનની સમજૂતી આપે છે જે આ લક્ષણને અમલમાં મૂકે છે, જે આ કિસ્સામાં `fn</p>
 <p>summarize(&amp;self) -&gt; String<code>છે. પદ્ધતિ હસ્તાક્ષર પછી, કુંજી કૌંસની અંદર અમલીકરણ આપવાને બદલે, આપણે અર્ધવિરામ (semicolon) નો ઉપયોગ કરીએ છીએ. આ લક્ષણને અમલમાં મૂકતો દરેક પ્રકાર પદ્ધતિના શરીર માટે પોતાનું કસ્ટમ વર્તન પ્રદાન કરે છે. કમ્પાઇલર ખાતરી કરશે કે</code>Summary<code>લક્ષણ ધરાવતા કોઈપણ પ્રકારમાં</code>summarize` પદ્ધતિ આ હસ્તાક્ષર સાથે ચોક્કસપણે વ્યાખ્યાયિત થયેલ હશે.</p>
@@ -205,52 +203,14 @@
 <p><strong>Listing 10-13: Implementing the <code>Summary</code> trait on the <code>NewsArticle</code> and <code>SocialPost</code> types</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
-</span><span class="boring">    fn summarize(&amp;self) -&gt; String;
-</span><span class="boring">}
-</span><span class="boring">
-</span>pub struct NewsArticle {
-    pub headline: String,
-    pub location: String,
-    pub author: String,
-    pub content: String,
-}
-
-impl Summary for NewsArticle {
-    fn summarize(&amp;self) -&gt; String {
-        format!("{}, by {} ({})", self.headline, self.author, self.location)
-    }
-}
-
-pub struct SocialPost {
-    pub username: String,
-    pub content: String,
-    pub reply: bool,
-    pub repost: bool,
-}
-
-impl Summary for SocialPost {
-    fn summarize(&amp;self) -&gt; String {
-        format!("{}: {}", self.username, self.content)
-    }
-}
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-13/src/lib.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>પ્રકાર પર લક્ષણ (trait) અમલમાં મૂકવું એ સામાન્ય પદ્ધતિઓ અમલમાં મૂકવા જેવું જ છે. તફાવત એ છે કે <code>impl</code> પછી, આપણે જે લક્ષણને અમલમાં મૂકવા માંગીએ છીએ તેનું નામ લખીએ છીએ, ત્યારબાદ <code>for</code> કીવર્ડનો ઉપયોગ કરીએ છીએ અને પછી આપણે જે પ્રકાર માટે લક્ષણ અમલમાં મૂકવા માંગીએ છીએ તેનું નામ સ્પષ્ટ કરીએ છીએ. <code>impl</code> બ્લોકમાં, આપણે તે પદ્ધતિ હસ્તાક્ષરો (signatures) મૂકીએ છીએ જે લક્ષણ વ્યાખ્યામાં નિર્ધારિત કરવામાં આવ્યા છે. દરેક હસ્તાક્ષર પછી અર્ધવિરામ મૂકવાના બદલે, આપણે કદબિંદુઓનો ઉપયોગ કરીએ છીએ અને લક્ષણની પદ્ધતિઓ માટે ચોક્કસ વર્તન ભરપૂર કરીએ છીએ જે વિશેષ પ્રકાર માટે હોવું જોઈએ.</p>
 <p>હવે પુસ્તકાલયે <code>NewsArticle</code> અને <code>SocialPost</code> પર <code>Summary</code> લક્ષણ (trait) અમલમાં મૂક્યું છે, તેથી હવે ક્રેટના userઓ <code>NewsArticle</code> અને <code>SocialPost</code> નાં ઉદાહરણો પર નિયમિત પદ્ધતિઓ (methods) ની જેમ જ લક્ષણની પદ્ધતિઓને બોલાવી શકે છે. એકમાત્ર ભેદ એ છે કે userએ પ્રકારોની સાથે લક્ષણને પણ કાર્યક્ષેત્રમાં લાવવું પડશે. અહીં એક ઉદાહરણ છે કે કેવી રીતે બાઈનરી ક્રેટ આપણી <code>aggregator</code> પુસ્તકાલય ક્રેટનો ઉપયોગ કરી શકે છે:</p>
-<pre class="playground"><code class="language-rust edition2024">use aggregator::{SocialPost, Summary};
-
-fn main() {
-    let post = SocialPost {
-        username: String::from("horse_ebooks"),
-        content: String::from(
-            "of course, as you probably already know, people",
-        ),
-        reply: false,
-        repost: false,
-    };
-
-    println!("1 new post: {}", post.summarize());
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-01-calling-trait-method/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>આ કોડ <code>1 નવું પોસ્ટ: horse_ebooks: અલબત્ત, જેવો કે તમે કદાચ પહેલાથી જ જાણો છો, લોકો</code></p>
 <p>છાપે છે. અન્ય ક્રેટે (crates) જે <code>aggregator</code> પર આધાર રાખે છે તેઓ પણ પોતાના પ્રકારો પર <code>Summary</code> અમલમાં મૂકવા માટે <code>Summary</code> ટ્રેઇટને કાર્યક્ષેત્રમાં લાવી શકે છે. એક નિયંત્રણ ધ્યાનમાં લેવું જોઈએ કે આપણે માત્ર ત્યારે જ કોઈ પ્રકાર પર ટ્રેઇટનો અમલ કરી શકીએ છીએ જો ટ્રેઇટ અથવા પ્રકાર, અથવા બંને, આપણા ક્રેટે સ્થાનિક હોય. ઉદાહરણ તરીકે, આપણે <code>Display</code> જેવા સ્ટાન્ડર્ડ લાઈબ્રેરી ટ્રેઇટ્સને <code>SocialPost</code> જેવા કસ્ટમ પ્રકાર પર અમલમાં મૂકી શકીએ છીએ જે આપણા <code>aggregator</code> ક્રેટેની કાર્યક્ષમતાનો ભાગ છે કારણ કે પ્રકાર <code>SocialPost</code> આપણા <code>aggregator</code> ક્રેટે સ્થાનિક છે. આપણે <code>Summary</code> ને પણ <code>Vec&lt;T&gt;</code> પર અમલમાં મૂકી શકીએ છીએ આપણા <code>aggregator</code> ક્રેટેમાં કારણ કે ટ્રેઇટ <code>Summary</code> આપણા <code>aggregator</code> ક્રેટે સ્થાનિક છે.</p>
 <p>પણ આપણે બાહ્ય પ્રકારો પર બાહ્ય લક્ષણો અમલમાં મૂકી શકતા નથી. ઉદાહરણ તરીકે, આપણે <code>Display</code> લક્ષણને <code>Vec&lt;T&gt;</code> પર આપણા <code>aggregator</code> ક્રેટમાં અમલમાં મૂકી શકતા નથી, કારણ કે <code>Display</code> અને <code>Vec&lt;T&gt;</code> બંને સ્ટાન્ડર્ડ લાઈબ્રેરીમાં વ્યાખ્યાયિત છે અને આપણા <code>aggregator</code> ક્રેટ માટે સ્થાનિક નથી. આ નિયંત્રણ એક ગુણધર્મના ભાગ છે જેને સુસંગતતા (coherence) કહેવાય છે, અને વિશેષ કરીને અનાથા નિયમ (orphan rule), જેનું નામ એટલા માટે આપવામાં આવ્યું છે કારણ કે પિતૃ પ્રકાર હાજર નથી. આ નિયમ ખાતરી કરે છે કે અન્ય લોકોનો કોડ તમારા કોડને તોડી શકતો નથી અને ઊલટું. જો આ નિયમ ન હોત, તો બે ક્રેટ એક જ પ્રકાર માટે એક જ લક્ષણને અમલમાં મૂકી શકે છે, અને Rust ને ખબર નહીં પડે કે કયો અમલ વાપરવો.</p>
@@ -261,115 +221,30 @@ fn main() {
 <p><strong>Listing 10-14: Defining a <code>Summary</code> trait with a default implementation of the <code>summarize</code> method</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub trait Summary {
-    fn summarize(&amp;self) -&gt; String {
-        String::from("(Read more...)")
-    }
-}
-<span class="boring">
-</span><span class="boring">pub struct NewsArticle {
-</span><span class="boring">    pub headline: String,
-</span><span class="boring">    pub location: String,
-</span><span class="boring">    pub author: String,
-</span><span class="boring">    pub content: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Summary for NewsArticle {}
-</span><span class="boring">
-</span><span class="boring">pub struct SocialPost {
-</span><span class="boring">    pub username: String,
-</span><span class="boring">    pub content: String,
-</span><span class="boring">    pub reply: bool,
-</span><span class="boring">    pub repost: bool,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Summary for SocialPost {
-</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
-</span><span class="boring">        format!("{}: {}", self.username, self.content)
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-14/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p><code>NewsArticle</code> ના ઉદાહરણોનો સારાંશ આપવા માટે ડિફોલ્ટ અમલીકરણનો ઉપયોગ કરવા માટે, આપણે <code>impl Summary for NewsArticle {}</code> સાથે ખાલી <code>impl</code> બ્લોક સ્પષ્ટ કરીએ છીએ.</p>
 <p>ભલે આપણે હવે સીધા <code>NewsArticle</code> પર <code>summarize</code> પદ્ધતિને વ્યાખ્યાયિત ન કરતા હોઈએ, આપણે ડિફોલ્ટ અમલીકરણ પ્રદાન કર્યું છે અને ઉલ્લેખ કર્યો છે કે <code>NewsArticle</code> <code>Summary</code> ટ્રેઇટનો અમલ કરે છે. પરિણામે, આપણે હજી પણ <code>NewsArticle</code> ના ઉદાહરણ પર <code>summarize</code> પદ્ધતિને બોલાવી શકીએ છીએ, આ રીતે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">use aggregator::{self, NewsArticle, Summary};
-</span><span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let article = NewsArticle {
-        headline: String::from("Penguins win the Stanley Cup Championship!"),
-        location: String::from("Pittsburgh, PA, USA"),
-        author: String::from("Iceburgh"),
-        content: String::from(
-            "The Pittsburgh Penguins once again are the best \
-             hockey team in the NHL.",
-        ),
-    };
-
-    println!("New article available! {}", article.summarize());
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-02-calling-default-impl/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>આ કોડ <code>New article available! (Read more...)</code> છાપે છે.</p>
 <p>મૂળભૂત અમલીકરણ બનાવવું એ આપણને Listing 10-13 માં <code>SocialPost</code> પર <code>Summary</code> ના અમલીકરણમાં કંઈપણ બદલવાની જરૂર નથી. આનું કારણ એ છે કે ડિફોલ્ટ અમલીકરણને ઓવરરાઇડ કરવા માટેનું વાક્યરચના એ ટ્રેઇટ પદ્ધતિને અમલમાં મૂકવા માટેની વાક્યરચના સમાન છે જેમાં ડિફોલ્ટ અમલીકરણ નથી.</p>
 <p>ડિફોલ્ટ અમલીકરણો સમાન ટ્રેઇટમાં અન્ય પદ્ધતિઓને બોલાવી શકે છે, ભલે તે અન્ય પદ્ધતિઓમાં ડિફોલ્ટ અમલીકરણ ન હોય. આ રીતે, એક ટ્રેઇટ ઘણી ઉપયોગી કાર્યક્ષમતા પ્રદાન કરી શકે છે અને માત્ર અમલકર્તાઓને તેનો નાનો ભાગ સ્પષ્ટ કરવાની જરૂર પડે છે. ઉદાહરણ તરીકે, આપણે <code>Summary</code> ટ્રેઇટને <code>summarize_author</code> પદ્ધતિ સાથે વ્યાખ્યાયિત કરી શકીએ છીએ જેનું અમલીકરણ જરૂરી છે, અને પછી <code>summarize</code> પદ્ધતિને વ્યાખ્યાયિત કરી શકીએ છીએ જેમાં ડિફોલ્ટ અમલીકરણ હોય છે જે <code>summarize_author</code> પદ્ધતિને બોલાવે છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub trait Summary {
-    fn summarize_author(&amp;self) -&gt; String;
-
-    fn summarize(&amp;self) -&gt; String {
-        format!("(Read more from {}...)", self.summarize_author())
-    }
-}
-<span class="boring">
-</span><span class="boring">pub struct SocialPost {
-</span><span class="boring">    pub username: String,
-</span><span class="boring">    pub content: String,
-</span><span class="boring">    pub reply: bool,
-</span><span class="boring">    pub repost: bool,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Summary for SocialPost {
-</span><span class="boring">    fn summarize_author(&amp;self) -&gt; String {
-</span><span class="boring">        format!("@{}", self.username)
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>આ <code>Summary</code> નાં આ સંસ્કરણનો ઉપયોગ કરવા માટે, આપણે માત્ર એટલું જ વ્યાખ્યાયિત કરવું જોઈએ કે જ્યારે કોઈ પ્રકાર પર લક્ષણ (trait) અમલમાં મુકવામાં આવે ત્યારે <code>summarize_author</code> કેવી રીતે કાર્ય કરે.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
-</span><span class="boring">    fn summarize_author(&amp;self) -&gt; String;
-</span><span class="boring">
-</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
-</span><span class="boring">        format!("(Read more from {}...)", self.summarize_author())
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub struct SocialPost {
-</span><span class="boring">    pub username: String,
-</span><span class="boring">    pub content: String,
-</span><span class="boring">    pub reply: bool,
-</span><span class="boring">    pub repost: bool,
-</span><span class="boring">}
-</span><span class="boring">
-</span>impl Summary for SocialPost {
-    fn summarize_author(&amp;self) -&gt; String {
-        format!("@{}", self.username)
-    }
-}
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/lib.rs:impl}}
 <span class="boring">}</span></code></pre>
 <p>નિર્ણિત કર્યા પછી <code>summarize_author</code>, અમે <code>SocialPost</code> struct ના ઉદાહરણો પર <code>summarize</code> ને બોલાવી શકીએ છીએ, અને <code>summarize</code> નું આદશ અમલીકરણ આપેલ <code>summarize_author</code> ની વ્યાખ્યાને બોલાવશે. કારણ કે આપણે <code>summarize_author</code> અમલમાં મૂક્યું છે, <code>Summary</code> trait એ આપણને <code>summarize</code> પદ્ધતિનું વર્તન આપ્યું છે, કોઈપણ વધુ કોડ લખવાની જરૂરિયાત વિના. આ આ પ્રમાણે દેખાય છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">use aggregator::{self, SocialPost, Summary};
-</span><span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let post = SocialPost {
-        username: String::from("horse_ebooks"),
-        content: String::from(
-            "of course, as you probably already know, people",
-        ),
-        reply: false,
-        repost: false,
-    };
-
-    println!("1 new post: {}", post.summarize());
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>આ કોડ `1 નવું પોસ્ટ: (વધુ માહિતી @horse_ebooks… પાસેથી</p>
 <p>મેળવો)` છાપે છે. નોંધ કરો કે તે જ પદ્ધતિના ઓવરરાઇડિંગ અમલીકરણમાંથી ડિફોલ્ટ અમલીકરણને બોલાવવું શક્ય નથી.</p>
@@ -378,39 +253,7 @@ fn main() {
 <p>હવે તમે પાત્રોને વ્યાખ્યાયિત અને અમલમાં મૂકવાની રીત જાણો છો, તો ચાલો એ તપાસીએ કે કેવી રીતે પાત્રોનો ઉપયોગ કરીને કાર્યોને વ્યાખ્યાયિત કરી શકાય છે જે ઘણાં વિવિધ પ્રકારો સ્વીકારે છે. આપણે <code>Summary</code> પાત્રનો ઉપયોગ કરીશું જે આપણે <code>NewsArticle</code> અને <code>SocialPost</code> પ્રકારો પર Listing 10-13 માં અમલમાં મૂક્યો હતો, જેથી <code>notify</code> કાર્યને વ્યાખ્યાયિત કરી શકાય જે તેના <code>item</code> પરિમાણ પર <code>summarize</code> પદ્ધતિને બોલાવે છે, જે કોઈ એવા પ્રકારનો હોય છે જે <code>Summary</code> પાત્રનો અમલ કરે છે. આ કરવા માટે, આપણે <code>impl Trait</code> વાક્યરચનાનો ઉપયોગ કરીએ છીએ, જેમ કે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
-</span><span class="boring">    fn summarize(&amp;self) -&gt; String;
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub struct NewsArticle {
-</span><span class="boring">    pub headline: String,
-</span><span class="boring">    pub location: String,
-</span><span class="boring">    pub author: String,
-</span><span class="boring">    pub content: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Summary for NewsArticle {
-</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
-</span><span class="boring">        format!("{}, by {} ({})", self.headline, self.author, self.location)
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub struct SocialPost {
-</span><span class="boring">    pub username: String,
-</span><span class="boring">    pub content: String,
-</span><span class="boring">    pub reply: bool,
-</span><span class="boring">    pub repost: bool,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Summary for SocialPost {
-</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
-</span><span class="boring">        format!("{}: {}", self.username, self.content)
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span>pub fn notify(item: &amp;impl Summary) {
-    println!("Breaking news! {}", item.summarize());
-}
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-04-traits-as-parameters/src/lib.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>નિશ્ચિત પ્રકારને બદલે <code>item</code> પરિમાણ માટે, અમે <code>impl</code> કીવર્ડ અને ટ્રેઇટ નામનો ઉલ્લેખ કરીએ છીએ. આ પરિમાણ એ કોઈપણ પ્રકારને સ્વીકારે છે જે નિર્દિષ્ટ ટ્રેઇટનું પાલન કરે છે. In the body of <code>notify</code>, we can call any methods on <code>item</code> that come from the <code>Summary</code> trait, such as <code>summarize</code>. <code>notify</code> ના ભાગમાં, અમે <code>Summary</code> ટ્રેઇટમાંથી આવતા <code>item</code> પરની કોઈપણ પદ્ધતિઓને બોલાવી શકીએ છીએ, જેમ કે <code>summarize</code>. We can call <code>notify</code> and pass in any instance of <code>NewsArticle</code> or <code>SocialPost</code>. અમે <code>notify</code> ને બોલાવી શકીએ છીએ અને <code>NewsArticle</code> અથવા <code>SocialPost</code> ના કોઈપણ ઉદાહરણને પસાર કરી શકીએ છીએ. Code that calls the function with any other type, such as a <code>String</code> or an <code>i32</code>, won’t compile, because those types don’t implement <code>Summary</code>. કોડ જે અન્ય કોઈ પ્રકાર સાથે ફંક્શનને બોલાવે છે, જેમ કે <code>String</code> અથવા <code>i32</code>, તે કમ્પાઇલ થશે નહીં, કારણ કે તે પ્રકારો <code>Summary</code> નું પાલન કરતા નથી.</p>
 <!-- Old headings. Do not remove or links may break. -->
@@ -456,119 +299,21 @@ fn main() {
 <p>આપણે <code>where</code> કલમનો ઉપયોગ કરી શકીએ છીએ, આ પ્રમાણે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>fn some_function&lt;T, U&gt;(t: &amp;T, u: &amp;U) -&gt; i32
-where
-    T: Display + Clone,
-    U: Clone + Debug,
-{
-<span class="boring">    unimplemented!()
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-07-where-clause/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>આ વિધેયનું નિદર્શણ ઓછું અવ્યવસ્થિત છે: વિધેય નામ, પરિમાણ યાદી અને વળતર પ્રકાર એકબીજાની નજીક હોય છે, જેtrait મર્યાદાઓ વગરના વિધેય જેવું જ લાગે છે.</p>
 <h3 id="returning-types-that-implement-traits"><a class="header" href="#returning-types-that-implement-traits">Returning Types That Implement Traits</a></h3>
 <p>આપણે <code>impl Trait</code> વાક્યરચનાને પાછા આપવાની સ્થિતિમાં પણ ઉપયોગ કરી શકીએ છીએ, જેથી કોઈ ચોક્કસ પ્રકારનું મૂલ્ય પાછું આપી શકાય જે લક્ષણ (trait)નો અમલ કરે છે, જે અહીં દર્શાવેલ છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
-</span><span class="boring">    fn summarize(&amp;self) -&gt; String;
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub struct NewsArticle {
-</span><span class="boring">    pub headline: String,
-</span><span class="boring">    pub location: String,
-</span><span class="boring">    pub author: String,
-</span><span class="boring">    pub content: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Summary for NewsArticle {
-</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
-</span><span class="boring">        format!("{}, by {} ({})", self.headline, self.author, self.location)
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub struct SocialPost {
-</span><span class="boring">    pub username: String,
-</span><span class="boring">    pub content: String,
-</span><span class="boring">    pub reply: bool,
-</span><span class="boring">    pub repost: bool,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Summary for SocialPost {
-</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
-</span><span class="boring">        format!("{}: {}", self.username, self.content)
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span>fn returns_summarizable() -&gt; impl Summary {
-    SocialPost {
-        username: String::from("horse_ebooks"),
-        content: String::from(
-            "of course, as you probably already know, people",
-        ),
-        reply: false,
-        repost: false,
-    }
-}
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-05-returning-impl-trait/src/lib.rs:here}}
 <span class="boring">}</span></code></pre>
 <p><code>impl Summary</code> માટે રિટર્ન પ્રકાર તરીકે ઉપયોગ કરીને, અમે ઉલ્લેખિત કરીએ છીએ કે <code>returns_summarizable</code> ફંક્શન અમુક પ્રકારનું વળતર આપે છે જે <code>Summary</code> લક્ષણનો અમલ કરે છે, પરંતુ નક્કર પ્રકારનું નામ આપ્યા વિના. આ કિસ્સામાં, <code>returns_summarizable</code> એક <code>SocialPost</code> નું વળતર આપે છે, પરંતુ આ ફંક્શનને બોલાવતો કોડ એ</p>
 <p>જાણવાની જરૂર નથી. The ability to specify a return type only by the trait it implements is especially useful in the context of closures and iterators, which we cover in Chapter 13. Closures and iterators create types that only the compiler knows or types that are very long to specify. The <code>impl Trait</code> syntax lets you concisely specify that a function returns some type that implements the <code>Iterator</code> trait without needing to write out a very long type. માત્ર લક્ષણ દ્વારા રિટર્ન પ્રકારનો ઉલ્લેખ કરવાની ક્ષમતા, વિશેષ કરીને ક્લોઝર અને ઇટરેટરના સંદર્ભમાં ઉપયોગી છે, જેનું વર્ણન આપણે પ્રકરણ ૧૩ માં કરીશું. ક્લોઝર અને ઇટરેટર એવા પ્રકારો બનાવે છે જે માત્ર કમ્પાઇલર જાણે છે અથવા જેનો ઉલ્લેખ કરવો ખૂબ લાંબો હોય છે. <code>impl Trait</code> વાક્યરચના તમને સંક્ષિપ્તમાં સ્પષ્ટ કરવાની મંજૂરી આપે છે કે એક ફંક્શન અમુક પ્રકારનું વળતર આપે છે જે <code>Iterator</code> લક્ષણનો અમલ કરે છે, વિના ખૂબ લાંબા પ્રકારને લખવાની જરૂરિયાત.</p>
 <p>જો કે, તમે <code>impl Trait</code> માત્ર ત્યારે જ વાપરી શકો છો જ્યારે તમે એક જ પ્રકારનું વળતર આપી રહ્યા હોવ. દાખલા તરીકે, આ કોડ જે <code>NewsArticle</code> અથવા <code>SocialPost</code> બંને વળતર આપે છે અને વળતરનો પ્રકાર <code>impl Summary</code> તરીકે દર્શાવવામાં આવ્યો છે, તે કામ નહીં કરે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
-</span><span class="boring">    fn summarize(&amp;self) -&gt; String;
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub struct NewsArticle {
-</span><span class="boring">    pub headline: String,
-</span><span class="boring">    pub location: String,
-</span><span class="boring">    pub author: String,
-</span><span class="boring">    pub content: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Summary for NewsArticle {
-</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
-</span><span class="boring">        format!("{}, by {} ({})", self.headline, self.author, self.location)
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub struct SocialPost {
-</span><span class="boring">    pub username: String,
-</span><span class="boring">    pub content: String,
-</span><span class="boring">    pub reply: bool,
-</span><span class="boring">    pub repost: bool,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Summary for SocialPost {
-</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
-</span><span class="boring">        format!("{}: {}", self.username, self.content)
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span>fn returns_summarizable(switch: bool) -&gt; impl Summary {
-    if switch {
-        NewsArticle {
-            headline: String::from(
-                "Penguins win the Stanley Cup Championship!",
-            ),
-            location: String::from("Pittsburgh, PA, USA"),
-            author: String::from("Iceburgh"),
-            content: String::from(
-                "The Pittsburgh Penguins once again are the best \
-                 hockey team in the NHL.",
-            ),
-        }
-    } else {
-        SocialPost {
-            username: String::from("horse_ebooks"),
-            content: String::from(
-                "of course, as you probably already know, people",
-            ),
-            reply: false,
-            repost: false,
-        }
-    }
-}
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-06-impl-trait-returns-one-type/src/lib.rs:here}}
 <span class="boring">}</span></code></pre>
 <p><code>NewsArticle</code> અથવા <code>SocialPost</code> બંને પાછા આપવાની મંજૂરી નથી, કારણ કે કમ્પાઇલર (compiler) માં <code>impl Trait</code> વાક્યરચનાનો અમલ કરવાની રીત અંગેના નિયંત્રણો છે. અમે પ્રકરણ ૧૮ ના “Trait વસ્તુઓનો ઉપયોગ કરીને સામાન્ય વર્તનનું નિરૂપણ” વિભાગમાં આ પ્રકારનું કાર્ય કેવી રીતે લખવું તે આવરી લઈશું.</p>
 <h3 id="using-trait-bounds-to-conditionally-implement-methods"><a class="header" href="#using-trait-bounds-to-conditionally-implement-methods">Using Trait Bounds to Conditionally Implement Methods</a></h3>
@@ -576,28 +321,7 @@ where
 <p><strong>Listing 10-15: Conditionally implementing methods on a generic type depending on trait bounds</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use std::fmt::Display;
-
-struct Pair&lt;T&gt; {
-    x: T,
-    y: T,
-}
-
-impl&lt;T&gt; Pair&lt;T&gt; {
-    fn new(x: T, y: T) -&gt; Self {
-        Self { x, y }
-    }
-}
-
-impl&lt;T: Display + PartialOrd&gt; Pair&lt;T&gt; {
-    fn cmp_display(&amp;self) {
-        if self.x &gt;= self.y {
-            println!("The largest member is x = {}", self.x);
-        } else {
-            println!("The largest member is y = {}", self.y);
-        }
-    }
-}
+</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-15/src/lib.rs}}
 <span class="boring">}</span></code></pre>
 <p>અમે અન્ય રીતે પણ એક trait ને કોઈપણ પ્રકાર માટે શરતી રૂપે અમલમાં મૂકી શકીએ છીએ જે અન્ય trait નો અમલ કરે છે. કોઈપણ પ્રકાર પરના trait ના અમલીકરણો કે જે trait ની સીમાઓ સંતોષે છે, તેને વ્યાપક અમલીકરણો કહેવામાં આવે છે અને તેનો ઉપયોગ Rust પ્રમાણિત પુસ્તકાલયમાં મોટા પ્રમાણમાં થાય છે. ઉદાહરણ તરીકે, પ્રમાણિત પુસ્તકાલય <code>Display</code> trait નો અમલ કરે તેવા કોઈપણ પ્રકાર પર <code>ToString</code> trait નો અમલ કરે છે. પ્રમાણિત પુસ્તકાલયમાં <code>impl</code> બ્લોક આ કોડ જેવો દેખાય છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -666,7 +390,7 @@ impl&lt;T: Display + PartialOrd&gt; Pair&lt;T&gt; {
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 

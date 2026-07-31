@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -220,42 +220,14 @@ cd ../../..
 -->
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn add(left: u64, right: u64) -&gt; u64 {
-    left + right
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-01/src/lib.rs}}
 <span class="boring">}</span></code></pre>
 <p>ફાઈલ એક ઉદાહરણ <code>add</code> કાર્યથી આરંભ થાય છે જેથી આપણી પાસે પરીક્ષણ કરવા માટે કંઈક હોય.</p>
 <p>હાલ માટે, ચાલો આપણે માત્ર <code>it_works</code> કાર્ય પર ધ્યાન કેન્દ્રિત કરીએ. <code>#[test]</code> નોંધ પર ધ્યાન આપો: આ લક્ષણ સૂચવે છે કે આ એક પરીક્ષણ કાર્ય છે, જેથી પરીક્ષણ ચલાવનારને ખબર પડે કે આ કાર્યને પરીક્ષણ તરીકે ગણવું. આપણી પાસે <code>tests</code> મોડ્યુલમાં પરીક્ષણ વગરના અન્ય કાર્યો પણ હોઈ શકે છે જે સામાન્ય પરિસ્થિતિઓ ગોઠવવા અથવા સામાન્ય ક્રિયાઓ કરવા માટે મદદ કરે છે, તેથી આપણે હંમેશાં કયા કાર્યો પરીક્ષણો છે તે</p>
 <p>દર્શાવવું જોઈએ. The example function body uses the <code>assert_eq!</code> macro to assert that <code>result</code> , which contains the result of calling <code>add</code> with 2 and 2, equals 4. This assertion serves as an example of the format for a typical test. Let’s run it to see that this test passes. ઉદાહરણ કાર્ય ભાગ <code>assert_eq!</code> મેક્રોનો ઉપયોગ કરે છે જે ચકાસણી કરે છે કે <code>result</code> , જેમાં 2 અને 2 સાથે <code>add</code> બોલાવવાનો પરિણામ સમાયેલું છે, તે 4 બરાબર છે. આ ચકાસણી એક સામાન્ય પરીક્ષણના ફોર્મેટનું ઉદાહરણ તરીકે કામ કરે છે. ચાલો તેને ચલાવીએ જેથી આ પરીક્ષણ પાસ થાય તે જોવા મળે.</p>
 <p><code>cargo test</code> આદેશ <code>cargo test</code> આદેશ આપણી પરિયોજનામાં રહેલાં તમામ પરીક્ષણો ચલાવે છે, જે યાદી 11-2 માં દર્શાવેલું છે.</p>
 <p><strong>Listing 11-2: The output from running the automatically generated test</strong></p>
-<pre><code class="language-console">$ cargo test
-   Compiling adder v0.1.0 (file:///projects/adder)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.57s
-     Running unittests src/lib.rs (target/debug/deps/adder-01ad14159ff659ab)
-
-running 1 test
-test tests::it_works ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-   Doc-tests adder
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/listing-11-01/output.txt}}
 </code></pre>
 <p>Cargo સંકલિત કર્યું અને પરીક્ષણ ચલાવ્યું. આપણે <code>running 1 test</code> લાઇન જોઈએ છીએ. આગલી લાઇન જનરેટ થયેલ પરીક્ષણ કાર્યનું નામ દર્શાવે છે, જે <code>tests::it_works</code> કહેવાય છે, અને તે પરીક્ષણને ચલાવવાનો પરિણામ <code>ok</code> છે. એકંદર સારાંશ <code>test result: ok.</code> નો અર્થ થાય છે કે બધા પરીક્ષણો પાસ થયા છે, અને <code>1 passed; 0 failed</code> ભાગ એવા પરીક્ષણોની સંખ્યાનો સરવાળો કરે છે જે પાસ થયા અથવા નિષ્ફળ ગયા.</p>
 <p>કોઈ પરીક્ષણને અવગણવામાં આવે તેવું ચિહ્નિત કરવું શક્ય છે જેથી તે કોઈ ચોક્કસ સમયે ન ચાલે; આપણે આ બાબતને “Ignoring Tests Unless Specifically Requested” વિભાગમાં પછીથી આ પ્રકરણમાં આવરી લઈશું. કારણ કે આપણે અહીં એવું કર્યું નથી, તેથી સારાંશ <code>0 ignored</code> દર્શાવે છે. આપણે <code>cargo test</code> આદેશને Argument પણ આપી શકીએ છીએ જેથી જે પરીક્ષણોના નામ કોઈ સ્ટ્રિંગ સાથે મેળ ખાય તે ચલાવવામાં આવે; આને ફિલ્ટરિંગ કહેવામાં આવે છે, અને આપણે તેને “Running a Subset of Tests by Name” વિભાગમાં આવરી લઈશું. અહીં, આપણે ચલાવવામાં આવી રહેલા પરીક્ષણોને ફિલ્ટર કર્યા નથી, તેથી સારાંશનો અંત <code>0 filtered out</code> દર્શાવે છે.</p>
@@ -265,89 +237,20 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <p>ફાઈલનામ: src/lib.rs</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn add(left: u64, right: u64) -&gt; u64 {
-    left + right
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn exploration() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-01-changing-test-name/src/lib.rs}}
 <span class="boring">}</span></code></pre>
 <p>પછી, <code>cargo test</code> ફરીથી ચલાવો. આ વખતે પરિણામમાં <code>exploration</code> દેખાશે, <code>it_works</code> નહીં.</p>
-<pre><code class="language-console">$ cargo test
-   Compiling adder v0.1.0 (file:///projects/adder)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.59s
-     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
-
-running 1 test
-test tests::exploration ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-   Doc-tests adder
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/no-listing-01-changing-test-name/output.txt}}
 </code></pre>
 <p>હવે આપણે બીજો પરીક્ષણ ઉમેરીશું, પરંતુ આ વખતે આપણે એવો પરીક્ષણ બનાવીશું જે નિષ્ફળ જાય! પરીક્ષણો નિષ્ફળ થાય છે જ્યારે પરીક્ષણ કાર્યમાં કંઈક ગભરાટ (panic) પામે છે. દરેક પરીક્ષણને નવા થ્રેડમાં ચલાવવામાં આવે છે, અને જ્યારે મુખ્ય થ્રેડ જુએ છે કે કોઈ પરીક્ષણ થ્રેડ મૃત્યુ પામ્યો છે, ત્યારે તે પરીક્ષણને નિષ્ફળ તરીકે નોંધવામાં આવે છે. પ્રકરણ 9 માં, આપણે વાત કરી હતી કે ગભરાટ (panic) કરવાનો સૌથી સરળ રસ્તો <code>panic!</code> મેક્રોને બોલાવવાનો છે. નવું પરીક્ષણ એક કાર્ય તરીકે ઉમેરો જેનું નામ <code>another</code> હોય, જેથી તમારી <code>src/lib.rs</code> ફાઈલ લિસ્ટિંગ 11-3 જેવી દેખાય.</p>
 <p><strong>Listing 11-3: Adding a second test that will fail because we call the <code>panic!</code> macro</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn add(left: u64, right: u64) -&gt; u64 {
-    left + right
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn exploration() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-
-    #[test]
-    fn another() {
-        panic!("Make this test fail");
-    }
-}
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-03/src/lib.rs}}
 <span class="boring">}</span></code></pre>
 <p>Run the tests again using <code>cargo test</code>. The output should look like Listing 11-4, which shows that our <code>exploration</code> test passed and <code>another</code> failed.</p>
 <p><strong>Listing 11-4: Test results when one test passes and one test fails</strong></p>
-<pre><code class="language-console">$ cargo test
-   Compiling adder v0.1.0 (file:///projects/adder)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.72s
-     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
-
-running 2 tests
-test tests::another ... FAILED
-test tests::exploration ... ok
-
-failures:
-
----- tests::another stdout ----
-
-thread 'tests::another' (6019162) panicked at src/lib.rs:17:9:
-Make this test fail
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-
-
-failures:
-    tests::another
-
-test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-error: test failed, to rerun pass `--lib`
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/listing-11-03/output.txt}}
 </code></pre>
 <!-- manual-regeneration
 rg panicked listings/ch11-writing-automated-tests/listing-11-03/output.txt
@@ -363,215 +266,34 @@ check the line number of the panic matches the line number in the following para
 <p><strong>Listing 11-5: The <code>Rectangle</code> struct and its <code>can_hold</code> method from Chapter 5</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>#[derive(Debug)]
-struct Rectangle {
-    width: u32,
-    height: u32,
-}
-
-impl Rectangle {
-    fn can_hold(&amp;self, other: &amp;Rectangle) -&gt; bool {
-        self.width &gt; other.width &amp;&amp; self.height &gt; other.height
-    }
-}
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-05/src/lib.rs}}
 <span class="boring">}</span></code></pre>
 <p><code>can_hold</code> પદ્ધતિ એક બુલિયન પરત કરે છે, જેનો અર્થ થાય છે કે તે <code>assert!</code> મેક્રો માટે એક યોગ્ય ઉપયોગ છે. યાદી 11-6 માં, અમે એક પરીક્ષણ લખીએ છીએ જે 8 પહોળાઈ અને 7 ઊંચાઈ ધરાવતા <code>Rectangle</code> ઉદાહરણ બનાવીને <code>can_hold</code> પદ્ધતિનું પરીક્ષણ કરે છે અને એ વાતની ખાતરી કરે છે કે તે બીજા <code>Rectangle</code> ઉદાહરણને, જેની પહોળાઈ 5 અને ઊંચાઈ 1 છે, સમાવી શકે છે.</p>
 <p><strong>Listing 11-6: A test for <code>can_hold</code> that checks whether a larger rectangle can indeed hold a smaller rectangle</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">#[derive(Debug)]
-</span><span class="boring">struct Rectangle {
-</span><span class="boring">    width: u32,
-</span><span class="boring">    height: u32,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Rectangle {
-</span><span class="boring">    fn can_hold(&amp;self, other: &amp;Rectangle) -&gt; bool {
-</span><span class="boring">        self.width &gt; other.width &amp;&amp; self.height &gt; other.height
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span>#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn larger_can_hold_smaller() {
-        let larger = Rectangle {
-            width: 8,
-            height: 7,
-        };
-        let smaller = Rectangle {
-            width: 5,
-            height: 1,
-        };
-
-        assert!(larger.can_hold(&amp;smaller));
-    }
-}
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-06/src/lib.rs:here}}
 <span class="boring">}</span></code></pre>
 <p><code>use super::*;</code> મોડ્યુલ એ સામાન્ય મોડ્યુલ છે જે પ્રકરણ 7 માં આપણે આવરી લીધેલા “મોડ્યુલ વૃક્ષમાં વસ્તુનો સંદર્ભ લેવા માટેના માર્ગ” વિભાગમાં લાગુ પડતા સામાન્ય દૃશ્ય નિયમોનું પાલન કરે છે. કારણ કે <code>tests</code> મોડ્યુલ એક આંતરિક મોડ્યુલ છે, તેથી આપણે બાહ્ય મોડ્યુલમાં પરીક્ષણ માટેનો કોડ આંતરિક મોડ્યુલના અવકાશમાં લાવવો પડે છે. અમે અહીં ગ્લોબનો ઉપયોગ કરીએ છીએ, જેથી બાહ્ય મોડ્યુલમાં આપણે જે કંઈપણ વ્યાખ્યાયિત કરીએ છીએ તે આ <code>tests</code> મોડ્યુલ માટે ઉપલબ્ધ થાય છે.</p>
 <p>આપણે આપણી ચકાસણીને <code>larger_can_hold_smaller</code> નામ આપ્યું છે, અને આપણે બે <code>Rectangle</code> ઉદાહરણો પણ બનાવ્યા છે જેની આપણને જરૂર છે. ત્યારબાદ, આપણે <code>assert!</code> મેક્રોને બોલાવ્યો અને તેને <code>larger.can_hold(&amp;smaller)</code> બોલાવીને મળેલા પરિણામને પસાર કર્યો. આ અભિવ્યક્તિ <code>true</code> પરત કરવા ધારવામાં આવે છે, તેથી આપણી ચકાસણી પાસ થવી જોઈએ. ચાલો જાણીએ!</p>
-<pre><code class="language-console">$ cargo test
-   Compiling rectangle v0.1.0 (file:///projects/rectangle)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.66s
-     Running unittests src/lib.rs (target/debug/deps/rectangle-6584c4561e48942e)
-
-running 1 test
-test tests::larger_can_hold_smaller ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-   Doc-tests rectangle
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/listing-11-06/output.txt}}
 </code></pre>
 <p>તે ચકાસણી પાસ થાય છે! હવે આપણે બીજી ચકાસણી ઉમેરીએ, આ વખતે એવું ખાતરી કરીએ કે નાનું લંબચોરસ મોટા લંબચોરસને સમાવી શકતું નથી:</p>
 <p>ફાઈલનામ: src/lib.rs</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">#[derive(Debug)]
-</span><span class="boring">struct Rectangle {
-</span><span class="boring">    width: u32,
-</span><span class="boring">    height: u32,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Rectangle {
-</span><span class="boring">    fn can_hold(&amp;self, other: &amp;Rectangle) -&gt; bool {
-</span><span class="boring">        self.width &gt; other.width &amp;&amp; self.height &gt; other.height
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span>#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn larger_can_hold_smaller() {
-        // --snip--
-<span class="boring">        let larger = Rectangle {
-</span><span class="boring">            width: 8,
-</span><span class="boring">            height: 7,
-</span><span class="boring">        };
-</span><span class="boring">        let smaller = Rectangle {
-</span><span class="boring">            width: 5,
-</span><span class="boring">            height: 1,
-</span><span class="boring">        };
-</span><span class="boring">
-</span><span class="boring">        assert!(larger.can_hold(&amp;smaller));
-</span>    }
-
-    #[test]
-    fn smaller_cannot_hold_larger() {
-        let larger = Rectangle {
-            width: 8,
-            height: 7,
-        };
-        let smaller = Rectangle {
-            width: 5,
-            height: 1,
-        };
-
-        assert!(!smaller.can_hold(&amp;larger));
-    }
-}
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-02-adding-another-rectangle-test/src/lib.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>કારણ કે આ કિસ્સામાં <code>can_hold</code> વિધેયનું યોગ્ય પરિણામ <code>false</code> છે, આપણે તે પરિણામને નકારવું પડશે અને પછી તેને <code>assert!</code> મેક્રોમાં પસાર કરવું પડશે. પરિણામે, જો <code>can_hold</code> <code>false</code> પરત કરે તો આપણી ચકાસણી સફળ થશે:</p>
-<pre><code class="language-console">$ cargo test
-   Compiling rectangle v0.1.0 (file:///projects/rectangle)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.66s
-     Running unittests src/lib.rs (target/debug/deps/rectangle-6584c4561e48942e)
-
-running 2 tests
-test tests::larger_can_hold_smaller ... ok
-test tests::smaller_cannot_hold_larger ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-   Doc-tests rectangle
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/no-listing-02-adding-another-rectangle-test/output.txt}}
 </code></pre>
 <p>બે પરીક્ષણો સફળ થયા! હવે જોઈએ કે આપણી કોડમાં ભૂલ દાખલ કરીએ ત્યારે આપણી પરીક્ષણ પરિણામો પર શું અસર થાય છે. આપણે <code>can_hold</code> પદ્ધતિના અમલીકરણને બદલીશું, જેમાં પહોળાઈની સરખામણી કરતી વખતે મોટી-થી-નાનું ચિહ્ન ( <code>&gt;</code> ) ને નાનું-થી-મોટું ચિહ્ન ( <code>&lt;</code> ) વડે બદલવામાં આવશે.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">#[derive(Debug)]
-</span><span class="boring">struct Rectangle {
-</span><span class="boring">    width: u32,
-</span><span class="boring">    height: u32,
-</span><span class="boring">}
-</span><span class="boring">
-</span>// --snip--
-impl Rectangle {
-    fn can_hold(&amp;self, other: &amp;Rectangle) -&gt; bool {
-        self.width &lt; other.width &amp;&amp; self.height &gt; other.height
-    }
-}
-<span class="boring">
-</span><span class="boring">#[cfg(test)]
-</span><span class="boring">mod tests {
-</span><span class="boring">    use super::*;
-</span><span class="boring">
-</span><span class="boring">    #[test]
-</span><span class="boring">    fn larger_can_hold_smaller() {
-</span><span class="boring">        let larger = Rectangle {
-</span><span class="boring">            width: 8,
-</span><span class="boring">            height: 7,
-</span><span class="boring">        };
-</span><span class="boring">        let smaller = Rectangle {
-</span><span class="boring">            width: 5,
-</span><span class="boring">            height: 1,
-</span><span class="boring">        };
-</span><span class="boring">
-</span><span class="boring">        assert!(larger.can_hold(&amp;smaller));
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    #[test]
-</span><span class="boring">    fn smaller_cannot_hold_larger() {
-</span><span class="boring">        let larger = Rectangle {
-</span><span class="boring">            width: 8,
-</span><span class="boring">            height: 7,
-</span><span class="boring">        };
-</span><span class="boring">        let smaller = Rectangle {
-</span><span class="boring">            width: 5,
-</span><span class="boring">            height: 1,
-</span><span class="boring">        };
-</span><span class="boring">
-</span><span class="boring">        assert!(!smaller.can_hold(&amp;larger));
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-03-introducing-a-bug/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>ચકાસણીઓ અત્યારે ચલાવવાથી નીચે મુજબ પરિણામ મળે છે:</p>
-<pre><code class="language-console">$ cargo test
-   Compiling rectangle v0.1.0 (file:///projects/rectangle)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.66s
-     Running unittests src/lib.rs (target/debug/deps/rectangle-6584c4561e48942e)
-
-running 2 tests
-test tests::larger_can_hold_smaller ... FAILED
-test tests::smaller_cannot_hold_larger ... ok
-
-failures:
-
----- tests::larger_can_hold_smaller stdout ----
-
-thread 'tests::larger_can_hold_smaller' (6020788) panicked at src/lib.rs:28:9:
-assertion failed: larger.can_hold(&amp;smaller)
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-
-
-failures:
-    tests::larger_can_hold_smaller
-
-test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-error: test failed, to rerun pass `--lib`
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/no-listing-03-introducing-a-bug/output.txt}}
 </code></pre>
 <p>આપણી ચકાસણીઓએ ભૂલ શોધી! કારણ કે <code>larger.width</code> એ <code>8</code> છે અને <code>smaller.width</code> એ <code>5</code> છે, <code>can_hold</code> માં પહોળાઈની સરખામણી હવે <code>false</code> આપે છે: 8 એ 5 કરતાં ઓછું નથી.</p>
 <!-- Old headings. Do not remove or links may break. -->
@@ -581,84 +303,19 @@ error: test failed, to rerun pass `--lib`
 <p><strong>Listing 11-7: Testing the function <code>add_two</code> using the <code>assert_eq!</code> macro</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn add_two(a: u64) -&gt; u64 {
-    a + 2
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_adds_two() {
-        let result = add_two(2);
-        assert_eq!(result, 4);
-    }
-}
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-07/src/lib.rs}}
 <span class="boring">}</span></code></pre>
 <p>ચાલો જોઈએ કે તે સફળ થાય છે કે નહીં!</p>
-<pre><code class="language-console">$ cargo test
-   Compiling adder v0.1.0 (file:///projects/adder)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.58s
-     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
-
-running 1 test
-test tests::it_adds_two ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-   Doc-tests adder
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/listing-11-07/output.txt}}
 </code></pre>
 <p>ચાલો આપણે એક variable નામનું <code>result</code> બનાવીએ, જે <code>add_two(2)</code> બોલાવવાથી મળેલ પરિણામ ધરાવે છે. ત્યારબાદ, આપણે <code>result</code> અને <code>4</code> ને Argumentો તરીકે <code>assert_eq!</code> મેક્રોને પસાર કરીએ છીએ. આ પરીક્ષણ માટેની આઉટપુટ લાઇન <code>test tests::it_adds_two ... ok</code> છે, અને <code>ok</code> દર્શાવે છે કે આપણું પરીક્ષણ</p>
 <p>સફળ થયું! Let’s introduce a bug into our code to see what <code>assert_eq!</code> looks like when it fails. Change the implementation of the <code>add_two</code> function to instead add <code>3</code>: ચાલો આપણા કોડમાં એક ભૂલ દાખલ કરીએ જેથી જોઈ શકાય કે <code>assert_eq!</code> નિષ્ફળતા પર કેવું દેખાય છે. <code>add_two</code> ફંક્શનના અમલીકરણને બદલીને <code>3</code> ઉમેરો:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn add_two(a: u64) -&gt; u64 {
-    a + 3
-}
-<span class="boring">
-</span><span class="boring">#[cfg(test)]
-</span><span class="boring">mod tests {
-</span><span class="boring">    use super::*;
-</span><span class="boring">
-</span><span class="boring">    #[test]
-</span><span class="boring">    fn it_adds_two() {
-</span><span class="boring">        let result = add_two(2);
-</span><span class="boring">        assert_eq!(result, 4);
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-04-bug-in-add-two/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>ફરીથી પરીક્ષણો ચલાવો:</p>
-<pre><code class="language-console">$ cargo test
-   Compiling adder v0.1.0 (file:///projects/adder)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.61s
-     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
-
-running 1 test
-test tests::it_adds_two ... FAILED
-
-failures:
-
----- tests::it_adds_two stdout ----
-
-thread 'tests::it_adds_two' (6020955) panicked at src/lib.rs:12:9:
-assertion `left == right` failed
-  left: 5
- right: 4
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-
-
-failures:
-    tests::it_adds_two
-
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-error: test failed, to rerun pass `--lib`
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/no-listing-04-bug-in-add-two/output.txt}}
 </code></pre>
 <p>આપણી ચકાસણીએ ભૂલ પકડી! <code>tests::it_adds_two</code> ચકાસણી નિષ્ફળ ગઈ, અને સંદેશ જણાવે છે કે જે assertion નિષ્ફળ થયું તે હતું <code>left == right</code> અને <code>left</code> અને <code>right</code> મૂલ્યો શું છે. આ સંદેશ અમને debugging શરૂ કરવામાં મદદ કરે છે: <code>left</code> Argument, જ્યાં આપણી પાસે <code>add_two(2)</code> બોલાવવાની પરિણામ હતો, તે <code>5</code> હતી, પરંતુ <code>right</code> Argument <code>4</code> હતી. તમે કલ્પના કરી શકો છો કે જ્યારે અમારી પાસે ઘણી બધી ચકાસણીઓ ચાલી રહી હોય ત્યારે આ વિશેષ કરીને મદદરૂપ થાય</p>
 <p>છે. નોંધ કરો કે કેટલીક ભાષાઓ અને ચકાસણી માળખામાં, સમાનતા assertion કાર્યોના પરિમાણોને <code>expected</code> અને <code>actual</code> કહેવામાં આવે છે, અને આપણે જે ક્રમમાં Argumentો સ્પષ્ટ કરીએ છીએ તે મહત્વપૂર્ણ છે. જો કે, Rust માં, તેઓને <code>left</code> અને <code>right</code> કહેવામાં આવે છે, અને આપણે જે મૂલ્યની અપેક્ષા રાખીએ છીએ અને કોડ ઉત્પન્ન કરે છે તે મૂલ્યનો ક્રમ મહત્વપૂર્ણ નથી. અમે આ ચકાસણીમાં assertion ને <code>assert_eq!(4, result)</code> તરીકે લખી શકીએ છીએ, જેના પરિણામે એ જ નિષ્ફળતા સંદેશ પ્રદર્શિત થશે જે <code>assertion left == right failed</code> દર્શાવે છે.</p>
@@ -670,110 +327,24 @@ error: test failed, to rerun pass `--lib`
 <p>ફાઈલનું નામ: src/lib.rs</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn greeting(name: &amp;str) -&gt; String {
-    format!("Hello {name}!")
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn greeting_contains_name() {
-        let result = greeting("Carol");
-        assert!(result.contains("Carol"));
-    }
-}
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-05-greeter/src/lib.rs}}
 <span class="boring">}</span></code></pre>
 <p>જરૂરિયાતો હજુ સુધી નક્કી થયી નથી, અને અમને ખાતરી છે કે અભિવાદન (greeting) ની શરૂઆત માં આવેલું <code>Hello</code> લખાણ બદલાશે. અમે એવું નક્કી કર્યું છે કે જરૂરિયાતો બદલાય ત્યારે પરીક્ષણને અપડેટ કરવાની જરૂર નથી, તેથી <code>greeting</code> વિધેયથી મળેલા મૂલ્ય સાથે ચોક્કસ સમાનતા ચકાસવાને બદલે, અમે માત્ર એટલું જ ખાતરી કરીશું કે આઉટપુટમાં ઇનપુટ પરિમાણનું લખાણ સમાવિષ્ટ છે.</p>
 <p>હવે ચાલો આ કોડમાં એક ભૂલ દાખલ કરીએ <code>name</code> ને બાકાત કરીને <code>greeting</code> માં ફેરફાર કરીને જોઈએ કે ડિફોલ્ટ પરીક્ષણ નિષ્ફળતા કેવી દેખાય છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn greeting(name: &amp;str) -&gt; String {
-    String::from("Hello!")
-}
-<span class="boring">
-</span><span class="boring">#[cfg(test)]
-</span><span class="boring">mod tests {
-</span><span class="boring">    use super::*;
-</span><span class="boring">
-</span><span class="boring">    #[test]
-</span><span class="boring">    fn greeting_contains_name() {
-</span><span class="boring">        let result = greeting("Carol");
-</span><span class="boring">        assert!(result.contains("Carol"));
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-06-greeter-with-bug/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>આ પરીક્ષણ ચલાવવાથી નીચે મુજબનું પરિણામ મળે છે:</p>
-<pre><code class="language-console">$ cargo test
-   Compiling greeter v0.1.0 (file:///projects/greeter)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.91s
-     Running unittests src/lib.rs (target/debug/deps/greeter-170b942eb5bf5e3a)
-
-running 1 test
-test tests::greeting_contains_name ... FAILED
-
-failures:
-
----- tests::greeting_contains_name stdout ----
-
-thread 'tests::greeting_contains_name' (6021143) panicked at src/lib.rs:12:9:
-assertion failed: result.contains("Carol")
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-
-
-failures:
-    tests::greeting_contains_name
-
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-error: test failed, to rerun pass `--lib`
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/no-listing-06-greeter-with-bug/output.txt}}
 </code></pre>
 <p>આ પરિણામ માત્ર દર્શાવે છે કે ખાતરી નિષ્ફળ ગઈ છે અને કઈ લીટી પર ખાતરી આવેલી છે. વધુ ઉપયોગી નિષ્ફળતા સંદેશ <code>greeting</code> કાર્યમાંથી મળેલ મૂલ્ય છાપશે. ચાલો આપણે એક કસ્ટમ નિષ્ફળતા સંદેશ ઉમેરીએ, જે ફોર્મેટ સ્ટ્રિંગથી બનેલો હશે અને તેમાં <code>greeting</code> કાર્યમાંથી મળેલા વાસ્તવિક મૂલ્ય સાથે ખાના ભરાઈ જશે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub fn greeting(name: &amp;str) -&gt; String {
-</span><span class="boring">    String::from("Hello!")
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">#[cfg(test)]
-</span><span class="boring">mod tests {
-</span><span class="boring">    use super::*;
-</span><span class="boring">
-</span>    #[test]
-    fn greeting_contains_name() {
-        let result = greeting("Carol");
-        assert!(
-            result.contains("Carol"),
-            "Greeting did not contain name, value was `{result}`"
-        );
-    }
-<span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-07-custom-failure-message/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>હવે જ્યારે આપણે પરીક્ષણ ચલાવીશું, ત્યારે આપણને વધુ માહિતીપૂર્ણ ભૂલ સંદેશ મળશે:</p>
-<pre><code class="language-console">$ cargo test
-   Compiling greeter v0.1.0 (file:///projects/greeter)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.93s
-     Running unittests src/lib.rs (target/debug/deps/greeter-170b942eb5bf5e3a)
-
-running 1 test
-test tests::greeting_contains_name ... FAILED
-
-failures:
-
----- tests::greeting_contains_name stdout ----
-
-thread 'tests::greeting_contains_name' (6021333) panicked at src/lib.rs:12:9:
-Greeting did not contain name, value was `Hello!`
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-
-
-failures:
-    tests::greeting_contains_name
-
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-error: test failed, to rerun pass `--lib`
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/no-listing-07-custom-failure-message/output.txt}}
 </code></pre>
 <p>આપણે પરીક્ષણ પરિણામમાં મળેલું મૂલ્ય જોઈ શકીએ છીએ, જે આપણને અપેક્ષા ન હતી તેવું શું થયું તેનું નિવારણ કરવામાં મદદ કરશે, તેના બદલે આપણે જે અપેક્ષા રાખતા હતા તેનું.</p>
 <h3 id="checking-for-panics-with-should_panic"><a class="header" href="#checking-for-panics-with-should_panic">Checking for Panics with <code>should_panic</code></a></h3>
@@ -783,223 +354,41 @@ error: test failed, to rerun pass `--lib`
 <p><strong>Listing 11-8: Testing that a condition will cause a <code>panic!</code></strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub struct Guess {
-    value: i32,
-}
-
-impl Guess {
-    pub fn new(value: i32) -&gt; Guess {
-        if value &lt; 1 || value &gt; 100 {
-            panic!("Guess value must be between 1 and 100, got {value}.");
-        }
-
-        Guess { value }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    #[should_panic]
-    fn greater_than_100() {
-        Guess::new(200);
-    }
-}
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-08/src/lib.rs}}
 <span class="boring">}</span></code></pre>
 <p>આપણે <code>#[should_panic]</code> લક્ષણ <code>#[test]</code> લક્ષણ પછી અને પરીક્ષણ કાર્ય પહેલાં મૂકીએ છીએ. ચાલો જોઈએ કે આ પરીક્ષણ સફળ થાય ત્યારે પરિણામ શું આવે છે:</p>
-<pre><code class="language-console">$ cargo test
-   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.58s
-     Running unittests src/lib.rs (target/debug/deps/guessing_game-57d70c3acb738f4d)
-
-running 1 test
-test tests::greater_than_100 - should panic ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-   Doc-tests guessing_game
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/listing-11-08/output.txt}}
 </code></pre>
 <p>સારું દેખાય છે! હવે આપણે આપણા કોડમાં એક ભૂલ દાખલ કરીએ, જે <code>new</code> વિધેયને 100થી મોટી કિંમત મળે તો ગભરાટ (panic) થતો અટકાવે.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub struct Guess {
-</span><span class="boring">    value: i32,
-</span><span class="boring">}
-</span><span class="boring">
-</span>// --snip--
-impl Guess {
-    pub fn new(value: i32) -&gt; Guess {
-        if value &lt; 1 {
-            panic!("Guess value must be between 1 and 100, got {value}.");
-        }
-
-        Guess { value }
-    }
-}
-<span class="boring">
-</span><span class="boring">#[cfg(test)]
-</span><span class="boring">mod tests {
-</span><span class="boring">    use super::*;
-</span><span class="boring">
-</span><span class="boring">    #[test]
-</span><span class="boring">    #[should_panic]
-</span><span class="boring">    fn greater_than_100() {
-</span><span class="boring">        Guess::new(200);
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-08-guess-with-bug/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>જ્યારે આપણે યાદી ૧૧-૮ માં પરીક્ષણ ચલાવીશું, ત્યારે તે નિષ્ફળ જશે:</p>
-<pre><code class="language-console">$ cargo test
-   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.62s
-     Running unittests src/lib.rs (target/debug/deps/guessing_game-57d70c3acb738f4d)
-
-running 1 test
-test tests::greater_than_100 - should panic ... FAILED
-
-failures:
-
----- tests::greater_than_100 stdout ----
-note: test did not panic as expected at src/lib.rs:21:8
-
-failures:
-    tests::greater_than_100
-
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-error: test failed, to rerun pass `--lib`
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/no-listing-08-guess-with-bug/output.txt}}
 </code></pre>
 <p>આ કિસ્સામાં આપણને બહુ મદદરૂપ સંદેશ મળતો નથી, પરંતુ જ્યારે આપણે પરીક્ષણ વિધેય (function) જોઈએ છીએ, ત્યારે આપણને દેખાય છે કે તે <code>#[should_panic]</code> સાથે નોંધાયેલું છે. આપણને મળેલી નિષ્ફળતાનો અર્થ એ થાય છે કે પરીક્ષણ વિધેયમાં રહેલો કોડ ગભરાટ (panic) ઊભો કરવામાં નિષ્ફળ ગયો હતો. Tests</p>
 <p>જે <code>should_panic</code> વાપરે છે તે પરીક્ષણો અચોક્કસ હોઈ શકે છે. એક <code>should_panic</code> પરીક્ષણ પણ પાસ થઈ જશે જો પરીક્ષણ કોઈ અલગ કારણસર ગભરાટ (panic) ઊભું કરે તો જે આપણે ધારતા હતા. <code>should_panic</code> પરીક્ષણોને વધુ ચોક્કસ બનાવવા માટે, આપણે <code>should_panic</code> લક્ષણ (attribute) માં એક વૈકલ્પિક <code>expected</code> પરિમાણ ઉમેરી શકીએ છીએ. પરીક્ષણ સાધન ખાતરી કરશે કે નિષ્ફળતા સંદેશમાં આપેલ લખાણ સમાવિષ્ટ છે. ઉદાહરણ તરીકે, યાદી 11-9 માં <code>Guess</code> માટે સુધારેલા કોડને ધ્યાનમાં લો જ્યાં <code>new</code> વિધેય (function) અલગ-અલગ સંદેશાઓ સાથે ગભરાટ (panic) ઊભો કરે છે, જે આધાર રાખે છે કે મૂલ્ય ખૂબ નાનું છે કે ખૂબ મોટું.</p>
 <p><strong>Listing 11-9: Testing for a <code>panic!</code> with a panic message containing a specified substring</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub struct Guess {
-</span><span class="boring">    value: i32,
-</span><span class="boring">}
-</span><span class="boring">
-</span>// --snip--
-
-impl Guess {
-    pub fn new(value: i32) -&gt; Guess {
-        if value &lt; 1 {
-            panic!(
-                "Guess value must be greater than or equal to 1, got {value}."
-            );
-        } else if value &gt; 100 {
-            panic!(
-                "Guess value must be less than or equal to 100, got {value}."
-            );
-        }
-
-        Guess { value }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    #[should_panic(expected = "less than or equal to 100")]
-    fn greater_than_100() {
-        Guess::new(200);
-    }
-}
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-09/src/lib.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>આ પરીક્ષણ સફળ થશે કારણ કે આપણે <code>should_panic</code> લક્ષણના <code>expected</code> પરિમાણમાં જે મૂલ્ય આપ્યું છે, તે સંદેશનો એક ભાગ છે જેનાથી <code>Guess::new</code> વિધેય ગભરાટ અનુભવે છે. આપણે સંપૂર્ણ ગભરાટ સંદેશ સ્પષ્ટ કરી શક્યા હોત, જે આ કિસ્સામાં <code>Guess value must be less than or equal to 100, got 200</code> હોત. તમે શું સ્પષ્ટ કરવાનું પસંદ કરો છો તે નિર્ધારિત કરે છે કે ગભરાટ સંદેશનો કેટલો ભાગ અનન્ય અથવા ગતિશીલ છે અને તમે તમારી પરીક્ષણને કેટલી ચોકસાઈથી કરવા માંગો છો. આ કિસ્સામાં, ગભરાટ સંદેશનો એક ભાગ પૂરતો છે તેની ખાતરી કરવા માટે કે પરીક્ષણ વિધેયમાં રહેલો <code>else if value &gt; 100</code> વિભાગ ચલાય છે.</p>
 <p>ચોક્કસ પરિસ્થિતિમાં <code>should_panic</code> પરીક્ષણ જેમાં અપેક્ષિત સંદેશ હોય, તે નિષ્ફળ જાય ત્યારે શું થાય છે તે જોવા માટે, ચાલો આપણી કોડમાં ફરીથી એક ભૂલ દાખલ કરીએ. આ માટે આપણે <code>if value &lt; 1</code> અને <code>else if value &gt; 100</code> બ્લોક્સના ભાગો બદલીએ:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub struct Guess {
-</span><span class="boring">    value: i32,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Guess {
-</span><span class="boring">    pub fn new(value: i32) -&gt; Guess {
-</span>        if value &lt; 1 {
-            panic!(
-                "Guess value must be less than or equal to 100, got {value}."
-            );
-        } else if value &gt; 100 {
-            panic!(
-                "Guess value must be greater than or equal to 1, got {value}."
-            );
-        }
-<span class="boring">
-</span><span class="boring">        Guess { value }
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">#[cfg(test)]
-</span><span class="boring">mod tests {
-</span><span class="boring">    use super::*;
-</span><span class="boring">
-</span><span class="boring">    #[test]
-</span><span class="boring">    #[should_panic(expected = "less than or equal to 100")]
-</span><span class="boring">    fn greater_than_100() {
-</span><span class="boring">        Guess::new(200);
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-09-guess-with-panic-msg-bug/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>આ વખતે જ્યારે આપણે <code>should_panic</code> પરીક્ષણ ચલાવીશું, ત્યારે તે નિષ્ફળ જશે:</p>
-<pre><code class="language-console">$ cargo test
-   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.66s
-     Running unittests src/lib.rs (target/debug/deps/guessing_game-57d70c3acb738f4d)
-
-running 1 test
-test tests::greater_than_100 - should panic ... FAILED
-
-failures:
-
----- tests::greater_than_100 stdout ----
-
-thread 'tests::greater_than_100' (6021675) panicked at src/lib.rs:12:13:
-Guess value must be greater than or equal to 1, got 200.
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-note: panic did not contain expected string
-      panic message: "Guess value must be greater than or equal to 1, got 200."
- expected substring: "less than or equal to 100"
-
-failures:
-    tests::greater_than_100
-
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-error: test failed, to rerun pass `--lib`
+<pre><code class="language-console">{{#include ../listings/ch11-writing-automated-tests/no-listing-09-guess-with-panic-msg-bug/output.txt}}
 </code></pre>
 <p>નિષ્ફળતા સંદેશ દર્શાવે છે કે આ પરીક્ષણ ખરેખર અપેક્ષા મુજબ પૅનિક થયું હતું, પરંતુ પૅનિક સંદેશમાં અપેક્ષિત શબ્દમાળા <code>લેસ ધેન ઓર ઇક્વલ ટુ ૧૦૦</code> નહોતો. અમને આ સ્થિતિમાં જે પૅનિક સંદેશ મળ્યો તે હતો <code>Guess value must be greater than or equal to 1, got 200</code>. હવે આપણે શોધી શકીએ છીએ કે આપણી ભૂલ ક્યાં છે!</p>
 <h3 id="using-resultt-e-in-tests"><a class="header" href="#using-resultt-e-in-tests">Using <code>Result&lt;T, E&gt;</code> in Tests</a></h3>
 <p>આપણે અત્યાર સુધીના બધા જ પરીક્ષણો નિષ્ફળ થવા પર ગભરાય છે. આપણે એવા પરીક્ષણો પણ લખી શકીએ છીએ જે <code>Result&lt;T, E&gt;</code> વાપરે છે! અહીં યાદી 11-1 માંથી પરીક્ષણ આપેલું છે, જેને <code>Result&lt;T, E&gt;</code> વાપરવા અને ગભરાવવાને બદલે <code>Err</code> પરત કરવા માટે ફરીથી લખવામાં આવ્યું છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub fn add(left: u64, right: u64) -&gt; u64 {
-</span><span class="boring">    left + right
-</span><span class="boring">}
-</span><span class="boring">
-</span>#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() -&gt; Result&lt;(), String&gt; {
-        let result = add(2, 2);
-
-        if result == 4 {
-            Ok(())
-        } else {
-            Err(String::from("two plus two does not equal four"))
-        }
-    }
-}
+</span>{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-10-result-in-tests/src/lib.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>it_works કાર્ય હવે <code>Result&lt;(), String&gt;</code> પરત પ્રકાર ધરાવે છે. આ કાર્યના પદમાં, <code>assert_eq!</code> મેક્રોને બોલાવવાને બદલે, અમે જ્યારે પરીક્ષણ સફળ થાય ત્યારે <code>Ok(())</code> અને જ્યારે પરીક્ષણ નિષ્ફળ જાય ત્યારે <code>Err</code> સાથે એક <code>String</code> પરત કરીએ છીએ.</p>
 <p><code>Result&lt;T, E&gt;</code> પરત કરતી પરીક્ષણો લખવાથી તમે પરીક્ષણોના પદમાં પ્રશ્ન ચિહ્ન સંચાલકનો ઉપયોગ કરી શકો છો, જે એવા પરીક્ષણો લખવાનો અનુકૂળ માર્ગ બની શકે છે જે કોઈપણ ક્રિયા તેમની અંદર <code>Err</code> પ્રકાર પરત કરે તો નિષ્ફળ થવા જોઈએ.</p>
@@ -1058,7 +447,7 @@ mod tests {
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 

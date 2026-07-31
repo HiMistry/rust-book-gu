@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -194,46 +194,13 @@
 <p><strong>Listing 18-1: An <code>AveragedCollection</code> struct that maintains a list of integers and the average of the items in the collection</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub struct AveragedCollection {
-    list: Vec&lt;i32&gt;,
-    average: f64,
-}
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-01/src/lib.rs}}
 <span class="boring">}</span></code></pre>
 <p>સ્ટ્રક્ચરને <code>pub</code> તરીકે નિશ્ચિત કરવામાં આવ્યું છે જેથી અન્ય કોડ તેનો ઉપયોગ કરી શકે, પરંતુ સ્ટ્રક્ચરની અંદરના ક્ષેત્રો ખાનગી રહે. આ બાબત અહીં મહત્વપૂર્ણ છે કારણ કે આપણે એ સુનિશ્ચિત કરવા માંગીએ છીએ કે જ્યારે પણ મૂલ્ય ઉમેરવામાં આવે અથવા દૂર કરવામાં આવે ત્યારે સરેરાશ પણ અપડેટ થાય. અમે આ <code>add</code>, <code>remove</code>, અને <code>average</code> પદ્ધતિઓને સ્ટ્રક્ચર પર અમલમાં મૂકીને કરીએ છીએ, જે લિસ્ટિંગ 18-2 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 18-2: Implementations of the public methods <code>add</code>, <code>remove</code>, and <code>average</code> on <code>AveragedCollection</code></strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub struct AveragedCollection {
-</span><span class="boring">    list: Vec&lt;i32&gt;,
-</span><span class="boring">    average: f64,
-</span><span class="boring">}
-</span><span class="boring">
-</span>impl AveragedCollection {
-    pub fn add(&amp;mut self, value: i32) {
-        self.list.push(value);
-        self.update_average();
-    }
-
-    pub fn remove(&amp;mut self) -&gt; Option&lt;i32&gt; {
-        let result = self.list.pop();
-        match result {
-            Some(value) =&gt; {
-                self.update_average();
-                Some(value)
-            }
-            None =&gt; None,
-        }
-    }
-
-    pub fn average(&amp;self) -&gt; f64 {
-        self.average
-    }
-
-    fn update_average(&amp;mut self) {
-        let total: i32 = self.list.iter().sum();
-        self.average = total as f64 / self.list.len() as f64;
-    }
-}
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-02/src/lib.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>જાહેર પદ્ધતિઓ <code>add</code>, <code>remove</code>, અને <code>average</code> એ <code>AveragedCollection</code> ના ઉદાહરણમાં ડેટાને મેળવવા અથવા બદલવાની એકમાત્ર રીતો છે. જ્યારે કોઈ વસ્તુ <code>list</code> માં <code>add</code> પદ્ધતિનો ઉપયોગ કરીને ઉમેરવામાં આવે છે અથવા <code>remove</code> પદ્ધતિનો ઉપયોગ કરીને દૂર કરવામાં આવે છે, ત્યારે દરેક અમલીકરણ ખાનગી <code>update_average</code> પદ્ધતિને બોલાવે છે જે <code>average</code> ક્ષેત્રને અપડેટ કરવાનું સંભાળે છે. We</p>
 <p>અમે <code>list</code> અને <code>average</code> ક્ષેત્રો ખાનગી રાખીએ છીએ જેથી બાહ્ય કોડ પાસે સીધા જ <code>list</code> ક્ષેત્રમાં વસ્તુઓ ઉમેરવાનો કે દૂર કરવાનો કોઈ રસ્તો ન હોય; અન્યથા, <code>list</code> બદલાય ત્યારે <code>average</code> ક્ષેત્ર અસંગત થઈ શકે છે. <code>average</code> પદ્ધતિ <code>average</code> ક્ષેત્રમાં રહેલું મૂલ્ય પરત કરે છે, જે બાહ્ય કોડને <code>average</code> વાંચવાની મંજૂરી આપે છે પરંતુ તેને બદલવાની નહીં.</p>
@@ -1956,7 +1923,7 @@
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 

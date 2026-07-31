@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -225,31 +225,19 @@
 <p><code>let x = 5;</code> જેવી વિધાનમાં PATTERN સ્લોટમાં ચલનું નામ હોય, તો તે માત્ર એક સરળ પ્રકારની પેટર્ન છે. Rust અભિવ્યક્તિને પેટર્ન સામે સરખાવે છે અને તે શોધે તેવા કોઈપણ નામો સોંપે છે. તેથી, <code>let x = 5;</code> ઉદાહરણમાં, <code>x</code> એ એક પેટર્ન છે જેનો અર્થ થાય છે “અહીં જે મેળ ખાય છે તેને variable <code>x</code> સાથે જોડો.” કારણ કે નામ <code>x</code> આખી પેટર્ન છે, આ પેટર્ન અસરકારક રીતે “variable <code>x</code> સાથે બધું બાંધો, ગમે તે મૂલ્ય હોય” એવો અર્થ સૂચવે છે.</p>
 <p>ચોક્કસ <code>let</code> ના પેટર્ન-મેચિંગ પાસાને વધુ સ્પષ્ટ રીતે સમજવા માટે, યાદી ૧૯-૧ જુઓ, જે <code>let</code> સાથે એક પેટર્નનો ઉપયોગ કરીને ટ્યૂપલને વિઘટિત કરે છે.</p>
 <p><strong>Listing 19-1: Using a pattern to destructure a tuple and create three variables at once</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span>    let (x, y, z) = (1, 2, 3);
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-01/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>અહીં, આપણે એક ટ્યૂપલને પેટર્ન સામે સરખાવે છે. Rust મૂલ્ય <code>(1, 2, 3)</code> ને પેટર્ન <code>(x, y, z)</code> સાથે સરખાવે છે અને જુએ છે કે મૂલ્ય પેટર્નને બંધબેસે છે—એટલે કે, તે જુએ છે કે બંનેમાં સમાન સંખ્યામાં ઘટકો છે—તેથી Rust <code>1</code> ને <code>x</code>, <code>2</code> ને <code>y</code>, અને <code>3</code> ને <code>z</code> સાથે જોડે છે. તમે આ ટ્યૂપલ પેટર્નને ત્રણ વ્યક્તિગત variable પેટર્નનું નેસ્ટિંગ તરીકે વિચારી શકો છો.</p>
 <p>જો પેટર્નમાં ઘટકોની સંખ્યા ટ્યૂપલમાં ઘટકોની સંખ્યા સાથે મેળ ખાતી નથી, તો સમગ્ર પ્રકાર મેળ ખાતો નથી અને આપણને કમ્પાઇલર ભૂલ મળશે. ઉદાહરણ તરીકે, યાદી 19-2 ત્રણ ઘટકો ધરાવતા ટ્યૂપલને બે variable વિઘટિત કરવાનો પ્રયાસ દર્શાવે છે, જે કામ કરશે નહીં.</p>
 <p><strong>Listing 19-2: Incorrectly constructing a pattern whose variables don’t match the number of elements in the tuple</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span>    let (x, y) = (1, 2, 3);
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-02/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>આ કોડને કમ્પાઇલ કરવાના પ્રયત્નોથી આ પ્રકારની ભૂલ આવે છે:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling patterns v0.1.0 (file:///projects/patterns)
-error[E0308]: mismatched types
- --&gt; src/main.rs:2:9
-  |
-2 |     let (x, y) = (1, 2, 3);
-  |         ^^^^^^   --------- this expression has type `({integer}, {integer}, {integer})`
-  |         |
-  |         expected a tuple with 3 elements, found one with 2 elements
-  |
-  = note: expected tuple `({integer}, {integer}, {integer})`
-             found tuple `(_, _)`
-
-For more information about this error, try `rustc --explain E0308`.
-error: could not compile `patterns` (bin "patterns") due to 1 previous error
+<pre><code class="language-console">{{#include ../listings/ch19-patterns-and-matching/listing-19-02/output.txt}}
 </code></pre>
 <p>આ ભૂલ નિવારવા માટે, આપણે ટ્યૂપલમાં રહેલા એક અથવા વધુ મૂલ્યોને અવગણી શકીએ છીએ <code>_</code> અથવા <code>..</code> નો ઉપયોગ કરીને, જે તમે “પેટર્નમાં મૂલ્યોને અવગણવું” વિભાગમાં જોશો. જો સમસ્યા એ હોય કે પેટર્નમાં ઘણાં બધાં variable છે, તો ઉકેલ એ છે કે પ્રકારોને મેળ ખાતા બનાવવા માટે variable દૂર કરવા જેથી variable’s સંખ્યા ટ્યૂપલના ઘટકોની સંખ્યા જેટલી થાય.</p>
 <h3 id="conditional-if-let-expressions"><a class="header" href="#conditional-if-let-expressions">Conditional <code>if let</code> Expressions</a></h3>
@@ -257,25 +245,10 @@ error: could not compile `patterns` (bin "patterns") due to 1 previous error
 <p>લિસ્ટિંગ ૧૯-૩ દર્શાવે છે કે <code>if let</code>, <code>else if</code>, અને <code>else if let</code> અભિવ્યક્તિઓને મિશ્રિત કરવી પણ શક્ય છે. આવું કરવાથી આપણને <code>match</code> અભિવ્યક્તિ કરતાં વધુ લવચીકતા મળે છે જેમાં આપણે માત્ર એક જ મૂલ્યની સરખામણી પેટર્ન સાથે કરી શકીએ છીએ. ઉપરાંત, Rust ને <code>if let</code>, <code>else if</code>, અને <code>else if let</code> શરતોની શ્રેણીમાં સંબંધિત હોવાની જરૂર નથી.</p>
 <p>Listing 19-3 નો કોડ Listing 19-3 માં રહેલો કોડ નક્કી કરે છે કે તમારી પૃષ્ઠભૂમિ કયો રંગ ધારણ કરે, જે અનેક શરતો માટેના પરીક્ષણોની શ્રેણી પર આધારિત છે. આ ઉદાહરણ માટે, અમે એવા variable (variable) બનાવ્યા છે જેમાં અગાઉથી નિશ્ચિત મૂલ્યો હોય, જે વાસ્તવિક કાર્યક્રમ user ઇનપુટ (user input) દ્વારા મેળવી શકે છે.</p>
 <p><strong>Listing 19-3: Mixing <code>if let</code>, <code>else if</code>, <code>else if let</code>, and <code>else</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let favorite_color: Option&lt;&amp;str&gt; = None;
-    let is_tuesday = false;
-    let age: Result&lt;u8, _&gt; = "34".parse();
-
-    if let Some(color) = favorite_color {
-        println!("Using your favorite color, {color}, as the background");
-    } else if is_tuesday {
-        println!("Tuesday is green day!");
-    } else if let Ok(age) = age {
-        if age &gt; 30 {
-            println!("Using purple as the background color");
-        } else {
-            println!("Using orange as the background color");
-        }
-    } else {
-        println!("Using blue as the background color");
-    }
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-03/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>જો user પોતાની મનપસંદ રંગ પસંદ કરે છે, તો તે રંગ પૃષ્ઠભૂમિ તરીકે વપરાય છે. જો કોઈ મનપસંદ રંગ પસંદ ન કર્યો હોય અને આજ મંગળવાર હોય, તો પૃષ્ઠભૂમિનો રંગ લીલો હોય છે. અન્યથા, જો user પોતાની ઉંમરને String સ્વરૂપે આપે અને અમે તેને સંખ્યા તરીકે સફળતાપૂર્વક parse કરી શકીએ, તો રંગ જાંબલી અથવા નારંગી હોઈ શકે છે, જે સંખ્યાના મૂલ્ય પર આધાર રાખે છે. જો આ શરતોમાંથી કોઈ પણ લાગુ ન થાય, તો પૃષ્ઠભૂમિનો રંગ વાદળી હોય છે.</p>
 <p>આ શરતી માળખું અમને જટિલ જરૂરિયાતોને પહોંચી વળવામાં મદદ કરે છે. અહીં આપેલા hardcoded મૂલ્યો સાથે, આ ઉદાહરણ <code>Using purple as the background color</code> પ્રિન્ટ કરશે.</p>
 <p>તમે જોઈ શકો છો કે <code>if let</code> નવા variable (variable) પણ રજૂ કરી શકે છે જે સમાન રીતે <code>match</code> આર્મને કરે છે, જેમ કે લાઈન <code>if let Ok(age) = age</code> એક નવું <code>age</code> variable રજૂ કરે છે જેમાં <code>Ok</code> પ્રકારની અંદર રહેલું મૂલ્ય હોય છે, જે હાલના <code>age</code> variable છાંકી દે છે. આનો અર્થ એ થાય છે કે આપણે <code>if age &gt; 30</code> શરતને તે બ્લોકમાં મૂકવાની જરૂર છે: આપણે આ બે શરતોને <code>if let Ok(age) = age &amp;&amp; age &gt; 30</code> માં ભેગી કરી શકતા નથી. આપણને ૩૦ સાથે સરખાવવા માટેનું નવું <code>age</code> ત્યારે જ માન્ય બને છે જ્યારે નવી અવધિ કૌંસ વળાંકથી શરૂ થાય છે.</p>
@@ -283,57 +256,35 @@ error: could not compile `patterns` (bin "patterns") due to 1 previous error
 <h3 id="while-let-conditional-loops"><a class="header" href="#while-let-conditional-loops"><code>while let</code> Conditional Loops</a></h3>
 <p><code>if let</code> ની રચના સમાન, <code>while let</code> શરતી લૂપ એક <code>while</code> લૂપને ચાલુ રાખવા માટે પરવાનગી આપે છે જ્યાં સુધી પેટર્ન મેળ ખાતી રહે. સૂચિ ૧૯-૪ માં, અમે એક <code>while let</code> લૂપ બતાવીએ છીએ જે થ્રેડ્સ વચ્ચે મોકલવામાં આવેલા સંદેશાઓની રાહ જુએ છે, પરંતુ આ કિસ્સામાં <code>Result</code> ની તપાસ કરે છે <code>Option</code> ની બદલે.</p>
 <p><strong>Listing 19-4: Using a <code>while let</code> loop to print values for as long as <code>rx.recv()</code> returns <code>Ok</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span>    let (tx, rx) = std::sync::mpsc::channel();
-    std::thread::spawn(move || {
-        for val in [1, 2, 3] {
-            tx.send(val).unwrap();
-        }
-    });
-
-    while let Ok(value) = rx.recv() {
-        println!("{value}");
-    }
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-04/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>આ ઉદાહરણ <code>1</code>, <code>2</code>, અને પછી <code>3</code> છાપે છે. <code>recv</code> પદ્ધતિ ચેનલની રીસીવર બાજુથી પ્રથમ સંદેશ લે છે અને <code>Ok(value)</code> પરત કરે છે. જ્યારે આપણે પ્રકરણ ૧૬ માં પહેલીવાર <code>recv</code> જોયો હતો, ત્યારે આપણે સીધો જ ભૂલને અનરેપ કરી હતી, અથવા આપણે એક <code>for</code> લૂપનો ઉપયોગ કરીને પુનરાવર્તક તરીકે તેની સાથે ક્રિયાપ્રતિક્રિયા કરી હતી. જો કે, સૂચિ ૧૯-૪ બતાવે છે તેમ, આપણે <code>while let</code> નો પણ ઉપયોગ કરી શકીએ છીએ, કારણ કે <code>recv</code> પદ્ધતિ દરેક વખતે સંદેશો આવે ત્યાં સુધી <code>Ok</code> પરત કરે છે, જ્યાં સુધી મોકલનાર અસ્તિત્વમાં હોય, અને પછી મોકલનાર બાજુ ડિસ્કનેક્ટ થાય ત્યારે <code>Err</code> ઉત્પન્ન કરે છે.</p>
 <h3 id="for-loops"><a class="header" href="#for-loops"><code>for</code> Loops</a></h3>
 <p>એક <code>for</code> લૂપમાં, કીવર્ડ <code>for</code> પછી તરત આવતું મૂલ્ય એક પ્રકારનું રૂપ છે. ઉદાહરણ તરીકે, <code>for x in y</code> માં, <code>x</code> એ રૂપ છે. સૂચિ ૧૯-૫ દર્શાવે છે કે કેવી રીતે રૂપનો ઉપયોગ <code>for</code> લૂપમાં ટ્યૂપલને વિઘટિત કરવા, અથવા તો ભાગ પાડવા માટે કરી શકાય છે, જે <code>for</code> લૂપનો એક ભાગ છે.</p>
 <p><strong>Listing 19-5: Using a pattern in a <code>for</code> loop to destructure a tuple</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span>    let v = vec!['a', 'b', 'c'];
-
-    for (index, value) in v.iter().enumerate() {
-        println!("{value} is at index {index}");
-    }
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-05/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>માહિતી ૧૯-૫ માં આપેલ કોડ નીચે મુજબ છાપશે:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling patterns v0.1.0 (file:///projects/patterns)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.52s
-     Running `target/debug/patterns`
-a is at index 0
-b is at index 1
-c is at index 2
+<pre><code class="language-console">{{#include ../listings/ch19-patterns-and-matching/listing-19-05/output.txt}}
 </code></pre>
 <p>અમે <code>enumerate</code> પદ્ધતિનો ઉપયોગ કરીને એક iterator ને અનુકૂલિત કરીએ છીએ જેથી તે એક મૂલ્ય અને તે મૂલ્ય માટે અનુક્રમણિકા (index) ઉત્પન્ન કરે, જે ટ્યૂપલમાં મૂકવામાં આવે. પ્રથમ ઉત્પન્ન થયેલું મૂલ્ય <code>(0, 'a')</code> ટ્યૂપલ છે. જ્યારે આ મૂલ્યને <code>(index, value)</code> પેટર્ન સાથે મેળવવામાં આવે છે, ત્યારે index <code>0</code> હશે અને value <code>'a'</code> હશે, જે આઉટપુટની પ્રથમ રેખા છાપશે.</p>
 <h3 id="function-parameters"><a class="header" href="#function-parameters">Function Parameters</a></h3>
 <p>કાર્ય પરિમાણો પણ પેટર્ન હોઈ શકે છે. લિસ્ટિંગ ૧૯-૬ માં આપેલ કોડ, જે <code>foo</code> નામનું કાર્ય વ્યાખ્યાયિત કરે છે અને તે <code>x</code> નામના એક પરિમાણ ને <code>i32</code> પ્રકારનો સ્વીકારે છે, તે હવેથી પરિચિત લાગશે.</p>
 <p><strong>Listing 19-6: A function signature using patterns in the parameters</strong></p>
-<pre class="playground"><code class="language-rust edition2024">fn foo(x: i32) {
-    // code goes here
-}
-<span class="boring">
-</span><span class="boring">fn main() {}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-06/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p><code>x</code> ભાગ એક પ્રકાર છે! જેમ આપણે <code>let</code> સાથે કર્યું હતું, તેમ આપણે કાર્યના પરિમાણોમાં એક ટ્યૂપલને પણ પ્રકાર સાથે સરખાવી શકીએ છીએ. સૂચિ ૧૯-૭ ટ્યૂપલમાં રહેલા મૂલ્યોને વિભાજિત કરે છે જ્યારે આપણે તેને કાર્યમાં મોકલીએ છીએ.</p>
 <p><strong>Listing 19-7: A function with parameters that destructure a tuple</strong></p>
-<pre class="playground"><code class="language-rust edition2024">fn print_coordinates(&amp;(x, y): &amp;(i32, i32)) {
-    println!("Current location: ({x}, {y})");
-}
-
-fn main() {
-    let point = (3, 5);
-    print_coordinates(&amp;point);
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-07/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>આ કોડ <code>Current location: (3, 5)</code> છાપે છે. મૂલ્યો <code>&amp;(3, 5)</code> પેટર્ન <code>&amp;(x, y)</code> સાથે મેળ ખાય છે, તેથી <code>x</code> એ મૂલ્ય <code>3</code> છે અને <code>y</code> એ મૂલ્ય <code>5</code> છે.</p>
 <p>આપણે ક્લોઝર પરિમાણ સૂચિમાં પણ પેટર્નનો ઉપયોગ કરી શકીએ છીએ જે રીતે ફંક્શન પરિમાણ સૂચિમાં કરીએ છીએ, કારણ કે ક્લોઝર ફંક્શન જેવા જ હોય છે, જે વિશે પ્રકરણ ૧૩ માં ચર્ચા કરવામાં આવી છે.</p>
 <p>આ સમયે, તમે પેટર્નનો ઉપયોગ કરવાની ઘણી રીતો જોઈ હશે, પરંતુ પેટર્ન દરેક જગ્યાએ સમાન રીતે કામ કરતા નથી જ્યાં આપણે તેનો ઉપયોગ કરી શકીએ છીએ. કેટલીક જગ્યાએ, પેટર્ન અચકાઉ (irrefutable) હોવા જોઈએ; અન્ય સંજોગોમાં, તે ખંડિત (refutable) થઈ શકે છે. હવે આપણે આ બે વિભાવનાઓની ચર્ચા કરીશું.</p>
@@ -390,7 +341,7 @@ fn main() {
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 

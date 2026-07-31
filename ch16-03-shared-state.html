@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -197,18 +197,10 @@
 <h4 id="the-api-of-mutext"><a class="header" href="#the-api-of-mutext">The API of <code>Mutex&lt;T&gt;</code></a></h4>
 <p>મ્યુટેક્સનો ઉપયોગ કેવી રીતે કરવો તેનું ઉદાહરણ તરીકે, ચાલો લિસ્ટિંગ ૧૬-૧૨ માં દર્શાવ્યા પ્રમાણે એક જ થ્રેડવાળા સંદર્ભમાં મ્યુટેક્સનો ઉપયોગ કરવાનું શરૂ કરીએ.</p>
 <p>` in a single-threaded context for simplicity“&gt;</p>
-<pre class="playground"><code class="language-rust edition2024">use std::sync::Mutex;
-
-fn main() {
-    let m = Mutex::new(5);
-
-    {
-        let mut num = m.lock().unwrap();
-        *num = 6;
-    }
-
-    println!("m = {m:?}");
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-12/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p><code>new</code> જેમ કે ઘણા પ્રકારો સાથે, આપણે સંલગ્ન વિધેય <code>નવું</code> નો ઉપયોગ કરીને <code>Mutex&lt;T&gt;</code> બનાવીએ છીએ. To access the data inside the mutex, we use the <code>lock</code> method to acquire the lock. This call will block the current thread so that it can’t do any work until it’s our turn to have the lock. મ્યુટેક્સની અંદરના ડેટાને મેળવવા માટે, આપણે લોક પ્રાપ્ત કરવા માટે <code>લોક</code> વિધેયનો ઉપયોગ કરીએ છીએ. આ કાર્ય વર્તમાન થ્રેડને અવરોધિત કરશે જેથી તે આપણી વારી થાય ત્યાં સુધી કોઈ કાર્ય કરી શકે નહીં. The call to <code>lock</code></p>
 <p><code>unwrap</code> જો બીજા થ્રેડે લોક ધરાવતો હોય અને તે ગભરાય તો <code>લોક</code> વિધેય નિષ્ફળ થઈ શકે છે. આવી સ્થિતિમાં, કોઈ પણ ક્યારેય લોક મેળવી શકશે નહીં, તેથી અમે <code>અનરેપ</code> કરવાનું પસંદ કર્યું છે અને જો અમે આવી પરિસ્થિતિમાં હોઈએ તો આ થ્રેડને ગભરાવવાનું નક્કી કર્યું છે.</p>
 <p>અમે તાળું મેળવી લીધા પછી, અમે વળતર મૂલ્ય, આ કિસ્સામાં <code>num</code> નામિત, અંદરના ડેટા તરફ એક પરિવર્તનશીલ સંદર્ભ તરીકે ગણી શકીએ છીએ. પ્રકાર પ્રણાલી ખાતરી કરે છે કે <code>m</code> માં મૂલ્યનો ઉપયોગ કરતા પહેલાં અમે તાળું મેળવીએ છીએ. <code>m</code> નો પ્રકાર <code>Mutex&lt;i32&gt;</code> છે, <code>i32</code> નહીં, તેથી આપણે <code>i32</code> મૂલ્યનો ઉપયોગ કરવા માટે <code>lock</code> ને બોલાવવું આવશ્યક છે. આપણે ભૂલી શકીએ નહીં; પ્રકાર પ્રણાલી અન્યથા આપણને આંતરિક <code>i32</code> ની ઍક્સેસ કરવાની મંજૂરી આપશે નહીં.</p>
@@ -218,107 +210,25 @@ fn main() {
 <h4 id="shared-access-to-mutext"><a class="header" href="#shared-access-to-mutext">Shared Access to <code>Mutex&lt;T&gt;</code></a></h4>
 <p>હવે આપણે <code>Mutex&lt;T&gt;</code> નો ઉપયોગ કરીને બહુવિધ થ્રેડો વચ્ચે મૂલ્ય વહેંચવાનો પ્રયાસ કરીએ. આપણે ૧૦ થ્રેડો ચાલુ કરીશું અને દરેકને એક કાઉન્ટર મૂલ્યમાં ૧ વધારવાનું કહીશું, જેથી કાઉન્ટર ૦ થી ૧૦ સુધી પહોંચે. લિસ્ટિંગ ૧૬-૧૩ માંનું ઉદાહરણ કમ્પાઇલર ભૂલ આપશે, અને આપણે તે ભૂલનો ઉપયોગ <code>Mutex&lt;T&gt;</code> ના ઉપયોગ વિશે વધુ જાણવા માટે કરીશું અને કેવી રીતે Rust આપણને તેનો યોગ્ય રીતે ઉપયોગ કરવામાં મદદ કરે છે તે સમજવા માટે.</p>
 <p>`“&gt;</p>
-<pre class="playground"><code class="language-rust edition2024">use std::sync::Mutex;
-use std::thread;
-
-fn main() {
-    let counter = Mutex::new(0);
-    let mut handles = vec![];
-
-    for _ in 0..10 {
-        let handle = thread::spawn(move || {
-            let mut num = counter.lock().unwrap();
-
-            *num += 1;
-        });
-        handles.push(handle);
-    }
-
-    for handle in handles {
-        handle.join().unwrap();
-    }
-
-    println!("Result: {}", *counter.lock().unwrap());
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-13/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>અમે <code>counter</code> variable બનાવીએ છીએ જે <code>Mutex&lt;T&gt;</code> ની અંદર <code>i32</code> મૂલ્ય રાખે છે, જેમ કે આપણે સૂચિ ૧૬-૧૨ માં કર્યું હતું. ત્યારબાદ, અમે સંખ્યાઓની શ્રેણી પર પુનરાવર્તન કરીને ૧૦ થ્રેડ્સ (threads) બનાવીએ છીએ. અમે <code>thread::spawn</code> નો ઉપયોગ કરીએ છીએ અને બધા થ્રેડ્સને એક જ ક્લોઝર (closure) આપીએ છીએ: જે કાઉન્ટરને થ્રેડમાં ખસેડે છે, <code>Mutex&lt;T&gt;</code> પર <code>lock</code> પદ્ધતિથી લોક મેળવે છે, અને ત્યારબાદ મ્યુટેક્સ (mutex) માં રહેલા મૂલ્યમાં ૧ ઉમેરે છે. જ્યારે કોઈ થ્રેડ તેનું ક્લોઝર પૂર્ણ કરે છે, ત્યારે <code>num</code> અવકાશમાંથી બહાર નીકળી જશે અને બીજા થ્રેડને લોક મેળવવા માટે મુક્ત કરશે.</p>
 <p>મુખ્ય થ્રેડમાં, અમે બધા જોડાણ હેન્ડલ એકત્રિત કરીએ છીએ. પછી, જેમ કે આપણે યાદશક્તિ ૧૬-૨ માં કર્યું હતું, દરેક હેન્ડલ પર <code>join</code> ને બોલાવીએ છીએ જેથી તમામ થ્રેડ પૂર્ણ થાય. તે સમયે, મુખ્ય થ્રેડ તાળું મેળવશે અને આ કાર્યક્રમના પરિણામને છાપશે.</p>
 <p>અમે સંકેત આપ્યો હતો કે આ ઉદાહરણ કમ્પાઇલ થશે નહીં. હવે ચાલો જોઈએ કે શા માટે!</p>
-<pre><code class="language-console">$ cargo run
-   Compiling shared-state v0.1.0 (file:///projects/shared-state)
-error[E0382]: borrow of moved value: `counter`
-  --&gt; src/main.rs:21:29
-   |
- 5 |     let counter = Mutex::new(0);
-   |         ------- move occurs because `counter` has type `std::sync::Mutex&lt;i32&gt;`, which does not implement the `Copy` trait
-...
- 8 |     for _ in 0..10 {
-   |     -------------- inside of this loop
- 9 |         let handle = thread::spawn(move || {
-   |                                    ------- value moved into closure here, in previous iteration of loop
-...
-21 |     println!("Result: {}", *counter.lock().unwrap());
-   |                             ^^^^^^^ value borrowed here after move
-
-For more information about this error, try `rustc --explain E0382`.
-error: could not compile `shared-state` (bin "shared-state") due to 1 previous error
+<pre><code class="language-console">{{#include ../listings/ch16-fearless-concurrency/listing-16-13/output.txt}}
 </code></pre>
 <p>ભૂલ સંદેશ જણાવે છે કે <code>counter</code> મૂલ્ય અગાઉના લૂપના ચક્રમાં ખસેડવામાં આવ્યું હતું. Rust આપણને જણાવી રહ્યું છે કે આપણે lock <code>counter</code> નું માલિકી એક કરતાં વધુ થ્રેડમાં સ્થાનાંતરિત કરી શકતા નથી. ચાલો, પ્રકરણ ૧૫ માં આપણે જે બહુ-માલિકી પદ્ધતિની ચર્ચા કરી હતી તેનો ઉપયોગ કરીને કમ્પાઇલરની ભૂલ સુધારીએ.</p>
 <h4 id="multiple-ownership-with-multiple-threads"><a class="header" href="#multiple-ownership-with-multiple-threads">Multiple Ownership with Multiple Threads</a></h4>
 <p>પ્રકરણ ૧૫ માં, અમે <code>Rc&lt;T&gt;</code> સ્માર્ટ પોઇન્ટરનો ઉપયોગ કરીને એક મૂલ્યને બહુવિધ માલિકોને આપ્યું હતું, જેથી સંદર્ભ ગણતરીવાળું મૂલ્ય બનાવી શકાય. ચાલો અહીં પણ એ જ કરીએ અને જોઈએ કે શું થાય છે. અમે યાદી ૧૬-૧૪ માં <code>Rc&lt;T&gt;</code> માં <code>Mutex&lt;T&gt;</code> ને લપેટીશું અને થ્રેડને માલિકી સોંપતા પહેલાં <code>Rc&lt;T&gt;</code> ની નકલ કરીશું.</p>
 <p><code>to allow multiple threads to own the</code>Mutex<t>`“&gt;</t></p>
-<pre class="playground"><code class="language-rust edition2024">use std::rc::Rc;
-use std::sync::Mutex;
-use std::thread;
-
-fn main() {
-    let counter = Rc::new(Mutex::new(0));
-    let mut handles = vec![];
-
-    for _ in 0..10 {
-        let counter = Rc::clone(&amp;counter);
-        let handle = thread::spawn(move || {
-            let mut num = counter.lock().unwrap();
-
-            *num += 1;
-        });
-        handles.push(handle);
-    }
-
-    for handle in handles {
-        handle.join().unwrap();
-    }
-
-    println!("Result: {}", *counter.lock().unwrap());
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-14/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>ફરી એકવાર, આપણે કમ્પાઇલ કરીએ છીએ અને મેળવીએ છીએ… અલગ ભૂલો! કમ્પાઈલર આપણને ઘણું શીખવે છે:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling shared-state v0.1.0 (file:///projects/shared-state)
-error[E0277]: `Rc&lt;std::sync::Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
-  --&gt; src/main.rs:11:36
-   |
-11 |           let handle = thread::spawn(move || {
-   |                        ------------- ^------
-   |                        |             |
-   |  ______________________|_____________within this `{closure@src/main.rs:11:36: 11:43}`
-   | |                      |
-   | |                      required by a bound introduced by this call
-12 | |             let mut num = counter.lock().unwrap();
-13 | |
-14 | |             *num += 1;
-15 | |         });
-   | |_________^ `Rc&lt;std::sync::Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
-   |
-   = help: within `{closure@src/main.rs:11:36: 11:43}`, the trait `Send` is not implemented for `Rc&lt;std::sync::Mutex&lt;i32&gt;&gt;`
-note: required because it's used within this closure
-  --&gt; src/main.rs:11:36
-   |
-11 |         let handle = thread::spawn(move || {
-   |                                    ^^^^^^^
-note: required by a bound in `spawn`
-  --&gt; /rustc/2d8144b7880597b6e6d3dfd63a9a9efae3f533d3/library/std/src/thread/functions.rs:125:0
-
-For more information about this error, try `rustc --explain E0277`.
-error: could not compile `shared-state` (bin "shared-state") due to 1 previous error
+<pre><code class="language-console">{{#include ../listings/ch16-fearless-concurrency/listing-16-14/output.txt}}
 </code></pre>
 <p>વાહ, તે ભૂલ સંદેશ ઘણો લાંબો છે! અહીં ધ્યાન કેન્દ્રિત કરવાનો મહત્વપૂર્ણ ભાગ છે: ``Rc&lt;Mutex<i32>&gt;<code> ને થ્રેડ્સ વચ્ચે સુરક્ષિત રીતે મોકલી શકાતું નથી</code>. કમ્પાઇલર આપણને કારણ પણ જણાવી રહ્યો છે: <code>trait </code>Send<code> </code>Rc&lt;Mutex<i32>&gt;<code> માટે અમલમાં મૂકાયેલ નથી</code>. આપણે આગલા વિભાગમાં <code>Send</code> વિશે વાત કરીશું: તે એવા traits પૈકીનું એક છે જે ખાતરી કરે છે કે આપણે થ્રેડ્સ સાથે ઉપયોગ કરીએ છીએ તે પ્રકારો એકસાથે પરિસ્થિતિઓમાં ઉપયોગ માટે બનાવાયેલા છે.</i32></i32></p>
 <p>કમનસીબે, <code>Rc&lt;T&gt;</code> થ્રેડ્સમાં વહેંચવા માટે સુરક્ષિત નથી. જ્યારે <code>Rc&lt;T&gt;</code> સંદર્ભ ગણતરીનું સંચાલન કરે છે, ત્યારે તે દરેક <code>clone</code> કૉલ માટે ગણતરીમાં ઉમેરે છે અને દરેક ક્લોન છોડવામાં આવે ત્યારે તેમાંથી બાદ કરે છે. પરંતુ તે ખાતરી કરવા માટે કોઈ concurrency primitives નો ઉપયોગ કરતું નથી કે ગણતરીમાં થતા ફેરફારોને બીજા થ્રેડ દ્વારા અવરોધિત કરી શકાતા નથી. આનાથી ખોટી ગણતરી થઈ શકે છે—સૂક્ષ્મ ભૂલો જે બદલામાં મેમરી લીક તરફ દોરી શકે છે અથવા કોઈ મૂલ્ય આપણે તેનો ઉપયોગ પૂરો કરીએ તે પહેલાં છોડી દેવામાં આવે છે. આપણને એક પ્રકારની જરૂર છે જે બરાબર <code>Rc&lt;T&gt;</code> જેવું જ હોય, પરંતુ જે થ્રેડ-સુરક્ષિત રીતે સંદર્ભ ગણતરીમાં ફેરફારો કરે છે.</p>
@@ -327,29 +237,10 @@ error: could not compile `shared-state` (bin "shared-state") due to 1 previous e
 <p>તમે કદાચ વિચારતા હશો કે શા માટે બધા પ્રાથમિક પ્રકારો પરમાણુ નથી અને શા માટે પ્રમાણિત પુસ્તકાલયના પ્રકારો ડિફૉલ્ટ રૂપે <code>Arc&lt;T&gt;</code> નો ઉપયોગ કરતા નથી. તેનું કારણ એ છે કે થ્રેડ સલામતી સાથે કામગીરીની કિંમત લાગે છે જે તમારે માત્ર ત્યારે જ ચૂકવવી જોઈએ જ્યારે તમને ખરેખર જરૂર હોય. જો તમે એક જ થ્રેડમાં મૂલ્યો પર કામગીરી કરી રહ્યા છો, તો તમારો કોડ વધુ ઝડપથી ચાલી શકે છે જો તે પરમાણુઓ દ્વારા પૂરા પાડવામાં આવતી ખાતરીઓ લાગુ કરવામાં આવે નહીં.</p>
 <p>ચાલો આપણી ઉદાહરણ પર પાછા ફરીએ: <code>Arc&lt;T&gt;</code> અને <code>Rc&lt;T&gt;</code> સમાન API ધરાવે છે, તેથી આપણે આપણી કાર્યક્રમમાં ફેરફાર કરીને તેને સુધારી શકીશું - <code>use</code> લાઇન બદલીને, <code>new</code> કૉલ બદલીને અને <code>clone</code> કૉલ બદલીને. યાદી 16-15 માં રહેલો કોડ અંતે કમ્પાઇલ થશે અને ચાલશે.</p>
 <p><code>to wrap the</code>Mutex<t>` to be able to share ownership across multiple threads“&gt;</t></p>
-<pre class="playground"><code class="language-rust edition2024">use std::sync::{Arc, Mutex};
-use std::thread;
-
-fn main() {
-    let counter = Arc::new(Mutex::new(0));
-    let mut handles = vec![];
-
-    for _ in 0..10 {
-        let counter = Arc::clone(&amp;counter);
-        let handle = thread::spawn(move || {
-            let mut num = counter.lock().unwrap();
-
-            *num += 1;
-        });
-        handles.push(handle);
-    }
-
-    for handle in handles {
-        handle.join().unwrap();
-    }
-
-    println!("Result: {}", *counter.lock().unwrap());
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-15/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>આ કોડ નીચે મુજબ છાપશે:</p>
 <!-- Not extracting output because changes to this output aren't significant;
 the changes are likely to be due to the threads running differently rather than
@@ -416,7 +307,7 @@ changes in the compiler -->
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 

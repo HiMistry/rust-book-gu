@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -197,20 +197,10 @@
 <p>સમાન સમસ્યાને ઉકેલવા માટે કોડને રચવાની અસંખ્ય રીતો છે, જેમાં દરેકની અલગ-અલગ આપઘાતકો (trade-offs) રહેલી છે. આ વિભાગનું અમલીકરણ વધુ પરંપરાગત વસ્તુલક્ષી શૈલીનું છે, જે Rust માં લખવું શક્ય છે, પરંતુ તે Rust ની કેટલીક શક્તિઓનો લાભ લેતું નથી. પછીથી, અમે એક અલગ ઉકેલ દર્શાવીશું જે હજી પણ વસ્તુલક્ષી ડિઝાઇન પેટર્નનો ઉપયોગ કરે છે, પરંતુ એવી રીતે રચાયેલ છે કે જે વસ્તુલક્ષી અનુભવ ધરાવતા પ્રોગ્રામરોને ઓછું પરિચિત લાગે. અમે બે ઉકેલોની તુલના કરીશું જેથી કરીને અન્ય ભાષાઓમાં કોડ કરતાં Rust કોડને અલગ રીતે ડિઝાઇન કરવાના આપઘાતકોનો અનુભવ કરી શકાય.</p>
 <p>Listing 18-11 ઉપક્રમ 18-11 આ કાર્યપ્રવાહને કોડ સ્વરૂપે દર્શાવે છે: આ <code>blog</code> નામની પુસ્તકાલય ક્રેટમાં અમે અમલમાં મૂકવાની API નો એક ઉદાહરણ ઉપયોગ છે. હજુ આ સંકલિત થશે નહીં, કારણ કે આપણે હજી સુધી <code>blog</code> ક્રેટનો અમલ કર્યો નથી.</p>
 <p><strong>Listing 18-11: Code that demonstrates the desired behavior we want our <code>blog</code> crate to have</strong></p>
-<pre class="playground"><code class="language-rust edition2024">use blog::Post;
-
-fn main() {
-    let mut post = Post::new();
-
-    post.add_text("I ate a salad for lunch today");
-    assert_eq!("", post.content());
-
-    post.request_review();
-    assert_eq!("", post.content());
-
-    post.approve();
-    assert_eq!("I ate a salad for lunch today", post.content());
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-11/src/main.rs:all}}
+<span class="boring">}</span></code></pre>
 <p>આપણે userને <code>Post::new</code> વડે નવું ડ્રાફ્ટ બ્લોગ પોસ્ટ બનાવવાની છૂટ આપવા માંગીએ છીએ. આપણે બ્લોગ પોસ્ટમાં લખાણ ઉમેરવાની પણ છૂટ આપવી જોઈએ. જો આપણે મંજૂરી પહેલાં પોસ્ટની સામગ્રી મેળવવાનો પ્રયત્ન કરીએ, તો આપણને કોઈ લખાણ મળવું જોઈએ નહીં, કારણ કે પોસ્ટ હજી ડ્રાફ્ટ છે. અમે નિદર્શન હેતુ માટે કોડમાં <code>assert_eq!</code> ઉમેર્યું છે. આ માટે એક ઉત્તમ યુનિટ પરીક્ષણ એ તપાસવાનું હશે કે ડ્રાફ્ટ બ્લોગ પોસ્ટ <code>content</code> પદ્ધતિમાંથી ખાલી સ્ટ્રિંગ આપે છે, પરંતુ આપણે આ ઉદાહરણ માટે પરીક્ષણો લખવાના નથી.</p>
 <p>આગળ, આપણને પોસ્ટની સમીક્ષા માટે વિનંતી સક્રિય કરવી છે, અને આપણે <code>content</code> ને સમીક્ષાની રાહ જોઇએ ત્યારે ખાલી સ્ટ્રિંગ પરત કરાવવું છે. જ્યારે પોસ્ટને મંજૂરી મળે છે, ત્યારે તેને પ્રકાશિત થવું જોઈએ, એટલે કે પોસ્ટનો લખાણ પાછો આવે જ્યારે <code>content</code> બોલાવવામાં આવે.</p>
 <p>ધ્યાનમાં રાખો કે આપણે માત્ર <code>Post</code> પ્રકાર સાથે ક્રિયાપ્રતિક્રિયા કરી રહ્યા છીએ તે પ્રકાર સાથે જ. આ પ્રકાર સ્ટેટ પેટર્નનો ઉપયોગ કરશે અને એક મૂલ્ય ધરાવશે જે ત્રણ સ્ટેટ ઓબ્જેક્ટ્સમાંથી એક હશે જે પોસ્ટની વિવિધ સ્થિતિઓ દર્શાવે છે—ડ્રાફ્ટ, સમીક્ષા અથવા પ્રકાશિત. એક સ્થિતિથી બીજી સ્થિતિમાં બદલાવ <code>Post</code> પ્રકારની અંદર આંતરિક રીતે સંચાલિત થશે. સ્થિતિઓમાં ફેરફાર આપણી લાયબ્રેરીના userઓ દ્વારા <code>Post</code> ઇન્સ્ટન્સ પર બોલાવવામાં આવતી પદ્ધતિઓના પ્રતિભાવમાં થાય છે, પરંતુ તેમને સ્થિતિમાં સીધા ફેરફારોનું સંચાલન કરવાની જરૂર નથી. ઉપરાંત, userઓ ભૂલ કરી શકતા નથી, જેમ કે સમીક્ષા પહેલા પોસ્ટ પ્રકાશિત કરવી.</p>
@@ -220,25 +210,7 @@ fn main() {
 <p><strong>Listing 18-12: Definition of a <code>Post</code> struct and a <code>new</code> function that creates a new <code>Post</code> instance, a <code>State</code> trait, and a <code>Draft</code> struct</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub struct Post {
-    state: Option&lt;Box&lt;dyn State&gt;&gt;,
-    content: String,
-}
-
-impl Post {
-    pub fn new() -&gt; Post {
-        Post {
-            state: Some(Box::new(Draft {})),
-            content: String::new(),
-        }
-    }
-}
-
-trait State {}
-
-struct Draft {}
-
-impl State for Draft {}
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-12/src/lib.rs}}
 <span class="boring">}</span></code></pre>
 <p>State ટ્રેઇટની વ્યાખ્યા <code>State</code> ટ્રેઇટ વિવિધ પોસ્ટ સ્થિતિઓ દ્વારા ઉપયોગમાં લેવાતા વર્તનને વ્યાખ્યાયિત કરે છે. <code>Draft</code>, <code>PendingReview</code> અને <code>Published</code> જેવી સ્થિતિ વસ્તુઓ <code>State</code> ટ્રેઇટનો અમલ કરશે. હાલ માટે, આ ટ્રેઇટમાં કોઈ પદ્ધતિઓ નથી, અને આપણે માત્ર <code>Draft</code> સ્થિતિને વ્યાખ્યાયિત કરીને શરૂઆત કરીશું કારણ કે પોસ્ટ કઈ સ્થિતિમાં આરંભ થવી જોઈએ તે આ છે. જ્યારે આપણે</p>
 <p>નવું <code>Post</code> બનાવીએ છીએ, ત્યારે આપણે તેની <code>state</code> ક્ષેત્રને <code>Some</code> મૂલ્ય પર સેટ કરીએ છીએ જે <code>Box</code> ધરાવે છે. આ <code>Box</code> <code>Draft</code> સ્ટ્રક્ચરના નવા ઉદાહરણ તરફ નિર્દેશ કરે છે. આ સુનિશ્ચિત કરે છે કે જ્યારે પણ આપણે <code>Post</code> નું નવું ઉદાહરણ બનાવીએ છીએ, ત્યારે તે ડ્રાફ્ટ તરીકે શરૂ થાય છે. કારણ કે <code>Post</code> ની <code>state</code> ક્ષેત્ર ખાનગી છે, તેથી અન્ય કોઈ સ્થિતિમાં <code>Post</code> બનાવવાનો કોઈ રસ્તો નથી! <code>Post::new</code> ફંક્શનમાં, આપણે <code>content</code> ક્ષેત્રને એક નવું, ખાલી <code>String</code> પર સેટ કરીએ છીએ.</p>
@@ -247,120 +219,23 @@ impl State for Draft {}
 <p><strong>Listing 18-13: Implementing the <code>add_text</code> method to add text to a post’s <code>content</code></strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
-</span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
-</span><span class="boring">    content: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span>impl Post {
-    // --snip--
-<span class="boring">    pub fn new() -&gt; Post {
-</span><span class="boring">        Post {
-</span><span class="boring">            state: Some(Box::new(Draft {})),
-</span><span class="boring">            content: String::new(),
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span>    pub fn add_text(&amp;mut self, text: &amp;str) {
-        self.content.push_str(text);
-    }
-}
-<span class="boring">
-</span><span class="boring">trait State {}
-</span><span class="boring">
-</span><span class="boring">struct Draft {}
-</span><span class="boring">
-</span><span class="boring">impl State for Draft {}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-13/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p><code>add_text</code> પદ્ધતિ <code>self</code> નો પરિવર્તનશીલ સંદર્ભ લે છે કારણ કે અમે <code>Post</code> ઉદાહરણમાં ફેરફાર કરી રહ્યા છીએ જેના પર <code>add_text</code> બોલાવવામાં આવે છે. પછી અમે <code>content</code> માં રહેલા <code>String</code> પર <code>push_str</code> ને બોલાવીએ છીએ અને <code>text</code> Argumentને ઉમેરવા માટે પસાર કરીએ છીએ જે સાચવેલા <code>content</code> માં ઉમેરાય છે. આ વર્તન પોસ્ટની સ્થિતિ પર આધારિત નથી, તેથી તે રાજ્ય પેટર્નનો ભાગ નથી. <code>add_text</code> પદ્ધતિ સંપૂર્ણપણે <code>state</code> ક્ષેત્ર સાથે ક્રિયાપ્રતિક્રિયા કરતી નથી, પરંતુ તે અમારી ઇચ્છિત વર્તનમાંનો એક ભાગ છે જે અમે ટેકો આપવા માંગીએ છીએ.</p>
 <h4 id="ensuring-that-the-content-of-a-draft-post-is-empty"><a class="header" href="#ensuring-that-the-content-of-a-draft-post-is-empty">Ensuring That the Content of a Draft Post Is Empty</a></h4>
 <p>આપણે <code>add_text</code> ને બોલાવ્યા પછી અને આપણી પોસ્ટમાં થોડી સામગ્રી ઉમેર્યા પછી પણ, આપણે <code>content</code> પદ્ધતિને ખાલી સ્ટ્રિંગ સ્લાઇસ પરત કરાવવી જોઈએ કારણ કે પોસ્ટ હજી ડ્રાફ્ટ સ્થિતિમાં છે, જે યાદી 18-11 માં પ્રથમ <code>assert_eq!</code> દ્વારા દર્શાવવામાં આવ્યું છે. હાલ માટે, ચાલો <code>content</code> પદ્ધતિને સૌથી સરળ વસ્તુ સાથે અમલમાં મૂકીએ જે આ જરૂરિયાત પૂરી કરશે: હંમેશા ખાલી સ્ટ્રિંગ સ્લાઇસ પરત કરવી. આપણે તેને પછીથી બદલીશું જ્યારે આપણે પોસ્ટની સ્થિતિ બદલવાની ક્ષમતાનો અમલ કરીશું જેથી તે પ્રકાશિત થઈ શકે. અત્યાર સુધી, પોસ્ટ્સ માત્ર ડ્રાફ્ટ સ્થિતિમાં જ હોઈ શકે છે, તેથી પોસ્ટની સામગ્રી હંમેશા ખાલી હોવી જોઈએ. યાદી 18-14 આ પ્લેસહોલ્ડર અમલીકરણ દર્શાવે છે.</p>
 <p><strong>Listing 18-14: Adding a placeholder implementation for the <code>content</code> method on <code>Post</code> that always returns an empty string slice</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
-</span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
-</span><span class="boring">    content: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span>impl Post {
-    // --snip--
-<span class="boring">    pub fn new() -&gt; Post {
-</span><span class="boring">        Post {
-</span><span class="boring">            state: Some(Box::new(Draft {})),
-</span><span class="boring">            content: String::new(),
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn add_text(&amp;mut self, text: &amp;str) {
-</span><span class="boring">        self.content.push_str(text);
-</span><span class="boring">    }
-</span><span class="boring">
-</span>    pub fn content(&amp;self) -&gt; &amp;str {
-        ""
-    }
-}
-<span class="boring">
-</span><span class="boring">trait State {}
-</span><span class="boring">
-</span><span class="boring">struct Draft {}
-</span><span class="boring">
-</span><span class="boring">impl State for Draft {}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-14/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>આ <code>content</code> પદ્ધતિ ઉમેરવાથી, સૂચિ ૧૮-૧૧ થી પ્રથમ <code>assert_eq!</code> સુધીનું બધું જ ધાર્યા પ્રમાણે કાર્ય કરે છે.</p>
 <h4 id="requesting-a-review-which-changes-the-posts-state"><a class="header" href="#requesting-a-review-which-changes-the-posts-state">Requesting a Review, Which Changes the Post’s State</a></h4>
 <p>પછી, આપણે કાર્યક્ષમતા ઉમેરવાની જરૂર છે કે પોસ્ટની સમીક્ષા માટે વિનંતી કરવી, જેનાથી તેની સ્થિતિ <code>Draft</code> થી <code>PendingReview</code> માં બદલાય. લિસ્ટિંગ 18-15 આ કોડ દર્શાવે છે.</p>
 <p><strong>Listing 18-15: Implementing <code>request_review</code> methods on <code>Post</code> and the <code>State</code> trait</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
-</span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
-</span><span class="boring">    content: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span>impl Post {
-    // --snip--
-<span class="boring">    pub fn new() -&gt; Post {
-</span><span class="boring">        Post {
-</span><span class="boring">            state: Some(Box::new(Draft {})),
-</span><span class="boring">            content: String::new(),
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn add_text(&amp;mut self, text: &amp;str) {
-</span><span class="boring">        self.content.push_str(text);
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn content(&amp;self) -&gt; &amp;str {
-</span><span class="boring">        ""
-</span><span class="boring">    }
-</span><span class="boring">
-</span>    pub fn request_review(&amp;mut self) {
-        if let Some(s) = self.state.take() {
-            self.state = Some(s.request_review())
-        }
-    }
-}
-
-trait State {
-    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt;;
-}
-
-struct Draft {}
-
-impl State for Draft {
-    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-        Box::new(PendingReview {})
-    }
-}
-
-struct PendingReview {}
-
-impl State for PendingReview {
-    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-        self
-    }
-}
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-15/src/lib.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>આપણે <code>Post</code> ને એક જાહેર પદ્ધતિ નામકું <code>request_review</code> આપીએ છીએ જે <code>self</code> નો પરિવર્તનશીલ સંદર્ભ લેશે. પછી, આપણે વર્તમાન <code>Post</code> સ્થિતિ પર આંતરિક <code>request_review</code> પદ્ધતિને બોલાવીએ છીએ, અને આ બીજી <code>request_review</code> પદ્ધતિ વર્તમાન સ્થિતિનો ઉપયોગ કરે છે અને નવી સ્થિતિ આપે છે.</p>
 <p>આપણે <code>State</code> લક્ષણ (trait) માં <code>request_review</code> પદ્ધતિ ઉમેરીએ છીએ; જે તમામ પ્રકારો આ લક્ષણને અમલમાં મૂકે છે તેઓ હવે <code>request_review</code> પદ્ધતિને અમલમાં મૂકવાની જરૂર પડશે. નોંધ કરો કે પદ્ધતિના પ્રથમ પરિમાણ તરીકે <code>self</code>, <code>&amp;self</code>, અથવા <code>&amp;mut self</code> ને બદલે, આપણી પાસે <code>self: Box&lt;Self&gt;</code> છે. આ વાક્યરચનાનો અર્થ એ થાય છે કે પદ્ધતિ માત્ર ત્યારે જ માન્ય છે જ્યારે તેને <code>Box</code> ધરાવતા પ્રકાર પર બોલાવવામાં આવે. આ વાક્યરચના <code>Box&lt;Self&gt;</code> નો ઉપયોગ કરે છે, જૂની સ્થિતિને અમાન્ય કરે છે જેથી <code>Post</code> ની સ્થિતિ મૂલ્ય નવી સ્થિતિમાં રૂપાંતરિત થઈ શકે.</p>
@@ -374,83 +249,7 @@ impl State for PendingReview {
 <p><strong>Listing 18-16: Implementing the <code>approve</code> method on <code>Post</code> and the <code>State</code> trait</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
-</span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
-</span><span class="boring">    content: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span>impl Post {
-    // --snip--
-<span class="boring">    pub fn new() -&gt; Post {
-</span><span class="boring">        Post {
-</span><span class="boring">            state: Some(Box::new(Draft {})),
-</span><span class="boring">            content: String::new(),
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn add_text(&amp;mut self, text: &amp;str) {
-</span><span class="boring">        self.content.push_str(text);
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn content(&amp;self) -&gt; &amp;str {
-</span><span class="boring">        ""
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn request_review(&amp;mut self) {
-</span><span class="boring">        if let Some(s) = self.state.take() {
-</span><span class="boring">            self.state = Some(s.request_review())
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span>    pub fn approve(&amp;mut self) {
-        if let Some(s) = self.state.take() {
-            self.state = Some(s.approve())
-        }
-    }
-}
-
-trait State {
-    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt;;
-    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt;;
-}
-
-struct Draft {}
-
-impl State for Draft {
-    // --snip--
-<span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-</span><span class="boring">        Box::new(PendingReview {})
-</span><span class="boring">    }
-</span><span class="boring">
-</span>    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-        self
-    }
-}
-
-struct PendingReview {}
-
-impl State for PendingReview {
-    // --snip--
-<span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-</span><span class="boring">        self
-</span><span class="boring">    }
-</span><span class="boring">
-</span>    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-        Box::new(Published {})
-    }
-}
-
-struct Published {}
-
-impl State for Published {
-    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-        self
-    }
-
-    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-        self
-    }
-}
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-16/src/lib.rs:here}}
 <span class="boring">}</span></code></pre>
 <p><code>Published</code> અમે <code>State</code> લક્ષણ (trait) માં <code>approve</code></p>
 <p>પદ્ધતિ ઉમેરીએ છીએ અને એક નવું struct ઉમેરીએ છીએ જે <code>State</code> લાગુ કરે છે, જે <code>Published</code> સ્થિતિ છે. જે રીતે <code>request_review</code> <code>PendingReview</code> પર કાર્ય કરે છે, તેવી જ રીતે જો આપણે <code>Draft</code> પર <code>approve</code> પદ્ધતિને બોલાવીએ, તો તેનો કોઈ અસર થશે નહીં કારણ કે <code>approve</code> <code>self</code> પાછું આપશે. જ્યારે આપણે <code>PendingReview</code> પર <code>approve</code> બોલાવીએ છીએ, ત્યારે તે <code>Published</code> struct નું એક નવું, boxed instance પાછું આપે છે. <code>Published</code> struct <code>State</code> લક્ષણ (trait) લાગુ કરે છે, અને બંને <code>request_review</code> પદ્ધતિ અને <code>approve</code> પદ્ધતિ માટે, તે પોતાને પાછું આપે છે કારણ કે પોસ્ટ <code>Published</code> સ્થિતિમાં જ રહેવી જોઈએ એવા કિસ્સાઓમાં.</p>
@@ -458,83 +257,8 @@ impl State for Published {
 <p><strong>Listing 18-17: Updating the <code>content</code> method on <code>Post</code> to delegate to a <code>content</code> method on <code>State</code></strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
-</span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
-</span><span class="boring">    content: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span>impl Post {
-    // --snip--
-<span class="boring">    pub fn new() -&gt; Post {
-</span><span class="boring">        Post {
-</span><span class="boring">            state: Some(Box::new(Draft {})),
-</span><span class="boring">            content: String::new(),
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn add_text(&amp;mut self, text: &amp;str) {
-</span><span class="boring">        self.content.push_str(text);
-</span><span class="boring">    }
-</span><span class="boring">
-</span>    pub fn content(&amp;self) -&gt; &amp;str {
-        self.state.as_ref().unwrap().content(self)
-    }
-    // --snip--
-<span class="boring">
-</span><span class="boring">    pub fn request_review(&amp;mut self) {
-</span><span class="boring">        if let Some(s) = self.state.take() {
-</span><span class="boring">            self.state = Some(s.request_review())
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn approve(&amp;mut self) {
-</span><span class="boring">        if let Some(s) = self.state.take() {
-</span><span class="boring">            self.state = Some(s.approve())
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span>}
-<span class="boring">
-</span><span class="boring">trait State {
-</span><span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt;;
-</span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt;;
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">struct Draft {}
-</span><span class="boring">
-</span><span class="boring">impl State for Draft {
-</span><span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-</span><span class="boring">        Box::new(PendingReview {})
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-</span><span class="boring">        self
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">struct PendingReview {}
-</span><span class="boring">
-</span><span class="boring">impl State for PendingReview {
-</span><span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-</span><span class="boring">        self
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-</span><span class="boring">        Box::new(Published {})
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">struct Published {}
-</span><span class="boring">
-</span><span class="boring">impl State for Published {
-</span><span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-</span><span class="boring">        self
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-</span><span class="boring">        self
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-17/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>કારણ કે ધ્યેય છે કે આ નિયમો બધા સ્ટ્રક્ચર્સની અંદર રહે જે <code>State</code> અમલમાં મૂકે છે, અમે <code>content</code> પદ્ધતિને <code>state</code> માં રહેલા મૂલ્ય પર બોલાવીએ છીએ અને પોસ્ટ ઇન્સ્ટન્સ (એટલે ​​કે <code>self</code>) ને Argument તરીકે પસાર કરીએ છીએ. પછી, અમે તે મૂલ્ય પરત કરીએ છીએ જે <code>content</code> પદ્ધતિનો ઉપયોગ કરીને <code>state</code> મૂલ્યમાંથી મળે છે.</p>
 <p>અમે <code>Option</code> પર <code>as_ref</code> પદ્ધતિ બોલાવીએ છીએ કારણ કે અમને <code>Option</code> ની અંદર રહેલા મૂલ્યનો સંદર્ભ જોઈએ છે, મૂલ્યની માલિકી નહીં. કારણ કે <code>state</code> એ <code>Option&lt;Box&lt;dyn State&gt;&gt;</code> છે, જ્યારે અમે <code>as_ref</code> બોલાવીએ છીએ, ત્યારે <code>Option&lt;&amp;Box&lt;dyn State&gt;&gt;</code> પરત કરવામાં આવે છે. જો અમે <code>as_ref</code> ન બોલાવ્યું હોત, તો અમને ભૂલ મળતી, કારણ કે અમે ફંક્શન પેરામીટરના ઉછીના લીધેલા <code>&amp;self</code> માંથી <code>state</code> ને ખસેડી શકતા નથી.</p>
 <p>પછી અમે <code>unwrap</code> પદ્ધતિને બોલાવીએ છીએ, જે આપણે જાણીએ છીએ કે તે ક્યારેય ગભરાશે નહીં કારણ કે આપણે જાણીએ છીએ કે <code>Post</code> પરની પદ્ધતિઓ ખાતરી કરે છે કે <code>state</code> હંમેશાં <code>Some</code> મૂલ્ય ધરાવશે જ્યારે તે પદ્ધતિઓ પૂર્ણ થાય છે. આ એવા કિસ્સાઓમાંનું એક છે જેની ચર્ચા અમે પ્રકરણ 9 ના “જ્યારે તમારી પાસે કમ્પાઇલર કરતાં વધુ માહિતી હોય” વિભાગમાં કરી હતી, જ્યારે આપણે જાણીએ છીએ કે <code>None</code> મૂલ્ય શક્ય નથી, ભલે કમ્પાઇલર તે</p>
@@ -542,92 +266,7 @@ impl State for Published {
 <p><strong>Listing 18-18: Adding the <code>content</code> method to the <code>State</code> trait</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
-</span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
-</span><span class="boring">    content: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Post {
-</span><span class="boring">    pub fn new() -&gt; Post {
-</span><span class="boring">        Post {
-</span><span class="boring">            state: Some(Box::new(Draft {})),
-</span><span class="boring">            content: String::new(),
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn add_text(&amp;mut self, text: &amp;str) {
-</span><span class="boring">        self.content.push_str(text);
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn content(&amp;self) -&gt; &amp;str {
-</span><span class="boring">        self.state.as_ref().unwrap().content(self)
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn request_review(&amp;mut self) {
-</span><span class="boring">        if let Some(s) = self.state.take() {
-</span><span class="boring">            self.state = Some(s.request_review())
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn approve(&amp;mut self) {
-</span><span class="boring">        if let Some(s) = self.state.take() {
-</span><span class="boring">            self.state = Some(s.approve())
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span>trait State {
-    // --snip--
-<span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt;;
-</span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt;;
-</span><span class="boring">
-</span>    fn content&lt;'a&gt;(&amp;self, post: &amp;'a Post) -&gt; &amp;'a str {
-        ""
-    }
-}
-
-// --snip--
-<span class="boring">
-</span><span class="boring">struct Draft {}
-</span><span class="boring">
-</span><span class="boring">impl State for Draft {
-</span><span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-</span><span class="boring">        Box::new(PendingReview {})
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-</span><span class="boring">        self
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">struct PendingReview {}
-</span><span class="boring">
-</span><span class="boring">impl State for PendingReview {
-</span><span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-</span><span class="boring">        self
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-</span><span class="boring">        Box::new(Published {})
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span>struct Published {}
-
-impl State for Published {
-    // --snip--
-<span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-</span><span class="boring">        self
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
-</span><span class="boring">        self
-</span><span class="boring">    }
-</span><span class="boring">
-</span>    fn content&lt;'a&gt;(&amp;self, post: &amp;'a Post) -&gt; &amp;'a str {
-        &amp;post.content
-    }
-}
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-18/src/lib.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>અમે <code>content</code> પદ્ધતિ માટે એક નિશ્ચિત અમલીકરણ ઉમેરીએ છીએ જે ખાલી string slice આપે છે. એનો અર્થ એ થાય કે આપણે <code>Draft</code> અને <code>PendingReview</code> struct પર <code>content</code> અમલમાં મૂકવાની જરૂર નથી. <code>Published</code> struct <code>content</code> પદ્ધતિને ઓવરરાઇડ કરશે અને <code>post.content</code> માં રહેલા મૂલ્યને આપશે. અનુકૂળ હોવા છતાં, <code>State</code> પરની <code>content</code> પદ્ધતિ <code>Post</code> ની સામગ્રી નક્કી કરે છે, જે <code>State</code> અને <code>Post</code> ની જવાબદારી વચ્ચે ભેદભાવ ભૂંસી નાખે છે.</p>
 <p>ધ્યાનમાં રાખો કે આપણે આ પદ્ધતિ પર lifetime annotations (જીવનકાળ નોંધણીઓ)ની જરૂર છે, જે વિશે આપણે પ્રકરણ 10 માં ચર્ચા કરી હતી. અમે એક <code>post</code> નો reference Argument તરીકે લઈ રહ્યા છીએ અને તે <code>post</code> ના ભાગનો reference આપી રહ્યા છીએ, તેથી પાછો મળેલા reference નો જીવનકાળ <code>post</code> Argumentના જીવનકાળ સાથે સંબંધિત છે.</p>
@@ -665,49 +304,15 @@ impl State for Published {
 <p>વસ્તુલક્ષી ભાષાઓ માટે વ્યાખ્યાયિત કરેલાં રાજ્ય પેટર્નને બરાબર અમલમાં મૂકીને, આપણે Rustની શક્તિનો પૂરો ઉપયોગ કરી શકતા નથી. ચાલો કેટલાક ફેરફારો જોઈએ જે <code>blog</code>  crateમાં કરી શકાય છે જેથી અમાન્ય રાજ્યો અને સંક્રમણો કમ્પાઇલ સમયની ભૂલોમાં પરિણમે.</p>
 <p>અમે તમને બતાવીશું કે કેવી રીતે રાજ્ય પેટર્નને ફરીથી વિચારીને અલગ વેપાર મેળવી શકાય છે. બહારના કોડને સ્થિતિઓ અને સંક્રમણો વિશે જાણકારી ન હોય તે રીતે સંપૂર્ણપણે સમાવવાનું બદલે, અમે સ્થિતિઓને વિવિધ પ્રકારોમાં એન્કોડ કરીશું. પરિણામે, Rustની પ્રકાર-ચકાસણી પ્રણાલી <code>compiler</code> ભૂલ જારી કરીને ડ્રાફ્ટ પોસ્ટ્સનો ઉપયોગ કરવાનો પ્રયાસ અટકાવશે જ્યાં માત્ર પ્રકાશિત પોસ્ટ્સને મંજૂરી હોય છે.</p>
 <p>ચાલો લિસ્ટિંગ 18-11 માં <code>main</code> નો પ્રથમ ભાગ ધ્યાનમાં લઈએ:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">use blog::Post;
-</span><span class="boring">
-</span>fn main() {
-    let mut post = Post::new();
-
-    post.add_text("I ate a salad for lunch today");
-    assert_eq!("", post.content());
-<span class="boring">
-</span><span class="boring">    post.request_review();
-</span><span class="boring">    assert_eq!("", post.content());
-</span><span class="boring">
-</span><span class="boring">    post.approve();
-</span><span class="boring">    assert_eq!("I ate a salad for lunch today", post.content());
-</span>}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-11/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>અમે હજી <code>Post::new</code> નો ઉપયોગ કરીને ડ્રાફ્ટ સ્થિતિમાં નવા પોસ્ટ્સ બનાવવાની અને પોસ્ટની સામગ્રીમાં લખાણ ઉમેરવાની ક્ષમતાને સક્ષમ કરીએ છીએ. પરંતુ ડ્રાફ્ટ પોસ્ટ પર ખાલી સ્ટ્રિંગ પાછળ આપતું <code>content</code> પદ્ધતિ રાખવાને બદલે, અમે એવું કરીશું કે ડ્રાફ્ટ પોસ્ટ્સ પાસે <code>content</code> પદ્ધતિ જ ન હોય. આ રીતે, જો આપણે ડ્રાફ્ટ પોસ્ટની સામગ્રી મેળવવાનો પ્રયત્ન કરીએ, તો આપણને એક કમ્પાઇલર ભૂલ મળશે જે જણાવશે કે પદ્ધતિ અસ્તિત્વમાં નથી. પરિણામે, ઉત્પાદનમાં (production) ડ્રાફ્ટ પોસ્ટની સામગ્રી આકસ્મિક રીતે પ્રદર્શિત કરવી અશક્ય બની જશે કારણ કે તે કોડ કમ્પાઇલ થશે જ નહીં. સૂચિ ૧૮-૧૯ <code>Post</code> સ્ટ્રક્ટ અને <code>DraftPost</code> સ્ટ્રક્ટની વ્યાખ્યા તેમજ દરેક પરની પદ્ધતિઓ દર્શાવે છે.</p>
 <p><strong>Listing 18-19: A <code>Post</code> with a <code>content</code> method and a <code>DraftPost</code> without a <code>content</code> method</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub struct Post {
-    content: String,
-}
-
-pub struct DraftPost {
-    content: String,
-}
-
-impl Post {
-    pub fn new() -&gt; DraftPost {
-        DraftPost {
-            content: String::new(),
-        }
-    }
-
-    pub fn content(&amp;self) -&gt; &amp;str {
-        &amp;self.content
-    }
-}
-
-impl DraftPost {
-    pub fn add_text(&amp;mut self, text: &amp;str) {
-        self.content.push_str(text);
-    }
-}
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-19/src/lib.rs}}
 <span class="boring">}</span></code></pre>
 <p>બંને <code>Post</code> અને <code>DraftPost</code> સ્ટ્રક્ચરમાં એક ખાનગી <code>content</code> ક્ષેત્ર છે જે બ્લોગ પોસ્ટના લખાણનો સંગ્રહ કરે છે. આ સ્ટ્રક્ચર્સમાં હવે <code>state</code> ક્ષેત્ર નથી, કારણ કે આપણે સ્ટ્રક્ચરના પ્રકારોમાં સ્થિતિનું એન્કોડિંગ ખસેડી રહ્યા છીએ. <code>Post</code> સ્ટ્રક્ચર પ્રકાશિત પોસ્ટ રજૂ કરશે અને તેમાં એક <code>content</code> પદ્ધતિ હશે જે <code>content</code></p>
 <p>પરત કરે છે. આપણે હજી પણ એક <code>Post::new</code> ફંક્શન ધરાવીએ છીએ, પરંતુ તે પહેલાં <code>Post</code> નું ઉદાહરણ પરત કરવાને બદલે, તે હવે <code>DraftPost</code> નું ઉદાહરણ પરત કરે છે. કારણ કે <code>content</code> ખાનગી છે અને એવા કોઈ ફંક્શન્સ નથી જે <code>Post</code> પરત કરે છે, તેથી હાલમાં <code>Post</code> નું ઉદાહરણ બનાવવું શક્ય નથી.</p>
@@ -716,67 +321,15 @@ impl DraftPost {
 <p><strong>Listing 18-20: A <code>PendingReviewPost</code> that gets created by calling <code>request_review</code> on <code>DraftPost</code> and an <code>approve</code> method that turns a <code>PendingReviewPost</code> into a published <code>Post</code></strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
-</span><span class="boring">    content: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub struct DraftPost {
-</span><span class="boring">    content: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Post {
-</span><span class="boring">    pub fn new() -&gt; DraftPost {
-</span><span class="boring">        DraftPost {
-</span><span class="boring">            content: String::new(),
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn content(&amp;self) -&gt; &amp;str {
-</span><span class="boring">        &amp;self.content
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span>impl DraftPost {
-    // --snip--
-<span class="boring">    pub fn add_text(&amp;mut self, text: &amp;str) {
-</span><span class="boring">        self.content.push_str(text);
-</span><span class="boring">    }
-</span><span class="boring">
-</span>    pub fn request_review(self) -&gt; PendingReviewPost {
-        PendingReviewPost {
-            content: self.content,
-        }
-    }
-}
-
-pub struct PendingReviewPost {
-    content: String,
-}
-
-impl PendingReviewPost {
-    pub fn approve(self) -&gt; Post {
-        Post {
-            content: self.content,
-        }
-    }
-}
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-20/src/lib.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>request_review અને approve પદ્ધતિઓ <code>request_review</code> અને <code>approve</code> પદ્ધતિઓ <code>self</code> નું માલિકી સ્થાનાંતરણ કરે છે, આથી <code>DraftPost</code> અને <code>PendingReviewPost</code> ઉદાહરણો વપરાશ પામે છે અને ક્રમશઃ <code>PendingReviewPost</code> અને પ્રકાશિત <code>Post</code> માં રૂપાંતરિત થાય છે. આ રીતે, આપણે <code>request_review</code> પદ્ધતિને બોલાવ્યા પછી કોઈપણ લટકેલા <code>DraftPost</code> ઉદાહરણો નહીં રાખીએ, અને એવું જ આગળ વધે છે. <code>PendingReviewPost</code> struct પર <code>content</code> પદ્ધતિ વ્યાખ્યાયિત નથી, તેથી તેની સામગ્રી વાંચવાનો પ્રયાસ કરવાથી compiler error આવે છે, જેમ કે <code>DraftPost</code> સાથે થાય છે. કારણ કે પ્રકાશિત <code>Post</code> ઉદાહરણ મેળવવાનો એકમાત્ર રસ્તો એ છે કે <code>PendingReviewPost</code> પર <code>approve</code> પદ્ધતિને બોલાવવી, અને <code>PendingReviewPost</code> મેળવવાનો એકમાત્ર રસ્તો એ છે કે <code>DraftPost</code> પર <code>request_review</code> પદ્ધતિને બોલાવવી, આપણે હવે બ્લોગ પોસ્ટ વર્કફ્લોને type system માં એન્કોડ કર્યો છે.</p>
 <p>પરંતુ આપણે <code>main</code> માં થોડા નાના ફેરફારો પણ કરવા પડશે. <code>request_review</code> અને <code>approve</code> પદ્ધતિઓ struct ને બદલવાને બદલે નવા ઉદાહરણો પરત કરે છે, તેથી આપણે પરત થયેલા ઉદાહરણોને સાચવવા માટે વધુ <code>let post =</code> છાયા સોંપણીઓ ઉમેરવાની જરૂર છે. આપણને ડ્રાફ્ટ અને બાકી રહેલા સમીક્ષા પોસ્ટ્સની સામગ્રી ખાલી સ્ટ્રિંગ હોવી જોઈએ તેવા દાવા પણ રાખી શકાતા નથી, અને તેની જરૂર પણ નથી: આપણે હવે તે સ્થિતિમાં પોસ્ટ્સની સામગ્રીનો ઉપયોગ કરવાનો પ્રયાસ કરતી કોડને કમ્પાઇલ કરી શકતા નથી. <code>main</code> માં અપડેટેડ કોડ લિસ્ટિંગ 18-21 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 18-21: Modifications to <code>main</code> to use the new implementation of the blog post workflow</strong></p>
-<pre class="playground"><code class="language-rust edition2024">use blog::Post;
-
-fn main() {
-    let mut post = Post::new();
-
-    post.add_text("I ate a salad for lunch today");
-
-    let post = post.request_review();
-
-    let post = post.approve();
-
-    assert_eq!("I ate a salad for lunch today", post.content());
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch18-oop/listing-18-21/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>આપણે <code>main</code> માં જે ફેરફારો કરવા પડ્યા તે <code>post</code> ને ફરીથી સોંપવા માટેનો અર્થ એ છે કે આ અમલીકરણ હવે સંપૂર્ણપણે વસ્તુ-લક્ષી સ્થિતિ પેટર્નનું પાલન કરતું નથી: સ્થિતિઓ વચ્ચેના પરિવર્તનો હવે <code>Post</code> અમલીકરણની અંદર સંપૂર્ણપણે બંધાયેલા નથી. જોકે, આપણને જે લાભ થયો છે તે એ છે કે પ્રકાર સિસ્ટમ અને કમ્પાઇલ સમયે થતી પ્રકાર ચકાસણીને કારણે અમાન્ય સ્થિતિઓ હવે શક્ય નથી! આ સુનિશ્ચિત કરે છે કે અમુક ભૂલો, જેમ કે પ્રકાશિત ન થયેલ પોસ્ટની સામગ્રીનું પ્રદર્શન, ઉત્પાદનમાં પહોંચે તે પહેલાં જ શોધી કાઢવામાં આવશે.</p>
 <p>આ વિભાગની શરૂઆતમાં સૂચવેલા કાર્યો <code>blog</code> ક્રેટ પર જુઓ, જે યાદી ૧૮-૨૧ પછીનું છે, અને તમને આ કોડના વર્તમાન સ્વરૂપની ડિઝાઇન વિશે શું લાગે છે તે જાણો. નોંધ કરો કે આ ડિઝાઇનનાં કેટલાંક કાર્યો પહેલાંથી જ પૂર્ણ થયેલા હોઈ શકે છે. We’ve seen that even though Rust is capable of</p>
 <p>જો કે Rust વસ્તુલક્ષી (object-oriented) ડિઝાઇન પેટર્નનાં અમલીકરણ સક્ષમ છે, તેમ છતાં અન્ય પેટર્ન, જેમ કે પ્રકાર પ્રણાલીમાં સ્થિતિનું એન્કોડિંગ કરવું, Rust માં ઉપલબ્ધ છે. આ પેટર્નમાં વિવિધ ત્યાગ હોય છે. ભલે તમે વસ્તુલક્ષી પેટર્નથી ખૂબ પરિચિત હોવ, Rustની વિશેષતાઓનો લાભ લેવા માટે સમસ્યાને ફરીથી વિચારવાથી ફાયદો થઈ શકે છે, જેમ કે કમ્પાઇલ સમયે કેટલીક ભૂલો અટકાવવી. અમુક વિશેષતાઓને લીધે, વસ્તુલક્ષી પેટર્ન હંમેશાં Rust માં શ્રેષ્ઠ ઉકેલ ન હોઈ શકે, જેમ કે માલિકી (ownership).</p>
@@ -851,7 +404,7 @@ fn main() {
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 
