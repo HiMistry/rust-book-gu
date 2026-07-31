@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -191,8 +191,7 @@ $ cd add
 </code></pre>
 <p>આગળ, <code>add</code> ડિરેક્ટરીમાં, આપણે <code>Cargo.toml</code> ફાઈલ બનાવીશું જે સમગ્ર વર્કસ્પેસને રૂપરેખાંકિત કરશે. આ ફાઈલમાં <code>[package]</code> વિભાગ નહીં હોય. તેના બદલે, તેમાં <code>[workspace]</code> વિભાગ હશે જે આપણને વર્કસ્પેસમાં સભ્યો ઉમેરવાની મંજૂરી આપશે. આપણે એ પણ ધ્યાન રાખીએ છીએ કે વર્કસ્પેસમાં Cargoના નવીનતમ રિઝોલ્વર અલ્ગોરિધમનો ઉપયોગ કરીએ, <code>resolver</code> મૂલ્યને <code>"3"</code> પર સેટ કરીને:</p>
 <p>ફાઈલનું નામ: Cargo.toml</p>
-<pre><code class="language-toml">[workspace]
-resolver = "3"
+<pre><code class="language-toml">{{#include ../listings/ch14-more-about-cargo/no-listing-01-workspace/add/Cargo.toml}}
 </code></pre>
 <p>આગળ, આપણે <code>adder</code> બાઈનરી ક્રેટ બનાવશું, જે <code>cargo new</code> આદેશ ચલાવીને <code>add</code> ડિરેક્ટરીમાં કરશે:</p>
 <!-- manual-regeneration
@@ -207,9 +206,7 @@ copy output below
       Adding `adder` as member of workspace at `file:///projects/add`
 </code></pre>
 <p>કાર્યકારી <code>cargo new</code> વર્કિંગ એરિયામાં પણ આપોઆપ નવું પેકેજ <code>members</code> કીમાં ઉમેરાય છે, જે <code>[workspace]</code> વ્યાખ્યામાં વર્કિંગ એરિયા Cargo.toml માં જોવા મળે છે, આ પ્રમાણે:</p>
-<pre><code class="language-toml">[workspace]
-resolver = "3"
-members = ["adder"]
+<pre><code class="language-toml">{{#include ../listings/ch14-more-about-cargo/output-only-01-adder-crate/add/Cargo.toml}}
 </code></pre>
 <p>હવે, આપણી કાર્યક્ષેત્ર બનાવી શકીએ છીએ <code>cargo build</code> ચલાવીને. તમારા ‘add’ ડિરેક્ટરીમાં રહેલી ફાઈલો આ પ્રમાણે દેખાવા જોઈએ:</p>
 <pre><code class="language-text">├── Cargo.lock
@@ -236,9 +233,7 @@ copy output below
 </code></pre>
 <p>ફાઈલનામ: Cargo.toml ઉચ્ચ સ્તરનું Cargo.toml હવે <code>members</code> યાદીમાં add_one માર્ગનો</p>
 <p>સમાવેશ કરશે:</p>
-<pre><code class="language-toml">[workspace]
-resolver = "3"
-members = ["adder", "add_one"]
+<pre><code class="language-toml">{{#include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/Cargo.toml}}
 </code></pre>
 <p>તમારું ઉમેરાયેલું ડિરેક્ટરીમાં હવે આ ડિરેક્ટરીઓ અને ફાઈલો હોવી જોઈએ:</p>
 <pre><code class="language-text">├── Cargo.lock
@@ -257,22 +252,19 @@ members = ["adder", "add_one"]
 <p>ઉમેરીએ: Filename: add_one/src/lib.rs</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn add_one(x: i32) -&gt; i32 {
-    x + 1
-}
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/add_one/src/lib.rs}}
 <span class="boring">}</span></code></pre>
 <p>હવે આપણે <code>adder</code> પેકેજને આપણી બાઈનરી પર આધાર રાખે તેવું કરી શકીએ છીએ, જે <code>add_one</code> પેકેજ પર આધારિત છે જેમાં આપણો લાયબ્રેરી છે. પ્રથમ, આપણે <code>adder/Cargo.toml</code> માં <code>add_one</code> પર એક પાથ ડિપેન્ડન્સી ઉમેરવાની જરૂર પડશે.</p>
 <p>ફાઈલનામ: adder/Cargo.toml</p>
-<pre><code class="language-toml">[dependencies]
-add_one = { path = "../add_one" }
+<pre><code class="language-toml">{{#include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/adder/Cargo.toml:6:7}}
 </code></pre>
 <p>Cargo કોઈ ધારી લેતું નથી કે વર્કસ્પેસમાં રહેલા crates એકબીજા પર આધારિત છે, તેથી આપણે અવલંબન સંબંધો વિશે સ્પષ્ટપણે જણાવવાની જરૂર છે.</p>
 <p>આગળ, ચાલો <code>add_one</code> ફંક્શન ( <code>add_one</code> crate માંથી) ને <code>adder</code> crate માં વાપરીએ. <code>adder/src/main.rs</code> ફાઈલ ખોલો અને <code>main</code> ફંક્શનને Listing 14-7 ની જેમ <code>add_one</code> ફંક્શનને બોલાવવા માટે બદલો.</p>
 <p><strong>Listing 14-7: Using the <code>add_one</code> library crate from the <code>adder</code> crate</strong></p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let num = 10;
-    println!("Hello, world! {num} plus one is {}!", add_one::add_one(num));
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-07/add/adder/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>ચાલો વર્કસ્પેસ બનાવીએ <code>cargo build</code> આદેશ ચલાવીને ટોપ-લેવલ ઉમેરવાની ડિરેક્ટરીમાં!</p>
 <!-- manual-regeneration
 cd listings/ch14-more-about-cargo/listing-14-07/add
@@ -305,8 +297,7 @@ Hello, world! 10 plus one is 11!
 * ch07-04-bringing-paths-into-scope-with-the-use-keyword.md
 -->
 <p>add_one/Cargo.toml આ <code>Cargo.toml</code> ફાઈલ એક <code>crate</code> માટે રૂપરેખાંકન માહિતી ધરાવે છે. આ રૂપરેખાંકનમાં <code>crate</code>નું નામ, સંસ્કરણ, લેખક અને અન્ય સંબંધિત વિગતો સમાવિષ્ટ છે જે <code>rustup</code> અને <code>cargo</code> જેવા સાધનો દ્વારા ઉપયોગમાં લેવાય છે. આ ફાઈલ <code>project</code>ના મૂળ ડિરેક્ટરીમાં સ્થિત હોવી જોઈએ. [package] name = “add_one” version = “0.1.0” authors = [“Your Name <a href="mailto:your_email@example.com">your_email@example.com</a>”] edition = “2021” [dependencies]</p>
-<pre><code class="language-toml">[dependencies]
-rand = "0.10.1"
+<pre><code class="language-toml">{{#include ../listings/ch14-more-about-cargo/no-listing-03-workspace-with-external-dependency/add/add_one/Cargo.toml:6:7}}
 </code></pre>
 <p>હવે આપણે <code>use rand;</code> ને add_one/src/lib.rs ફાઈલમાં ઉમેરી શકીએ છીએ, અને <code>cargo build</code> આદેશ ચલાવીને સમગ્ર વર્કસ્પેસ બનાવવાથી <code>rand</code> ક્રેટે આયાત થશે અને સંકલિત થશે. આપણને એક ચેતવણી મળશે કારણ કે આપણે જે <code>rand</code> ને અવકાશમાં લાવ્યા છીએ તેનો ઉલ્લેખ નથી કરી રહ્યા:</p>
 <!-- manual-regeneration
@@ -354,19 +345,7 @@ error[E0432]: unresolved import `rand`
 <p>ફાઈલનામ: add_one/src/lib.rs</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn add_one(x: i32) -&gt; i32 {
-    x + 1
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        assert_eq!(3, add_one(2));
-    }
-}
+</span>{{#rustdoc_include ../listings/ch14-more-about-cargo/no-listing-04-workspace-with-tests/add/add_one/src/lib.rs}}
 <span class="boring">}</span></code></pre>
 <p>હવે ટોચના સ્તરના ઉમેરણ ડિરેક્ટરીમાં <code>cargo test</code> ચલાવો. આ પ્રકારની રચના ધરાવતા વર્કસ્પેસમાં <code>cargo test</code> ચલાવવાથી વર્કસ્પેસમાં રહેલા તમામ ક્રેટે માટે પરીક્ષણો થશે:</p>
 <!-- manual-regeneration
@@ -477,7 +456,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 

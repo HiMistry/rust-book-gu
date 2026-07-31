@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -186,24 +186,14 @@
 <p>વિધિઓ Rust કોડમાં સામાન્ય છે. તમે પહેલેથી જ ભાષાની સૌથી મહત્વપૂર્ણ વિધિઓમાંની એક જોઈ હશે: <code>main</code> વિધિ, જે ઘણા પ્રોગ્રામ્સનો પ્રવેશ બિંદુ છે. તમે <code>fn</code> કીવર્ડ પણ જોયો હશે, જે તમને નવી વિધિઓ જાહેર કરવાની મંજૂરી આપે છે.</p>
 <p>Rust કોડમાં વિધિ અને variable નામો માટે સાપ કેસ (snake case) સંમેલન શૈલીનો ઉપયોગ થાય છે, જેમાં બધા અક્ષરો નાના હોય છે અને અન્ડરસ્કોર્સ શબ્દોને અલગ કરે છે. અહીં એક પ્રોગ્રામ છે જેમાં ઉદાહરણ વિધિ વ્યાખ્યા છે:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    println!("Hello, world!");
-
-    another_function();
-}
-
-fn another_function() {
-    println!("Another function.");
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-16-functions/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>આપણે Rust માં એક વિધેય વ્યાખ્યાયિત કરીએ છીએ <code>fn</code> વડે શરૂ કરીને, ત્યારબાદ વિધેયનું નામ અને કૌંસનો સમૂહ આવે છે. કુંડાકી મૂળાક્ષરો કમ્પાઇલરને વિધેય શરીરની શરૂઆત અને અંત ક્યાં છે તે જણાવે છે.</p>
 <p>આપણે કોઈપણ વિધેયને બોલાવી શકીએ છીએ જેને આપણે વ્યાખ્યાયિત કર્યું છે, તેનું નામ દાખલ કરીને ત્યારબાદ કૌંસનો સમૂહ આવે છે. કારણ કે <code>another_function</code> પ્રોગ્રામમાં વ્યાખ્યાયિત થયેલું છે, તે <code>main</code> વિધેયની અંદરથી બોલાવી શકાય છે. નોંધ કરો કે આપણે <code>another_function</code> ને  <code>main</code> વિધેય પછી સ્રોત કોડમાં વ્યાખ્યાયિત કર્યું હતું; આપણે તેને પહેલા પણ વ્યાખ્યાયિત કરી શકતા હતા. Rust ને તમારી વિધેયો ક્યાં વ્યાખ્યાયિત કરેલ છે તેની ચિંતા નથી, માત્ર એટલું જ કે તે કોલર દ્વારા જોઈ શકાય તેવા સ્કોપમાં ક્યાંક વ્યાખ્યાયિત થયેલું છે.</p>
 <p>ચાલો, <code>functions</code> નામની નવી બાઈનરી પ્રોજેક્ટ શરૂ કરીએ જેથી ફંક્શન્સને વધુ સારી રીતે સમજી શકાય. <code>another_function</code> ઉદાહરણને src/main.rs માં મૂકો અને તેને ચલાવો. તમારે નીચેનું પરિણામ જોવું જોઈએ:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling functions v0.1.0 (file:///projects/functions)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.28s
-     Running `target/debug/functions`
-Hello, world!
-Another function.
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/no-listing-16-functions/output.txt}}
 </code></pre>
 <p>રેખાઓ એ ક્રમમાં ચલાવવામાં આવે છે જે તે <code>main</code> વિધેયમાં દેખાય છે. પ્રથમ “Hello, world!” સંદેશ છાપાય છે, અને ત્યારબાદ <code>another_function</code> બોલાવવામાં આવે છે અને તેનું સંદેશ છાપાય છે.</p>
 <h3 id="parameters"><a class="header" href="#parameters">Parameters</a></h3>
@@ -212,38 +202,24 @@ Another function.
 <p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે.</p>
 <pre class="playground"><code class="language-rust edition2024">fn main() { println!("Hello, world!"); }</code></pre>
 <p>આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    another_function(5);
-}
-
-fn another_function(x: i32) {
-    println!("The value of x is: {x}");
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-17-functions-with-parameters/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>આ કાર્યક્રમ ચલાવવાનો પ્રયત્ન કરો; તમને નીચેનું પરિણામ મળવું જોઈએ:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling functions v0.1.0 (file:///projects/functions)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.21s
-     Running `target/debug/functions`
-The value of x is: 5
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/no-listing-17-functions-with-parameters/output.txt}}
 </code></pre>
 <p>ના ઘોષણામાં એક પરિમાણ નામકું <code>x</code> છે. <code>x</code> નો પ્રકાર <code>i32</code> તરીકે દર્શાવવામાં આવ્યો છે. જ્યારે આપણે <code>5</code> ને <code>another_function</code> માં મોકલીએ છીએ, ત્યારે <code>println!</code> મેક્રો <code>x</code> ધરાવતા કૌંસિત નિશ્ચિત ફોર્મેટ સ્ટ્રિંગમાં <code>5</code> મૂકે છે. In function signatures, you must declare the type of each parameter. This is a deliberate decision in Rust’s design: Requiring type annotations in function definitions means</p>
 <p>ફંક્શન હસ્તાક્ષરોમાં, તમારે દરેક પરિમાણનો પ્રકાર જાહેર કરવો આવશ્યક છે. આ Rust ની ડિઝાઇનનો એક જાણીતો નિર્ણય છે: ફંક્શન વ્યાખ્યાઓમાં પ્રકારની નોંધણી ફરજિયાત હોવાથી, કમ્પાઇલરને ભાગ્યે જ અન્યત્ર કોડમાં તેનો અર્થ શું છે તે જાણવા માટે તમારે તેનો ઉપયોગ કરવાની જરૂર પડે છે. જો તેને ખબર હોય કે ફંક્શન કયા પ્રકારની અપેક્ષા રાખે છે, તો કમ્પાઇલર વધુ મદદરૂપ ભૂલ સંદેશ આપી શકે છે.</p>
 <p>જ્યારે અનેક પરિમાણો વ્યાખ્યાયિત કરવામાં આવે છે, ત્યારે પરિમાણ ઘોષણાઓને અલ્પવિરામથી અલગ કરો, આ પ્રમાણે:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    print_labeled_measurement(5, 'h');
-}
-
-fn print_labeled_measurement(value: i32, unit_label: char) {
-    println!("The measurement is: {value}{unit_label}");
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-18-functions-with-multiple-parameters/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>આ ઉદાહરણ આ ઉદાહરણ બે પરિમાણો સાથે <code>print_labeled_measurement</code> નામનું વિધેય બનાવે છે. પ્રથમ પરિમાણનું નામ <code>value</code> છે અને તે <code>i32</code> પ્રકારનું છે. બીજું પરિમાણ <code>unit_label</code> નામનું છે અને તે <code>char</code> પ્રકારનું છે. ત્યારબાદ, વિધેય <code>value</code> અને <code>unit_label</code> બંને ધરાવતો લખાણ છાપે</p>
 <p>છે. ચાલો આ કોડ ચલાવીએ. તમારી <code>functions</code> પ્રોજેક્ટની src/main.rs ફાઈલમાં હાલમાં રહેલા પ્રોગ્રામને ઉપરના ઉદાહરણ સાથે બદલો અને <code>cargo run</code> નો ઉપયોગ કરીને તેને ચલાવો:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling functions v0.1.0 (file:///projects/functions)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
-     Running `target/debug/functions`
-The measurement is: 5h
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/no-listing-18-functions-with-multiple-parameters/output.txt}}
 </code></pre>
 <ul>
 <li>કારણ કે આપણે <code>value</code> માટે <code>5</code> અને <code>unit_label</code> માટે <code>'h'</code> મૂલ્ય સાથે વિધેયને બોલાવ્યું, તેથી કાર્યક્રમનું પરિણામ તેમાં સમાવિષ્ટ મૂલ્યો દર્શાવે છે.</li>
@@ -257,55 +233,29 @@ The measurement is: 5h
 <p>ચાલો કેટલાક ઉદાહરણો જોઈએ.</p>
 <p>આપણે હકીકતમાં વિધાન અને અભિવ્યક્તિઓનો ઉપયોગ કર્યો છે. <code>let</code> કીવર્ડ વડે variable બનાવવું અને તેને મૂલ્ય સોંપવું એ એક વિધાન છે. યાદી 3-1 માં, <code>let y = 6;</code> એ એક વિધાન છે.</p>
 <p><strong>Listing 3-1: A <code>main</code> function declaration containing one statement</strong></p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let y = 6;
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-01/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>Function નિરુપણો પણ વિધાન છે; સમગ્ર અગાઉનું ઉદાહરણ પોતે જ એક વિધાન છે. (જે ટૂંક સમયમાં જોશું તેમ, કાર્યને બોલાવવું એ વિધાન નથી, જોકે.)</p>
 <p>વિધાનો મૂલ્યો પરત કરતા નથી. તેથી, તમે નીચેના કોડ દ્વારા જે કરવાનો પ્રયાસ કરે છે તે બીજા variable <code>let</code> વિધાન સોંપી શકતા નથી; તમને ભૂલ મળશે:</p>
 <p>ફાઈલનું નામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let x = (let y = 6);
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-19-statements-vs-expressions/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>જ્યારે તમે આ કાર્યક્રમ ચલાવો છો, ત્યારે તમને મળતો ભૂલ આ પ્રમાણે દેખાશે:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling functions v0.1.0 (file:///projects/functions)
-error: expected expression, found `let` statement
- --&gt; src/main.rs:2:14
-  |
-2 |     let x = (let y = 6);
-  |              ^^^
-  |
-  = note: only supported directly in conditions of `if` and `while` expressions
-
-warning: unnecessary parentheses around assigned value
- --&gt; src/main.rs:2:13
-  |
-2 |     let x = (let y = 6);
-  |             ^         ^
-  |
-  = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
-help: remove these parentheses
-  |
-2 -     let x = (let y = 6);
-2 +     let x = let y = 6 ;
-  |
-
-warning: `functions` (bin "functions") generated 1 warning
-error: could not compile `functions` (bin "functions") due to 1 previous error; 1 warning emitted
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/no-listing-19-statements-vs-expressions/output.txt}}
 </code></pre>
 <p>આ <code>let y = 6</code> વિધાન કોઈ મૂલ્ય પરત કરતું નથી, તેથી <code>x</code> ને કંઈ બાંધવા માટે મળતું નથી. આ અન્ય ભાષાઓમાં થતી ઘટનાથી અલગ છે, જેમ કે C અને Ruby, જ્યાં સોંપણી મૂલ્ય પરત કરે છે. તે ભાષાઓમાં, તમે <code>x = y = 6</code> લખી શકો છો અને <code>x</code> અને <code>y</code> બંનેને <code>6</code> નું મૂલ્ય મળશે; Rust માં એવું શક્ય નથી. Expressions</p>
 <p>પ્રતિક્રિયાઓ (expressions) એક મૂલ્યનું મૂલ્યાંકન કરે છે અને તમે Rust માં લખશો તે મોટાભાગના કોડનો ભાગ બનાવે છે. ગણિતની ક્રિયાને ધ્યાનમાં લો, જેમ કે <code>5 + 6</code>, જે <code>11</code> ના મૂલ્ય પર પહોંચે છે. પ્રતિક્રિયાઓ વિધાનનો ભાગ હોઈ શકે છે: યાદી 3-1 માં, વિધાન <code>let y = 6;</code> માં રહેલું <code>6</code> એ એક પ્રતિક્રિયા છે જે <code>6</code> ના મૂલ્ય પર પહોંચે છે. ફંક્શનને બોલાવવું એ પ્રતિક્રિયા છે. મેક્રોને બોલાવવું એ પ્રતિક્રિયા છે. કુંજી કૌંસ (curly brackets) વડે બનાવેલો નવો અવકાશ બ્લોક (scope block) પણ એક પ્રતિક્રિયા છે, ઉદાહરણ તરીકે:</p>
 <p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે.</p>
 <pre class="playground"><code class="language-rust edition2024">fn main() { println!("Hello, world!"); }</code></pre>
 <p>આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let y = {
-        let x = 3;
-        x + 1
-    };
-
-    println!("The value of y is: {y}");
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-20-blocks-are-expressions/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>આ અભિવ્યક્તિ:</p>
 <p>{
 let x = 3;
@@ -317,21 +267,12 @@ x + 1
 <p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે.</p>
 <pre class="playground"><code class="language-rust edition2024">fn main() { println!("Hello, world!"); }</code></pre>
 <p>આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
-<pre class="playground"><code class="language-rust edition2024">fn five() -&gt; i32 {
-    5
-}
-
-fn main() {
-    let x = five();
-
-    println!("The value of x is: {x}");
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-21-function-return-values/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>પાંચ ફંક્શન પાંચ ફંક્શનમાં કોઈ ફંક્શન કોલ્સ, મેક્રો કે <code>let</code> વિધાન નથી—માત્ર સંખ્યા <code>5</code> પોતે જ છે. તે Rust માં એક યોગ્ય ફંક્શન છે. નોંધ કરો કે ફંક્શનનો રિટર્ન પ્રકાર પણ ઉલ્લેખિત છે, જે <code>-&gt; i32</code> છે. આ કોડ ચલાવવાનો પ્રયત્ન કરો; આઉટપુટ આના જેવું દેખાશે:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling functions v0.1.0 (file:///projects/functions)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.30s
-     Running `target/debug/functions`
-The value of x is: 5
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/no-listing-21-function-return-values/output.txt}}
 </code></pre>
 <p><code>five</code> માં <code>5</code> એ વિધેયનું પરિણામ છે, જેના કારણે વળતર પ્રકાર <code>i32</code> છે. ચાલો આને વધુ વિગતવાર જોઈએ. બે મહત્વના ભાગો છે: પ્રથમ, <code>let x = five();</code> લાઇન દર્શાવે છે કે અમે એક variable પ્રારંભ કરવા માટે વિધેયનું પરિણામ વાપરી રહ્યા છીએ. કારણકે વિધેય <code>five</code> એક <code>5</code> પરિણામ આપે છે, તે લાઇન નીચે મુજબ સમાન છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -341,41 +282,18 @@ The value of x is: 5
 <p>બીજું, <code>five</code> વિધેય કોઈ પરિમાણો ધરાવતું નથી અને વળતર મૂલ્યનો પ્રકાર વ્યાખ્યાયિત કરે છે, પરંતુ વિધેયનું શરીર એકલું <code>5</code> છે જેમાં અર્ધવિરામચિહ્ન નથી, કારણ કે તે એક અભિવ્યક્તિ છે જેનું મૂલ્ય આપણે પાછું મેળવવા માંગીએ છીએ.</p>
 <p>ચાલો બીજા ઉદાહરણ જોઈએ:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let x = plus_one(5);
-
-    println!("The value of x is: {x}");
-}
-
-fn plus_one(x: i32) -&gt; i32 {
-    x + 1
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-22-function-parameter-and-return/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>ફાઇલનામ: src/main.rs આ કોડ ચલાવવાથી <code>The value of x is: 6</code> છપાવશે. પરંતુ જો આપણે <code>x + 1</code> ધરાવતી લીટીના અંતે અર્ધવિરામ મૂકીએ, અને તેને અભિવ્યક્તિથી નિવેદનમાં બદલીએ તો</p>
 <p>શું થશે?</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let x = plus_one(5);
-
-    println!("The value of x is: {x}");
-}
-
-fn plus_one(x: i32) -&gt; i32 {
-    x + 1;
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-23-statements-dont-return-values/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>આ કોડનું સંકલન એક ભૂલ ઉત્પન્ન કરશે, જે નીચે મુજબ છે:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling functions v0.1.0 (file:///projects/functions)
-error[E0308]: mismatched types
- --&gt; src/main.rs:7:24
-  |
-7 | fn plus_one(x: i32) -&gt; i32 {
-  |    --------            ^^^ expected `i32`, found `()`
-  |    |
-  |    implicitly returns `()` as its body has no tail or `return` expression
-8 |     x + 1;
-  |          - help: remove this semicolon to return this value
-
-For more information about this error, try `rustc --explain E0308`.
-error: could not compile `functions` (bin "functions") due to 1 previous error
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/no-listing-23-statements-dont-return-values/output.txt}}
 </code></pre>
 <p>મુખ્ય ભૂલ સંદેશ, <code>mismatched types</code> , આ કોડ સાથેની મુખ્ય સમસ્યા જાહેર કરે છે. <code>plus_one</code> ફંક્શનની વ્યાખ્યા જણાવે છે કે તે એક <code>i32</code> પરત કરશે, પરંતુ વિધાન કોઈ મૂલ્યનું પરિણામ આપતું નથી, જે <code>()</code> દ્વારા દર્શાવવામાં આવ્યું છે, જે યુનિટ પ્રકાર છે. તેથી, કંઈપણ પરત કરવામાં આવતું નથી, જે ફંક્શનની વ્યાખ્યાનો વિરોધાભાસ કરે છે અને ભૂલ તરફ દોરી જાય છે. આ આઉટપુટમાં, Rust સંભવિત રીતે આ સમસ્યાને સુધારવામાં મદદ કરવા માટે એક સંદેશ પ્રદાન કરે છે: તે સેમિકોલન દૂર કરવાનું સૂચવે છે, જે ભૂલને ઠીક કરશે.</p>
 
@@ -431,7 +349,7 @@ error: could not compile `functions` (bin "functions") due to 1 previous error
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 

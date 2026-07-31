@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -197,72 +197,19 @@
 <p><strong>Listing 12-15: Creating a failing test for the <code>search</code> function for the functionality we wish we had</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
-</span><span class="boring">    unimplemented!();
-</span><span class="boring">}
-</span><span class="boring">
-</span>// --snip--
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn one_result() {
-        let query = "duct";
-        let contents = "\
-Rust:
-safe, fast, productive.
-Pick three.";
-
-        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
-    }
-}
+</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-15/src/lib.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>આ પરીક્ષણ <code>"duct"</code> શબ્દ શોધે છે. જે લખાણોમાં આપણે શોધી રહ્યા છીએ તે ત્રણ લીટીઓનાં છે, જેમાંની માત્ર એક લીટીમાં <code>"duct"</code> આવેલું છે (નોંધ કરો કે ઉઘાડતી બેવડી અવતરણ ચિહ્નની પછી બેકસ્લેશ Rust ને આ શબ્દપ્રયોગની શરૂઆતમાં નવી લાઇન મૂકવાનું કહેતું નથી). આપણે ખાતરી કરીએ છીએ કે <code>search</code> કાર્ય દ્વારા મળેલું પરિણામ માત્ર એ જ લીટી</p>
 <p>ધરાવે છે જેની આપણને અપેક્ષા છે. જો આપણે આ પરીક્ષણ ચલાવીએ, તો તે હાલમાં નિષ્ફળ થશે કારણ કે <code>unimplemented!</code> મેક્રો “not implemented” સંદેશ સાથે ગભરાટ (panic) પાડે છે. TDD ના સિદ્ધાંતો અનુસાર, આપણે માત્ર એટલો જ કોડ ઉમેરવાનો એક નાનો પગલું લઈશું કે જેથી કાર્યને બોલાવવાથી ગભરાટ ન થાય - <code>search</code> કાર્યને હંમેશા ખાલી વેક્ટર પરત કરવા માટે વ્યાખ્યાયિત કરીને. પછી, પરીક્ષણ સંકલન (compile) થશે અને નિષ્ફળ જશે કારણ કે ખાલી વેક્ટર એ <code>"safe, fast, productive."</code> લીટી ધરાવતા વેક્ટર સાથે મેળ ખાતું નથી.</p>
 <p><strong>Listing 12-16: Defining just enough of the <code>search</code> function so that calling it won’t panic</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
-    vec![]
-}
-<span class="boring">
-</span><span class="boring">#[cfg(test)]
-</span><span class="boring">mod tests {
-</span><span class="boring">    use super::*;
-</span><span class="boring">
-</span><span class="boring">    #[test]
-</span><span class="boring">    fn one_result() {
-</span><span class="boring">        let query = "duct";
-</span><span class="boring">        let contents = "\
-</span><span class="boring">Rust:
-</span><span class="boring">safe, fast, productive.
-</span><span class="boring">Pick three.";
-</span><span class="boring">
-</span><span class="boring">        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-16/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>હવે ચાલો ચર્ચા કરીએ કે શા માટે આપણે સ્પષ્ટ આયુષ્ય <code>'a</code> ને <code>search</code> ના નિશ્ચિત રૂપરેખામાં વ્યાખ્યાયિત કરવાની અને તે આયુષ્યનો ઉપયોગ <code>contents</code> Argument અને વળતર મૂલ્ય સાથે કરવાની જરૂર છે. યાદ કરો પ્રકરણ ૧૦ માં કે આયુષ્ય પરિમાણો કઈ Argument આયુષ્યને વળતર આયુષ્ય સાથે જોડે છે. આ કિસ્સામાં, અમે દર્શાવે છે કે પરત કરેલ વેક્ટર સ્ટ્રિંગ સ્લાઇસ ધરાવવું જોઈએ જે <code>contents</code> Argumentના સ્લાઇસનો સંદર્ભ આપે છે (બળિયા <code>query</code> Argumentને બદલે).</p>
 <p>બીજા શબ્દોમાં કહીએ તો, અમે Rust ને જણાવીએ છીએ કે <code>search</code> ફંક્શન દ્વારા પરત કરવામાં આવેલ ડેટા <code>contents</code> Argumentમાં <code>search</code> ફંક્શનમાં પસાર કરવામાં આવેલા ડેટા જેટલો લાંબો જીવશે. આ મહત્વપૂર્ણ છે! સ્લાઇસ દ્વારા સંદર્ભિત ડેટા સંદર્ભને માન્ય રાખવા માટે માન્ય હોવું જરૂરી છે; જો કમ્પાઇલર ધારે છે કે અમે <code>query</code> ને બદલે <code>contents</code> ના સ્ટ્રિંગ સ્લાઇસ બનાવી રહ્યા છીએ, તો તે તેની સલામતી તપાસ ખોટી રીતે કરશે.</p>
 <p>જો આપણે લાઈફટાઈમની નોંધણીઓ ભૂલી જઈએ અને આ ફંક્શનને કમ્પાઈલ કરવાનો પ્રયત્ન કરીએ, તો આપણને આ ભૂલ મળશે:</p>
-<pre><code class="language-console">$ cargo build
-   Compiling minigrep v0.1.0 (file:///projects/minigrep)
-error[E0106]: missing lifetime specifier
- --&gt; src/lib.rs:1:51
-  |
-1 | pub fn search(query: &amp;str, contents: &amp;str) -&gt; Vec&lt;&amp;str&gt; {
-  |                      ----            ----         ^ expected named lifetime parameter
-  |
-  = help: this function's return type contains a borrowed value, but the signature does not say whether it is borrowed from `query` or `contents`
-help: consider introducing a named lifetime parameter
-  |
-1 | pub fn search&lt;'a&gt;(query: &amp;'a str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
-  |              ++++         ++                 ++              ++
-
-For more information about this error, try `rustc --explain E0106`.
-error: could not compile `minigrep` (lib) due to 1 previous error
+<pre><code class="language-console">{{#include ../listings/ch12-an-io-project/output-only-02-missing-lifetimes/output.txt}}
 </code></pre>
 <p>Rust ને ખબર નહિ કે આપણને આઉટપુટ માટે કયો પરિમાણ (parameter) જોઈએ છે, તેથી આપણે તેને સ્પષ્ટપણે જણાવવું પડશે. નોંધ કરો કે સહાયક લખાણ (help text) સૂચવે છે કે બધા પરિમાણો અને આઉટપુટ પ્રકાર માટે સમાન લાઈફટાઈમ પરિમાણ (lifetime parameter) નિર્દિષ્ટ કરવું, જે અયોગ્ય છે! કારણ કે <code>contents</code> એ પરિમાણ છે જેમાં આપણો તમામ લખાણ સમાવિષ્ટ છે અને આપણે તે લખાણના ભાગો પાછા મેળવવા માંગીએ છીએ, તેથી આપણે જાણીએ છીએ કે <code>contents</code> એ એકમાત્ર પરિમાણ છે જેને રિટર્ન વેલ્યુ (return value) સાથે લાઈફટાઈમ સિન્ટેક્સ (lifetime syntax) નો ઉપયોગ કરીને જોડવું જોઈએ.</p>
 <p>અન્ય પ્રોગ્રામિંગ ભાષાઓમાં તમારે પરિણામ મૂલ્યો સાથે Argumentો જોડવાની જરૂર નથી, પરંતુ આ પ્રથા સમય જતાં સરળ થઈ જશે. તમે પ્રકરણ ૧૦ માં “જીવનકાળ સાથે સંદર્ભોનું માન્યતાપત્ર” વિભાગમાં આપેલા ઉદાહરણો સાથે આ ઉદાહરણની સરખામણી કરવા માગી શકો છો.</p>
@@ -279,139 +226,37 @@ error: could not compile `minigrep` (lib) due to 1 previous error
 <p><strong>Listing 12-17: Iterating through each line in <code>contents</code></strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
-    for line in contents.lines() {
-        // do something with line
-    }
-}
-<span class="boring">
-</span><span class="boring">#[cfg(test)]
-</span><span class="boring">mod tests {
-</span><span class="boring">    use super::*;
-</span><span class="boring">
-</span><span class="boring">    #[test]
-</span><span class="boring">    fn one_result() {
-</span><span class="boring">        let query = "duct";
-</span><span class="boring">        let contents = "\
-</span><span class="boring">Rust:
-</span><span class="boring">safe, fast, productive.
-</span><span class="boring">Pick three.";
-</span><span class="boring">
-</span><span class="boring">        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-17/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p><code>lines</code> પદ્ધતિ એક પુનરાવર્તક (iterator) આપે છે. આપણે પુનરાવર્તકો વિશે પ્રકરણ ૧૩ માં વિગતવાર ચર્ચા કરીશું. પરંતુ યાદ રાખો કે તમે આ પુનરાવર્તકનો ઉપયોગ કરવાની રીત સૂચિ ૩-૫ માં જોઈ હતી, જ્યાં અમે એક સંગ્રહના દરેક ઘટક પર કોડ ચલાવવા માટે પુનરાવર્તક સાથે <code>for</code> લૂપનો ઉપયોગ કર્યો હતો.</p>
 <h4 id="searching-each-line-for-the-query"><a class="header" href="#searching-each-line-for-the-query">Searching Each Line for the Query</a></h4>
 <p>ત્યારબાદ, અમે ચકાસીશું કે વર્તમાન રેખામાં અમારો ક્વેરી સ્ટ્રિંગ છે કે નહીં. સદભાગ્યે, સ્ટ્રિંગ્સ પાસે એક ઉપયોગી પદ્ધતિ નામ <code>contains</code> છે જે આ કાર્ય કરે છે! <code>search</code> ફંક્શનમાં <code>contains</code> પદ્ધતિને બોલાવો, જેમ કે Listing 12-18 માં દર્શાવેલ છે. નોંધ કરો કે હજી પણ આ કમ્પાઇલ થશે નહીં.</p>
 <p><strong>Listing 12-18: Adding functionality to see whether the line contains the string in <code>query</code></strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
-    for line in contents.lines() {
-        if line.contains(query) {
-            // do something with line
-        }
-    }
-}
-<span class="boring">
-</span><span class="boring">#[cfg(test)]
-</span><span class="boring">mod tests {
-</span><span class="boring">    use super::*;
-</span><span class="boring">
-</span><span class="boring">    #[test]
-</span><span class="boring">    fn one_result() {
-</span><span class="boring">        let query = "duct";
-</span><span class="boring">        let contents = "\
-</span><span class="boring">Rust:
-</span><span class="boring">safe, fast, productive.
-</span><span class="boring">Pick three.";
-</span><span class="boring">
-</span><span class="boring">        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-18/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>હાલમાં, અમે કાર્યક્ષમતા વિકસાવી રહ્યા છીએ. કોડને કમ્પાઇલ કરવા માટે, આપણે ફંક્શન હસ્તાક્ષરમાં દર્શાવ્યા મુજબ બોડીમાંથી મૂલ્ય પરત કરવું પડશે.</p>
 <h4 id="storing-matching-lines"><a class="header" href="#storing-matching-lines">Storing Matching Lines</a></h4>
 <p>આ કાર્ય પૂર્ણ કરવા માટે, આપણે મેળ ખાતી લીટીઓને સંગ્રહિત કરવાની એક રીત જોઈએ છે જે આપણે પરત કરવા માંગીએ છીએ. તે માટે, આપણે <code>for</code> લૂપ પહેલાં એક પરિવર્તનશીલ વેક્ટર બનાવી શકીએ અને <code>push</code> પદ્ધતિને બોલાવીને વેક્ટરમાં <code>line</code> સંગ્રહિત કરી શકીએ. <code>for</code> લૂપ પછી, આપણે વેક્ટરને પરત કરીએ છીએ, જે યાદી 12-19 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 12-19: Storing the lines that match so that we can return them</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
-    let mut results = Vec::new();
-
-    for line in contents.lines() {
-        if line.contains(query) {
-            results.push(line);
-        }
-    }
-
-    results
-}
-<span class="boring">
-</span><span class="boring">#[cfg(test)]
-</span><span class="boring">mod tests {
-</span><span class="boring">    use super::*;
-</span><span class="boring">
-</span><span class="boring">    #[test]
-</span><span class="boring">    fn one_result() {
-</span><span class="boring">        let query = "duct";
-</span><span class="boring">        let contents = "\
-</span><span class="boring">Rust:
-</span><span class="boring">safe, fast, productive.
-</span><span class="boring">Pick three.";
-</span><span class="boring">
-</span><span class="boring">        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-19/src/lib.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>હવે <code>search</code> વિધેય માત્ર એ જ લીટીઓ પાછી આપવી જોઈએ જેમાં <code>query</code> હોય, અને આપણી ચકાસણી સફળ થવી જોઈએ. ચાલો ચકાસણી ચલાવીએ:</p>
-<pre><code class="language-console">$ cargo test
-   Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.22s
-     Running unittests src/lib.rs (target/debug/deps/minigrep-9cd200e5fac0fc94)
-
-running 1 test
-test tests::one_result ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-     Running unittests src/main.rs (target/debug/deps/minigrep-9cd200e5fac0fc94)
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-   Doc-tests minigrep
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
+<pre><code class="language-console">{{#include ../listings/ch12-an-io-project/listing-12-19/output.txt}}
 </code></pre>
 <p>આપણી ચકાસણી સફળ થઈ, તેથી આપણે જાણીએ છીએ કે તે કાર્ય કરે છે!</p>
 <p>આ તબક્કે, આપણે શોધ વિધેય (search function) ની અમલીકરણને સુધારવાની તકો ધ્યાનમાં લઈ શકીએ છીએ, જ્યારે પરીક્ષણો ચાલુ રાખવા માટે સમાન કાર્યક્ષમતા જાળવી રાખીએ છીએ. શોધ વિધેયમાં રહેલો કોડ બહુ ખરાબ નથી, પરંતુ તે પુનરાવર્તકો (iterators) ની કેટલીક ઉપયોગી વિશેષતાઓનો લાભ લેતો નથી. આપણે પ્રકરણ ૧૩ માં આ ઉદાહરણ પર પાછા ફરીશું, જ્યાં આપણે પુનરાવર્તકોની વિગતવાર ચર્ચા કરીશું અને તેને કેવી રીતે સુધારી શકાય તે જોઈશું.</p>
 <p>હવે સમગ્ર કાર્યક્રમ કાર્યરત હોવો જોઈએ! ચાલો તેનો પ્રયત્ન કરીએ, પ્રથમ એવા શબ્દ સાથે જે એલિસ ડિકિન્સનની કવિતામાંથી બરાબર એક લીટી પરત કરે છે: frog .</p>
-<pre><code class="language-console">$ cargo run -- frog poem.txt
-   Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.38s
-     Running `target/debug/minigrep frog poem.txt`
-How public, like a frog
+<pre><code class="language-console">{{#include ../listings/ch12-an-io-project/no-listing-02-using-search-in-run/output.txt}}
 </code></pre>
 <p>શાનદાર! હવે આપણે એક એવું શબ્દ જોઈએ જે અનેક લીટીઓ સાથે મેળ ખાય છે, જેમ કે <code>body :</code></p>
-<pre><code class="language-console">$ cargo run -- body poem.txt
-   Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
-     Running `target/debug/minigrep body poem.txt`
-I'm nobody! Who are you?
-Are you nobody, too?
-How dreary to be somebody!
+<pre><code class="language-console">{{#include ../listings/ch12-an-io-project/output-only-03-multiple-matches/output.txt}}
 </code></pre>
 <p>અને અંતે, ચાલો ખાતરી કરીએ કે જ્યારે આપણે કોઈ શબ્દની શોધ કરીએ છીએ જે કાવ્યમાં નથી, જેમ કે monomorphization : ત્યારે આપણને કોઈ લીટીઓ ન મળે.</p>
-<pre><code class="language-console">$ cargo run -- monomorphization poem.txt
-   Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
-     Running `target/debug/minigrep monomorphization poem.txt`
+<pre><code class="language-console">{{#include ../listings/ch12-an-io-project/output-only-04-no-matches/output.txt}}
 </code></pre>
 <p>ખૂબ સારું! આપણે એક પ્રચલિત સાધનનું પોતાનું નાનકડું સંસ્કરણ બનાવ્યું છે અને એપ્લિકેશનોને કેવી રીતે ગોઠવવી તે વિશે ઘણું શીખ્યા છીએ. આપણે ફાઈલ ઇનપુટ અને આઉટપુટ, લાઈફટાઇમ, પરીક્ષણ અને કમાન્ડ લાઇન પાર્સિંગ વિશે પણ થોડું શીખ્યું છે.</p>
 <p>આ પ્રોજેક્ટને પૂર્ણ કરવા માટે, આપણે સંવર્ધિત variables સાથે કેવી રીતે કામ કરવું અને સ્ટાન્ડર્ડ એરર પર કેવી રીતે છાપવું તે ટૂંકમાં દર્શાવીશું, જે બંને કમાન્ડ લાઇન પ્રોગ્રામ લખતી વખતે ઉપયોગી છે.</p>
@@ -468,7 +313,7 @@ How dreary to be somebody!
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 

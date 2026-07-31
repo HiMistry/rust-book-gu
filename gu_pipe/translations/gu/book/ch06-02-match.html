@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -188,98 +188,33 @@
 <p>એક <code>match</code> અભિવ્યક્તિને સિક્કો-ચકાસણી મશીન જેવું વિચારો: સિક્કા એક માર્ગ પરથી સરકે છે જેમાં જુદી જુદી કદની છિદ્રો હોય છે, અને દરેક સિક્કો પ્રથમ છિદ્રમાંથી પડે છે જેમાં તે બંધબેસે છે. એ જ રીતે, મૂલ્યો દરેક પેટર્નમાં જાય છે અને જ્યાં મૂલ્ય “બંધબેસે” ત્યાંથી તે સંકળાયેલ કોડ બ્લોકમાં વપરાશ માટે પડે છે. Speaking of coins, let’s use them as an example using <code>match</code></p>
 <p>! સિક્કાઓની વાત કરીએ તો, ચાલો <code>match</code> નો ઉપયોગ કરીને તેમને ઉદાહરણ તરીકે લઈએ! આપણે એક કાર્ય લખી શકીએ છીએ જે અજ્ઞાત યુએસ સિક્કો લે છે અને ગણતરી મશીનની જેમ, તે કયો સિક્કો છે તે નક્કી કરે છે અને સેન્ટ્સમાં તેનું મૂલ્ય આપે છે, જે યાદી 6-3 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 6-3: An enum and a <code>match</code> expression that has the variants of the enum as its patterns</strong></p>
-<pre class="playground"><code class="language-rust edition2024">enum Coin {
-    Penny,
-    Nickel,
-    Dime,
-    Quarter,
-}
-
-fn value_in_cents(coin: Coin) -&gt; u8 {
-    match coin {
-        Coin::Penny =&gt; 1,
-        Coin::Nickel =&gt; 5,
-        Coin::Dime =&gt; 10,
-        Coin::Quarter =&gt; 25,
-    }
-}
-<span class="boring">
-</span><span class="boring">fn main() {}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-03/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>ચાલો <code>match</code> ને <code>value_in_cents</code> કાર્યમાં સમજીએ. પ્રથમ, આપણે <code>match</code> કીવર્ડને અનુસરતા અભિવ્યક્તિ (expression) નો ઉલ્લેખ કરીએ છીએ, જે આ કિસ્સામાં <code>coin</code> મૂલ્ય છે. આ <code>if</code> સાથે વપરાતી શરતી અભિવ્યક્તિ જેવું જ લાગે છે, પરંતુ તેમાં મોટો તફાવત છે: <code>if</code> સાથે, શરતને બુલિયન (Boolean) મૂલ્યનું પરિણામ આપવું જરૂરી છે, પરંતુ અહીં તે કોઈપણ પ્રકારનું હોઈ શકે છે. આ ઉદાહરણમાં <code>coin</code> નો પ્રકાર <code>Coin</code> એનમ (enum) છે જે આપણે પ્રથમ લીટી પર વ્યાખ્યાયિત કર્યું હતું.</p>
 <p>આગળ છે <code>match</code> અંગો. એક અંગમાં બે ભાગ હોય છે: એક પ્રકારણી (pattern) અને થોડો કોડ. અહીં પહેલો અંગ <code>Coin::Penny</code> મૂલ્ય ધરાવે છે તે પ્રકારણી ધરાવે છે અને પછી <code>=&gt;</code> ઓપરેટર જે પ્રકારણી અને ચલાવવાના કોડને વિભાજિત કરે છે. આ કિસ્સામાં કોડ માત્ર મૂલ્ય <code>1</code> છે. દરેક અંગને અલ્પવિરામથી આગામી અંગથી અલગ કરવામાં આવે છે.</p>
 <p>જ્યારે <code>match</code> અભિવ્યક્તિ (expression) કાર્યરત થાય છે, ત્યારે તે પરિણામી મૂલ્યની તુલના દરેક અંગની પ્રકારણી સાથે ક્રમમાં કરે છે. જો કોઈ પ્રકારણી મૂલ્ય સાથે મેળ ખાય છે, તો તે પ્રકારણી સાથે સંકળાયેલ કોડ ચલાવવામાં આવે છે. જો તે પ્રકારણી મૂલ્ય સાથે મેળ ન ખાય, તો અમલ (execution) આગામી અંગ તરફ આગળ વધે છે, જાણે કે સિક્કાને અલગ કરનાર મશીનમાં હોય છે. આપણને જેટલા જરૂર હોય એટલા અંગો હોઈ શકે છે: યાદી 6-3 માં, અમારી <code>match</code> ચાર અંગ ધરાવે છે.</p>
 <p>દરેક શાખા સાથે સંકળાયેલ કોડ એક અભિવ્યક્તિ છે, અને મેળ ખાતી શાખામાંની અભિવ્યક્તિનું પરિણામી મૂલ્ય સમગ્ર <code>match</code> અભિવ્યક્તિ માટે પરત કરવામાં આવે છે. We don’t typically use curly brackets</p>
 <p>જો મેચ શાખાનો કોડ ટૂંકો હોય તો સામાન્ય રીતે આપણે કદબદ્ધ નિશાનો (curly brackets) વાપરતા નથી, જેમ કે Listing 6-3 માં દરેક શાખા માત્ર એક મૂલ્ય પરત કરે છે. જો તમે મેચ શાખામાં બહુવિધ લીટીઓનો કોડ ચલાવવા માંગો છો, તો તમારે કદબદ્ધ નિશાનોનો ઉપયોગ કરવો આવશ્યક છે, અને પછીથી શાખાને અનુસરતું અલ્પવિરામ વૈકલ્પિક છે. ઉદાહરણ તરીકે, નીચે આપેલ કોડ <code>Coin::Penny</code> સાથે પદ્ધતિને દરેક વખતે બોલાવવામાં આવે ત્યારે “Lucky penny!” છાપે છે, પરંતુ તે હજી પણ બ્લોકના છેલ્લા મૂલ્ય, <code>1</code> : પરત કરે છે.</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">enum Coin {
-</span><span class="boring">    Penny,
-</span><span class="boring">    Nickel,
-</span><span class="boring">    Dime,
-</span><span class="boring">    Quarter,
-</span><span class="boring">}
-</span><span class="boring">
-</span>fn value_in_cents(coin: Coin) -&gt; u8 {
-    match coin {
-        Coin::Penny =&gt; {
-            println!("Lucky penny!");
-            1
-        }
-        Coin::Nickel =&gt; 5,
-        Coin::Dime =&gt; 10,
-        Coin::Quarter =&gt; 25,
-    }
-}
-<span class="boring">
-</span><span class="boring">fn main() {}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-08-match-arm-multiple-lines/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <h3 id="patterns-that-bind-to-values"><a class="header" href="#patterns-that-bind-to-values">Patterns That Bind to Values</a></h3>
 <p>મેચ આર્મ્સની બીજી એક ઉપયોગી વિશેષતા એ છે કે તે મેળ ખાતી કિંમતના ભાગોને જોડી શકે છે. આ રીતે આપણે <code>enum</code> ભિન્નતામાંથી મૂલ્યો બહાર કાઢી શકીએ છીએ.</p>
 <p>ઉદાહરણ તરીકે, ચાલો આપણે આપણી એક <code>enum</code> ભિન્નતામાં ડેટા ઉમેરીએ. 1999 થી 2008 સુધીના સમયગાળા દરમિયાન, યુનાઇટેડ સ્ટેટસે દરેક 50 રાજ્યો માટે એક બાજુ પર અલગ-અલગ ડિઝાઇનવાળા ક્વાર્ટર બનાવ્યા હતા. અન્ય કોઈ સિક્કાઓને રાજ્યની ડિઝાઇન મળી ન હતી, તેથી માત્ર ક્વાર્ટરને જ આ વધારાનું મૂલ્ય પ્રાપ્ત છે. આપણે આપણી <code>enum</code> માં આ માહિતી ઉમેરી શકીએ છીએ, જે Listing 6-4 માં દર્શાવેલ છે, જેમાં <code>Quarter</code> ભિન્નતામાં <code>UsState</code> મૂલ્યનો સમાવેશ થાય છે.</p>
 <p><strong>Listing 6-4: A <code>Coin</code> enum in which the <code>Quarter</code> variant also holds a <code>UsState</code> value</strong></p>
-<pre class="playground"><code class="language-rust edition2024">#[derive(Debug)] // so we can inspect the state in a minute
-enum UsState {
-    Alabama,
-    Alaska,
-    // --snip--
-}
-
-enum Coin {
-    Penny,
-    Nickel,
-    Dime,
-    Quarter(UsState),
-}
-<span class="boring">
-</span><span class="boring">fn main() {}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-04/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>ચાલો કલ્પના કરીએ કે એક મિત્ર અમેરિકાના તમામ 50 રાજ્યોના સિક્કાઓ એકઠા કરવાનો પ્રયત્ન કરી રહ્યો છે. જ્યારે આપણે આપણી છૂટી સિક્કાઓને પ્રકાર પ્રમાણે ગોઠવીશું, ત્યારે આપણે દરેક સિક્કા સાથે સંકળાયેલ રાજ્યનું નામ પણ જણાવીશું જેથી જો તે અમારા મિત્ર પાસે ન હોય તો તેઓ તેને તેમના</p>
 <p>સંગ્રહમાં ઉમેરી શકે. આ કોડના <code>match</code> અભિવ્યક્તિમાં, અમે એક variable (<code>variable</code>) નામ <code>state</code> ને <code>Coin::Quarter</code> પ્રકારના મૂલ્યો સાથે મેળ ખાતા પેટર્નમાં ઉમેરીએ છીએ. જ્યારે <code>Coin::Quarter</code> મેળ ખાય છે, ત્યારે <code>state</code> variable તે સિક્કાના રાજ્યનું મૂલ્ય લેશે. પછી, આપણે તે વિભાગમાં <code>state</code> નો ઉપયોગ કોડમાં આ રીતે કરી શકીએ:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#[derive(Debug)]
-</span><span class="boring">enum UsState {
-</span><span class="boring">    Alabama,
-</span><span class="boring">    Alaska,
-</span><span class="boring">    // --snip--
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">enum Coin {
-</span><span class="boring">    Penny,
-</span><span class="boring">    Nickel,
-</span><span class="boring">    Dime,
-</span><span class="boring">    Quarter(UsState),
-</span><span class="boring">}
-</span><span class="boring">
-</span>fn value_in_cents(coin: Coin) -&gt; u8 {
-    match coin {
-        Coin::Penny =&gt; 1,
-        Coin::Nickel =&gt; 5,
-        Coin::Dime =&gt; 10,
-        Coin::Quarter(state) =&gt; {
-            println!("State quarter from {state:?}!");
-            25
-        }
-    }
-}
-<span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">    value_in_cents(Coin::Quarter(UsState::Alaska));
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-09-variable-in-pattern/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>જો આપણે <code>value_in_cents(Coin::Quarter(UsState::Alaska))</code> ને બોલાવીએ, તો <code>coin</code> એ <code>Coin::Quarter(UsState::Alaska)</code> થશે. જ્યારે આપણે તે મૂલ્યને દરેક <code>match</code> શસ્ત્ર સાથે સરખાવીએ છીએ, ત્યારે આપણે <code>Coin::Quarter(state)</code> સુધી પહોંચીએ ત્યાં સુધી કોઈ પણ મેળ ખાતું નથી. તે સમયે, <code>state</code> માટેનું બંધન <code>UsState::Alaska</code> મૂલ્ય હશે. પછી આપણે <code>println!</code> અભિવ્યક્તિમાં તે બંધનનો ઉપયોગ કરી શકીએ છીએ, આમ <code>Quarter</code> ના <code>Coin</code> એનુમ પ્રકારમાંથી આંતરિક <code>state</code> મૂલ્ય બહાર કાઢી શકીએ છીએ.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h3 id="the-optiont-match-pattern"><a class="header" href="#the-optiont-match-pattern">The <code>Option&lt;T&gt;</code> <code>match</code> Pattern</a></h3>
@@ -287,140 +222,57 @@ enum Coin {
 <p>ચાલો કહીએ કે આપણે એક ફંક્શન લખવા માંગીએ છીએ જે <code>Option&lt;i32&gt;</code> લે છે અને, જો અંદર કોઈ મૂલ્ય હોય, તો તે મૂલ્યમાં 1 ઉમેરે છે. જો અંદર કોઈ મૂલ્ય ન હોય, તો ફંક્શન <code>None</code> મૂલ્ય પરત કરે અને કોઈપણ ક્રિયાઓ કરવાનો પ્રયાસ ન કરે.</p>
 <p>આ કાર્ય રચવાનું ખૂબ જ સરળ છે, <code>match</code> ના કારણે, અને તે યાદી ૬-૫ જેવું દેખાશે.</p>
 <p>`“&gt;</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span>    fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
-        match x {
-            None =&gt; None,
-            Some(i) =&gt; Some(i + 1),
-        }
-    }
-
-    let five = Some(5);
-    let six = plus_one(five);
-    let none = plus_one(None);
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-05/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>ચાલો આપણે <code>plus_one</code> ના પ્રથમ અમલને વધુ વિગતવાર જોઈએ. જ્યારે આપણે <code>plus_one(five)</code> ને બોલાવીએ છીએ, ત્યારે <code>plus_one</code> ના શરીરમાં variable <code>x</code> નું મૂલ્ય <code>Some(5)</code> હશે. ત્યારબાદ આપણે તેને દરેક <code>match</code> શસ્ત્ર સાથે સરખાવીશું:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span><span class="boring">    fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
-</span><span class="boring">        match x {
-</span>            None =&gt; None,
-<span class="boring">            Some(i) =&gt; Some(i + 1),
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    let five = Some(5);
-</span><span class="boring">    let six = plus_one(five);
-</span><span class="boring">    let none = plus_one(None);
-</span><span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-05/src/main.rs:first_arm}}
+<span class="boring">}</span></code></pre>
 <p><code>Some(5)</code> મૂલ્ય પેટર્ન <code>None</code> સાથે મળતું નથી, તેથી આપણે આગામી શાખા તરફ આગળ વધીએ છીએ:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span><span class="boring">    fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
-</span><span class="boring">        match x {
-</span><span class="boring">            None =&gt; None,
-</span>            Some(i) =&gt; Some(i + 1),
-<span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    let five = Some(5);
-</span><span class="boring">    let six = plus_one(five);
-</span><span class="boring">    let none = plus_one(None);
-</span><span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-05/src/main.rs:second_arm}}
+<span class="boring">}</span></code></pre>
 <p>Does <code>Some(5)</code> match <code>Some(i)</code>? તે <code>Some(5)</code> એ <code>Some(i)</code> સાથે બંધબેસે છે? તે બંધબેસે છે! આપણી પાસે સમાન પ્રકાર છે. <code>i</code> એ <code>Some</code> માં રહેલા મૂલ્ય સાથે જોડાય છે, તેથી <code>i</code> ને <code>5</code> ની કિંમત મળે છે. ત્યારબાદ મેચ આર્મમાં રહેલો કોડ ચલાવવામાં આવે છે, જેથી આપણે <code>i</code> ના મૂલ્યમાં 1 ઉમેરીએ અને આપણી કુલ <code>6</code> સાથે એક નવું <code>Some</code></p>
 <p>મૂલ્ય બનાવીએ. હવે ચાલો Listing 6-5 માં <code>plus_one</code> ના બીજા કૉલમાં જોઈએ, જ્યાં <code>x</code> એ <code>None</code> છે. આપણે <code>match</code> માં પ્રવેશીને પ્રથમ આર્મ સાથે સરખામણી કરીએ છીએ:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span><span class="boring">    fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
-</span><span class="boring">        match x {
-</span>            None =&gt; None,
-<span class="boring">            Some(i) =&gt; Some(i + 1),
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    let five = Some(5);
-</span><span class="boring">    let six = plus_one(five);
-</span><span class="boring">    let none = plus_one(None);
-</span><span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-05/src/main.rs:first_arm}}
+<span class="boring">}</span></code></pre>
 <p>It matches! તે મેળ ખાય છે! ઉમેરવા માટે કોઈ મૂલ્ય નથી, તેથી કાર્યક્રમ બંધ થઈ જાય છે અને <code>None</code> મૂલ્ય જમણી બાજુએ આપે છે <code>=&gt;</code>. પ્રથમ ભાગ મળ્યો હોવાથી, અન્ય ભાગોની સરખામણી કરવામાં</p>
 <p>આવતી નથી. <code>match</code> અને enums ને જોડવું ઘણા પરિસ્થિતિઓમાં ઉપયોગી છે. તમે આ નમૂનો Rust કોડમાં ઘણી વાર જોશો: enum સામે <code>match</code>, ડેટાની અંદર variable બાંધો, અને પછી તેના આધારે કોડ ચલાવો. શરૂઆતમાં તે થોડું મુશ્કેલ લાગે છે, પરંતુ એકવાર તમે તેની આદત પાડો છો, તો તમે ઇચ્છશો કે તમારી પાસે તે બધી ભાષાઓમાં હોય. તે userઓમાં સતત પ્રિય છે.</p>
 <h3 id="matches-are-exhaustive"><a class="header" href="#matches-are-exhaustive">Matches Are Exhaustive</a></h3>
 <p>અહીં <code>match</code> ના અન્ય એક પાસાની ચર્ચા કરવાની જરૂર છે: પેટર્ન તમામ શક્યતાઓને આવરી લેવી જોઈએ. અમારા <code>plus_one</code> ફંક્શનના આ સંસ્કરણને ધ્યાનમાં લો, જેમાં ભૂલ છે અને તે કમ્પાઇલ થશે નહીં:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span>    fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
-        match x {
-            Some(i) =&gt; Some(i + 1),
-        }
-    }
-<span class="boring">
-</span><span class="boring">    let five = Some(5);
-</span><span class="boring">    let six = plus_one(five);
-</span><span class="boring">    let none = plus_one(None);
-</span><span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-10-non-exhaustive-match/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>અમે <code>None</code> સ્થિતિને નિયંત્રિત કરી ન હતી, તેથી આ કોડમાં ખામી સર્જાશે. સદભાગ્યે, આ એવી ખામી છે જે Rust જાણે છે કે કેવી રીતે પકડવી. જો આપણે આ કોડને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ, તો આપણને આ ભૂલ મળશે:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling enums v0.1.0 (file:///projects/enums)
-error[E0004]: non-exhaustive patterns: `None` not covered
- --&gt; src/main.rs:3:15
-  |
-3 |         match x {
-  |               ^ pattern `None` not covered
-  |
-note: `Option&lt;i32&gt;` defined here
- --&gt; /rustc/2d8144b7880597b6e6d3dfd63a9a9efae3f533d3/library/core/src/option.rs:597:0
- ::: /rustc/2d8144b7880597b6e6d3dfd63a9a9efae3f533d3/library/core/src/option.rs:601:4
-  |
-  = note: not covered
-  = note: the matched value is of type `Option&lt;i32&gt;`
-help: ensure that all possible cases are being handled by adding a match arm with a wildcard pattern or an explicit pattern as shown
-  |
-4 ~             Some(i) =&gt; Some(i + 1),
-5 ~             None =&gt; todo!(),
-  |
-
-For more information about this error, try `rustc --explain E0004`.
-error: could not compile `enums` (bin "enums") due to 1 previous error
+<pre><code class="language-console">{{#include ../listings/ch06-enums-and-pattern-matching/no-listing-10-non-exhaustive-match/output.txt}}
 </code></pre>
 <p>Rust જાણે છે કે અમે દરેક સંભવિત સ્થિતિને આવરી નથી લીધી અને તે કયું પેટર્ન ભૂલ્યું છે એ પણ જાણે છે! Rust માં મેચિંગ સંપૂર્ણ હોય છે: કોડ માન્ય રહે તે માટે આપણે તમામ શક્યતાઓને ધ્યાનમાં લેવી જ જોઈએ. વિશેષ કરીને <code>Option&lt;T&gt;</code> ના કિસ્સામાં, જ્યારે Rust આપણને <code>None</code> કેસને સ્પષ્ટપણે હેન્ડલ કરવાનું ભૂલવાનું અટકાવે છે, ત્યારે તે આપણને એવું ધારી લેવાથી બચાવે છે કે આપણી પાસે મૂલ્ય છે જ્યારે હકીકતમાં તે શૂન્ય હોઈ શકે છે, આમ પહેલાં ચર્ચા કરાયેલું અબજો ડોલરનું નુકસાન થતું અટકાવે છે.</p>
 <h3 id="catch-all-patterns-and-the-_-placeholder"><a class="header" href="#catch-all-patterns-and-the-_-placeholder">Catch-All Patterns and the <code>_</code> Placeholder</a></h3>
 <p>એનમ્સનો ઉપયોગ કરીને, અમે અમુક ચોક્કસ મૂલ્યો માટે વિશેષ ક્રિયાઓ પણ કરી શકીએ છીએ, પરંતુ બાકીના તમામ મૂલ્યો માટે એક ડિફૉલ્ટ ક્રિયા લઈ શકીએ છીએ. ધારો કે આપણે એક રમત અમલમાં મૂકી રહ્યા છીએ જ્યાં, જો તમે પાસા ફેંકશો અને 3 આવે તો, ખેલાડી આગળ વધતો નથી પણ તેના બદલે તેને એક સુંદર નવી ટોપી મળે છે. જો 7 આવે તો, ખેલાડી એક સુંદર ટોપી ગુમાવે છે. બાકીના તમામ મૂલ્યો માટે, ખેલાડી રમત બોર્ડ પર પાસાની સંખ્યા જેટલા સ્થાન આગળ વધે છે. અહીં એક <code>match</code> છે જે આ તર્કનો અમલ કરે છે, જેમાં પાસા ફેંકવાના પરિણામને હાર્ડકોડેડ કરવામાં આવ્યા છે, રેન્ડમ મૂલ્ય નહીં, અને અન્ય તમામ ક્રિયાઓ ફંક્શન્સ દ્વારા રજૂ થાય છે જેમાં કોઈ બોડી નથી, કારણ કે વાસ્તવમાં તેમને અમલમાં મૂકવું આ ઉદાહરણના અવકાશની બહાર છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span>    let dice_roll = 9;
-    match dice_roll {
-        3 =&gt; add_fancy_hat(),
-        7 =&gt; remove_fancy_hat(),
-        other =&gt; move_player(other),
-    }
-
-    fn add_fancy_hat() {}
-    fn remove_fancy_hat() {}
-    fn move_player(num_spaces: u8) {}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-15-binding-catchall/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>પ્રથમ બે વિભાગો માટે, પેટર્ન સાચા મૂલ્યો <code>3</code> અને <code>7</code> છે. છેલ્લા વિભાગ માટે જે અન્ય તમામ સંભવિત મૂલ્યોને આવરી લે છે, તે variable છે જેને આપણે <code>other</code> નામ આપ્યું છે. <code>other</code> વિભાગ માટે ચાલતો કોડ variable’s ઉપયોગ કરે છે, તેને <code>move_player</code> કાર્યમાં મોકલીને. This code compiles, even though we haven’t listed all the possible</p>
 <p>આ કોડ સંકલિત થાય છે, ભલે આપણે <code>u8</code> દ્વારા ધરાવતા તમામ સંભવિત મૂલ્યોની યાદી ન બનાવી હોય, કારણ કે અંતિમ પેટર્ન એવા તમામ મૂલ્યો સાથે મેળ ખાય છે જે વિશેષ કરીને સૂચિબદ્ધ નથી. આ બધી-ને-કવર કરતી પેટર્ન <code>match</code> ની સંપૂર્ણ હોવાની જરૂરિયાતને પૂર્ણ કરે છે. નોંધ કરો કે આપણે બધી-ને-કવર કરતી પેટર્નને અંતમાં મૂકવી પડશે કારણ કે પેટર્ન ક્રમમાં મૂલ્યાંકિત થાય છે. જો આપણે બધી-ને-કવર કરતી પેટર્નને પહેલાં મૂકી હોત, તો અન્ય વિભાગો ક્યારેય ચાલ્યા ન હોત, તેથી જો આપણે બધી-ને-કવર કરતી પેટર્ન પછી વિભાગો ઉમેરીએ તો Rust આપણને ચેતવણી આપશે!</p>
 <p>Rustમાં એક પ્રકારની રચના પણ છે જેનો ઉપયોગ આપણે કરી શકીએ છીએ જ્યારે આપણે બધા મૂલ્યોને પકડવા માંગતા હોઈએ પરંતુ પકડવામાં આવેલા મૂલ્યનો ઉપયોગ કરવા ન હોય: <code>_</code> એ એક વિશેષ રચના છે જે કોઈપણ મૂલ્ય સાથે મેળ ખાય છે અને તે મૂલ્યને કોઈ variable સાથે જોડે (bind)  નથી. આ Rustને જણાવે છે કે આપણે તે મૂલ્યનો ઉપયોગ નહીં કરીએ, તેથી Rust આપણને બિનઉપયોગી variable વિશે ચેતવણી નહીં આપે.</p>
 <p>ચાલો રમતનાં નિયમો બદલીએ: હવે, જો તમે ૩ અથવા ૭ સિવાય કંઈપણ ફેંકો છો, તો તમારે ફરીથી ફેંકવું પડશે. આપણે પકડવામાં આવેલા મૂલ્યનો ઉપયોગ કરવાની જરૂર નથી, તેથી આપણે આપણા કોડને <code>_</code> નો ઉપયોગ કરવા માટે બદલી શકીએ છીએ, <code>other</code> નામના variable’s જગ્યાએ:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span>    let dice_roll = 9;
-    match dice_roll {
-        3 =&gt; add_fancy_hat(),
-        7 =&gt; remove_fancy_hat(),
-        _ =&gt; reroll(),
-    }
-
-    fn add_fancy_hat() {}
-    fn remove_fancy_hat() {}
-    fn reroll() {}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-16-underscore-catchall/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>આ ઉદાહરણ અંતિમ શરત પણ પૂર્ણ કરે છે, કારણ કે આપણે છેલ્લા ભાગમાં અન્ય તમામ મૂલ્યોને સ્પષ્ટપણે અવગણી રહ્યા છીએ; આપણે કંઈપણ ભૂલ્યા નથી.</p>
 <p>અંતે, આપણે રમતની નિયમોને ફરી એકવાર બદલીશું જેથી જો તમે ૩ અથવા ૭ સિવાય કંઈપણ ફેંકો તો તમારા વળાંકમાં બીજું કંઈ ન બને. આપણે એકમ મૂલ્ય (ખાલી ટ્યૂપલ પ્રકાર જેનો ઉલ્લેખ “ધ ટ્યૂપલ ટાઈપ” વિભાગમાં કર્યો હતો) નો ઉપયોગ કરીને તે વ્યક્ત કરી શકીએ છીએ, જે <code>_</code> ભાગ સાથેના કોડ તરીકે વપરાય છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span>    let dice_roll = 9;
-    match dice_roll {
-        3 =&gt; add_fancy_hat(),
-        7 =&gt; remove_fancy_hat(),
-        _ =&gt; (),
-    }
-
-    fn add_fancy_hat() {}
-    fn remove_fancy_hat() {}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-17-underscore-unit/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>અહીં, અમે Rust ને સ્પષ્ટપણે જણાવી રહ્યા છીએ કે આપણે કોઈ પણ અન્ય મૂલ્યનો ઉપયોગ નહીં કરીએ જે અગાઉના ભાગમાં પેટર્ન સાથે મેળ ખાતું નથી, અને આ સ્થિતિમાં આપણે કોઈ કોડ ચલાવવા</p>
 <p>માંગતા નથી. પેટર્ન અને મેચિંગ વિશે વધુ માહિતી Chapter 19 માં આપવામાં આવશે. હાલ માટે, આપણે <code>if let</code> વાક્યરચના તરફ આગળ વધીશું, જે એવી પરિસ્થિતિઓમાં ઉપયોગી થઈ શકે છે જ્યાં <code>match</code> અભિવ્યક્તિ થોડી લાંબી હોય છે.</p>
@@ -477,7 +329,7 @@ error: could not compile `enums` (bin "enums") due to 1 previous error
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 

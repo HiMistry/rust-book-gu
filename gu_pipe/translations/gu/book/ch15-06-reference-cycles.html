@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -187,85 +187,21 @@
 <h3 id="creating-a-reference-cycle"><a class="header" href="#creating-a-reference-cycle">Creating a Reference Cycle</a></h3>
 <p>ચાલો જોઈએ કે સંદર્ભ ચક્ર કેવી રીતે થઈ શકે છે અને તેને અટકાવવા માટે શું કરવું, યાદી <code>List</code> enum ની વ્યાખ્યા અને યાદી 15-25 માં <code>tail</code> પદ્ધતિથી આરંભ કરીએ.</p>
 <p><code>so that we can modify what a</code>Cons` variant is referring to“&gt;</p>
-<pre class="playground"><code class="language-rust edition2024">use crate::List::{Cons, Nil};
-use std::cell::RefCell;
-use std::rc::Rc;
-
-#[derive(Debug)]
-enum List {
-    Cons(i32, RefCell&lt;Rc&lt;List&gt;&gt;),
-    Nil,
-}
-
-impl List {
-    fn tail(&amp;self) -&gt; Option&lt;&amp;RefCell&lt;Rc&lt;List&gt;&gt;&gt; {
-        match self {
-            Cons(_, item) =&gt; Some(item),
-            Nil =&gt; None,
-        }
-    }
-}
-<span class="boring">
-</span><span class="boring">fn main() {}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-25/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>આપણે યાદી (List) ની વ્યાખ્યાનો બીજો પ્રકાર વાપરી રહ્યા છીએ, જે યાદી 15-5 માં દર્શાવેલ છે. <code>Cons</code> પ્રકારના બીજા ઘટક હવે <code>RefCell&lt;Rc&lt;List&gt;&gt;</code> છે, જેનો અર્થ થાય છે કે આપણે યાદી 15-24 માં કર્યા મુજબ <code>i32</code> મૂલ્યમાં ફેરફાર કરવાની ક્ષમતાને બદલે, <code>Cons</code> પ્રકાર નિર્દેશિત કરેલા <code>List</code> મૂલ્યમાં ફેરફાર કરવા માંગીએ છીએ. આપણે બીજા ઘટકને મેળવવા માટે અનુકૂળતા ખાતર <code>tail</code> પદ્ધતિ પણ ઉમેરી રહ્યા છીએ જો આપણી પાસે <code>Cons</code> પ્રકાર હોય તો.</p>
 <p>યાદી 15-26 માં, આપણે એક <code>main</code> કાર્ય ઉમેરી રહ્યા છીએ જે યાદી 15-25 માં વ્યાખ્યાયિત કરેલાનો ઉપયોગ કરે છે. આ કોડ <code>a</code> માં એક યાદી અને <code>b</code> માં એક યાદી બનાવે છે જે <code>a</code> માં યાદી તરફ નિર્દેશ કરે છે. પછી, તે <code>a</code> માં યાદીને <code>b</code> તરફ નિર્દેશ કરવા માટે બદલે છે, જેનાથી સંદર્ભ ચક્ર (reference cycle) બને છે. આ પ્રક્રિયાના વિવિધ તબક્કામાં સંદર્ભ ગણતરીઓ શું છે તે દર્શાવવા માટે <code>println!</code> વિધાનનો ઉપયોગ કરવામાં આવ્યો છે.</p>
 <p><strong>Listing 15-26: Creating a reference cycle of two <code>List</code> values pointing to each other</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">use crate::List::{Cons, Nil};
-</span><span class="boring">use std::cell::RefCell;
-</span><span class="boring">use std::rc::Rc;
-</span><span class="boring">
-</span><span class="boring">#[derive(Debug)]
-</span><span class="boring">enum List {
-</span><span class="boring">    Cons(i32, RefCell&lt;Rc&lt;List&gt;&gt;),
-</span><span class="boring">    Nil,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl List {
-</span><span class="boring">    fn tail(&amp;self) -&gt; Option&lt;&amp;RefCell&lt;Rc&lt;List&gt;&gt;&gt; {
-</span><span class="boring">        match self {
-</span><span class="boring">            Cons(_, item) =&gt; Some(item),
-</span><span class="boring">            Nil =&gt; None,
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span>fn main() {
-    let a = Rc::new(Cons(5, RefCell::new(Rc::new(Nil))));
-
-    println!("a initial rc count = {}", Rc::strong_count(&amp;a));
-    println!("a next item = {:?}", a.tail());
-
-    let b = Rc::new(Cons(10, RefCell::new(Rc::clone(&amp;a))));
-
-    println!("a rc count after b creation = {}", Rc::strong_count(&amp;a));
-    println!("b initial rc count = {}", Rc::strong_count(&amp;b));
-    println!("b next item = {:?}", b.tail());
-
-    if let Some(link) = a.tail() {
-        *link.borrow_mut() = Rc::clone(&amp;b);
-    }
-
-    println!("b rc count after changing a = {}", Rc::strong_count(&amp;b));
-    println!("a rc count after changing a = {}", Rc::strong_count(&amp;a));
-
-    // Uncomment the next line to see that we have a cycle;
-    // it will overflow the stack.
-    // println!("a next item = {:?}", a.tail());
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-26/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>આપણે variable <code>a</code> માં <code>5, Nil</code> ની પ્રારંભિક યાદી ધરાવતું <code>Rc&lt;List&gt;</code> ઉદાહરણ બનાવીએ છીએ. ત્યારબાદ આપણે variable <code>b</code> માં બીજું <code>Rc&lt;List&gt;</code> ઉદાહરણ બનાવીએ છીએ જે <code>10</code> નું મૂલ્ય ધરાવે છે અને <code>a</code> માં રહેલી યાદી તરફ નિર્દેશ કરે છે.</p>
 <p>આપણે <code>a</code> ને એવી રીતે બદલીએ છીએ કે તે હવે <code>Nil</code> ને બદલે <code>b</code> તરફ નિર્દેશ કરે, જેનાથી એક ચક્ર બને છે. આ કરવા માટે આપણે <code>tail</code> પદ્ધતિનો ઉપયોગ કરીને <code>a</code> માં રહેલા <code>RefCell&lt;Rc&lt;List&gt;&gt;</code> નો સંદર્ભ મેળવીએ છીએ, જેને આપણે variable <code>link</code> માં મૂકીએ છીએ. ત્યારબાદ આપણે <code>RefCell&lt;Rc&lt;List&gt;&gt;</code> પર <code>borrow_mut</code> પદ્ધતિનો ઉપયોગ કરીએ છીએ જેથી અંદરનું મૂલ્ય <code>Nil</code> ધરાવતા <code>Rc&lt;List&gt;</code> થી બદલાઈને <code>b</code> માં રહેલા <code>Rc&lt;List&gt;</code> થઈ જાય.</p>
 <p>જ્યારે આપણે આ કોડ ચલાવીએ છીએ, છેલ્લી <code>println!</code> ટિપ્પણીને થોડા સમય માટે અવગણીને, તો આપણને આ પરિણામ મળશે:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling cons-list v0.1.0 (file:///projects/cons-list)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.53s
-     Running `target/debug/cons-list`
-a initial rc count = 1
-a next item = Some(RefCell { value: Nil })
-a rc count after b creation = 2
-b initial rc count = 1
-b next item = Some(RefCell { value: Cons(5, RefCell { value: Nil }) })
-b rc count after changing a = 2
-a rc count after changing a = 2
+<pre><code class="language-console">{{#include ../listings/ch15-smart-pointers/listing-15-26/output.txt}}
 </code></pre>
 <p><code>Rc&lt;List&gt;</code> ના ઉદાહરણો <code>a</code> અને <code>b</code> બંનેમાં રહેલા સંદર્ભ ગણતરી 2 છે, જ્યારે આપણે <code>a</code> માં યાદીને <code>b</code> તરફ નિર્દેશ કરવા બદલીએ છીએ. <code>main</code> ના અંતે, Rust variable <code>b</code> ને છોડી દે છે, જે <code>b</code> <code>Rc&lt;List&gt;</code> ઉદાહરણની સંદર્ભ ગણતરીને 2 થી ઘટાડીને 1 કરે છે. આ સમયે <code>Rc&lt;List&gt;</code> દ્વારા હીપ પર ફાળવેલી મેમરી છોડવામાં આવશે નહીં, કારણ કે તેની સંદર્ભ ગણતરી 0 ને બદલે 1 છે. પછી, Rust <code>a</code> ને છોડી દે છે, જે <code>a</code> <code>Rc&lt;List&gt;</code> ઉદાહરણની સંદર્ભ ગણતરીને પણ 2 થી ઘટાડીને 1 કરે છે. આ ઉદાહરણની મેમરી પણ છોડી શકાતી નથી, કારણ કે અન્ય <code>Rc&lt;List&gt;</code> ઉદાહરણ હજુ પણ તેનો સંદર્ભ ધરાવે છે. યાદી માટે ફાળવેલી મેમરી કાયમ માટે એકત્રિત થશે નહીં. આ સંદર્ભ ચક્રને દૃષ્ટિનીકરણ કરવા માટે, અમે આકૃતિ 15-4 માં రేఖాచిత્ર બનાવ્યું છે.</p>
 <img alt="A rectangle labeled &#39;a&#39; that points to a rectangle containing the integer 5. A rectangle labeled &#39;b&#39; that points to a rectangle containing the integer 10. The rectangle containing 5 points to the rectangle containing 10, and the rectangle containing 10 points back to the rectangle containing 5, creating a cycle." src="img/trpl15-04.svg" class="center" />
@@ -284,115 +220,33 @@ Figure 15-4: યાદીઓ `a` અને `b` નો સંદર્ભ ચક�
 <h4 id="creating-a-tree-data-structure"><a class="header" href="#creating-a-tree-data-structure">Creating a Tree Data Structure</a></h4>
 <p>શરૂ કરવા માટે, આપણે એક વૃક્ષ બનાવીશું જેમાં ગાંઠો તેમના બાળ ગાંઠો વિશે જાણતા હોય. આપણે <code>Node</code> નામનું struct બનાવીશું જે પોતાના <code>i32</code> મૂલ્ય તેમજ તેના બાળ <code>Node</code> મૂલ્યોના સંદર્ભોને જાળવે છે:</p>
 <p>ફાઈલનું નામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024">use std::cell::RefCell;
-use std::rc::Rc;
-
-#[derive(Debug)]
-struct Node {
-    value: i32,
-    children: RefCell&lt;Vec&lt;Rc&lt;Node&gt;&gt;&gt;,
-}
-<span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">    let leaf = Rc::new(Node {
-</span><span class="boring">        value: 3,
-</span><span class="boring">        children: RefCell::new(vec![]),
-</span><span class="boring">    });
-</span><span class="boring">
-</span><span class="boring">    let branch = Rc::new(Node {
-</span><span class="boring">        value: 5,
-</span><span class="boring">        children: RefCell::new(vec![Rc::clone(&amp;leaf)]),
-</span><span class="boring">    });
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-27/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>અમે ઇચ્છિએ છીએ કે એક <code>Node</code> તેના બાળકોને નિયંત્રિત કરે, અને અમે તે નિયંત્રણ દરેક variable સાથે વહેંચી શકીએ જેથી કરીને વૃક્ષમાં રહેલા દરેક <code>Node</code> ને સીધો જ મેળવી શકાય. આ કરવા માટે, અમે <code>Vec&lt;T&gt;</code> વસ્તુઓને <code>Rc&lt;Node&gt;</code> પ્રકારના મૂલ્યો તરીકે વ્યાખ્યાયિત કરીએ છીએ. અમારે એ પણ બદલવું છે કે કયા નોડ બીજા નોડના બાળકો છે, તેથી અમે <code>RefCell&lt;T&gt;</code> ને</p>
 <p><code>children</code> માં <code>Vec&lt;Rc&lt;Node&gt;&gt;</code> ની આસપાસ રાખીએ છીએ. આગળ, અમે અમારી struct વ્યાખ્યાનો ઉપયોગ કરીશું અને એક <code>Node</code> ઉદાહરણ બનાવીશું જેનું નામ <code>leaf</code> છે, જેમાં <code>3</code> મૂલ્ય અને કોઈ બાળકો નથી, અને બીજું ઉદાહરણ બનાવીશું જેનું નામ <code>branch</code> છે, જેમાં <code>5</code> મૂલ્ય અને <code>leaf</code> એ તેના બાળકોમાંનું એક છે, જે Listing 15-27 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 15-27: Creating a <code>leaf</code> node with no children and a <code>branch</code> node with <code>leaf</code> as one of its children</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::cell::RefCell;
-</span><span class="boring">use std::rc::Rc;
-</span><span class="boring">
-</span><span class="boring">#[derive(Debug)]
-</span><span class="boring">struct Node {
-</span><span class="boring">    value: i32,
-</span><span class="boring">    children: RefCell&lt;Vec&lt;Rc&lt;Node&gt;&gt;&gt;,
-</span><span class="boring">}
-</span><span class="boring">
-</span>fn main() {
-    let leaf = Rc::new(Node {
-        value: 3,
-        children: RefCell::new(vec![]),
-    });
-
-    let branch = Rc::new(Node {
-        value: 5,
-        children: RefCell::new(vec![Rc::clone(&amp;leaf)]),
-    });
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-27/src/main.rs:there}}
+<span class="boring">}</span></code></pre>
 <p>આપણે <code>Rc&lt;Node&gt;</code> ને <code>leaf</code> માં નકલ કરીએ છીએ અને તેને <code>branch</code> માં સંગ્રહિત કરીએ છીએ, જેનો અર્થ થાય છે કે <code>leaf</code> માં રહેલો <code>Node</code> હવે બે માલિકો ધરાવે છે: <code>leaf</code> અને <code>branch</code>. આપણે <code>branch.children</code> દ્વારા <code>branch</code> થી <code>leaf</code> સુધી પહોંચી શકીએ છીએ, પરંતુ <code>leaf</code> થી <code>branch</code> સુધી જવાનો કોઈ રસ્તો નથી. તેનું કારણ એ છે કે <code>leaf</code> પાસે <code>branch</code> નો સંદર્ભ નથી અને તેઓ સંબંધિત છે તે ખબર નથી. આપણે ઈચ્છીએ છીએ કે <code>leaf</code> જાણે કે <code>branch</code> તેનો પિતા છે. આપણે આવતા પગલામાં આ કરીશું.</p>
 <h4 id="adding-a-reference-from-a-child-to-its-parent"><a class="header" href="#adding-a-reference-from-a-child-to-its-parent">Adding a Reference from a Child to Its Parent</a></h4>
 <p>બાળ ઘટકને તેના પિતા વિશે જાગૃત કરવા માટે, આપણે આપણા <code>Node</code> struct વ્યાખ્યામાં એક <code>parent</code> ક્ષેત્ર ઉમેરવાની જરૂર છે. મુશ્કેલી એ છે કે <code>parent</code> નો પ્રકાર શું હોવો જોઈએ તે નક્કી કરવામાં. આપણને ખબર છે કે તેમાં <code>Rc&lt;T&gt;</code> ન હોઈ શકે, કારણ કે તેનાથી <code>leaf.parent</code> દ્વારા <code>branch</code> તરફ અને <code>branch.children</code> દ્વારા <code>leaf</code> તરફ સંદર્ભ ચક્ર રચાઈ જશે, જેના કારણે તેમના <code>strong_count</code> મૂલ્યો ક્યારેય 0 નહીં થાય.</p>
 <p>સંબંધોને બીજી રીતે વિચારીએ તો, પિતા ઘટકે તેના બાળકોનો કબજો રાખવો જોઈએ: જો કોઈ પિતા ઘટક દૂર કરવામાં આવે છે, તો તેના બાળ ઘટકો પણ દૂર કરવા જોઈએ. જો કે, એક બાળક તેના પિતાનો કબજો ન રાખવો જોઈએ: જો આપણે કોઈ બાળક ઘટકને દૂર કરીએ, તો પિતા અસ્તિત્વમાં રહેવો જોઈએ. આ નબળા સંદર્ભો માટેની પરિસ્થિતિ છે!</p>
 <p>આથી, <code>Rc&lt;T&gt;</code> ને બદલે, આપણે <code>parent</code> ના પ્રકારનો ઉપયોગ <code>Weak&lt;T&gt;</code>, વિશેષ કરીને <code>RefCell&lt;Weak&lt;Node&gt;&gt;</code> કરીશું. હવે આપણું <code>Node</code> struct વ્યાખ્યા આ પ્રમાણે દેખાય છે:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024">use std::cell::RefCell;
-use std::rc::{Rc, Weak};
-
-#[derive(Debug)]
-struct Node {
-    value: i32,
-    parent: RefCell&lt;Weak&lt;Node&gt;&gt;,
-    children: RefCell&lt;Vec&lt;Rc&lt;Node&gt;&gt;&gt;,
-}
-<span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">    let leaf = Rc::new(Node {
-</span><span class="boring">        value: 3,
-</span><span class="boring">        parent: RefCell::new(Weak::new()),
-</span><span class="boring">        children: RefCell::new(vec![]),
-</span><span class="boring">    });
-</span><span class="boring">
-</span><span class="boring">    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
-</span><span class="boring">
-</span><span class="boring">    let branch = Rc::new(Node {
-</span><span class="boring">        value: 5,
-</span><span class="boring">        parent: RefCell::new(Weak::new()),
-</span><span class="boring">        children: RefCell::new(vec![Rc::clone(&amp;leaf)]),
-</span><span class="boring">    });
-</span><span class="boring">
-</span><span class="boring">    *leaf.parent.borrow_mut() = Rc::downgrade(&amp;branch);
-</span><span class="boring">
-</span><span class="boring">    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
-</span><span class="boring">}</span></code></pre>
+</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-28/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>એક નોડ તેના પિતૃ નોડનો સંદર્ભ લઈ શકશે પરંતુ તે તેના પિતૃ નોડનો માલિક નહીં હોય. સૂચિ ૧૫-૨૮ માં, અમે <code>main</code> ને આ નવી વ્યાખ્યાનો ઉપયોગ કરવા માટે અપડેટ કરીએ છીએ જેથી <code>leaf</code> નોડને તેના પિતૃ, <code>branch</code> નો સંદર્ભ લેવાનો માર્ગ મળે.</p>
 <p><strong>Listing 15-28: A <code>leaf</code> node with a weak reference to its parent node, <code>branch</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::cell::RefCell;
-</span><span class="boring">use std::rc::{Rc, Weak};
-</span><span class="boring">
-</span><span class="boring">#[derive(Debug)]
-</span><span class="boring">struct Node {
-</span><span class="boring">    value: i32,
-</span><span class="boring">    parent: RefCell&lt;Weak&lt;Node&gt;&gt;,
-</span><span class="boring">    children: RefCell&lt;Vec&lt;Rc&lt;Node&gt;&gt;&gt;,
-</span><span class="boring">}
-</span><span class="boring">
-</span>fn main() {
-    let leaf = Rc::new(Node {
-        value: 3,
-        parent: RefCell::new(Weak::new()),
-        children: RefCell::new(vec![]),
-    });
-
-    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
-
-    let branch = Rc::new(Node {
-        value: 5,
-        parent: RefCell::new(Weak::new()),
-        children: RefCell::new(vec![Rc::clone(&amp;leaf)]),
-    });
-
-    *leaf.parent.borrow_mut() = Rc::downgrade(&amp;branch);
-
-    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-28/src/main.rs:there}}
+<span class="boring">}</span></code></pre>
 <p>Creating the <code>leaf</code> node <code>leaf</code> નોડ બનાવવાની પ્રક્રિયા યાદગાર 15-27 જેવી જ છે, સિવાય કે <code>parent</code> ક્ષેત્ર : <code>leaf</code> શરૂઆતમાં કોઈ પેરેન્ટ વગરની હોય છે, તેથી આપણે એક નવું, ખાલી <code>Weak&lt;Node&gt;</code></p>
 <p>સંદર્ભ ઉદાહરણ બનાવીએ છીએ. આ સમયે, જ્યારે આપણે <code>upgrade</code> પદ્ધતિનો ઉપયોગ કરીને <code>leaf</code> ના પેરેન્ટનો સંદર્ભ મેળવવાનો પ્રયત્ન કરીએ છીએ, ત્યારે આપણને <code>None</code> મૂલ્ય મળે છે. આ આપણે પ્રથમ <code>println!</code> વિધાનના પરિણામમાં જોઈ શકીએ છીએ:</p>
 <pre><code class="language-text">leaf parent = None
@@ -407,58 +261,10 @@ children: RefCell { value: [] } }] } })
 <h4 id="visualizing-changes-to-strong_count-and-weak_count"><a class="header" href="#visualizing-changes-to-strong_count-and-weak_count">Visualizing Changes to <code>strong_count</code> and <code>weak_count</code></a></h4>
 <p>ચાલો જોઈએ કે <code>Rc&lt;Node&gt;</code> ઇન્સ્ટન્સના <code>strong_count</code> અને <code>weak_count</code> મૂલ્યો કેવી રીતે બદલાય છે, એક નવું આંતરિક ક્ષેત્ર બનાવીને અને <code>branch</code> ની રચનાને તે ક્ષેત્રમાં ખસેડીને. આમ કરવાથી, આપણે જોઈ શકીએ છીએ કે <code>branch</code> બનાવવામાં આવે છે અને જ્યારે તે અવકાશમાંથી બહાર નીકળી જાય ત્યારે તેને નાબૂદ કરવામાં આવે છે. ફેરફારો સૂચિ ૧૫-૨૯ માં દર્શાવ્યા છે.</p>
 <p><strong>Listing 15-29: Creating <code>branch</code> in an inner scope and examining strong and weak reference counts</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::cell::RefCell;
-</span><span class="boring">use std::rc::{Rc, Weak};
-</span><span class="boring">
-</span><span class="boring">#[derive(Debug)]
-</span><span class="boring">struct Node {
-</span><span class="boring">    value: i32,
-</span><span class="boring">    parent: RefCell&lt;Weak&lt;Node&gt;&gt;,
-</span><span class="boring">    children: RefCell&lt;Vec&lt;Rc&lt;Node&gt;&gt;&gt;,
-</span><span class="boring">}
-</span><span class="boring">
-</span>fn main() {
-    let leaf = Rc::new(Node {
-        value: 3,
-        parent: RefCell::new(Weak::new()),
-        children: RefCell::new(vec![]),
-    });
-
-    println!(
-        "leaf strong = {}, weak = {}",
-        Rc::strong_count(&amp;leaf),
-        Rc::weak_count(&amp;leaf),
-    );
-
-    {
-        let branch = Rc::new(Node {
-            value: 5,
-            parent: RefCell::new(Weak::new()),
-            children: RefCell::new(vec![Rc::clone(&amp;leaf)]),
-        });
-
-        *leaf.parent.borrow_mut() = Rc::downgrade(&amp;branch);
-
-        println!(
-            "branch strong = {}, weak = {}",
-            Rc::strong_count(&amp;branch),
-            Rc::weak_count(&amp;branch),
-        );
-
-        println!(
-            "leaf strong = {}, weak = {}",
-            Rc::strong_count(&amp;leaf),
-            Rc::weak_count(&amp;leaf),
-        );
-    }
-
-    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
-    println!(
-        "leaf strong = {}, weak = {}",
-        Rc::strong_count(&amp;leaf),
-        Rc::weak_count(&amp;leaf),
-    );
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-29/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p><code>leaf</code> બનાવ્યા પછી, તેનું <code>Rc&lt;Node&gt;</code> એક મજબૂત ગણતરી અને શૂન્ય નબળી ગણતરી ધરાવે છે. આંતરિક અવકાશમાં, અમે <code>branch</code> બનાવીએ છીએ અને તેને <code>leaf</code> સાથે સાંકળીએ છીએ, જેના પરિણામે જ્યારે આપણે ગણતરીઓ છાપીએ છીએ, ત્યારે <code>branch</code> માંનું <code>Rc&lt;Node&gt;</code> એક મજબૂત ગણતરી 1 અને નબળી ગણતરી 1 (કારણ કે <code>leaf.parent</code> <code>Weak&lt;Node&gt;</code> સાથે <code>branch</code> તરફ નિર્દેશ કરે છે) ધરાવશે. જ્યારે આપણે <code>leaf</code> માં ગણતરીઓ છાપીએ છીએ, ત્યારે આપણે જોઈશું કે તેની મજબૂત ગણતરી 2 હશે કારણ કે <code>branch</code> હવે <code>branch.children</code> માં <code>leaf</code> ના <code>Rc&lt;Node&gt;</code> ની નકલ સંગ્રહિત કરે છે, પરંતુ તેની નબળી ગણતરી હજી પણ શૂન્ય રહેશે.</p>
 <p>જ્યારે આંતરિક અવકાશ પૂર્ણ થાય છે, ત્યારે <code>branch</code> અવકાશમાંથી બહાર જાય છે અને <code>Rc&lt;Node&gt;</code> ની પ્રબળ ગણતરી 0 સુધી ઘટે છે, જેથી તેનું <code>Node</code> નાશ પામે છે. <code>leaf.parent</code> માંથી મળતી 1 ની નબળી ગણતરી <code>Node</code> નાશ પામવામાં કોઈ ભાગ લેતી નથી, તેથી આપણને સ્મૃતિ લીક થતું નથી!</p>
 <p>જો આપણે અવકાશ પૂર્ણ થયા પછી <code>leaf</code> ના પિતાને મેળવવાનો પ્રયત્ન કરીએ, તો આપણને ફરીથી <code>None</code> મળશે. કાર્યક્રમના અંતે, <code>leaf</code> માં રહેલું <code>Rc&lt;Node&gt;</code> એક પ્રબળ ગણતરી અને 0 ની નબળી ગણતરી ધરાવે છે કારણ કે variable <code>leaf</code> હવે <code>Rc&lt;Node&gt;</code> નો એકમાત્ર સંદર્ભ છે.</p>
@@ -521,7 +327,7 @@ children: RefCell { value: [] } }] } })
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 

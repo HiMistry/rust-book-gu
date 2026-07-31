@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -194,12 +194,9 @@
 <ul>
 <li>જો તમારી પાસે અન્ય કોઈ તર્ક હોય જે ખાતરી કરે છે કે <code>Result</code> માં <code>Ok</code> મૂલ્ય હશે, પરંતુ તે તર્ક કમ્પાઇલર સમજી શકતો નથી, તો <code>expect</code> ને બોલાવવું પણ યોગ્ય રહેશે. તમારી પાસે હજુ પણ એક <code>Result</code> મૂલ્ય હશે જેને તમારે સંભાળવાની જરૂર પડશે: તમે જે ઓપરેશનને બોલી રહ્યા છો તેમાં સામાન્ય રીતે નિષ્ફળ થવાની શક્યતા છે, ભલે તે તમારા ચોક્કસ પરિસ્થિતિમાં તાર્કિક રીતે અશક્ય હોય. જો તમે મેન્યુઅલી કોડનું નિરીક્ષણ કરીને ખાતરી કરી શકો છો કે તમારી પાસે ક્યારેય <code>Err</code> પ્રકાર નથી, તો <code>expect</code> ને બોલાવવું અને Argument ટેક્સ્ટમાં તમે શા માટે <code>Err</code> પ્રકાર નહીં આવે એનું કારણ દસ્તાવેજીકૃત કરવું સંપૂર્ણપણે સ્વીકાર્ય છે. અહીં એક ઉદાહરણ છે:</li>
 </ul>
-<pre class="playground"><code class="language-rust edition2024">- # fn main() {
-    use std::net::IpAddr;
-
-    let home: IpAddr = "127.0.0.1"
-        .parse()
-        .expect("Hardcoded IP address should be valid");
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>- {{#rustdoc_include ../listings/ch09-error-handling/no-listing-08-unwrap-that-cant-fail/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>આપણે એક <code>IpAddr</code> ઉદાહરણ બનાવી રહ્યા છીએ, જે એક નિશ્ચિત સ્ટ્રિંગને વિશ્લેષણ કરીને બનાવવામાં આવ્યું છે. આપણે જોઈ શકીએ છીએ કે <code>127.0.0.1</code> એ માન્ય IP સરનામું છે, તેથી અહીં <code>expect</code> વાપરવું સ્વીકાર્ય છે. જોકે, એક નિશ્ચિત, માન્ય સ્ટ્રિંગ <code>parse</code> પદ્ધતિનો વળતર પ્રકાર બદલતું નથી: આપણને હજી પણ એક <code>Result</code> મૂલ્ય મળે છે, અને કમ્પાઇલરને હજી પણ <code>Err</code> વિવિધતાની શક્યતા હોવાથી <code>Result</code> ને હેન્ડલ કરવા માટે મજબૂર કરે છે, કારણ કે કમ્પાઇલર એટલું બુદ્ધિશાળી નથી કે આ સ્ટ્રિંગ હંમેશા માન્ય IP સરનામું છે તે જોઈ શકે. જો IP સરનામાનું સ્ટ્રિંગ કોઈ user પાસેથી આવ્યું હોત અને પ્રોગ્રામમાં નિશ્ચિત ન હોત, તો નિષ્ફળ થવાની શક્યતા હોત, તો આપણે <code>Result</code> ને વધુ મજબૂત રીતે હેન્ડલ કરવા ચોક્કસપણે ઈચ્છા પામ્યા. એ ધારણાનો ઉલ્લેખ કરવો કે આ IP સરનામું નિશ્ચિત છે, તે આપણને ભવિષ્યમાં જો આપણે કોઈ અન્ય સ્ત્રોતમાંથી IP સરનામું મેળવવાની જરૂર હોય તો <code>expect</code> ને વધુ સારી ભૂલ-હેન્ડલિંગ કોડથી બદલવા માટે પ્રેરિત કરશે.</p>
 <h3 id="guidelines-for-error-handling"><a class="header" href="#guidelines-for-error-handling">Guidelines for Error Handling</a></h3>
@@ -217,47 +214,9 @@
 <h3 id="custom-types-for-validation"><a class="header" href="#custom-types-for-validation">Custom Types for Validation</a></h3>
 <p>ચાલો આપણે Rustની type systemનો ઉપયોગ કરીને માન્ય મૂલ્યની ખાતરી કરવાની વિચારને વધુ આગળ વધારીએ અને validation માટે એક કસ્ટમ પ્રકાર બનાવવાનો પ્રયાસ કરીએ. પ્રકરણ ૨ માં રહેલા અનુમાન લગાવવાના રમતના પરિણામને યાદ કરો, જેમાં આપણી કોડે userને ૧ થી ૧૦૦ ની વચ્ચેનો અંક પસંદ કરવાનું કહ્યું હતું. આપણે ગુપ્ત અંક સામે તપાસ કરતા પહેલાં userના અનુમાન તે સંખ્યાઓની વચ્ચે છે કે નહીં તેની ચકાસણી ક્યારેય કરી ન હતી; આપણે માત્ર એટલું જ ચકાસ્યું હતું કે અનુમાન હકારાત્મક છે. આ સ્થિતિમાં, પરિણામો ઘણા ગંભીર ન હતા: “ખૂબ ઊંચું” અથવા “ખૂબ નીચું” જેવો આપણો આઉટપુટ તો સાચો જ રહેત. પરંતુ userને માન્ય અનુમાન તરફ માર્ગદર્શન આપવા અને રેન્જની બહારના અંકનો અનુમાન લગાડવા અને ઉદાહરણ તરીકે, અક્ષરો ટાઈપ કરવા વચ્ચે અલગ વર્તન રાખવા માટે આ એક ઉપયોગી સુધારો હશે.</p>
 <p>એક રીત આ અનુમાનને <code>i32</code> તરીકે ઉતારવાની હોઈ શકે છે, માત્ર <code>u32</code> તરીકે નહીં, જેથી નકારાત્મક સંખ્યાઓ પણ સ્વીકારી શકાય, અને પછી સંખ્યાની રેન્જમાં છે કે નહીં તે ચકાસવું, આ પ્રમાણે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::cmp::Ordering;
-</span><span class="boring">use std::io;
-</span><span class="boring">
-</span><span class="boring">use rand::prelude::*;
-</span><span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">    println!("Guess the number!");
-</span><span class="boring">
-</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
-</span><span class="boring">
-</span>    loop {
-        // --snip--
-
-<span class="boring">        println!("Please input your guess.");
-</span><span class="boring">
-</span><span class="boring">        let mut guess = String::new();
-</span><span class="boring">
-</span><span class="boring">        io::stdin()
-</span><span class="boring">            .read_line(&amp;mut guess)
-</span><span class="boring">            .expect("Failed to read line");
-</span><span class="boring">
-</span>        let guess: i32 = match guess.trim().parse() {
-            Ok(num) =&gt; num,
-            Err(_) =&gt; continue,
-        };
-
-        if guess &lt; 1 || guess &gt; 100 {
-            println!("The secret number will be between 1 and 100.");
-            continue;
-        }
-
-        match guess.cmp(&amp;secret_number) {
-            // --snip--
-<span class="boring">            Ordering::Less =&gt; println!("Too small!"),
-</span><span class="boring">            Ordering::Greater =&gt; println!("Too big!"),
-</span><span class="boring">            Ordering::Equal =&gt; {
-</span><span class="boring">                println!("You win!");
-</span><span class="boring">                break;
-</span><span class="boring">            }
-</span><span class="boring">        }
-</span>    }
+</span>{{#rustdoc_include ../listings/ch09-error-handling/no-listing-09-guess-out-of-range/src/main.rs:here}}
 <span class="boring">}</span></code></pre>
 <p>if અભિવ્યક્તિની ચકાસણી <code>if</code> અભિવ્યક્તિ તપાસ કરે છે કે આપણું મૂલ્ય રેન્જની બહાર છે કે નહીં, userને સમસ્યા વિશે જણાવે છે અને <code>continue</code> ને બોલાવીને લૂપના આગામી પુનરાવર્તન (iteration) શરૂ કરે છે અને બીજો પ્રયાસ કરવા માટે કહે છે. <code>if</code> અભિવ્યક્તિ પછી, આપણે સરખામણીઓ ચાલુ રાખી શકીએ છીએ <code>guess</code> અને ગુપ્ત સંખ્યા વચ્ચે એ જાણીને કે <code>guess</code> 1 થી 100 ની વચ્ચે છે. જો કે,</p>
 <p>આ એક આદર્શ ઉકેલ નથી: જો તે સંપૂર્ણપણે નિર્ણાયક હતું કે પ્રોગ્રામ માત્ર 1 થી 100 ની વચ્ચેના મૂલ્યો પર જ કાર્ય કરે, અને તેની પાસે ઘણાં કાર્યો (functions) આ જરૂરિયાત સાથે હોય, તો દરેક કાર્યમાં આવી ચકાસણી રાખવી કંટાળાજનક (tedious) હોઈ શકે છે (અને કામગીરી (performance) પર અસર કરી શકે છે).</p>
@@ -265,23 +224,7 @@
 <p><strong>Listing 9-13: A <code>Guess</code> type that will only continue with values between 1 and 100</strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub struct Guess {
-    value: i32,
-}
-
-impl Guess {
-    pub fn new(value: i32) -&gt; Guess {
-        if value &lt; 1 || value &gt; 100 {
-            panic!("Guess value must be between 1 and 100, got {value}.");
-        }
-
-        Guess { value }
-    }
-
-    pub fn value(&amp;self) -&gt; i32 {
-        self.value
-    }
-}
+</span>{{#rustdoc_include ../listings/ch09-error-handling/listing-09-13/src/guessing_game.rs}}
 <span class="boring">}</span></code></pre>
 <p>નોંધ કરો કે src/guessing_game.rs માં આ કોડમાં એક મોડ્યુલ ઘોષણા <code>mod guessing_game;</code> ઉમેરવાની જરૂર છે, જે src/lib.rs માં આપણે અહીં દર્શાવ્યું નથી. આ નવા મોડ્યુલની ફાઈલમાં, અમે <code>Guess</code> નામનું struct વ્યાખ્યાયિત કરીએ છીએ જેમાં <code>value</code> નામનું ક્ષેત્ર છે જે <code>i32</code> ધરાવે છે. અહીં સંખ્યા સંગ્રહિત કરવામાં આવશે.</p>
 <p>પછી, અમે <code>Guess</code> પર <code>new</code> નામનું સંકળાયેલું કાર્ય અમલમાં મૂકીએ છીએ જે <code>Guess</code> ના instances બનાવે છે. <code>new</code> કાર્યને એક પરિમાણ <code>value</code> પ્રકાર <code>i32</code> સાથે વ્યાખ્યાયિત કરવામાં આવ્યું છે અને <code>Guess</code> પાછું આપવાનું છે. <code>new</code> કાર્યના body માં રહેલો કોડ <code>value</code> નું પરીક્ષણ કરે છે કે તે 1 અને 100 ની વચ્ચે છે કે નહીં. જો <code>value</code> આ પરીક્ષણને પાસ ન કરે, તો અમે એક <code>panic!</code> કૉલ કરીએ છીએ, જે કોલિંગ કોડ લખતા પ્રોગ્રામરને ચેતવણી આપશે કે તેમની પાસે એક bug છે જેને ઠીક કરવાની જરૂર છે, કારણ કે આ રેન્જની બહાર <code>Guess</code> સાથે <code>value</code> બનાવવું એ કરારનું ઉલ્લંઘન કરશે જેના પર <code>Guess::new</code> આધાર રાખે છે. <code>Guess::new</code> ક્યારે panic થઈ શકે તેની પરિસ્થિતિઓ તેની public-facing API દસ્તાવેજીકરણમાં ચર્चित કરવી જોઈએ; અમે પ્રકરણ 14 માં તમે બનાવશો તે API દસ્તાવેજીકરણમાં panic! ની શક્યતા દર્શાવતી દસ્તાવેજીકરણ સંમેલનોને આવરી લઈશું. જો <code>value</code> પરીક્ષણને પાસ કરે, તો અમે એક નવું <code>Guess</code> બનાવીએ છીએ જેમાં તેનું <code>value</code> ક્ષેત્ર <code>value</code> પરિમાણ પર સેટ કરવામાં આવ્યું છે અને <code>Guess</code> પાછું આપીએ છીએ.</p>
@@ -343,7 +286,7 @@ impl Guess {
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 

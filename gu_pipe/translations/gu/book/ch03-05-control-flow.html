@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bee0d6e8.js";
+            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -188,137 +188,71 @@
 <p>એક <code>if</code> અભિવ્યક્તિ તમને શરતો પર આધારિત તમારા કોડને વિભાજિત કરવાની મંજૂરી આપે છે. તમે એક શરત પ્રદાન કરો છો અને પછી જણાવો છો, “જો આ શરત પૂરી થાય, તો આ કોડ બ્લોક ચલાવો. જો શરત પૂરી ન થાય, તો આ કોડ બ્લોક ચલાવશો નહીં.”</p>
 <p><code>if</code> અભિવ્યક્તિને અન્વેષણ કરવા માટે તમારા પ્રોજેક્ટ્સ ડિરેક્ટરીમાં branches નામનો એક નવો પ્રોજેક્ટ બનાવો. src/main.rs ફાઇલમાં નીચે મુજબ ઇનપુટ કરો:</p>
 <p>ફાઇલનામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let number = 3;
-
-    if number &lt; 5 {
-        println!("condition was true");
-    } else {
-        println!("condition was false");
-    }
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-26-if-true/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>if અભિવ્યક્તિઓ બધી <code>if</code> અભિવ્યક્તિઓ <code>if</code> કીવર્ડથી શરૂ થાય છે, ત્યારબાદ એક શરત આવે છે. આ કિસ્સામાં, શરત તપાસે છે કે variable <code>number</code> નું મૂલ્ય 5 થી ઓછું છે કે નહીં. જો શરત <code>true</code> હોય તો અમલમાં મૂકવા માટે કોડનો બ્લોક તરત જ શરતના અંતે ચોકની નિશાની ({}) માં મૂકવામાં આવે છે. <code>if</code> અભિવ્યક્તિઓમાં શરતો સાથે સંકળાયેલા કોડના બ્લોક્સને કેટલીકવાર આર્મ્ઝ કહેવામાં આવે છે, જેમ કે આપણે પ્રકરણ 2 ના “અનુમાનને ગુપ્ત સંખ્યા સાથે સરખાવવું” વિભાગમાં ચર્ચા કરેલા <code>match</code> અભિવ્યક્તિઓમાં આર્મ્ઝ હોય છે.</p>
 <p>વૈકલ્પિક રીતે, અમે અહીં <code>else</code> અભિવ્યક્તિ પણ ઉમેરી શકીએ છીએ, જેથી જો શરત <code>false</code> હોય તો પ્રોગ્રામને ચલાવવા માટે વૈકલ્પિક કોડ બ્લોક મળે. જો તમે <code>else</code> અભિવ્યક્તિ ન આપો અને શરત <code>false</code> હોય, તો પ્રોગ્રામ માત્ર <code>if</code> બ્લોક છોડી દેશે અને આગલા કોડ ભાગ પર આગળ વધશે. આ કોડ</p>
 <p>ચલાવવાનો પ્રયાસ કરો; તમારે નીચેનું પરિણામ જોવું જોઈએ:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling branches v0.1.0 (file:///projects/branches)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
-     Running `target/debug/branches`
-condition was true
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/no-listing-26-if-true/output.txt}}
 </code></pre>
 <p>ચાલો <code>number</code> નું મૂલ્ય એવું બદલીએ કે જે શરતને <code>false</code> બનાવે, અને જોઈએ કે શું થાય છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span>    let number = 7;
-<span class="boring">
-</span><span class="boring">    if number &lt; 5 {
-</span><span class="boring">        println!("condition was true");
-</span><span class="boring">    } else {
-</span><span class="boring">        println!("condition was false");
-</span><span class="boring">    }
-</span><span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-27-if-false/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
 <p>ફરીથી કાર્યક્રમ ચલાવો અને પરિણામ જુઓ:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling branches v0.1.0 (file:///projects/branches)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
-     Running `target/debug/branches`
-condition was false
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/no-listing-27-if-false/output.txt}}
 </code></pre>
 <p>એ નોંધવું પણ મહત્વનું છે કે આ કોડમાં શરત <code>bool</code> પ્રકારની હોવી જોઈએ. જો શરત <code>bool</code> ન હોય, તો આપણને ભૂલ મળશે. ઉદાહરણ તરીકે, નીચેના કોડ ચલાવવાનો પ્રયાસ કરો:</p>
 <p>ફાઈલનું નામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let number = 3;
-
-    if number {
-        println!("number was three");
-    }
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-28-if-condition-must-be-bool/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>જો શરતનું મૂલ્યાંકન આ સમયે <code>3</code> ના મૂલ્ય પર થાય છે, અને Rust એક ભૂલ ઉત્પન્ન કરે છે:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling branches v0.1.0 (file:///projects/branches)
-error[E0308]: mismatched types
- --&gt; src/main.rs:4:8
-  |
-4 |     if number {
-  |        ^^^^^^ expected `bool`, found integer
-
-For more information about this error, try `rustc --explain E0308`.
-error: could not compile `branches` (bin "branches") due to 1 previous error
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/no-listing-28-if-condition-must-be-bool/output.txt}}
 </code></pre>
 <p>ભૂલ સૂચવે છે કે Rust ને <code>bool</code> અપેક્ષિત હતું પરંતુ એક પૂર્ણાંક મળ્યો. રૂબી અને JavaScript જેવા ભાષાઓથી વિપરીત, Rust આપોઆપ બિન-બુલિયન પ્રકારોને બુલિયનમાં રૂપાંતર કરવાનો પ્રયત્ન કરશે નહીં. તમારે સ્પષ્ટપણે જણાવવું જોઈએ અને હંમેશાં <code>if</code> સાથે બુલિયન શરત પ્રદાન કરવી જોઈએ. જો આપણે ઈચ્છીએ કે <code>if</code> કોડ બ્લોક માત્ર ત્યારે જ ચાલે જ્યારે કોઈ સંખ્યા <code>0</code> બરાબર ન હોય, ઉદાહરણ તરીકે, તો અમે <code>if</code> અભિવ્યક્તિને નીચે મુજબ બદલી શકીએ છીએ:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let number = 3;
-
-    if number != 0 {
-        println!("number was something other than zero");
-    }
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-29-if-not-equal-0/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>આ કોડ ચલાવવાથી <code>number was something other than zero</code> પ્રિન્ટ થશે.</p>
 <h4 id="handling-multiple-conditions-with-else-if"><a class="header" href="#handling-multiple-conditions-with-else-if">Handling Multiple Conditions with <code>else if</code></a></h4>
 <p>તમે <code>if</code> અને <code>else</code> ને <code>else if</code> અભિવ્યક્તિમાં જોડીને બહુવિધ શરતોનો ઉપયોગ કરી શકો છો. ઉદાહરણ તરીકે:</p>
 <p>ફાઈલનામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let number = 6;
-
-    if number % 4 == 0 {
-        println!("number is divisible by 4");
-    } else if number % 3 == 0 {
-        println!("number is divisible by 3");
-    } else if number % 2 == 0 {
-        println!("number is divisible by 2");
-    } else {
-        println!("number is not divisible by 4, 3, or 2");
-    }
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-30-else-if/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>આ કાર્યક્રમ ચાર સંભવિત માર્ગો લઈ શકે છે. તેને ચલાવ્યા પછી, તમારે નીચે મુજબનું પરિણામ જોવું જોઈએ:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling branches v0.1.0 (file:///projects/branches)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
-     Running `target/debug/branches`
-number is divisible by 3
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/no-listing-30-else-if/output.txt}}
 </code></pre>
 <p>જ્યારે આ કાર્યક્રમ ચલાય છે, ત્યારે તે દરેક <code>if</code> અભિવ્યક્તિને વારાફરતી તપાસે છે અને જે શરત <code>true</code> હોય તેવા પ્રથમ ભાગનું પાલન કરે છે. નોંધ કરો કે ભલે 6 એ 2 વડે વિભાજ્ય હોય, છતાં આપણે આઉટપુટ <code>number is divisible by 2</code> જોતા નથી, ન તો આપણે <code>else</code> બ્લોકમાંથી <code>number is not divisible by 4, 3, or 2</code> લખાણ જોઈએ છીએ. આ એટલા માટે છે કે Rust માત્ર પ્રથમ <code>true</code> શરત માટે બ્લોકનું પાલન કરે છે, અને એકવાર તેને તે મળી જાય પછી, તે બાકીની શરતોને પણ તપાસતું નથી.</p>
 <p>અતિશય <code>else if</code> અભિવ્યક્તિઓ વાપરવાથી કોડ અવ્યવસ્થિત થઈ શકે છે, તેથી જો તમારી પાસે એક કરતાં વધુ હોય, તો તમે તમારા કોડને સુધારી શકો છો. પ્રકરણ ૬ એક શક્તિશાળી Rust શાખા રચના <code>match</code> વિશે વર્ણવે છે જે આવા કિસ્સાઓ માટે ઉપયોગી છે.</p>
 <h4 id="using-if-in-a-let-statement"><a class="header" href="#using-if-in-a-let-statement">Using <code>if</code> in a <code>let</code> Statement</a></h4>
 <p>કારણ કે <code>if</code> એક અભિવ્યક્તિ છે, આપણે તેનો ઉપયોગ <code>let</code> વિધાનની જમણી બાજુએ variable મૂલ્ય સોંપવા માટે કરી શકીએ છીએ, જે યાદી 3-2 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 3-2: Assigning the result of an <code>if</code> expression to a variable</strong></p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let condition = true;
-    let number = if condition { 5 } else { 6 };
-
-    println!("The value of number is: {number}");
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-02/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p><code>number</code> variable <code>if</code> અભિવ્યક્તિના પરિણામ પર આધારિત મૂલ્ય સાથે જોડી દેવામાં આવશે. જુઓ કે શું થાય છે તે જોવા માટે આ કોડ ચલાવો:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling branches v0.1.0 (file:///projects/branches)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.30s
-     Running `target/debug/branches`
-The value of number is: 5
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/listing-03-02/output.txt}}
 </code></pre>
 <p>યાદ રાખવું કે કોડ બ્લોક્સ અંતિમ અભિવ્યક્તિનું મૂલ્યાંકન કરે છે, અને સંખ્યાઓ પણ અભિવ્યક્તિઓ જ હોય છે. આ કિસ્સામાં, સમગ્ર <code>if</code> અભિવ્યક્તિ કયા કોડ બ્લોક ચલાવવામાં આવે તેના પર આધારિત છે. આનો અર્થ એ થાય છે કે <code>if</code> ના દરેક ભાગમાંથી પરિણામો મળવાની સંભાવના ધરાવતા મૂલ્યો સમાન પ્રકારના હોવા જોઈએ; યાદી 3-2 માં, <code>if</code> ભાગ અને <code>else</code> ભાગ બંનેના પરિણામો <code>i32</code> પૂર્ણાંકો હતા. જો પ્રકારો મેળ ખાતા ન હોય, તો નીચે આપેલ ઉદાહરણમાં જેમ કે, આપણને ભૂલ મળશે:</p>
 <p>ફાઈલનામ: src/main.rs આ એક સરળ Rust કાર્યક્રમ છે જે “Hello, world!” છાપે છે.</p>
 <pre class="playground"><code class="language-rust edition2024">fn main() { println!("Hello, world!"); }</code></pre>
 <p>આ કાર્યક્રમ <code>main</code> નામનું એક કાર્ય વ્યાખ્યાયિત કરે છે. આ કાર્ય Rust કાર્યક્રમનો પ્રવેશ બિંદુ છે. જ્યારે તમે કાર્યક્રમ ચલાવો છો, ત્યારે <code>main</code> કાર્ય પ્રથમ ચલાવવામાં આવે છે. <code>println!</code> એ એક macro છે જે કન્સોલ પર ટેક્સ્ટ છાપે છે. આ કિસ્સામાં, તે “Hello, world!” છાપે છે. તમે આ કાર્યક્રમને Rust compiler સાથે compile કરી શકો છો અને પછી executable બનાવી શકો છો. executable ચલાવવા માટે, તમે <code>cargo run</code> command વાપરી શકો છો.</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let condition = true;
-
-    let number = if condition { 5 } else { "six" };
-
-    println!("The value of number is: {number}");
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-31-arms-must-return-same-type/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>જ્યારે આપણે આ કોડને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ છીએ, ત્યારે આપણને ભૂલ મળશે. <code>if</code> અને <code>else</code> વિભાગોમાં મૂલ્ય પ્રકારો સુસંગત નથી, અને Rust ચોક્કસપણે પ્રોગ્રામમાં સમસ્યા ક્યાં શોધવી તે દર્શાવે છે:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling branches v0.1.0 (file:///projects/branches)
-error[E0308]: `if` and `else` have incompatible types
- --&gt; src/main.rs:4:44
-  |
-4 |     let number = if condition { 5 } else { "six" };
-  |                                 -          ^^^^^ expected integer, found `&amp;str`
-  |                                 |
-  |                                 expected because of this
-
-For more information about this error, try `rustc --explain E0308`.
-error: could not compile `branches` (bin "branches") due to 1 previous error
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/no-listing-31-arms-must-return-same-type/output.txt}}
 </code></pre>
 <p><code>if</code> બ્લોકમાં રહેલું અભિવ્યક્તિ એક પૂર્ણાંકમાં મૂલ્યાંકન કરે છે, અને <code>else</code> બ્લોકમાં રહેલું અભિવ્યક્તિ એક શબ્દમાળામાં મૂલ્યાંકન કરે છે. આ કામ નહીં કરે, કારણ કે variable એક જ પ્રકાર હોવો જોઈએ, અને Rust ને કમ્પાઇલ સમયે ચોક્કસપણે ખબર હોવી જરૂરી છે કે <code>number</code> variable’s પ્રકાર શું છે. <code>number</code> ના પ્રકારને જાણવાથી કમ્પાઈલરને ચકાસણી કરવાની મંજૂરી મળે છે કે <code>number</code> નો ઉપયોગ દરેક જગ્યાએ માન્ય પ્રકાર છે. જો <code>number</code> નો પ્રકાર માત્ર રનટાઇમ પર નક્કી થતો હોત, તો Rust તે કરી શકતું ન હતું; કમ્પાઈલર વધુ જટિલ બની જાત અને તેણે કોઈપણ variable માટે બહુવિધ સંભવિત પ્રકારોને ટ્રેક કરવા પડે તો કોડ વિશે ઓછા વચનો આપ્યા સિવાય.</p>
 <h3 id="repetition-with-loops"><a class="header" href="#repetition-with-loops">Repetition with Loops</a></h3>
@@ -328,11 +262,10 @@ error: could not compile `branches` (bin "branches") due to 1 previous error
 <p><code>loop</code> કીવર્ડ Rust ને જણાવે છે કે કોડનો બ્લોક વારંવાર ચલાવો, કાના કારણ કે અનંત ગાળા માટે અથવા જ્યાં સુધી તમે તેને સ્પષ્ટપણે બંધ કરવાનું ન કહો.</p>
 <p>ઉદાહરણ તરીકે, તમારી <code>loops</code> ડિરેક્ટરીમાં આવેલી src/main.rs ફાઈલને આ પ્રમાણે બદલો:</p>
 <p>ફાઈલનું નામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    loop {
-        println!("again!");
-    }
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-loop/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>જ્યારે આપણે આ કાર્યક્રમ ચલાવીશું, ત્યારે આપણે <code>again!</code> છાપેલું વારંવાર અને સતત જોઈશું જ્યાં સુધી આપણે કાર્યક્રમને જાતે જ રોકીએ નહીં. મોટાભાગના ટર્મિનલ્સ ctrl - C કીબોર્ડ શૉર્ટકટને સપોર્ટ કરે છે જેથી કોઈ કાર્યક્રમ જે અનંત લૂપમાં ફસાયો હોય તેને અવરોધિત કરી શકાય. પ્રયત્ન કરો:</p>
 <!-- manual-regeneration
 cd listings/ch03-common-programming-concepts/no-listing-32-loop
@@ -355,122 +288,58 @@ again!
 <p>અમે અનુમાન લગાવવાની રમતમાં <code>continue</code> નો પણ ઉપયોગ કર્યો હતો, જે લૂપમાં પ્રોગ્રામને આ લૂપના વર્તમાન પુનરાવર્તનમાં બાકી રહેલા કોડને અવગણવા અને આગામી પુનરાવર્તન પર જવાનો આદેશ આપે છે.</p>
 <h4 id="returning-values-from-loops"><a class="header" href="#returning-values-from-loops">Returning Values from Loops</a></h4>
 <p>એક <code>loop</code> નો ઉપયોગ એવાં કાર્યને ફરીથી પ્રયત્ન કરવા માટે થાય છે જે નિષ્ફળ થઈ શકે, જેમ કે કોઈ થ્રેડનું કાર્ય પૂર્ણ થયું છે કે નહીં તે તપાસવું. તમારે તે કાર્યના પરિણામને પણ લૂપમાંથી બહારની કોડમાં મોકલવાની જરૂર પડી શકે છે. આવું કરવા માટે, તમે <code>break</code> અભિવ્યક્તિ પછી જે મૂલ્ય પરત કરવું હોય તે ઉમેરી શકો છો; તે મૂલ્ય લૂપમાંથી પરત કરવામાં આવશે જેથી કરીને તમે તેનો ઉપયોગ કરી શકો, જે અહીં દર્શાવેલ છે:</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let mut counter = 0;
-
-    let result = loop {
-        counter += 1;
-
-        if counter == 10 {
-            break counter * 2;
-        }
-    };
-
-    println!("The result is {result}");
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-33-return-value-from-loop/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>લૂપ પહેલાં, અમે <code>counter</code> નામનું variable જાહેર કરીએ છીએ અને તેને <code>0</code> થી શરૂઆત કરીએ છીએ. ત્યારબાદ, અમે <code>result</code> નામનું variable જાહેર કરીએ છીએ જે લૂપમાંથી મળેલ મૂલ્ય રાખશે. લૂપના દરેક પુનરાવર્તનમાં, અમે <code>counter</code> variable <code>1</code> ઉમેરીએ છીએ, અને પછી તપાસીએ છીએ કે શું <code>counter</code>  <code>10</code> બરાબર છે. જ્યારે તે હોય છે, ત્યારે અમે <code>break</code> કીવર્ડનો ઉપયોગ <code>counter * 2</code> મૂલ્ય સાથે કરીએ છીએ. લૂપ પછી, અમે <code>result</code> માં મૂલ્ય સોંપવા માટે વપરાતા વિધાનને સમાપ્ત કરવા માટે અર્ધવિરામ ચિહ્નનો ઉપયોગ કરીએ છીએ. અંતે, અમે <code>result</code> માં રહેલું મૂલ્ય છાપીએ છીએ, જે આ કિસ્સામાં <code>20</code> છે.</p>
 <p>તમે લૂપની અંદરથી પણ <code>return</code> કરી શકો છો. જ્યારે <code>break</code> માત્ર વર્તમાન લૂપમાંથી બહાર નીકળે છે, ત્યારે <code>return</code> હંમેશાં વર્તમાન ફંક્શનમાંથી બહાર નીકળી જાય છે.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <h4 id="disambiguating-with-loop-labels"><a class="header" href="#disambiguating-with-loop-labels">Disambiguating with Loop Labels</a></h4>
 <p>જો તમારી પાસે ચક્રોની અંદર ચકરો હોય, તો <code>break</code> અને <code>continue</code> તે સમયે સૌથી અંદરના ચક્ર પર લાગુ પડે છે. તમે વૈકલ્પિક રીતે એક ચક્ર પર ચક્ર લેબલ સ્પષ્ટ કરી શકો છો, જેનો ઉપયોગ તમે <code>break</code> અથવા <code>continue</code> સાથે તે લેબલવાળા ચક્ર પર લાગુ કરવા માટે કરી શકો છો, તેના બદલે સૌથી અંદરના ચક્ર પર. ચક્ર લેબલ્સ એકલ અવધરેણીથી શરૂ થવા જોઈએ. અહીં બે નેસ્ટેડ ચક્રોનું ઉદાહરણ છે:</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let mut count = 0;
-    'counting_up: loop {
-        println!("count = {count}");
-        let mut remaining = 10;
-
-        loop {
-            println!("remaining = {remaining}");
-            if remaining == 9 {
-                break;
-            }
-            if count == 2 {
-                break 'counting_up;
-            }
-            remaining -= 1;
-        }
-
-        count += 1;
-    }
-    println!("End count = {count}");
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-5-loop-labels/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>લૂપનું લેબલ બાહ્ય લૂપને <code>'counting_up</code>’ નામનું લેબલ છે, અને તે 0 થી 2 સુધી ગણશે. લેબલ વગરનું આંતરિક લૂપ 10 થી 9 સુધી ઉતરશે. પહેલો <code>break</code> જે લેબલનો ઉલ્લેખ કરતો નથી, તે માત્ર આંતરિક લૂપમાંથી બહાર નીકળી જશે. <code>break 'counting_up;</code> વિધાન બાહ્ય લૂપમાંથી બહાર નીકળી જશે. આ કોડ છાપે છે:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling loops v0.1.0 (file:///projects/loops)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.58s
-     Running `target/debug/loops`
-count = 0
-remaining = 10
-remaining = 9
-count = 1
-remaining = 10
-remaining = 9
-count = 2
-remaining = 10
-End count = 2
+<pre><code class="language-console">{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-5-loop-labels/output.txt}}
 </code></pre>
 <!-- Old headings. Do not remove or links may break. -->
 <h4 id="streamlining-conditional-loops-with-while"><a class="header" href="#streamlining-conditional-loops-with-while">Streamlining Conditional Loops with while</a></h4>
 <p>એક કાર્યક્રમને ઘણીવાર એક ચક્ર (loop) ની અંદર શરતનું મૂલ્યાંકન કરવાની જરૂર પડે છે. જ્યાં સુધી શરત <code>true</code> હોય ત્યાં સુધી ચક્ર ચાલે છે. જ્યારે શરત <code>true</code> રહેવાનું બંધ કરે છે, ત્યારે કાર્યક્રમ <code>break</code> ને બોલાવે છે, જે ચક્રને રોકે છે. <code>loop</code>, <code>if</code>, <code>else</code>, અને <code>break</code> ના સંયોજનનો ઉપયોગ કરીને આ પ્રકારનું વર્તન અમલમાં મૂકવું શક્ય છે; જો તમે ઈચ્છો તો તમે હવે એક કાર્યક્રમમાં તે પ્રયાસ કરી શકો છો. જો કે, આ પેટર્ન એટલી સામાન્ય છે કે Rust પાસે તેના માટે બનેલ ભાષાની રચના છે, જેને <code>while</code> ચક્ર કહેવામાં આવે છે. લિસ્ટિંગ 3-3 માં, અમે ત્રણ વખત કાર્યક્રમને ચક્ર કરવા માટે <code>while</code> નો ઉપયોગ કરીએ છીએ, દરેક વખતે ગણતરી ઘટાડીએ છીએ, અને પછી, ચક્ર પછી, એક સંદેશ છાપવા અને બહાર નીકળવા માટે.</p>
 <p><strong>Listing 3-3: Using a <code>while</code> loop to run code while a condition evaluates to <code>true</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let mut number = 3;
-
-    while number != 0 {
-        println!("{number}!");
-
-        number -= 1;
-    }
-
-    println!("LIFTOFF!!!");
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-03/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>આ રચના <code>loop</code>, <code>if</code>, <code>else</code>, અને <code>break</code> ના ઉપયોગથી જરૂરી થતી ઘણી બધી અંદરની રચનાઓ (nesting) દૂર કરે છે, અને તે વધુ સ્પષ્ટ છે. જ્યાં સુધી કોઈ શરત <code>true</code> હોય ત્યાં સુધી કોડ ચાલે છે; અન્યથા, તે લૂપમાંથી બહાર નીકળી જાય છે.</p>
 <h4 id="looping-through-a-collection-with-for"><a class="header" href="#looping-through-a-collection-with-for">Looping Through a Collection with <code>for</code></a></h4>
 <p>તમે જ્યારે કોઈ સંગ્રહના ઘટકો પર ચક્રીય થવા માંગતા હોવ, ત્યારે <code>while</code> રચનાનો ઉપયોગ કરવાનું પસંદ કરી શકો છો, જેમ કે એરે. ઉદાહરણ તરીકે, યાદી 3-4 માં દર્શાવેલ લૂપ એરે <code>a</code> ના દરેક ઘટકને છાપે છે.</p>
 <p><strong>Listing 3-4: Looping through each element of a collection using a <code>while</code> loop</strong></p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let a = [10, 20, 30, 40, 50];
-    let mut index = 0;
-
-    while index &lt; 5 {
-        println!("the value is: {}", a[index]);
-
-        index += 1;
-    }
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-04/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>અહીં, કોડ એરેના ઘટકોમાંથી ગણતરી કરે છે. તે ઇન્ડેક્સ <code>0</code> થી આરંભ થાય છે અને પછી લૂપ ચલાવે છે જ્યાં સુધી તે એરેના અંતિમ ઇન્ડેક્સ સુધી ન પહોંચે (એટલે કે, જ્યારે <code>index &lt; 5</code> હવે <code>true</code> ન હોય). આ કોડ ચલાવવાથી એરેના દરેક ઘટક છાપાશે:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling loops v0.1.0 (file:///projects/loops)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.32s
-     Running `target/debug/loops`
-the value is: 10
-the value is: 20
-the value is: 30
-the value is: 40
-the value is: 50
+<pre><code class="language-console">{{#include ../listings/ch03-common-programming-concepts/listing-03-04/output.txt}}
 </code></pre>
 <p>પાંચેય એરે મૂલ્યો ટર્મિનલમાં દેખાય છે, જે અપેક્ષિત છે. ભલે <code>index</code> નું મૂલ્ય અમુક સમયે <code>5</code> સુધી પહોંચી જાય, તેમ છતાં લૂપ એરેમાંથી છઠ્ઠું મૂલ્ય મેળવવાનો પ્રયત્ન કરતા પહેલા જ બંધ થઈ જાય</p>
 <p>છે. However, this approach is error-prone; we could cause the program to panic if the index value or test condition is incorrect. For example, if you changed the definition of the <code>a</code> array to have four elements but forgot to update the condition to <code>while index &lt; 4</code>, the code would panic. It’s also slow, because the compiler adds runtime code to perform the conditional check of whether the index is within the bounds of the array on every iteration through the loop. જો કે, આ અભિગમ ભૂલયુક્ત છે; જો અનુક્રમણિકાનું મૂલ્ય અથવા પરીક્ષણ શરત ખોટી હોય તો આપણે પ્રોગ્રામને ગભરાવવાનું કારણ બની શકે છે. ઉદાહરણ તરીકે, જો તમે <code>a</code> એરેની વ્યાખ્યામાં ચાર ઘટકો ઉમેર્યા હોય પરંતુ શરતને <code>while index &lt; 4</code> માં અપડેટ કરવાનું ભૂલી જાઓ છો, તો કોડ ગભરાઈ જશે. તે ધીમું પણ છે, કારણ કે કમ્પાઇલર દરેક લૂપ પુનરાવર્તન દરમિયાન એરેની સીમામાં અનુક્રમણિકા છે કે નહીં તેની શરતી ચકાસણી કરવા માટે રનટાઇમ કોડ ઉમેરે છે.</p>
 <p>વૈકલ્પિક રીતે, તમે <code>for</code> લૂપનો ઉપયોગ કરી શકો છો અને સંગ્રહમાં દરેક વસ્તુ માટે અમુક કોડ ચલાવી શકો છો. <code>for</code> લૂપ એ યાદી 3-5 માં દર્શાવેલ કોડ જેવું દેખાય છે.</p>
 <p><strong>Listing 3-5: Looping through each element of a collection using a <code>for</code> loop</strong></p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    let a = [10, 20, 30, 40, 50];
-
-    for element in a {
-        println!("the value is: {element}");
-    }
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-05/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>જ્યારે આપણે આ કોડ ચલાવીશું, ત્યારે આપણને યાદી 3-4 માં જે પરિણામ દેખાય છે તેવું જ પરિણામ જોવા મળશે. વધુ મહત્વની વાત એ છે કે, હવે આપણે કોડની સુરક્ષામાં વધારો કર્યો છે અને એવા ભૂલો થવાની શક્યતાને દૂર કરી છે જે એરેના અંતથી આગળ વધી જવા અથવા પૂરતી દૂર ન જવાથી આવી શકે છે. <code>for</code> લૂપમાંથી ઉત્પન્ન થયેલ મશીન કોડ પણ વધુ કાર્યક્ષમ હોઈ શકે છે કારણ કે દરેક પુનરાવર્તનમાં એરેની લંબાઈ સાથે અનુક્રમણિકાની સરખામણી કરવાની જરૂર નથી.</p>
 <p><code>for</code> લૂપનો ઉપયોગ કરીને, જો તમે એરેમાં રહેલા મૂલ્યોની સંખ્યા બદલો તો તમારે અન્ય કોડને બદલવાની જરૂર નહીં પડે, જે યાદી 3-4 માં વપરાયેલી પદ્ધતિ સાથે થવું જોઈએ.</p>
 <p><code>while</code> માં <code>for</code> લૂપની સલામતી અને સંક્ષિપ્તતા તેને સૌથી વધુ વપરાયેલ લૂપ રચના બનાવે છે. ભલે તમે અમુક કોડને ચોક્કસ સંખ્યામાં વખત ચલાવવા માંગતા હો, જેમ કે Listing 3-3 માં ગણતરી ઉલટાવવાનું ઉદાહરણ હતું, મોટા ભાગના Rustaceans <code>for</code> લૂપનો ઉપયોગ કરશે. આવું કરવા માટે, સ્ટાન્ડર્ડ લાઇબ્રેરી દ્વારા પૂરા પાડવામાં આવેલ <code>Range</code> નો ઉપયોગ કરવો જોઈએ, જે એક સંખ્યાથી શરૂ કરીને બીજી સંખ્યા પહેલાં સમાપ્ત થતી તમામ સંખ્યાઓનું ક્રમશઃ ઉત્પાદન કરે છે.</p>
 <p>અહીં <code>for</code> લૂપ અને અન્ય એક પદ્ધતિ <code>rev</code> નો ઉપયોગ કરીને ગણતરી કેવી દેખાશે તે દર્શાવેલું છે, જે શ્રેણીને ઉલટાવે છે:</p>
 <p>ફાઈલનું નામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024">fn main() {
-    for number in (1..4).rev() {
-        println!("{number}!");
-    }
-    println!("LIFTOFF!!!");
-}</code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-34-for-range/src/main.rs}}
+<span class="boring">}</span></code></pre>
 <p>આ કોડ થોડો વધુ સુખદ છે, ખરું ને?</p>
 <h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
 <p>તમે સફળ થયા! આ એક મોટું પ્રકરણ હતું: તમે variable (variable), સ્કેલર (scalar) અને સંયોજન ડેટા પ્રકારો, વિધેયો (function), ટિપ્પણીઓ (comments), <code>if</code> અભિવ્યક્તિઓ (expressions), અને લૂપ્સ (loops) વિશે શીખ્યા! આ પ્રકરણમાં ચર્ચા કરાયેલ ખ્યાલો સાથે પ્રેક્ટિસ કરવા માટે, નીચે મુજબના કાર્યો કરવા માટે પ્રોગ્રામ બનાવો:</p>
@@ -539,7 +408,7 @@ the value is: 50
 
         <!-- Custom JS scripts -->
         <script src="ferris-2317480c.js"></script>
-        <script src="english-link-22ed2842.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
 
 
 
