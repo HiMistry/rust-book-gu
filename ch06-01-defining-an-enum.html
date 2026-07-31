@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
+            window.path_to_searchindex_js = "searchindex-4bc072ff.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -187,44 +187,113 @@
 <p>ચાલો એક પરિસ્થિતિ જોઈએ કે જેને આપણે કોડમાં વ્યક્ત કરવા માગીએ છીએ અને જોઈએ કે શા માટે આ કિસ્સામાં એનમ્સ સ્ટ્રક્ચર્સ કરતાં વધુ ઉપયોગી અને યોગ્ય છે. ધારો કે આપણે IP એડ્રેસ સાથે કામ કરવાની જરૂર છે. હાલમાં, બે મુખ્ય ધોરણો IP એડ્રેસ માટે વપરાય છે: વર્ઝન ચાર અને વર્ઝન છ. કારણ કે આ એકમાત્ર શક્યતાઓ છે જે આપણા પ્રોગ્રામને મળે તેવી IP એડ્રેસની, આપણે તમામ સંભવિત પ્રકારોને ગણી શકીએ છીએ, જ્યાંથી એનુમરેશનને તેનું નામ મળ્યું છે.</p>
 <p>કોઈ પણ IP સરનામું વર્ઝન ચાર અથવા વર્ઝન છ નું હોઈ શકે છે, પરંતુ તે બંને એકસાથે ન હોઈ શકે. IP સરનામાંની આ વિશેષતા <code>enum</code> ડેટા સ્ટ્રક્ચરને યોગ્ય બનાવે છે કારણ કે <code>enum</code> મૂલ્ય માત્ર તેના પ્રકારોમાંથી એક જ હોઈ શકે છે. વર્ઝન ચાર અને વર્ઝન છ બંને હજી પણ મૂળભૂત રીતે IP સરનામાં જ છે, તેથી જ્યારે કોડ એવા સંજોગોને હેન્ડલ કરે છે જે કોઈપણ પ્રકારના IP સરનામા પર લાગુ પડે</p>
 <p>છે, ત્યારે તેમની સાથે સમાન પ્રકારની વ્યવહાર કરવો જોઈએ. આમ આપણે આ વિભાવનાને કોડમાં વ્યક્ત કરી શકીએ છીએ <code>IpAddrKind</code> નામનું <code>enum</code> વ્યાખ્યાયિત કરીને અને IP સરનામાના શક્ય પ્રકારોની યાદી બનાવી શકીએ છીએ, <code>V4</code> અને <code>V6</code>. આ <code>enum</code> ના પ્રકાર છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024">enum IpAddrKind {
+    V4,
+    V6,
+}
+<span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-01-defining-enums/src/main.rs:def}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    let four = IpAddrKind::V4;
+</span><span class="boring">    let six = IpAddrKind::V6;
+</span><span class="boring">
+</span><span class="boring">    route(IpAddrKind::V4);
+</span><span class="boring">    route(IpAddrKind::V6);
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn route(ip_kind: IpAddrKind) {}</span></code></pre>
 <p><code>IpAddrKind</code> હવે એક નિશ્ચિત માહિતી પ્રકાર છે, જેનો ઉપયોગ આપણે આપણી કોડમાં અન્યત્ર કરી શકીએ છીએ.</p>
 <h3 id="enum-values"><a class="header" href="#enum-values">Enum Values</a></h3>
 <p>આપણે <code>IpAddrKind</code> ના બંને પ્રકારોના ઉદાહરણો આ રીતે બનાવી શકીએ છીએ:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">enum IpAddrKind {
+</span><span class="boring">    V4,
+</span><span class="boring">    V6,
+</span><span class="boring">}
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-01-defining-enums/src/main.rs:instance}}
-<span class="boring">}</span></code></pre>
+</span>    let four = IpAddrKind::V4;
+    let six = IpAddrKind::V6;
+<span class="boring">
+</span><span class="boring">    route(IpAddrKind::V4);
+</span><span class="boring">    route(IpAddrKind::V6);
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn route(ip_kind: IpAddrKind) {}</span></code></pre>
 <p>નોંધ એનમ (enum) ના પ્રકારો તેના ઓળખકર્તા હેઠળ નામિત થયેલા છે, અને બે કોલોન (:) નો ઉપયોગ કરીને બંનેને અલગ પાડે છે. આ ઉપયોગી છે કારણ કે હવે બંને કિંમતો <code>IpAddrKind::V4</code> અને <code>IpAddrKind::V6</code> એ જ પ્રકારના છે: <code>IpAddrKind</code>. આપણે પછીથી એક કાર્ય વ્યાખ્યાયિત કરી શકીએ છીએ જે કોઈપણ <code>IpAddrKind</code> સ્વીકારે છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">enum IpAddrKind {
+</span><span class="boring">    V4,
+</span><span class="boring">    V6,
+</span><span class="boring">}
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-01-defining-enums/src/main.rs:fn}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    let four = IpAddrKind::V4;
+</span><span class="boring">    let six = IpAddrKind::V6;
+</span><span class="boring">
+</span><span class="boring">    route(IpAddrKind::V4);
+</span><span class="boring">    route(IpAddrKind::V6);
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn route(ip_kind: IpAddrKind) {}</code></pre>
 <p>અને અમે આ કાર્યને કોઈપણ પ્રકાર સાથે બોલાવી શકીએ છીએ:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">enum IpAddrKind {
+</span><span class="boring">    V4,
+</span><span class="boring">    V6,
+</span><span class="boring">}
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-01-defining-enums/src/main.rs:fn_call}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    let four = IpAddrKind::V4;
+</span><span class="boring">    let six = IpAddrKind::V6;
+</span><span class="boring">
+</span>    route(IpAddrKind::V4);
+    route(IpAddrKind::V6);
+<span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn route(ip_kind: IpAddrKind) {}</span></code></pre>
 <p>એનમનો ઉપયોગ કરવાથી વધુ લાભ થાય છે. આપણી IP સરનામા પ્રકાર વિશે વધુ વિચારતા, હાલમાં આપણી પાસે વાસ્તવિક IP સરનામા ડેટા સંગ્રહિત કરવાની કોઈ રીત નથી; આપણે માત્ર તે પ્રકાર જાણે છીએ. તમને પ્રકરણ ૫ માં સ્ટ્રક્ચર્સ વિશે તાજેતરમાં જ શીખવા મળ્યું છે, તેથી તમે સૂચિ ૬-૧ માં દર્શાવ્યા પ્રમાણે આ સમસ્યાને સ્ટ્રક્ચર્સથી ઉકેલવાનો પ્રયાસ કરી શકો છો.</p>
 <p><strong>Listing 6-1: Storing the data and <code>IpAddrKind</code> variant of an IP address using a <code>struct</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-01/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    enum IpAddrKind {
+        V4,
+        V6,
+    }
+
+    struct IpAddr {
+        kind: IpAddrKind,
+        address: String,
+    }
+
+    let home = IpAddr {
+        kind: IpAddrKind::V4,
+        address: String::from("127.0.0.1"),
+    };
+
+    let loopback = IpAddr {
+        kind: IpAddrKind::V6,
+        address: String::from("::1"),
+    };
 <span class="boring">}</span></code></pre>
 <p>અહીં, આપણે એક struct <code>IpAddr</code> વ્યાખ્યાયિત કર્યો છે જે બે ક્ષેત્રો ધરાવે છે: એક <code>kind</code> ક્ષેત્ર જે <code>IpAddrKind</code> પ્રકારનું છે (આપણે અગાઉ વ્યાખ્યાયિત કરેલ enum) અને એક <code>address</code> ક્ષેત્ર જે <code>String</code> પ્રકારનું છે. આ struct ના બે ઉદાહરણો છે. પહેલું <code>home</code> છે, અને તેનું <code>kind</code> મૂલ્ય <code>IpAddrKind::V4</code> છે, સાથે સંકળાયેલું સરનામું ડેટા <code>127.0.0.1</code> છે. બીજું ઉદાહરણ <code>loopback</code> છે. તે <code>IpAddrKind</code> ના અન્ય variant ને તેના <code>kind</code> મૂલ્ય તરીકે ધરાવે છે, <code>V6</code>, અને તેની સાથે સંકળાયેલું સરનામું <code>::1</code> છે. આપણે એક struct નો ઉપયોગ <code>kind</code> અને <code>address</code> મૂલ્યોને એકસાથે જૂથ બનાવવા માટે કર્યો છે, જેથી હવે variant ને મૂલ્ય સાથે જોડી દેવામાં આવ્યું છે.</p>
 <p>જો કે, માત્ર એક enum વાપરીને સમાન વિભાવના દર્શાવવી વધુ સંક્ષિપ્ત છે: struct ની અંદર enum ને બદલે, આપણે સીધા જ દરેક enum પ્રકારમાં માહિતી મૂકી શકીએ છીએ. <code>IpAddr</code> enumની આ નવી વ્યાખ્યા કહે છે કે <code>V4</code> અને <code>V6</code> બંને પ્રકારો સાથે સંકળાયેલ <code>String</code> મૂલ્યો ધરાવશે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-02-enum-with-data/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    enum IpAddr {
+        V4(String),
+        V6(String),
+    }
+
+    let home = IpAddr::V4(String::from("127.0.0.1"));
+
+    let loopback = IpAddr::V6(String::from("::1"));
 <span class="boring">}</span></code></pre>
 <p>અમે દરેક enum પ્રકાર સાથે સીધો જ ડેટા જોડીએ છીએ, તેથી વધારાની struct ની જરૂર નથી. અહીં, એ પણ સરળતાથી જોઈ શકાય છે કે enums કેવી રીતે કાર્ય કરે છે: આપણી દ્વારા વ્યાખ્યાયિત દરેક enum પ્રકારનું નામ એક એવું ફંક્શન પણ બને છે જે enum નું ઉદાહરણ બનાવે છે. એટલે કે, <code>IpAddr::V4()</code> એ ફંક્શન કોલ છે જે <code>String</code> આર્ગ્યુમેન્ટ લે છે અને <code>IpAddr</code> પ્રકારનું ઉદાહરણ આપે છે. આ કન્સ્ટ્રક્ટર ફંક્શન આપોઆપ વ્યાખ્યાયિત થાય છે enum ની વ્યાખ્યાના પરિણામ સ્વરૂપે.</p>
 <p>અહીં એક અન્ય લાભ છે જે enum નો ઉપયોગ કરવાથી અને struct નો ઉપયોગ ન કરવાથી મળે છે: દરેક પ્રકાર અલગ-અલગ પ્રકારના અને સંકળાયેલ ડેટાની માત્રા ધરાવી શકે છે. વર્ઝન ચાર IP સરનામાં હંમેશાં ચાર સંખ્યાત્મક ઘટકો ધરાવશે જેની કિંમત 0 થી 255 ની વચ્ચે હશે. જો આપણે <code>V4</code> સરનામાંને ચાર <code>u8</code> મૂલ્યો તરીકે સંગ્રહિત કરવા માંગતા હોઈએ, પરંતુ <code>V6</code> સરનામાને એક <code>String</code> મૂલ્ય તરીકે વ્યક્ત કરવા માંગતા હોઈએ, તો struct સાથે આ શક્ય ન બનશે. Enums સરળતાથી આ પરિસ્થિતિને સંભાળે છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-03-variants-with-different-data/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    enum IpAddr {
+        V4(u8, u8, u8, u8),
+        V6(String),
+    }
+
+    let home = IpAddr::V4(127, 0, 0, 1);
+
+    let loopback = IpAddr::V6(String::from("::1"));
 <span class="boring">}</span></code></pre>
 <p>અમે વર્ઝન ચાર અને વર્ઝન છ IP સરનામાં સંગ્રહ કરવા માટે ડેટા સ્ટ્રક્ચર્સ વ્યાખ્યાયિત કરવાની ઘણી રીતો દર્શાવી છે. જો કે, તેવું લાગે છે કે IP સરનામાં સંગ્રહિત કરવાની અને તેઓ કયા પ્રકારના છે એને એન્કોડ કરવાની ઈચ્છા એટલી સામાન્ય છે કે સ્ટાન્ડર્ડ લાઈબ્રેરીમાં એક વ્યાખ્યા છે જેનો આપણે ઉપયોગ કરી શકીએ! ચાલો જોઈએ કે સ્ટાન્ડર્ડ લાઈબ્રેરી <code>IpAddr</code> કેવી રીતે વ્યાખ્યાયિત કરે છે. તેમાં એક્ઝેક્ટ enum અને variants છે જે આપણે વ્યાખ્યાયિત કર્યા છે અને ઉપયોગ કર્યા છે, પરંતુ તે દરેક variant માં સરનામાનો ડેટા બે અલગ-અલગ structs ના રૂપમાં જડવે છે, જે દરેક variant માટે અલગ રીતે વ્યાખ્યાયિત કરવામાં આવ્યા છે:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -246,10 +315,14 @@ enum IpAddr {
 <p>ધ્યાનમાં રાખો કે ભલે સ્ટાન્ડર્ડ લાઈબ્રેરીમાં <code>IpAddr</code> માટે વ્યાખ્યા હોય, તેમ છતાં આપણે આપણી પોતાની વ્યાખ્યા બનાવી અને ઉપયોગ કરી શકીએ છીએ કારણ કે આપણે સ્ટાન્ડર્ડ લાઈબ્રેરીની વ્યાખ્યાને આપણા કાર્યક્ષેત્રમાં નથી લાવવી. આપણે પ્રકરણ ૭ માં પ્રકારોને કાર્યક્ષેત્રમાં લાવવા વિશે વધુ વાત કરીશું.</p>
 <p>ચાલો યાદી ૬-૨ માં એક અન્ય <code>enum</code> નું ઉદાહરણ જોઈએ: આ પ્રકારનાં વિવિધ પ્રકારો તેનાં વિકલ્પોમાં જડિત છે.</p>
 <p><strong>Listing 6-2: A <code>Message</code> enum whose variants each store different amounts and types of values</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>- {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-02/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">- enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre>
 <ul>
 <li>
 <p>આ enum ચાર પ્રકારો ધરાવે છે:</p>
@@ -264,15 +337,33 @@ enum IpAddr {
 <p><code>Write</code>: તેમાં એક <code>String</code> સમાવિષ્ટ છે.</p>
 <p><code>ChangeColor</code>: તેમાં ત્રણ <code>i32</code> મૂલ્યો સમાવિષ્ટ છે.</p>
 <p>વ્યાખ્યાનમૂક (enum) ની વ્યાખ્યા વ્યાખ્યાનમૂક (enum) ના પ્રકારો, જેમ કે યાદી 6-2 માં દર્શાવેલ છે, તે રચના (struct) ની વિવિધ વ્યાખ્યાઓ કરવા જેવું જ છે, સિવાય કે વ્યાખ્યાનમૂકમાં <code>struct</code> કીવર્ડનો ઉપયોગ થતો નથી અને તમામ પ્રકારો <code>Message</code> પ્રકાર હેઠળ એકત્રિત કરવામાં આવે છે. આગળની રચનાઓ (structs) અગાઉના વ્યાખ્યાનમૂકના (enum) પ્રકારો જેવો જ ડેટા ધરાવી શકે છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-04-structs-similar-to-message-enum/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">struct QuitMessage; // unit struct
+struct MoveMessage {
+    x: i32,
+    y: i32,
+}
+struct WriteMessage(String); // tuple struct
+struct ChangeColorMessage(i32, i32, i32); // tuple struct
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre>
 <p>પરંતુ જો આપણે વિવિધ struct નો ઉપયોગ કર્યો હોત, જે દરેકની પોતાની type હોય, તો આપણે તેવાં સંદેશાઓમાંથી કોઈપણ સ્વીકારવા માટે function ને આટલા સરળતાથી વ્યાખ્યાયિત કરી શક્યા ન હોત, જેમ કે Listing 6-2 માં વ્યાખ્યાયિત <code>Message</code> enum, જે એક single type છે.</p>
 <p>એક વધુ સામ્યતા enums અને structs વચ્ચે છે: struct પર methods <code>impl</code> નો ઉપયોગ કરીને વ્યાખ્યાયિત કરવાની જેમ, આપણે enums પર પણ methods વ્યાખ્યાયિત કરી શકીએ છીએ. અહીં <code>call</code> નામની એક method છે જેને આપણે આપણી <code>Message</code> enum પર વ્યાખ્યાયિત કરી શકીએ છીએ:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-05-methods-on-enums/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    enum Message {
+</span><span class="boring">        Quit,
+</span><span class="boring">        Move { x: i32, y: i32 },
+</span><span class="boring">        Write(String),
+</span><span class="boring">        ChangeColor(i32, i32, i32),
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    impl Message {
+        fn call(&amp;self) {
+            // method body would be defined here
+        }
+    }
+
+    let m = Message::Write(String::from("hello"));
+    m.call();
 <span class="boring">}</span></code></pre>
 <p><code>call</code> <code>m.call()</code> ચાલો આપણે પદ્ધતિના ભાગમાં <code>self</code> નો ઉપયોગ કરીએ, જેનો અર્થ થાય છે કે આપણે જે મૂલ્ય મેળવ્યું છે તેના પર પદ્ધતિને બોલાવવામાં આવી હતી. આ ઉદાહરણમાં, આપણે એક variable <code>m</code> બનાવ્યું છે જેમાં <code>Message::Write(String::from("hello"))</code></p>
 <p>નું મૂલ્ય છે, અને જ્યારે <code>m.call()</code> ચાલે ત્યારે તે <code>self</code> ના ભાગમાં હશે. ચાલો હવે પ્રમાણિત લાયબ્રેરીમાં આવેલું બીજું enum જોઈએ જે ખૂબ સામાન્ય અને ઉપયોગી છે: <code>Option</code>.</p>
@@ -294,19 +385,51 @@ enum IpAddr {
 <span class="boring">}</span></code></pre>
 <p>The <code>Option&lt;T&gt;</code> enum <code>Option&lt;T&gt;</code> એnum એટલું ઉપયોગી છે કે તે પ્રસ્તાવનામાં પણ સામેલ છે; તમારે તેને સ્પષ્ટપણે અવકાશમાં લાવવાની જરૂર નથી. તેના પ્રકારો પણ પ્રસ્તાવનામાં સમાવિષ્ટ છે: તમે <code>Some</code> અને <code>None</code> નો ઉપયોગ સીધો જ <code>Option::</code> ઉપસર્ગ વગર કરી શકો છો. <code>Option&lt;T&gt;</code> enum હજી પણ એક સામાન્ય enum છે, અને <code>Some(T)</code> અને <code>None</code> એ હજી પણ <code>Option&lt;T&gt;</code> પ્રકારના પ્રકારો</p>
 <p>છે. <code>&lt;T&gt;</code> વાક્યરચના Rustની એક વિશેષતા છે જેની આપણે હજુ સુધી વાત કરી નથી. તે સામાન્ય પ્રકાર પરિમાણ છે, અને અમે પ્રકરણ 10માં જનરિક્સને વધુ વિગતવાર આવરી લઈશું. અત્યારે, તમારે માત્ર એટલું જ જાણવાની જરૂર છે કે <code>&lt;T&gt;</code> નો અર્થ એ થાય છે કે <code>Option</code> enum ના <code>Some</code> પ્રકાર કોઈપણ પ્રકારના ડેટાનો એક ભાગ ધરાવી શકે છે, અને <code>T</code> ની જગ્યાએ વપરાતા દરેક નક્કર પ્રકાર સમગ્ર <code>Option&lt;T&gt;</code> પ્રકારને અલગ પ્રકાર બનાવે છે. અહીં સંખ્યા પ્રકારો અને char પ્રકારોને પકડી રાખવા માટે <code>Option</code> મૂલ્યોનો ઉપયોગ કરવાનાં કેટલાક ઉદાહરણો છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-06-option-examples/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let some_number = Some(5);
+    let some_char = Some('e');
+
+    let absent_number: Option&lt;i32&gt; = None;
 <span class="boring">}</span></code></pre>
 <p>પ્રકારનું સ્વરૂપ <code>some_number</code> એ <code>Option&lt;i32&gt;</code> છે. <code>some_char</code> નું પ્રકારનું સ્વરૂપ <code>Option&lt;char&gt;</code> છે, જે એક અલગ પ્રકારનું સ્વરૂપ છે. Rust આ પ્રકારના સ્વરૂપોને અનુમાનિત કરી શકે છે કારણ કે આપણે <code>Some</code> વિવિધતામાં મૂલ્ય નિર્દિષ્ટ કર્યું છે. <code>absent_number</code> માટે, Rust ને સમગ્ર <code>Option</code> પ્રકારનું વર્ણન કરવાની આવશ્યકતા છે: કમ્પાઇલર માત્ર <code>None</code> મૂલ્ય જોઈને અનુરૂપ <code>Some</code> વિવિધતા જે પ્રકાર ધરાવે છે તેનુ અનુમાન કરી શકે તેમ નથી. અહીં, આપણે Rust ને જણાવીએ છીએ કે <code>absent_number</code> પ્રકાર <code>Option&lt;i32&gt;</code> નું હોવું જોઈએ.</p>
 <p>જ્યારે આપણી પાસે <code>Some</code> મૂલ્ય હોય છે, ત્યારે આપણે જાણીએ છીએ કે એક મૂલ્ય હાજર છે, અને તે મૂલ્ય <code>Some</code> ની અંદર રહેલું છે. જ્યારે આપણી પાસે <code>None</code> મૂલ્ય હોય છે, ત્યારે તે અમુક અંશે null જેવું જ સૂચવે છે: આપણી પાસે માન્ય મૂલ્ય નથી. તો, <code>Option&lt;T&gt;</code> હોવું null કરતાં કેમ વધુ સારું છે?</p>
 <p>ટૂંકમાં, કારણ કે <code>Option&lt;T&gt;</code> અને <code>T</code> (જ્યાં <code>T</code> કોઈપણ પ્રકારનું હોઈ શકે છે) અલગ-અલગ પ્રકારો છે, કમ્પાઇલર આપણને <code>Option&lt;T&gt;</code> મૂલ્યનો ઉપયોગ એવું માનતા પહેલાં નહીં કરવા દે કે તે ચોક્કસપણે માન્ય મૂલ્ય છે. ઉદાહરણ તરીકે, આ કોડ કમ્પાઇલ થશે નહીં, કારણ કે તે <code>i8</code> ને <code>Option&lt;i8&gt;</code> માં ઉમેસવાનો પ્રયાસ કરી રહ્યું છે:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-07-cant-use-option-directly/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let x: i8 = 5;
+    let y: Option&lt;i8&gt; = Some(5);
+
+    let sum = x + y;
 <span class="boring">}</span></code></pre>
 <p>જો આપણે આ કોડ ચલાવીએ, તો આપણને આવી ભૂલ સંદેશ મળે છે:</p>
-<pre><code class="language-console">{{#include ../listings/ch06-enums-and-pattern-matching/no-listing-07-cant-use-option-directly/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling enums v0.1.0 (file:///projects/enums)
+error[E0277]: cannot add `Option&lt;i8&gt;` to `i8`
+ --&gt; src/main.rs:5:17
+  |
+5 |     let sum = x + y;
+  |                 ^ no implementation for `i8 + Option&lt;i8&gt;`
+  |
+  = help: the trait `Add&lt;Option&lt;i8&gt;&gt;` is not implemented for `i8`
+help: the following other types implement trait `Add&lt;Rhs&gt;`
+ --&gt; /rustc/2d8144b7880597b6e6d3dfd63a9a9efae3f533d3/library/core/src/ops/arith.rs:98:8
+  |
+  = note: `i8` implements `Add`
+ ::: /rustc/2d8144b7880597b6e6d3dfd63a9a9efae3f533d3/library/core/src/ops/arith.rs:113:0
+  |
+  = note: in this macro invocation
+ --&gt; /rustc/2d8144b7880597b6e6d3dfd63a9a9efae3f533d3/library/core/src/internal_macros.rs:22:8
+  |
+  = note: `&amp;i8` implements `Add&lt;i8&gt;`
+ ::: /rustc/2d8144b7880597b6e6d3dfd63a9a9efae3f533d3/library/core/src/internal_macros.rs:33:8
+  |
+  = note: `i8` implements `Add&lt;&amp;i8&gt;`
+ ::: /rustc/2d8144b7880597b6e6d3dfd63a9a9efae3f533d3/library/core/src/internal_macros.rs:44:8
+  |
+  = note: `&amp;i8` implements `Add`
+  = note: this error originates in the macro `add_impl` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `enums` (bin "enums") due to 1 previous error
 </code></pre>
 <p>અતિ ઉત્તેજક! આ ભૂલ સંદેશનો અર્થ એ થાય છે કે Rust ને <code>i8</code> અને <code>Option&lt;i8&gt;</code> કેવી રીતે ઉમેરવા તે સમજાતું નથી, કારણ કે તેઓ જુદાં પ્રકારના છે. જ્યારે આપણી પાસે <code>i8</code> જેવા પ્રકારનું મૂલ્ય Rust માં હોય છે, ત્યારે કમ્પાઇલર ખાતરી કરે છે કે આપણી પાસે હંમેશાં માન્ય મૂલ્ય હોય. આપણે તે મૂલ્યનો ઉપયોગ કરતા પહેલા શૂન્ય (null) માટે તપાસવાની જરૂર વગર આત્મવિશ્વાસથી આગળ વધી શકીએ છીએ. માત્ર જ્યારે આપણી પાસે <code>Option&lt;i8&gt;</code> હોય છે (અથવા આપણે જે પ્રકારના મૂલ્ય સાથે કામ કરી રહ્યા છીએ), ત્યારે આપણને મૂલ્ય ન હોવાની શક્યતાની ચિંતા કરવાની રહે છે, અને કમ્પાઇલર ખાતરી કરે છે કે આપણે તે પરિસ્થિતિને સંભાળીએ.</p>
 <p>અન્ય શબ્દોમાં કહીએ તો, તમારે <code>Option&lt;T&gt;</code> ને <code>T</code> માં રૂપાંતરિત કરવું પડશે જેથી તમે <code>T</code> પર ક્રિયાઓ કરી શકો. સામાન્ય રીતે, આ શૂન્ય (null) સાથેની સૌથી સામાન્ય સમસ્યાઓને પકડવામાં મદદ કરે છે: ધારી લેવું કે કંઈક શૂન્ય નથી જ્યારે</p>

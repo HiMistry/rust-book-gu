@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
+            window.path_to_searchindex_js = "searchindex-4bc072ff.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -185,19 +185,57 @@
                         <h2 id="reading-a-file"><a class="header" href="#reading-a-file">Reading a File</a></h2>
 <p>હવે આપણે <code>file_path</code> Argument માં દર્શાવેલ ફાઇલ વાંચવા માટે કાર્યક્ષમતા ઉમેરીશું. પ્રથમ, આપણને ચકાસણી માટે એક નમૂના ફાઇલની જરૂર છે: અમે એક એવી ફાઇલનો ઉપયોગ કરીશું જેમાં થોડી માત્રામાં અનેક લીટીઓ સાથે કેટલાક પુનરાવર્તિત શબ્દો હોય. યાદી 12-3 માં એલિઝાબેથ ડિકિન્સનની કવિતા છે જે સારી રીતે કામ કરશે! તમારી યોજનાના મૂળ સ્તર પર poem.txt નામની ફાઇલ બનાવો, અને “હું કોઈ નથી! તમે કોણ છો?” કવિતા દાખલ કરો.</p>
 <p><strong>Listing 12-3: A poem by Emily Dickinson makes a good test case.</strong></p>
-<pre><code class="language-text">{{#include ../listings/ch12-an-io-project/listing-12-03/poem.txt}}
+<pre><code class="language-text">I'm nobody! Who are you?
+Are you nobody, too?
+Then there's a pair of us - don't tell!
+They'd banish us, you know.
+
+How dreary to be somebody!
+How public, like a frog
+To tell your name the livelong day
+To an admiring bog!
 </code></pre>
 <p>સ્થાનમાં લખાણ સાથે, src/main.rs ફાઈલને સંપાદિત કરો અને કોડ ઉમેરો જે ફાઈલ વાંચે, જેમ કે સૂચિ ૧૨-૪ માં દર્શાવેલ છે.</p>
 <p><strong>Listing 12-4: Reading the contents of the file specified by the second argument</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-04/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">use std::env;
+use std::fs;
+
+fn main() {
+    // --snip--
+<span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let query = &amp;args[1];
+</span><span class="boring">    let file_path = &amp;args[2];
+</span><span class="boring">
+</span><span class="boring">    println!("Searching for {query}");
+</span>    println!("In file {file_path}");
+
+    let contents = fs::read_to_string(file_path)
+        .expect("Should have been able to read the file");
+
+    println!("With text:\n{contents}");
+}</code></pre>
 <p>પ્રથમ, આપણે પ્રમાણિત લાયબ્રેરીનો એક મહત્વપૂર્ણ ભાગ <code>use</code> વિધાન સાથે લાવીએ છીએ: આપણે ફાઇલોને નિયંત્રિત કરવા માટે <code>std::fs</code> ની જરૂર છે.</p>
 <p><code>main</code> માં, નવું વિધાન <code>fs::read_to_string</code>  <code>file_path</code> લે છે, તે ફાઇલ ખોલે છે અને <code>std::io::Result&lt;String&gt;</code> પ્રકારનું મૂલ્ય પરત કરે છે જેમાં ફાઇલની સામગ્રી હોય છે.</p>
 <p>તે પછી, આપણે ફરીથી એક કામચલાઉ <code>println!</code> વિધાન ઉમેરીએ છીએ જે ફાઇલ વાંચ્યા પછી <code>contents</code> ના મૂલ્યને છાપે છે જેથી અમે ચકાસી શકીએ કે પ્રોગ્રામ અત્યાર સુધી કાર્ય કરી રહ્યો છે.</p>
 <p>ચાલો આ કોડને કોઈપણ સ્ટ્રિંગ સાથે પ્રથમ કમાન્ડ લાઇન Argument તરીકે (કારણ કે આપણે હજી શોધવાનું ભાગ અમલમાં મૂક્યો નથી) અને <code>poem.txt</code> ફાઇલને બીજી Argument તરીકે ચલાવીએ:</p>
-<pre><code class="language-console">{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-04/output.txt}}
+<pre><code class="language-console">$ cargo run -- the poem.txt
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
+     Running `target/debug/minigrep the poem.txt`
+Searching for the
+In file poem.txt
+With text:
+I'm nobody! Who are you?
+Are you nobody, too?
+Then there's a pair of us - don't tell!
+They'd banish us, you know.
+
+How dreary to be somebody!
+How public, like a frog
+To tell your name the livelong day
+To an admiring bog!
+
 </code></pre>
 <p>ચોક્કસ! કોડ ફાઈલ વાંચી અને પછી તેની વિષમતા છાપી. પરંતુ કોડમાં થોડી ખામીઓ છે. હાલમાં, <code>main</code> કાર્યવિધિમાં અનેક જવાબદારીઓ છે: સામાન્ય રીતે, જો દરેક કાર્યવિધિ માત્ર એક જ વિચાર માટે જવાબદાર હોય તો તે વધુ સ્પષ્ટ અને જાળવવા માટે સરળ રહે છે. બીજી સમસ્યા એ છે કે અમે ભૂલોને એટલી સારી રીતે નિયંત્રિત નથી કરી જેટલી કરી શકીએ છીએ. આ પ્રોગ્રામ હજી નાનો છે, તેથી આ ખામીઓ મોટી સમસ્યા નથી, પરંતુ જેમ જેમ પ્રોગ્રામ વધશે તેમ તેમ તેને સ્વચ્છ રીતે સુધારવાનું મુશ્કેલ બનશે. પ્રોગ્રામ વિકસાવતી વખતે શરૂઆતમાં જ રિફેક્ટરિંગ (refactoring) કરવાનું એક સારું પ્રથા છે કારણ કે નાના કોડને રિફેક્ટર કરવું ઘણું સરળ હોય છે. અમે તે પછી કરીશું.</p>
 

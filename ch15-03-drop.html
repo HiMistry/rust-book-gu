@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
+            window.path_to_searchindex_js = "searchindex-4bc072ff.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -189,38 +189,108 @@
 <p>તમે સ્કોપમાંથી મૂલ્ય બહાર નીકળી જાય ત્યારે કોડ ચલાવવા માટે <code>Drop</code> ટ્રેઇટનો અમલ કરો છો. <code>Drop</code> ટ્રેઇટ તમને એક પદ્ધતિ લાગુ કરવાની આવશ્યકતા આપે છે, જેનું નામ <code>drop</code> હોય અને તે <code>self</code> નો મ્યુટેબલ રેફરન્સ લે. જોઈએ કે ક્યારે Rust <code>drop</code> ને બોલાવે છે, તો ચાલો આપણે હાલમાં <code>println!</code> સ્ટેટમેન્ટ્સ સાથે <code>drop</code> લાગુ કરીએ.</p>
 <p>લિસ્ટિંગ 15-14 એક <code>CustomSmartPointer</code> સ્ટ્રક્ચર દર્શાવે છે જેની એકમાત્ર કસ્ટમ કાર્યક્ષમતા એ છે કે જ્યારે ઇન્સ્ટન્સ સ્કોપમાંથી બહાર નીકળી જાય ત્યારે તે <code>Dropping CustomSmartPointer!</code> પ્રિન્ટ કરશે, જેથી Rust ક્યારે <code>drop</code> પદ્ધતિ ચલાવે છે તે બતાવી શકાય.</p>
 <p><strong>Listing 15-14: A <code>CustomSmartPointer</code> struct that implements the <code>Drop</code> trait where we would put our cleanup code</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-14/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">struct CustomSmartPointer {
+    data: String,
+}
+
+impl Drop for CustomSmartPointer {
+    fn drop(&amp;mut self) {
+        println!("Dropping CustomSmartPointer with data `{}`!", self.data);
+    }
+}
+
+fn main() {
+    let c = CustomSmartPointer {
+        data: String::from("my stuff"),
+    };
+    let d = CustomSmartPointer {
+        data: String::from("other stuff"),
+    };
+    println!("CustomSmartPointers created");
+}</code></pre>
 <p>The <code>Drop</code> ટ્રેઇટ <code>Drop</code> ટ્રેઇટ પ્રીલ્યુડમાં સમાવિષ્ટ છે, તેથી આપણે તેને સ્કોપમાં લાવવાની જરૂર નથી. અમે <code>CustomSmartPointer</code> પર <code>Drop</code> ટ્રેઇટનો અમલ કરીએ છીએ અને <code>drop</code> પદ્ધતિ માટે એક અમલીકરણ આપીએ છીએ જે <code>println!</code> ને બોલાવે છે. <code>drop</code> પદ્ધતિનું શરીર એવું સ્થાન છે જ્યાં તમે કોઈપણ તર્ક મૂકી શકો છો જે તમે ઇચ્છો કે જ્યારે તમારા પ્રકારની ઇન્સ્ટન્સ સ્કોપમાંથી બહાર જાય ત્યારે ચલે. અમે અહીં થોડો ટેક્સ્ટ છાપી રહ્યા છીએ જેથી દૃષ્ટિની રીતે દર્શાવી શકાય કે</p>
 <p>ક્યારે Rust <code>drop</code> ને બોલાવશે. <code>main</code> માં, અમે <code>CustomSmartPointer</code> ની બે ઇન્સ્ટન્સ બનાવીએ છીએ અને પછી <code>CustomSmartPointers created</code> છાપીએ છીએ. <code>main</code> ના અંતે, અમારા <code>CustomSmartPointer</code> ની ઇન્સ્ટન્સ સ્કોપમાંથી બહાર જશે, અને Rust અમારી દ્વારા મૂકવામાં આવેલ કોડને <code>drop</code> પદ્ધતિમાં બોલાવશે, અમારો અંતિમ સંદેશ છાપીને. નોંધ કરો કે આપણે <code>drop</code> પદ્ધતિને સ્પષ્ટપણે બોલવાની જરૂર નહોતી.</p>
 <p>જ્યારે આપણે આ કાર્યક્રમ ચલાવીશું, ત્યારે આપણને નીચે મુજબનું પરિણામ જોવા મળશે:</p>
-<pre><code class="language-console">{{#include ../listings/ch15-smart-pointers/listing-15-14/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling drop-example v0.1.0 (file:///projects/drop-example)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.60s
+     Running `target/debug/drop-example`
+CustomSmartPointers created
+Dropping CustomSmartPointer with data `other stuff`!
+Dropping CustomSmartPointer with data `my stuff`!
 </code></pre>
 <p>Rust આપોઆપ જ <code>drop</code> ને બોલાવે છે જ્યારે આપણાં ઉદાહરણો અવકાશ બહાર જાય છે, આપણને જણાવેલ કોડને બોલાવીને. variable (variable) ઊલટ ક્રમમાં છોડી દેવામાં આવે છે જેમાં તેઓ બનાવવામાં આવ્યા હતા, તેથી <code>d</code>  <code>c</code> પહેલાં છોડી દેવાયું હતું. આ ઉદાહરણનો હેતુ તમને એક દૃશ્ય માર્ગદર્શિકા આપવાનો છે કે <code>drop</code> પદ્ધતિ કેવી રીતે કાર્ય કરે છે; સામાન્ય રીતે તમે તમારા પ્રકારને ચલાવવાની જરૂર હોય તેવા સફાઈ કોડને જણાવશો, પ્રિન્ટ સંદેશને નહીં.</p>
 <!-- Old headings. Do not remove or links may break. -->
 <p>અફસોસની વાત છે કે સ્વચાલિત <code>drop</code> કાર્યક્ષમતાને નિષ્ક્રિય કરવાનું સરળ નથી. <code>drop</code> ને નિષ્ક્રિય કરવું સામાન્ય રીતે જરૂરી હોતું નથી; <code>Drop</code> trait નો મુખ્ય હેતુ એ જ છે કે તેની સંભાળ આપોઆપ લેવામાં આવે. ક્યારેક, જોકે, તમે કોઈ મૂલ્યને વહેલા સાફ કરવા માગી શકો છો. સ્માર્ટ પોઇન્ટર્સનો ઉપયોગ કરતી વખતે જે લોકનું વ્યવસ્થાપન કરે છે તે એક ઉદાહરણ છે: તમે <code>drop</code> પદ્ધતિને દબાણ કરવા માગી શકો છો જે લોકને મુક્ત કરે છે જેથી સમાન અવકાશમાંના અન્ય કોડ લોક મેળવી શકે. Rust તમને <code>Drop</code> trait ની <code>drop</code> પદ્ધતિને જાતે જ બોલાવવાની મંજૂરી આપતું નથી; તેના બદલે, જો તમે કોઈ મૂલ્યને તેના અવકાશના અંત પહેલાં છોડી દેવા દબાણ કરવા માંગતા હો તો તમારે સ્ટાન્ડર્ડ લાયબ્રેરી દ્વારા પૂરા પાડવામાં આવેલું <code>std::mem::drop</code> ફંક્શન બોલાવવું પડશે.</p>
 <p><code>Drop</code> લક્ષણની <code>drop</code> પદ્ધતિને જાતે જ બોલાવવાનો પ્રયત્ન કરવો, યાદી 15-14 માંથી <code>main</code> કાર્યમાં ફેરફાર કરીને, યાદી 15-15 માં દર્શાવ્યા પ્રમાણે કામ નહીં કરે.</p>
 <p><strong>Listing 15-15: Attempting to call the <code>drop</code> method from the <code>Drop</code> trait manually to clean up early</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-15/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">struct CustomSmartPointer {
+</span><span class="boring">    data: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Drop for CustomSmartPointer {
+</span><span class="boring">    fn drop(&amp;mut self) {
+</span><span class="boring">        println!("Dropping CustomSmartPointer with data `{}`!", self.data);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn main() {
+    let c = CustomSmartPointer {
+        data: String::from("some data"),
+    };
+    println!("CustomSmartPointer created");
+    c.drop();
+    println!("CustomSmartPointer dropped before the end of main");
+}</code></pre>
 <p>જ્યારે આપણે આ કોડને કમ્પાઇલ કરવાનો પ્રયત્ન કરીએ છીએ, ત્યારે આપણને આ ભૂલ મળશે:</p>
-<pre><code class="language-console">{{#include ../listings/ch15-smart-pointers/listing-15-15/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling drop-example v0.1.0 (file:///projects/drop-example)
+error[E0040]: explicit use of destructor method
+  --&gt; src/main.rs:16:7
+   |
+16 |     c.drop();
+   |       ^^^^ explicit destructor calls not allowed
+   |
+help: consider using `drop` function
+   |
+16 -     c.drop();
+16 +     drop(c);
+   |
+
+For more information about this error, try `rustc --explain E0040`.
+error: could not compile `drop-example` (bin "drop-example") due to 1 previous error
 </code></pre>
 <p>આ ભૂલ સંદેશ જણાવે છે કે આપણને સ્પષ્ટ રીતે <code>drop</code> બોલાવાની અનુમતિ નથી. આ ભૂલ સંદેશમાં ‘નિવારક’ શબ્દનો ઉપયોગ થયો છે, જે એક સામાન્ય પ્રોગ્રામિંગ શબ્દ છે અને તેનો અર્થ થાય છે એવું વિધેય (function) જે ઇન્સ્ટન્સને સાફ કરે છે. નિવારક એ નિર્માણકાર (constructor) જેવો જ છે, જે ઇન્સ્ટન્સ બનાવે છે. Rustમાં <code>drop</code> વિધેય એક ચોક્કસ નિવારક છે.</p>
 <p>Rust આપણને <code>drop</code> સ્પષ્ટ રીતે બોલાવાની મંજૂરી આપતું નથી, કારણ કે Rust હજી પણ <code>main</code> ના અંતે મૂલ્ય પર આપોઆપ <code>drop</code> બોલાશે. તેનાથી ‘દ્વિ-મુક્ત’ (double free) ભૂલ થશે, કારણ કે Rust એ બે વાર સમાન મૂલ્યને સાફ કરવાનો પ્રયત્ન કરશે.</p>
 <p>અમે આપોઆપ <code>drop</code> ની સ્થાપનાને નિષ્ક્રિય કરી શકતા નથી જ્યારે કોઈ મૂલ્ય અવકાશમાંથી બહાર જાય છે, અને અમે સ્પષ્ટપણે <code>drop</code> પદ્ધતિને બોલાવી શકતા નથી. તેથી, જો આપણે કોઈ મૂલ્યને વહેલા સાફ કરવું હોય તો, અમે <code>std::mem::drop</code> વિધેયનો ઉપયોગ કરીએ છીએ.</p>
 <p><code>std::mem::drop</code> વિધેય <code>Drop</code> લક્ષણની <code>drop</code> પદ્ધતિથી અલગ છે. અમે તેને Argument તરીકે પસાર કરીને બોલાવીએ છીએ કે જે મૂલ્યને આપણે બળજબરીથી દૂર કરવા માંગીએ છીએ. આ વિધેય પ્રસ્તાવનામાં (prelude) છે, તેથી અમે યાદી 15-15 માં <code>main</code> ને સંશોધિત કરી શકીએ છીએ જેથી <code>drop</code> વિધેયને બોલાવી શકાય, જે યાદી 15-16 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 15-16: Calling <code>std::mem::drop</code> to explicitly drop a value before it goes out of scope</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-16/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">struct CustomSmartPointer {
+</span><span class="boring">    data: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Drop for CustomSmartPointer {
+</span><span class="boring">    fn drop(&amp;mut self) {
+</span><span class="boring">        println!("Dropping CustomSmartPointer with data `{}`!", self.data);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn main() {
+    let c = CustomSmartPointer {
+        data: String::from("some data"),
+    };
+    println!("CustomSmartPointer created");
+    drop(c);
+    println!("CustomSmartPointer dropped before the end of main");
+}</code></pre>
 <p>આ કોડ ચલાવવાથી નીચે મુજબ છાપવામાં આવશે:</p>
-<pre><code class="language-console">{{#include ../listings/ch15-smart-pointers/listing-15-16/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling drop-example v0.1.0 (file:///projects/drop-example)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.73s
+     Running `target/debug/drop-example`
+CustomSmartPointer created
+Dropping CustomSmartPointer with data `some data`!
+CustomSmartPointer dropped before the end of main
 </code></pre>
 <p><code>CustomSmartPointer created</code> અને <code>CustomSmartPointer dropped before the end of main</code> લખાણો વચ્ચે <code>Dropping CustomSmartPointer with data \</code>some data`!<code>છાપવામાં આવે છે, જે દર્શાવે છે કે</code>drop<code>પદ્ધતિનો કોડ</code>c` ને તે સમયે છોડવા</p>
 <p>માટે બોલાવવામાં આવે છે. તમે <code>Drop</code> લક્ષણના અમલીકરણમાં ઉલ્લેખિત કોડને અનેક રીતે ઉપયોગ કરી શકો છો જેથી સફાઈ અનુકૂળ અને સુરક્ષિત બને: દાખલા તરીકે, તમે તેનો ઉપયોગ તમારો પોતાનો મેમરી ફાળવણીકાર બનાવવા માટે કરી શકો છો! <code>Drop</code> લક્ષણ અને Rust ની માલિકી પ્રણાલી સાથે, તમારે સફાઈ કરવાની જરૂર નથી, કારણ કે Rust તે આપમેળે કરે છે.</p>

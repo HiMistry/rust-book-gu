@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
+            window.path_to_searchindex_js = "searchindex-4bc072ff.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -188,10 +188,19 @@
 <p>અમે પ્રકરણ ૧૩ માં એક વસ્તુઓની શ્રેણી જોઈ હતી, જ્યારે અમે <a href="ch13-02-iterators.html#the-iterator-trait-and-the-next-method">“The Iterator Trait and the <code>next</code> Method”</a> વિભાગમાં Iterator trait ને તપાસ્યું હતું, પરંતુ iterator અને async channel receiver વચ્ચે બે તફાવત છે. પ્રથમ તફાવત સમયનો છે: iterators synchronous હોય છે, જ્યારે channel receiver asynchronous હોય છે. બીજો તફાવત API નો છે. <code>Iterator</code> સાથે સીધું કાર્ય કરતી વખતે, અમે તેનું synchronous <code>next</code> પદ્ધતિને બોલાવીએ છીએ. <code>trpl::Receiver</code> સ્ટ્રીમ સાથે વિશેષ કરીને, અમે એક asynchronous <code>recv</code> પદ્ધતિને બદલે બોલાવી હતી. અન્યથા, આ APIs ખૂબ સમાન લાગે છે, અને તે સામ્યતા કોઈ સંયોગ નથી. સ્ટ્રીમ એ iteration નું asynchronous સ્વરૂપ જેવું છે. જો કે <code>trpl::Receiver</code> વિશેષ કરીને સંદેશો મેળવવા માટે રાહ જુએ છે, તો સામાન્ય હેતુની સ્ટ્રીમ API ઘણું વ્યાપક છે: તે <code>Iterator</code> ની જેમ જ આગલી વસ્તુ પ્રદાન કરે છે, પરંતુ asynchronously.</p>
 <p>માં ઇટરેટર (iterator) અને સ્ટ્રીમ (stream) વચ્ચેની સમાનતાનો અર્થ એ થાય છે કે આપણે કોઈપણ ઇટરેટરથી સ્ટ્રીમ બનાવી શકીએ છીએ. એક ઇટરેટરની જેમ, આપણે તેની <code>next</code> પદ્ધતિને બોલાવીને અને પછી આઉટપુટની રાહ જોઈને સ્ટ્રીમ સાથે કાર્ય કરી શકીએ છીએ, જે યાદી 17-21માં દર્શાવેલ છે, જે હજી કમ્પાઇલ (compile) થશે નહીં.</p>
 <p><strong>Listing 17-21: Creating a stream from an iterator and printing its values</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-21/src/main.rs:stream}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    trpl::block_on(async {
+</span>        let values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        let iter = values.iter().map(|n| n * 2);
+        let mut stream = trpl::stream_from_iter(iter);
+
+        while let Some(value) = stream.next().await {
+            println!("The value was: {value}");
+        }
+<span class="boring">    });
+</span><span class="boring">}</span></code></pre>
 <p>અમે સંખ્યાઓની શ્રેણીથી આરંભ કરીએ છીએ, જેને આપણે પુનરાવર્તક (iterator) માં રૂપાંતરિત કરીએ છીએ અને પછી તમામ મૂલ્યોને બમણા કરવા માટે <code>map</code> ને બોલાવીએ છીએ. ત્યારબાદ અમે <code>trpl::stream_from_iter</code> વિધેયનો ઉપયોગ કરીને પુનરાવર્તકને પ્રવાહમાં ફેરવીએ છીએ. આગળ, આપણે <code>while let</code> લૂપ વડે આવતા આઇટમ્સ પર લૂપ કરીએ છીએ.</p>
 <p>કમનસીબે, જ્યારે આપણે કોડ ચલાવવાનો પ્રયત્ન કરીએ છીએ, ત્યારે તે કમ્પાઇલ થતો નથી પરંતુ તેના બદલે જણાવે છે કે કોઈ <code>next</code> પદ્ધતિ ઉપલબ્ધ નથી:</p>
 <!-- manual-regeneration
@@ -231,7 +240,22 @@ help: there is a method `try_next` with a similar name
 **Listing 17-22: Successfully using an iterator as the basis for a stream**
 
 ```rust
-{{#rustdoc_include ../listings/ch17-async-await/listing-17-22/src/main.rs:all}}
+# extern crate trpl; // required for mdbook test
+# 
+use trpl::StreamExt;
+
+fn main() {
+    trpl::block_on(async {
+        let values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        // --snip--
+#         let iter = values.iter().map(|n| n * 2);
+#         let mut stream = trpl::stream_from_iter(iter);
+# 
+#         while let Some(value) = stream.next().await {
+#             println!("The value was: {value}");
+#         }
+#     });
+# }
 </code></pre>
 <p>આ બધાં ઘટકો એકત્રિત થવાથી, આ કોડ આપણી ઇચ્છા મુજબ કાર્ય કરે છે! વળી, હવે કે <code>StreamExt</code> અવકાશમાં છે, તેથી અમે પુનરાવર્તકોની જેમ તેના તમામ ઉપયોગી પદ્ધતિઓનો ઉપયોગ કરી શકીએ છીએ.</p>
 

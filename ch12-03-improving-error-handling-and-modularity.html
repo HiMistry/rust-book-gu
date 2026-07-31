@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
+            window.path_to_searchindex_js = "searchindex-4bc072ff.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -204,10 +204,31 @@
 <ul>
 <li><strong>Listing 12-5: Extracting a <code>parse_config</code> function from <code>main</code></strong></li>
 </ul>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>- {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-05/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">- # use std::env;
+<span class="boring">use std::fs;
+</span><span class="boring">
+</span>fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    let (query, file_path) = parse_config(&amp;args);
+
+    // --snip--
+<span class="boring">
+</span><span class="boring">    println!("Searching for {query}");
+</span><span class="boring">    println!("In file {file_path}");
+</span><span class="boring">
+</span><span class="boring">    let contents = fs::read_to_string(file_path)
+</span><span class="boring">        .expect("Should have been able to read the file");
+</span><span class="boring">
+</span><span class="boring">    println!("With text:\n{contents}");
+</span>}
+
+fn parse_config(args: &amp;[String]) -&gt; (&amp;str, &amp;str) {
+    let query = &amp;args[1];
+    let file_path = &amp;args[2];
+
+    (query, file_path)
+}</code></pre>
 <ul>
 <li>
 <p>અમે હજી કમાન્ડ લાઇન આર્ગ્યુમેન્ટ્સને વેક્ટર (vector) માં એકત્રિત કરી રહ્યા છીએ, પરંતુ ઇન્ડેક્સ ૧ પરના આર્ગ્યુમેન્ટ મૂલ્યને <code>query</code> variable અને ઇન્ડેક્સ ૨ પરના આર્ગ્યુમેન્ટ મૂલ્યને <code>file_path</code> variable સોંપવાને બદલે, અમે સમગ્ર વેક્ટરને <code>parse_config</code> ફંક્શનમાં પસાર કરીએ છીએ. <code>parse_config</code> ફંક્શન પછી તર્ક ધરાવે છે કે કયું આર્ગ્યુમેન્ટ કયા variable જાય છે અને મૂલ્યોને પાછા <code>main</code> માં મોકલે છે. અમે હજી પણ <code>query</code> અને <code>file_path</code> variables <code>main</code> માં બનાવીએ છીએ, પરંતુ <code>main</code> હવે કમાન્ડ લાઇન આર્ગ્યુમેન્ટ્સ અને variables વચ્ચેનો સંબંધ નક્કી કરવાની જવાબદારી ધરાવતું નથી.</p>
@@ -229,10 +250,36 @@
 </li>
 </ul>
 <p><strong>Listing 12-6: Refactoring <code>parse_config</code> to return an instance of a <code>Config</code> struct</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-06/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
+</span><span class="boring">use std::fs;
+</span><span class="boring">
+</span>fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    let config = parse_config(&amp;args);
+
+    println!("Searching for {}", config.query);
+    println!("In file {}", config.file_path);
+
+    let contents = fs::read_to_string(config.file_path)
+        .expect("Should have been able to read the file");
+
+    // --snip--
+<span class="boring">
+</span><span class="boring">    println!("With text:\n{contents}");
+</span>}
+
+struct Config {
+    query: String,
+    file_path: String,
+}
+
+fn parse_config(args: &amp;[String]) -&gt; Config {
+    let query = args[1].clone();
+    let file_path = args[2].clone();
+
+    Config { query, file_path }
+}</code></pre>
 <p>અમે <code>Config</code> નામનું struct ઉમેર્યું છે જે <code>query</code> અને <code>file_path</code> નામના ક્ષેત્રો ધરાવે છે. <code>parse_config</code> નું નિદર્શક હવે દર્શાવે છે કે તે એક <code>Config</code> મૂલ્ય આપે છે. <code>parse_config</code> ની અંદર, જ્યાં અમે પહેલાં string slices આપતા હતા જે <code>args</code> માં રહેલા  <code>String</code> મૂલ્યોનો સંદર્ભ લેતા હતા, ત્યાં હવે અમે <code>Config</code> ને ધરાવે છે એવા owned <code>String</code> મૂલ્યો. <code>main</code> માં <code>args</code> variable આર્ગ્યુમેન્ટ મૂલ્યોનો માલિક છે અને તે માત્ર <code>parse_config</code> કાર્યને તેમ લોન આપવા દે છે, જેનો અર્થ થાય છે કે જો <code>Config</code> <code>args</code> માં રહેલા મૂલ્યોનું સ્વામિત્વ લેવાનો પ્રયત્ન કરે તો અમે Rust ના લોન નિયમોનું ઉલ્લંઘન કરીશું.</p>
 <p>ત્યાં  <code>String</code>  માહિતીનું સંચાલન કરવાની ઘણી રીતો છે; સૌથી સરળ, જોકે થોડી અસક્ષમ, માર્ગ એ છે કે મૂલ્યો પર  <code>clone</code>  પદ્ધતિને બોલાવવી. આ  <code>Config</code>  ઇન્સ્ટન્સ માટે ડેટાની સંપૂર્ણ નકલ બનાવશે, જેમાં વધુ સમય અને મેમરી લાગશે સ્ટ્રિંગ ડેટાના સંદર્ભ સંગ્રહિત કરવા કરતાં. જો કે, ડેટા ક્લોન કરવાથી અમારું કોડ ખૂબ સીધું પણ થઈ જાય છે કારણ કે આપણે સંદર્ભોના આયુષ્યનું સંચાલન કરવું પડતું નથી; આ પરિસ્થિતિમાં, થોડી કામગીરી છોડીને સરળતા મેળવવી એ યોગ્ય સમાધાન છે.</p>
 <blockquote>
@@ -248,10 +295,40 @@
 <blockquote>
 <pre><code class="language-rust"></code></pre>
 </blockquote>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>&gt; {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-07/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">&gt; # use std::env;
+<span class="boring">use std::fs;
+</span><span class="boring">
+</span>fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    let config = Config::new(&amp;args);
+<span class="boring">
+</span><span class="boring">    println!("Searching for {}", config.query);
+</span><span class="boring">    println!("In file {}", config.file_path);
+</span><span class="boring">
+</span><span class="boring">    let contents = fs::read_to_string(config.file_path)
+</span><span class="boring">        .expect("Should have been able to read the file");
+</span><span class="boring">
+</span><span class="boring">    println!("With text:\n{contents}");
+</span>
+    // --snip--
+}
+
+// --snip--
+
+<span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Config {
+    fn new(args: &amp;[String]) -&gt; Config {
+        let query = args[1].clone();
+        let file_path = args[2].clone();
+
+        Config { query, file_path }
+    }
+}</code></pre>
 <blockquote>
 <pre><code>
 અમે `main` ને અપડેટ કર્યું છે જ્યાં અમે `parse_config` ને બોલાવતા હતા, હવે `Config::new` ને બોલાવવા માટે. અમે `parse_config` નું નામ બદલીને `new` કર્યું છે અને તેને `impl` બ્લોકમાં ખસેડ્યું છે, જે `new` ફંક્શનને `Config` સાથે સાંકળે છે. ખાતરી કરવા માટે આ કોડ ફરીથી કમ્પાઈલ કરો કે તે યોગ્ય રીતે કાર્ય કરે છે.
@@ -265,7 +342,14 @@
 ```console
 </code></pre>
 </blockquote>
-<pre><code class="language-console">&gt; {{#include ../listings/ch12-an-io-project/listing-12-07/output.txt}}
+<pre><code class="language-console">&gt; $ cargo run
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
+     Running `target/debug/minigrep`
+
+thread 'main' (6023615) panicked at src/main.rs:27:21:
+index out of bounds: the len is 1 but the index is 1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <blockquote>
 <pre><code></code></pre>
@@ -280,10 +364,42 @@
 <blockquote>
 <pre><code class="language-rust"></code></pre>
 </blockquote>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024">&gt; # use std::env;
+<span class="boring">use std::fs;
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>&gt; {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-08/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let config = Config::new(&amp;args);
+</span><span class="boring">
+</span><span class="boring">    println!("Searching for {}", config.query);
+</span><span class="boring">    println!("In file {}", config.file_path);
+</span><span class="boring">
+</span><span class="boring">    let contents = fs::read_to_string(config.file_path)
+</span><span class="boring">        .expect("Should have been able to read the file");
+</span><span class="boring">
+</span><span class="boring">    println!("With text:\n{contents}");
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Config {
+</span>    // --snip--
+    fn new(args: &amp;[String]) -&gt; Config {
+        if args.len() &lt; 3 {
+            panic!("not enough arguments");
+        }
+        // --snip--
+<span class="boring">
+</span><span class="boring">        let query = args[1].clone();
+</span><span class="boring">        let file_path = args[2].clone();
+</span><span class="boring">
+</span><span class="boring">        Config { query, file_path }
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
 <blockquote>
 <pre><code>
 આ કોડ Listing 9-13 માં આપણે લખેલ `Guess::new` ફંક્શન જેવો જ છે, જ્યાં આપણે માન્ય મૂલ્યોની રેન્જની બહારના `value` આર્ગ્યુમેન્ટ માટે `panic!` બોલાવ્યો હતો. અહીં મૂલ્યોની રેન્જ તપાસવાને બદલે, અમે ચકાસી રહ્યા છીએ કે `args` ની લંબાઈ ઓછામાં ઓછી `3` છે અને ફંક્શનનો બાકીનો ભાગ એ ધારણા હેઠળ કાર્ય કરી શકે છે કે આ શરત પૂરી થઈ ગઈ છે. જો `args` માં ત્રણથી ઓછા આઇટમ હોય, તો આ શરત `true` થશે, અને અમે પ્રોગ્રામને તાત્કાલિક સમાપ્ત કરવા માટે `panic!` મેક્રોને બોલાવીશું.
@@ -297,7 +413,14 @@
 ```console
 </code></pre>
 </blockquote>
-<pre><code class="language-console">&gt; {{#include ../listings/ch12-an-io-project/listing-12-08/output.txt}}
+<pre><code class="language-console">&gt; $ cargo run
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
+     Running `target/debug/minigrep`
+
+thread 'main' (6023776) panicked at src/main.rs:26:13:
+not enough arguments
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <blockquote>
 <pre><code>આ પરિણામ વધુ સારું છે: આપણી પાસે હવે એક યોગ્ય ભૂલ સંદેશ છે. જો કે, આપણી પાસે બિનજરૂરી માહિતી પણ છે જે અમે અમારા userઓને આપવા માંગતા નથી. કદાચ આપણે યાદી 9-13 માં ઉપયોગ કરેલી પદ્ધતિ અહીં વાપરવા માટે શ્રેષ્ઠ નથી: `panic!` ને પ્રોગ્રામિંગ સમસ્યા માટે અને વપરાશની સમસ્યા માટે નહીં, ચર્ચા કરાયેલ પ્રકરણ 9 મુજબ વધુ યોગ્ય છે. તેના બદલે, આપણે બીજી તકનીકનો ઉપયોગ કરીશું જે તમે પ્રકરણ 9 માં શીખ્યા છો— એક `Result` પરત કરવું જે સફળતા અથવા ભૂલ દર્શાવે છે.
@@ -308,52 +431,282 @@
 <p>આપણે તેના બદલે એક <code>Result</code> મૂલ્ય પરત કરી શકીએ છીએ, જેમાં સફળતાના કિસ્સામાં <code>Config</code> ઇન્સ્ટન્સ હશે અને ભૂલના કિસ્સામાં સમસ્યાનું વર્ણન હશે. આપણે કાર્ય નામ પણ <code>new</code> થી <code>build</code> માં બદલીશું, કારણ કે ઘણા પ્રોગ્રામરો અપેક્ષા રાખે છે કે <code>new</code> કાર્યો ક્યારેય નિષ્ફળ ન જાય. જ્યારે <code>Config::build</code>, <code>main</code> સાથે વાતચીત કરે છે, ત્યારે આપણે સમસ્યા હતી તે દર્શાવવા માટે <code>Result</code> પ્રકારનો ઉપયોગ કરી શકીએ છીએ. પછી, આપણે <code>Err</code> વિવિધતાને અમારા userઓ માટે વધુ વ્યવહારુ ભૂલમાં રૂપાંતરિત કરવા માટે <code>main</code> માં ફેરફાર કરી શકીએ છીએ, જેમાં <code>thread 'main'</code> અને <code>RUST_BACKTRACE</code> વિશેની આસપાસનો લખાણ સમાવિષ્ટ નથી જે <code>panic!</code> કૉલ દ્વારા થાય છે.</p>
 <p>Listing 12-9 દર્શાવે છે કે આપણે <code>Config::build</code> નામના ફંક્શનના વળતર મૂલ્યમાં અને ફંક્શનના મુખ્ય ભાગમાં શું ફેરફાર કરવાની જરૂર છે, જેની આવશ્યકતા <code>Result</code>  વળતર આપવાની છે. નોંધ કરો કે આ કોડ ત્યાં સુધી કમ્પાઇલ થશે નહીં જ્યાં સુધી આપણે <code>main</code> ને પણ અપડેટ ન કરીએ, જે આપણે આગામી યાદીમાં કરીશું.</p>
 <p><strong>Listing 12-9: Returning a <code>Result</code> from <code>Config::build</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
+</span><span class="boring">use std::fs;
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-09/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let config = Config::new(&amp;args);
+</span><span class="boring">
+</span><span class="boring">    println!("Searching for {}", config.query);
+</span><span class="boring">    println!("In file {}", config.file_path);
+</span><span class="boring">
+</span><span class="boring">    let contents = fs::read_to_string(config.file_path)
+</span><span class="boring">        .expect("Should have been able to read the file");
+</span><span class="boring">
+</span><span class="boring">    println!("With text:\n{contents}");
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Config {
+    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+        if args.len() &lt; 3 {
+            return Err("not enough arguments");
+        }
+
+        let query = args[1].clone();
+        let file_path = args[2].clone();
+
+        Ok(Config { query, file_path })
+    }
+}</code></pre>
 <p>અમારું <code>build</code> વિધેય એક <code>Result</code> પરત કરે છે જેમાં સફળતાના કિસ્સામાં <code>Config</code> ઇન્સ્ટન્સ અને ભૂલના કિસ્સામાં સ્ટ્રિંગ લિટરલ હોય છે. અમારી ભૂલની કિંમતો હંમેશાં સ્ટ્રિંગ લિટરલ હશે જે <code>'static</code> આયુષ્ય ધરાવે છે. We’ve</p>
 <p>અમે વિધેયના મુખ્ય ભાગમાં બે પરિવર્તનો કર્યા છે: જ્યારે user પૂરતા આર્ગ્યુમેન્ટ્સ નથી આપતા ત્યારે <code>panic!</code> કૉલ કરવાને બદલે, હવે અમે એક <code>Err</code> મૂલ્ય પરત કરીએ છીએ અને <code>Config</code> ની પરત થતી કિંમતને <code>Ok</code> માં લપેટીએ છીએ. આ પરિવર્તનો વિધેયને તેના નવા પ્રકારના હસ્તાક્ષરનું પાલન કરાવે છે.</p>
 <p><code>Config::build</code> માંથી <code>Err</code> મૂલ્ય પાછું આપીને, <code>main</code> કાર્ય મુખ્ય <code>build</code> કાર્યમાંથી પાછા મળેલા <code>Result</code> મૂલ્યને નિયંત્રિત કરી શકે છે અને ભૂલની સ્થિતિમાં પ્રક્રિયાને વધુ સ્વચ્છ રીતે સમાપ્ત કરી શકે છે.</p>
 <p>અવ્યવસ્થાપન (error) વ્યવહાર કરવા અને user-મૈત્રીપૂર્ણ સંદેશ છાપવા માટે, આપણે <code>main</code> ને અપડેટ કરવાની જરૂર છે જેથી તે <code>Result</code> ને સંભાળી શકે જે <code>Config::build</code> દ્વારા પરત કરવામાં આવે છે, જે સૂચિ 12-10 માં દર્શાવેલ છે. આપણે આદેશ વાધું સાધન (command line tool) ને શૂન્ય સિવાયની અવ્યવસ્થાપન કોડ સાથે સમાપ્ત કરવાની જવાબદારી પણ સ્વીકારવાનું છોડી દઈશું અને તેના બદલે તેને જાતે અમલમાં મૂકીશું. શૂન્ય સિવાયનો બહાર નીકળવાનો દરજ્જો (exit status) એ એક સંમેલન છે જે આપણા કાર્યક્રમ દ્વારા બોલાવવામાં આવતી પ્રક્રિયાને સંકેત આપવા માટે કે કાર્યક્રમ અવ્યવસ્થાપન સ્થિતિ સાથે સમાપ્ત થયો હતો.</p>
 <p><strong>Listing 12-10: Exiting with an error code if building a <code>Config</code> fails</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-10/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
+</span><span class="boring">use std::fs;
+</span>use std::process;
+
+fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    let config = Config::build(&amp;args).unwrap_or_else(|err| {
+        println!("Problem parsing arguments: {err}");
+        process::exit(1);
+    });
+
+    // --snip--
+<span class="boring">
+</span><span class="boring">    println!("Searching for {}", config.query);
+</span><span class="boring">    println!("In file {}", config.file_path);
+</span><span class="boring">
+</span><span class="boring">    let contents = fs::read_to_string(config.file_path)
+</span><span class="boring">        .expect("Should have been able to read the file");
+</span><span class="boring">
+</span><span class="boring">    println!("With text:\n{contents}");
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Config {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">        if args.len() &lt; 3 {
+</span><span class="boring">            return Err("not enough arguments");
+</span><span class="boring">        }
+</span><span class="boring">
+</span><span class="boring">        let query = args[1].clone();
+</span><span class="boring">        let file_path = args[2].clone();
+</span><span class="boring">
+</span><span class="boring">        Ok(Config { query, file_path })
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
 <p>આ યાદીમાં, અમે એક એવી પદ્ધતિનો ઉપયોગ કર્યો છે જેનું આપણે હજી વિગતવાર વર્ણન કર્યું નથી: <code>unwrap_or_else</code>, જે સ્ટાન્ડર્ડ લાઈબ્રેરી દ્વારા <code>Result&lt;T, E&gt;</code> પર વ્યાખ્યાયિત થયેલ છે. <code>unwrap_or_else</code> નો ઉપયોગ કરીને, આપણી પાસે કસ્ટમ, નોન-<code>panic!</code> ભૂલ નિયંત્રણ કરવાની ક્ષમતા છે. જો <code>Result</code> એ <code>Ok</code> મૂલ્ય હોય, તો આ પદ્ધતિનું વર્તન <code>unwrap</code> જેવું જ હોય છે: તે અંદરના મૂલ્યને પરત કરે છે જે <code>Ok</code> ઘેરી લે છે. જો કે, જો મૂલ્ય <code>Err</code> મૂલ્ય હોય, તો આ પદ્ધતિ ક્લોઝરમાં રહેલા કોડને બોલાવે છે, જે એક અનામી ફંક્શન છે જેને આપણે <code>unwrap_or_else</code> ને Argument તરીકે વ્યાખ્યાયિત કરીએ છીએ અને પસાર કરીએ છીએ. આપણે પ્રકરણ 13 માં ક્લોઝર વિશે વધુ વિગતવાર વાત કરીશું. અત્યારે, તમારે માત્ર એટલું જ જાણવાની જરૂર છે કે <code>unwrap_or_else</code> એ <code>Err</code> ના અંદરના મૂલ્યને પાસ કરશે, જે આ કિસ્સામાં સ્થિર સ્ટ્રિંગ <code>"not enough arguments"</code> છે જેને આપણે યાદી 12-9 માં ઉમેર્યું હતું, તે આપણા ક્લોઝરમાં Argument <code>err</code> તરીકે દેખાય છે. ક્લોઝરમાં રહેલો કોડ જ્યારે ચાલે છે ત્યારે <code>err</code> મૂલ્યનો ઉપયોગ કરી શકે છે.</p>
 <p>અમે <code>use</code> લીટી ઉમેરી છે જેથી કરીને <code>process</code> ને પ્રમાણિત લાયબ્રેરીમાંથી અવકાશમાં લાવવામાં આવે. ભૂલની સ્થિતિમાં ચલાવવામાં આવનાર ક્લોઝર (closure) નો કોડ માત્ર બે લીટીનો છે: અમે <code>err</code> મૂલ્ય છાપીએ છીએ અને પછી <code>process::exit</code> ને બોલાવીએ છીએ. <code>process::exit</code> ફંક્શન તરત જ પ્રોગ્રામને બંધ કરી દેશે અને બહાર નીકળવાની સ્થિતિ કોડ તરીકે આપવામાં આવેલી સંખ્યા પરત કરશે. આ Listing 12-8 માં અમે ઉપયોગ કરેલ <code>panic!</code> આધારિત હેન્ડલિંગ જેવું જ છે, પરંતુ હવે અમને વધારાનું આઉટપુટ મળતું નથી. ચાલો પ્રયત્ન કરીએ:</p>
-<pre><code class="language-console">{{#include ../listings/ch12-an-io-project/listing-12-10/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
+     Running `target/debug/minigrep`
+Problem parsing arguments: not enough arguments
 </code></pre>
 <p>મહાન! આ પરિણામ અમારા userઓ માટે વધુ મૈત્રીપૂર્ણ છે.</p>
 <p>હવે આપણે રૂપરેખાંકન વિશ્લેષણનું પુનર્ગઠન પૂર્ણ કરી લીધું છે, તો ચાલો કાર્યક્રમના તર્ક તરફ વળીએ. જેમ કે આપણે “Binary પ્રોજેક્ટ્સમાં ચિંતાઓને અલગ કરવી” માં જણાવ્યું હતું, આપણે <code>run</code> નામનું એક વિધેય બહાર કાઢીશું, જે <code>main</code> વિધેયમાં હાલના તમામ તર્કના ભાગ રૂપે રહેશે અને રૂપરેખાંકન સેટઅપ અથવા ભૂલોને નિયંત્રિત કરવામાં સામેલ નથી. જ્યારે આપણે પૂર્ણ કરીશું, ત્યારે <code>main</code> વિધેય સંક્ષિપ્ત અને નિરીક્ષણ દ્વારા ચકાસવા માટે સરળ હશે, અને આપણી પાસે અન્ય તમામ તર્ક માટે પરીક્ષણો લખવાની ક્ષમતા હશે.</p>
 <p>Listing 12-11 દર્શાવે છે <code>run</code> કાર્યને બહાર કાઢવાની નાની, ક્રમિક પ્રગતિ.</p>
 <p><strong>Listing 12-11: Extracting a <code>run</code> function containing the rest of the program logic</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-11/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::process;
+</span><span class="boring">
+</span>fn main() {
+    // --snip--
+
+<span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
+</span><span class="boring">        println!("Problem parsing arguments: {err}");
+</span><span class="boring">        process::exit(1);
+</span><span class="boring">    });
+</span><span class="boring">
+</span>    println!("Searching for {}", config.query);
+    println!("In file {}", config.file_path);
+
+    run(config);
+}
+
+fn run(config: Config) {
+    let contents = fs::read_to_string(config.file_path)
+        .expect("Should have been able to read the file");
+
+    println!("With text:\n{contents}");
+}
+
+// --snip--
+<span class="boring">
+</span><span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Config {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">        if args.len() &lt; 3 {
+</span><span class="boring">            return Err("not enough arguments");
+</span><span class="boring">        }
+</span><span class="boring">
+</span><span class="boring">        let query = args[1].clone();
+</span><span class="boring">        let file_path = args[2].clone();
+</span><span class="boring">
+</span><span class="boring">        Ok(Config { query, file_path })
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
 <p>run કાર્ય હવે <code>main</code> માંથી બાકી રહેલા તમામ તર્ક ધરાવે છે, ફાઈલ વાંચવાથી આરંભીને. <code>run</code> કાર્ય <code>Config</code> ઉદાહરણને Argument તરીકે સ્વીકારે છે.</p>
 <p>બાકીના કાર્યક્રમ તર્કને <code>run</code> ફંક્શનમાં અલગ કર્યા પછી, આપણે ભૂલ વ્યવસ્થાપનને સુધારી શકીએ છીએ, જેમ કે આપણે Listing 12-9 માં <code>Config::build</code> સાથે કર્યું હતું. <code>expect</code> કૉલ કરીને પ્રોગ્રામને ગભરાવવા દેવાને બદલે, જ્યારે કંઈક ખોટું થાય ત્યારે <code>run</code> ફંક્શન એક <code>Result&lt;T, E&gt;</code> પરત કરશે. આનાથી આપણને <code>main</code> માં user-મૈત્રીપૂર્ણ રીતે ભૂલોને નિયંત્રિત કરવા સંબંધિત તર્કને વધુ મજબૂત બનાવવાની મંજૂરી મળશે. Listing 12-12 <code>run</code> ના હસ્તાક્ષર અને શરીર માં જરૂરી ફેરફારો દર્શાવે છે.</p>
 <p><strong>Listing 12-12: Changing the <code>run</code> function to return <code>Result</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::process;
+</span>use std::error::Error;
+
+// --snip--
+
+<span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-12/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
+</span><span class="boring">        println!("Problem parsing arguments: {err}");
+</span><span class="boring">        process::exit(1);
+</span><span class="boring">    });
+</span><span class="boring">
+</span><span class="boring">    println!("Searching for {}", config.query);
+</span><span class="boring">    println!("In file {}", config.file_path);
+</span><span class="boring">
+</span><span class="boring">    run(config);
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+    let contents = fs::read_to_string(config.file_path)?;
+
+    println!("With text:\n{contents}");
+
+    Ok(())
+}
+<span class="boring">
+</span><span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Config {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">        if args.len() &lt; 3 {
+</span><span class="boring">            return Err("not enough arguments");
+</span><span class="boring">        }
+</span><span class="boring">
+</span><span class="boring">        let query = args[1].clone();
+</span><span class="boring">        let file_path = args[2].clone();
+</span><span class="boring">
+</span><span class="boring">        Ok(Config { query, file_path })
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
 <p>અહીં ત્રણ મહત્ત્વના પરિવર્તનો કર્યા છે. પ્રથમ, અમે <code>run</code> ફંક્શનનો વળતર પ્રકાર <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> માં બદલ્યો છે. આ ફંક્શન અગાઉ એકમ પ્રકાર, <code>()</code> , પરત કરતું હતું, અને અમે તેને <code>Ok</code> કેસમાં પરત થતા મૂલ્ય</p>
 <p>તરીકે જાળવી રાખીએ છીએ. ભૂલ પ્રકાર માટે, અમે ટ્રેઇટ ઑબ્જેક્ટ <code>Box&lt;dyn Error&gt;</code> નો ઉપયોગ કર્યો છે (અને અમે <code>use</code> વિધાન સાથે ટોચ પર <code>std::error::Error</code> ને અવકાશમાં લાવ્યા). અમે પ્રકરણ ૧૮ માં ટ્રેઇટ ઑબ્જેક્ટ્સ આવરી લઈશું. અત્યારે, માત્ર એટલું જ જાણો કે <code>Box&lt;dyn Error&gt;</code> નો અર્થ એ છે કે ફંક્શન <code>Error</code> ટ્રેઇટ લાગુ કરતો પ્રકાર પરત કરશે, પરંતુ આપણે તે વળતર મૂલ્ય કયો ચોક્કસ પ્રકાર હશે તે સ્પષ્ટ કરવાની જરૂર નથી. આ આપણને વિવિધ ભૂલ પરિસ્થિતિઓમાં અલગ-અલગ પ્રકારના ભૂલ મૂલ્યો પરત કરવાની સુગમતા આપે છે. <code>dyn</code> કીવર્ડ dynamic માટે ટૂંકું છે.</p>
 <p>બીજું, અમે <code>expect</code> ફંક્શનને દૂર કર્યું છે અને તેના બદલે <code>?</code> ઓપરેટરનો ઉપયોગ કર્યો છે, જે વિશે આપણે પ્રકરણ ૯ માં વાત કરી હતી. ભૂલ આવે ત્યારે <code>panic!</code> કરવાના બદલે, <code>?</code> વર્તમાન ફંક્શનમાંથી ભૂલનું મૂલ્ય પાછું આપશે જેથી કોલર તેને નિયંત્રિત કરી શકે.</p>
 <p>ત્રીજું, <code>run</code> ફંક્શન હવે સફળતાની સ્થિતિમાં <code>Ok</code> મૂલ્ય આપે છે. અમે <code>run</code> ફંક્શનના સફળતા પ્રકારને હસ્તાક્ષરમાં <code>()</code> તરીકે જાહેર કર્યો છે, જેનો અર્થ થાય છે કે આપણે એકમ પ્રકારના મૂલ્યને <code>Ok</code> મૂલ્યમાં લપેટી લેવું પડશે. આ <code>Ok(())</code> સિન્ટેક્સ શરૂઆતમાં થોડું વિચિત્ર લાગી શકે છે. પરંતુ <code>()</code> નો આ રીતે ઉપયોગ કરવો એ સૂચવવાનો પ્રમાણભૂત માર્ગ છે કે અમે <code>run</code> તેના આડઅસરો માટે જ બોલાવી રહ્યા છીએ; તે કોઈ એવું મૂલ્ય આપતું નથી જેની આપણને જરૂર હોય.</p>
 <p>જ્યારે તમે આ કોડ ચલાવો છો, ત્યારે તે કમ્પાઇલ થશે પરંતુ એક ચેતવણી પ્રદર્શિત કરશે:</p>
-<pre><code class="language-console">{{#include ../listings/ch12-an-io-project/listing-12-12/output.txt}}
+<pre><code class="language-console">$ cargo run -- the poem.txt
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+warning: unused `Result` that must be used
+  --&gt; src/main.rs:19:5
+   |
+19 |     run(config);
+   |     ^^^^^^^^^^^
+   |
+   = note: this `Result` may be an `Err` variant, which should be handled
+   = note: `#[warn(unused_must_use)]` (part of `#[warn(unused)]`) on by default
+help: use `let _ = ...` to ignore the resulting value
+   |
+19 |     let _ = run(config);
+   |     +++++++
+
+warning: `minigrep` (bin "minigrep") generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.71s
+     Running `target/debug/minigrep the poem.txt`
+Searching for the
+In file poem.txt
+With text:
+I'm nobody! Who are you?
+Are you nobody, too?
+Then there's a pair of us - don't tell!
+They'd banish us, you know.
+
+How dreary to be somebody!
+How public, like a frog
+To tell your name the livelong day
+To an admiring bog!
+
 </code></pre>
 <p>Rust જણાવે છે કે આપણી કોડ <code>Result</code> મૂલ્યને અવગણ્યું અને આ <code>Result</code> કોઈ ભૂલ સૂચવી શકે છે. પરંતુ આપણે ચકાસતા નથી કે ભૂલ આવી છે કે નહીં, અને કમ્પાઇલર આપણને યાદ અપાવે છે કે આપણે સંભવતઃ અહીં ભૂલ-નિવારણ કોડ રાખવાનો હતો! ચાલો હવે તે સમસ્યાને સુધારીએ.</p>
 <p>અમે ભૂલો ચકાસીશું અને તેનું નિવારણ એક એવી પદ્ધતિનો ઉપયોગ કરીને કરીશું જે આપણે Listing 12-10 માં <code>Config::build</code> સાથે વાપરી હતી, પરંતુ થોડો તફાવત છે:</p>
 <p>ફાઈલનું નામ: src/main.rs</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch12-an-io-project/no-listing-01-handling-errors-in-main/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
+</span><span class="boring">use std::error::Error;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::process;
+</span><span class="boring">
+</span>fn main() {
+    // --snip--
+
+<span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
+</span><span class="boring">        println!("Problem parsing arguments: {err}");
+</span><span class="boring">        process::exit(1);
+</span><span class="boring">    });
+</span><span class="boring">
+</span>    println!("Searching for {}", config.query);
+    println!("In file {}", config.file_path);
+
+    if let Err(e) = run(config) {
+        println!("Application error: {e}");
+        process::exit(1);
+    }
+}
+<span class="boring">
+</span><span class="boring">fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+</span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
+</span><span class="boring">
+</span><span class="boring">    println!("With text:\n{contents}");
+</span><span class="boring">
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Config {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">        if args.len() &lt; 3 {
+</span><span class="boring">            return Err("not enough arguments");
+</span><span class="boring">        }
+</span><span class="boring">
+</span><span class="boring">        let query = args[1].clone();
+</span><span class="boring">        let file_path = args[2].clone();
+</span><span class="boring">
+</span><span class="boring">        Ok(Config { query, file_path })
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
 <p>આપણે <code>unwrap_or_else</code> ને બદલે <code>if let</code> વાપરીએ છીએ, જેથી ચકાસી શકાય કે <code>run</code> કોઈ <code>Err</code> મૂલ્ય આપે છે કે નહીં અને જો તેવું હોય તો <code>process::exit(1)</code> ને બોલાવી શકાય. <code>run</code> કાર્યક્રમ એવું કોઈ મૂલ્ય આપતો નથી જેને આપણે <code>unwrap</code> કરવા માંગીએ છીએ, જે રીતે <code>Config::build</code> <code>Config</code> ઉદાહરણ આપે છે. કારણ કે <code>run</code> સફળતાના કિસ્સામાં <code>()</code> આપે છે, તેથી આપણને માત્ર ભૂલ શોધવામાં રસ છે, માટે આપણને <code>unwrap_or_else</code> દ્વારા મેળવેલા મૂલ્યની જરૂર નથી, જે માત્ર <code>()</code> જ હશે. The bodies of the <code>if let</code> and the <code>unwrap_or_else</code></p>
 <p><code>if let</code> અને <code>unwrap_or_else</code> કાર્યો બંને કિસ્સાઓમાં સમાન હોય છે: આપણે ભૂલ છાપીએ છીએ અને બહાર નીકળી જઈએ છીએ.</p>
 <h3 id="fixing-the-error-handling"><a class="header" href="#fixing-the-error-handling">Fixing the Error Handling</a></h3>
@@ -363,15 +716,66 @@
 <p><strong>Listing 12-13: Defining the <code>search</code> function in <em>src/lib.rs</em></strong></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}
+</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+    unimplemented!();
+}
 <span class="boring">}</span></code></pre>
 <p>આપણે <code>pub</code> કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી <code>search</code> ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!</p>
 <p>હવે આપણે <code>src/lib.rs</code> માં વ્યાખ્યાયિત કરેલા કોડને <code>src/main.rs</code> માં બાઈનરી ક્રેટના અવકાશમાં લાવવાની અને તેને બોલાવવાની જરૂર છે, જે યાદી 12-14 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 12-14: Using the <code>minigrep</code> library crate’s <code>search</code> function in <em>src/main.rs</em></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
+</span><span class="boring">use std::error::Error;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::process;
+</span><span class="boring">
+</span>// --snip--
+use minigrep::search;
+
+fn main() {
+    // --snip--
+<span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
+</span><span class="boring">        println!("Problem parsing arguments: {err}");
+</span><span class="boring">        process::exit(1);
+</span><span class="boring">    });
+</span><span class="boring">
+</span><span class="boring">    if let Err(e) = run(config) {
+</span><span class="boring">        println!("Application error: {e}");
+</span><span class="boring">        process::exit(1);
+</span><span class="boring">    }
+</span>}
+
+// --snip--
+
+<span class="boring">
+</span><span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Config {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">        if args.len() &lt; 3 {
+</span><span class="boring">            return Err("not enough arguments");
+</span><span class="boring">        }
+</span><span class="boring">
+</span><span class="boring">        let query = args[1].clone();
+</span><span class="boring">        let file_path = args[2].clone();
+</span><span class="boring">
+</span><span class="boring">        Ok(Config { query, file_path })
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+    let contents = fs::read_to_string(config.file_path)?;
+
+    for line in search(&amp;config.query, &amp;contents) {
+        println!("{line}");
+    }
+
+    Ok(())
+}</code></pre>
 <p>આપણે <code>use minigrep::search</code> લાઇન ઉમેરીએ છીએ જેથી કરીને <code>search</code> કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, <code>run</code> કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે <code>search</code> કાર્યને બોલાવીએ છીએ અને <code>config.query</code> મૂલ્ય અને <code>contents</code> ને Argumentો તરીકે પસાર કરીએ છીએ. પછી, <code>run</code> એક <code>for</code> લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે <code>search</code> દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે <code>main</code> કાર્યમાં રહેલા <code>println!</code> કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).</p>
 <p>નોંધ શોધ કાર્ય બધા પરિણામોને એક વેક્ટર (vector) માં ભેગા કરીને પરત લાવશે, જે છાપવામાં આવે તે પહેલાં. મોટા ફાઈલોમાં શોધ કરતી વખતે આ અમલીકરણ (implementation) ધીમું થઈ શકે છે, કારણ કે પરિણામો તરત જ છાપવામાં આવતા નથી; આપણે પ્રકરણ ૧૩ માં પુનરાવર્તકો (iterators) નો ઉપયોગ કરીને આને સુધારવાનો</p>
 <p>એક સંભવિત માર્ગ ચર્ચા કરીશું. સારું થયું! ઘણું કામ થયું, પરંતુ ભવિષ્યમાં સફળતા માટે આપણે પોતાને તૈયાર કર્યા છીએ. હવે ભૂલોને નિયંત્રિત કરવી ખૂબ સરળ છે, અને આપણે કોડને વધુ મોડ્યુલર (modular) બનાવ્યો છે. લગભગ બધું જ કાર્ય અહીંથી src/lib.rs માં થશે.</p>
@@ -381,11 +785,62 @@
 <p>ચાલો આપણે src/lib.rs માં ટેક્સ્ટ શોધવા માટે જવાબદાર કોડ વ્યાખ્યાયિત કરીએ, src/main.rs માં નહીં. આ આપણને (અથવા આપણા <code>minigrep</code> લાયબ્રેરીનો ઉપયોગ કરનાર કોઈ પણ વ્યક્તિને) શોધવાનું કાર્ય વધુ સંદર્ભોમાં બોલાવવા દેશે, આપણી <code>minigrep</code> બાઈનરી સિવાય.</p>
 <p>સૌ પ્રથમ, આપણે <code>search</code> વિધેયની નિશાની (signature) src/lib.rs માં Listing 12-13 માં દર્શાવ્યા પ્રમાણે વ્યાખ્યાયિત કરીએ, જેમાં <code>unimplemented!</code> મેક્રોને બોલાવતું શરીર (body) હશે. જ્યારે આપણે અમલીકરણ ભરીશું ત્યારે આપણે નિશાની વિશે વધુ વિગતવાર સમજાવીશું.</p>
 <p><strong>Listing 12-13: Defining the <code>search</code> function in <em>src/lib.rs</em></strong></p>
-<p>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}</p>
+<p>pub fn search&lt;’a&gt;(query: &amp;str, contents: &amp;’a str) -&gt; Vec&lt;&amp;’a str&gt; {
+unimplemented!();
+}</p>
 <p>આપણે <code>pub</code> કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી <code>search</code> ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!</p>
 <p>હવે આપણે <code>src/lib.rs</code> માં વ્યાખ્યાયિત કરેલા કોડને <code>src/main.rs</code> માં બાઈનરી ક્રેટના અવકાશમાં લાવવાની અને તેને બોલાવવાની જરૂર છે, જે યાદી 12-14 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 12-14: Using the <code>minigrep</code> library crate’s <code>search</code> function in <em>src/main.rs</em></strong></p>
-<p>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}</p>
+<h1 id="use-stdenv"><a class="header" href="#use-stdenv">use std::env;</a></h1>
+<h1 id="use-stderrorerror"><a class="header" href="#use-stderrorerror">use std::error::Error;</a></h1>
+<h1 id="use-stdfs"><a class="header" href="#use-stdfs">use std::fs;</a></h1>
+<h1 id="use-stdprocess"><a class="header" href="#use-stdprocess">use std::process;</a></h1>
+<h1 id=""><a class="header" href="#"></a></h1>
+<p>// –snip–
+use minigrep::search;</p>
+<p>fn main() {
+// –snip–</p>
+<h1 id="let-args-vec--envargscollect"><a class="header" href="#let-args-vec--envargscollect">let args: Vec<string> = env::args().collect();</string></a></h1>
+<h1 id="-1"><a class="header" href="#-1"></a></h1>
+<h1 id="let-config--configbuildargsunwrap_or_elseerr-"><a class="header" href="#let-config--configbuildargsunwrap_or_elseerr-">let config = Config::build(&amp;args).unwrap_or_else(|err| {</a></h1>
+<h1 id="printlnproblem-parsing-arguments-err"><a class="header" href="#printlnproblem-parsing-arguments-err">println!(“Problem parsing arguments: {err}”);</a></h1>
+<h1 id="processexit1"><a class="header" href="#processexit1">process::exit(1);</a></h1>
+<h1 id="-2"><a class="header" href="#-2">});</a></h1>
+<h1 id="-3"><a class="header" href="#-3"></a></h1>
+<h1 id="if-let-erre--runconfig-"><a class="header" href="#if-let-erre--runconfig-">if let Err(e) = run(config) {</a></h1>
+<h1 id="printlnapplication-error-e"><a class="header" href="#printlnapplication-error-e">println!(“Application error: {e}”);</a></h1>
+<h1 id="processexit1-1"><a class="header" href="#processexit1-1">process::exit(1);</a></h1>
+<h1 id="-4"><a class="header" href="#-4">}</a></h1>
+<p>}</p>
+<p>// –snip–</p>
+<h1 id="-5"><a class="header" href="#-5"></a></h1>
+<h1 id="struct-config-"><a class="header" href="#struct-config-">struct Config {</a></h1>
+<h1 id="query-string"><a class="header" href="#query-string">query: String,</a></h1>
+<h1 id="file_path-string"><a class="header" href="#file_path-string">file_path: String,</a></h1>
+<h1 id="-6"><a class="header" href="#-6">}</a></h1>
+<h1 id="-7"><a class="header" href="#-7"></a></h1>
+<h1 id="impl-config-"><a class="header" href="#impl-config-">impl Config {</a></h1>
+<h1 id="fn-buildargs-string---resultconfig-static-str-"><a class="header" href="#fn-buildargs-string---resultconfig-static-str-">fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;’static str&gt; {</a></h1>
+<h1 id="if-argslen--3-"><a class="header" href="#if-argslen--3-">if args.len() &lt; 3 {</a></h1>
+<h1 id="return-errnot-enough-arguments"><a class="header" href="#return-errnot-enough-arguments">return Err(“not enough arguments”);</a></h1>
+<h1 id="-8"><a class="header" href="#-8">}</a></h1>
+<h1 id="-9"><a class="header" href="#-9"></a></h1>
+<h1 id="let-query--args1clone"><a class="header" href="#let-query--args1clone">let query = args[1].clone();</a></h1>
+<h1 id="let-file_path--args2clone"><a class="header" href="#let-file_path--args2clone">let file_path = args[2].clone();</a></h1>
+<h1 id="-10"><a class="header" href="#-10"></a></h1>
+<h1 id="okconfig--query-file_path-"><a class="header" href="#okconfig--query-file_path-">Ok(Config { query, file_path })</a></h1>
+<h1 id="-11"><a class="header" href="#-11">}</a></h1>
+<h1 id="-12"><a class="header" href="#-12">}</a></h1>
+<h1 id="-13"><a class="header" href="#-13"></a></h1>
+<p>fn run(config: Config) -&gt; Result&lt;(), Box<dyn error="">&gt; {
+let contents = fs::read_to_string(config.file_path)?;</dyn></p>
+<pre><code>for line in search(&amp;config.query, &amp;contents) {
+    println!("{line}");
+}
+
+Ok(())
+</code></pre>
+<p>}</p>
 <p>આપણે <code>use minigrep::search</code> લાઇન ઉમેરીએ છીએ જેથી કરીને <code>search</code> કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, <code>run</code> કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે <code>search</code> કાર્યને બોલાવીએ છીએ અને <code>config.query</code> મૂલ્ય અને <code>contents</code> ને Argumentો તરીકે પસાર કરીએ છીએ. પછી, <code>run</code> એક <code>for</code> લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે <code>search</code> દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે <code>main</code> કાર્યમાં રહેલા <code>println!</code> કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).</p>
 <p>નોંધ શોધ કાર્ય બધા પરિણામોને એક વેક્ટર (vector) માં ભેગા કરીને પરત લાવશે, જે છાપવામાં આવે તે પહેલાં. મોટા ફાઈલોમાં શોધ કરતી વખતે આ અમલીકરણ (implementation) ધીમું થઈ શકે છે, કારણ કે પરિણામો તરત જ છાપવામાં આવતા નથી; આપણે પ્રકરણ ૧૩ માં પુનરાવર્તકો (iterators) નો ઉપયોગ કરીને આને સુધારવાનો</p>
 <p>એક સંભવિત માર્ગ ચર્ચા કરીશું. સારું થયું! ઘણું કામ થયું, પરંતુ ભવિષ્યમાં સફળતા માટે આપણે પોતાને તૈયાર કર્યા છીએ. હવે ભૂલોને નિયંત્રિત કરવી ખૂબ સરળ છે, અને આપણે કોડને વધુ મોડ્યુલર (modular) બનાવ્યો છે. લગભગ બધું જ કાર્ય અહીંથી src/lib.rs માં થશે.</p>
@@ -395,11 +850,62 @@
 <p>ચાલો આપણે src/lib.rs માં ટેક્સ્ટ શોધવા માટે જવાબદાર કોડ વ્યાખ્યાયિત કરીએ, src/main.rs માં નહીં. આ આપણને (અથવા આપણા <code>minigrep</code> લાયબ્રેરીનો ઉપયોગ કરનાર કોઈ પણ વ્યક્તિને) શોધવાનું કાર્ય વધુ સંદર્ભોમાં બોલાવવા દેશે, આપણી <code>minigrep</code> બાઈનરી સિવાય.</p>
 <p>સૌ પ્રથમ, આપણે <code>search</code> વિધેયની નિશાની (signature) src/lib.rs માં Listing 12-13 માં દર્શાવ્યા પ્રમાણે વ્યાખ્યાયિત કરીએ, જેમાં <code>unimplemented!</code> મેક્રોને બોલાવતું શરીર (body) હશે. જ્યારે આપણે અમલીકરણ ભરીશું ત્યારે આપણે નિશાની વિશે વધુ વિગતવાર સમજાવીશું.</p>
 <p><strong>Listing 12-13: Defining the <code>search</code> function in <em>src/lib.rs</em></strong></p>
-<p>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}</p>
+<p>pub fn search&lt;’a&gt;(query: &amp;str, contents: &amp;’a str) -&gt; Vec&lt;&amp;’a str&gt; {
+unimplemented!();
+}</p>
 <p>આપણે <code>pub</code> કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી <code>search</code> ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!</p>
 <p>હવે આપણે <code>src/lib.rs</code> માં વ્યાખ્યાયિત કરેલા કોડને <code>src/main.rs</code> માં બાઈનરી ક્રેટના અવકાશમાં લાવવાની અને તેને બોલાવવાની જરૂર છે, જે યાદી 12-14 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 12-14: Using the <code>minigrep</code> library crate’s <code>search</code> function in <em>src/main.rs</em></strong></p>
-<p>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}</p>
+<h1 id="use-stdenv-1"><a class="header" href="#use-stdenv-1">use std::env;</a></h1>
+<h1 id="use-stderrorerror-1"><a class="header" href="#use-stderrorerror-1">use std::error::Error;</a></h1>
+<h1 id="use-stdfs-1"><a class="header" href="#use-stdfs-1">use std::fs;</a></h1>
+<h1 id="use-stdprocess-1"><a class="header" href="#use-stdprocess-1">use std::process;</a></h1>
+<h1 id="-14"><a class="header" href="#-14"></a></h1>
+<p>// –snip–
+use minigrep::search;</p>
+<p>fn main() {
+// –snip–</p>
+<h1 id="let-args-vec--envargscollect-1"><a class="header" href="#let-args-vec--envargscollect-1">let args: Vec<string> = env::args().collect();</string></a></h1>
+<h1 id="-15"><a class="header" href="#-15"></a></h1>
+<h1 id="let-config--configbuildargsunwrap_or_elseerr--1"><a class="header" href="#let-config--configbuildargsunwrap_or_elseerr--1">let config = Config::build(&amp;args).unwrap_or_else(|err| {</a></h1>
+<h1 id="printlnproblem-parsing-arguments-err-1"><a class="header" href="#printlnproblem-parsing-arguments-err-1">println!(“Problem parsing arguments: {err}”);</a></h1>
+<h1 id="processexit1-2"><a class="header" href="#processexit1-2">process::exit(1);</a></h1>
+<h1 id="-16"><a class="header" href="#-16">});</a></h1>
+<h1 id="-17"><a class="header" href="#-17"></a></h1>
+<h1 id="if-let-erre--runconfig--1"><a class="header" href="#if-let-erre--runconfig--1">if let Err(e) = run(config) {</a></h1>
+<h1 id="printlnapplication-error-e-1"><a class="header" href="#printlnapplication-error-e-1">println!(“Application error: {e}”);</a></h1>
+<h1 id="processexit1-3"><a class="header" href="#processexit1-3">process::exit(1);</a></h1>
+<h1 id="-18"><a class="header" href="#-18">}</a></h1>
+<p>}</p>
+<p>// –snip–</p>
+<h1 id="-19"><a class="header" href="#-19"></a></h1>
+<h1 id="struct-config--1"><a class="header" href="#struct-config--1">struct Config {</a></h1>
+<h1 id="query-string-1"><a class="header" href="#query-string-1">query: String,</a></h1>
+<h1 id="file_path-string-1"><a class="header" href="#file_path-string-1">file_path: String,</a></h1>
+<h1 id="-20"><a class="header" href="#-20">}</a></h1>
+<h1 id="-21"><a class="header" href="#-21"></a></h1>
+<h1 id="impl-config--1"><a class="header" href="#impl-config--1">impl Config {</a></h1>
+<h1 id="fn-buildargs-string---resultconfig-static-str--1"><a class="header" href="#fn-buildargs-string---resultconfig-static-str--1">fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;’static str&gt; {</a></h1>
+<h1 id="if-argslen--3--1"><a class="header" href="#if-argslen--3--1">if args.len() &lt; 3 {</a></h1>
+<h1 id="return-errnot-enough-arguments-1"><a class="header" href="#return-errnot-enough-arguments-1">return Err(“not enough arguments”);</a></h1>
+<h1 id="-22"><a class="header" href="#-22">}</a></h1>
+<h1 id="-23"><a class="header" href="#-23"></a></h1>
+<h1 id="let-query--args1clone-1"><a class="header" href="#let-query--args1clone-1">let query = args[1].clone();</a></h1>
+<h1 id="let-file_path--args2clone-1"><a class="header" href="#let-file_path--args2clone-1">let file_path = args[2].clone();</a></h1>
+<h1 id="-24"><a class="header" href="#-24"></a></h1>
+<h1 id="okconfig--query-file_path--1"><a class="header" href="#okconfig--query-file_path--1">Ok(Config { query, file_path })</a></h1>
+<h1 id="-25"><a class="header" href="#-25">}</a></h1>
+<h1 id="-26"><a class="header" href="#-26">}</a></h1>
+<h1 id="-27"><a class="header" href="#-27"></a></h1>
+<p>fn run(config: Config) -&gt; Result&lt;(), Box<dyn error="">&gt; {
+let contents = fs::read_to_string(config.file_path)?;</dyn></p>
+<pre><code>for line in search(&amp;config.query, &amp;contents) {
+    println!("{line}");
+}
+
+Ok(())
+</code></pre>
+<p>}</p>
 <p>આપણે <code>use minigrep::search</code> લાઇન ઉમેરીએ છીએ જેથી કરીને <code>search</code> કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, <code>run</code> કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે <code>search</code> કાર્યને બોલાવીએ છીએ અને <code>config.query</code> મૂલ્ય અને <code>contents</code> ને Argumentો તરીકે પસાર કરીએ છીએ. પછી, <code>run</code> એક <code>for</code> લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે <code>search</code> દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે <code>main</code> કાર્યમાં રહેલા <code>println!</code> કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).</p>
 <p>નોંધ શોધ કાર્ય બધા પરિણામોને એક વેક્ટર (vector) માં ભેગા કરીને પરત લાવશે, જે છાપવામાં આવે તે પહેલાં. મોટા ફાઈલોમાં શોધ કરતી વખતે આ અમલીકરણ (implementation) ધીમું થઈ શકે છે, કારણ કે પરિણામો તરત જ છાપવામાં આવતા નથી; આપણે પ્રકરણ ૧૩ માં પુનરાવર્તકો (iterators) નો ઉપયોગ કરીને આને સુધારવાનો</p>
 <p>એક સંભવિત માર્ગ ચર્ચા કરીશું. સારું થયું! ઘણું કામ થયું, પરંતુ ભવિષ્યમાં સફળતા માટે આપણે પોતાને તૈયાર કર્યા છીએ. હવે ભૂલોને નિયંત્રિત કરવી ખૂબ સરળ છે, અને આપણે કોડને વધુ મોડ્યુલર (modular) બનાવ્યો છે. લગભગ બધું જ કાર્ય અહીંથી src/lib.rs માં થશે.</p>
@@ -409,11 +915,62 @@
 <p>ચાલો આપણે src/lib.rs માં ટેક્સ્ટ શોધવા માટે જવાબદાર કોડ વ્યાખ્યાયિત કરીએ, src/main.rs માં નહીં. આ આપણને (અથવા આપણા <code>minigrep</code> લાયબ્રેરીનો ઉપયોગ કરનાર કોઈ પણ વ્યક્તિને) શોધવાનું કાર્ય વધુ સંદર્ભોમાં બોલાવવા દેશે, આપણી <code>minigrep</code> બાઈનરી સિવાય.</p>
 <p>સૌ પ્રથમ, આપણે <code>search</code> વિધેયની નિશાની (signature) src/lib.rs માં Listing 12-13 માં દર્શાવ્યા પ્રમાણે વ્યાખ્યાયિત કરીએ, જેમાં <code>unimplemented!</code> મેક્રોને બોલાવતું શરીર (body) હશે. જ્યારે આપણે અમલીકરણ ભરીશું ત્યારે આપણે નિશાની વિશે વધુ વિગતવાર સમજાવીશું.</p>
 <p><strong>Listing 12-13: Defining the <code>search</code> function in <em>src/lib.rs</em></strong></p>
-<p>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}</p>
+<p>pub fn search&lt;’a&gt;(query: &amp;str, contents: &amp;’a str) -&gt; Vec&lt;&amp;’a str&gt; {
+unimplemented!();
+}</p>
 <p>આપણે <code>pub</code> કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી <code>search</code> ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!</p>
 <p>હવે આપણે <code>src/lib.rs</code> માં વ્યાખ્યાયિત કરેલા કોડને <code>src/main.rs</code> માં બાઈનરી ક્રેટના અવકાશમાં લાવવાની અને તેને બોલાવવાની જરૂર છે, જે યાદી 12-14 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 12-14: Using the <code>minigrep</code> library crate’s <code>search</code> function in <em>src/main.rs</em></strong></p>
-<p>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}</p>
+<h1 id="use-stdenv-2"><a class="header" href="#use-stdenv-2">use std::env;</a></h1>
+<h1 id="use-stderrorerror-2"><a class="header" href="#use-stderrorerror-2">use std::error::Error;</a></h1>
+<h1 id="use-stdfs-2"><a class="header" href="#use-stdfs-2">use std::fs;</a></h1>
+<h1 id="use-stdprocess-2"><a class="header" href="#use-stdprocess-2">use std::process;</a></h1>
+<h1 id="-28"><a class="header" href="#-28"></a></h1>
+<p>// –snip–
+use minigrep::search;</p>
+<p>fn main() {
+// –snip–</p>
+<h1 id="let-args-vec--envargscollect-2"><a class="header" href="#let-args-vec--envargscollect-2">let args: Vec<string> = env::args().collect();</string></a></h1>
+<h1 id="-29"><a class="header" href="#-29"></a></h1>
+<h1 id="let-config--configbuildargsunwrap_or_elseerr--2"><a class="header" href="#let-config--configbuildargsunwrap_or_elseerr--2">let config = Config::build(&amp;args).unwrap_or_else(|err| {</a></h1>
+<h1 id="printlnproblem-parsing-arguments-err-2"><a class="header" href="#printlnproblem-parsing-arguments-err-2">println!(“Problem parsing arguments: {err}”);</a></h1>
+<h1 id="processexit1-4"><a class="header" href="#processexit1-4">process::exit(1);</a></h1>
+<h1 id="-30"><a class="header" href="#-30">});</a></h1>
+<h1 id="-31"><a class="header" href="#-31"></a></h1>
+<h1 id="if-let-erre--runconfig--2"><a class="header" href="#if-let-erre--runconfig--2">if let Err(e) = run(config) {</a></h1>
+<h1 id="printlnapplication-error-e-2"><a class="header" href="#printlnapplication-error-e-2">println!(“Application error: {e}”);</a></h1>
+<h1 id="processexit1-5"><a class="header" href="#processexit1-5">process::exit(1);</a></h1>
+<h1 id="-32"><a class="header" href="#-32">}</a></h1>
+<p>}</p>
+<p>// –snip–</p>
+<h1 id="-33"><a class="header" href="#-33"></a></h1>
+<h1 id="struct-config--2"><a class="header" href="#struct-config--2">struct Config {</a></h1>
+<h1 id="query-string-2"><a class="header" href="#query-string-2">query: String,</a></h1>
+<h1 id="file_path-string-2"><a class="header" href="#file_path-string-2">file_path: String,</a></h1>
+<h1 id="-34"><a class="header" href="#-34">}</a></h1>
+<h1 id="-35"><a class="header" href="#-35"></a></h1>
+<h1 id="impl-config--2"><a class="header" href="#impl-config--2">impl Config {</a></h1>
+<h1 id="fn-buildargs-string---resultconfig-static-str--2"><a class="header" href="#fn-buildargs-string---resultconfig-static-str--2">fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;’static str&gt; {</a></h1>
+<h1 id="if-argslen--3--2"><a class="header" href="#if-argslen--3--2">if args.len() &lt; 3 {</a></h1>
+<h1 id="return-errnot-enough-arguments-2"><a class="header" href="#return-errnot-enough-arguments-2">return Err(“not enough arguments”);</a></h1>
+<h1 id="-36"><a class="header" href="#-36">}</a></h1>
+<h1 id="-37"><a class="header" href="#-37"></a></h1>
+<h1 id="let-query--args1clone-2"><a class="header" href="#let-query--args1clone-2">let query = args[1].clone();</a></h1>
+<h1 id="let-file_path--args2clone-2"><a class="header" href="#let-file_path--args2clone-2">let file_path = args[2].clone();</a></h1>
+<h1 id="-38"><a class="header" href="#-38"></a></h1>
+<h1 id="okconfig--query-file_path--2"><a class="header" href="#okconfig--query-file_path--2">Ok(Config { query, file_path })</a></h1>
+<h1 id="-39"><a class="header" href="#-39">}</a></h1>
+<h1 id="-40"><a class="header" href="#-40">}</a></h1>
+<h1 id="-41"><a class="header" href="#-41"></a></h1>
+<p>fn run(config: Config) -&gt; Result&lt;(), Box<dyn error="">&gt; {
+let contents = fs::read_to_string(config.file_path)?;</dyn></p>
+<pre><code>for line in search(&amp;config.query, &amp;contents) {
+    println!("{line}");
+}
+
+Ok(())
+</code></pre>
+<p>}</p>
 <p>આપણે <code>use minigrep::search</code> લાઇન ઉમેરીએ છીએ જેથી કરીને <code>search</code> કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, <code>run</code> કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે <code>search</code> કાર્યને બોલાવીએ છીએ અને <code>config.query</code> મૂલ્ય અને <code>contents</code> ને Argumentો તરીકે પસાર કરીએ છીએ. પછી, <code>run</code> એક <code>for</code> લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે <code>search</code> દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે <code>main</code> કાર્યમાં રહેલા <code>println!</code> કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).</p>
 <p>નોંધ શોધ કાર્ય બધા પરિણામોને એક વેક્ટર (vector) માં ભેગા કરીને પરત લાવશે, જે છાપવામાં આવે તે પહેલાં. મોટા ફાઈલોમાં શોધ કરતી વખતે આ અમલીકરણ (implementation) ધીમું થઈ શકે છે, કારણ કે પરિણામો તરત જ છાપવામાં આવતા નથી; આપણે પ્રકરણ ૧૩ માં પુનરાવર્તકો (iterators) નો ઉપયોગ કરીને આને સુધારવાનો</p>
 <p>એક સંભવિત માર્ગ ચર્ચા કરીશું. સારું થયું! ઘણું કામ થયું, પરંતુ ભવિષ્યમાં સફળતા માટે આપણે પોતાને તૈયાર કર્યા છીએ. હવે ભૂલોને નિયંત્રિત કરવી ખૂબ સરળ છે, અને આપણે કોડને વધુ મોડ્યુલર (modular) બનાવ્યો છે. લગભગ બધું જ કાર્ય અહીંથી src/lib.rs માં થશે.</p>
@@ -423,11 +980,62 @@
 <p>ચાલો આપણે src/lib.rs માં ટેક્સ્ટ શોધવા માટે જવાબદાર કોડ વ્યાખ્યાયિત કરીએ, src/main.rs માં નહીં. આ આપણને (અથવા આપણા <code>minigrep</code> લાયબ્રેરીનો ઉપયોગ કરનાર કોઈ પણ વ્યક્તિને) શોધવાનું કાર્ય વધુ સંદર્ભોમાં બોલાવવા દેશે, આપણી <code>minigrep</code> બાઈનરી સિવાય.</p>
 <p>સૌ પ્રથમ, આપણે <code>search</code> વિધેયની નિશાની (signature) src/lib.rs માં Listing 12-13 માં દર્શાવ્યા પ્રમાણે વ્યાખ્યાયિત કરીએ, જેમાં <code>unimplemented!</code> મેક્રોને બોલાવતું શરીર (body) હશે. જ્યારે આપણે અમલીકરણ ભરીશું ત્યારે આપણે નિશાની વિશે વધુ વિગતવાર સમજાવીશું.</p>
 <p><strong>Listing 12-13: Defining the <code>search</code> function in <em>src/lib.rs</em></strong></p>
-<p>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}</p>
+<p>pub fn search&lt;’a&gt;(query: &amp;str, contents: &amp;’a str) -&gt; Vec&lt;&amp;’a str&gt; {
+unimplemented!();
+}</p>
 <p>આપણે <code>pub</code> કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી <code>search</code> ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!</p>
 <p>હવે આપણે <code>src/lib.rs</code> માં વ્યાખ્યાયિત કરેલા કોડને <code>src/main.rs</code> માં બાઈનરી ક્રેટના અવકાશમાં લાવવાની અને તેને બોલાવવાની જરૂર છે, જે યાદી 12-14 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 12-14: Using the <code>minigrep</code> library crate’s <code>search</code> function in <em>src/main.rs</em></strong></p>
-<p>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}</p>
+<h1 id="use-stdenv-3"><a class="header" href="#use-stdenv-3">use std::env;</a></h1>
+<h1 id="use-stderrorerror-3"><a class="header" href="#use-stderrorerror-3">use std::error::Error;</a></h1>
+<h1 id="use-stdfs-3"><a class="header" href="#use-stdfs-3">use std::fs;</a></h1>
+<h1 id="use-stdprocess-3"><a class="header" href="#use-stdprocess-3">use std::process;</a></h1>
+<h1 id="-42"><a class="header" href="#-42"></a></h1>
+<p>// –snip–
+use minigrep::search;</p>
+<p>fn main() {
+// –snip–</p>
+<h1 id="let-args-vec--envargscollect-3"><a class="header" href="#let-args-vec--envargscollect-3">let args: Vec<string> = env::args().collect();</string></a></h1>
+<h1 id="-43"><a class="header" href="#-43"></a></h1>
+<h1 id="let-config--configbuildargsunwrap_or_elseerr--3"><a class="header" href="#let-config--configbuildargsunwrap_or_elseerr--3">let config = Config::build(&amp;args).unwrap_or_else(|err| {</a></h1>
+<h1 id="printlnproblem-parsing-arguments-err-3"><a class="header" href="#printlnproblem-parsing-arguments-err-3">println!(“Problem parsing arguments: {err}”);</a></h1>
+<h1 id="processexit1-6"><a class="header" href="#processexit1-6">process::exit(1);</a></h1>
+<h1 id="-44"><a class="header" href="#-44">});</a></h1>
+<h1 id="-45"><a class="header" href="#-45"></a></h1>
+<h1 id="if-let-erre--runconfig--3"><a class="header" href="#if-let-erre--runconfig--3">if let Err(e) = run(config) {</a></h1>
+<h1 id="printlnapplication-error-e-3"><a class="header" href="#printlnapplication-error-e-3">println!(“Application error: {e}”);</a></h1>
+<h1 id="processexit1-7"><a class="header" href="#processexit1-7">process::exit(1);</a></h1>
+<h1 id="-46"><a class="header" href="#-46">}</a></h1>
+<p>}</p>
+<p>// –snip–</p>
+<h1 id="-47"><a class="header" href="#-47"></a></h1>
+<h1 id="struct-config--3"><a class="header" href="#struct-config--3">struct Config {</a></h1>
+<h1 id="query-string-3"><a class="header" href="#query-string-3">query: String,</a></h1>
+<h1 id="file_path-string-3"><a class="header" href="#file_path-string-3">file_path: String,</a></h1>
+<h1 id="-48"><a class="header" href="#-48">}</a></h1>
+<h1 id="-49"><a class="header" href="#-49"></a></h1>
+<h1 id="impl-config--3"><a class="header" href="#impl-config--3">impl Config {</a></h1>
+<h1 id="fn-buildargs-string---resultconfig-static-str--3"><a class="header" href="#fn-buildargs-string---resultconfig-static-str--3">fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;’static str&gt; {</a></h1>
+<h1 id="if-argslen--3--3"><a class="header" href="#if-argslen--3--3">if args.len() &lt; 3 {</a></h1>
+<h1 id="return-errnot-enough-arguments-3"><a class="header" href="#return-errnot-enough-arguments-3">return Err(“not enough arguments”);</a></h1>
+<h1 id="-50"><a class="header" href="#-50">}</a></h1>
+<h1 id="-51"><a class="header" href="#-51"></a></h1>
+<h1 id="let-query--args1clone-3"><a class="header" href="#let-query--args1clone-3">let query = args[1].clone();</a></h1>
+<h1 id="let-file_path--args2clone-3"><a class="header" href="#let-file_path--args2clone-3">let file_path = args[2].clone();</a></h1>
+<h1 id="-52"><a class="header" href="#-52"></a></h1>
+<h1 id="okconfig--query-file_path--3"><a class="header" href="#okconfig--query-file_path--3">Ok(Config { query, file_path })</a></h1>
+<h1 id="-53"><a class="header" href="#-53">}</a></h1>
+<h1 id="-54"><a class="header" href="#-54">}</a></h1>
+<h1 id="-55"><a class="header" href="#-55"></a></h1>
+<p>fn run(config: Config) -&gt; Result&lt;(), Box<dyn error="">&gt; {
+let contents = fs::read_to_string(config.file_path)?;</dyn></p>
+<pre><code>for line in search(&amp;config.query, &amp;contents) {
+    println!("{line}");
+}
+
+Ok(())
+</code></pre>
+<p>}</p>
 <p>આપણે <code>use minigrep::search</code> લાઇન ઉમેરીએ છીએ જેથી કરીને <code>search</code> કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, <code>run</code> કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે <code>search</code> કાર્યને બોલાવીએ છીએ અને <code>config.query</code> મૂલ્ય અને <code>contents</code> ને Argumentો તરીકે પસાર કરીએ છીએ. પછી, <code>run</code> એક <code>for</code> લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે <code>search</code> દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે <code>main</code> કાર્યમાં રહેલા <code>println!</code> કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).</p>
 <p>નોંધ શોધ કાર્ય બધા પરિણામોને એક વેક્ટર (vector) માં ભેગા કરીને પરત લાવશે, જે છાપવામાં આવે તે પહેલાં. મોટા ફાઈલોમાં શોધ કરતી વખતે આ અમલીકરણ (implementation) ધીમું થઈ શકે છે, કારણ કે પરિણામો તરત જ છાપવામાં આવતા નથી; આપણે પ્રકરણ ૧૩ માં પુનરાવર્તકો (iterators) નો ઉપયોગ કરીને આને સુધારવાનો</p>
 <p>એક સંભવિત માર્ગ ચર્ચા કરીશું. સારું થયું! ઘણું કામ થયું, પરંતુ ભવિષ્યમાં સફળતા માટે આપણે પોતાને તૈયાર કર્યા છીએ. હવે ભૂલોને નિયંત્રિત કરવી ખૂબ સરળ છે, અને આપણે કોડને વધુ મોડ્યુલર (modular) બનાવ્યો છે. લગભગ બધું જ કાર્ય અહીંથી src/lib.rs માં થશે.</p>
@@ -437,11 +1045,62 @@
 <p>ચાલો આપણે src/lib.rs માં ટેક્સ્ટ શોધવા માટે જવાબદાર કોડ વ્યાખ્યાયિત કરીએ, src/main.rs માં નહીં. આ આપણને (અથવા આપણા <code>minigrep</code> લાયબ્રેરીનો ઉપયોગ કરનાર કોઈ પણ વ્યક્તિને) શોધવાનું કાર્ય વધુ સંદર્ભોમાં બોલાવવા દેશે, આપણી <code>minigrep</code> બાઈનરી સિવાય.</p>
 <p>સૌ પ્રથમ, આપણે <code>search</code> વિધેયની નિશાની (signature) src/lib.rs માં Listing 12-13 માં દર્શાવ્યા પ્રમાણે વ્યાખ્યાયિત કરીએ, જેમાં <code>unimplemented!</code> મેક્રોને બોલાવતું શરીર (body) હશે. જ્યારે આપણે અમલીકરણ ભરીશું ત્યારે આપણે નિશાની વિશે વધુ વિગતવાર સમજાવીશું.</p>
 <p><strong>Listing 12-13: Defining the <code>search</code> function in <em>src/lib.rs</em></strong></p>
-<p>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}</p>
+<p>pub fn search&lt;’a&gt;(query: &amp;str, contents: &amp;’a str) -&gt; Vec&lt;&amp;’a str&gt; {
+unimplemented!();
+}</p>
 <p>આપણે <code>pub</code> કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી <code>search</code> ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!</p>
 <p>હવે આપણે <code>src/lib.rs</code> માં વ્યાખ્યાયિત કરેલા કોડને <code>src/main.rs</code> માં બાઈનરી ક્રેટના અવકાશમાં લાવવાની અને તેને બોલાવવાની જરૂર છે, જે યાદી 12-14 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 12-14: Using the <code>minigrep</code> library crate’s <code>search</code> function in <em>src/main.rs</em></strong></p>
-<p>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}</p>
+<h1 id="use-stdenv-4"><a class="header" href="#use-stdenv-4">use std::env;</a></h1>
+<h1 id="use-stderrorerror-4"><a class="header" href="#use-stderrorerror-4">use std::error::Error;</a></h1>
+<h1 id="use-stdfs-4"><a class="header" href="#use-stdfs-4">use std::fs;</a></h1>
+<h1 id="use-stdprocess-4"><a class="header" href="#use-stdprocess-4">use std::process;</a></h1>
+<h1 id="-56"><a class="header" href="#-56"></a></h1>
+<p>// –snip–
+use minigrep::search;</p>
+<p>fn main() {
+// –snip–</p>
+<h1 id="let-args-vec--envargscollect-4"><a class="header" href="#let-args-vec--envargscollect-4">let args: Vec<string> = env::args().collect();</string></a></h1>
+<h1 id="-57"><a class="header" href="#-57"></a></h1>
+<h1 id="let-config--configbuildargsunwrap_or_elseerr--4"><a class="header" href="#let-config--configbuildargsunwrap_or_elseerr--4">let config = Config::build(&amp;args).unwrap_or_else(|err| {</a></h1>
+<h1 id="printlnproblem-parsing-arguments-err-4"><a class="header" href="#printlnproblem-parsing-arguments-err-4">println!(“Problem parsing arguments: {err}”);</a></h1>
+<h1 id="processexit1-8"><a class="header" href="#processexit1-8">process::exit(1);</a></h1>
+<h1 id="-58"><a class="header" href="#-58">});</a></h1>
+<h1 id="-59"><a class="header" href="#-59"></a></h1>
+<h1 id="if-let-erre--runconfig--4"><a class="header" href="#if-let-erre--runconfig--4">if let Err(e) = run(config) {</a></h1>
+<h1 id="printlnapplication-error-e-4"><a class="header" href="#printlnapplication-error-e-4">println!(“Application error: {e}”);</a></h1>
+<h1 id="processexit1-9"><a class="header" href="#processexit1-9">process::exit(1);</a></h1>
+<h1 id="-60"><a class="header" href="#-60">}</a></h1>
+<p>}</p>
+<p>// –snip–</p>
+<h1 id="-61"><a class="header" href="#-61"></a></h1>
+<h1 id="struct-config--4"><a class="header" href="#struct-config--4">struct Config {</a></h1>
+<h1 id="query-string-4"><a class="header" href="#query-string-4">query: String,</a></h1>
+<h1 id="file_path-string-4"><a class="header" href="#file_path-string-4">file_path: String,</a></h1>
+<h1 id="-62"><a class="header" href="#-62">}</a></h1>
+<h1 id="-63"><a class="header" href="#-63"></a></h1>
+<h1 id="impl-config--4"><a class="header" href="#impl-config--4">impl Config {</a></h1>
+<h1 id="fn-buildargs-string---resultconfig-static-str--4"><a class="header" href="#fn-buildargs-string---resultconfig-static-str--4">fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;’static str&gt; {</a></h1>
+<h1 id="if-argslen--3--4"><a class="header" href="#if-argslen--3--4">if args.len() &lt; 3 {</a></h1>
+<h1 id="return-errnot-enough-arguments-4"><a class="header" href="#return-errnot-enough-arguments-4">return Err(“not enough arguments”);</a></h1>
+<h1 id="-64"><a class="header" href="#-64">}</a></h1>
+<h1 id="-65"><a class="header" href="#-65"></a></h1>
+<h1 id="let-query--args1clone-4"><a class="header" href="#let-query--args1clone-4">let query = args[1].clone();</a></h1>
+<h1 id="let-file_path--args2clone-4"><a class="header" href="#let-file_path--args2clone-4">let file_path = args[2].clone();</a></h1>
+<h1 id="-66"><a class="header" href="#-66"></a></h1>
+<h1 id="okconfig--query-file_path--4"><a class="header" href="#okconfig--query-file_path--4">Ok(Config { query, file_path })</a></h1>
+<h1 id="-67"><a class="header" href="#-67">}</a></h1>
+<h1 id="-68"><a class="header" href="#-68">}</a></h1>
+<h1 id="-69"><a class="header" href="#-69"></a></h1>
+<p>fn run(config: Config) -&gt; Result&lt;(), Box<dyn error="">&gt; {
+let contents = fs::read_to_string(config.file_path)?;</dyn></p>
+<pre><code>for line in search(&amp;config.query, &amp;contents) {
+    println!("{line}");
+}
+
+Ok(())
+</code></pre>
+<p>}</p>
 <p>આપણે <code>use minigrep::search</code> લાઇન ઉમેરીએ છીએ જેથી કરીને <code>search</code> કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, <code>run</code> કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે <code>search</code> કાર્યને બોલાવીએ છીએ અને <code>config.query</code> મૂલ્ય અને <code>contents</code> ને Argumentો તરીકે પસાર કરીએ છીએ. પછી, <code>run</code> એક <code>for</code> લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે <code>search</code> દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે <code>main</code> કાર્યમાં રહેલા <code>println!</code> કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).</p>
 <p>નોંધ શોધ કાર્ય બધા પરિણામોને એક વેક્ટર (vector) માં ભેગા કરીને પરત લાવશે, જે છાપવામાં આવે તે પહેલાં. મોટા ફાઈલોમાં શોધ કરતી વખતે આ અમલીકરણ (implementation) ધીમું થઈ શકે છે, કારણ કે પરિણામો તરત જ છાપવામાં આવતા નથી; આપણે પ્રકરણ ૧૩ માં પુનરાવર્તકો (iterators) નો ઉપયોગ કરીને આને સુધારવાનો</p>
 <p>એક સંભવિત માર્ગ ચર્ચા કરીશું. સારું થયું! ઘણું કામ થયું, પરંતુ ભવિષ્યમાં સફળતા માટે આપણે પોતાને તૈયાર કર્યા છીએ. હવે ભૂલોને નિયંત્રિત કરવી ખૂબ સરળ છે, અને આપણે કોડને વધુ મોડ્યુલર (modular) બનાવ્યો છે. લગભગ બધું જ કાર્ય અહીંથી src/lib.rs માં થશે.</p>
@@ -451,11 +1110,62 @@
 <p>ચાલો આપણે src/lib.rs માં ટેક્સ્ટ શોધવા માટે જવાબદાર કોડ વ્યાખ્યાયિત કરીએ, src/main.rs માં નહીં. આ આપણને (અથવા આપણા <code>minigrep</code> લાયબ્રેરીનો ઉપયોગ કરનાર કોઈ પણ વ્યક્તિને) શોધવાનું કાર્ય વધુ સંદર્ભોમાં બોલાવવા દેશે, આપણી <code>minigrep</code> બાઈનરી સિવાય.</p>
 <p>સૌ પ્રથમ, આપણે <code>search</code> વિધેયની નિશાની (signature) src/lib.rs માં Listing 12-13 માં દર્શાવ્યા પ્રમાણે વ્યાખ્યાયિત કરીએ, જેમાં <code>unimplemented!</code> મેક્રોને બોલાવતું શરીર (body) હશે. જ્યારે આપણે અમલીકરણ ભરીશું ત્યારે આપણે નિશાની વિશે વધુ વિગતવાર સમજાવીશું.</p>
 <p><strong>Listing 12-13: Defining the <code>search</code> function in <em>src/lib.rs</em></strong></p>
-<p>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}</p>
+<p>pub fn search&lt;’a&gt;(query: &amp;str, contents: &amp;’a str) -&gt; Vec&lt;&amp;’a str&gt; {
+unimplemented!();
+}</p>
 <p>આપણે <code>pub</code> કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી <code>search</code> ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!</p>
 <p>હવે આપણે <code>src/lib.rs</code> માં વ્યાખ્યાયિત કરેલા કોડને <code>src/main.rs</code> માં બાઈનરી ક્રેટના અવકાશમાં લાવવાની અને તેને બોલાવવાની જરૂર છે, જે યાદી 12-14 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 12-14: Using the <code>minigrep</code> library crate’s <code>search</code> function in <em>src/main.rs</em></strong></p>
-<p>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}</p>
+<h1 id="use-stdenv-5"><a class="header" href="#use-stdenv-5">use std::env;</a></h1>
+<h1 id="use-stderrorerror-5"><a class="header" href="#use-stderrorerror-5">use std::error::Error;</a></h1>
+<h1 id="use-stdfs-5"><a class="header" href="#use-stdfs-5">use std::fs;</a></h1>
+<h1 id="use-stdprocess-5"><a class="header" href="#use-stdprocess-5">use std::process;</a></h1>
+<h1 id="-70"><a class="header" href="#-70"></a></h1>
+<p>// –snip–
+use minigrep::search;</p>
+<p>fn main() {
+// –snip–</p>
+<h1 id="let-args-vec--envargscollect-5"><a class="header" href="#let-args-vec--envargscollect-5">let args: Vec<string> = env::args().collect();</string></a></h1>
+<h1 id="-71"><a class="header" href="#-71"></a></h1>
+<h1 id="let-config--configbuildargsunwrap_or_elseerr--5"><a class="header" href="#let-config--configbuildargsunwrap_or_elseerr--5">let config = Config::build(&amp;args).unwrap_or_else(|err| {</a></h1>
+<h1 id="printlnproblem-parsing-arguments-err-5"><a class="header" href="#printlnproblem-parsing-arguments-err-5">println!(“Problem parsing arguments: {err}”);</a></h1>
+<h1 id="processexit1-10"><a class="header" href="#processexit1-10">process::exit(1);</a></h1>
+<h1 id="-72"><a class="header" href="#-72">});</a></h1>
+<h1 id="-73"><a class="header" href="#-73"></a></h1>
+<h1 id="if-let-erre--runconfig--5"><a class="header" href="#if-let-erre--runconfig--5">if let Err(e) = run(config) {</a></h1>
+<h1 id="printlnapplication-error-e-5"><a class="header" href="#printlnapplication-error-e-5">println!(“Application error: {e}”);</a></h1>
+<h1 id="processexit1-11"><a class="header" href="#processexit1-11">process::exit(1);</a></h1>
+<h1 id="-74"><a class="header" href="#-74">}</a></h1>
+<p>}</p>
+<p>// –snip–</p>
+<h1 id="-75"><a class="header" href="#-75"></a></h1>
+<h1 id="struct-config--5"><a class="header" href="#struct-config--5">struct Config {</a></h1>
+<h1 id="query-string-5"><a class="header" href="#query-string-5">query: String,</a></h1>
+<h1 id="file_path-string-5"><a class="header" href="#file_path-string-5">file_path: String,</a></h1>
+<h1 id="-76"><a class="header" href="#-76">}</a></h1>
+<h1 id="-77"><a class="header" href="#-77"></a></h1>
+<h1 id="impl-config--5"><a class="header" href="#impl-config--5">impl Config {</a></h1>
+<h1 id="fn-buildargs-string---resultconfig-static-str--5"><a class="header" href="#fn-buildargs-string---resultconfig-static-str--5">fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;’static str&gt; {</a></h1>
+<h1 id="if-argslen--3--5"><a class="header" href="#if-argslen--3--5">if args.len() &lt; 3 {</a></h1>
+<h1 id="return-errnot-enough-arguments-5"><a class="header" href="#return-errnot-enough-arguments-5">return Err(“not enough arguments”);</a></h1>
+<h1 id="-78"><a class="header" href="#-78">}</a></h1>
+<h1 id="-79"><a class="header" href="#-79"></a></h1>
+<h1 id="let-query--args1clone-5"><a class="header" href="#let-query--args1clone-5">let query = args[1].clone();</a></h1>
+<h1 id="let-file_path--args2clone-5"><a class="header" href="#let-file_path--args2clone-5">let file_path = args[2].clone();</a></h1>
+<h1 id="-80"><a class="header" href="#-80"></a></h1>
+<h1 id="okconfig--query-file_path--5"><a class="header" href="#okconfig--query-file_path--5">Ok(Config { query, file_path })</a></h1>
+<h1 id="-81"><a class="header" href="#-81">}</a></h1>
+<h1 id="-82"><a class="header" href="#-82">}</a></h1>
+<h1 id="-83"><a class="header" href="#-83"></a></h1>
+<p>fn run(config: Config) -&gt; Result&lt;(), Box<dyn error="">&gt; {
+let contents = fs::read_to_string(config.file_path)?;</dyn></p>
+<pre><code>for line in search(&amp;config.query, &amp;contents) {
+    println!("{line}");
+}
+
+Ok(())
+</code></pre>
+<p>}</p>
 <p>આપણે <code>use minigrep::search</code> લાઇન ઉમેરીએ છીએ જેથી કરીને <code>search</code> કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, <code>run</code> કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે <code>search</code> કાર્યને બોલાવીએ છીએ અને <code>config.query</code> મૂલ્ય અને <code>contents</code> ને Argumentો તરીકે પસાર કરીએ છીએ. પછી, <code>run</code> એક <code>for</code> લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે <code>search</code> દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે <code>main</code> કાર્યમાં રહેલા <code>println!</code> કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).</p>
 <p>નોંધ શોધ કાર્ય બધા પરિણામોને એક વેક્ટર (vector) માં ભેગા કરીને પરત લાવશે, જે છાપવામાં આવે તે પહેલાં. મોટા ફાઈલોમાં શોધ કરતી વખતે આ અમલીકરણ (implementation) ધીમું થઈ શકે છે, કારણ કે પરિણામો તરત જ છાપવામાં આવતા નથી; આપણે પ્રકરણ ૧૩ માં પુનરાવર્તકો (iterators) નો ઉપયોગ કરીને આને સુધારવાનો</p>
 <p>એક સંભવિત માર્ગ ચર્ચા કરીશું. સારું થયું! ઘણું કામ થયું, પરંતુ ભવિષ્યમાં સફળતા માટે આપણે પોતાને તૈયાર કર્યા છીએ. હવે ભૂલોને નિયંત્રિત કરવી ખૂબ સરળ છે, અને આપણે કોડને વધુ મોડ્યુલર (modular) બનાવ્યો છે. લગભગ બધું જ કાર્ય અહીંથી src/lib.rs માં થશે.</p>
@@ -465,11 +1175,62 @@
 <p>ચાલો આપણે src/lib.rs માં ટેક્સ્ટ શોધવા માટે જવાબદાર કોડ વ્યાખ્યાયિત કરીએ, src/main.rs માં નહીં. આ આપણને (અથવા આપણા <code>minigrep</code> લાયબ્રેરીનો ઉપયોગ કરનાર કોઈ પણ વ્યક્તિને) શોધવાનું કાર્ય વધુ સંદર્ભોમાં બોલાવવા દેશે, આપણી <code>minigrep</code> બાઈનરી સિવાય.</p>
 <p>સૌ પ્રથમ, આપણે <code>search</code> વિધેયની નિશાની (signature) src/lib.rs માં Listing 12-13 માં દર્શાવ્યા પ્રમાણે વ્યાખ્યાયિત કરીએ, જેમાં <code>unimplemented!</code> મેક્રોને બોલાવતું શરીર (body) હશે. જ્યારે આપણે અમલીકરણ ભરીશું ત્યારે આપણે નિશાની વિશે વધુ વિગતવાર સમજાવીશું.</p>
 <p><strong>Listing 12-13: Defining the <code>search</code> function in <em>src/lib.rs</em></strong></p>
-<p>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs}}</p>
+<p>pub fn search&lt;’a&gt;(query: &amp;str, contents: &amp;’a str) -&gt; Vec&lt;&amp;’a str&gt; {
+unimplemented!();
+}</p>
 <p>આપણે <code>pub</code> કીવર્ડનો ઉપયોગ ફંક્શન વ્યાખ્યામાં કર્યો છે જેથી <code>search</code> ને આપણી લાયબ્રેરી ક્રેટના જાહેર API નો ભાગ તરીકે નિયુક્ત કરી શકાય. હવે આપણી પાસે એક લાયબ્રેરી ક્રેટ છે જેનો ઉપયોગ આપણે આપણી બાઈનરી ક્રેટમાંથી કરી શકીએ છીએ અને જેનું પરીક્ષણ પણ કરી શકીએ છીએ!</p>
 <p>હવે આપણે <code>src/lib.rs</code> માં વ્યાખ્યાયિત કરેલા કોડને <code>src/main.rs</code> માં બાઈનરી ક્રેટના અવકાશમાં લાવવાની અને તેને બોલાવવાની જરૂર છે, જે યાદી 12-14 માં દર્શાવેલ છે.</p>
 <p><strong>Listing 12-14: Using the <code>minigrep</code> library crate’s <code>search</code> function in <em>src/main.rs</em></strong></p>
-<p>{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}</p>
+<h1 id="use-stdenv-6"><a class="header" href="#use-stdenv-6">use std::env;</a></h1>
+<h1 id="use-stderrorerror-6"><a class="header" href="#use-stderrorerror-6">use std::error::Error;</a></h1>
+<h1 id="use-stdfs-6"><a class="header" href="#use-stdfs-6">use std::fs;</a></h1>
+<h1 id="use-stdprocess-6"><a class="header" href="#use-stdprocess-6">use std::process;</a></h1>
+<h1 id="-84"><a class="header" href="#-84"></a></h1>
+<p>// –snip–
+use minigrep::search;</p>
+<p>fn main() {
+// –snip–</p>
+<h1 id="let-args-vec--envargscollect-6"><a class="header" href="#let-args-vec--envargscollect-6">let args: Vec<string> = env::args().collect();</string></a></h1>
+<h1 id="-85"><a class="header" href="#-85"></a></h1>
+<h1 id="let-config--configbuildargsunwrap_or_elseerr--6"><a class="header" href="#let-config--configbuildargsunwrap_or_elseerr--6">let config = Config::build(&amp;args).unwrap_or_else(|err| {</a></h1>
+<h1 id="printlnproblem-parsing-arguments-err-6"><a class="header" href="#printlnproblem-parsing-arguments-err-6">println!(“Problem parsing arguments: {err}”);</a></h1>
+<h1 id="processexit1-12"><a class="header" href="#processexit1-12">process::exit(1);</a></h1>
+<h1 id="-86"><a class="header" href="#-86">});</a></h1>
+<h1 id="-87"><a class="header" href="#-87"></a></h1>
+<h1 id="if-let-erre--runconfig--6"><a class="header" href="#if-let-erre--runconfig--6">if let Err(e) = run(config) {</a></h1>
+<h1 id="printlnapplication-error-e-6"><a class="header" href="#printlnapplication-error-e-6">println!(“Application error: {e}”);</a></h1>
+<h1 id="processexit1-13"><a class="header" href="#processexit1-13">process::exit(1);</a></h1>
+<h1 id="-88"><a class="header" href="#-88">}</a></h1>
+<p>}</p>
+<p>// –snip–</p>
+<h1 id="-89"><a class="header" href="#-89"></a></h1>
+<h1 id="struct-config--6"><a class="header" href="#struct-config--6">struct Config {</a></h1>
+<h1 id="query-string-6"><a class="header" href="#query-string-6">query: String,</a></h1>
+<h1 id="file_path-string-6"><a class="header" href="#file_path-string-6">file_path: String,</a></h1>
+<h1 id="-90"><a class="header" href="#-90">}</a></h1>
+<h1 id="-91"><a class="header" href="#-91"></a></h1>
+<h1 id="impl-config--6"><a class="header" href="#impl-config--6">impl Config {</a></h1>
+<h1 id="fn-buildargs-string---resultconfig-static-str--6"><a class="header" href="#fn-buildargs-string---resultconfig-static-str--6">fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;’static str&gt; {</a></h1>
+<h1 id="if-argslen--3--6"><a class="header" href="#if-argslen--3--6">if args.len() &lt; 3 {</a></h1>
+<h1 id="return-errnot-enough-arguments-6"><a class="header" href="#return-errnot-enough-arguments-6">return Err(“not enough arguments”);</a></h1>
+<h1 id="-92"><a class="header" href="#-92">}</a></h1>
+<h1 id="-93"><a class="header" href="#-93"></a></h1>
+<h1 id="let-query--args1clone-6"><a class="header" href="#let-query--args1clone-6">let query = args[1].clone();</a></h1>
+<h1 id="let-file_path--args2clone-6"><a class="header" href="#let-file_path--args2clone-6">let file_path = args[2].clone();</a></h1>
+<h1 id="-94"><a class="header" href="#-94"></a></h1>
+<h1 id="okconfig--query-file_path--6"><a class="header" href="#okconfig--query-file_path--6">Ok(Config { query, file_path })</a></h1>
+<h1 id="-95"><a class="header" href="#-95">}</a></h1>
+<h1 id="-96"><a class="header" href="#-96">}</a></h1>
+<h1 id="-97"><a class="header" href="#-97"></a></h1>
+<p>fn run(config: Config) -&gt; Result&lt;(), Box<dyn error="">&gt; {
+let contents = fs::read_to_string(config.file_path)?;</dyn></p>
+<pre><code>for line in search(&amp;config.query, &amp;contents) {
+    println!("{line}");
+}
+
+Ok(())
+</code></pre>
+<p>}</p>
 <p>આપણે <code>use minigrep::search</code> લાઇન ઉમેરીએ છીએ જેથી કરીને <code>search</code> કાર્યને પુસ્તકાલય ક્રેટમાંથી બાઈનરી ક્રેટના ક્ષેત્રમાં લાવવામાં આવે. ત્યારબાદ, <code>run</code> કાર્યમાં, ફાઇલની વિગતો છાપવાને બદલે, આપણે <code>search</code> કાર્યને બોલાવીએ છીએ અને <code>config.query</code> મૂલ્ય અને <code>contents</code> ને Argumentો તરીકે પસાર કરીએ છીએ. પછી, <code>run</code> એક <code>for</code> લૂપનો ઉપયોગ કરીને દરેક લીટીને છાપશે જે <code>search</code> દ્વારા પરત કરવામાં આવે છે અને જે પ્રશ્ન સાથે મેળ ખાય છે. આ એવો પણ સારો સમય છે જ્યારે આપણે <code>main</code> કાર્યમાં રહેલા <code>println!</code> કૉલ્સને દૂર કરી શકીએ છીએ, જે પ્રશ્ન અને ફાઇલ પાથ દર્શાવતા હતા, જેથી આપણો કાર્ય માત્ર શોધ પરિણામો જ છાપે (જો કોઈ ભૂલો ન થાય તો).</p>
 <p>નોંધ શોધ કાર્ય બધા પરિણામોને એક વેક્ટર (vector) માં ભેગા કરીને પરત લાવશે, જે છાપવામાં આવે તે પહેલાં. મોટા ફાઈલોમાં શોધ કરતી વખતે આ અમલીકરણ (implementation) ધીમું થઈ શકે છે, કારણ કે પરિણામો તરત જ છાપવામાં આવતા નથી; આપણે પ્રકરણ ૧૩ માં પુનરાવર્તકો (iterators) નો ઉપયોગ કરીને આને સુધારવાનો</p>
 <p>એક સંભવિત માર્ગ ચર્ચા કરીશું. સારું થયું! ઘણું કામ થયું, પરંતુ ભવિષ્યમાં સફળતા માટે આપણે પોતાને તૈયાર કર્યા છીએ. હવે ભૂલોને નિયંત્રિત કરવી ખૂબ સરળ છે, અને આપણે કોડને વધુ મોડ્યુલર (modular) બનાવ્યો છે. લગભગ બધું જ કાર્ય અહીંથી src/lib.rs માં થશે.</p>

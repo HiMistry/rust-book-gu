@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
+            window.path_to_searchindex_js = "searchindex-4bc072ff.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -246,10 +246,56 @@ loop {
 <h3 id="the-pin-type-and-the-unpin-trait"><a class="header" href="#the-pin-type-and-the-unpin-trait">The <code>Pin</code> Type and the <code>Unpin</code> Trait</a></h3>
 <p>પાછલા યાદી ૧૭-૧૩ માં, અમે ત્રણ futures ની રાહ જોવા માટે <code>trpl::join!</code> macro નો ઉપયોગ કર્યો હતો. જો કે, ઘણીવાર એવી કલેક્શન (collection) હોય છે, જેમ કે વેક્ટર (vector), જેમાં અમુક સંખ્યાના futures હોય છે જે રનટાઇમ (runtime) સુધી જાણીતા હોતા નથી. ચાલો યાદી ૧૭-૧૩ ને યાદી ૧૭-૨૩ માં બદલીએ, જે ત્રણ futures ને વેક્ટરમાં મૂકે છે અને <code>trpl::join_all</code> ફંક્શનને બોલાવે છે, જે હજી કમ્પાઇલ (compile) થશે નહીં.</p>
 <p><strong>Listing 17-23: Awaiting futures in a collection</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
+</span><span class="boring">
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-23/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    trpl::block_on(async {
+</span><span class="boring">        let (tx, mut rx) = trpl::channel();
+</span><span class="boring">
+</span><span class="boring">        let tx1 = tx.clone();
+</span><span class="boring">        let tx1_fut = async move {
+</span><span class="boring">            let vals = vec![
+</span><span class="boring">                String::from("hi"),
+</span><span class="boring">                String::from("from"),
+</span><span class="boring">                String::from("the"),
+</span><span class="boring">                String::from("future"),
+</span><span class="boring">            ];
+</span><span class="boring">
+</span><span class="boring">            for val in vals {
+</span><span class="boring">                tx1.send(val).unwrap();
+</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
+</span><span class="boring">            }
+</span><span class="boring">        };
+</span><span class="boring">
+</span><span class="boring">        let rx_fut = async {
+</span><span class="boring">            while let Some(value) = rx.recv().await {
+</span><span class="boring">                println!("received '{value}'");
+</span><span class="boring">            }
+</span><span class="boring">        };
+</span><span class="boring">
+</span>        let tx_fut = async move {
+            // --snip--
+<span class="boring">            let vals = vec![
+</span><span class="boring">                String::from("more"),
+</span><span class="boring">                String::from("messages"),
+</span><span class="boring">                String::from("for"),
+</span><span class="boring">                String::from("you"),
+</span><span class="boring">            ];
+</span><span class="boring">
+</span><span class="boring">            for val in vals {
+</span><span class="boring">                tx.send(val).unwrap();
+</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
+</span><span class="boring">            }
+</span>        };
+
+        let futures: Vec&lt;Box&lt;dyn Future&lt;Output = ()&gt;&gt;&gt; =
+            vec![Box::new(tx1_fut), Box::new(rx_fut), Box::new(tx_fut)];
+
+        trpl::join_all(futures).await;
+<span class="boring">    });
+</span><span class="boring">}</span></code></pre>
 <p>આપણે દરેક ભવિષ્યને <code>Box</code> માં મૂકીએ છીએ જેથી તે trait object બને, જેમ કે આપણે પ્રકરણ ૧૨ ના “Returning Errors from <code>run</code>” વિભાગમાં કર્યું હતું. (આપણે પ્રકરણ ૧૮ માં trait objects વિશે વિગતવાર વાત કરીશું.) trait objects નો ઉપયોગ કરવાથી, આપણે આ પ્રકારો દ્વારા ઉત્પાદિત અનામી ભવિષ્યને સમાન પ્રકાર તરીકે ગણી શકીએ છીએ, કારણ કે તે બધા <code>Future</code> trait ને અમલમાં મૂકે છે. This might be surprising.</p>
 <p>આ આશ્ચર્યજનક હોઈ શકે છે. અંતે તો, દરેક async બ્લોક કંઈપણ પરત કરતું નથી, તેથી તે બધા <code>Future&lt;Output = ()&gt;</code> ઉત્પન્ન કરે છે. યાદ રાખો કે <code>Future</code> એ trait છે, અને કમ્પાઇલર દરેક async બ્લોક માટે એક અનન્ય enum બનાવે છે, ભલે તેમની આઉટપુટ પ્રકારો સમાન હોય. જેમ તમે બે અલગ-અલગ handwritten structs ને <code>Vec</code> માં મૂકી શકતા નથી, તેમ તમે કમ્પાઇલર દ્વારા જનરેટ કરેલા enums ને પણ મિક્સ કરી શકતા નથી.</p>
 <p>પછી આપણે ભવિષ્યનો સમૂહ <code>trpl::join_all</code> વિધેયને આપીએ છીએ અને પરિણામની રાહ જોઈએ છીએ. જો કે, આ કમ્પાઇલ થતું નથી; અહીં ભૂલ સંદેશાઓનો સંબંધિત ભાગ છે.</p>
@@ -344,10 +390,62 @@ pub trait Future {
 </figure>
 હવે આપણને પૂરતું જ્ઞાન છે કે Listing 17-23 માં પાછળના `join_all` કૉલ માટે રિપોર્ટ થયેલી ભૂલોને સમજવા માટે. આપણે મૂળરૂપે async બ્લોક્સ દ્વારા ઉત્પાદિત ભવિષ્યને `Vec<box<dyn future<output="()">&gt;&gt;` માં ખસેડવાનો પ્રયત્ન કર્યો હતો, પરંતુ આપણે જોયું છે તેમ, તે ભવિષ્યમાં આંતરિક સંદર્ભો હોઈ શકે છે, તેથી તેઓ આપમેળે `Unpin` લાગુ કરતા નથી. એકવાર આપણે તેમને પિન કરીએ, પછી આપણે પરિણામી `Pin` પ્રકારને `Vec` માં આપી શકીએ છીએ, એ વાતનો વિશ્વાસ રાખીને કે ભવિષ્યમાં રહેલાં અંતર્ગત ડેટા ખસેડવામાં આવશે નહીં. Listing 17-24 બતાવે છે કે દરેક ત્રણ ભવિષ્ય વ્યાખ્યાયિત કરવામાં આવે ત્યારે `pin!` મેક્રો કૉલ કરીને અને ટ્રેઇટ ઓબ્જેક્ટ પ્રકારને સમાયોજિત કરીને કોડને કેવી રીતે સુધારવો.
 <p><strong>Listing 17-24: Pinning the futures to enable moving them into the vector</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
+</span><span class="boring">
+</span>use std::pin::{Pin, pin};
+
+// --snip--
+
+<span class="boring">use std::time::Duration;
+</span><span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch17-async-await/listing-17-24/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    trpl::block_on(async {
+</span><span class="boring">        let (tx, mut rx) = trpl::channel();
+</span><span class="boring">
+</span><span class="boring">        let tx1 = tx.clone();
+</span>        let tx1_fut = pin!(async move {
+            // --snip--
+<span class="boring">            let vals = vec![
+</span><span class="boring">                String::from("hi"),
+</span><span class="boring">                String::from("from"),
+</span><span class="boring">                String::from("the"),
+</span><span class="boring">                String::from("future"),
+</span><span class="boring">            ];
+</span><span class="boring">
+</span><span class="boring">            for val in vals {
+</span><span class="boring">                tx1.send(val).unwrap();
+</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
+</span><span class="boring">            }
+</span>        });
+
+        let rx_fut = pin!(async {
+            // --snip--
+<span class="boring">            while let Some(value) = rx.recv().await {
+</span><span class="boring">                println!("received '{value}'");
+</span><span class="boring">            }
+</span>        });
+
+        let tx_fut = pin!(async move {
+            // --snip--
+<span class="boring">            let vals = vec![
+</span><span class="boring">                String::from("more"),
+</span><span class="boring">                String::from("messages"),
+</span><span class="boring">                String::from("for"),
+</span><span class="boring">                String::from("you"),
+</span><span class="boring">            ];
+</span><span class="boring">
+</span><span class="boring">            for val in vals {
+</span><span class="boring">                tx.send(val).unwrap();
+</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
+</span><span class="boring">            }
+</span>        });
+
+        let futures: Vec&lt;Pin&lt;&amp;mut dyn Future&lt;Output = ()&gt;&gt;&gt; =
+            vec![tx1_fut, rx_fut, tx_fut];
+<span class="boring">
+</span><span class="boring">        trpl::join_all(futures).await;
+</span><span class="boring">    });
+</span><span class="boring">}</span></code></pre>
 <p>આ ઉદાહરણ હવે સંપાઈ જાય છે અને ચાલે છે, અને અમે ચલિતકાળમાં વેક્ટર માંથી ભવિષ્ય ઉમેરી અથવા દૂર કરી શકીએ છીએ અને બધાને જોડી શકીએ છીએ.</p>
 <p><code>Pin</code> અને <code>Unpin</code> મોટા ભાગે નીચલા સ્તરના લાયબ્રેરીઓ બનાવવા માટે મહત્વપૂર્ણ છે, અથવા જ્યારે તમે ચલિતકાળ જાતે બનાવી રહ્યા હોવ, દૈનિક Rust કોડ માટે નહીં. પરંતુ, જ્યારે તમને ભૂલ સંદેશાઓમાં આ traits દેખાય છે, તો હવે તમને તમારા કોડને સુધારવાનો વધુ સારો ખ્યાલ આવશે!</p>
 <p>નોંધ: <code>Pin</code> અને <code>Unpin</code> નું આ સંયોજન એ શક્ય બનાવે છે કે Rust માં જટિલ પ્રકારોની એક સંપૂર્ણ શ્રેણી સુરક્ષિત રીતે અમલમાં મૂકી શકાય છે જે અન્યથા મુશ્કેલ સાબિત થશે કારણ કે તે સ્વ-સંદર્ભિત છે. <code>Pin</code> જરૂરી હોય તેવા પ્રકારો આજે async Rust માં સૌથી સામાન્ય રીતે દેખાય છે, પરંતુ ક્યારેક-ક્યારેક તમે તેને અન્ય સંદર્ભોમાં પણ જોઈ શકો છો.</p>
@@ -376,7 +474,24 @@ trait Stream {
 <p>જો કે, આપણે “સ્ટ્રીમ્સ: ફ્યુચર્સ ઇન સિક્વન્સ” વિભાગમાં જોયેલી ઉદાહરણોમાં, આપણે <code>poll_next</code> અથવા <code>Stream</code> નો ઉપયોગ કર્યો ન હતો, પરંતુ તેના બદલે <code>next</code> અને <code>StreamExt</code> નો ઉપયોગ કર્યો હતો. અલબત્ત, આપણે જાતે <code>Stream</code> સ્ટેટ મશીનો લખીને <code>poll_next</code> API સાથે સીધા જ કામ કરી શકીએ છીએ, જેમ કે આપણે તેમના <code>poll</code> પદ્ધતિ દ્વારા ફ્યુચર્સ સાથે સીધા જ કામ કરી શકીએ છીએ. જો કે, <code>await</code> નો ઉપયોગ કરવો ઘણો સારો છે, અને <code>StreamExt</code> ટ્રેઇટ <code>next</code> પદ્ધતિ પૂરી પાડે છે જેથી આપણે તેવું કરી શકીએ:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch17-async-await/no-listing-stream-ext/src/lib.rs:here}}
+</span><span class="boring">use std::pin::Pin;
+</span><span class="boring">use std::task::{Context, Poll};
+</span><span class="boring">
+</span><span class="boring">trait Stream {
+</span><span class="boring">    type Item;
+</span><span class="boring">    fn poll_next(
+</span><span class="boring">        self: Pin&lt;&amp;mut Self&gt;,
+</span><span class="boring">        cx: &amp;mut Context&lt;'_&gt;,
+</span><span class="boring">    ) -&gt; Poll&lt;Option&lt;Self::Item&gt;&gt;;
+</span><span class="boring">}
+</span><span class="boring">
+</span>trait StreamExt: Stream {
+    async fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt;
+    where
+        Self: Unpin;
+
+    // other methods...
+}
 <span class="boring">}</span></code></pre>
 <!--
 TODO: update this if/when tokio/etc. update their MSRV and switch to using async functions

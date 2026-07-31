@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
+            window.path_to_searchindex_js = "searchindex-4bc072ff.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -188,28 +188,63 @@
 <p>નિષ્ફળતા પર આધારિત અલગ રીતે કાર્ય કરવાની ક્ષમતામાં રહેલી છે. સામાન્ય રીતે, તમારે વિવાદીલ અને અવિવાદીલ પેટર્ન વચ્ચેના ભેદ વિશે ચિંતા કરવાની જરૂર નથી; જો કે, તમારે રેફ્યુટેબિલિટી (refutability) ની વિભાવનાથી પરિચિત હોવું જરૂરી છે જેથી તમે તેને ભૂલ સંદેશમાં જુઓ ત્યારે પ્રતિસાદ આપી શકો. તેવા કિસ્સાઓમાં, તમારે પેટર્ન અથવા તમે જે પેટર્નનો ઉપયોગ કરી રહ્યા છો તે રચનાને બદલવાની જરૂર પડશે, કોડના ઇચ્છિત વર્તન પર આધાર રાખીને.</p>
 <p>ચાલો એક ઉદાહરણ જોઈએ કે શું થાય છે જ્યારે આપણે એક વિવાદાસ્પદ પેટર્નનો ઉપયોગ કરવાનો પ્રયત્ન કરીએ છીએ જ્યાં Rust ને અવિવાદાસ્પદ પેટર્નની જરૂર હોય છે અને ઊલટું. સૂચિ ૧૯-૮ માં એક <code>let</code> વિધાન દર્શાવેલું છે, પરંતુ પેટર્ન માટે, આપણે <code>Some(x)</code> , એક વિવાદાસ્પદ પેટર્ન નિર્દિષ્ટ કરી છે. તમે અપેક્ષા રાખી શકો તેમ, આ કોડ કમ્પાઇલ થશે નહીં.</p>
 <p><strong>Listing 19-8: Attempting to use a refutable pattern with <code>let</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-08/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let some_option_value: Option&lt;i32&gt; = None;
+</span>    let Some(x) = some_option_value;
 <span class="boring">}</span></code></pre>
 <p>જો <code>some_option_value</code> એ <code>None</code> મૂલ્ય હોત, તો તે <code>Some(x)</code> પેટર્ન સાથે મેળ ખાતો ન હોત, જેનો અર્થ થાય છે કે પેટર્ન જૂઠાણીવાળી છે. જોકે, <code>let</code> વિધાન માત્ર અવિભાજ્ય પેટર્નને જ સ્વીકારી શકે છે કારણ કે <code>None</code> મૂલ્ય સાથે કોડ શું કરી શકે તેની કોઈ યોગ્ય બાબત નથી. કમ્પાઇલ સમય દરમિયાન, Rust ફરિયાદ કરશે કે અમે જૂઠાણીવાળી પેટર્નનો ઉપયોગ કરવાનો પ્રયાસ કર્યો છે જ્યાં અવિભાજ્ય પેટર્નની જરૂર છે:</p>
-<pre><code class="language-console">{{#include ../listings/ch19-patterns-and-matching/listing-19-08/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling patterns v0.1.0 (file:///projects/patterns)
+error[E0005]: refutable pattern in local binding
+ --&gt; src/main.rs:3:9
+  |
+3 |     let Some(x) = some_option_value;
+  |         ^^^^^^^ pattern `None` not covered
+  |
+  = note: `let` bindings require an "irrefutable pattern", like a `struct` or an `enum` with only one variant
+  = note: for more information, visit https://doc.rust-lang.org/book/ch19-02-refutability.html
+  = note: the matched value is of type `Option&lt;i32&gt;`
+help: you might want to use `let...else` to handle the variant that isn't matched
+  |
+3 |     let Some(x) = some_option_value else { todo!() };
+  |                                     ++++++++++++++++
+
+For more information about this error, try `rustc --explain E0005`.
+error: could not compile `patterns` (bin "patterns") due to 1 previous error
 </code></pre>
 <p>કારણ કે અમે બધી માન્ય કિંમતોને <code>Some(x)</code> પેટર્ન સાથે આવરી ન લીધી (અને ન લઈ શક્યા!), Rust યોગ્ય રીતે કમ્પાઇલર ભૂલ ઉત્પન્ન</p>
 <p>કરે છે. જો આપણી પાસે એક અવિશ્વસનીય પેટર્ન હોય જ્યાં એક નિશ્ચિત પેટર્નની જરૂર હોય, તો અમે તેનો ઉકેલ કોડ બદલીને લાવી શકીએ છીએ જે પેટર્નનો ઉપયોગ કરે છે: <code>let</code> ને બદલે, અમે <code>let...else</code> નો ઉપયોગ કરી શકીએ છીએ. પછી, જો પેટર્ન મેળ ખાતી નથી, તો ચોકડી કૌંસમાં રહેલો કોડ મૂલ્યને સંભાળશે. સૂચિ 19-9 દર્શાવે છે કે સૂચિ 19-8 માં રહેલા કોડને કેવી રીતે સુધારવો.</p>
 <p><strong>Listing 19-9: Using <code>let...else</code> and a block with refutable patterns instead of <code>let</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-09/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let some_option_value: Option&lt;i32&gt; = None;
+</span>    let Some(x) = some_option_value else {
+        return;
+    };
 <span class="boring">}</span></code></pre>
 <p>આપણે કોડને એક બહારનો માર્ગ આપ્યો છે! આ કોડ સંપૂર્ણપણે યોગ્ય છે, જોકે તેનો અર્થ એ થાય છે કે આપણે ચેતવણી ન મળે તેવાં પેટર્નનો ઉપયોગ કરી શકતા નથી. જો આપણે <code>let...else</code> ને એવી પેટર્ન આપીએ જે હંમેશાં મેળ ખાય છે, જેમ કે <code>x</code>, જે યાદી 19-10 માં દર્શાવેલ છે, તો કમ્પાઇલર ચેતવણી આપશે.</p>
 <p><strong>Listing 19-10: Attempting to use an irrefutable pattern with <code>let...else</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-10/src/main.rs:here}}
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let x = 5 else {
+        return;
+    };
 <span class="boring">}</span></code></pre>
 <p>Rust ફરિયાદ કરે છે કે અસ્પષ્ટ પેટર્ન સાથે <code>let...else</code> વાપરવું તાર્કિક નથી:</p>
-<pre><code class="language-console">{{#include ../listings/ch19-patterns-and-matching/listing-19-10/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling patterns v0.1.0 (file:///projects/patterns)
+warning: unreachable `else` clause
+ --&gt; src/main.rs:2:15
+  |
+2 |     let x = 5 else {
+  |     --------- ^^^^
+  |     |
+  |     assigning to binding pattern will always succeed
+  |
+  = note: this pattern always matches, so the else clause is unreachable
+  = note: `#[warn(irrefutable_let_patterns)]` on by default
+
+warning: `patterns` (bin "patterns") generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.39s
+     Running `target/debug/patterns`
 </code></pre>
 <p>એ જ કારણે, <code>match</code> વિભાગોએ વિનંતી કરી શકાય તેવા પ્રકાર (refutable patterns) વાપરવા જોઈએ, સિવાય કે છેલ્લા વિભાગમાં, જે બાકી રહેલા મૂલ્યો સાથે અવિનંતી કરી શકાય તેવા પ્રકાર (irrefutable pattern) સાથે મેળ ખાય છે. Rust આપણને માત્ર એક જ વિભાગ ધરાવતા <code>match</code> માં અવિનંતી કરી શકાય તેવો પ્રકાર વાપરવાની મંજૂરી આપે છે, પરંતુ આ સિન્ટેક્સ વિશેષ કરીને ઉપયોગી નથી અને તેને સરળ <code>let</code> વિધાનથી બદલી શકાય</p>
 <p>છે. હવે તમને ક્યાં પ્રકારો વાપરવાનાં છે અને વિનંતી કરી શકાય તેવા અને અવિનંતી કરી શકાય તેવા પ્રકાર વચ્ચેનો તફાવત ખબર છે, તો ચાલો આપણે જે સિન્ટેક્સ વાપરી શકીએ છીએ તેને આવરી લઈએ.</p>

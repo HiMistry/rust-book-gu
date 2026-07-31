@@ -40,7 +40,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e16d4d07.js";
+            window.path_to_searchindex_js = "searchindex-4bc072ff.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0e4ce700.js"></script>
@@ -188,10 +188,43 @@
 <p>જ્યારે આપણે સામાન્ય પ્રકારના ડેટાને પરિમાણો અને વળતર મૂલ્ય તરીકે દર્શાવતા હોય તેમ, જનરિક્સને કાર્યની હસ્તાક્ષરમાં (signature) મૂકવામાં આવે છે. આ રીતે કોડ વધુ લવચીક બને છે અને કાર્ય userઓ માટે વધુ કાર્યક્ષમતા પૂરી પાડે છે, સાથે સાથે કોડની નકલ થતી અટકાવે છે.</p>
 <p>આપણે <code>largest</code> કાર્ય ચાલુ રાખીએ, સૂચિ 10-4 બે કાર્યો દર્શાવે છે જે સ્લાઇસમાં સૌથી મોટું મૂલ્ય શોધે છે. ત્યારબાદ આપણે આ બધાને એક જનરિક્સનો ઉપયોગ કરતા એકકાર્યમાં જોડીશું.</p>
 <p><strong>Listing 10-4: Two functions that differ only in their names and in the types in their signatures</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-04/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn largest_i32(list: &amp;[i32]) -&gt; &amp;i32 {
+    let mut largest = &amp;list[0];
+
+    for item in list {
+        if item &gt; largest {
+            largest = item;
+        }
+    }
+
+    largest
+}
+
+fn largest_char(list: &amp;[char]) -&gt; &amp;char {
+    let mut largest = &amp;list[0];
+
+    for item in list {
+        if item &gt; largest {
+            largest = item;
+        }
+    }
+
+    largest
+}
+
+fn main() {
+    let number_list = vec![34, 50, 25, 100, 65];
+
+    let result = largest_i32(&amp;number_list);
+    println!("The largest number is {result}");
+<span class="boring">    assert_eq!(*result, 100);
+</span>
+    let char_list = vec!['y', 'm', 'a', 'q'];
+
+    let result = largest_char(&amp;char_list);
+    println!("The largest char is {result}");
+<span class="boring">    assert_eq!(*result, 'y');
+</span>}</code></pre>
 <p><code>largest_i32</code> વિધેય એListing 10-3 માં આપણે જે કાઢ્યું તે છે, જે સ્લાઇસમાં સૌથી મોટું <code>i32</code> શોધે છે. <code>largest_char</code> વિધેય સ્લાઇસમાં સૌથી મોટું <code>char</code> શોધે છે. બંને વિધેયોના મુખ્ય ભાગ સમાન કોડ ધરાવે છે, તેથી ચાલો આપણે એક જ વિધેયમાં સામાન્ય પ્રકાર પરિમાણ (generic type parameter) દાખલ કરીને આ બિનજરૂરીયાત દૂર કરીએ. એક</p>
 <p>નવા એકલ વિધેયમાં પ્રકારોને પરિમાણિત કરવા માટે, આપણે પ્રકાર પરિમાણને નામ આપવું પડશે, જેવી રીતે આપણે વિધેયના મૂલ્ય પરિમાણો (value parameters) માટે કરીએ છીએ. તમે કોઈપણ ઓળખકર્તા (identifier) નો પ્રકાર પરિમાણ તરીકે ઉપયોગ કરી શકો છો. પરંતુ આપણે <code>T</code> નો ઉપયોગ કરીશું, કારણ કે, સંમેલન મુજબ, Rust માં પ્રકાર પરિમાણ નામો ટૂંકા હોય છે, ઘણીવાર માત્ર એક અક્ષર હોય છે, અને Rust નું પ્રકાર નામકરણ સંમેલન UpperCamelCase હોય છે. પ્રકાર માટે ટૂંકું, <code>T</code> એ મોટાભાગના Rust પ્રોગ્રામરોની ડિફૉલ્ટ પસંદગી છે.</p>
 <p>જ્યારે આપણે ફંક્શનના મુખ્ય ભાગમાં કોઈ પરિમાણનો ઉપયોગ કરીએ છીએ, ત્યારે કમ્પાઇલરને ખબર પડે તે માટે આપણે પરિમાણનું નામ હસ્તાક્ષરમાં જાહેર કરવું જોઈએ કે તેનો અર્થ શું છે. એ જ રીતે, જ્યારે આપણે ફંક્શન હસ્તાક્ષરમાં પ્રકાર પરિમાણના નામને વાપરીએ છીએ, ત્યારે આપણે તેનો ઉપયોગ કરતા પહેલા પ્રકાર પરિમાણનું નામ જાહેર કરવું જોઈએ. સામાન્ય <code>largest</code> ફંક્શનને વ્યાખ્યાયિત કરવા માટે, આપણે ખૂણાંની અંદર, <code>&lt;&gt;</code>, ફંક્શનના નામ અને પરિમાણ યાદી વચ્ચે પ્રકાર નામના ઘોષણાઓ મૂકીએ છીએ, જેમ કે:</p>
@@ -202,37 +235,96 @@
 <p>આ વ્યાખ્યાને આપણે આ રીતે સમજીએ છીએ: “કાર્ય <code>largest</code> અમુક પ્રકાર <code>T</code> પર સામાન્ય છે.” આ કાર્યમાં એક પરિમાણ નામ <code>list</code> છે, જે પ્રકાર <code>T</code> ના મૂલ્યોની સ્લાઇસ છે. <code>largest</code> કાર્ય સમાન પ્રકાર <code>T</code> ના મૂલ્યનો સંદર્ભ આપશે. Listing</p>
 <p>10-5 દર્શાવે છે કે સામાન્ય ડેટા પ્રકારને તેના હસ્તાક્ષરમાં ઉપયોગ કરીને <code>largest</code> કાર્યની વ્યાખ્યા કેવી રીતે જોડવી. આ યાદી એ પણ બતાવે છે કે આપણે <code>i32</code> મૂલ્યો અથવા <code>char</code> મૂલ્યોની સ્લાઇસ સાથે કાર્યને કેવી રીતે બોલાવી શકીએ છીએ. નોંધ કરો કે આ કોડ હજી કમ્પાઇલ થશે નહીં.</p>
 <p><strong>Listing 10-5: The <code>largest</code> function using generic type parameters; this doesn’t compile yet</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">fn largest&lt;T&gt;(list: &amp;[T]) -&gt; &amp;T {
+    let mut largest = &amp;list[0];
+
+    for item in list {
+        if item &gt; largest {
+            largest = item;
+        }
+    }
+
+    largest
+}
+
+fn main() {
+    let number_list = vec![34, 50, 25, 100, 65];
+
+    let result = largest(&amp;number_list);
+    println!("The largest number is {result}");
+
+    let char_list = vec!['y', 'm', 'a', 'q'];
+
+    let result = largest(&amp;char_list);
+    println!("The largest char is {result}");
+}</code></pre>
 <p>જો આપણે આ કોડ અત્યારે જ કંપાઇલ કરીએ, તો આપણને આ ભૂલ મળશે:</p>
-<pre><code class="language-console">{{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0369]: binary operation `&gt;` cannot be applied to type `&amp;T`
+ --&gt; src/main.rs:5:17
+  |
+5 |         if item &gt; largest {
+  |            ---- ^ ------- &amp;T
+  |            |
+  |            &amp;T
+  |
+help: consider restricting type parameter `T` with trait `PartialOrd`
+  |
+1 | fn largest&lt;T: std::cmp::PartialOrd&gt;(list: &amp;[T]) -&gt; &amp;T {
+  |             ++++++++++++++++++++++
+
+For more information about this error, try `rustc --explain E0369`.
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>std::cmp::PartialOrd મદદરૂપ લખાણમાં <code>std::cmp::PartialOrd</code> નો ઉલ્લેખ છે, જે એક trait છે, અને આપણે આગલા વિભાગમાં traits વિશે વાત કરીશું. હાલ માટે, જાણો કે આ ભૂલ જણાવે છે કે <code>largest</code> નું શરીર બધા સંભવિત પ્રકારો માટે કામ કરશે નહીં કે જે <code>T</code> હોઈ શકે છે. કારણ કે આપણે શરીર માં type <code>T</code> ના મૂલ્યોની સરખામણી કરવા માંગીએ છીએ, આપણે માત્ર એવા પ્રકારોનો જ ઉપયોગ કરી શકીએ છીએ જેના મૂલ્યોને ક્રમબદ્ધ કરી શકાય. સરખામણીઓ સક્ષમ કરવા માટે, પ્રમાણિત library પાસે <code>std::cmp::PartialOrd</code> trait છે જે તમે types પર અમલમાં મૂકી શકો છો (આ trait વિશે વધુ માહિતી માટે Appendix C જુઓ). Listing 10-5 ને સુધારવા માટે, આપણે મદદરૂપ લખાણની સૂચનાને અનુસરીને <code>T</code> માટે માન્ય પ્રકારોને માત્ર એવા પ્રકારો સુધી મર્યાદિત કરી શકીએ છીએ જે <code>PartialOrd</code> અમલમાં મૂકે છે. આથી listing compile થશે, કારણ કે પ્રમાણિત library <code>i32</code> અને <code>char</code> બંને પર <code>PartialOrd</code> અમલમાં મૂકે છે.</p>
 <h3 id="in-struct-definitions"><a class="header" href="#in-struct-definitions">In Struct Definitions</a></h3>
 <p>આપણે <code>&lt;&gt;</code> વાક્યરચનાનો ઉપયોગ કરીને એક અથવા વધુ ક્ષેત્રોમાં સામાન્ય પ્રકાર પરિમાણનો ઉપયોગ કરવા માટે માળખાઓ પણ વ્યાખ્યાયિત કરી શકીએ છીએ. સૂચિ ૧૦-૬ એક <code>Point&lt;T&gt;</code> માળખું વ્યાખ્યાયિત કરે છે જે કોઈપણ પ્રકારના <code>x</code> અને <code>y</code> યામ મૂલ્યોને જાળવી રાખે છે.</p>
 <p><code>struct that holds</code>x<code>and</code>y<code>values of type</code>T`“&gt;</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-06/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">struct Point&lt;T&gt; {
+    x: T,
+    y: T,
+}
+
+fn main() {
+    let integer = Point { x: 5, y: 10 };
+    let float = Point { x: 1.0, y: 4.0 };
+}</code></pre>
 <p>struct વ્યાખ્યાઓમાં સામાન્યતાઓ (generics) નો ઉપયોગ કરવાની રીત struct વ્યાખ્યાઓમાં સામાન્યતાઓનો ઉપયોગ કરવાની રીત કાર્ય વ્યાખ્યાઓ માટે વપરાતી રીત જેવી જ છે. પ્રથમ, આપણે સ્ટ્રક્ચરના નામ પછી તરત જ ખૂણાંની અંદર પ્રકાર પરિમાણનું નામ જાહેર કરીએ છીએ. ત્યારબાદ, આપણે સ્ટ્રક્ચરમાં સામાન્ય પ્રકારનો ઉપયોગ કરીએ છીએ જ્યાં આપણે અન્યથા નક્કર ડેટા પ્રકારો સ્પષ્ટ કરતા હોત. ધ્યાનમાં</p>
 <p>રાખો કે અમે માત્ર એક જ સામાન્ય પ્રકારનો ઉપયોગ કરીને <code>Point&lt;T&gt;</code> વ્યાખ્યાયિત કર્યો છે, આ વ્યાખ્યા કહે છે કે <code>Point&lt;T&gt;</code> સ્ટ્રક્ચર અમુક પ્રકાર <code>T</code> પર સામાન્ય છે, અને ક્ષેત્રો <code>x</code> અને <code>y</code> બંને તે જ પ્રકારના છે, ભલે તે પ્રકાર ગમે તે હોય. જો આપણે <code>Point&lt;T&gt;</code> ની એક ઇન્સ્ટન્સ બનાવીએ જેમાં જુદા જુદા પ્રકારોની કિંમતો હોય, જેમ કે લિસ્ટિંગ 10-7 માં છે, તો આપણો કોડ કમ્પાઇલ થશે નહીં.</p>
 <p><strong>Listing 10-7: The fields <code>x</code> and <code>y</code> must be the same type because both have the same generic data type <code>T</code>.</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-07/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">struct Point&lt;T&gt; {
+    x: T,
+    y: T,
+}
+
+fn main() {
+    let wont_work = Point { x: 5, y: 4.0 };
+}</code></pre>
 <p>આ ઉદાહરણમાં, જ્યારે આપણે પૂર્ણાંક મૂલ્ય <code>5</code> ને <code>x</code> માં સોંપીએ છીએ, ત્યારે આપણે કમ્પાઇલરને જણાવીએ છીએ કે આ <code>Point&lt;T&gt;</code> ના ઉદાહરણ માટે સામાન્ય પ્રકાર <code>T</code> એ પૂર્ણાંક હશે. પછી, જ્યારે આપણે <code>y</code> માટે <code>4.0</code> નો ઉલ્લેખ કરીએ છીએ, જેનો પ્રકાર <code>x</code> જેટલો જ વ્યાખ્યાયિત કરવામાં આવ્યો છે, ત્યારે આપણને આ પ્રકારની અસંગતતાની ભૂલ મળશે:</p>
-<pre><code class="language-console">{{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-07/output.txt}}
+<pre><code class="language-console">$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0308]: mismatched types
+ --&gt; src/main.rs:7:38
+  |
+7 |     let wont_work = Point { x: 5, y: 4.0 };
+  |                                      ^^^ expected integer, found floating-point number
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p><code>Point</code> રચનાને વ્યાખ્યાયિત કરવા માટે જેમાં <code>x</code> અને <code>y</code> બંને સામાન્યિક (generics) છે પરંતુ અલગ-અલગ પ્રકારો હોઈ શકે છે, આપણે બહુવિધ સામાન્યિક પ્રકાર પરિમાણોનો ઉપયોગ કરી શકીએ છીએ. ઉદાહરણ તરીકે, યાદી 10-8 માં, આપણે <code>Point</code> ની વ્યાખ્યાને પ્રકાર <code>T</code> અને <code>U</code> પર સામાન્ય બનાવવા માટે બદલીએ છીએ જ્યાં <code>x</code> પ્રકાર <code>T</code> નું હોય છે અને <code>y</code> પ્રકાર <code>U</code> નું હોય છે.</p>
 <p><code>generic over two types so that</code>x<code>and</code>y` can be values of different types“&gt;</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-08/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">struct Point&lt;T, U&gt; {
+    x: T,
+    y: U,
+}
+
+fn main() {
+    let both_integer = Point { x: 5, y: 10 };
+    let both_float = Point { x: 1.0, y: 4.0 };
+    let integer_and_float = Point { x: 5, y: 4.0 };
+}</code></pre>
 <p>હવે <code>Point</code> નાં તમામ ઉદાહરણો સ્વીકાર્ય છે! તમે વ્યાખ્યામાં જેટલા જનરિક પ્રકાર પરિમાણો (generic type parameters) ઇચ્છો તેટલા વાપરી શકો છો, પરંતુ વધારે પડતાં વાપરવાથી તમારો કોડ વાંચવામાં મુશ્કેલ બની શકે છે. જો તમને તમારા કોડમાં ઘણાં જનરિક પ્રકારોની જરૂર જણાય, તો એનો અર્થ એ થઈ શકે કે તમારા કોડને નાના ભાગોમાં પુનર્ગઠન કરવાની જરૂર છે.</p>
 <h3 id="in-enum-definitions"><a class="header" href="#in-enum-definitions">In Enum Definitions</a></h3>
 <p>જે રીતે આપણે struct સાથે કર્યું હતું, તેમ આપણે સામાન્ય ડેટા પ્રકારોને તેમનાં વિવિધ સ્વરૂપોમાં સમાવવા માટે સમૂહો (enums) પણ વ્યાખ્યાયિત કરી શકીએ છીએ. ચાલો ફરી એકવાર <code>Option&lt;T&gt;</code> સમૂહ પર નજર કરીએ જે પ્રમાણભૂત પુસ્તકાલય પ્રદાન કરે છે, જેનો આપણે પ્રકરણ ૬ માં ઉપયોગ કર્યો હતો.</p>
@@ -257,25 +349,73 @@
 <h3 id="in-method-definitions"><a class="header" href="#in-method-definitions">In Method Definitions</a></h3>
 <p>આપણે સ્ટ્રક્ચર્સ અને ઇનમ્સ પર પદ્ધતિઓ અમલમાં મૂકી શકીએ છીએ (જેમ કે આપણે પ્રકરણ 5 માં કર્યું હતું) અને તેમની વ્યાખ્યાઓમાં સામાન્ય પ્રકારોનો પણ ઉપયોગ કરી શકીએ છીએ. સૂચિ 10-9 દર્શાવે છે કે  <code>Point&lt;T&gt;</code>  સ્ટ્રક્ચર, જે આપણે સૂચિ 10-6 માં વ્યાખ્યાયિત કર્યું હતું, તેના પર નામકું પદ્ધતિ  <code>x</code>  અમલમાં મૂકવામાં આવી છે.</p>
 <p><code>struct that will return a reference to the</code>x<code>field of type</code>T`“&gt;</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-09/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">struct Point&lt;T&gt; {
+    x: T,
+    y: T,
+}
+
+impl&lt;T&gt; Point&lt;T&gt; {
+    fn x(&amp;self) -&gt; &amp;T {
+        &amp;self.x
+    }
+}
+
+fn main() {
+    let p = Point { x: 5, y: 10 };
+
+    println!("p.x = {}", p.x());
+}</code></pre>
 <p>અહીં, આપણે <code>x</code> નામની એક પદ્ધતિ વ્યાખ્યાયિત કરી છે જે <code>Point&lt;T&gt;</code> પર અમલમાં મૂકાયેલ છે અને તે ક્ષેત્ર <code>x</code> માં રહેલા</p>
 <p>ડેટાનો સંદર્ભ આપે છે. નોંધ કરો કે આપણે <code>impl</code> પછી તરત જ <code>T</code> જાહેર કરવું પડશે જેથી કરીને આપણે <code>T</code> નો ઉપયોગ એ ઉલ્લેખિત કરવા માટે કરી શકીએ કે અમે <code>Point&lt;T&gt;</code> પ્રકાર પર પદ્ધતિઓ અમલમાં મૂકી રહ્યા છીએ. <code>impl</code> પછી સામાન્ય પ્રકાર તરીકે <code>T</code> જાહેર કરીને, Rust ઓળખી શકે છે કે <code>Point</code> માં ખૂણાના કૌંસમાં રહેલો પ્રકાર એક સામાન્ય પ્રકાર છે, કોઈ નક્કર પ્રકાર નથી. આપણે આ સામાન્ય પરિમાણ માટે અલગ નામ પસંદ કરી શક્યા હોત, પરંતુ સમાન નામનો ઉપયોગ કરવો એ પ્રચલિત છે. જો તમે <code>impl</code> ની અંદર એક પદ્ધતિ લખો છો જે એક સામાન્ય પ્રકાર જાહેર કરે છે, તો તે પદ્ધતિ પ્રકારના કોઈપણ ઉદાહરણ પર વ્યાખ્યાયિત કરવામાં આવશે, ભલે ગમે તે નક્કર પ્રકાર સામાન્ય પ્રકાર માટે બદલાય છે.</p>
 <p>આપણે પ્રકારો પર પદ્ધતિઓ વ્યાખ્યાયિત કરતી વખતે સામાન્ય પ્રકારો પર નિયંત્રણો પણ સ્પષ્ટ કરી શકીએ છીએ. ઉદાહરણ તરીકે, આપણે <code>Point&lt;f32&gt;</code> સંસ્થાઓ પર જ પદ્ધતિઓ અમલમાં મૂકી શકીએ છીએ, કોઈપણ સામાન્ય પ્રકારની <code>Point&lt;T&gt;</code> સંસ્થાઓ પર નહીં. યાદી 10-10 માં, આપણે નક્કર પ્રકાર <code>f32</code> નો ઉપયોગ કરીએ છીએ, જેનો અર્થ થાય છે કે આપણે <code>impl</code> પછી કોઈ પ્રકારો જાહેર કરતા નથી.</p>
 <p><strong>Listing 10-10: An <code>impl</code> block that only applies to a struct with a particular concrete type for the generic type parameter <code>T</code></strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">struct Point&lt;T&gt; {
+</span><span class="boring">    x: T,
+</span><span class="boring">    y: T,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl&lt;T&gt; Point&lt;T&gt; {
+</span><span class="boring">    fn x(&amp;self) -&gt; &amp;T {
+</span><span class="boring">        &amp;self.x
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Point&lt;f32&gt; {
+    fn distance_from_origin(&amp;self) -&gt; f32 {
+        (self.x.powi(2) + self.y.powi(2)).sqrt()
+    }
+}
+<span class="boring">
 </span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-10/src/main.rs:here}}
-<span class="boring">}</span></code></pre>
+</span><span class="boring">    let p = Point { x: 5, y: 10 };
+</span><span class="boring">
+</span><span class="boring">    println!("p.x = {}", p.x());
+</span><span class="boring">}</span></code></pre>
 <p>આ કોડનો અર્થ એ થાય છે કે <code>Point&lt;f32&gt;</code> પ્રકારમાં <code>distance_from_origin</code> નામની પદ્ધતિ હશે; <code>Point&lt;T&gt;</code> ના અન્ય ઉદાહરણો, જ્યાં <code>T</code> પ્રકાર <code>f32</code> ન હોય, તેમની પાસે આ પદ્ધતિ વ્યાખ્યાયિત થયેલી રહેશે નહીં. આ પદ્ધતિ આપણા બિંદુનું (0.0, 0.0) 좌표ઓવાળા બિંદુથી અંતર માપે છે અને માત્ર ફ્લોટિંગ-પોઇન્ટ પ્રકારો માટે ઉપલબ્ધ ગાણિતિક ક્રિયાઓનો ઉપયોગ</p>
 <p>કરે છે. સ્ટ્રક્ચ વ્યાખ્યામાં સામાન્ય પ્રકારના પરિમાણો એ જ હોતા નથી જે તમે તે જ સ્ટ્રક્ચરની પદ્ધતિ હસ્તાક્ષરોમાં વાપરો છો. સૂચિ 10-11 <code>Point</code> સ્ટ્રક્ચર માટે સામાન્ય પ્રકારો <code>X1</code> અને <code>Y1</code> અને <code>mixup</code> પદ્ધતિ હસ્તાક્ષર માટે <code>X2</code> અને <code>Y2</code> નો ઉપયોગ કરે છે જેથી ઉદાહરણ સ્પષ્ટ થાય. આ પદ્ધતિ <code>self</code> ના <code>x</code> મૂલ્ય (પ્રકાર <code>X1</code> ધરાવે છે) અને પસાર થયેલ <code>Point</code> ના <code>y</code> મૂલ્ય (પ્રકાર <code>Y2</code> ધરાવે છે) સાથે એક નવું <code>Point</code> ઉદાહરણ બનાવે છે.</p>
 <p><strong>Listing 10-11: A method that uses generic types that are different from its struct’s definition</strong></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-11/src/main.rs}}
-<span class="boring">}</span></code></pre>
+<pre class="playground"><code class="language-rust edition2024">struct Point&lt;X1, Y1&gt; {
+    x: X1,
+    y: Y1,
+}
+
+impl&lt;X1, Y1&gt; Point&lt;X1, Y1&gt; {
+    fn mixup&lt;X2, Y2&gt;(self, other: Point&lt;X2, Y2&gt;) -&gt; Point&lt;X1, Y2&gt; {
+        Point {
+            x: self.x,
+            y: other.y,
+        }
+    }
+}
+
+fn main() {
+    let p1 = Point { x: 5, y: 10.4 };
+    let p2 = Point { x: "Hello", y: 'c' };
+
+    let p3 = p1.mixup(p2);
+
+    println!("p3.x = {}, p3.y = {}", p3.x, p3.y);
+}</code></pre>
 <p><code>main</code> માં, આપણે એક <code>Point</code> વ્યાખ્યાયિત કર્યો છે જેમાં <code>x</code> માટે <code>i32</code> (મૂલ્ય <code>5</code> સાથે) અને <code>y</code> માટે <code>f64</code> (મૂલ્ય <code>10.4</code> સાથે) છે. <code>p2</code> variable એ <code>Point</code> struct છે જેમાં <code>x</code> માટે સ્ટ્રિંગ સ્લાઇસ (મૂલ્ય <code>"Hello"</code> સાથે) અને <code>y</code> માટે <code>char</code> (મૂલ્ય <code>c</code> સાથે) છે. <code>p1</code> પર <code>mixup</code> ને <code>p2</code> Argument સાથે બોલાવવાથી આપણને <code>p3</code> મળે છે, જેમાં <code>x</code> માટે <code>i32</code> હશે કારણ કે <code>x</code>, <code>p1</code> માંથી આવ્યું છે. <code>p3</code> variable <code>y</code> માટે <code>char</code> હશે કારણ કે <code>y</code>, <code>p2</code> માંથી આવ્યું છે. <code>println!</code> મેક્રો કૉલ <code>p3.x = 5, p3.y = c</code> પ્રિન્ટ કરશે.</p>
 <p>આ ઉદાહરણનો હેતુ એવા સંજોગો દર્શાવવાનો છે જેમાં અમુક સામાન્ય પરિમાણો <code>impl</code> સાથે જાહેર કરવામાં આવે છે અને અમુક પદ્ધતિ વ્યાખ્યા સાથે જાહેર કરવામાં આવે છે. અહીં, સામાન્ય પરિમાણો <code>X1</code> અને <code>Y1</code> <code>impl</code> પછી જાહેર કરવામાં આવ્યા છે કારણ કે તે struct વ્યાખ્યા સાથે સંકળાયેલા છે. સામાન્ય પરિમાણો <code>X2</code> અને <code>Y2</code> <code>fn mixup</code> પછી જાહેર કરવામાં આવ્યા છે કારણ કે તેઓ માત્ર પદ્ધતિ માટે જ સુસંગત છે.</p>
 <h3 id="performance-of-code-using-generics"><a class="header" href="#performance-of-code-using-generics">Performance of Code Using Generics</a></h3>
