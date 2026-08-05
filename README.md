@@ -1,5 +1,5 @@
 # rust-book-gu
-
+# the-rust-programming-language-gu 
 Gujarati translation of The Rust Programming Language (the official Rust book), translated from the latest English source.
 
 Read the book in Gujarati:
