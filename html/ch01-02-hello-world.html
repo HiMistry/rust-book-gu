@@ -1,0 +1,324 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Hello, World! - ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-4bc072ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-0e4ce700.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h2 id="hello-world"><a class="header" href="#hello-world">Hello, World!</a></h2>
+<p>હવે તમે Rust સ્થાપિત કરી લીધું છે, તો હવે પહેલું Rust કાર્યક્રમ લખવાનો સમય આવી ગયો છે. નવી ભાષા શીખતી વખતે કોઈ નાનું કાર્યક્રમ છાપવો એ પરંપરા છે જે <code>Hello, world!</code> લખાણ સ્ક્રીન પર દર્શાવે છે, તેથી આપણે પણ તે જ કરીશું!</p>
+<p>નોંધ: આ પુસ્તક કમાન્ડ લાઇનથી થોડી પૃથ્થઈ પરિચય હોવાનું માને છે. Rust તમારા સંપાદન કે સાધન અથવા તમારો કોડ ક્યાં રહે છે તેના વિશે કોઈ ચોક્કસ માંગણી કરતું નથી, તેથી જો તમે કમાન્ડ લાઇનને બદલે IDE વાપરવાનું પસંદ કરો છો, તો તમારા મનપસંદ IDE નો ઉપયોગ કરી શકો છો. ઘણા IDEs હવે Rust માટે થોડી ઘણી મદદ પૂરી પાડે છે; વિગતો માટે IDE ના દસ્તાવેજ તપાસો. Rust ટીમ <code>rust-analyzer</code> દ્વારા મહાન IDE મદદ આપવા પર ધ્યાન કેન્દ્રિત કરી રહી છે. વધુ માહિતી માટે <a href="appendix-04-useful-development-tools.html">Appendix D</a> જુઓ.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="project-directory-setup"><a class="header" href="#project-directory-setup">Project Directory Setup</a></h3>
+<p>તમે એક ડિરેક્ટરી બનાવીને શરૂઆત કરશો જ્યાં તમે તમારો Rust કોડ સંગ્રહિત કરશો. Rust ને એનાથી કોઈ ફરક પડતો નથી કે તમારો કોડ ક્યાં રહે છે, પરંતુ આ પુસ્તકમાં આપેલાં વ્યાયમો અને પ્રોજેક્ટ્સ માટે, અમે તમારા હોમ ડિરેક્ટરીમાં એક <code>projects</code> ડિરેક્ટરી બનાવવાની અને બધાં પ્રોજેક્ટ્સ ત્યાં રાખવાની ભલામણ કરીએ છીએ.</p>
+<p>એક ટર્મિનલ ખોલો અને <code>projects</code> ડિરેક્ટરી અને “Hello, world!” પ્રોજેક્ટ માટેની ડિરેક્ટરી બનાવવા માટે નીચેના આદેશો દાખલ કરો.</p>
+<p>Linux, macOS, અને Windows પર PowerShell માટે, આ દાખલ કરો:</p>
+<pre><code class="language-console">$ mkdir ~/projects
+$ cd ~/projects
+$ mkdir hello_world
+$ cd hello_world
+</code></pre>
+<p>વિન્ડોઝ CMD માટે, આ દાખલ કરો:</p>
+<pre><code class="language-cmd">&gt; mkdir "%USERPROFILE%\projects"
+&gt; cd /d "%USERPROFILE%\projects"
+&gt; mkdir hello_world
+&gt; cd hello_world
+</code></pre>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="rust-program-basics"><a class="header" href="#rust-program-basics">Rust Program Basics</a></h3>
+<p>ત્યારબાદ, એક નવી સ્ત્રોત ફાઈલ બનાવો અને તેનું નામ main.rs રાખો. Rust ફાઈલો હંમેશાં .rs એક્સટેન્શન સાથે સમાપ્ત થાય છે. જો તમે તમારી ફાઇલનામમાં એક કરતાં વધુ શબ્દોનો ઉપયોગ કરી રહ્યા છો, તો સંમેલન મુજબ તેમને અન્ડરસ્કોરથી અલગ કરો. ઉદાહરણ તરીકે, hello_world.rs નો ઉપયોગ કરોhelloworld.rs ને બદલે.</p>
+<p>હવે બનાવેલી main.rs ફાઈલ ખોલો અને Listing 1-1 માં આપેલ કોડ દાખલ કરો.</p>
+<p><strong>Listing 1-1: A program that prints <code>Hello, world!</code></strong></p>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    println!("Hello, world!");
+}</code></pre>
+<p>ફાઈલ સાચવો અને તમારા ટર્મિનલ વિન્ડોમાં પાછા જાઓ ~/projects/hello_world ડિરેક્ટરીમાં. લિનક્સ અથવા મૅકઓએસ પર, ફાઈલને કમ્પાઇલ કરવા અને ચલાવવા માટે નીચેના આદેશો દાખલ કરો:</p>
+<pre><code class="language-console">$ rustc main.rs
+$ ./main
+Hello, world!
+</code></pre>
+<p>વિન્ડોઝ પર, આદેશ <code>.\main</code> દાખલ કરો, <code>./main</code> ને બદલે:</p>
+<pre><code class="language-powershell">&gt; rustc main.rs
+&gt; .\main
+Hello, world!
+</code></pre>
+<p>તમારા ઓપરેટિંગ સિસ્ટમ કેવું હોય વાંધો નહિ, <code>Hello, world!</code> એ આઉટપુટ ટર્મિનલ પર દેખાવા જોઈએ. જો તમને આ આઉટપુટ ના દેખાય, તો સહાય મેળવવા માટે ઇન્સ્ટોલેશન વિભાગના <a href="ch01-01-installation.html#troubleshooting">“Troubleshooting”</a> ભાગમાં પાછા જાઓ. If <code>Hello, world!</code> did print,</p>
+<p>જો <code>Hello, world!</code> છપાયું હોય, તો અભિનંદન! તમે સત્તાવાર રીતે એક Rust કાર્યક્રમ લખ્યો છે. એ તમને એક Rust પ્રોગ્રામર બનાવે છે—સ્વાગત છે!</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="the-anatomy-of-a-rust-program"><a class="header" href="#the-anatomy-of-a-rust-program">The Anatomy of a Rust Program</a></h3>
+<p>ચાલો આ “Hello, world!” કાર્યક્રમને વિગતવાર જોઈએ. અહીં પ્રથમ ભાગ છે:</p>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+
+}</code></pre>
+<p>These lines define a function named <code>main</code>. The <code>main</code> function is special: It is always the first code that runs in every executable Rust program. Here, the first line declares a function named <code>main</code> that has no parameters and returns nothing. If there were parameters, they would go inside the parentheses (<code>()</code>).</p>
+<p>The function body is wrapped in <code>{}</code>. Rust requires curly brackets around all function bodies. It’s good style to place the opening curly bracket on the same line as the function declaration, adding one space in between.</p>
+<p>નોંધ: જો તમે બધા Rust પ્રોજેક્ટ્સમાં એકસમાન શૈલી જાળવવા માંગતા હો, તો તમે <code>rustfmt</code> નામના આપોઆપ ફોર્મેટર સાધનનો ઉપયોગ કરી શકો છો જે તમારા કોડને ચોક્કસ શૈલીમાં ફોર્મેટ કરે છે ( <code>rustfmt</code> વિશે વધુ માહિતી <a href="appendix-04-useful-development-tools.html">Appendix D</a> માં મળશે). Rust ટીમ આ સાધનને સ્ટાન્ડર્ડ Rust વિતરણ સાથે સામેલ કર્યું છે, જેમ કે <code>rustc</code>, તેથી તે પહેલાથી જ તમારા કમ્પ્યુટર પર ઇન્સ્ટોલ થયેલ હોવું જોઈએ!</p>
+<p><code>main</code> ફંક્શનનો મુખ્ય ભાગ નીચેના કોડ ધરાવે છે:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>println!("Hello, world!");
+<span class="boring">}</span></code></pre>
+<p>આ લીટી આ નાનકડા કાર્યક્રમમાં તમામ કાર્ય કરે છે: તે સ્ક્રીન પર લખાણ છાપે છે. અહીં ત્રણ મહત્વપૂર્ણ વિગતો ધ્યાન રાખવા જેવી છે.</p>
+<p>પ્રથમ, <code>println!</code> એક Rust મેક્રોને બોલાવે છે. જો તેના બદલે કોઈ ફંક્શન બોલાવવામાં આવ્યું હોત, તો તેને <code>println</code> ( <code>!</code> વગર) તરીકે દાખલ કરવામાં આવતું હોત. Rust મેક્રો એ કોડ લખવાનો એક માર્ગ છે જે Rust વાક્યરચનાને વિસ્તારવા માટે કોડ જનરેટ કરે છે, અને આપણે તેના વિશે પ્રકરણ 20 માં વધુ વિગતવાર ચર્ચા કરીશું. અત્યારે, તમારે માત્ર એટલું જ જાણવાની જરૂર છે કે <code>!</code> નો ઉપયોગ કરવો એ સામાન્ય ફંક્શનને બદલે મેક્રોને બોલાવવા સમાન છે અને મેક્રો હંમેશાં ફંક્શન જેવા નિયમોનું પાલન કરતા નથી.</p>
+<p>બીજું, તમે <code>"Hello, world!"</code> સ્ટ્રિંગ જુઓ છો. અમે આ સ્ટ્રિંગને <code>println!</code> ને Argument તરીકે પસાર કરીએ છીએ, અને સ્ટ્રિંગ સ્ક્રીન પર છપાય છે. ત્રીજું, આપણે</p>
+<p>લીટીને સેમિકોલન ( <code>;</code> ) સાથે સમાપ્ત કરીએ છીએ, જે દર્શાવે છે કે આ અભિવ્યક્તિ પૂર્ણ થઈ ગઈ છે, અને આગામી શરૂ થવા માટે તૈયાર છે. મોટાભાગની Rust કોડની લીટીઓ સેમિકોલનથી અંતિમ થાય છે.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="compilation-and-execution"><a class="header" href="#compilation-and-execution">Compilation and Execution</a></h3>
+<p>તમે હમણાં જ એક નવું બનાવેલું કાર્યક્રમ ચલાવ્યો છે, તો ચાલો આ પ્રક્રિયાના દરેક તબક્કાની તપાસ કરીએ.</p>
+<p>Rust કાર્યક્રમ ચલાવતા પહેલાં, તમારે તેને Rust કંપક (compiler) દ્વારા કમ્પાઇલ કરવું આવશ્યક છે, જેમાં <code>rustc</code> આદેશ દાખલ કરીને અને તમારા સ્ત્રોત ફાઈલનું નામ પસાર કરીને, જેમ કે:</p>
+<pre><code class="language-console">$ rustc main.rs
+</code></pre>
+<p>જો તમને C અથવા C++ નો અનુભવ હોય, તો તમે નોંધશો કે આ <code>gcc</code> અથવા <code>clang</code> જેવું જ છે. સફળતાપૂર્વક કમ્પાઈલ કર્યા પછી, Rust એક બાઈનરી એક્ઝિક્યુટેબલ ફાઈલ</p>
+<p>ઉત્પન્ન કરે છે. Linux, macOS અને Windows પર PowerShell માં, તમે <code>ls</code> આદેશ તમારા શેલમાં દાખલ કરીને એક્ઝિક્યુટેબલ જોઈ શકો છો:</p>
+<pre><code class="language-console">$ ls
+main  main.rs
+</code></pre>
+<p>Linux અને macOS પર, તમે બે ફાઈલો જોશો. Windows પર PowerShell સાથે, તમને એ જ ત્રણ ફાઈલો દેખાશે જે CMD વાપરતી વખતે દેખાત. Windows પર CMD સાથે, તમારે નીચે મુજબ કરવું જોઈએ:</p>
+<pre><code class="language-cmd">&gt; dir /B %= the /B option says to only show the file names =%
+main.exe
+main.pdb
+main.rs
+</code></pre>
+<p>આ દર્શાવે છે કે સ્ત્રોત કોડ ફાઈલ કઈ સાથે .rs એક્સ્ટેંશન ધરાવે છે, એક્ઝિક્યુટેબલ ફાઈલ (Windows પર main.exe, પરંતુ અન્ય તમામ પ્લેટફોર્મ પર main), અને, Windows વાપરતી વખતે, એક ફાઈલ જેમાં ડીબગીંગ માહિતી હોય જે .pdb એક્સ્ટેંશન સાથે હોય. અહીંથી, તમે main અથવા main.exe ફાઈલ ચલાવો છો, આ રીતે:</p>
+<pre><code class="language-console">$ ./main # or .\main on Windows
+</code></pre>
+<p>જો તમારું main.rs ફાઈલ “હેલો, વર્લ્ડ!” પ્રોગ્રામ છે, તો આ લીટી તમારા ટર્મિનલમાં <code>Hello, world!</code> છાપે છે.</p>
+<p>જો તમે ડાયનેમિક ભાષાથી વધુ પરિચિત છો, જેમ કે રૂબી, પાયથોન અથવા JavaScript, તો તમને પ્રોગ્રામને અલગ તબક્કામાં કમ્પાઇલ કરવું અને ચલાવવું સામાન્ય ન લાગી શકે. Rust એ એક અગાઉથી કમ્પાઈલ કરેલી ભાષા છે, જેનો અર્થ થાય છે કે તમે પ્રોગ્રામને કમ્પાઇલ કરી શકો છો અને તેને કોઈ બીજાને આપી શકો છો, અને તેઓ Rust ઇન્સ્ટોલ કર્યા વિના પણ ચલાવી શકે છે. જો તમે કોઈને .rb , .py , અથવા .js ફાઈલ આપો છો, તો તેમને રૂબી, પાયથોન અથવા JavaScript અમલીકરણ ઇન્સ્ટોલ કરવું પડશે (ક્રમશઃ). પરંતુ તે ભાષાઓમાં, તમારે તમારા પ્રોગ્રામને કમ્પાઇલ કરવા અને ચલાવવા માટે માત્ર એક જ આદેશની જરૂર પડે છે. ભાષા ડિઝાઇન હંમેશાં આપ-લેનું પરિણામ હોય છે.</p>
+<p><code>rustc</code> વડે માત્ર કમ્પાઇલ કરવું સરળ પ્રોગ્રામ માટે ઠીક છે, પરંતુ જેમ જેમ તમારી યોજના વિશાળ બનશે, તેમ તમને બધા વિકલ્પોનું સંચાલન કરવું અને તમારા કોડને વહેંચવાનું સરળ બનાવવું જોઈશે. હવે પછી, અમે Cargo સાધનપરિચય કરાવશે, જે તમને વાસ્તવિક દુનિયાના Rust પ્રોગ્રામ લખવામાં મદદ કરશે.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch01-01-installation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch01-03-hello-cargo.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch01-01-installation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch01-03-hello-cargo.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Hello, Cargo! - ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="gu-theme-444cb377.css">
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-4bc072ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-0e4ce700.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ધ રસ્ટ પ્રોગ્રામિંગ લેંગ્વેજ (ગુજરાતી) - પ્રકરણ 1</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h2 id="hello-cargo"><a class="header" href="#hello-cargo">Hello, Cargo!</a></h2>
+<p>Cargo એ Rustનું નિર્માણ તંત્ર અને પેકેજ વ્યવસ્થાપક છે. મોટાભાગના Rustaceans તેમના Rust પ્રોજેક્ટ્સનું સંચાલન કરવા માટે આ સાધન વાપરે છે, કારણ કે Cargo તમારા માટે ઘણાં કાર્યો કરે છે, જેમ કે તમારા કોડનું નિર્માણ કરવું, તમારા કોડને જરૂરી હોય તેવા પુસ્તકાલયો (libraries) ડાઉનલોડ કરવા અને તે પુસ્તકાલયોનું નિર્માણ કરવું. (આપણે જે પુસ્તકાલયોની જરૂર હોય છે તેને આધારભૂત (dependencies) કહીએ છીએ.)</p>
+<p>સૌથી સરળ Rust કાર્યક્રમો, જેમ કે અત્યાર સુધી આપણે લખેલું છે, તેમાં કોઈ આધારભૂત નથી. જો આપણે “Hello, world!” પ્રોજેક્ટ Cargo સાથે બનાવ્યો હોત, તો તે માત્ર Cargoના તે ભાગનો ઉપયોગ કરત જે તમારા કોડનું નિર્માણ કરે છે. જેમ જેમ તમે વધુ જટિલ Rust કાર્યક્રમો લખશો, તેમ તેમ તમે આધારભૂત ઉમેરશો અને જો તમે Cargoથી શરૂ કરીને કોઈ પ્રોજેક્ટ કરો છો, તો આધારભૂત ઉમેરવાનું ઘણું સરળ રહેશે.</p>
+<p>કારણ કે મોટાભાગના Rust પ્રોજેક્ટ્સ Cargo નો ઉપયોગ કરે છે, આ પુસ્તકના બાકીના ભાગમાં એવું માનવામાં આવે છે કે તમે પણ Cargo નો ઉપયોગ કરી રહ્યા છો. જો તમે સત્તાવાર સ્થાપકોનો ઉપયોગ કર્યો હોય જે “સ્થાપન” વિભાગમાં ચર્ચા કરવામાં આવી હતી, તો Cargo Rust સાથે જ સ્થાપિત થયેલું હશે. જો તમે અન્ય કોઈ રીતે Rust સ્થાપિત કર્યું હોય, તો તમારા ટર્મિનલમાં નીચે મુજબ દાખલ કરીને તપાસો કે Cargo સ્થાપિત છે કે નહીં:</p>
+<pre><code class="language-console">$ cargo --version
+</code></pre>
+<p>જો તમે વર્ઝન સંખ્યા જુઓ છો, તો તે તમારી પાસે છે! જો તમને કોઈ ભૂલ આવે છે, જેમ કે <code>command not found</code>, તો તમારા સ્થાપન પદ્ધતિ માટેના દસ્તાવેજને જુઓ કે કેવી રીતે Cargo ને અલગથી સ્થાપિત કરવું.</p>
+<h3 id="creating-a-project-with-cargo"><a class="header" href="#creating-a-project-with-cargo">Creating a Project with Cargo</a></h3>
+<p>ચાલો કાર્ગોનો ઉપયોગ કરીને એક નવું પ્રોજેક્ટ બનાવીએ અને જોઈએ કે તે આપણા મૂળ “Hello, world!” પ્રોજેક્ટથી કેવી રીતે અલગ છે. તમારા પ્રોજેક્ટ ડિરેક્ટરીમાં પાછા જાઓ (અથવા તમે તમારો કોડ ક્યાં સંગ્રહ કરવાનું નક્કી કર્યું હોય ત્યાં). પછી, કોઈપણ ઓપરેટિંગ સિસ્ટમ પર, નીચે મુજબ ચલાવો:</p>
+<pre><code class="language-console">$ cargo new hello_cargo
+$ cd hello_cargo
+</code></pre>
+<p>પ્રથમ આદેશ એક નવું સંનિધિ અને પરિયોજન બનાવે છે જેનું નામ hello_cargo છે. અમે અમારા પરિયોજનને hello_cargo નામ આપ્યું છે, અને Cargo તેના બધાં જ દસ્તાવેજો સમાન નામના સંનિધિમાં બનાવે છે. Go into the hello_cargo directory and list the files. You’ll see that Cargo has</p>
+<p>સંનિધિમાં જાઓ અને ફાઈલોની યાદી જુઓ. તમને દેખાશે કે Cargo એ આપણી માટે બે ફાઈલો અને એક સંનિધિ ઉત્પન્ન કરી છે: એક Cargo.toml ફાઈલ અને એક src સંનિધિ જેમાં main.rs ફાઈલ અંદર છે. It has also initialized a new Git repository along with</p>
+<p>તેણે એક નવું Git ભંડાર પણ શરૂ કર્યું છે અને સાથે સાથે એક .gitignore ફાઈલ પણ છે. જો તમે પહેલાથી અસ્તિત્વમાં રહેલા Git ભંડારમાં <code>cargo new</code> ચલાવો તો Git ફાઈલો ઉત્પન્ન થશે નહીં; તમે આ વર્તણૂકને <code>cargo new --vcs=git</code> નો ઉપયોગ કરીને બદલી શકો છો.</p>
+<p>નોંધ: Git એક સામાન્ય વર્ઝન નિયંત્રણ પ્રણાલી છે. તમે <code>cargo new</code> ને અન્ય વર્ઝન નિયંત્રણ પ્રણાલી અથવા કોઈ પણ વર્ઝન નિયંત્રણ પ્રણાલી વાપરવા માટે <code>--vcs</code> ધ્વજ (flag) નો ઉપયોગ કરી શકો છો. ઉપલબ્ધ વિકલ્પો જોવા માટે <code>cargo new --help</code> ચલાવો.</p>
+<p>તમારી પસંદગીના ટેક્સ્ટ સંપાદકમાં Cargo.toml ખોલો. તે યાદી 1-2 માં આપેલ કોડ જેવું દેખાશે.</p>
+<p><strong>Listing 1-2: Contents of <em>Cargo.toml</em> generated by <code>cargo new</code></strong></p>
+<pre><code class="language-toml">[package]
+name = "hello_cargo"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+</code></pre>
+<p>આ ફાઈલ TOML ( ટોમ્સ ઓબ્વિયસ, મિનિમલ ભાષા ) ફોર્મેટમાં છે, જે Cargo નું રૂપરેખાંકન ફોર્મેટ છે.</p>
+<p>પહેલી લીટી, <code>[package]</code> , એક વિભાગ હેડિંગ છે જે દર્શાવે છે કે ત્યારબાદના વિધાનો પેકેજને રૂપરેખાંકિત કરી રહ્યા છે. જેમ આપણે આ ફાઈલમાં વધુ માહિતી ઉમેરીશું, તેમ તેમ અમે અન્ય વિભાગો ઉમેરીશું.</p>
+<p>આગામી ત્રણ લીટીઓ Cargo ને તમારા પ્રોગ્રામને કમ્પાઇલ કરવા માટે જરૂરી રૂપરેખાંકન માહિતી સેટ કરે છે: નામ, વર્ઝન અને Rust નું આવૃત્તિ (edition) વાપરવું. આપણે <a href="appendix-05-editions.html">Appendix E</a> માં <code>edition</code> કી વિશે વાત કરીશું.</p>
+<p>હવે, <code>[dependencies]</code> એ વિભાગની શરૂઆત છે જ્યાં તમે તમારા પ્રોજેક્ટની નિર્ભરતા (dependency) સૂચિબદ્ધ કરી શકો છો. Rust માં, કોડના પેકેજોને crates કહેવામાં આવે છે. આ પ્રોજેક્ટ માટે આપણને અન્ય કોઈ crate ની જરૂર નથી, પરંતુ બીજા પ્રકરણમાં પ્રથમ પ્રોજેક્ટ માટે જરૂર</p>
+<p>પડશે, તેથી અમે આ નિર્ભરતા વિભાગનો ઉપયોગ કરીશું. હવે src/main.rs ખોલો અને</p>
+<p>જુઓ: ફાઈલનામ: src/main.rs</p>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    println!("Hello, world!");
+}</code></pre>
+<p>Cargo એ તમારા માટે “Hello, world!” કાર્યક્રમ ઉત્પન્ન કર્યો છે, જે Listing 1-1 માં આપણે લખેલ કાર્યક્રમ જેવો જ છે! અત્યાર સુધીમાં, આપણા પ્રોજેક્ટ અને Cargo દ્વારા ઉત્પન્ન થયેલા પ્રોજેક્ટ વચ્ચેનો તફાવત એ છે કે Cargo એ કોડ src ડિરેક્ટરીમાં મૂક્યો છે, અને આપણી પાસે ટોચની ડિરેક્ટરીમાં Cargo.toml રૂપરેખાંકન ફાઈલ છે.</p>
+<p>Cargo તમારા સ્રોત ફાઇલોને src ડિરેક્ટરીમાં રહેવાની અપેક્ષા રાખે છે. ટોચ-સ્તરના પ્રોજેક્ટ ડિરેક્ટરી માત્ર README ફાઇલો, લાયસન્સ માહિતી, રૂપરેખાંકન ફાઇલો અને તમારા કોડ સાથે સંબંધિત ન હોય તેવી અન્ય વસ્તુઓ માટે છે. Cargo નો ઉપયોગ કરવાથી તમને તમારા પ્રોજેક્ટને વ્યવસ્થિત કરવામાં મદદ મળે છે. દરેક વસ્તુ માટે એક સ્થાન છે, અને દરેક વસ્તુ તેની જગ્યાએ છે.</p>
+<p>જો તમે એવી કોઈ project શરૂ કરી હોય જે Cargo વાપરતી નથી, જેમ કે આપણે “Hello, world!” project માં કર્યું હતું, તો તમે તેને Cargo વાપરતી project માં ફેરવી શકો છો. <code>src</code> directory માં project નો code ખસેડો અને એક યોગ્ય <code>Cargo.toml</code> file બનાવો. <code>cargo init</code> ચલાવવાની એ એક સરળ રીત છે, જે આપોઆપ તે file બનાવી દેશે.</p>
+<h3 id="building-and-running-a-cargo-project"><a class="header" href="#building-and-running-a-cargo-project">Building and Running a Cargo Project</a></h3>
+<p>હવે આપણે જોઈએ કે જ્યારે આપણે <code>Cargo</code> વડે “Hello, world!” કાર્યક્રમ બનાવો અને ચલાવીએ ત્યારે શું ફેરફાર થાય છે. તમારા <code>hello_cargo</code> ડિરેક્ટરીમાંથી, નીચેનો આદેશ દાખલ કરીને તમારી યોજના બનાવો:</p>
+<pre><code class="language-console">$ cargo build
+   Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
+    Finished dev [unoptimized + debuginfo] target(s) in 2.85 secs
+</code></pre>
+<p>આદેશ એક એક્ઝિક્યુટેબલ ફાઈલ બનાવે છે આ આદેશ <code>target/debug/hello_cargo</code> માં એક એક્ઝિક્યુટેબલ ફાઈલ બનાવે છે (અથવા Windows પર <code>target\debug\hello_cargo.exe</code>), તમારા વર્તમાન ડિરેક્ટરીમાં નહીં. કારણ કે ડિફૉલ્ટ બિલ્ડ ડીબગ બિલ્ડ હોય છે, Cargo બાઈનરીને <code>debug</code> નામની ડિરેક્ટરીમાં મૂકે છે. તમે આ આદેશથી એક્ઝિક્યુટેબલ ચલાવી શકો છો:</p>
+<pre><code class="language-console">$ ./target/debug/hello_cargo # or .\target\debug\hello_cargo.exe on Windows
+Hello, world!
+</code></pre>
+<p>જો બધું સારું રહેશે, તો <code>Hello, world!</code> ટર્મિનલ પર છાપાઈ જશે. પ્રથમ વખત <code>cargo build</code> ચલાવવાથી Cargo એક નવી ફાઈલ પણ બનાવે છે: Cargo.lock. આ ફાઈલ તમારા પ્રોજેક્ટમાં રહેલા ડિપેન્ડન્સીઝ (dependencies) ના ચોક્કસ વર્ઝનની નોંધ રાખે છે. આ પ્રોજેક્ટમાં કોઈ ડિપેન્ડન્સીઝ નથી, તેથી ફાઈલ થોડી ખાલી છે. તમારે ક્યારેય પણ આ ફાઈલમાં જાતે જ ફેરફાર કરવાની જરૂર નહીં પડે; Cargo તેનાcontentsનું સંચાલન તમારા માટે કરે છે.</p>
+<p>અમે <code>cargo build</code> સાથે એક પ્રોજેક્ટ બનાવ્યો અને <code>./target/debug/hello_cargo</code> વડે ચલાવ્યો, પરંતુ અમે <code>cargo run</code> નો ઉપયોગ કરીને કોડને કમ્પાઈલ કરી શકીએ છીએ અને એક જ આદેશમાં પરિણામી એક્ઝિક્યુટેબલ (executable) ચલાવી શકીએ છીએ:</p>
+<pre><code class="language-console">$ cargo run
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/hello_cargo`
+Hello, world!
+</code></pre>
+<p><code>cargo run</code> વાપરવું એ <code>cargo build</code> ચલાવવા અને પછી બાઈનરીનો આખો માર્ગ યાદ રાખવા કરતાં વધુ અનુકૂળ છે, તેથી મોટાભાગના વિકાસકર્તાઓ <code>cargo run</code> વાપરે છે.</p>
+<p>ધ્યાનમાં રાખો કે આ વખતે અમને આઉટપુટ દેખાયું ન હતું કે Cargo  <code>hello_cargo</code> કમ્પાઈલ કરી રહ્યું છે. Cargo એ નક્કી કર્યું કે ફાઇલો બદલાઈ નથી, તેથી તેણે ફરીથી બનાવ્યું નહીં પરંતુ માત્ર બાઈનરી ચલાવ્યું. જો તમે તમારા સ્રોત કોડમાં ફેરફાર કર્યો હોત, તો Cargo પ્રોજેક્ટને ચલાવતા પહેલા ફરીથી બનાવ્યું હોત, અને તમને આ આઉટપુટ દેખાયું હોત:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.33 secs
+     Running `target/debug/hello_cargo`
+Hello, world!
+</code></pre>
+<p>Cargo પણ એક આદેશ પ્રદાન કરે છે જેનું નામ <code>cargo check</code> છે. આ આદેશ ઝડપથી તમારા કોડની ચકાસણી કરે છે જેથી ખાતરી થાય કે તે સંકલિત થઈ શકે, પરંતુ એ કોઈ કાર્યકારી ફાઈલ ઉત્પન્ન કરતું નથી:</p>
+<pre><code class="language-console">$ cargo check
+   Checking hello_cargo v0.1.0 (file:///projects/hello_cargo)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.32 secs
+</code></pre>
+<p>શા માટે તમારે એક્ઝિક્યુટેબલ (executable) ન જોઈતું હોય? ઘણીવાર <code>cargo check</code> એ <code>cargo build</code> કરતાં વધુ ઝડપી હોય છે, કારણ કે તે એક્ઝિક્યુટેબલ બનાવવાની પ્રક્રિયાને છોડી દે છે. જો તમે કોડ લખતી વખતે સતત તમારા કાર્યની ચકાસણી કરતા હોવ, તો <code>cargo check</code> નો ઉપયોગ કરવાથી તમને ખબર પડશે કે તમારી પ્રોજેક્ટ હજી પણ કમ્પાઇલ (compile) થઈ રહી છે કે નહીં, તે જાણવાની પ્રક્રિયા ઝડપી થશે! આથી, ઘણા Rustaceans તેમની પ્રોગ્રામ (program) લખતી વખતે સમયાંતરે <code>cargo check</code> ચલાવે છે, જેથી ખાતરી કરી શકાય કે તે કમ્પાઇલ (compile) થાય છે. પછી તેઓ એક્ઝિક્યુટેબલ (executable) વાપરવા માટે તૈયાર હોય ત્યારે <code>cargo build</code> ચલાવે છે.</p>
+<p>ચાલો આપણે અત્યાર સુધીમાં કાર્ગો વિશે જે શીખ્યા તેનું પુનરાવર્તન કરીએ:</p>
+<ul>
+<li>
+<p>આપણે <code>cargo new</code> નો ઉપયોગ કરીને એક પ્રોજેક્ટ બનાવી શકીએ છીએ.</p>
+</li>
+<li>
+<p>આપણે <code>cargo build</code> નો ઉપયોગ કરીને એક પ્રોજેક્ટ બનાવી શકીએ છીએ.</p>
+</li>
+<li>
+<p>આપણે <code>cargo run</code> નો ઉપયોગ કરીને એક પ્રોજેક્ટને એક જ પગલામાં બનાવી અને ચલાવી શકીએ છીએ.</p>
+</li>
+<li>
+<p>આપણે <code>cargo check</code> નો ઉપયોગ કરીને ભૂલો તપાસવા માટે બાઈનરી ઉત્પન્ન કર્યા વિના એક પ્રોજેક્ટ બનાવી શકીએ છીએ.</p>
+</li>
+<li>
+<p>આપણો કોડની જેમ સમાન ડિરેક્ટરીમાં બિલ્ડ પરિણામ સાચવવાની જગ્યાએ, કાર્ગો તેને <code>target/debug</code> ડિરેક્ટરીમાં સંગ્રહિત કરે છે.</p>
+</li>
+</ul>
+<p>એક વધારાનો લાભ એ છે કે Cargo નો ઉપયોગ કરવાથી આદેશો સમાન રહે છે, તમે જે પણ ઓપરેટિંગ સિસ્ટમ પર કાર્ય કરી રહ્યા હોવ તેનાથી કોઈ ફરક પડતો નથી. તેથી, હવે પછી અમે Linux અને macOS વિરુદ્ધ Windows માટે વિશેષ સૂચનાઓ આપવાનું બંધ કરીશું.</p>
+<h3 id="building-for-release"><a class="header" href="#building-for-release">Building for Release</a></h3>
+<p>જ્યારે તમારો પ્રોજેક્ટ અંતિમ રીતે વિમોચન માટે તૈયાર હોય, ત્યારે તમે તેને સુવ્યવસ્થિતતાઓ સાથે કમ્પાઇલ કરવા માટે <code>cargo build --release</code> નો ઉપયોગ કરી શકો છો. આ આદેશ  target/release માં target/debug ને બદલે એક એક્ઝિક્યુટેબલ બનાવશે. સુવ્યવસ્થિતતાઓને ચાલુ કરવાથી તમારી Rust કોડ ઝડપથી ચાલે છે, પરંતુ તે તમારા પ્રોગ્રામને કમ્પાઇલ થવામાં લાગતો સમય વધારે છે. આ જ કારણ છે કે બે અલગ-અલગ રૂપરેખાંકનો (profiles) છે: એક વિકાસ માટે, જ્યારે તમે ઝડપથી અને વારંવાર ફરીથી બનાવવાનું ઇચ્છો છો, અને બીજો અંતિમ પ્રોગ્રામ બનાવવા માટે જે userને આપશો અને તેને વારંવાર ફરીથી બનાવવામાં આવશે નહીં અને તે શક્ય તેટલી ઝડપથી ચાલશે. જો તમે તમારા કોડના ચાલવાના સમયનું મૂલ્યાંકન કરી રહ્યા હો, તો <code>cargo build --release</code> ચલાવવાનું અને target/release માં એક્ઝિક્યુટેબલ સાથે મૂલ્યાંકન કરવાનું સુનિશ્ચિત કરો.</p>
+<!-- Old headings. Do not remove or links may break. -->
+<h3 id="leveraging-cargos-conventions"><a class="header" href="#leveraging-cargos-conventions">Leveraging Cargo’s Conventions</a></h3>
+<p>સરળ પ્રોજેક્ટ્સ સાથે, કાર્ગો માત્ર <code>rustc</code> વાપરવા કરતાં વધારે લાભ આપતું નથી, પરંતુ તમારા કાર્યક્રમો વધુ જટિલ બને ત્યારે તે પોતાની કિંમત સાબિત કરશે. જ્યારે પ્રોગ્રામ્સ અનેક ફાઇલો સુધી પહોંચે અથવા કોઈ આધાર રાખતી વસ્તુની જરૂર પડે, ત્યારે કાર્ગો દ્વારા નિર્માણનું સંકલન કરાવવું ઘણું સરળ બની જાય છે.</p>
+<p>જોકે <code>hello_cargo</code> પ્રોજેક્ટ સરળ છે, તે હવે મોટાભાગના વાસ્તવિક સાધનોનો ઉપયોગ કરે છે જેનો તમે તમારા રસ્ટ કારકિર્દીમાં ઉપયોગ કરશો. હકીકતમાં, કોઈપણ હાલના પ્રોજેક્ટ્સ પર કામ કરવા માટે, તમે નીચે આપેલા આદેશોનો ઉપયોગ કરીને કોડને Git દ્વારા તપાસી શકો છો, તે પ્રોજેક્ટની ડિરેક્ટરીમાં જઈ શકો છો અને નિર્માણ કરી શકો છો:</p>
+<pre><code class="language-console">$ git clone example.org/someproject
+$ cd someproject
+$ cargo build
+</code></pre>
+<p>વધુ માહિતી માટે, કાર્ગોના દસ્તાવેજીકરણ તપાસો.</p>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>તમે તમારી Rust પ્રવાસની એક ઉત્તમ શરૂઆત કરી છે! આ પ્રકરણમાં, તમે શીખ્યા કે કેવી રીતે:</p>
+<ul>
+<li>
+<p><code>rustup</code> નો ઉપયોગ કરીને Rust નું નવીનતમ સ્થિર સંસ્કરણ સ્થાપિત કરવું.</p>
+</li>
+<li>
+<p>નવા Rust સંસ્કરણ પર અપડેટ કરવું.</p>
+</li>
+<li>
+<p>સ્થાનિક રીતે સ્થાપિત દસ્તાવેજો ખોલવા.</p>
+</li>
+<li>
+<p><code>rustc</code> નો સીધો ઉપયોગ કરીને “Hello, world!” કાર્યક્રમ લખવો અને ચલાવવો.</p>
+</li>
+<li>
+<p>Cargo ના નિયમો અનુસાર નવી project બનાવવી અને ચલાવવી.</p>
+</li>
+</ul>
+<p>આ એક ઉત્તમ સમય છે વધુ મજબૂત કાર્યક્રમ બનાવવા માટે, જેથી Rust કોડ વાંચવાની અને લખવાની આદત પડે. તેથી, પ્રકરણ ૨ માં, આપણે અનુમાન લગાવવાનો (guessing) કાર્યક્રમ બનાવીશું. જો તમે સામાન્ય પ્રોગ્રામિંગ વિભાવનાઓ Rust માં કેવી રીતે કાર્ય કરે છે તે શીખવા દ્વારા શરૂ કરવાનું પસંદ કરો છો, તો પ્રકરણ ૩ જુઓ અને પછી પ્રકરણ ૨ પર પાછા ફરો.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch01-02-hello-world.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch02-00-guessing-game-tutorial.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch01-02-hello-world.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch02-00-guessing-game-tutorial.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+        <script src="english-link-8ef155a3.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
