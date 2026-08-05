@@ -1,0 +1,9 @@
+[book]
+title = "The Rust Programming Language"
+authors = ["Steve Klabnik", "Carol Nichols", "Chris Krycho"]
+language = "en"
+
+[rust]
+edition = "2024"
+
+[output.epub]
