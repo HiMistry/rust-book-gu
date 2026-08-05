@@ -47,5 +47,7 @@ output-mode = "default"
 [rust]
 edition = "2024"
 
+[output.epub]
+
 [build]
 extra-watch-dirs = ["packages/mdbook-trpl"]
