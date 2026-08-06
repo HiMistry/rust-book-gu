@@ -6,4 +6,5 @@ Read the book in Gujarati:
 https://himistry.github.io/rust-book-gu/
 
 EPUB download (Gujarati): https://himistry.github.io/rust-book-gu/epub/the-rust-programming-language-gu.epub
+
 EPUB download (English): https://himistry.github.io/rust-book-gu/epub/the-rust-programming-language-en.epub
